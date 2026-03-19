@@ -14790,13 +14790,10 @@ int item::charge_linked_batteries(item& linked_item, vehicle& linked_veh, int tu
         return 0;
     }
     const item* parent_mag = linked_item.magazine_current();
-    if (!parent_mag) {
-        return 0;
-    }
 
     const bool power_in = link->charge_rate > 0;
 
-    if ((power_in && parent_mag->has_flag(flag_RECHARGE) &&
+    if ((power_in && ((parent_mag && parent_mag->has_flag(flag_RECHARGE)) || linked_item.has_flag(flag_USE_UPS)) &&
         linked_item.ammo_remaining() < linked_item.ammo_capacity(ammo_battery)) ||
         (!power_in && linked_item.ammo_remaining() > 0)) {
 
