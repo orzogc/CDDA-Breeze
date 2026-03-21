@@ -18,7 +18,7 @@
     "initial_charges": 3,
     "use_action": {
       "type": "link_up",
-      "menu_text": "Plug in / Unplug",
+      "menu_text": "接入电网 / 断开连接",
       "is_cable_item": true,
       "cable_length": 3,
       "targets": [ "vehicle_port" ]

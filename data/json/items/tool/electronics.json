@@ -167,7 +167,7 @@
       },
       {
         "type": "link_up",
-        "menu_text": "Plug in / Unplug",
+        "menu_text": "接入电网 / 断开连接",
         "ammo_scale": 0,
         "cable_length": 4,
         "charge_rate": "10 W"
@@ -211,7 +211,7 @@
       },
       {
         "type": "link_up",
-        "menu_text": "Plug in / Unplug",
+        "menu_text": "接入电网 / 断开连接",
         "ammo_scale": 0,
         "cable_length": 4,
         "charge_rate": "10 W"
@@ -372,7 +372,7 @@
       },
       {
         "type": "link_up",
-        "menu_text": "Plug in / Unplug",
+        "menu_text": "接入电网 / 断开连接",
         "ammo_scale": 0,
         "cable_length": 5,
         "charge_rate": "140 W"
@@ -416,7 +416,7 @@
       },
       {
         "type": "link_up",
-        "menu_text": "Plug in / Unplug",
+        "menu_text": "接入电网 / 断开连接",
         "ammo_scale": 0,
         "cable_length": 5,
         "charge_rate": "140 W"
@@ -440,7 +440,7 @@
     "ammo": [ "battery" ],
     "use_action": [
       "MP3",
-      { "type": "link_up", "menu_text": "Plug in / Unplug", "ammo_scale": 0, "cable_length": 4, "charge_rate": "5 W" }
+      { "type": "link_up", "menu_text": "接入电网 / 断开连接", "ammo_scale": 0, "cable_length": 4, "charge_rate": "5 W" }
     ],
     "charges_per_use": 1,
     "flags": [ "WATER_BREAK_ACTIVE", "ELECTRONIC" ],
@@ -463,7 +463,7 @@
     "revert_to": "mp3",
     "use_action": [
       "MP3_ON",
-      { "type": "link_up", "menu_text": "Plug in / Unplug", "ammo_scale": 0, "cable_length": 4, "charge_rate": "5 W" }
+      { "type": "link_up", "menu_text": "接入电网 / 断开连接", "ammo_scale": 0, "cable_length": 4, "charge_rate": "5 W" }
     ],
     "flags": [ "TRADER_AVOID", "WATER_BREAK", "ELECTRONIC" ]
   },
@@ -564,7 +564,7 @@
       "PORTABLE_GAME",
       {
         "type": "link_up",
-        "menu_text": "Plug in / Unplug",
+        "menu_text": "接入电网 / 断开连接",
         "ammo_scale": 0,
         "//": "Based on the Nintendo Switch's power adapter",
         "cable_length": 4,
@@ -615,7 +615,7 @@
       },
       {
         "type": "link_up",
-        "menu_text": "Plug in / Unplug",
+        "menu_text": "接入电网 / 断开连接",
         "ammo_scale": 0,
         "cable_length": 3,
         "charge_rate": "20 W"
@@ -649,7 +649,7 @@
       "EBOOKREAD",
       {
         "type": "link_up",
-        "menu_text": "Plug in / Unplug",
+        "menu_text": "接入电网 / 断开连接",
         "ammo_scale": 0,
         "cable_length": 3,
         "charge_rate": "20 W"
@@ -678,7 +678,7 @@
       },
       {
         "type": "link_up",
-        "menu_text": "Plug in / Unplug",
+        "menu_text": "接入电网 / 断开连接",
         "ammo_scale": 0,
         "cable_length": 3,
         "charge_rate": "20 W"
