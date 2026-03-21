@@ -3499,10 +3499,12 @@ std::string options_manager::show( bool ingame, const bool world_options_only, b
     bool used_tiles_changed = false;
     bool pixel_minimap_changed = false;
     bool terminal_size_changed = false;
+    std::string changed_options_name="";
 
     for( auto &iter : OPTIONS_OLD ) {
         if( iter.second != OPTIONS[iter.first] ) {
             options_changed = true;
+            changed_options_name = changed_options_name +"<color_light_green>"+iter.second.getMenuText() + "</color>\n";
 
             if( iter.second.getPage() == "world_default" ) {
                 world_options_changed = true;
@@ -3526,12 +3528,13 @@ std::string options_manager::show( bool ingame, const bool world_options_only, b
             }
         }
     }
-    std::string changed_options_name="";
-    for( auto &iter : WOPTIONS_OLD ) {
-        if( iter.second != ACTIVE_WORLD_OPTIONS[iter.first] ) {
-            options_changed = true;
-            world_options_changed = true;
-            changed_options_name = changed_options_name +"<color_light_green>"+iter.second.getMenuText() + "</color>\n";
+    if( world_options.has_value() ) {
+        for( auto &iter : WOPTIONS_OLD ) {
+            if( iter.second != ACTIVE_WORLD_OPTIONS[iter.first] ) {
+                options_changed = true;
+                world_options_changed = true;
+                changed_options_name = changed_options_name +"<color_light_green>"+iter.second.getMenuText() + "</color>\n";
+            }
         }
     }
 
