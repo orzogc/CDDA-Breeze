@@ -1,23 +1,72 @@
 [
   {
     "type": "mod_tileset",
-    "compatibility": [ "UNDEAD_PEOPLE_BASE", "MshockXottoplus" ],
+    "compatibility": [
+      "UNDEAD_PEOPLE_BASE",
+      "MshockXottoplus"
+    ],
     "tiles-new": [
       {
-        "file": "gfx_new/new_01.png",
+        "file": "gfx_new/32_32_01.png",
         "tiles": [
-          { "id": "f_conveyor_belt_east", "fg": 1 },
-          { "id": "f_conveyor_belt_west", "fg": 2 },
-          { "id": "f_conveyor_belt_south", "fg": 3 },
-          { "id": "f_conveyor_belt_north", "fg": 4 },
-          { "id": "分拣器_GENERIC", "fg": 5 },
-          { "id": "highlight_02", "fg": 6 },
-          { "id": "highlight_03", "fg": 7 }
+          {
+            "id": "f_conveyor_belt_east",
+            "fg": 0
+          },
+          {
+            "id": "f_conveyor_belt_west",
+            "fg": 1
+          },
+          {
+            "id": "f_conveyor_belt_south",
+            "fg": 2
+          },
+          {
+            "id": "f_conveyor_belt_north",
+            "fg": 3
+          },
+          {
+            "id": "分拣器_GENERIC",
+            "fg": 4
+          },
+          {
+            "id": "highlight_02",
+            "fg": 5
+          },
+          {
+            "id": "highlight_03",
+            "fg": 6
+          },
+          {
+            "id": "char_smoker",
+            "fg": 7
+          },
+                    {
+            "id": "shovel_snow_plastic",
+            "fg": 8
+          },
+                    {
+            "id": "overlay_wielded_shovel_snow_plastic",
+            "fg": 9
+          }
         ],
         "sprite_width": 32,
         "sprite_height": 32,
         "sprite_offset_x": 0,
         "sprite_offset_y": 0
+      },
+      {
+        "file": "gfx_new/32_48_01.png",
+        "tiles": [
+          {
+            "id": "overlay_effect_blind",
+            "fg": 272
+          }
+        ],
+        "sprite_width": 32,
+        "sprite_height": 48,
+        "sprite_offset_x": 0,
+        "sprite_offset_y": -16
       }
     ]
   }
