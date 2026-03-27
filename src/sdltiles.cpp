@@ -584,7 +584,7 @@ void refresh_display()
 
 #endif
 #if defined(__ANDROID__)
-    //draw_terminal_size_preview();
+    draw_terminal_size_preview();
     if( g ) {
         draw_quick_shortcuts();
     }
@@ -2263,14 +2263,16 @@ bool remove_expired_actions_from_quick_shortcuts( const std::string &category )
 // Draw preview of terminal size when adjusting values
 void draw_terminal_size_preview()
 {
-    bool preview_terminal_dirty = preview_terminal_width != terminal_x * fontwidth
+    int current_terminal_x = get_option<int>( "TERMINAL_X" );
+    int current_terminal_y = get_option<int>( "TERMINAL_Y" );
+    bool preview_terminal_dirty = preview_terminal_width != current_terminal_x * fontwidth
                                   ||
-                                  preview_terminal_height != terminal_y * fontheight;
+                                  preview_terminal_height != current_terminal_y * fontheight;
     if( preview_terminal_dirty ||
         ( preview_terminal_change_time > 0 && SDL_GetTicks() - preview_terminal_change_time < 1000 ) ) {
         if( preview_terminal_dirty ) {
-            preview_terminal_width = terminal_x * fontwidth;
-            preview_terminal_height = terminal_y * fontheight;
+            preview_terminal_width = current_terminal_x * fontwidth;
+            preview_terminal_height = current_terminal_y * fontheight;
             preview_terminal_change_time = SDL_GetTicks();
         }
         SetRenderDrawColor( renderer, 255, 255, 255, 255 );
