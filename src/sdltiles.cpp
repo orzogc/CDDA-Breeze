@@ -3709,6 +3709,7 @@ void catacurses::init_interface()
     // Make sure we initialize preview_terminal_width/height to sensible values
     preview_terminal_width = TERMINAL_WIDTH * fontwidth;
     preview_terminal_height = TERMINAL_HEIGHT * fontheight;
+    preview_terminal_change_time = 0;
 #endif
 }
 
