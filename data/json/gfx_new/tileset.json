@@ -64,6 +64,30 @@
           {
             "id": "metal_file",
             "fg": 13
+          },
+          {
+            "id": "pancakes",
+            "fg": 14
+          },
+          {
+            "id": "choc_pancakes",
+            "fg": 15
+          },
+          {
+            "id": "fruit_pancakes",
+            "fg": 16
+          },
+          {
+            "id": "hamburger",
+            "fg": 17
+          },
+          {
+            "id": "cheeseburger",
+            "fg": 18
+          },
+          {
+            "id": "sloppyjoe",
+            "fg": 19
           }
         ],
         "sprite_width": 32,
