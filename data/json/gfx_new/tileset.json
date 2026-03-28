@@ -41,13 +41,21 @@
             "id": "char_smoker",
             "fg": 7
           },
-                    {
+          {
             "id": "shovel_snow_plastic",
             "fg": 8
           },
-                    {
+          {
             "id": "overlay_wielded_shovel_snow_plastic",
             "fg": 9
+          },
+          {
+            "id": "chisel",
+            "fg": 10
+          },
+          {
+            "id": "stone_chisel",
+            "fg": 11
           }
         ],
         "sprite_width": 32,
