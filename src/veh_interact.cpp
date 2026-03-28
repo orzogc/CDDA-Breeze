@@ -2684,6 +2684,10 @@ void veh_interact::display_stats() const
                         vel_to_int( veh->rotor_acceleration( false ) ),
                         velocity_units( VU_VEHICLE ) );
         i += 1;
+        fold_and_print(w_stats, point(x[i], y[i]), w[i], c_light_gray,
+            _("升力： <color_light_blue>%.0f</color> N"),
+            veh->lift_thrust_of_rotorcraft(true));
+        i += 1;
     } else {
         if( is_ground ) {
             fold_and_print( w_stats, point( x[i], y[i] ), w[i], c_light_gray,
@@ -2699,8 +2703,6 @@ void veh_interact::display_stats() const
                             vel_to_int( veh->ground_acceleration( false ) ),
                             velocity_units( VU_VEHICLE ) );
             i += 1;
-        } else {
-            i += 2;
         }
         if( is_boat ) {
             fold_and_print( w_stats, point( x[i], y[i] ), w[i], c_light_gray,
@@ -2716,8 +2718,12 @@ void veh_interact::display_stats() const
                             vel_to_int( veh->water_acceleration( false ) ),
                             velocity_units( VU_VEHICLE ) );
             i += 1;
-        } else {
-            i += 2;
+        }
+        if (!veh->rotors.empty()) {
+            fold_and_print(w_stats, point(x[i], y[i]), w[i], c_light_gray,
+                _("升力： <color_light_blue>%.0f</color> N"),
+                veh->lift_thrust_of_rotorcraft(true));
+            i += 1;
         }
     }
     fold_and_print( w_stats, point( x[i], y[i] ), w[i], c_light_gray,
