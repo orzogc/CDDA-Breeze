@@ -56,6 +56,14 @@
           {
             "id": "stone_chisel",
             "fg": 11
+          },
+          {
+            "id": "bone_glue",
+            "fg": 12
+          },
+          {
+            "id": "metal_file",
+            "fg": 13
           }
         ],
         "sprite_width": 32,
