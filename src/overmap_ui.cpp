@@ -51,6 +51,7 @@
 #include "map_iterator.h"
 #include "mapbuffer.h"
 #include "memory_fast.h"
+#include "mod_manager.h"
 #include "mission.h"
 #include "mongroup.h"
 #include "npc.h"
@@ -1070,12 +1071,15 @@ static void draw_om_sidebar(
         } else {
             const oter_t &ter = overmap_buffer.ter( center ).obj();
             const auto sm_pos = project_to<coords::sm>( center );
-
-            // NOLINTNEXTLINE(cata-use-named-point-constants)
-            mvwputch( wbar, point( 1, 1 ), ter.get_color(), ter.get_symbol() );
-
+            const std::string mod_src = enumerate_as_string(ter.get_type_id()->src.begin(),
+                ter.get_type_id()->src.end(), [](const std::pair<oter_type_str_id, mod_id>& source) {
+                    return string_format("'%s'", source.second->name());
+                }, enumeration_conjunction::arrow);
+            mvwputch(wbar, point(1, 1), ter.get_color(), ter.get_symbol());
             lines = fold_and_print( wbar, point( 3, 1 ), getmaxx( wbar ) - 3, c_light_gray,
                                     overmap_buffer.get_description_at( sm_pos ) );
+            fold_and_print(wbar, point(1, ++lines), getmaxx(wbar) - 3, c_light_gray,
+                "来自："+mod_src);
         }
     } else {
         // NOLINTNEXTLINE(cata-use-named-point-constants)
