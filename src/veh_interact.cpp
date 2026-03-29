@@ -2531,8 +2531,8 @@ void veh_interact::display_veh()
     
     cata_tiles::get_o() = point(0, 0);
     cata_tiles::get_op() = point(win_left, win_top);
-    cata_tiles::get_screentile_wdith() = win_cols;
-    cata_tiles::get_screentile_height() = win_lines;
+    cata_tiles::get_screentile_wdith() = divide_round_up(win_width, tile_w);
+    cata_tiles::get_screentile_height() = divide_round_up(win_height, tile_h);
     point offset((win_width/tile_w) / 2, (win_height/tile_h) / 2);
 
     const int rotation = static_cast<int>(std::round(to_degrees(veh->face.dir())));
