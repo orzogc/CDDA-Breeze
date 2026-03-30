@@ -280,6 +280,7 @@ set(CMAKE_THREAD_PREFER_PTHREAD True)
 find_package(Threads REQUIRED)
 
 find_package(ZLIB REQUIRED)
+find_package(CURL REQUIRED)
 
 # Check for build types and libraries
 if (TILES)

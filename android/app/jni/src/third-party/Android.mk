@@ -22,3 +22,6 @@ ifeq ($(OS),Windows_NT)
 endif
 
 include $(BUILD_STATIC_LIBRARY)
+
+# Include libcurl module
+include $(LOCAL_PATH)/../android/app/jni/src/third-party/curl/Android.mk
