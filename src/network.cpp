@@ -343,24 +343,24 @@ RequestId start_pollinations_request( const std::string &system_prompt,const std
     
     std::string url = "https://gen.pollinations.ai/v1/chat/completions";
     
-    std::ofstream log_file( "pollinations_request_debug.txt", std::ios::out | std::ios::trunc );
-    if( log_file.is_open() ) {
-        log_file << "URL:\n";
-        log_file << url << "\n";
-        log_file << "\nHeaders:\n";
-        for( const auto &header : headers ) {
-            log_file << header.first << ": " << header.second << "\n";
-        }
-        log_file << "\nBody:\n";
-        log_file << json_body << "\n";
-        log_file << "\nSystem Prompt:\n";
-        log_file << system_prompt << "\n";
-        log_file << "\nModel:\n";
-        log_file << model << "\n";
-        log_file << "\nTemperature:\n";
-        log_file << temperature << "\n";
-        log_file.close();
-    }
+    // std::ofstream log_file( "pollinations_request_debug.txt", std::ios::out | std::ios::trunc );
+    // if( log_file.is_open() ) {
+    //     log_file << "URL:\n";
+    //     log_file << url << "\n";
+    //     log_file << "\nHeaders:\n";
+    //     for( const auto &header : headers ) {
+    //         log_file << header.first << ": " << header.second << "\n";
+    //     }
+    //     log_file << "\nBody:\n";
+    //     log_file << json_body << "\n";
+    //     log_file << "\nSystem Prompt:\n";
+    //     log_file << system_prompt << "\n";
+    //     log_file << "\nModel:\n";
+    //     log_file << model << "\n";
+    //     log_file << "\nTemperature:\n";
+    //     log_file << temperature << "\n";
+    //     log_file.close();
+    // }
     
     add_msg("Sending POST request to pollinations.ai");
     return start_post( url, json_body, headers );
