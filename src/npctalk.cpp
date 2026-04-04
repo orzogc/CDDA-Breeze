@@ -121,8 +121,8 @@ std::string build_prompt(npc& n) {
         n.male ? "男" : "女",
         n.myclass->get_name(),
         n.personality.bravery,
-        n.personality.aggression,
         n.personality.altruism,
+        n.personality.aggression,
         // 对玩家的态度
         n.op_of_u.trust,
         n.op_of_u.fear,
