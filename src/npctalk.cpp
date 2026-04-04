@@ -2091,7 +2091,7 @@ talk_topic dialogue::opt( dialogue_window &d_win, const talk_topic &topic )
     bool is_npc_speaking = (actor(true)->get_npc() != nullptr) &&
         !d_win.is_computer &&
         !d_win.is_not_conversation;
-    if (get_option<bool>("AI润色回复内容") && is_npc_speaking) {
+    if (get_option<bool>("AI润色NPC的回复内容") && is_npc_speaking) {
         add_msg(challenge);
         network::RequestId requ_id = network::start_pollinations_request(build_prompt(*actor(true)->get_npc()), "npc说："+challenge);
         while (true) {
