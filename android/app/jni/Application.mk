@@ -1,7 +1,7 @@
 # Reference: https://developer.android.com/ndk/guides/application_mk.html
 
 # See CPLUSPLUS-SUPPORT.html in the NDK documentation for more information
-APP_STL := c++_static
+APP_STL := c++_shared
 APP_CPPFLAGS += -std=c++17
 ifneq ($(OS),Windows_NT)
     APP_LDFLAGS += -fuse-ld=lld
