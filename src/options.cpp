@@ -215,7 +215,8 @@ options_manager::options_manager() :
     graphics_page_( "graphics", to_translation( "Graphics" ) ),
     world_default_page_( "world_default", to_translation( "World Defaults" ) ),
     debug_page_( "debug", to_translation( "Debug" ) ),
-    android_page_( "android", to_translation( "Android" ) )
+    android_page_( "android", to_translation( "Android" ) ),
+    ai_page_("ai",to_translation("AI"))
 {
     pages_.emplace_back( general_page_ );
     pages_.emplace_back( interface_page_ );
@@ -229,7 +230,7 @@ options_manager::options_manager() :
 #if defined(__ANDROID__)
     pages_.emplace_back( android_page_ );
 #endif
-
+    pages_.emplace_back(ai_page_);
     enable_json( "DEFAULT_REGION" );
     // to allow class based init_data functions to add values to a 'string' type option, add:
     //   enable_json("OPTION_KEY_THAT_GETS_STRING_ENTRIES_ADDED_VIA_JSON");
@@ -1313,6 +1314,7 @@ void options_manager::init()
     add_options_world_default();
     add_options_debug();
     add_options_android();
+    add_options_ai();
 
     for( Page &p : pages_ ) {
         p.removeRepeatedEmptyLines();
@@ -2940,6 +2942,12 @@ void options_manager::add_options_android()
 #endif
 }
 
+void options_manager::add_options_ai() {
+    add("密钥", "ai", to_translation("密钥"),
+        to_translation("填入在 pollinations.ai 上创建的密钥。"),
+        "", 50
+    );
+}
 
 // Helper method to isolate #ifdeffed tiles code.
 static void refresh_tiles( bool used_tiles_changed, bool pixel_minimap_height_changed, bool ingame )
