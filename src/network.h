@@ -5,6 +5,7 @@
 #include <string>
 #include <functional>
 #include <vector>
+#include <map>
 
 namespace network
 {
@@ -26,12 +27,15 @@ struct RequestResult
 };
 
 using RequestId = size_t;
+using Headers = std::map<std::string, std::string>;
 
 bool init();
 void cleanup();
 
 RequestId start_get( const std::string &url );
+RequestId start_get( const std::string &url, const Headers &headers );
 RequestId start_post( const std::string &url, const std::string &data );
+RequestId start_post( const std::string &url, const std::string &data, const Headers &headers );
 
 void process();
 
@@ -41,6 +45,12 @@ void cancel_request( RequestId id );
 void clear_completed();
 
 std::vector<RequestId> get_all_requests();
+
+// 发送 pollinations API 请求
+RequestId start_pollinations_request( const std::string &system_prompt,const std::string& user_prompt);
+
+// 解析 pollinations API 响应，提取 content
+std::string parse_pollinations_response( const std::string &json_response );
 
 } // namespace network
 

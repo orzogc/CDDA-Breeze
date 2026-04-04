@@ -55,8 +55,10 @@
 #include "messages.h"
 #include "mission.h"
 #include "mtype.h"
+#include "network.h"
 #include "npc.h"
 #include "npctalk.h"
+#include "npc_class.h"
 #include "npctrade.h"
 #include "options.h"
 #include "output.h"
@@ -65,6 +67,7 @@
 #include "player_activity.h"
 #include "point.h"
 #include "popup.h"
+#include "profession.h"
 #include "recipe.h"
 #include "recipe_groups.h"
 #include "ret_val.h"
@@ -88,6 +91,46 @@
 #include "vpart_position.h"
 #include "vpart_range.h"
 #include "sdltiles.h"
+
+std::string basic_prompt =
+"# 绝对要遵守的核心目标 \n"
+"- 你的任务是扮演npc，并基于npc角色设定和额外环境信息，对npc固定回复内容进行符合逻辑与性格的“润色扩写”，使其更加生动自然。\n"
+"# 绝对要遵守的输出结果 \n"
+"- 你最终需要将润色后的文本返回。并且绝对不能添加除了被润色文本之外的内容。 \n"
+"# 用户的输入"
+"- 用户会给你提供npc的固定回复内容。"
+"# 已知的游戏数据信息"
+"## npc的基本信息 \n"
+"- 姓名：%1s \n"
+"- 性别：%2s \n"
+"- 职业：%3s \n"
+"- 勇敢：%4s \n"
+"- 良心：%5s \n"
+"- 侵略性：%6s \n"
+"## npc对玩家的态度 \n"
+"- 信任：%7s \n"
+"- 恐惧：%8s \n"
+"- 功利性地衡量玩家的价值：%9s \n"
+"- 愤怒：%10s \n"
+;
+
+std::string build_prompt(npc& n) {
+    std::string prompt = string_format(basic_prompt,
+        // npc的基本信息
+        n.get_name(),
+        n.male ? "男" : "女",
+        n.myclass->get_name(),
+        n.personality.bravery,
+        n.personality.aggression,
+        n.personality.altruism,
+        // 对玩家的态度
+        n.op_of_u.trust,
+        n.op_of_u.fear,
+        n.op_of_u.value,
+        n.op_of_u.anger
+    );
+    return prompt;
+}
 
 static const activity_id ACT_AIM( "ACT_AIM" );
 static const activity_id ACT_SOCIALIZE( "ACT_SOCIALIZE" );
@@ -2028,9 +2071,9 @@ talk_topic dialogue::opt( dialogue_window &d_win, const talk_topic &topic )
     std::string challenge = dynamic_line( topic );
     gen_responses( topic );
     // Put quotes around challenge (unless it's an action)
-    if( challenge[0] != '*' && challenge[0] != '&' ) {
-        challenge = string_format( _( "\"%s\"" ), challenge );
-    }
+     if( challenge[0] != '*' && challenge[0] != '&' ) {
+         challenge = string_format( _( "\"%s\"" ), challenge );
+     }
 
     // Parse any tags in challenge
     if( actor( true )->get_npc() ) {
@@ -2041,6 +2084,21 @@ talk_topic dialogue::opt( dialogue_window &d_win, const talk_topic &topic )
                     topic.item_type );
     }
     challenge = uppercase_first_letter( challenge );
+    if (get_option<bool>("AI润色回复内容")) {
+        auto requ_id = network::start_pollinations_request(build_prompt(*actor(true)->get_npc()), challenge);
+        while (true) {
+            network::process();
+            if (network::get_status(requ_id) == network::RequestStatus::Completed) {
+                challenge =network::parse_pollinations_response(network::get_result(requ_id).response_body);
+                network::clear_completed();
+                break;
+            }
+            else if (network::get_status(requ_id) == network::RequestStatus::Failed) {
+                add_msg(network::get_result(requ_id).response_body);
+                break;
+            }
+        }
+    }
 
     d_win.clear_history_highlights();
     if( challenge[0] == '&' ) {

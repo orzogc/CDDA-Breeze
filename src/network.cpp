@@ -1,17 +1,52 @@
 #include "network.h"
+#include "options.h"
+#include "filesystem.h"
+#include "json.h"
+#include <fstream>
 #include <curl/curl.h>
 #include <map>
 #include <vector>
 #include <memory>
+#include <sstream>
+#include <iomanip>
+#include "messages.h"
 
 namespace
 {
+
+std::string json_escape( const std::string &value )
+{
+    std::string result;
+    for( char c : value ) {
+        switch( c ) {
+            case '\"': result += "\\\""; break;
+            case '\\': result += "\\\\"; break;
+            case '\b': result += "\\b"; break;
+            case '\f': result += "\\f"; break;
+            case '\n': result += "\\n"; break;
+            case '\r': result += "\\r"; break;
+            case '\t': result += "\\t"; break;
+            default: result += c; break;
+        }
+    }
+    return result;
+}
+
+std::string url_encode( const std::string &value )
+{
+    char *encoded = curl_easy_escape( nullptr, value.c_str(), static_cast<int>( value.length() ) );
+    std::string result;
+    result = encoded;
+    curl_free( encoded );
+    return result;
+}
 
 struct Request
 {
     network::RequestId id;
     network::RequestStatus status;
     CURL *handle;
+    curl_slist *headers;
     std::string response_body;
     std::string error_message;
     long http_code;
@@ -32,6 +67,16 @@ size_t write_callback( void *contents, size_t size, size_t nmemb, std::string *s
         return 0;
     }
     return new_length;
+}
+
+curl_slist *build_curl_headers( const network::Headers &headers )
+{
+    curl_slist *list = nullptr;
+    for( const auto &pair : headers ) {
+        std::string header = pair.first + ": " + pair.second;
+        list = curl_slist_append( list, header.c_str() );
+    }
+    return list;
 }
 
 Request *find_request( CURL *handle )
@@ -78,6 +123,9 @@ void cleanup()
             curl_multi_remove_handle( g_multi_handle, pair.second->handle );
             curl_easy_cleanup( pair.second->handle );
         }
+        if( pair.second->headers ) {
+            curl_slist_free_all( pair.second->headers );
+        }
     }
     g_requests.clear();
 
@@ -89,6 +137,11 @@ void cleanup()
 }
 
 RequestId start_get( const std::string &url )
+{
+    return start_get( url, Headers{} );
+}
+
+RequestId start_get( const std::string &url, const Headers &headers )
 {
     CURL *handle = curl_easy_init();
     if( !handle ) {
@@ -102,6 +155,7 @@ RequestId start_get( const std::string &url )
     req->handle = handle;
     req->http_code = 0;
     req->is_post = false;
+    req->headers = build_curl_headers( headers );
 
     curl_easy_setopt( handle, CURLOPT_URL, url.c_str() );
     curl_easy_setopt( handle, CURLOPT_WRITEFUNCTION, write_callback );
@@ -109,6 +163,9 @@ RequestId start_get( const std::string &url )
     curl_easy_setopt( handle, CURLOPT_FOLLOWLOCATION, 1L );
     curl_easy_setopt( handle, CURLOPT_SSL_VERIFYPEER, 0L );
     curl_easy_setopt( handle, CURLOPT_SSL_VERIFYHOST, 0L );
+    if( req->headers ) {
+        curl_easy_setopt( handle, CURLOPT_HTTPHEADER, req->headers );
+    }
     curl_easy_setopt( handle, CURLOPT_PRIVATE, req.get() );
 
     curl_multi_add_handle( g_multi_handle, handle );
@@ -119,6 +176,11 @@ RequestId start_get( const std::string &url )
 }
 
 RequestId start_post( const std::string &url, const std::string &data )
+{
+    return start_post( url, data, Headers{} );
+}
+
+RequestId start_post( const std::string &url, const std::string &data, const Headers &headers )
 {
     CURL *handle = curl_easy_init();
     if( !handle ) {
@@ -133,6 +195,7 @@ RequestId start_post( const std::string &url, const std::string &data )
     req->http_code = 0;
     req->is_post = true;
     req->post_data = data;
+    req->headers = build_curl_headers( headers );
 
     curl_easy_setopt( handle, CURLOPT_URL, url.c_str() );
     curl_easy_setopt( handle, CURLOPT_POSTFIELDS, req->post_data.c_str() );
@@ -142,6 +205,9 @@ RequestId start_post( const std::string &url, const std::string &data )
     curl_easy_setopt( handle, CURLOPT_FOLLOWLOCATION, 1L );
     curl_easy_setopt( handle, CURLOPT_SSL_VERIFYPEER, 0L );
     curl_easy_setopt( handle, CURLOPT_SSL_VERIFYHOST, 0L );
+    if( req->headers ) {
+        curl_easy_setopt( handle, CURLOPT_HTTPHEADER, req->headers );
+    }
     curl_easy_setopt( handle, CURLOPT_PRIVATE, req.get() );
 
     curl_multi_add_handle( g_multi_handle, handle );
@@ -177,6 +243,9 @@ void process()
                 } else {
                     req->status = RequestStatus::Failed;
                     req->error_message = curl_easy_strerror( msg->data.result );
+                    if( req->response_body.empty() ) {
+                        req->response_body = "Error: " + req->error_message;
+                    }
                 }
                 curl_multi_remove_handle( g_multi_handle, handle );
             }
@@ -219,6 +288,10 @@ void cancel_request( RequestId id )
             curl_easy_cleanup( req->handle );
             req->handle = nullptr;
         }
+        if( req->headers ) {
+            curl_slist_free_all( req->headers );
+            req->headers = nullptr;
+        }
         req->status = RequestStatus::Failed;
     }
 }
@@ -230,6 +303,9 @@ void clear_completed()
         if( req->status == RequestStatus::Completed || req->status == RequestStatus::Failed ) {
             if( req->handle ) {
                 curl_easy_cleanup( req->handle );
+            }
+            if( req->headers ) {
+                curl_slist_free_all( req->headers );
             }
             it = g_requests.erase( it );
         } else {
@@ -245,6 +321,80 @@ std::vector<RequestId> get_all_requests()
         ids.push_back( pair.first );
     }
     return ids;
+}
+
+RequestId start_pollinations_request( const std::string &system_prompt,const std::string& user_prompt )
+{
+    std::string api_key = get_option<std::string>( "密钥" );
+    std::string model = get_option<std::string>( "模型名称" );
+    std::string temperature = std::to_string(get_option<float>("温度"));
+    
+    Headers headers;
+    headers["Content-Type"] = "application/json";
+    headers["Accept"] = "application/json";
+    if( !api_key.empty() ) {
+        headers["Authorization"] = "Bearer " + api_key;
+    }
+    
+    std::string json_body = "{\"messages\":[{\"content\":\"" + json_escape( system_prompt ) + 
+        "\",\"role\":\"system\"},{\"role\":\"user\",\"content\":\""+json_escape(user_prompt)+"\"}], \"model\":\"" +
+        json_escape(model.empty() ? "openai" : model ) + 
+        "\",\"modalities\":[\"text\"],\"stream\":false,\"temperature\":"+temperature+"}";
+    
+    std::string url = "https://gen.pollinations.ai/v1/chat/completions";
+    
+    std::ofstream log_file( "pollinations_request_debug.txt", std::ios::out | std::ios::trunc );
+    if( log_file.is_open() ) {
+        log_file << "URL:\n";
+        log_file << url << "\n";
+        log_file << "\nHeaders:\n";
+        for( const auto &header : headers ) {
+            log_file << header.first << ": " << header.second << "\n";
+        }
+        log_file << "\nBody:\n";
+        log_file << json_body << "\n";
+        log_file << "\nSystem Prompt:\n";
+        log_file << system_prompt << "\n";
+        log_file << "\nModel:\n";
+        log_file << model << "\n";
+        log_file << "\nTemperature:\n";
+        log_file << temperature << "\n";
+        log_file.close();
+    }
+    
+    add_msg("Sending POST request to pollinations.ai");
+    return start_post( url, json_body, headers );
+}
+
+std::string parse_pollinations_response( const std::string &json_response )
+{
+    std::istringstream ss( json_response );
+    TextJsonIn jsin( ss );
+    TextJsonObject jo = jsin.get_object();
+    jo.allow_omitted_members();
+
+    if( !jo.has_member( "choices" ) ) {
+        return "";
+    }
+
+    TextJsonArray choices = jo.get_array( "choices" );
+    if( choices.empty() ) {
+        return "";
+    }
+
+    TextJsonObject choice = choices.get_object( 0 );
+    choice.allow_omitted_members();
+    if( !choice.has_member( "message" ) ) {
+        return "";
+    }
+
+    TextJsonObject message = choice.get_object( "message" );
+    message.allow_omitted_members();
+    if( !message.has_member( "content" ) ) {
+        return "";
+    }
+
+    return message.get_string( "content" );
 }
 
 } // namespace network

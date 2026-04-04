@@ -44,6 +44,7 @@
 #include "main_menu.h"
 #include "mapsharing.h"
 #include "memory_fast.h"
+#include "network.h"
 #include "options.h"
 #include "output.h"
 #include "help.h"
@@ -374,6 +375,7 @@ int main( int argc, const char *argv[] )
         exit_handler( -999 );
     }
 
+    network::init();
 
     // Now we do the actual game.
 

@@ -2943,9 +2943,28 @@ void options_manager::add_options_android()
 }
 
 void options_manager::add_options_ai() {
+    const auto add_empty_line = [&]() {
+        ai_page_.items_.emplace_back();
+        };
+
     add("密钥", "ai", to_translation("密钥"),
         to_translation("填入在 pollinations.ai 上创建的密钥。"),
         "", 50
+    );
+    add("模型名称", "ai", to_translation("模型名称"),
+        to_translation("要调用的模型名称。"),
+        "nova-fast",30 
+    );
+    add("温度", "ai", to_translation("温度"),
+        to_translation("温度可以调节生成文本的多样性。低温生成的文本确定性更强，高温生成的文本多样性更强。"),
+        0.1, 1.0, 0.7, 0.1
+    );
+
+    add_empty_line();
+
+    add("AI润色回复内容", "ai", to_translation("AI润色回复内容"),
+        to_translation("当此选项的值为 是 时，在与npc对话时，AI会根据各种数据（自身的属性、对玩家的态度......）来润色回复的内容。"),
+        false
     );
 }
 
