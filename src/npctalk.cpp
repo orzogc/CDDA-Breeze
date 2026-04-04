@@ -93,25 +93,28 @@
 #include "sdltiles.h"
 
 std::string basic_prompt =
-"# 绝对要遵守的核心目标 \n"
+"# 你是谁 \n"
+"- 你是一个只会润色文本的AI，绝对服从命令，像一个流水线一样，接受用户输入的文本，并将润色后的文本返回。 \n"
+"# 你绝对要遵守的核心规则 \n"
 "- 你的任务是扮演npc，并基于npc角色设定和额外环境信息，对npc固定回复内容进行符合逻辑与性格的“润色扩写”，使其更加生动自然。\n"
-"# 绝对要遵守的输出结果 \n"
-"- 你最终需要将润色后的文本返回。并且绝对不能添加除了被润色文本之外的内容。 \n"
-"# 用户的输入"
-"- 用户会给你提供npc的固定回复内容。"
-"# 已知的游戏数据信息"
+"- 你要始终明白，用户提供的是你所扮演的npc说的话。"
+"# 你接收的输入"
+"- 用户会给你提供npc的固定回复内容。\n"
+"# 你绝对要遵守的输出结果 \n"
+"- 你最终只需要将润色后的文本返回。并且绝对不能添加除了被润色文本之外的内容。 我不需要你返回思考过程、对用户恭维的话语。\n"
+"# 已知的游戏数据信息 \n"
 "## npc的基本信息 \n"
-"- 姓名：%1s \n"
-"- 性别：%2s \n"
-"- 职业：%3s \n"
-"- 勇敢：%4s \n"
-"- 良心：%5s \n"
-"- 侵略性：%6s \n"
+"- 姓名：%s \n"
+"- 性别：%s \n"
+"- 职业：%s \n"
+"- 勇敢：%s \n"
+"- 良心：%s \n"
+"- 侵略性：%s \n"
 "## npc对玩家的态度 \n"
-"- 信任：%7s \n"
-"- 恐惧：%8s \n"
-"- 功利性地衡量玩家的价值：%9s \n"
-"- 愤怒：%10s \n"
+"- 信任：%s \n"
+"- 恐惧：%s \n"
+"- 功利性地衡量玩家的价值：%s \n"
+"- 愤怒：%s \n"
 ;
 
 std::string build_prompt(npc& n) {
@@ -2071,9 +2074,9 @@ talk_topic dialogue::opt( dialogue_window &d_win, const talk_topic &topic )
     std::string challenge = dynamic_line( topic );
     gen_responses( topic );
     // Put quotes around challenge (unless it's an action)
-     if( challenge[0] != '*' && challenge[0] != '&' ) {
-         challenge = string_format( _( "\"%s\"" ), challenge );
-     }
+    if( challenge[0] != '*' && challenge[0] != '&' ) {
+        challenge = string_format( _( "\"%s\"" ), challenge );
+    }
 
     // Parse any tags in challenge
     if( actor( true )->get_npc() ) {
@@ -2084,12 +2087,17 @@ talk_topic dialogue::opt( dialogue_window &d_win, const talk_topic &topic )
                     topic.item_type );
     }
     challenge = uppercase_first_letter( challenge );
-    if (get_option<bool>("AI润色回复内容")) {
-        auto requ_id = network::start_pollinations_request(build_prompt(*actor(true)->get_npc()), challenge);
+    
+    bool is_npc_speaking = (actor(true)->get_npc() != nullptr) &&
+        !d_win.is_computer &&
+        !d_win.is_not_conversation;
+    if (get_option<bool>("AI润色回复内容") && is_npc_speaking) {
+        add_msg(challenge);
+        network::RequestId requ_id = network::start_pollinations_request(build_prompt(*actor(true)->get_npc()), "npc说："+challenge);
         while (true) {
             network::process();
             if (network::get_status(requ_id) == network::RequestStatus::Completed) {
-                challenge =network::parse_pollinations_response(network::get_result(requ_id).response_body);
+                challenge = network::parse_pollinations_response(network::get_result(requ_id).response_body);
                 network::clear_completed();
                 break;
             }
