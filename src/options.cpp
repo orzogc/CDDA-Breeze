@@ -2962,8 +2962,12 @@ void options_manager::add_options_ai() {
 
     add_empty_line();
 
-    add("AI润色NPC的回复内容", "ai", to_translation("AI润色的回复内容"),
+    add("AI润色NPC的回复内容", "ai", to_translation("AI润色NPC的回复内容"),
         to_translation("当此选项的值为 是 时，在与NPC对话时，AI会根据各种数据（自身的属性、对玩家的态度......）来润色NPC的回复内容。"),
+        false
+    );
+    add("显示消耗的Token数量", "ai", to_translation("显示消耗的Token数量"),
+        to_translation("当此选项的值为 是 时，对话界面会显示出润色过程消耗的Token数量。"),
         false
     );
 }

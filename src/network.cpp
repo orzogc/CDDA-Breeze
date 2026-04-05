@@ -387,7 +387,7 @@ RequestId start_pollinations_request( const std::string &system_prompt,const std
     return start_post( url, json_body, headers );
 }
 
-std::string parse_pollinations_response( const std::string &json_response )
+std::string parse_pollinations_response( const std::string &json_response, bool include_token_usage )
 {
     try {
         std::istringstream ss( json_response );
@@ -416,7 +416,32 @@ std::string parse_pollinations_response( const std::string &json_response )
             return "";
         }
 
-        return message.get_string( "content" );
+        std::string content = message.get_string( "content" );
+
+        if( include_token_usage && jo.has_member( "usage" ) ) {
+            TextJsonObject usage = jo.get_object( "usage" );
+            usage.allow_omitted_members();
+            int prompt_tokens = 0;
+            int completion_tokens = 0;
+            int total_tokens = 0;
+
+            if( usage.has_member( "prompt_tokens" ) ) {
+                prompt_tokens = usage.get_int( "prompt_tokens" );
+            }
+            if( usage.has_member( "completion_tokens" ) ) {
+                completion_tokens = usage.get_int( "completion_tokens" );
+            }
+            if( usage.has_member( "total_tokens" ) ) {
+                total_tokens = usage.get_int( "total_tokens" );
+            }
+
+            content += "\n\nToken使用量:\n";
+            content += "输入: " + std::to_string( prompt_tokens ) + "\n";
+            content += "输出: " + std::to_string( completion_tokens ) + "\n";
+            content += "总量: " + std::to_string( total_tokens );
+        }
+
+        return content;
     } catch( ... ) {
         return json_response;
     }

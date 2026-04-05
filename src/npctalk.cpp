@@ -2272,7 +2272,7 @@ talk_topic dialogue::opt( dialogue_window &d_win, const talk_topic &topic )
         while (true) {
             network::process();
             if (network::get_status(requ_id) == network::RequestStatus::Completed) {
-                challenge = network::parse_pollinations_response(network::get_result(requ_id).response_body);
+                challenge = network::parse_pollinations_response(network::get_result(requ_id).response_body,get_option<bool>("显示消耗的Token数量"));
                 network::clear_completed();
                 break;
             }
