@@ -360,7 +360,7 @@ RequestId start_pollinations_request( const std::string &system_prompt,const std
     std::string json_body = "{\"messages\":[{\"content\":\"" + json_escape( system_prompt ) + 
         "\",\"role\":\"system\"},{\"role\":\"user\",\"content\":\""+json_escape(user_prompt)+"\"}], \"model\":\"" +
         json_escape(model.empty() ? "openai" : model ) + 
-        "\",\"modalities\":[\"text\"],\"stream\":false,\"temperature\":"+temperature+"}";
+        "\",\"stream\":false,\"temperature\":"+temperature+"}";
     
     std::string url = "https://gen.pollinations.ai/v1/chat/completions";
     
