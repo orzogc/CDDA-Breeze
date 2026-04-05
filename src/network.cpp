@@ -3,6 +3,7 @@
 #include "filesystem.h"
 #include "json.h"
 #include <fstream>
+#include <chrono>
 #include <curl/curl.h>
 #include <map>
 #include <vector>
@@ -52,6 +53,7 @@ struct Request
     long http_code;
     bool is_post;
     std::string post_data;
+    std::chrono::steady_clock::time_point start_time;
 };
 
 CURLM *g_multi_handle = nullptr;
@@ -156,6 +158,7 @@ RequestId start_get( const std::string &url, const Headers &headers )
     req->http_code = 0;
     req->is_post = false;
     req->headers = build_curl_headers( headers );
+    req->start_time = std::chrono::steady_clock::now();
 
     curl_easy_setopt( handle, CURLOPT_URL, url.c_str() );
     curl_easy_setopt( handle, CURLOPT_WRITEFUNCTION, write_callback );
@@ -196,6 +199,7 @@ RequestId start_post( const std::string &url, const std::string &data, const Hea
     req->is_post = true;
     req->post_data = data;
     req->headers = build_curl_headers( headers );
+    req->start_time = std::chrono::steady_clock::now();
 
     curl_easy_setopt( handle, CURLOPT_URL, url.c_str() );
     curl_easy_setopt( handle, CURLOPT_POSTFIELDS, req->post_data.c_str() );
@@ -248,6 +252,23 @@ void process()
                     }
                 }
                 curl_multi_remove_handle( g_multi_handle, handle );
+            }
+        }
+    }
+    
+    // 检查超时请求
+    auto now = std::chrono::steady_clock::now();
+    for( auto &pair : g_requests ) {
+        Request *req = pair.second.get();
+        if( req->status == RequestStatus::InProgress ) {
+            auto elapsed = std::chrono::duration_cast<std::chrono::seconds>( now - req->start_time ).count();
+            if( elapsed >= 20 ) {
+                req->status = RequestStatus::Failed;
+                req->error_message = "Request timed out after 20 seconds";
+                req->response_body = "Error: Request timed out after 20 seconds";
+                if( req->handle ) {
+                    curl_multi_remove_handle( g_multi_handle, req->handle );
+                }
             }
         }
     }
