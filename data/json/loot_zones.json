@@ -6,6 +6,13 @@
     "can_be_personal": true,
     "description": "Place to drop unsorted loot.  You can use \"sort out loot\" zone-action to sort items inside.  It can overlap with Loot zones of different types."
   },
+    {
+    "id": "LOOT_DEFAULT",
+    "type": "LOOT_ZONE",
+    "name": "物资: 默认",
+    "can_be_personal": true,
+    "description": "任何尚未指定确定区域的物资在进行分类时的目标地点。"
+  },
   {
     "id": "LOOT_FOOD",
     "type": "LOOT_ZONE",
