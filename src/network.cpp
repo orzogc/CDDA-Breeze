@@ -389,33 +389,37 @@ RequestId start_pollinations_request( const std::string &system_prompt,const std
 
 std::string parse_pollinations_response( const std::string &json_response )
 {
-    std::istringstream ss( json_response );
-    TextJsonIn jsin( ss );
-    TextJsonObject jo = jsin.get_object();
-    jo.allow_omitted_members();
+    try {
+        std::istringstream ss( json_response );
+        TextJsonIn jsin( ss );
+        TextJsonObject jo = jsin.get_object();
+        jo.allow_omitted_members();
 
-    if( !jo.has_member( "choices" ) ) {
-        return "";
+        if( !jo.has_member( "choices" ) ) {
+            return "";
+        }
+
+        TextJsonArray choices = jo.get_array( "choices" );
+        if( choices.empty() ) {
+            return "";
+        }
+
+        TextJsonObject choice = choices.get_object( 0 );
+        choice.allow_omitted_members();
+        if( !choice.has_member( "message" ) ) {
+            return "";
+        }
+
+        TextJsonObject message = choice.get_object( "message" );
+        message.allow_omitted_members();
+        if( !message.has_member( "content" ) ) {
+            return "";
+        }
+
+        return message.get_string( "content" );
+    } catch( ... ) {
+        return json_response;
     }
-
-    TextJsonArray choices = jo.get_array( "choices" );
-    if( choices.empty() ) {
-        return "";
-    }
-
-    TextJsonObject choice = choices.get_object( 0 );
-    choice.allow_omitted_members();
-    if( !choice.has_member( "message" ) ) {
-        return "";
-    }
-
-    TextJsonObject message = choice.get_object( "message" );
-    message.allow_omitted_members();
-    if( !message.has_member( "content" ) ) {
-        return "";
-    }
-
-    return message.get_string( "content" );
 }
 
 } // namespace network
