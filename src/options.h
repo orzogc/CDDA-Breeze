@@ -208,6 +208,7 @@ class options_manager
         void add_options_world_default();
         void add_options_debug();
         void add_options_android();
+        void add_options_ai();
         void load();
         bool save() const;
         std::string show( bool ingame = false, bool world_options_only = false, bool with_tabs = true );
@@ -309,6 +310,7 @@ class options_manager
         Page world_default_page_; // NOLINT(cata-serialize)
         Page debug_page_; // NOLINT(cata-serialize)
         Page android_page_; // NOLINT(cata-serialize)
+        Page ai_page_;
 
         std::vector<std::reference_wrapper<Page>> pages_; // NOLINT(cata-serialize)
 };

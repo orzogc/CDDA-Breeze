@@ -102,12 +102,14 @@ if (TILES)
             ${SDL2_INCLUDE_DIR}
             ${SDL2_IMAGE_INCLUDE_DIRS}
             ${SDL2_TTF_INCLUDE_DIRS}
-            ${ZLIB_INCLUDE_DIRS})
+            ${ZLIB_INCLUDE_DIRS}
+            ${CURL_INCLUDE_DIRS})
     target_link_libraries(cataclysm-tiles-common PUBLIC
             ${SDL2_LIBRARY}
             ${SDL2_IMAGE_LIBRARIES}
             ${SDL2_TTF_LIBRARIES}
-            ${ZLIB_LIBRARIES})
+            ${ZLIB_LIBRARIES}
+            ${CURL_LIBRARIES})
     if(TARGET SDL2::SDL2)
         target_link_libraries(cataclysm-tiles-common PUBLIC SDL2::SDL2
             SDL2::SDL2main
@@ -193,8 +195,8 @@ if (CURSES)
                 ${ICONV_LIBRARIES})
     endif ()
 
-    target_include_directories(cataclysm-common PUBLIC ${CURSES_INCLUDE_DIR} ${ZLIB_INCLUDE_DIRS})
-    target_link_libraries(cataclysm-common PUBLIC ${CURSES_LIBRARIES} ${ZLIB_LIBRARIES})
+    target_include_directories(cataclysm-common PUBLIC ${CURSES_INCLUDE_DIR} ${ZLIB_INCLUDE_DIRS} ${CURL_INCLUDE_DIRS})
+    target_link_libraries(cataclysm-common PUBLIC ${CURSES_LIBRARIES} ${ZLIB_LIBRARIES} ${CURL_LIBRARIES})
 
     if (CMAKE_USE_PTHREADS_INIT)
         target_compile_options(cataclysm-common PUBLIC "-pthread")

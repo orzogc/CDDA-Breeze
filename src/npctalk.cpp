@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <array>
+#include <chrono>
 #include <cmath>
 #include <cstddef>
 #include <iterator>
@@ -10,6 +11,7 @@
 #include <memory>
 #include <ostream>
 #include <string>
+#include <thread>
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
@@ -55,8 +57,10 @@
 #include "messages.h"
 #include "mission.h"
 #include "mtype.h"
+#include "network.h"
 #include "npc.h"
 #include "npctalk.h"
+#include "npc_class.h"
 #include "npctrade.h"
 #include "options.h"
 #include "output.h"
@@ -65,6 +69,7 @@
 #include "player_activity.h"
 #include "point.h"
 #include "popup.h"
+#include "profession.h"
 #include "recipe.h"
 #include "recipe_groups.h"
 #include "ret_val.h"
@@ -73,6 +78,7 @@
 #include "sounds.h"
 #include "string_formatter.h"
 #include "string_input_popup.h"
+#include "string_editor_window.h"
 #include "talker.h"
 #include "talker_topic.h"
 #include "teleport.h"
@@ -88,6 +94,211 @@
 #include "vpart_position.h"
 #include "vpart_range.h"
 #include "sdltiles.h"
+
+std::string basic_prompt =
+"# 你是谁 \n"
+"- 你是一个只会润色文本的AI，绝对服从命令，像一个流水线一样，接受用户输入的文本，并将润色后的文本返回。 \n"
+"# 你绝对要遵守的核心规则 \n"
+"- 你的任务是扮演npc，并基于npc角色设定和额外环境信息，对npc固定回复内容进行符合逻辑与性格的“润色扩写”，使其更加生动自然。\n"
+"- 你要始终明白，用户提供的是你所扮演的npc说的话。"
+"# 你接收的输入\n"
+"- 用户会给你提供npc的固定回复内容。\n"
+"# 你绝对要遵守的输出结果 \n"
+"- 你最终只需要将润色后的文本返回。并且绝对不能添加除了被润色文本之外的内容。 我不需要你返回思考过程、对用户恭维的话语。\n"
+"# 已知的游戏数据信息 \n"
+"## npc的基本信息 \n"
+"- 姓名：%s \n"
+"- 性别：%s \n"
+"- 职业：%s \n"
+"- 勇敢：%s \n"
+"- 良心：%s \n"
+"- 侵略性：%s \n"
+"## npc对玩家的态度 \n"
+"- 信任：%s \n"
+"- 恐惧：%s \n"
+"- 功利性地衡量玩家的价值：%s \n"
+"- 愤怒：%s \n"
+;
+
+std::string build_prompt(npc& n) {
+    std::string template_str = !n.ai_prompt.empty() ? n.ai_prompt : basic_prompt;
+    std::string prompt = string_format(template_str,
+        // npc的基本信息
+        n.get_name(),
+        n.male ? "男" : "女",
+        n.myclass->get_name(),
+        n.personality.bravery,
+        n.personality.altruism,
+        n.personality.aggression,
+        // 对玩家的态度
+        n.op_of_u.trust,
+        n.op_of_u.fear,
+        n.op_of_u.value,
+        n.op_of_u.anger
+    );
+    return prompt;
+}
+
+static std::pair<point, point> ai_prompt_window_position()
+{
+    return {
+        point( TERMX / 4, TERMY / 4 ),
+        point( TERMX / 2, TERMY / 2 )
+    };
+}
+
+void talk_function::edit_ai_prompt(npc& n) {
+    if (n.ai_prompt.empty()) {
+        n.ai_prompt = basic_prompt;
+    }
+    std::string old_text = n.ai_prompt;
+    
+    while (true) {
+        std::string new_text = old_text;
+        
+        auto create_editor_window = [&]() {
+            const std::pair<point, point> beg_and_max = ai_prompt_window_position();
+            const point &beg = beg_and_max.first;
+            const point &max = beg_and_max.second;
+            return catacurses::newwin(max.y, max.x, beg);
+        };
+        
+        string_editor_window ed(create_editor_window, new_text);
+        const std::pair<bool, std::string> result = ed.query_string();
+        new_text = result.second;
+        
+        if (!result.first && old_text != new_text) {
+            const bool force_uc = get_option<bool>("FORCE_CAPITAL_YN");
+            const auto& allow_key = force_uc ? input_context::disallow_lower_case_or_non_modified_letters
+                                            : input_context::allow_all_keys;
+            const std::string action = query_popup()
+                                       .context("YESNOQUIT")
+                                       .message("%s", _("Save changes?"))
+                                       .option("YES", allow_key)
+                                       .option("NO", allow_key)
+                                       .option(_("Preview"), allow_key)
+                                       .allow_cancel(true)
+                                       .default_color(c_light_red)
+                                       .query()
+                                       .action;
+            if (action == "YES") {
+                n.ai_prompt = new_text;
+                return;
+            } else if (action == "NO") {
+                return;
+            } else if (action != _("Preview")) {
+                continue;
+            }
+            
+            catacurses::window w_preview;
+            catacurses::window w_border;
+            
+            ui_adaptor ui;
+            
+            auto update_preview = [&](const std::string& text) -> std::string {
+                try {
+                    return string_format(text,
+                        n.get_name(),
+                        n.male ? "男" : "女",
+                        n.myclass->get_name(),
+                        n.personality.bravery,
+                        n.personality.altruism,
+                        n.personality.aggression,
+                        n.op_of_u.trust,
+                        n.op_of_u.fear,
+                        n.op_of_u.value,
+                        n.op_of_u.anger
+                    );
+                } catch (...) {
+                    return text;
+                }
+            };
+            
+            auto create_folded_text = [](const std::string& str, int width) -> std::vector<std::string> {
+                std::vector<std::string> lines;
+                std::string current_line;
+                int current_width = 0;
+                
+                const char* src = str.c_str();
+                int bytes = str.length();
+                
+                while (bytes > 0) {
+                    const uint32_t uc = UTF8_getch(&src, &bytes);
+                    const int cw = uc == '\n' ? 0 : std::max(0, mk_wcwidth(uc));
+                    
+                    if (uc == '\n') {
+                        lines.push_back(current_line);
+                        current_line.clear();
+                        current_width = 0;
+                    } else if (current_width + cw > width && !current_line.empty()) {
+                        lines.push_back(current_line);
+                        current_line = utf32_to_utf8(uc);
+                        current_width = cw;
+                    } else {
+                        current_line += utf32_to_utf8(uc);
+                        current_width += cw;
+                    }
+                }
+                if (!current_line.empty()) {
+                    lines.push_back(current_line);
+                }
+                
+                return lines;
+            };
+            
+            ui.on_screen_resize([&](ui_adaptor& ui) {
+                const std::pair<point, point> beg_and_max = ai_prompt_window_position();
+                const point &beg = beg_and_max.first;
+                const point &max = beg_and_max.second;
+                
+                w_preview = catacurses::newwin(max.y, max.x, beg);
+                w_border = catacurses::newwin(max.y + 4, max.x + 4, beg + point(-2, -2));
+                
+                ui.position_from_window(w_border);
+            });
+            
+            ui.mark_resize();
+            
+            ui.on_redraw([&](const ui_adaptor&) {
+                werase(w_border);
+                werase(w_preview);
+                
+                draw_border(w_border);
+                center_print(w_border, 0, c_light_gray, _("预览 - 按任意键返回"));
+                
+                const int preview_width = getmaxx(w_preview);
+                const int preview_height = getmaxy(w_preview);
+                
+                // Draw preview content
+                std::string preview_text = update_preview(new_text);
+                std::vector<std::string> preview_lines = create_folded_text(preview_text, preview_width - 2);
+                
+                for (int i = 0; i < preview_height - 1 && i < static_cast<int>(preview_lines.size()); i++) {
+                    mvwprintz(w_preview, point(1, i), c_white, "%s", preview_lines[i]);
+                }
+                
+                wnoutrefresh(w_border);
+                wnoutrefresh(w_preview);
+            });
+            
+            input_context ctxt("PREVIEW");
+            ctxt.register_action("CONFIRM");
+            ctxt.register_action("QUIT");
+            ctxt.register_action("ANY_INPUT");
+            
+            ui_manager::redraw();
+            ctxt.handle_input();
+            
+            old_text = new_text;
+            continue;
+        }
+        
+        if (result.first || old_text == new_text) {
+            n.ai_prompt = new_text;
+            return;
+        }
+    }
+}
 
 static const activity_id ACT_AIM( "ACT_AIM" );
 static const activity_id ACT_SOCIALIZE( "ACT_SOCIALIZE" );
@@ -343,7 +554,8 @@ enum npc_chat_menu {
     NPC_CHAT_ACTIVITIES_MOPPING,
     NPC_CHAT_ACTIVITIES_VEHICLE_DECONSTRUCTION,
     NPC_CHAT_ACTIVITIES_VEHICLE_REPAIR,
-    NPC_CHAT_ACTIVITIES_UNASSIGN
+    NPC_CHAT_ACTIVITIES_UNASSIGN,
+    NPC_CHAT_EDIT_AI_PROMPT
 
 };
 
@@ -757,6 +969,7 @@ void game::chat()
         nmenu.addentry( NPC_CHAT_CLEAR_OVERRIDES, true, 'r',
                         _( "Tell everyone on your team to relax (Clear Overrides)" ) );
         nmenu.addentry( NPC_CHAT_ORDERS, true, 'o', _( "Tell everyone on your team to temporarily…" ) );
+        nmenu.addentry( NPC_CHAT_EDIT_AI_PROMPT, true, 'p', _( "自定义AI提示词" ) );
     }
     std::string message;
     std::string yell_msg;
@@ -922,6 +1135,14 @@ void game::chat()
         case NPC_CHAT_ORDERS:
             npc_temp_orders_menu( followers );
             break;
+        case NPC_CHAT_EDIT_AI_PROMPT: {
+            const int npcselect = npc_select_menu( available, _( "为谁编辑自定义AI提示词?" ), false );
+            if( npcselect < 0 ) {
+                return;
+            }
+            talk_function::edit_ai_prompt( *available[npcselect] );
+            break;
+        }
         case NPC_CHAT_ANIMAL_VEHICLE_FOLLOW:
             assign_veh_to_follow();
             break;
@@ -2041,6 +2262,27 @@ talk_topic dialogue::opt( dialogue_window &d_win, const talk_topic &topic )
                     topic.item_type );
     }
     challenge = uppercase_first_letter( challenge );
+    
+    bool is_npc_speaking = (actor(true)->get_npc() != nullptr) &&
+        !d_win.is_computer &&
+        !d_win.is_not_conversation;
+    if (get_option<bool>("AI润色NPC的回复内容") && is_npc_speaking) {
+        add_msg(challenge);
+        network::RequestId requ_id = network::start_pollinations_request(build_prompt(*actor(true)->get_npc()), "npc说："+challenge);
+        while (true) {
+            network::process();
+            if (network::get_status(requ_id) == network::RequestStatus::Completed) {
+                challenge = network::parse_pollinations_response(network::get_result(requ_id).response_body);
+                network::clear_completed();
+                break;
+            }
+            else if (network::get_status(requ_id) == network::RequestStatus::Failed) {
+                add_msg(network::get_result(requ_id).response_body);
+                break;
+            }
+            std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        }
+    }
 
     d_win.clear_history_highlights();
     if( challenge[0] == '&' ) {
@@ -4661,6 +4903,7 @@ void talk_effect_t<T>::parse_string_effect( const std::string &effect_id, const 
             WRAP( clear_overrides ),
             WRAP( do_disassembly ),
             WRAP( nothing ),
+            WRAP( edit_ai_prompt ),
 #undef WRAP
         }
     };
