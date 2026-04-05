@@ -2267,7 +2267,6 @@ talk_topic dialogue::opt( dialogue_window &d_win, const talk_topic &topic )
         !d_win.is_computer &&
         !d_win.is_not_conversation;
     if (get_option<bool>("AI润色NPC的回复内容") && is_npc_speaking) {
-        add_msg(challenge);
         network::RequestId requ_id = network::start_pollinations_request(build_prompt(*actor(true)->get_npc()), "npc说："+challenge);
         while (true) {
             network::process();
@@ -2277,7 +2276,8 @@ talk_topic dialogue::opt( dialogue_window &d_win, const talk_topic &topic )
                 break;
             }
             else if (network::get_status(requ_id) == network::RequestStatus::Failed) {
-                add_msg(network::get_result(requ_id).response_body);
+                add_msg(m_bad,network::get_result(requ_id).response_body);
+                network::clear_completed();
                 break;
             }
             std::this_thread::sleep_for(std::chrono::milliseconds(50));
