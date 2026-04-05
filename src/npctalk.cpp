@@ -76,6 +76,7 @@
 #include "sounds.h"
 #include "string_formatter.h"
 #include "string_input_popup.h"
+#include "string_editor_window.h"
 #include "talker.h"
 #include "talker_topic.h"
 #include "teleport.h"
@@ -118,7 +119,8 @@ std::string basic_prompt =
 ;
 
 std::string build_prompt(npc& n) {
-    std::string prompt = string_format(basic_prompt,
+    std::string template_str = !n.ai_prompt.empty() ? n.ai_prompt : basic_prompt;
+    std::string prompt = string_format(template_str,
         // npc的基本信息
         n.get_name(),
         n.male ? "男" : "女",
@@ -133,6 +135,50 @@ std::string build_prompt(npc& n) {
         n.op_of_u.anger
     );
     return prompt;
+}
+
+void talk_function::edit_ai_prompt(npc& n) {
+    std::string old_text = n.ai_prompt;
+    std::string new_text = old_text;
+
+    auto create_window = [&]() {
+        const int w_width = FULL_SCREEN_WIDTH - 4;
+        const int w_height = FULL_SCREEN_HEIGHT - 4;
+        const int w_x = 2;
+        const int w_y = 2;
+        return catacurses::newwin(w_height, w_width, point(w_x, w_y));
+    };
+
+    string_editor_window ed(create_window, new_text);
+
+    do {
+        const std::pair<bool, std::string> result = ed.query_string();
+        new_text = result.second;
+
+        if (result.first || old_text == new_text) {
+            n.ai_prompt = new_text;
+            break;
+        }
+
+        const bool force_uc = get_option<bool>("FORCE_CAPITAL_YN");
+        const auto& allow_key = force_uc ? input_context::disallow_lower_case_or_non_modified_letters
+                                        : input_context::allow_all_keys;
+        const std::string action = query_popup()
+                                   .context("YESNOQUIT")
+                                   .message("%s", _("Save changes?"))
+                                   .option("YES", allow_key)
+                                   .option("NO", allow_key)
+                                   .allow_cancel(true)
+                                   .default_color(c_light_red)
+                                   .query()
+                                   .action;
+        if (action == "YES") {
+            n.ai_prompt = new_text;
+            break;
+        } else if (action == "NO") {
+            break;
+        }
+    } while (true);
 }
 
 static const activity_id ACT_AIM( "ACT_AIM" );
@@ -389,7 +435,8 @@ enum npc_chat_menu {
     NPC_CHAT_ACTIVITIES_MOPPING,
     NPC_CHAT_ACTIVITIES_VEHICLE_DECONSTRUCTION,
     NPC_CHAT_ACTIVITIES_VEHICLE_REPAIR,
-    NPC_CHAT_ACTIVITIES_UNASSIGN
+    NPC_CHAT_ACTIVITIES_UNASSIGN,
+    NPC_CHAT_EDIT_AI_PROMPT
 
 };
 
@@ -803,6 +850,7 @@ void game::chat()
         nmenu.addentry( NPC_CHAT_CLEAR_OVERRIDES, true, 'r',
                         _( "Tell everyone on your team to relax (Clear Overrides)" ) );
         nmenu.addentry( NPC_CHAT_ORDERS, true, 'o', _( "Tell everyone on your team to temporarily…" ) );
+        nmenu.addentry( NPC_CHAT_EDIT_AI_PROMPT, true, 'p', _( "自定义AI提示词" ) );
     }
     std::string message;
     std::string yell_msg;
@@ -968,6 +1016,14 @@ void game::chat()
         case NPC_CHAT_ORDERS:
             npc_temp_orders_menu( followers );
             break;
+        case NPC_CHAT_EDIT_AI_PROMPT: {
+            const int npcselect = npc_select_menu( available, _( "为谁编辑自定义AI提示词?" ), false );
+            if( npcselect < 0 ) {
+                return;
+            }
+            talk_function::edit_ai_prompt( *available[npcselect] );
+            break;
+        }
         case NPC_CHAT_ANIMAL_VEHICLE_FOLLOW:
             assign_veh_to_follow();
             break;
@@ -4727,6 +4783,7 @@ void talk_effect_t<T>::parse_string_effect( const std::string &effect_id, const 
             WRAP( clear_overrides ),
             WRAP( do_disassembly ),
             WRAP( nothing ),
+            WRAP( edit_ai_prompt ),
 #undef WRAP
         }
     };

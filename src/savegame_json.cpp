@@ -2424,6 +2424,7 @@ void npc::load( const JsonObject &data )
         complaints.emplace( member.name(), p );
     }
     data.read( "unique_id", unique_id );
+    data.read( "ai_prompt", ai_prompt );
 }
 
 /*
@@ -2493,6 +2494,7 @@ void npc::store( JsonOut &json ) const
 
     json.member( "complaints", complaints );
     json.member( "unique_id", unique_id );
+    json.member( "ai_prompt", ai_prompt );
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

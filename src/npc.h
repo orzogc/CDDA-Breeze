@@ -1358,6 +1358,7 @@ class npc : public Character
         // Dummy point that indicates that the goal is invalid.
         static constexpr tripoint_abs_omt no_goal_point{ tripoint_min };
         job_data job;
+        std::string ai_prompt; // 自定义AI提示词
         /**
          * Do some cleanup and caching as npc is being unloaded from map.
          */
