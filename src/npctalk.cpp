@@ -139,46 +139,159 @@ std::string build_prompt(npc& n) {
 
 void talk_function::edit_ai_prompt(npc& n) {
     std::string old_text = n.ai_prompt;
-    std::string new_text = old_text;
-
-    auto create_window = [&]() {
-        const int w_width = FULL_SCREEN_WIDTH - 4;
-        const int w_height = FULL_SCREEN_HEIGHT - 4;
-        const int w_x = 2;
-        const int w_y = 2;
-        return catacurses::newwin(w_height, w_width, point(w_x, w_y));
-    };
-
-    string_editor_window ed(create_window, new_text);
-
-    do {
+    
+    // 创建一个简单的双窗口预览界面
+    while (true) {
+        // 首先使用标准的string_editor_window进行编辑
+        std::string new_text = old_text;
+        
+        auto create_editor_window = [&]() {
+            const int w_width = FULL_SCREEN_WIDTH - 4;
+            const int w_height = (FULL_SCREEN_HEIGHT / 2) - 4;
+            const int w_x = 2;
+            const int w_y = 2;
+            return catacurses::newwin(w_height, w_width, point(w_x, w_y));
+        };
+        
+        string_editor_window ed(create_editor_window, new_text);
         const std::pair<bool, std::string> result = ed.query_string();
         new_text = result.second;
-
+        
+        if (!result.first && old_text != new_text) {
+            const bool force_uc = get_option<bool>("FORCE_CAPITAL_YN");
+            const auto& allow_key = force_uc ? input_context::disallow_lower_case_or_non_modified_letters
+                                            : input_context::allow_all_keys;
+            const std::string action = query_popup()
+                                       .context("YESNOQUIT")
+                                       .message("%s", _("Save changes?"))
+                                       .option("YES", allow_key)
+                                       .option("NO", allow_key)
+                                       .option(_("Preview"), allow_key)
+                                       .allow_cancel(true)
+                                       .default_color(c_light_red)
+                                       .query()
+                                       .action;
+            if (action == "YES") {
+                n.ai_prompt = new_text;
+                return;
+            } else if (action == "NO") {
+                return;
+            } else if (action != _("Preview")) {
+                continue;
+            }
+            
+            // 显示预览界面
+            catacurses::window w_preview;
+            catacurses::window w_border;
+            
+            ui_adaptor ui;
+            
+            auto update_preview = [&](const std::string& text) -> std::string {
+                try {
+                    return string_format(text,
+                        n.get_name(),
+                        n.male ? "男" : "女",
+                        n.myclass->get_name(),
+                        n.personality.bravery,
+                        n.personality.altruism,
+                        n.personality.aggression,
+                        n.op_of_u.trust,
+                        n.op_of_u.fear,
+                        n.op_of_u.value,
+                        n.op_of_u.anger
+                    );
+                } catch (...) {
+                    return text;
+                }
+            };
+            
+            auto create_folded_text = [](const std::string& str, int width) -> std::vector<std::string> {
+                std::vector<std::string> lines;
+                std::string current_line;
+                int current_width = 0;
+                
+                const char* src = str.c_str();
+                int bytes = str.length();
+                
+                while (bytes > 0) {
+                    const uint32_t uc = UTF8_getch(&src, &bytes);
+                    const int cw = uc == '\n' ? 0 : std::max(0, mk_wcwidth(uc));
+                    
+                    if (uc == '\n') {
+                        lines.push_back(current_line);
+                        current_line.clear();
+                        current_width = 0;
+                    } else if (current_width + cw > width && !current_line.empty()) {
+                        lines.push_back(current_line);
+                        current_line = utf32_to_utf8(uc);
+                        current_width = cw;
+                    } else {
+                        current_line += utf32_to_utf8(uc);
+                        current_width += cw;
+                    }
+                }
+                if (!current_line.empty()) {
+                    lines.push_back(current_line);
+                }
+                
+                return lines;
+            };
+            
+            ui.on_screen_resize([&](ui_adaptor& ui) {
+                const int w_width = FULL_SCREEN_WIDTH - 4;
+                const int w_height = (FULL_SCREEN_HEIGHT / 2) - 4;
+                const int w_x = 2;
+                const int w_y = 2;
+                
+                w_preview = catacurses::newwin(w_height, w_width, point(w_x, w_y));
+                w_border = catacurses::newwin(w_height + 4, w_width + 4, point(w_x - 2, w_y - 2));
+                
+                ui.position_from_window(w_border);
+            });
+            
+            ui.mark_resize();
+            
+            ui.on_redraw([&](const ui_adaptor&) {
+                werase(w_border);
+                werase(w_preview);
+                
+                draw_border(w_border);
+                center_print(w_border, 0, c_light_gray, _("预览 - 按任意键返回"));
+                
+                const int preview_width = getmaxx(w_preview);
+                const int preview_height = getmaxy(w_preview);
+                
+                // Draw preview content
+                std::string preview_text = update_preview(new_text);
+                std::vector<std::string> preview_lines = create_folded_text(preview_text, preview_width - 2);
+                
+                for (int i = 0; i < preview_height - 1 && i < static_cast<int>(preview_lines.size()); i++) {
+                    mvwprintz(w_preview, point(1, i), c_white, "%s", preview_lines[i]);
+                }
+                
+                wnoutrefresh(w_border);
+                wnoutrefresh(w_preview);
+            });
+            
+            // 显示预览界面，等待用户输入
+            input_context ctxt("PREVIEW");
+            ctxt.register_action("CONFIRM");
+            ctxt.register_action("QUIT");
+            ctxt.register_action("ANY_INPUT");
+            
+            ui_manager::redraw();
+            ctxt.handle_input();
+            
+            // 返回编辑状态
+            old_text = new_text;
+            continue;
+        }
+        
         if (result.first || old_text == new_text) {
             n.ai_prompt = new_text;
-            break;
+            return;
         }
-
-        const bool force_uc = get_option<bool>("FORCE_CAPITAL_YN");
-        const auto& allow_key = force_uc ? input_context::disallow_lower_case_or_non_modified_letters
-                                        : input_context::allow_all_keys;
-        const std::string action = query_popup()
-                                   .context("YESNOQUIT")
-                                   .message("%s", _("Save changes?"))
-                                   .option("YES", allow_key)
-                                   .option("NO", allow_key)
-                                   .allow_cancel(true)
-                                   .default_color(c_light_red)
-                                   .query()
-                                   .action;
-        if (action == "YES") {
-            n.ai_prompt = new_text;
-            break;
-        } else if (action == "NO") {
-            break;
-        }
-    } while (true);
+    }
 }
 
 static const activity_id ACT_AIM( "ACT_AIM" );
