@@ -151,9 +151,7 @@ void talk_function::edit_ai_prompt(npc& n) {
     }
     std::string old_text = n.ai_prompt;
     
-    // 创建一个简单的双窗口预览界面
     while (true) {
-        // 首先使用标准的string_editor_window进行编辑
         std::string new_text = old_text;
         
         auto create_editor_window = [&]() {
@@ -190,7 +188,6 @@ void talk_function::edit_ai_prompt(npc& n) {
                 continue;
             }
             
-            // 显示预览界面
             catacurses::window w_preview;
             catacurses::window w_border;
             
@@ -282,7 +279,6 @@ void talk_function::edit_ai_prompt(npc& n) {
                 wnoutrefresh(w_preview);
             });
             
-            // 显示预览界面，等待用户输入
             input_context ctxt("PREVIEW");
             ctxt.register_action("CONFIRM");
             ctxt.register_action("QUIT");
@@ -291,7 +287,6 @@ void talk_function::edit_ai_prompt(npc& n) {
             ui_manager::redraw();
             ctxt.handle_input();
             
-            // 返回编辑状态
             old_text = new_text;
             continue;
         }
