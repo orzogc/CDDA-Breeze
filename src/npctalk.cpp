@@ -138,6 +138,9 @@ std::string build_prompt(npc& n) {
 }
 
 void talk_function::edit_ai_prompt(npc& n) {
+    if (n.ai_prompt.empty()) {
+        n.ai_prompt = basic_prompt;
+    }
     std::string old_text = n.ai_prompt;
     
     // 创建一个简单的双窗口预览界面
@@ -148,8 +151,8 @@ void talk_function::edit_ai_prompt(npc& n) {
         auto create_editor_window = [&]() {
             const int w_width = FULL_SCREEN_WIDTH - 4;
             const int w_height = (FULL_SCREEN_HEIGHT / 2) - 4;
-            const int w_x = 2;
-            const int w_y = 2;
+            const int w_x = (FULL_SCREEN_WIDTH - w_width) / 2;
+            const int w_y = (FULL_SCREEN_HEIGHT - w_height) / 2;
             return catacurses::newwin(w_height, w_width, point(w_x, w_y));
         };
         
@@ -240,8 +243,8 @@ void talk_function::edit_ai_prompt(npc& n) {
             ui.on_screen_resize([&](ui_adaptor& ui) {
                 const int w_width = FULL_SCREEN_WIDTH - 4;
                 const int w_height = (FULL_SCREEN_HEIGHT / 2) - 4;
-                const int w_x = 2;
-                const int w_y = 2;
+                const int w_x = (FULL_SCREEN_WIDTH - w_width) / 2;
+                const int w_y = (FULL_SCREEN_HEIGHT - w_height) / 2;
                 
                 w_preview = catacurses::newwin(w_height, w_width, point(w_x, w_y));
                 w_border = catacurses::newwin(w_height + 4, w_width + 4, point(w_x - 2, w_y - 2));
