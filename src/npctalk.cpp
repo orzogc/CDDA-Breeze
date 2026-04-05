@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <array>
+#include <chrono>
 #include <cmath>
 #include <cstddef>
 #include <iterator>
@@ -10,6 +11,7 @@
 #include <memory>
 #include <ostream>
 #include <string>
+#include <thread>
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
@@ -2278,6 +2280,7 @@ talk_topic dialogue::opt( dialogue_window &d_win, const talk_topic &topic )
                 add_msg(network::get_result(requ_id).response_body);
                 break;
             }
+            std::this_thread::sleep_for(std::chrono::milliseconds(50));
         }
     }
 
