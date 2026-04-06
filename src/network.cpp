@@ -262,10 +262,10 @@ void process()
         Request *req = pair.second.get();
         if( req->status == RequestStatus::InProgress ) {
             auto elapsed = std::chrono::duration_cast<std::chrono::seconds>( now - req->start_time ).count();
-            if( elapsed >= 30 ) {
+            if( elapsed >= 40 ) {
                 req->status = RequestStatus::Failed;
-                req->error_message = "Request timed out after 30 seconds";
-                req->response_body = "Error: Request timed out after 30 seconds";
+                req->error_message = "Request timed out after 40 seconds";
+                req->response_body = "Error: Request timed out after 40 seconds";
                 if( req->handle ) {
                     curl_multi_remove_handle( g_multi_handle, req->handle );
                 }
