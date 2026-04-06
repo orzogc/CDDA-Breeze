@@ -174,16 +174,38 @@ void talk_function::edit_ai_prompt(npc& n) {
     std::string old_text = n.ai_prompt;
     std::string new_text = old_text;
     while (true) {
+        catacurses::window w_editor_border;
+        catacurses::window w_editor;
+        std::unique_ptr<ui_adaptor> editor_ui;
+        
         auto create_editor_window = [&]() {
             const std::pair<point, point> beg_and_max = ai_prompt_window_position();
             const point &beg = beg_and_max.first;
             const point &max = beg_and_max.second;
-            return catacurses::newwin(max.y, max.x, beg);
+            
+            w_editor_border = catacurses::newwin(max.y + 4, max.x + 4, beg + point(-2, -2));
+            w_editor = catacurses::newwin(max.y, max.x, beg);
+            return w_editor;
         };
+        
+        editor_ui = std::make_unique<ui_adaptor>();
+        editor_ui->on_screen_resize([&](ui_adaptor& ui) {
+            create_editor_window();
+            ui.position_from_window(w_editor_border);
+        });
+        editor_ui->mark_resize();
+        editor_ui->on_redraw([&](const ui_adaptor&) {
+            werase(w_editor_border);
+            draw_border(w_editor_border);
+            center_print(w_editor_border, 0, c_light_gray, _("编辑AI提示词"));
+            wnoutrefresh(w_editor_border);
+        });
         
         string_editor_window ed(create_editor_window, new_text);
         const std::pair<bool, std::string> result = ed.query_string();
         new_text = result.second;
+        
+        editor_ui.reset();
         
         if (!result.first) {
             const bool force_uc = get_option<bool>("FORCE_CAPITAL_YN");
@@ -210,6 +232,7 @@ void talk_function::edit_ai_prompt(npc& n) {
             catacurses::window w_border;
             
             ui_adaptor ui;
+            int scroll_pos = 0;
             
             auto create_folded_text = [](const std::string& str, int width) -> std::vector<std::string> {
                 std::vector<std::string> lines;
@@ -256,22 +279,44 @@ void talk_function::edit_ai_prompt(npc& n) {
             
             ui.mark_resize();
             
+            std::vector<std::string> preview_lines;
+            int preview_height;
+            
             ui.on_redraw([&](const ui_adaptor&) {
                 werase(w_border);
                 werase(w_preview);
                 
                 draw_border(w_border);
-                center_print(w_border, 0, c_light_gray, _("预览 - 按任意键返回"));
+                center_print(w_border, 0, c_light_gray, _("预览 - 方向键/翻页键滚动，其他键返回"));
                 
                 const int preview_width = getmaxx(w_preview);
-                const int preview_height = getmaxy(w_preview);
+                preview_height = getmaxy(w_preview);
                 
                 // Draw preview content
                 std::string preview_text = fill_prompt(new_text,n);
-                std::vector<std::string> preview_lines = create_folded_text(preview_text, preview_width - 2);
+                preview_lines = create_folded_text(preview_text, preview_width - 2);
                 
-                for (int i = 0; i < preview_height - 1 && i < static_cast<int>(preview_lines.size()); i++) {
-                    mvwprintz(w_preview, point(1, i), c_white, "%s", preview_lines[i]);
+                const int max_scroll = std::max(0, static_cast<int>(preview_lines.size()) - preview_height);
+                if (scroll_pos > max_scroll) {
+                    scroll_pos = max_scroll;
+                }
+                if (scroll_pos < 0) {
+                    scroll_pos = 0;
+                }
+                
+                const int end_line = std::min(scroll_pos + preview_height, static_cast<int>(preview_lines.size()));
+                for (int i = scroll_pos; i < end_line; i++) {
+                    const int y = i - scroll_pos;
+                    mvwprintz(w_preview, point(1, y), c_white, "%s", preview_lines[i]);
+                }
+                
+                // Draw scrollbar if needed
+                if (static_cast<int>(preview_lines.size()) > preview_height) {
+                    scrollbar()
+                    .content_size(preview_lines.size())
+                    .viewport_pos(scroll_pos)
+                    .viewport_size(preview_height)
+                    .apply(w_preview);
                 }
                 
                 wnoutrefresh(w_border);
@@ -281,10 +326,35 @@ void talk_function::edit_ai_prompt(npc& n) {
             input_context ctxt("PREVIEW");
             ctxt.register_action("CONFIRM");
             ctxt.register_action("QUIT");
+            ctxt.register_action("TEXT.UP");
+            ctxt.register_action("TEXT.DOWN");
+            ctxt.register_action("TEXT.PAGE_UP");
+            ctxt.register_action("TEXT.PAGE_DOWN");
+            ctxt.register_action("TEXT.HOME");
+            ctxt.register_action("TEXT.END");
             ctxt.register_action("ANY_INPUT");
             
-            ui_manager::redraw();
-            ctxt.handle_input();
+            while (true) {
+                ui_manager::redraw();
+                const std::string action = ctxt.handle_input();
+                
+                if (action == "TEXT.UP") {
+                    scroll_pos = std::max(0, scroll_pos - 1);
+                } else if (action == "TEXT.DOWN") {
+                    scroll_pos = std::min(scroll_pos + 1, std::max(0, static_cast<int>(preview_lines.size()) - preview_height));
+                } else if (action == "TEXT.PAGE_UP") {
+                    scroll_pos = std::max(0, scroll_pos - preview_height);
+                } else if (action == "TEXT.PAGE_DOWN") {
+                    const int max_scroll = std::max(0, static_cast<int>(preview_lines.size()) - preview_height);
+                    scroll_pos = std::min(scroll_pos + preview_height, max_scroll);
+                } else if (action == "TEXT.HOME") {
+                    scroll_pos = 0;
+                } else if (action == "TEXT.END") {
+                    scroll_pos = std::max(0, static_cast<int>(preview_lines.size()) - preview_height);
+                } else {
+                    break;
+                }
+            }
             continue;
         }
         
