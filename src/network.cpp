@@ -262,10 +262,10 @@ void process()
         Request *req = pair.second.get();
         if( req->status == RequestStatus::InProgress ) {
             auto elapsed = std::chrono::duration_cast<std::chrono::seconds>( now - req->start_time ).count();
-            if( elapsed >= 20 ) {
+            if( elapsed >= 30 ) {
                 req->status = RequestStatus::Failed;
-                req->error_message = "Request timed out after 20 seconds";
-                req->response_body = "Error: Request timed out after 20 seconds";
+                req->error_message = "Request timed out after 30 seconds";
+                req->response_body = "Error: Request timed out after 30 seconds";
                 if( req->handle ) {
                     curl_multi_remove_handle( g_multi_handle, req->handle );
                 }
@@ -383,7 +383,6 @@ RequestId start_pollinations_request( const std::string &system_prompt,const std
     //     log_file.close();
     // }
     
-    add_msg("Sending POST request to pollinations.ai");
     return start_post( url, json_body, headers );
 }
 
