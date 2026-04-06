@@ -434,10 +434,10 @@ std::string parse_pollinations_response( const std::string &json_response, bool 
                 total_tokens = usage.get_int( "total_tokens" );
             }
 
-            content += "\n\nToken使用量:\n";
-            content += "输入: " + std::to_string( prompt_tokens ) + "\n";
-            content += "输出: " + std::to_string( completion_tokens ) + "\n";
-            content += "总量: " + std::to_string( total_tokens );
+            content += "\n\nToken消耗情况:\n";
+            content += "输入消耗：" + std::to_string( prompt_tokens ) + "\n";
+            content += "输出消耗：" + std::to_string( completion_tokens ) + "\n";
+            content += "总消耗  ：" + std::to_string( total_tokens );
         }
 
         return content;
