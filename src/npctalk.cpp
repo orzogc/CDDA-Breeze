@@ -285,7 +285,7 @@ void talk_function::edit_ai_prompt(npc& n) {
                 werase(w_preview);
                 
                 draw_border(w_border);
-                center_print(w_border, 0, c_light_gray, _("预览 - 方向键/翻页键滚动，其他键返回"));
+                center_print(w_border, 0, c_light_green, _("预览 - 方向键/翻页键滚动，其他键返回"));
                 
                 const int preview_width = getmaxx(w_preview);
                 preview_height = getmaxy(w_preview);
