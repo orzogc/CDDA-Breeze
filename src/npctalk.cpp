@@ -2342,7 +2342,8 @@ talk_topic dialogue::opt( dialogue_window &d_win, const talk_topic &topic )
                 network::clear_completed();
                 break;
             }
-            std::this_thread::sleep_for(std::chrono::milliseconds(50));
+            inp_mngr.pump_events();
+            std::this_thread::sleep_for(std::chrono::milliseconds(300));
         }
     }
 
