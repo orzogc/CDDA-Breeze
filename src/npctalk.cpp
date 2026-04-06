@@ -202,7 +202,7 @@ void talk_function::edit_ai_prompt(npc& n) {
             if (action == "保存并退出" || action == "退出编辑") {
                 n.ai_prompt = new_text;
                 return;
-            } else if (action == "继续编辑" || action != "预览") {
+            } else if (action == "继续编辑") {
                 continue;
             }
             
@@ -210,10 +210,6 @@ void talk_function::edit_ai_prompt(npc& n) {
             catacurses::window w_border;
             
             ui_adaptor ui;
-            
-            auto update_preview = [&](const std::string& text) -> std::string {
-                return fill_prompt(text,n);
-            };
             
             auto create_folded_text = [](const std::string& str, int width) -> std::vector<std::string> {
                 std::vector<std::string> lines;
@@ -271,7 +267,7 @@ void talk_function::edit_ai_prompt(npc& n) {
                 const int preview_height = getmaxy(w_preview);
                 
                 // Draw preview content
-                std::string preview_text = update_preview(new_text);
+                std::string preview_text = fill_prompt(new_text,n);
                 std::vector<std::string> preview_lines = create_folded_text(preview_text, preview_width - 2);
                 
                 for (int i = 0; i < preview_height - 1 && i < static_cast<int>(preview_lines.size()); i++) {
