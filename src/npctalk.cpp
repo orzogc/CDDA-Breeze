@@ -176,7 +176,7 @@ void talk_function::edit_ai_prompt(npc& n) {
     while (true) {
         catacurses::window w_editor_border;
         catacurses::window w_editor;
-        std::unique_ptr<ui_adaptor> editor_ui;
+        ui_adaptor editor_ui;
         
         auto create_editor_window = [&]() {
             const std::pair<point, point> beg_and_max = ai_prompt_window_position();
@@ -188,13 +188,12 @@ void talk_function::edit_ai_prompt(npc& n) {
             return w_editor;
         };
         
-        editor_ui = std::make_unique<ui_adaptor>();
-        editor_ui->on_screen_resize([&](ui_adaptor& ui) {
+        editor_ui.on_screen_resize([&](ui_adaptor& ui) {
             create_editor_window();
             ui.position_from_window(w_editor_border);
         });
-        editor_ui->mark_resize();
-        editor_ui->on_redraw([&](const ui_adaptor&) {
+        editor_ui.mark_resize();
+        editor_ui.on_redraw([&](const ui_adaptor&) {
             werase(w_editor_border);
             draw_border(w_editor_border);
             center_print(w_editor_border, 0, c_light_gray, _("编辑AI提示词"));
@@ -205,9 +204,9 @@ void talk_function::edit_ai_prompt(npc& n) {
         const std::pair<bool, std::string> result = ed.query_string();
         new_text = result.second;
         
-        editor_ui.reset();
         
         if (!result.first) {
+            editor_ui.reset();
             const bool force_uc = get_option<bool>("FORCE_CAPITAL_YN");
             const auto& allow_key = force_uc ? input_context::disallow_lower_case_or_non_modified_letters
                                             : input_context::allow_all_keys;
@@ -215,16 +214,20 @@ void talk_function::edit_ai_prompt(npc& n) {
                                        .context("YESNOQUIT")
                                        .message("%s", old_text != new_text?"保存修改？":"没有修改提示词。")
                                        .option(old_text != new_text ? "保存并退出":"退出编辑", allow_key)
-                                       .option("继续编辑", allow_key)
+                                       .option("退出", allow_key)
                                        .option("预览", allow_key)
                                        .allow_cancel(true)
                                        .default_color(c_light_red)
                                        .query()
                                        .action;
-            if (action == "保存并退出" || action == "退出编辑") {
+            if (action == "保存并退出") {
                 n.ai_prompt = new_text;
                 return;
-            } else if (action == "继续编辑") {
+            }
+            else if (action == "退出") {
+                return;
+            }
+            else if (action == "继续编辑") {
                 continue;
             }
             
