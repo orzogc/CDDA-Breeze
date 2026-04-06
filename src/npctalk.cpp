@@ -95,12 +95,12 @@
 #include "vpart_range.h"
 #include "sdltiles.h"
 
-std::string basic_prompt =
+const std::string basic_prompt =
 "# 你是谁 \n"
 "- 你是一个只会润色文本的AI，绝对服从命令，像一个流水线一样，接受用户输入的文本，并将润色后的文本返回。 \n"
 "# 你绝对要遵守的核心规则 \n"
 "- 你的任务是扮演npc，并基于npc角色设定和额外环境信息，对npc固定回复内容进行符合逻辑与性格的“润色扩写”，使其更加生动自然。\n"
-"- 你要始终明白，用户提供的是你所扮演的npc说的话。"
+"- 你要始终明白，用户提供的是你所扮演的npc说的话。\n"
 "# 你接收的输入\n"
 "- 用户会给你提供npc的固定回复内容。\n"
 "# 你绝对要遵守的输出结果 \n"
@@ -118,11 +118,20 @@ std::string basic_prompt =
 "- 恐惧：%s \n"
 "- 功利性地衡量玩家的价值：%s \n"
 "- 愤怒：%s \n"
+"## 玩家的基本信息 \n"
+"- 姓名：%s \n"
+"- 性别：%s \n"
+"## 周围的情况 \n"
+"- 是否有可见的敌人：%s"
 ;
 
-std::string build_prompt(npc& n) {
-    std::string template_str = !n.ai_prompt.empty() ? n.ai_prompt : basic_prompt;
-    std::string prompt = string_format(template_str,
+std::string fill_prompt(const std::string &original_prompt,npc& n) {
+    Character& player = get_player_character();
+    std::string has_visible_enemy = "否";
+    if (n.get_hostile_creatures(60).empty() == false) {
+        has_visible_enemy = "是";
+    }
+    std::string prompt = string_format(original_prompt,
         // npc的基本信息
         n.get_name(),
         n.male ? "男" : "女",
@@ -134,8 +143,19 @@ std::string build_prompt(npc& n) {
         n.op_of_u.trust,
         n.op_of_u.fear,
         n.op_of_u.value,
-        n.op_of_u.anger
+        n.op_of_u.anger,
+        // 玩家的基本信息
+        player.get_name(),
+        player.male ? "男" : "女",
+        // 周围环境信息
+        has_visible_enemy
     );
+    return prompt;
+}
+
+std::string build_prompt(npc& n) {
+    std::string template_str = !n.ai_prompt.empty() ? n.ai_prompt : basic_prompt;
+    std::string prompt = fill_prompt(template_str,n);
     return prompt;
 }
 
@@ -152,10 +172,8 @@ void talk_function::edit_ai_prompt(npc& n) {
         n.ai_prompt = basic_prompt;
     }
     std::string old_text = n.ai_prompt;
-    
+    std::string new_text = old_text;
     while (true) {
-        std::string new_text = old_text;
-        
         auto create_editor_window = [&]() {
             const std::pair<point, point> beg_and_max = ai_prompt_window_position();
             const point &beg = beg_and_max.first;
@@ -167,26 +185,24 @@ void talk_function::edit_ai_prompt(npc& n) {
         const std::pair<bool, std::string> result = ed.query_string();
         new_text = result.second;
         
-        if (!result.first && old_text != new_text) {
+        if (!result.first) {
             const bool force_uc = get_option<bool>("FORCE_CAPITAL_YN");
             const auto& allow_key = force_uc ? input_context::disallow_lower_case_or_non_modified_letters
                                             : input_context::allow_all_keys;
             const std::string action = query_popup()
                                        .context("YESNOQUIT")
-                                       .message("%s", _("Save changes?"))
-                                       .option("YES", allow_key)
-                                       .option("NO", allow_key)
-                                       .option(_("Preview"), allow_key)
+                                       .message("%s", old_text != new_text?"保存修改？":"没有修改提示词。")
+                                       .option(old_text != new_text ? "保存并退出":"退出编辑", allow_key)
+                                       .option("继续编辑", allow_key)
+                                       .option("预览", allow_key)
                                        .allow_cancel(true)
                                        .default_color(c_light_red)
                                        .query()
                                        .action;
-            if (action == "YES") {
+            if (action == "保存并退出" || action == "退出编辑") {
                 n.ai_prompt = new_text;
                 return;
-            } else if (action == "NO") {
-                return;
-            } else if (action != _("Preview")) {
+            } else if (action == "继续编辑" || action != "预览") {
                 continue;
             }
             
@@ -196,22 +212,7 @@ void talk_function::edit_ai_prompt(npc& n) {
             ui_adaptor ui;
             
             auto update_preview = [&](const std::string& text) -> std::string {
-                try {
-                    return string_format(text,
-                        n.get_name(),
-                        n.male ? "男" : "女",
-                        n.myclass->get_name(),
-                        n.personality.bravery,
-                        n.personality.altruism,
-                        n.personality.aggression,
-                        n.op_of_u.trust,
-                        n.op_of_u.fear,
-                        n.op_of_u.value,
-                        n.op_of_u.anger
-                    );
-                } catch (...) {
-                    return text;
-                }
+                return fill_prompt(text,n);
             };
             
             auto create_folded_text = [](const std::string& str, int width) -> std::vector<std::string> {
@@ -288,13 +289,10 @@ void talk_function::edit_ai_prompt(npc& n) {
             
             ui_manager::redraw();
             ctxt.handle_input();
-            
-            old_text = new_text;
             continue;
         }
         
-        if (result.first || old_text == new_text) {
-            n.ai_prompt = new_text;
+        if (result.first) {
             return;
         }
     }
