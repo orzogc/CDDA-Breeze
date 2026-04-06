@@ -207,28 +207,23 @@ void talk_function::edit_ai_prompt(npc& n) {
         
         if (!result.first) {
             editor_ui.reset();
-            const bool force_uc = get_option<bool>("FORCE_CAPITAL_YN");
-            const auto& allow_key = force_uc ? input_context::disallow_lower_case_or_non_modified_letters
-                                            : input_context::allow_all_keys;
-            const std::string action = query_popup()
-                                       .context("YESNOQUIT")
-                                       .message("%s", old_text != new_text?"保存修改？":"没有修改提示词。")
-                                       .option(old_text != new_text ? "保存并退出":"退出编辑", allow_key)
-                                       .option("退出", allow_key)
-                                       .option("预览", allow_key)
-                                       .allow_cancel(true)
-                                       .default_color(c_light_red)
-                                       .query()
-                                       .action;
-            if (action == "保存并退出") {
+
+            uilist menu;
+            int option_index = 0;
+            menu.text = old_text != new_text ? "保存修改？" : "没有修改提示词。";
+            menu.addentry(0, true, 'p', "预览");
+            if (old_text != new_text) {
+                menu.addentry(1, true, 's', "保存并退出");
+            }
+            menu.addentry(2, true, 'q', "退出");
+            menu.query();
+
+            if (menu.ret == 1) {
                 n.ai_prompt = new_text;
                 return;
             }
-            else if (action == "退出") {
+            else if (menu.ret == 2) {
                 return;
-            }
-            else if (action == "继续编辑") {
-                continue;
             }
             
             catacurses::window w_preview;
