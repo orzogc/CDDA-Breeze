@@ -2952,8 +2952,13 @@ void options_manager::add_options_ai() {
         "", 50
     );
     add("模型名称", "ai", to_translation("模型名称"),
-        to_translation("要调用的模型名称。目前只推荐使用gemini-fast和nova-fast。nova-fast消耗的额度更少，但是能力整体较低。"),
-        "gemini-fast",30 
+        to_translation("要调用的模型名称。\nopenai-fast能力强，但是消耗额度多。\ngemini-fast能力中等，消耗额度适中。 \nnova-fast能力弱，消耗额度少。"),
+        { { "openai-fast", to_translation("openai-fast")},
+        //~ capped at a value
+        { "gemini-fast", to_translation("gemini-fast")},
+        { "nova-fast", to_translation("nova-fast")}
+        },
+        "gemini-fast"
     );
     add("温度", "ai", to_translation("温度"),
         to_translation("温度可以调节生成文本的多样性。低温生成的文本确定性更强，高温生成的文本多样性更强。"),
@@ -2963,7 +2968,7 @@ void options_manager::add_options_ai() {
     add_empty_line();
 
     add("AI润色NPC的回复内容", "ai", to_translation("AI润色NPC的回复内容"),
-        to_translation("当此选项的值为 是 时，在与NPC对话时，AI会根据各种数据（自身的属性、对玩家的态度......）来润色NPC的回复内容。"),
+        to_translation("当此选项的值为 是 时，在与NPC对话时，AI会根据提示词结合游戏数据（NPC的基本信息、对玩家的态度......）来润色NPC的回复内容。"),
         false
     );
     add("显示消耗的Token数量", "ai", to_translation("显示消耗的Token数量"),
