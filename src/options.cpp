@@ -2952,7 +2952,7 @@ void options_manager::add_options_ai() {
         "", 50
     );
     add("模型名称", "ai", to_translation("模型名称"),
-        to_translation("要调用的模型名称。\nopenai-fast能力强，但是消耗额度多。\ngemini-fast能力中等，消耗额度适中。 \nnova-fast能力弱，消耗额度少。"),
+        to_translation("要调用的模型名称。\nopenai-fast能力强，消耗额度多。可能是服务商或者网络的原因，调用此模型返回结果的速度较慢。\ngemini-fast能力中等，消耗额度适中。 \nnova-fast能力弱，消耗额度少。"),
         { { "openai-fast", to_translation("openai-fast")},
         //~ capped at a value
         { "gemini-fast", to_translation("gemini-fast")},
