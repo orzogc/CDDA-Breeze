@@ -95,12 +95,12 @@
 #include "vpart_range.h"
 #include "sdltiles.h"
 
-std::string basic_prompt =
+const std::string basic_prompt =
 "# 你是谁 \n"
 "- 你是一个只会润色文本的AI，绝对服从命令，像一个流水线一样，接受用户输入的文本，并将润色后的文本返回。 \n"
 "# 你绝对要遵守的核心规则 \n"
 "- 你的任务是扮演npc，并基于npc角色设定和额外环境信息，对npc固定回复内容进行符合逻辑与性格的“润色扩写”，使其更加生动自然。\n"
-"- 你要始终明白，用户提供的是你所扮演的npc说的话。"
+"- 你要始终明白，用户提供的是你所扮演的npc说的话。\n"
 "# 你接收的输入\n"
 "- 用户会给你提供npc的固定回复内容。\n"
 "# 你绝对要遵守的输出结果 \n"
@@ -118,11 +118,20 @@ std::string basic_prompt =
 "- 恐惧：%s \n"
 "- 功利性地衡量玩家的价值：%s \n"
 "- 愤怒：%s \n"
+"## 玩家的基本信息 \n"
+"- 姓名：%s \n"
+"- 性别：%s \n"
+"## 周围的情况 \n"
+"- 是否有可见的敌人：%s"
 ;
 
-std::string build_prompt(npc& n) {
-    std::string template_str = !n.ai_prompt.empty() ? n.ai_prompt : basic_prompt;
-    std::string prompt = string_format(template_str,
+std::string fill_prompt(const std::string &original_prompt,npc& n) {
+    Character& player = get_player_character();
+    std::string has_visible_enemy = "否";
+    if (n.get_hostile_creatures(60).empty() == false) {
+        has_visible_enemy = "是";
+    }
+    std::string prompt = string_format(original_prompt,
         // npc的基本信息
         n.get_name(),
         n.male ? "男" : "女",
@@ -134,8 +143,19 @@ std::string build_prompt(npc& n) {
         n.op_of_u.trust,
         n.op_of_u.fear,
         n.op_of_u.value,
-        n.op_of_u.anger
+        n.op_of_u.anger,
+        // 玩家的基本信息
+        player.get_name(),
+        player.male ? "男" : "女",
+        // 周围环境信息
+        has_visible_enemy
     );
+    return prompt;
+}
+
+std::string build_prompt(npc& n) {
+    std::string template_str = !n.ai_prompt.empty() ? n.ai_prompt : basic_prompt;
+    std::string prompt = fill_prompt(template_str,n);
     return prompt;
 }
 
@@ -152,67 +172,65 @@ void talk_function::edit_ai_prompt(npc& n) {
         n.ai_prompt = basic_prompt;
     }
     std::string old_text = n.ai_prompt;
-    
+    std::string new_text = old_text;
     while (true) {
-        std::string new_text = old_text;
+        catacurses::window w_editor_border;
+        catacurses::window w_editor;
+        ui_adaptor editor_ui;
         
         auto create_editor_window = [&]() {
             const std::pair<point, point> beg_and_max = ai_prompt_window_position();
             const point &beg = beg_and_max.first;
             const point &max = beg_and_max.second;
-            return catacurses::newwin(max.y, max.x, beg);
+            
+            w_editor_border = catacurses::newwin(max.y + 4, max.x + 4, beg + point(-2, -2));
+            w_editor = catacurses::newwin(max.y, max.x, beg);
+            return w_editor;
         };
+        
+        editor_ui.on_screen_resize([&](ui_adaptor& ui) {
+            create_editor_window();
+            ui.position_from_window(w_editor_border);
+        });
+        editor_ui.mark_resize();
+        editor_ui.on_redraw([&](const ui_adaptor&) {
+            werase(w_editor_border);
+            draw_border(w_editor_border);
+            center_print(w_editor_border, 0, c_light_gray, _("编辑AI提示词"));
+            wnoutrefresh(w_editor_border);
+        });
         
         string_editor_window ed(create_editor_window, new_text);
         const std::pair<bool, std::string> result = ed.query_string();
         new_text = result.second;
         
-        if (!result.first && old_text != new_text) {
-            const bool force_uc = get_option<bool>("FORCE_CAPITAL_YN");
-            const auto& allow_key = force_uc ? input_context::disallow_lower_case_or_non_modified_letters
-                                            : input_context::allow_all_keys;
-            const std::string action = query_popup()
-                                       .context("YESNOQUIT")
-                                       .message("%s", _("Save changes?"))
-                                       .option("YES", allow_key)
-                                       .option("NO", allow_key)
-                                       .option(_("Preview"), allow_key)
-                                       .allow_cancel(true)
-                                       .default_color(c_light_red)
-                                       .query()
-                                       .action;
-            if (action == "YES") {
+        
+        if (!result.first) {
+            editor_ui.reset();
+
+            uilist menu;
+            int option_index = 0;
+            menu.text = old_text != new_text ? "保存修改？" : "没有修改提示词。";
+            menu.addentry(0, true, 'p', "预览");
+            if (old_text != new_text) {
+                menu.addentry(1, true, 's', "保存并退出");
+            }
+            menu.addentry(2, true, 'q', "退出");
+            menu.query();
+
+            if (menu.ret == 1) {
                 n.ai_prompt = new_text;
                 return;
-            } else if (action == "NO") {
+            }
+            else if (menu.ret == 2) {
                 return;
-            } else if (action != _("Preview")) {
-                continue;
             }
             
             catacurses::window w_preview;
             catacurses::window w_border;
             
             ui_adaptor ui;
-            
-            auto update_preview = [&](const std::string& text) -> std::string {
-                try {
-                    return string_format(text,
-                        n.get_name(),
-                        n.male ? "男" : "女",
-                        n.myclass->get_name(),
-                        n.personality.bravery,
-                        n.personality.altruism,
-                        n.personality.aggression,
-                        n.op_of_u.trust,
-                        n.op_of_u.fear,
-                        n.op_of_u.value,
-                        n.op_of_u.anger
-                    );
-                } catch (...) {
-                    return text;
-                }
-            };
+            int scroll_pos = 0;
             
             auto create_folded_text = [](const std::string& str, int width) -> std::vector<std::string> {
                 std::vector<std::string> lines;
@@ -259,22 +277,44 @@ void talk_function::edit_ai_prompt(npc& n) {
             
             ui.mark_resize();
             
+            std::vector<std::string> preview_lines;
+            int preview_height;
+            
             ui.on_redraw([&](const ui_adaptor&) {
                 werase(w_border);
                 werase(w_preview);
                 
                 draw_border(w_border);
-                center_print(w_border, 0, c_light_gray, _("预览 - 按任意键返回"));
+                center_print(w_border, 0, c_light_green, _("预览 - 上/下方向键滚动，其他键返回"));
                 
                 const int preview_width = getmaxx(w_preview);
-                const int preview_height = getmaxy(w_preview);
+                preview_height = getmaxy(w_preview);
                 
                 // Draw preview content
-                std::string preview_text = update_preview(new_text);
-                std::vector<std::string> preview_lines = create_folded_text(preview_text, preview_width - 2);
+                std::string preview_text = fill_prompt(new_text,n);
+                preview_lines = create_folded_text(preview_text, preview_width - 2);
                 
-                for (int i = 0; i < preview_height - 1 && i < static_cast<int>(preview_lines.size()); i++) {
-                    mvwprintz(w_preview, point(1, i), c_white, "%s", preview_lines[i]);
+                const int max_scroll = std::max(0, static_cast<int>(preview_lines.size()) - preview_height);
+                if (scroll_pos > max_scroll) {
+                    scroll_pos = max_scroll;
+                }
+                if (scroll_pos < 0) {
+                    scroll_pos = 0;
+                }
+                
+                const int end_line = std::min(scroll_pos + preview_height, static_cast<int>(preview_lines.size()));
+                for (int i = scroll_pos; i < end_line; i++) {
+                    const int y = i - scroll_pos;
+                    mvwprintz(w_preview, point(1, y), c_white, "%s", preview_lines[i]);
+                }
+                
+                // Draw scrollbar if needed
+                if (static_cast<int>(preview_lines.size()) > preview_height) {
+                    scrollbar()
+                    .content_size(preview_lines.size())
+                    .viewport_pos(scroll_pos)
+                    .viewport_size(preview_height)
+                    .apply(w_preview);
                 }
                 
                 wnoutrefresh(w_border);
@@ -284,17 +324,39 @@ void talk_function::edit_ai_prompt(npc& n) {
             input_context ctxt("PREVIEW");
             ctxt.register_action("CONFIRM");
             ctxt.register_action("QUIT");
+            ctxt.register_action("TEXT.UP");
+            ctxt.register_action("TEXT.DOWN");
+            ctxt.register_action("TEXT.PAGE_UP");
+            ctxt.register_action("TEXT.PAGE_DOWN");
+            ctxt.register_action("TEXT.HOME");
+            ctxt.register_action("TEXT.END");
             ctxt.register_action("ANY_INPUT");
             
-            ui_manager::redraw();
-            ctxt.handle_input();
-            
-            old_text = new_text;
+            while (true) {
+                ui_manager::redraw();
+                const std::string action = ctxt.handle_input();
+                
+                if (action == "TEXT.UP") {
+                    scroll_pos = std::max(0, scroll_pos - 1);
+                } else if (action == "TEXT.DOWN") {
+                    scroll_pos = std::min(scroll_pos + 1, std::max(0, static_cast<int>(preview_lines.size()) - preview_height));
+                } else if (action == "TEXT.PAGE_UP") {
+                    scroll_pos = std::max(0, scroll_pos - preview_height);
+                } else if (action == "TEXT.PAGE_DOWN") {
+                    const int max_scroll = std::max(0, static_cast<int>(preview_lines.size()) - preview_height);
+                    scroll_pos = std::min(scroll_pos + preview_height, max_scroll);
+                } else if (action == "TEXT.HOME") {
+                    scroll_pos = 0;
+                } else if (action == "TEXT.END") {
+                    scroll_pos = std::max(0, static_cast<int>(preview_lines.size()) - preview_height);
+                } else {
+                    break;
+                }
+            }
             continue;
         }
         
-        if (result.first || old_text == new_text) {
-            n.ai_prompt = new_text;
+        if (result.first) {
             return;
         }
     }
@@ -2267,20 +2329,21 @@ talk_topic dialogue::opt( dialogue_window &d_win, const talk_topic &topic )
         !d_win.is_computer &&
         !d_win.is_not_conversation;
     if (get_option<bool>("AI润色NPC的回复内容") && is_npc_speaking) {
-        add_msg(challenge);
         network::RequestId requ_id = network::start_pollinations_request(build_prompt(*actor(true)->get_npc()), "npc说："+challenge);
         while (true) {
             network::process();
             if (network::get_status(requ_id) == network::RequestStatus::Completed) {
-                challenge = network::parse_pollinations_response(network::get_result(requ_id).response_body);
+                challenge = network::parse_pollinations_response(network::get_result(requ_id).response_body,get_option<bool>("显示消耗的Token数量"));
                 network::clear_completed();
                 break;
             }
             else if (network::get_status(requ_id) == network::RequestStatus::Failed) {
-                add_msg(network::get_result(requ_id).response_body);
+                add_msg(m_bad,network::get_result(requ_id).response_body);
+                network::clear_completed();
                 break;
             }
-            std::this_thread::sleep_for(std::chrono::milliseconds(50));
+            inp_mngr.pump_events();
+            std::this_thread::sleep_for(std::chrono::milliseconds(300));
         }
     }
 

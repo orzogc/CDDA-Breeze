@@ -49,8 +49,8 @@ std::vector<RequestId> get_all_requests();
 // 发送 pollinations API 请求
 RequestId start_pollinations_request( const std::string &system_prompt,const std::string& user_prompt);
 
-// 解析 pollinations API 响应，提取 content
-std::string parse_pollinations_response( const std::string &json_response );
+// 解析 pollinations API 响应，提取 content，可选追加token消耗信息
+std::string parse_pollinations_response( const std::string &json_response, bool include_token_usage = false );
 
 } // namespace network
 

@@ -262,10 +262,10 @@ void process()
         Request *req = pair.second.get();
         if( req->status == RequestStatus::InProgress ) {
             auto elapsed = std::chrono::duration_cast<std::chrono::seconds>( now - req->start_time ).count();
-            if( elapsed >= 20 ) {
+            if( elapsed >= 40 ) {
                 req->status = RequestStatus::Failed;
-                req->error_message = "Request timed out after 20 seconds";
-                req->response_body = "Error: Request timed out after 20 seconds";
+                req->error_message = "Request timed out after 40 seconds";
+                req->response_body = "Error: Request timed out after 40 seconds";
                 if( req->handle ) {
                     curl_multi_remove_handle( g_multi_handle, req->handle );
                 }
@@ -360,7 +360,7 @@ RequestId start_pollinations_request( const std::string &system_prompt,const std
     std::string json_body = "{\"messages\":[{\"content\":\"" + json_escape( system_prompt ) + 
         "\",\"role\":\"system\"},{\"role\":\"user\",\"content\":\""+json_escape(user_prompt)+"\"}], \"model\":\"" +
         json_escape(model.empty() ? "openai" : model ) + 
-        "\",\"modalities\":[\"text\"],\"stream\":false,\"temperature\":"+temperature+"}";
+        "\",\"stream\":false,\"temperature\":"+temperature+"}";
     
     std::string url = "https://gen.pollinations.ai/v1/chat/completions";
     
@@ -383,39 +383,67 @@ RequestId start_pollinations_request( const std::string &system_prompt,const std
     //     log_file.close();
     // }
     
-    add_msg("Sending POST request to pollinations.ai");
     return start_post( url, json_body, headers );
 }
 
-std::string parse_pollinations_response( const std::string &json_response )
+std::string parse_pollinations_response( const std::string &json_response, bool include_token_usage )
 {
-    std::istringstream ss( json_response );
-    TextJsonIn jsin( ss );
-    TextJsonObject jo = jsin.get_object();
-    jo.allow_omitted_members();
+    try {
+        std::istringstream ss( json_response );
+        TextJsonIn jsin( ss );
+        TextJsonObject jo = jsin.get_object();
+        jo.allow_omitted_members();
 
-    if( !jo.has_member( "choices" ) ) {
-        return "";
+        if( !jo.has_member( "choices" ) ) {
+            return "";
+        }
+
+        TextJsonArray choices = jo.get_array( "choices" );
+        if( choices.empty() ) {
+            return "";
+        }
+
+        TextJsonObject choice = choices.get_object( 0 );
+        choice.allow_omitted_members();
+        if( !choice.has_member( "message" ) ) {
+            return "";
+        }
+
+        TextJsonObject message = choice.get_object( "message" );
+        message.allow_omitted_members();
+        if( !message.has_member( "content" ) ) {
+            return "";
+        }
+
+        std::string content = message.get_string( "content" );
+
+        if( include_token_usage && jo.has_member( "usage" ) ) {
+            TextJsonObject usage = jo.get_object( "usage" );
+            usage.allow_omitted_members();
+            int prompt_tokens = 0;
+            int completion_tokens = 0;
+            int total_tokens = 0;
+
+            if( usage.has_member( "prompt_tokens" ) ) {
+                prompt_tokens = usage.get_int( "prompt_tokens" );
+            }
+            if( usage.has_member( "completion_tokens" ) ) {
+                completion_tokens = usage.get_int( "completion_tokens" );
+            }
+            if( usage.has_member( "total_tokens" ) ) {
+                total_tokens = usage.get_int( "total_tokens" );
+            }
+
+            content += "\n\nToken消耗情况:\n";
+            content += "输入消耗：" + std::to_string( prompt_tokens ) + "\n";
+            content += "输出消耗：" + std::to_string( completion_tokens ) + "\n";
+            content += "总消耗  ：" + std::to_string( total_tokens );
+        }
+
+        return content;
+    } catch( ... ) {
+        return json_response;
     }
-
-    TextJsonArray choices = jo.get_array( "choices" );
-    if( choices.empty() ) {
-        return "";
-    }
-
-    TextJsonObject choice = choices.get_object( 0 );
-    choice.allow_omitted_members();
-    if( !choice.has_member( "message" ) ) {
-        return "";
-    }
-
-    TextJsonObject message = choice.get_object( "message" );
-    message.allow_omitted_members();
-    if( !message.has_member( "content" ) ) {
-        return "";
-    }
-
-    return message.get_string( "content" );
 }
 
 } // namespace network
