@@ -267,6 +267,12 @@ jobs:
             '${{ github.workspace }}/android/a.keystore' > keystore.properties
 
           chmod +x gradlew
+
+          # Do not let an old native object or a prebuilt libmain.so survive
+          # into a release whose Android versionName has already changed.
+          rm -rf app/.cxx app/build/intermediates/cxx app/build/intermediates/merged_native_libs app/build/intermediates/stripped_native_libs
+          find app/libs -type f -name 'libmain.so' -delete 2>/dev/null || true
+
           ./gradlew --no-daemon \
             -Pj="$(nproc)" \
             -Pabi_arm_32=false \
@@ -299,7 +305,37 @@ jobs:
             exit 1
           fi
 
-          echo "Verified APK versionName=${APK_VERSION_NAME}, versionCode=${APK_VERSION_CODE}."
+          EXPECTED_NATIVE_VERSION="CDDA-Breeze-${BREEZE_VERSION}"
+          NATIVE_CHECK_DIR="$(mktemp -d)"
+          trap 'rm -rf "${NATIVE_CHECK_DIR}"' EXIT
+
+          unzip -q "${APK_PATH}" 'lib/*/libmain.so' -d "${NATIVE_CHECK_DIR}"
+          mapfile -t MAIN_LIBRARIES < <(
+            find "${NATIVE_CHECK_DIR}/lib" -type f -name 'libmain.so' -print
+          )
+
+          if [[ "${#MAIN_LIBRARIES[@]}" -eq 0 ]]; then
+            echo "APK does not contain libmain.so." >&2
+            exit 1
+          fi
+
+          for MAIN_LIBRARY in "${MAIN_LIBRARIES[@]}"; do
+            NATIVE_VERSION_STRINGS="$(
+              strings -a "${MAIN_LIBRARY}" |
+                grep -E '^CDDA-Breeze[- ][0-9]' |
+                sort -u || true
+            )"
+
+            if ! grep -Fqx "${EXPECTED_NATIVE_VERSION}" <<<"${NATIVE_VERSION_STRINGS}"; then
+              echo "Native version mismatch in ${MAIN_LIBRARY}." >&2
+              echo "Expected: ${EXPECTED_NATIVE_VERSION}" >&2
+              echo "Found native version strings:" >&2
+              printf '%s\n' "${NATIVE_VERSION_STRINGS:-<none>}" >&2
+              exit 1
+            fi
+          done
+
+          echo "Verified APK versionName=${APK_VERSION_NAME}, versionCode=${APK_VERSION_CODE}, nativeVersion=${EXPECTED_NATIVE_VERSION}."
           mv "${APK_PATH}" "../${OUTPUT_FILE}"
 
       - name: 保存构建文件到Actions
