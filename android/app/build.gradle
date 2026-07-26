@@ -207,7 +207,11 @@ task unzipDeps(type: Copy) {
     println("Using dependencies file: $deps")
     def zipFile = new File("$deps")
     def outputDir = new File('.')
-    from zipTree(zipFile)
+    from(zipTree(zipFile)) {
+        // libmain.so is the game executable and must always be rebuilt from
+        // the current source tree. Never allow deps.zip to provide an old copy.
+        exclude '**/libmain.so'
+    }
     into outputDir
 }
 
@@ -338,7 +342,9 @@ android {
 
         externalNativeBuild {
             ndkBuild {
-                arguments "APP_PLATFORM=$override_ndkBuildAppPlatform", "-j$njobs"
+                arguments "APP_PLATFORM=$override_ndkBuildAppPlatform",
+                          "-j$njobs",
+                          "BREEZE_VERSION=$resolved_version"
             }
         }
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
