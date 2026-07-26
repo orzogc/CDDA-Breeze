@@ -274,7 +274,33 @@ jobs:
             -Poverride_versionCode="${UPSTREAM_BUILD_NUMBER}" \
             assembleRelease
 
-          mv ./app/build/outputs/apk/stable/release/*.apk "../${OUTPUT_FILE}"
+          APK_PATH="$(find ./app/build/outputs/apk/stable/release -maxdepth 1 -type f -name '*.apk' -print -quit)"
+          if [[ -z "${APK_PATH}" ]]; then
+            echo "Android APK was not generated." >&2
+            exit 1
+          fi
+
+          AAPT="$(find "${ANDROID_SDK_ROOT}/build-tools" -type f -name aapt -print | sort -V | tail -n 1)"
+          if [[ -z "${AAPT}" ]]; then
+            echo "Unable to locate aapt for APK version verification." >&2
+            exit 1
+          fi
+
+          APK_BADGING="$("${AAPT}" dump badging "${APK_PATH}")"
+          APK_VERSION_NAME="$(sed -n "s/^package:.*versionName='\([^']*\)'.*/\1/p" <<<"${APK_BADGING}")"
+          APK_VERSION_CODE="$(sed -n "s/^package:.*versionCode='\([^']*\)'.*/\1/p" <<<"${APK_BADGING}")"
+
+          if [[ "${APK_VERSION_NAME}" != "${BREEZE_VERSION}" ]]; then
+            echo "APK versionName mismatch: expected ${BREEZE_VERSION}, got ${APK_VERSION_NAME}." >&2
+            exit 1
+          fi
+          if [[ "${APK_VERSION_CODE}" != "${UPSTREAM_BUILD_NUMBER}" ]]; then
+            echo "APK versionCode mismatch: expected ${UPSTREAM_BUILD_NUMBER}, got ${APK_VERSION_CODE}." >&2
+            exit 1
+          fi
+
+          echo "Verified APK versionName=${APK_VERSION_NAME}, versionCode=${APK_VERSION_CODE}."
+          mv "${APK_PATH}" "../${OUTPUT_FILE}"
 
       - name: 保存构建文件到Actions
         uses: actions/upload-artifact@v4
