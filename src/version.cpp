@@ -2,7 +2,9 @@
 
 #if defined(BREEZE_ANDROID_VERSION)
 
-#define VERSION BREEZE_ANDROID_VERSION
+#define STRINGIFY_IMPL(x) #x
+#define STRINGIFY(x) STRINGIFY_IMPL(x)
+#define VERSION STRINGIFY(BREEZE_ANDROID_VERSION)
 
 #elif (defined(_WIN32) || defined(MINGW)) && !defined(GIT_VERSION) && !defined(CROSS_LINUX) && !defined(_MSC_VER)
 
