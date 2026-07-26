@@ -40,11 +40,17 @@ public class SplashScreen extends Activity {
     public CharSequence[] mSettingsNames;
     public boolean[] mSettingsValues = { false, true, false };
 
-    private String getVersionName() {
+    private String getInstallVersionKey() {
         try {
             Context context = getApplicationContext();
             PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-            return pInfo.versionName;
+            long versionCode;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                versionCode = pInfo.getLongVersionCode();
+            } else {
+                versionCode = pInfo.versionCode;
+            }
+            return pInfo.versionName + ":" + versionCode;
         } catch (Exception e) {
             e.printStackTrace();
             return "error";
@@ -126,7 +132,7 @@ public class SplashScreen extends Activity {
         Log.e(TAG, "onCreate()");
         accessibilityServicesAlert.dismiss();
         // Start the game if already installed, otherwise start installing...
-        if (getVersionName().equals(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("installed", ""))) {
+        if (getInstallVersionKey().equals(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("installed", ""))) {
             // Show an alert box if the game crashed last time
             String externalFilesDir = getExternalFilesDir(null).getPath();
             File crashAlertPrompt = new File(externalFilesDir + "/config/crash.log.prompt");
@@ -326,7 +332,7 @@ public class SplashScreen extends Activity {
             }
 
             // Remember which version the installed data is
-            PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("installed", getVersionName()).commit();
+            PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("installed", getInstallVersionKey()).commit();
 
             publishProgress(++installedFiles);
             Log.d(TAG, "Total number of files copied: " + installedFiles);
