@@ -1620,11 +1620,25 @@ std::optional<int> iuse::petfood( Character *p, item *it, bool, const tripoint &
         if( petfood.feed.empty() ) {
             p->add_msg_if_player( m_good, _( "The %1$s is your pet now!" ), mon->get_name() );
         } else {
-            p->add_msg_if_player( m_good, petfood.feed, mon->get_name() );
+            // JSON 中的物种专属驯养文本此前被直接输出，绕过了翻译系统。
+            const std::string localized_feed = _( petfood.feed );
+            const std::string generic_feed = _( "The %1$s is your pet now!" );
+            if( localized_feed == petfood.feed &&
+                generic_feed != "The %1$s is your pet now!" ) {
+                // 当前语言缺少专属译文时，退回已本地化的通用提示，避免夹杂英文。
+                p->add_msg_if_player( m_good, generic_feed, mon->get_name() );
+            } else {
+                p->add_msg_if_player( m_good, localized_feed, mon->get_name() );
+            }
         }
 
         mon->friendly = -1;
         mon->add_effect( effect_pet, 1_turns, true );
+        // 非狗动物在被驯服前可能仍保留着接近或逃离玩家的旧目标。
+        // 驯服成功时立即清除；需要带走时使用绳子牵引。
+        if( !mon->is_pet_follow() ) {
+            mon->unset_dest();
+        }
         p->consume_charges( *it, 1 );
         return std::nullopt;
     }

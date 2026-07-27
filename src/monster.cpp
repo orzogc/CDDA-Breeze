@@ -135,6 +135,7 @@ static const material_id material_veggy("veggy");
 static const mfaction_str_id monfaction_acid_ant("acid_ant");
 static const mfaction_str_id monfaction_ant("ant");
 static const mfaction_str_id monfaction_bee("bee");
+static const mfaction_str_id monfaction_dog("dog");
 static const mfaction_str_id monfaction_nether_player_hate("nether_player_hate");
 static const mfaction_str_id monfaction_wasp("wasp");
 
@@ -1481,6 +1482,19 @@ bool monster::made_of_any(const std::set<material_id>& ms) const
 bool monster::shearable() const
 {
     return type->shearing.valid();
+}
+
+bool monster::is_pet() const
+{
+    return friendly == -1 && has_effect( effect_pet );
+}
+
+bool monster::is_pet_follow() const
+{
+    // Only animals whose original monster faction is the dog faction follow
+    // automatically.  Other tamed animals must be led with a leash.
+    return is_pet() && type->default_faction == monfaction_dog &&
+           !has_flag( MF_PET_WONT_FOLLOW );
 }
 
 bool monster::made_of(phase_id p) const

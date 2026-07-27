@@ -851,6 +851,16 @@
     "based_on": "speed"
   },
   {
+    "id": "ACT_TRAIN_COMBAT_MOUNT",
+    "type": "activity_type",
+    "activity_level": "LIGHT_EXERCISE",
+    "verb": "训练战马",
+    "rooted": true,
+    "based_on": "time",
+    "suspendable": false,
+    "no_resume": true
+  },
+  {
     "id": "ACT_PLAY_WITH_PET",
     "type": "activity_type",
     "activity_level": "LIGHT_EXERCISE",

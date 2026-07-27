@@ -185,6 +185,12 @@
   },
   {
     "type": "effect_type",
+    "id": "combat_mount_trained",
+    "name": [ "战马训练" ],
+    "desc": [ "这匹坐骑经过了战斗训练，不会再因附近的敌人受惊。" ]
+  },
+  {
+    "type": "effect_type",
     "id": "paid",
     "name": [ "Paid" ],
     "desc": [ "AI tag used for paid critters.  This is a bug if you have it." ]

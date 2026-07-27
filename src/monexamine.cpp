@@ -43,6 +43,9 @@
 #include "overmapbuffer.h"
 #include "units_utility.h"
 
+static const activity_id ACT_TRAIN_COMBAT_MOUNT( "ACT_TRAIN_COMBAT_MOUNT" );
+
+static const efftype_id effect_combat_mount_trained( "combat_mount_trained" );
 static const efftype_id effect_controlled( "controlled" );
 static const efftype_id effect_harnessed( "harnessed" );
 static const efftype_id effect_has_bag( "has_bag" );
@@ -65,6 +68,8 @@ static const flag_id json_flag_AUTONOMOUS_CONTROL("AUTONOMOUS_CONTROL");
 
 static const itype_id itype_cash_card( "cash_card" );
 static const itype_id itype_id_military( "id_military" );
+
+static const mtype_id mon_horse( "mon_horse" );
 
 static const quality_id qual_SHEAR( "SHEAR" );
 
@@ -695,6 +700,7 @@ bool monexamine::pet_menu( monster &z )
         pay,
         attach_saddle,
         remove_saddle,
+        train_combat_mount,
         mount,
         tie,
         untie,
@@ -782,15 +788,13 @@ bool monexamine::pet_menu( monster &z )
     
     }
 
-    if (!z.has_flag(MF_RIDEABLE_MECH) && !z.has_effect(effect_has_bag)) {
-        amenu.addentry(attach_bag, true, 'b', "给 % s 安装容器", pet_name);
+    if( !z.has_flag( MF_RIDEABLE_MECH ) && !z.has_effect( effect_has_bag ) ) {
+        amenu.addentry( attach_bag, true, 'b', _( "给%s安装容器" ), pet_name );
     }
 
-    if (z.has_effect(effect_has_bag)) {
-        amenu.addentry(交换物品, true, 'E', _("交换物品"));
-    }
-    else {
-        amenu.addentry(交换物品, false, 'E', _("交换物品"));
+    // 只有宠物实际安装了容器时才显示物品管理，避免菜单里长期出现无意义的灰色选项。
+    if( z.has_effect( effect_has_bag ) ) {
+        amenu.addentry( 交换物品, true, 'E', _( "管理容器内物品" ) );
     }
 
     if( z.has_effect( effect_harnessed ) ) {
@@ -854,6 +858,16 @@ bool monexamine::pet_menu( monster &z )
     }
     if( z.has_flag( MF_PET_MOUNTABLE ) && z.has_effect( effect_monster_saddled ) ) {
         amenu.addentry( remove_saddle, true, 'h', _( "Remove tack from %s" ), pet_name );
+    }
+    // 训练完成后不再保留灰色菜单项；战马状态仍会永久保存。
+    if( z.type->id == mon_horse && !z.has_effect( effect_combat_mount_trained ) ) {
+        if( player_character.get_skill_level( skill_survival ) < 3 ) {
+            amenu.addentry( train_combat_mount, false, 'W', _( "训练为战马，需要生存技能3" ) );
+        } else if( !z.has_effect( effect_tied ) ) {
+            amenu.addentry( train_combat_mount, false, 'W', _( "训练为战马，需要先将马拴好" ) );
+        } else {
+            amenu.addentry( train_combat_mount, true, 'W', _( "训练为战马，一小时" ) );
+        }
     }
     if( z.has_flag( MF_PAY_BOT ) ) {
         amenu.addentry( pay, true, 'f', _( "Manage your friendship with %s" ), pet_name );
@@ -968,6 +982,12 @@ bool monexamine::pet_menu( monster &z )
             break;
         case remove_saddle:
             remove_saddle_from( z );
+            break;
+        case train_combat_mount:
+            player_character.assign_activity( ACT_TRAIN_COMBAT_MOUNT, to_moves<int>( 1_hours ) );
+            player_character.activity.monsters.push_back( g->shared_from( z ) );
+            player_character.activity.str_values.push_back( pet_name );
+            add_msg( m_info, _( "你开始训练%s适应怪物的嘶吼与骚动。" ), pet_name );
             break;
         case mount:
             mount_pet( z );

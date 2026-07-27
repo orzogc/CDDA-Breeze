@@ -254,6 +254,7 @@ static const efftype_id effect_recently_coughed( "recently_coughed" );
 static const efftype_id effect_recover( "recover" );
 static const efftype_id effect_ridden( "ridden" );
 static const efftype_id effect_riding( "riding" );
+static const efftype_id effect_combat_mount_trained( "combat_mount_trained" );
 static const efftype_id effect_sleep( "sleep" );
 static const efftype_id effect_slept_through_alarm( "slept_through_alarm" );
 static const efftype_id effect_stunned( "stunned" );
@@ -1496,12 +1497,20 @@ void Character::mount_creature( monster &z )
         // mech night-vision counts as optics for overmap sight range.
         g->update_overmap_seen();
     }
+
+    // Animal mounts start at a steady trot.  Galloping remains an explicit player choice,
+    // while mechs keep their existing power-management behavior.
+    if( get_steed_type() == steed_type::ANIMAL ) {
+        set_movement_mode( move_mode_walk );
+    }
+
     mod_moves( -100 );
 }
 
 bool Character::check_mount_will_move( const tripoint &dest_loc )
 {
-    if( !is_mounted() ) {
+    if( !is_mounted() || ( mounted_creature &&
+                             mounted_creature->has_effect( effect_combat_mount_trained ) ) ) {
         return true;
     }
     if( mounted_creature && mounted_creature->type->has_fear_trigger( mon_trigger::HOSTILE_CLOSE ) ) {
@@ -1522,7 +1531,8 @@ bool Character::check_mount_will_move( const tripoint &dest_loc )
 
 bool Character::check_mount_is_spooked()
 {
-    if( !is_mounted() ) {
+    if( !is_mounted() || ( mounted_creature &&
+                             mounted_creature->has_effect( effect_combat_mount_trained ) ) ) {
         return false;
     }
     // chance to spook per monster nearby:
