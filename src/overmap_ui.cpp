@@ -284,8 +284,12 @@ static void draw_city_labels( const catacurses::window &w, const tripoint_abs_om
 
     const point screen_center_pos( win_x_max / 2, win_y_max / 2 );
 
+    // Above ground, labels follow the same z=0 layer used by the aviation map.
+    const tripoint_abs_omt label_center =
+        center.z() > 0 ? tripoint_abs_omt( center.xy(), 0 ) : center;
+
     for( const city_reference &element : overmap_buffer.get_cities_near(
-             project_to<coords::sm>( center ), sm_radius ) ) {
+             project_to<coords::sm>( label_center ), sm_radius ) ) {
         const point_abs_omt city_pos =
             project_to<coords::omt>( element.abs_sm_pos.xy() );
         const point_rel_omt screen_pos( city_pos - center.xy() + screen_center_pos );
@@ -309,8 +313,8 @@ static void draw_city_labels( const catacurses::window &w, const tripoint_abs_om
             continue;   // right under the cursor.
         }
 
-        if( !overmap_buffer.seen( tripoint_abs_omt( city_pos, center.z() ) ) ) {
-            continue;   // haven't seen it.
+        if( !overmap_buffer.seen( tripoint_abs_omt( city_pos, label_center.z() ) ) ) {
+            continue;   // haven't seen it on the displayed ground layer.
         }
 
         mvwprintz( w, point( text_x_min, text_y ), i_yellow, element.city->name );
@@ -325,8 +329,12 @@ static void draw_camp_labels( const catacurses::window &w, const tripoint_abs_om
 
     const point screen_center_pos( win_x_max / 2, win_y_max / 2 );
 
+    // Ordinary camps are ground features and use the projected ground layer.
+    const tripoint_abs_omt label_center =
+        center.z() > 0 ? tripoint_abs_omt( center.xy(), 0 ) : center;
+
     for( const camp_reference &element : overmap_buffer.get_camps_near(
-             project_to<coords::sm>( center ), sm_radius ) ) {
+             project_to<coords::sm>( label_center ), sm_radius ) ) {
         const point_abs_omt camp_pos( element.camp->camp_omt_pos().xy() );
         const point screen_pos( ( camp_pos - center.xy() ).raw() + screen_center_pos );
         const std::string camp_name = element.camp->camp_name().empty() ?
@@ -349,8 +357,8 @@ static void draw_camp_labels( const catacurses::window &w, const tripoint_abs_om
             continue;   // right under the cursor.
         }
 
-        if( !overmap_buffer.seen( tripoint_abs_omt( camp_pos, center.z() ) ) ) {
-            continue;   // haven't seen it.
+        if( !overmap_buffer.seen( tripoint_abs_omt( camp_pos, label_center.z() ) ) ) {
+            continue;   // haven't seen it on the displayed ground layer.
         }
 
         mvwprintz( w, point( text_x_min, text_y ), i_yellow, camp_name );
@@ -364,8 +372,12 @@ static void draw_faction_camp_labels( const catacurses::window &w,
     const int win_y_max = getmaxy( w );
     const point screen_center_pos( win_x_max / 2, win_y_max / 2 );
 
+    // Faction camps follow the same z=0 projection when viewed from the air.
+    const tripoint_abs_omt label_center =
+        center.z() > 0 ? tripoint_abs_omt( center.xy(), 0 ) : center;
+
     for( const faction_camp_reference &element : overmap_buffer.get_faction_camps_near(
-             center, win_x_max / 2 + 1, win_y_max / 2 + 1 ) ) {
+             label_center, win_x_max / 2 + 1, win_y_max / 2 + 1 ) ) {
         const point screen_pos( ( element.abs_omt_pos.xy() - center.xy() ).raw() +
                                 screen_center_pos );
         const int text_width = utf8_width( element.name, true );
