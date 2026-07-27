@@ -923,6 +923,43 @@ std::string cata_tiles::get_omt_id_rotation_and_subtile(
     return ot_type_id.id().str();
 }
 
+void cata_tiles::draw_om_tile_recursively( const tripoint_abs_omt &omp,
+        const std::string &id, const int rotation, const int subtile,
+        const int base_z_offset, const bool has_debug_vision )
+{
+    std::optional<tile_lookup_res> tile =
+        find_tile_looks_like( id, TILE_CATEGORY::OVERMAP_TERRAIN, "" );
+    const bool transparent = tile && tile->tile().has_om_transparency;
+
+    bool drew_lower = false;
+    if( transparent && omp.z() > -OVERMAP_DEPTH ) {
+        const tripoint_abs_omt lower_omp = omp + tripoint( 0, 0, -1 );
+        if( has_debug_vision || overmap_buffer.seen( lower_omp ) ) {
+            int lower_rotation = 0;
+            int lower_subtile = -1;
+            const std::string lower_id =
+                get_omt_id_rotation_and_subtile( lower_omp, lower_rotation, lower_subtile );
+            draw_om_tile_recursively( lower_omp, lower_id, lower_rotation, lower_subtile,
+                                      base_z_offset + 1, has_debug_vision );
+            drew_lower = true;
+        }
+    }
+
+    const int previous_overlay_depth = z_overlay_depth;
+    const bool previous_foreground_only = overmap_transparency_foreground_only;
+    z_overlay_depth = base_z_offset;
+    overmap_transparency_foreground_only = transparent && drew_lower;
+
+    const lit_level ll =
+        overmap_buffer.is_explored( omp ) ? lit_level::LOW : lit_level::LIT;
+    int discarded_height = 0;
+    draw_from_id_string( id, TILE_CATEGORY::OVERMAP_TERRAIN, "overmap_terrain",
+                         omp.raw(), subtile, rotation, ll, false, discarded_height );
+
+    z_overlay_depth = previous_overlay_depth;
+    overmap_transparency_foreground_only = previous_foreground_only;
+}
+
 static point draw_string( Font &font,
                           const SDL_Renderer_Ptr &renderer,
                           const GeometryRenderer_Ptr &geometry,
@@ -1028,10 +1065,10 @@ void cata_tiles::draw_om( const point &dest, const tripoint_abs_omt &center_abs_
                 mx = overmap_buffer.extra( omp );
             }
 
+            // Draw transparent/open-air overmap tiles bottom-to-top, with the same
+            // pale-cyan depth cue used by the local map.
+            draw_om_tile_recursively( omp, id, rotation, subtile, 0, has_debug_vision );
             const lit_level ll = overmap_buffer.is_explored( omp ) ? lit_level::LOW : lit_level::LIT;
-            // light level is now used for choosing between grayscale filter and normal lit tiles.
-            draw_from_id_string( id, TILE_CATEGORY::OVERMAP_TERRAIN, "overmap_terrain", omp.raw(),
-                                 subtile, rotation, ll, false, height_3d );
             if( !mx.is_empty() && mx->autonote ) {
                 draw_from_id_string( mx.str(), TILE_CATEGORY::MAP_EXTRA, "map_extra", omp.raw(),
                                      0, 0, ll, false );

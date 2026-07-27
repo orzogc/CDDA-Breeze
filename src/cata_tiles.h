@@ -43,6 +43,8 @@ struct tile_type {
     bool multitile = false;
     bool rotates = false;
     bool animated = false;
+    // Overmap tiles with transparent foreground pixels reveal lower z-levels.
+    bool has_om_transparency = false;
     int height_3d = 0;
     point offset = point_zero;
     point offset_retracted = point_zero;
@@ -119,6 +121,10 @@ class texture
             return SDL_RenderCopyEx( renderer.get(), sdl_texture_ptr.get(), &srcrect, dstrect, angle, center,
                                      flip );
         }
+
+        int set_alpha_mod( int alpha ) const {
+            return SDL_SetTextureAlphaMod( sdl_texture_ptr.get(), static_cast<Uint8>( alpha ) );
+        }
 };
 
 class layer_variant
@@ -155,6 +161,7 @@ class tileset
         std::vector<texture> shadow_tile_values;
         std::vector<texture> night_tile_values;
         std::vector<texture> overexposed_tile_values;
+        std::vector<texture> z_overlay_values;
         std::vector<texture> memory_tile_values;
 
         std::unordered_set<std::string> duplicate_ids;
@@ -215,6 +222,9 @@ class tileset
         }
         const texture *get_memory_tile( const size_t index ) const {
             return get_if_available( index, memory_tile_values );
+        }
+        const texture *get_z_overlay( const size_t index ) const {
+            return get_if_available( index, z_overlay_values );
         }
 
         const std::unordered_set<std::string> &get_duplicate_ids() const {
@@ -674,6 +684,9 @@ class cata_tiles
     private:
         std::string get_omt_id_rotation_and_subtile(
             const tripoint_abs_omt &omp, int &rota, int &subtile );
+        void draw_om_tile_recursively( const tripoint_abs_omt &omp, const std::string &id,
+                                       int rotation, int subtile, int base_z_offset,
+                                       bool has_debug_vision );
     protected:
         template <typename maptype>
         void tile_loading_report_map( const maptype &tiletypemap, TILE_CATEGORY category,
@@ -782,6 +795,11 @@ class cata_tiles
          * Allows usage of night vision tilesets during sprite rendering.
          */
         bool nv_goggles_activated = false;
+
+        // Depth of the z-level currently being rendered.  Zero means the viewed level.
+        int z_overlay_depth = 0;
+        // Transparent overmap tiles draw only their foreground after the lower tile.
+        bool overmap_transparency_foreground_only = false;
 
         pimpl<pixel_minimap> minimap;
 

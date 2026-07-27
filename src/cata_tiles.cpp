@@ -1,4 +1,4 @@
-#include "cata_tiles.h"
+﻿#include "cata_tiles.h"
 #include "particle_effect_manager.h"
 
 #include <algorithm>
@@ -284,6 +284,7 @@ void tileset::clear()
     shadow_tile_values.clear();
     night_tile_values.clear();
     overexposed_tile_values.clear();
+    z_overlay_values.clear();
     memory_tile_values.clear();
     duplicate_ids.clear();
     tile_ids.clear();
@@ -493,11 +494,12 @@ void tileset_cache::loader::create_textures_from_tile_atlas( const SDL_Surface_P
 
     /** perform color filter conversion here */
     using tiles_pixel_color_entry = std::tuple<std::vector<texture>*, std::string>;
-    std::array<tiles_pixel_color_entry, 5> tile_values_data = {{
+    std::array<tiles_pixel_color_entry, 6> tile_values_data = {{
             { std::make_tuple( &ts.tile_values, "color_pixel_none" ) },
             { std::make_tuple( &ts.shadow_tile_values, "color_pixel_grayscale" ) },
             { std::make_tuple( &ts.night_tile_values, "color_pixel_nightvision" ) },
             { std::make_tuple( &ts.overexposed_tile_values, "color_pixel_overexposed" ) },
+            { std::make_tuple( &ts.z_overlay_values, "color_pixel_zoverlay" ) },
             { std::make_tuple( &ts.memory_tile_values, tilecontext->memory_map_mode ) }
         }
     };
@@ -595,6 +597,7 @@ void tileset_cache::loader::load_tileset( const cata_path &img_path, const bool 
     extend_vector_by( ts.shadow_tile_values, expected_tilecount );
     extend_vector_by( ts.night_tile_values, expected_tilecount );
     extend_vector_by( ts.overexposed_tile_values, expected_tilecount );
+    extend_vector_by( ts.z_overlay_values, expected_tilecount );
     extend_vector_by( ts.memory_tile_values, expected_tilecount );
 
     for( const SDL_Rect sub_rect : output_range ) {
@@ -1179,6 +1182,13 @@ tile_type &tileset_cache::loader::load_tile( const JsonObject &entry, const std:
     load_tile_spritelists( entry, curr_subtile.fg, "fg" );
     load_tile_spritelists( entry, curr_subtile.bg, "bg" );
 
+    // CBN marks these explicitly in tileset JSON.  Breeze also infers the common
+    // open-air/roof cases so existing tilesets benefit without a huge JSON rewrite.
+    const bool inferred_om_transparency =
+        id == "open_air" || id.find( "roof" ) != std::string::npos;
+    curr_subtile.has_om_transparency =
+        entry.get_bool( "has_om_transparency", inferred_om_transparency );
+
     return ts.create_tile_type( id, std::move( curr_subtile ) );
 }
 
@@ -1400,9 +1410,10 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
 
     creature_tracker &creatures = get_creature_tracker();
     phmap::btree_map<int, std::vector<tile_render_info>> draw_points;
-    // Limit draw depth to vertical vision setting
-    // Disable multi z-level display on isometric tilesets until height_3d issues resolved
-    const int max_draw_depth = is_isometric() ? 0 : fov_3d_z_range;
+    // Always draw at least the first visible level below the player.  The existing
+    // vertical-vision option still controls whether more distant levels are included.
+    // Disable multi z-level display on isometric tilesets until height_3d issues resolved.
+    const int max_draw_depth = is_isometric() ? 0 : std::max( 1, fov_3d_z_range );
     for( int row = min_row; row < max_row; row ++ ) {
         draw_points[row].reserve(max_col);
         for( int col = min_col; col < max_col; col ++ ) {
@@ -1661,6 +1672,7 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
             // Start drawing from the bottom-most z-level
             int cur_zlevel = -OVERMAP_DEPTH;
             do {
+                z_overlay_depth = std::max( 0, center.z - cur_zlevel );
                 //int cur_height_3d = ( cur_zlevel - center.z ) * height_3d_mult;
             // For each row
                 for (int row = min_row; row < max_row; row++) {
@@ -1683,6 +1695,7 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
                 }
                 cur_zlevel += 1;
             } while (cur_zlevel <= center.z);
+            z_overlay_depth = 0;
         }
 
         // display number of monsters to spawn in mapgen preview
@@ -2628,6 +2641,15 @@ bool cata_tiles::draw_from_id_string( const std::string &id, TILE_CATEGORY categ
         }
     }
 
+    // Transparent overmap sprites are composited bottom-to-top.  Once the lower
+    // tile has been drawn, omit this tile's opaque background and keep its roof/edge foreground.
+    if( category == TILE_CATEGORY::OVERMAP_TERRAIN &&
+        overmap_transparency_foreground_only && display_tile.has_om_transparency ) {
+        draw_sprite_at( display_tile, display_tile.fg, screen_pos, loc_rand, true, rota, ll,
+                        nv_color_active, retract, height_3d, offset );
+        return true;
+    }
+
     //draw it!
     draw_tile_at( display_tile, screen_pos, loc_rand, rota, ll,
                   nv_color_active, retract, height_3d, offset );
@@ -2695,6 +2717,11 @@ bool cata_tiles::draw_sprite_at(
         }
     }
 
+    const texture *z_overlay_tex = nullptr;
+    if( z_overlay_depth > 0 ) {
+        z_overlay_tex = tileset_ptr->get_z_overlay( sprite_index );
+    }
+
     int width = 0;
     int height = 0;
     std::tie( width, height ) = sprite_tex->dimension();
@@ -2713,19 +2740,34 @@ bool cata_tiles::draw_sprite_at(
     destination.w = width * tile_width * tile.pixelscale / tileset_ptr->get_tile_width();
     destination.h = height * tile_height * tile.pixelscale / tileset_ptr->get_tile_height();
 
+    const auto render_with_z_overlay = [&]( const double angle,
+    const SDL_RendererFlip flip ) {
+        int result = sprite_tex->render_copy_ex( renderer, &destination, angle, nullptr, flip );
+        if( z_overlay_tex ) {
+            // First lower floor stays readable; deeper floors become progressively bluer.
+            const int alpha = std::min( 160, 56 + ( z_overlay_depth - 1 ) * 32 );
+            z_overlay_tex->set_alpha_mod( alpha );
+            const int overlay_result =
+                z_overlay_tex->render_copy_ex( renderer, &destination, angle, nullptr, flip );
+            z_overlay_tex->set_alpha_mod( 255 );
+            if( result == 0 ) {
+                result = overlay_result;
+            }
+        }
+        return result;
+    };
+
     if( rotate_sprite ) {
         if( rota == -1 ) {
             // flip horizontally
-            ret = sprite_tex->render_copy_ex(
-                      renderer, &destination, 0, nullptr,
-                      static_cast<SDL_RendererFlip>( SDL_FLIP_HORIZONTAL ) );
+            ret = render_with_z_overlay(
+                      0, static_cast<SDL_RendererFlip>( SDL_FLIP_HORIZONTAL ) );
         } else {
             switch( rota % 4 ) {
                 default:
                 case 0:
                     // unrotated (and 180, with just two sprites)
-                    ret = sprite_tex->render_copy_ex( renderer, &destination, 0, nullptr,
-                                                      SDL_FLIP_NONE );
+                    ret = render_with_z_overlay( 0, SDL_FLIP_NONE );
                     break;
                 case 1:
                     // 90 degrees (and 270, with just two sprites)
@@ -2738,23 +2780,19 @@ bool cata_tiles::draw_sprite_at(
 #endif
                     if( !is_isometric() ) {
                         // never rotate isometric tiles
-                        ret = sprite_tex->render_copy_ex( renderer, &destination, -90, nullptr,
-                                                          SDL_FLIP_NONE );
+                        ret = render_with_z_overlay( -90, SDL_FLIP_NONE );
                     } else {
-                        ret = sprite_tex->render_copy_ex( renderer, &destination, 0, nullptr,
-                                                          SDL_FLIP_NONE );
+                        ret = render_with_z_overlay( 0, SDL_FLIP_NONE );
                     }
                     break;
                 case 2:
                     // 180 degrees, implemented with flips instead of rotation
                     if( !is_isometric() ) {
                         // never flip isometric tiles vertically
-                        ret = sprite_tex->render_copy_ex(
-                                  renderer, &destination, 0, nullptr,
-                                  static_cast<SDL_RendererFlip>( SDL_FLIP_HORIZONTAL | SDL_FLIP_VERTICAL ) );
+                        ret = render_with_z_overlay(
+                                  0, static_cast<SDL_RendererFlip>( SDL_FLIP_HORIZONTAL | SDL_FLIP_VERTICAL ) );
                     } else {
-                        ret = sprite_tex->render_copy_ex( renderer, &destination, 0, nullptr,
-                                                          SDL_FLIP_NONE );
+                        ret = render_with_z_overlay( 0, SDL_FLIP_NONE );
                     }
                     break;
                 case 3:
@@ -2768,18 +2806,16 @@ bool cata_tiles::draw_sprite_at(
 #endif
                     if( !is_isometric() ) {
                         // never rotate isometric tiles
-                        ret = sprite_tex->render_copy_ex( renderer, &destination, 90, nullptr,
-                                                          SDL_FLIP_NONE );
+                        ret = render_with_z_overlay( 90, SDL_FLIP_NONE );
                     } else {
-                        ret = sprite_tex->render_copy_ex( renderer, &destination, 0, nullptr,
-                                                          SDL_FLIP_NONE );
+                        ret = render_with_z_overlay( 0, SDL_FLIP_NONE );
                     }
                     break;
             }
         }
     } else {
         // don't rotate, same as case 0 above
-        ret = sprite_tex->render_copy_ex( renderer, &destination, 0, nullptr, SDL_FLIP_NONE );
+        ret = render_with_z_overlay( 0, SDL_FLIP_NONE );
     }
 
     printErrorIf( ret != 0, "SDL_RenderCopyEx() failed" );
@@ -2927,9 +2963,10 @@ bool cata_tiles::draw_terrain( const tripoint &p, const lit_level ll, int &heigh
     // first memorize the actual terrain
     const ter_id &t = here.ter( p );
     const std::string& tname = t.id().str();
-    // Non-isometric legacy mode does not draw fog sprites
-    if (!is_isometric() && fov_3d_z_range == 0 && tname == "t_open_air") {
-        return false;
+    // Open air is a transparent window onto the already-rendered lower z-level.
+    // Drawing a fog/fallback sprite here would cover the new cyan lower-level view.
+    if( !is_isometric() && tname == "t_open_air" ) {
+        return true;
     }
     if( t && !invisible[0] ) {
         int subtile = 0;
@@ -5284,5 +5321,4 @@ std::vector<options_manager::id_and_option> cata_tiles::build_display_list()
 
     return display_names.empty() ? default_display_names : display_names;
 }
-
 
