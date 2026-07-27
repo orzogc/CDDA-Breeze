@@ -784,6 +784,28 @@ static void pldrive(point d)
     return pldrive(tripoint(d, 0));
 }
 
+static bool is_mounted_passage_openable( map &here, const tripoint &p )
+{
+    // 车门仍按载具交互处理。地形与家具只要当前状态或开关后的状态属于门窗，
+    // 就允许骑乘时操作，从而同时识别关闭和已经打开的门窗。
+    if( here.veh_at( p ) ) {
+        return false;
+    }
+
+    const ter_t &ter = here.ter( p ).obj();
+    const furn_t &furn = here.furn( p ).obj();
+    const auto is_passage = []( const map_data_common_t &data ) {
+        return data.has_flag( ter_furn_flag::TFLAG_DOOR ) ||
+               data.has_flag( ter_furn_flag::TFLAG_WINDOW );
+    };
+
+    return is_passage( ter ) || is_passage( furn ) ||
+           ( ter.open && is_passage( ter.open.obj() ) ) ||
+           ( ter.close && is_passage( ter.close.obj() ) ) ||
+           ( furn.open && is_passage( furn.open.obj() ) ) ||
+           ( furn.close && is_passage( furn.close.obj() ) );
+}
+
 static void open()
 {
     avatar& player_character = get_avatar();
@@ -796,6 +818,11 @@ static void open()
     }
     const tripoint openp = *openp_;
     map& here = get_map();
+
+    if( player_character.is_mounted() && !is_mounted_passage_openable( here, openp ) ) {
+        add_msg( m_info, _( "骑乘时只能开门或开窗。" ) );
+        return;
+    }
 
     player_character.moves -= 100;
 
@@ -872,10 +899,16 @@ static void open()
 
 static void close()
 {
-    if (const std::optional<tripoint> pnt = choose_adjacent_highlight(_("Close where?"),
-        pgettext("no door, gate, etc.", "There is nothing that can be closed nearby."),
-        ACTION_CLOSE, false)) {
-        doors::close_door(get_map(), get_player_character(), *pnt);
+    if( const std::optional<tripoint> pnt = choose_adjacent_highlight( _( "Close where?" ),
+            pgettext( "no door, gate, etc.", "There is nothing that can be closed nearby." ),
+            ACTION_CLOSE, false ) ) {
+        map &here = get_map();
+        avatar &player_character = get_avatar();
+        if( player_character.is_mounted() && !is_mounted_passage_openable( here, *pnt ) ) {
+            add_msg( m_info, _( "骑乘时只能关门或关窗。" ) );
+            return;
+        }
+        doors::close_door( here, player_character, *pnt );
     }
 }
 
@@ -2092,9 +2125,25 @@ static void open_movement_mode_menu()
 
     for (size_t i = 0; i < modes.size(); ++i) {
         const move_mode_id& curr = modes[i];
+        std::string mode_name = curr->name();
+        if( player_character.get_steed_type() == steed_type::ANIMAL ) {
+            switch( curr->type() ) {
+                case move_mode_type::RUNNING:
+                    mode_name = _( "疾驰，基础消耗25" );
+                    break;
+                case move_mode_type::WALKING:
+                    mode_name = _( "快步，基础消耗30" );
+                    break;
+                case move_mode_type::CROUCHING:
+                    mode_name = _( "慢行，基础消耗50" );
+                    break;
+                case move_mode_type::PRONE:
+                    mode_name = _( "缓步，基础消耗100" );
+                    break;
+            }
+        }
         as_m.entries.emplace_back(static_cast<int>(i), player_character.can_switch_to(curr),
-            curr->letter(),
-            curr->name());
+            curr->letter(), mode_name);
     }
     as_m.entries.emplace_back(cycle,
         player_character.can_switch_to(player_character.current_movement_mode()->cycle()),
@@ -2820,9 +2869,6 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
         if (in_shell) {
             add_msg(m_info, _("You can't open things while you're in your shell."));
         }
-        else if (player_character.is_mounted()) {
-            add_msg(m_info, _("You can't open things while you're riding."));
-        }
         else if (u.has_effect(effect_incorporeal)) {
             add_msg(m_info, _("You lack the substance to affect anything."));
         }
@@ -2838,14 +2884,13 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
         else if (player_character.has_effect(effect_incorporeal)) {
             add_msg(m_info, _("You lack the substance to affect anything."));
         }
-        else if (player_character.is_mounted()) {
-            auto* mon = player_character.mounted_creature.get();
-            if (!mon->has_flag(MF_RIDEABLE_MECH)) {
-                add_msg(m_info, _("You can't close things while you're riding."));
-            }
-        }
         else if (mouse_target) {
-            doors::close_door(m, player_character, *mouse_target);
+            if( player_character.is_mounted() &&
+                !is_mounted_passage_openable( m, *mouse_target ) ) {
+                add_msg( m_info, _( "骑乘时只能关门或关窗。" ) );
+            } else {
+                doors::close_door( m, player_character, *mouse_target );
+            }
         }
         else {
             close();

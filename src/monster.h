@@ -178,6 +178,11 @@ class monster : public Creature
 
         bool shearable() const;
 
+        // Permanent pets are marked by both friendly == -1 and the pet effect.
+        bool is_pet() const;
+        // Only dog-type pets follow automatically; other animals require a leash.
+        bool is_pet_follow() const;
+
         bool avoid_trap( const tripoint &pos, const trap &tr ) const override;
 
         void serialize( JsonOut &json ) const;
