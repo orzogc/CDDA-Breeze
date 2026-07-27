@@ -1,4 +1,4 @@
-#include "cursesdef.h" // IWYU pragma: associated
+﻿#include "cursesdef.h" // IWYU pragma: associated
 #include "sdltiles.h" // IWYU pragma: associated
 
 #include "cuboid_rectangle.h"
@@ -922,6 +922,13 @@ std::string cata_tiles::get_omt_id_rotation_and_subtile(
 
     return ot_type_id.id().str();
 }
+// Legacy overmap tilesets often have no dedicated transparent roof foreground.
+// Treat a roof as a proxy for the already-known level below.
+static bool overmap_tile_copies_lower_level( const std::string &id )
+{
+    return id == "roof" || id.find( "_roof" ) != std::string::npos ||
+           id.rfind( "roof_", 0 ) == 0;
+}
 
 void cata_tiles::draw_om_tile_recursively( const tripoint_abs_omt &omp,
         const std::string &id, const int rotation, const int subtile,
@@ -1095,9 +1102,13 @@ void cata_tiles::draw_om( const point &dest, const tripoint_abs_omt &center_abs_
 
             // CBN does not redraw the current open_air sprite after drawing the lower tile.
             // Instead it follows any consecutive open_air chain down to the first real terrain.
+            // Some legacy tilesets also use roof sprites that need to borrow the lower level.
+            std::string draw_id = id;
+            int draw_rotation = rotation;
+            int draw_subtile = subtile;
             int z_offset = 0;
             tripoint_abs_omt draw_omp = omp;
-            while( id == "open_air" && draw_omp.z() > -OVERMAP_DEPTH ) {
+            while( draw_id == "open_air" && draw_omp.z() > -OVERMAP_DEPTH ) {
                 const tripoint_abs_omt lower_omp = draw_omp + tripoint( 0, 0, -1 );
                 const bool lower_see = has_debug_vision || overmap_buffer.seen( lower_omp );
                 if( !lower_see ) {
@@ -1105,9 +1116,32 @@ void cata_tiles::draw_om( const point &dest, const tripoint_abs_omt &center_abs_
                 }
                 ++z_offset;
                 draw_omp = lower_omp;
-                id = get_omt_id_rotation_and_subtile( draw_omp, rotation, subtile );
+                draw_id = get_omt_id_rotation_and_subtile( draw_omp, draw_rotation, draw_subtile );
             }
-            draw_om_tile_recursively( draw_omp, id, rotation, subtile, z_offset, has_debug_vision );
+            while( overmap_tile_copies_lower_level( draw_id ) &&
+                   draw_omp.z() > -OVERMAP_DEPTH ) {
+                const tripoint_abs_omt lower_omp = draw_omp + tripoint( 0, 0, -1 );
+                const bool lower_see = has_debug_vision || overmap_buffer.seen( lower_omp );
+                if( !lower_see ) {
+                    break;
+                }
+
+                int lower_rotation = 0;
+                int lower_subtile = -1;
+                const std::string lower_id = get_omt_id_rotation_and_subtile(
+                                                 lower_omp, lower_rotation, lower_subtile );
+                if( !find_tile_looks_like( lower_id, TILE_CATEGORY::OVERMAP_TERRAIN, "" ) ) {
+                    break;
+                }
+
+                ++z_offset;
+                draw_omp = lower_omp;
+                draw_id = lower_id;
+                draw_rotation = lower_rotation;
+                draw_subtile = lower_subtile;
+            }
+            draw_om_tile_recursively( draw_omp, draw_id, draw_rotation, draw_subtile,
+                                      z_offset, has_debug_vision );
             const lit_level ll = overmap_buffer.is_explored( omp ) ? lit_level::LOW : lit_level::LIT;
             if( !mx.is_empty() && mx->autonote ) {
                 draw_from_id_string( mx.str(), TILE_CATEGORY::MAP_EXTRA, "map_extra", omp.raw(),
