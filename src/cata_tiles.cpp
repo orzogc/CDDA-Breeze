@@ -1,4 +1,4 @@
-﻿#include "cata_tiles.h"
+#include "cata_tiles.h"
 #include "particle_effect_manager.h"
 
 #include <algorithm>
@@ -2744,8 +2744,10 @@ bool cata_tiles::draw_sprite_at(
     const SDL_RendererFlip flip ) {
         int result = sprite_tex->render_copy_ex( renderer, &destination, angle, nullptr, flip );
         if( z_overlay_tex ) {
-            // First lower floor stays readable; deeper floors become progressively bluer.
-            const int alpha = std::min( 160, 56 + ( z_overlay_depth - 1 ) * 32 );
+            // CBN uses a much gentler tint on the overmap than on the local map.
+            const int alpha = drawing_overmap_transparency
+                              ? std::min( 96, 24 + ( z_overlay_depth - 1 ) * 12 )
+                              : std::min( 160, 56 + ( z_overlay_depth - 1 ) * 32 );
             z_overlay_tex->set_alpha_mod( alpha );
             const int overlay_result =
                 z_overlay_tex->render_copy_ex( renderer, &destination, angle, nullptr, flip );
@@ -5321,4 +5323,3 @@ std::vector<options_manager::id_and_option> cata_tiles::build_display_list()
 
     return display_names.empty() ? default_display_names : display_names;
 }
-

@@ -800,9 +800,10 @@ class cata_tiles
         int z_overlay_depth = 0;
         // Transparent overmap tiles draw only their foreground after the lower tile.
         bool overmap_transparency_foreground_only = false;
+        // Uses the gentler CBN overmap alpha curve instead of the local-map curve.
+        bool drawing_overmap_transparency = false;
 
         pimpl<pixel_minimap> minimap;
-
         // List all layers for a single z-level
         const std::array<decltype(&cata_tiles::draw_furniture), 12> drawing_layers = { {
                 &cata_tiles::draw_terrain, &cata_tiles::draw_furniture, &cata_tiles::draw_graffiti, &cata_tiles::draw_trap, &cata_tiles::draw_part_con,

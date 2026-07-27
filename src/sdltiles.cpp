@@ -947,8 +947,10 @@ void cata_tiles::draw_om_tile_recursively( const tripoint_abs_omt &omp,
 
     const int previous_overlay_depth = z_overlay_depth;
     const bool previous_foreground_only = overmap_transparency_foreground_only;
+    const bool previous_overmap_render = drawing_overmap_transparency;
     z_overlay_depth = base_z_offset;
     overmap_transparency_foreground_only = transparent && drew_lower;
+    drawing_overmap_transparency = true;
 
     const lit_level ll =
         overmap_buffer.is_explored( omp ) ? lit_level::LOW : lit_level::LIT;
@@ -958,6 +960,7 @@ void cata_tiles::draw_om_tile_recursively( const tripoint_abs_omt &omp,
 
     z_overlay_depth = previous_overlay_depth;
     overmap_transparency_foreground_only = previous_foreground_only;
+    drawing_overmap_transparency = previous_overmap_render;
 }
 
 static point draw_string( Font &font,
@@ -1065,9 +1068,21 @@ void cata_tiles::draw_om( const point &dest, const tripoint_abs_omt &center_abs_
                 mx = overmap_buffer.extra( omp );
             }
 
-            // Draw transparent/open-air overmap tiles bottom-to-top, with the same
-            // pale-cyan depth cue used by the local map.
-            draw_om_tile_recursively( omp, id, rotation, subtile, 0, has_debug_vision );
+            // CBN does not redraw the current open_air sprite after drawing the lower tile.
+            // Instead it follows any consecutive open_air chain down to the first real terrain.
+            int z_offset = 0;
+            tripoint_abs_omt draw_omp = omp;
+            while( id == "open_air" && draw_omp.z() > -OVERMAP_DEPTH ) {
+                const tripoint_abs_omt lower_omp = draw_omp + tripoint( 0, 0, -1 );
+                const bool lower_see = has_debug_vision || overmap_buffer.seen( lower_omp );
+                if( !lower_see ) {
+                    break;
+                }
+                ++z_offset;
+                draw_omp = lower_omp;
+                id = get_omt_id_rotation_and_subtile( draw_omp, rotation, subtile );
+            }
+            draw_om_tile_recursively( draw_omp, id, rotation, subtile, z_offset, has_debug_vision );
             const lit_level ll = overmap_buffer.is_explored( omp ) ? lit_level::LOW : lit_level::LIT;
             if( !mx.is_empty() && mx->autonote ) {
                 draw_from_id_string( mx.str(), TILE_CATEGORY::MAP_EXTRA, "map_extra", omp.raw(),
