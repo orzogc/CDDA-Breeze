@@ -1182,12 +1182,10 @@ tile_type &tileset_cache::loader::load_tile( const JsonObject &entry, const std:
     load_tile_spritelists( entry, curr_subtile.fg, "fg" );
     load_tile_spritelists( entry, curr_subtile.bg, "bg" );
 
-    // CBN marks these explicitly in tileset JSON.  Breeze also infers the common
-    // open-air/roof cases so existing tilesets benefit without a huge JSON rewrite.
-    const bool inferred_om_transparency =
-        id == "open_air" || id.find( "roof" ) != std::string::npos;
+    // Match CBN's contract exactly: overmap transparency is opt-in tileset metadata.
+    // Inferring it from names such as "*roof*" misclassifies opaque or oversized sprites.
     curr_subtile.has_om_transparency =
-        entry.get_bool( "has_om_transparency", inferred_om_transparency );
+        entry.get_bool( "has_om_transparency", false );
 
     return ts.create_tile_type( id, std::move( curr_subtile ) );
 }

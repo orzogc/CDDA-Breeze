@@ -927,8 +927,33 @@ void cata_tiles::draw_om_tile_recursively( const tripoint_abs_omt &omp,
         const std::string &id, const int rotation, const int subtile,
         const int base_z_offset, const bool has_debug_vision )
 {
+    std::string draw_id = id;
+    int draw_rotation = rotation;
+    int draw_subtile = subtile;
+
+    // open_air is not a roof sprite.  It is a transparent hole and must never be
+    // drawn back over the lower level.  When the lower level is unknown, render
+    // unknown terrain instead of exposing it or showing a tileset-specific air icon.
+    if( id == "open_air" ) {
+        if( omp.z() > -OVERMAP_DEPTH ) {
+            const tripoint_abs_omt lower_omp = omp + tripoint( 0, 0, -1 );
+            if( has_debug_vision || overmap_buffer.seen( lower_omp ) ) {
+                int lower_rotation = 0;
+                int lower_subtile = -1;
+                const std::string lower_id =
+                    get_omt_id_rotation_and_subtile( lower_omp, lower_rotation, lower_subtile );
+                draw_om_tile_recursively( lower_omp, lower_id, lower_rotation, lower_subtile,
+                                          base_z_offset + 1, has_debug_vision );
+                return;
+            }
+        }
+        draw_id = "unknown_terrain";
+        draw_rotation = 0;
+        draw_subtile = -1;
+    }
+
     std::optional<tile_lookup_res> tile =
-        find_tile_looks_like( id, TILE_CATEGORY::OVERMAP_TERRAIN, "" );
+        find_tile_looks_like( draw_id, TILE_CATEGORY::OVERMAP_TERRAIN, "" );
     const bool transparent = tile && tile->tile().has_om_transparency;
 
     bool drew_lower = false;
@@ -955,8 +980,8 @@ void cata_tiles::draw_om_tile_recursively( const tripoint_abs_omt &omp,
     const lit_level ll =
         overmap_buffer.is_explored( omp ) ? lit_level::LOW : lit_level::LIT;
     int discarded_height = 0;
-    draw_from_id_string( id, TILE_CATEGORY::OVERMAP_TERRAIN, "overmap_terrain",
-                         omp.raw(), subtile, rotation, ll, false, discarded_height );
+    draw_from_id_string( draw_id, TILE_CATEGORY::OVERMAP_TERRAIN, "overmap_terrain",
+                         omp.raw(), draw_subtile, draw_rotation, ll, false, discarded_height );
 
     z_overlay_depth = previous_overlay_depth;
     overmap_transparency_foreground_only = previous_foreground_only;
