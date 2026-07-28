@@ -442,14 +442,23 @@ void advanced_inventory::print_items( const advanced_inventory_pane &pane, bool 
             item_name = string_format( "%s %s", it.symbol(), item_name );
         }
 
+        // 在 AIM_ALL 模式下，src 标签会右对齐
+        int row_name_length = max_name_length;
+        int row_src_x = static_cast<int>( src_startpos );
+        if( pane.get_area() == AIM_ALL && !compact ) {
+            const int src_width = utf8_width( squares[sitem.area].shortname );
+            row_src_x = static_cast<int>( amt_startpos ) - 1 - src_width;
+            row_name_length = row_src_x - static_cast<int>( name_startpos ) - 1;
+        }
+
         //print item name
-        trim_and_print( window, point( compact ? 1 : 4, 6 + item_line ), max_name_length, thiscolor,
+        trim_and_print( window, point( compact ? 1 : 4, 6 + item_line ), row_name_length, thiscolor,
                         item_name );
 
         //print src column
         // TODO: specify this is coming from a vehicle!
         if( pane.get_area() == AIM_ALL && !compact ) {
-            mvwprintz( window, point( src_startpos, 6 + item_line ), thiscolor, squares[sitem.area].shortname );
+            mvwprintz( window, point( row_src_x, 6 + item_line ), thiscolor, squares[sitem.area].shortname );
         }
 
         //print "amount" column
