@@ -11574,11 +11574,14 @@ bool Character::wield_contents( item &container, item *internal_item, bool penal
         inv->unsort();
     }
 
-    // for holsters, we should not include the cost of wielding the holster itself
-    // The cost of wielding the holster was already added earlier in avatar_action::use_item.
-    // As we couldn't make sure back then what action was going to be used, we remove the cost now.
-    item_location il = item_location( *this, &container );
-    mv -= il.obtain_cost( *this );
+    // 对于刀鞘/枪套，wielding 刀鞘本身的消耗不应包含在内
+    // 该消耗已在 avatar_action::use_item 中提前加过了
+    // 由于当时无法确定具体要执行什么动作，所以在这里把消耗退还
+    // 只有非穿戴的刀鞘才需要退还，因为穿戴的刀鞘在上游从未加过消耗
+    if( !is_worn( container ) ) {
+        item_location il = item_location( *this, &container );
+        mv -= il.obtain_cost( *this );
+    }
     mv += item_retrieve_cost( *internal_item, container, penalties, base_cost );
 
     if( internal_item->stacks_with( weapon, true ) ) {
