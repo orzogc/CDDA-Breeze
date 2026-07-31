@@ -1,4 +1,4 @@
-#include "cursesdef.h" // IWYU pragma: associated
+﻿#include "cursesdef.h" // IWYU pragma: associated
 #include "sdltiles.h" // IWYU pragma: associated
 
 #include "cuboid_rectangle.h"
@@ -922,6 +922,78 @@ std::string cata_tiles::get_omt_id_rotation_and_subtile(
 
     return ot_type_id.id().str();
 }
+// Legacy overmap tilesets often have no dedicated transparent roof foreground.
+// Treat a roof as a proxy for the already-known level below.
+static bool overmap_tile_copies_lower_level( const std::string &id )
+{
+    return id == "roof" || id.find( "_roof" ) != std::string::npos ||
+           id.rfind( "roof_", 0 ) == 0;
+}
+
+void cata_tiles::draw_om_tile_recursively( const tripoint_abs_omt &omp,
+        const std::string &id, const int rotation, const int subtile,
+        const int base_z_offset, const bool has_debug_vision )
+{
+    std::string draw_id = id;
+    int draw_rotation = rotation;
+    int draw_subtile = subtile;
+
+    // open_air is not a roof sprite.  It is a transparent hole and must never be
+    // drawn back over the lower level.  When the lower level is unknown, render
+    // unknown terrain instead of exposing it or showing a tileset-specific air icon.
+    if( id == "open_air" ) {
+        if( omp.z() > -OVERMAP_DEPTH ) {
+            const tripoint_abs_omt lower_omp = omp + tripoint( 0, 0, -1 );
+            if( has_debug_vision || overmap_buffer.seen( lower_omp ) ) {
+                int lower_rotation = 0;
+                int lower_subtile = -1;
+                const std::string lower_id =
+                    get_omt_id_rotation_and_subtile( lower_omp, lower_rotation, lower_subtile );
+                draw_om_tile_recursively( lower_omp, lower_id, lower_rotation, lower_subtile,
+                                          base_z_offset + 1, has_debug_vision );
+                return;
+            }
+        }
+        draw_id = "unknown_terrain";
+        draw_rotation = 0;
+        draw_subtile = -1;
+    }
+
+    std::optional<tile_lookup_res> tile =
+        find_tile_looks_like( draw_id, TILE_CATEGORY::OVERMAP_TERRAIN, "" );
+    const bool transparent = tile && tile->tile().has_om_transparency;
+
+    bool drew_lower = false;
+    if( transparent && omp.z() > -OVERMAP_DEPTH ) {
+        const tripoint_abs_omt lower_omp = omp + tripoint( 0, 0, -1 );
+        if( has_debug_vision || overmap_buffer.seen( lower_omp ) ) {
+            int lower_rotation = 0;
+            int lower_subtile = -1;
+            const std::string lower_id =
+                get_omt_id_rotation_and_subtile( lower_omp, lower_rotation, lower_subtile );
+            draw_om_tile_recursively( lower_omp, lower_id, lower_rotation, lower_subtile,
+                                      base_z_offset + 1, has_debug_vision );
+            drew_lower = true;
+        }
+    }
+
+    const int previous_overlay_depth = z_overlay_depth;
+    const bool previous_foreground_only = overmap_transparency_foreground_only;
+    const bool previous_overmap_render = drawing_overmap_transparency;
+    z_overlay_depth = base_z_offset;
+    overmap_transparency_foreground_only = transparent && drew_lower;
+    drawing_overmap_transparency = true;
+
+    const lit_level ll =
+        overmap_buffer.is_explored( omp ) ? lit_level::LOW : lit_level::LIT;
+    int discarded_height = 0;
+    draw_from_id_string( draw_id, TILE_CATEGORY::OVERMAP_TERRAIN, "overmap_terrain",
+                         omp.raw(), draw_subtile, draw_rotation, ll, false, discarded_height );
+
+    z_overlay_depth = previous_overlay_depth;
+    overmap_transparency_foreground_only = previous_foreground_only;
+    drawing_overmap_transparency = previous_overmap_render;
+}
 
 static point draw_string( Font &font,
                           const SDL_Renderer_Ptr &renderer,
@@ -1028,10 +1100,52 @@ void cata_tiles::draw_om( const point &dest, const tripoint_abs_omt &center_abs_
                 mx = overmap_buffer.extra( omp );
             }
 
+            // Above ground, use the overmap as an aviation chart: always project the
+            // known z=0 terrain instead of drawing sparse roof/upper-floor OMTs.
+            // Underground and z=0 retain their original behavior.
+            tripoint_abs_omt terrain_omp = omp;
+            std::string terrain_id = id;
+            int terrain_rotation = rotation;
+            int terrain_subtile = subtile;
+            lit_level terrain_ll =
+                overmap_buffer.is_explored( omp ) ? lit_level::LOW : lit_level::LIT;
+
+            if( !viewing_weather && omp.z() > 0 ) {
+                terrain_omp = tripoint_abs_omt( omp.xy(), 0 );
+                const bool ground_seen =
+                    has_debug_vision || overmap_buffer.seen( terrain_omp );
+
+                if( ground_seen ) {
+                    terrain_id = get_omt_id_rotation_and_subtile(
+                                     terrain_omp, terrain_rotation, terrain_subtile );
+                    terrain_ll = overmap_buffer.is_explored( terrain_omp )
+                                 ? lit_level::LOW : lit_level::LIT;
+                } else {
+                    terrain_id = "unknown_terrain";
+                    terrain_rotation = 0;
+                    terrain_subtile = -1;
+                    terrain_ll = lit_level::LIT;
+                }
+            }
+
+            const int previous_overlay_depth = z_overlay_depth;
+            const bool previous_overmap_render = drawing_overmap_transparency;
+            if( !viewing_weather && omp.z() > 0 ) {
+                z_overlay_depth = omp.z();
+                drawing_overmap_transparency = true;
+            }
+
+            draw_from_id_string( terrain_id, TILE_CATEGORY::OVERMAP_TERRAIN,
+                                 "overmap_terrain", terrain_omp.raw(),
+                                 terrain_subtile, terrain_rotation, terrain_ll,
+                                 false, height_3d );
+
+            z_overlay_depth = previous_overlay_depth;
+            drawing_overmap_transparency = previous_overmap_render;
+
+            // Notes, missions, vehicles and other overlays still belong to the currently
+            // viewed z-level and are drawn at full opacity over the projected ground map.
             const lit_level ll = overmap_buffer.is_explored( omp ) ? lit_level::LOW : lit_level::LIT;
-            // light level is now used for choosing between grayscale filter and normal lit tiles.
-            draw_from_id_string( id, TILE_CATEGORY::OVERMAP_TERRAIN, "overmap_terrain", omp.raw(),
-                                 subtile, rotation, ll, false, height_3d );
             if( !mx.is_empty() && mx->autonote ) {
                 draw_from_id_string( mx.str(), TILE_CATEGORY::MAP_EXTRA, "map_extra", omp.raw(),
                                      0, 0, ll, false );
