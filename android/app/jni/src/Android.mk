@@ -18,6 +18,12 @@ LOCAL_LDLIBS := -lGLESv1_CM -lGLESv2 -llog -lz
 
 LOCAL_CFLAGS += -DTILES=1 -DSDL_SOUND=1 -DBACKTRACE=1 -DLOCALIZE=1 -Wextra -Wall -fsigned-char
 
+# Pass the Gradle-resolved release version directly into the native compiler.
+# This prevents APK versionName and libmain.so from using different versions.
+ifneq ($(strip $(BREEZE_VERSION)),)
+    LOCAL_CPPFLAGS += -DBREEZE_ANDROID_VERSION=$(BREEZE_VERSION)
+endif
+
 LOCAL_LDFLAGS += $(LOCAL_CFLAGS)
 
 ifeq ($(OS),Windows_NT)

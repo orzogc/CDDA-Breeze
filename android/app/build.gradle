@@ -69,7 +69,7 @@ if (localProperties.getProperty('deps') != null) {
     deps = localProperties.getProperty("deps")
 }
 
-def override_version = getProperty("override_version")
+def override_version = getProperty("override_version") ?: ""
 if (localProperties.getProperty('override_version') != null) {
     override_version = localProperties.getProperty("override_version")
 }
@@ -77,6 +77,68 @@ if (localProperties.getProperty('override_version') != null) {
 def version_header_path = getProperty("version_header_path")
 if (localProperties.getProperty('version_header_path') != null) {
     version_header_path = localProperties.getProperty("version_header_path")
+}
+
+def projectRoot = './../..'
+def versionHeaderFile = new File(rootProject.projectDir, version_header_path)
+
+def normalizeBreezeVersion = { String value ->
+    def normalized = value.trim().replaceFirst(/(?i)^cdda-breeze[- ]?/, "")
+    if (normalized.isEmpty()) {
+        return ""
+    }
+    return "CDDA-Breeze-${normalized}"
+}
+
+def readVersionFromGit = {
+    def output = new ByteArrayOutputStream()
+    def errors = new ByteArrayOutputStream()
+    try {
+        def result = exec {
+            workingDir projectRoot
+            commandLine 'git', 'describe', '--tags', '--always', '--dirty',
+                '--match', 'cdda-breeze-*',
+                '--match', 'CDDA-Breeze-*',
+                '--match', '[0-9A-Z]*.[0-9A-Z]*'
+            standardOutput output
+            errorOutput errors
+            ignoreExitValue true
+        }
+        if (result.exitValue == 0) {
+            return output.toString('UTF-8').trim()
+        }
+    } catch (Exception ignored) {
+        // Source archives may not contain Git metadata.
+    }
+    return ""
+}
+
+def readVersionFromHeader = {
+    if (!versionHeaderFile.isFile()) {
+        return ""
+    }
+    def matcher = versionHeaderFile.getText('UTF-8') =~ /#define\s+VERSION\s+"([^"]+)"/
+    return matcher.find() ? matcher.group(1).trim() : ""
+}
+
+def resolved_version = override_version.trim()
+if (resolved_version.isEmpty()) {
+    resolved_version = (System.getenv("BREEZE_VERSION") ?: "").trim()
+}
+if (resolved_version.isEmpty()) {
+    resolved_version = readVersionFromGit()
+}
+if (resolved_version.isEmpty()) {
+    resolved_version = readVersionFromHeader()
+}
+resolved_version = normalizeBreezeVersion(resolved_version)
+if (resolved_version.isEmpty()) {
+    throw new GradleException("Unable to determine the Breeze version. Pass -Poverride_version=CDDA-Breeze-<version>.")
+}
+
+def android_version_name = resolved_version.replaceFirst(/^CDDA-Breeze[- ]?/, "")
+if (android_version_name.isEmpty()) {
+    throw new GradleException("Android versionName cannot be empty")
 }
 
 def override_compileSdkVersion = getProperty("override_compileSdkVersion").toInteger()
@@ -109,12 +171,10 @@ if (localProperties.getProperty('override_versionCode') != null) {
     override_versionCode = localProperties.getProperty('override_versionCode').toInteger()
 }
 
-def android_version_name = override_version.replaceFirst(/^CDDA-Breeze[- ]?/, "")
-
 println("Using [              njobs]: $njobs")
 println("Using [           localize]: $localize")
 println("Using [               deps]: $deps")
-println("Using [   override_version]: $override_version")
+println("Using [   resolved_version]: $resolved_version")
 println("Using [version_header_path]: $version_header_path")
 println("Using [  compileSdkVersion]: $override_compileSdkVersion")
 println("Using [      minSdkVersion]: $override_minSdkVersion")
@@ -135,15 +195,11 @@ if (!file(deps).exists()) {
     throw new GradleException("Dependencies file does not exist:" + deps)
 }
 
-if (!override_version.isEmpty()) {
-    if (version_header_path.isEmpty()) {
-        throw new GradleException("`version_header_path` cannot be empty when `override_version` is not empty")
-    } else {
-        println("Overriding version number to $override_version using path $version_header_path")
-    }
+if (version_header_path.isEmpty()) {
+    throw new GradleException("`version_header_path` cannot be empty")
+} else {
+    println("Writing version number $resolved_version using path $version_header_path")
 }
-
-def projectRoot = './../..'
 def assetsDir = 'src/main/assets'
 def assetsDirWindows = 'src/main/assetsWinHost'
 
@@ -151,7 +207,11 @@ task unzipDeps(type: Copy) {
     println("Using dependencies file: $deps")
     def zipFile = new File("$deps")
     def outputDir = new File('.')
-    from zipTree(zipFile)
+    from(zipTree(zipFile)) {
+        // libmain.so is the game executable and must always be rebuilt from
+        // the current source tree. Never allow deps.zip to provide an old copy.
+        exclude '**/libmain.so'
+    }
     into outputDir
 }
 
@@ -181,28 +241,13 @@ task makeLocalization(type: Exec) {
 }
 
 task generateVersionHeader() {
-    // this taks imitates `make version` while respecting version_header_path
-    if (override_version.isEmpty()) {
-        println("Generating version number to $version_header_path")
-        def output = new ByteArrayOutputStream()
-        exec {
-            workingDir projectRoot
-            commandLine 'git', 'describe', '--tags', '--always', '--dirty', '--match', '"[0-9A-Z]*.[0-9A-Z]*"'
-            standardOutput output
-        }
-        override_version = output.toString()
-        override_version = override_version.split()[0] // strip whitespaces
-    } else {
-        println("Overriding version number to $override_version")
-    }
-
-    def define = "// NOLINT(cata-header-guard)\n#define VERSION \"$override_version\"\n"
-    def versionHeader = new File("$version_header_path")
-    if (!versionHeader.exists() || versionHeader.text != define) {
-        versionHeader.text = define
+    // Keep the header synchronized during Gradle configuration, before native tasks are scheduled.
+    def define = "// NOLINT(cata-header-guard)\n#define VERSION \"$resolved_version\"\n"
+    versionHeaderFile.parentFile?.mkdirs()
+    if (!versionHeaderFile.exists() || versionHeaderFile.getText('UTF-8') != define) {
+        versionHeaderFile.setText(define, 'UTF-8')
     }
 }
-
 task createWindowsJunctionLinks() {
     onlyIf {
         OperatingSystem.current() == OperatingSystem.WINDOWS
@@ -297,7 +342,9 @@ android {
 
         externalNativeBuild {
             ndkBuild {
-                arguments "APP_PLATFORM=$override_ndkBuildAppPlatform", "-j$njobs"
+                arguments "APP_PLATFORM=$override_ndkBuildAppPlatform",
+                          "-j$njobs",
+                          "BREEZE_VERSION=$resolved_version"
             }
         }
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

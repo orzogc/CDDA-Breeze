@@ -267,6 +267,12 @@ jobs:
             '${{ github.workspace }}/android/a.keystore' > keystore.properties
 
           chmod +x gradlew
+
+          # Do not let an old native object or a prebuilt libmain.so survive
+          # into a release whose Android versionName has already changed.
+          rm -rf app/.cxx app/build/intermediates/cxx app/build/intermediates/merged_native_libs app/build/intermediates/stripped_native_libs
+          find app/libs -type f -name 'libmain.so' -delete 2>/dev/null || true
+
           ./gradlew --no-daemon \
             -Pj="$(nproc)" \
             -Pabi_arm_32=false \
@@ -274,7 +280,63 @@ jobs:
             -Poverride_versionCode="${UPSTREAM_BUILD_NUMBER}" \
             assembleRelease
 
-          mv ./app/build/outputs/apk/stable/release/*.apk "../${OUTPUT_FILE}"
+          APK_PATH="$(find ./app/build/outputs/apk/stable/release -maxdepth 1 -type f -name '*.apk' -print -quit)"
+          if [[ -z "${APK_PATH}" ]]; then
+            echo "Android APK was not generated." >&2
+            exit 1
+          fi
+
+          AAPT="$(find "${ANDROID_SDK_ROOT}/build-tools" -type f -name aapt -print | sort -V | tail -n 1)"
+          if [[ -z "${AAPT}" ]]; then
+            echo "Unable to locate aapt for APK version verification." >&2
+            exit 1
+          fi
+
+          APK_BADGING="$("${AAPT}" dump badging "${APK_PATH}")"
+          APK_VERSION_NAME="$(sed -n "s/^package:.*versionName='\([^']*\)'.*/\1/p" <<<"${APK_BADGING}")"
+          APK_VERSION_CODE="$(sed -n "s/^package:.*versionCode='\([^']*\)'.*/\1/p" <<<"${APK_BADGING}")"
+
+          if [[ "${APK_VERSION_NAME}" != "${BREEZE_VERSION}" ]]; then
+            echo "APK versionName mismatch: expected ${BREEZE_VERSION}, got ${APK_VERSION_NAME}." >&2
+            exit 1
+          fi
+          if [[ "${APK_VERSION_CODE}" != "${UPSTREAM_BUILD_NUMBER}" ]]; then
+            echo "APK versionCode mismatch: expected ${UPSTREAM_BUILD_NUMBER}, got ${APK_VERSION_CODE}." >&2
+            exit 1
+          fi
+
+          EXPECTED_NATIVE_VERSION="CDDA-Breeze-${BREEZE_VERSION}"
+          NATIVE_CHECK_DIR="$(mktemp -d)"
+          trap 'rm -rf "${NATIVE_CHECK_DIR}"' EXIT
+
+          unzip -q "${APK_PATH}" 'lib/*/libmain.so' -d "${NATIVE_CHECK_DIR}"
+          mapfile -t MAIN_LIBRARIES < <(
+            find "${NATIVE_CHECK_DIR}/lib" -type f -name 'libmain.so' -print
+          )
+
+          if [[ "${#MAIN_LIBRARIES[@]}" -eq 0 ]]; then
+            echo "APK does not contain libmain.so." >&2
+            exit 1
+          fi
+
+          for MAIN_LIBRARY in "${MAIN_LIBRARIES[@]}"; do
+            NATIVE_VERSION_STRINGS="$(
+              strings -a "${MAIN_LIBRARY}" |
+                grep -E '^CDDA-Breeze[- ][0-9]' |
+                sort -u || true
+            )"
+
+            if ! grep -Fqx "${EXPECTED_NATIVE_VERSION}" <<<"${NATIVE_VERSION_STRINGS}"; then
+              echo "Native version mismatch in ${MAIN_LIBRARY}." >&2
+              echo "Expected: ${EXPECTED_NATIVE_VERSION}" >&2
+              echo "Found native version strings:" >&2
+              printf '%s\n' "${NATIVE_VERSION_STRINGS:-<none>}" >&2
+              exit 1
+            fi
+          done
+
+          echo "Verified APK versionName=${APK_VERSION_NAME}, versionCode=${APK_VERSION_CODE}, nativeVersion=${EXPECTED_NATIVE_VERSION}."
+          mv "${APK_PATH}" "../${OUTPUT_FILE}"
 
       - name: 保存构建文件到Actions
         uses: actions/upload-artifact@v4

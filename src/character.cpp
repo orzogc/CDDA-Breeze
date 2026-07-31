@@ -254,6 +254,7 @@ static const efftype_id effect_recently_coughed( "recently_coughed" );
 static const efftype_id effect_recover( "recover" );
 static const efftype_id effect_ridden( "ridden" );
 static const efftype_id effect_riding( "riding" );
+static const efftype_id effect_combat_mount_trained( "combat_mount_trained" );
 static const efftype_id effect_sleep( "sleep" );
 static const efftype_id effect_slept_through_alarm( "slept_through_alarm" );
 static const efftype_id effect_stunned( "stunned" );
@@ -1496,12 +1497,20 @@ void Character::mount_creature( monster &z )
         // mech night-vision counts as optics for overmap sight range.
         g->update_overmap_seen();
     }
+
+    // Animal mounts start at a steady trot.  Galloping remains an explicit player choice,
+    // while mechs keep their existing power-management behavior.
+    if( get_steed_type() == steed_type::ANIMAL ) {
+        set_movement_mode( move_mode_walk );
+    }
+
     mod_moves( -100 );
 }
 
 bool Character::check_mount_will_move( const tripoint &dest_loc )
 {
-    if( !is_mounted() ) {
+    if( !is_mounted() || ( mounted_creature &&
+                             mounted_creature->has_effect( effect_combat_mount_trained ) ) ) {
         return true;
     }
     if( mounted_creature && mounted_creature->type->has_fear_trigger( mon_trigger::HOSTILE_CLOSE ) ) {
@@ -1522,7 +1531,8 @@ bool Character::check_mount_will_move( const tripoint &dest_loc )
 
 bool Character::check_mount_is_spooked()
 {
-    if( !is_mounted() ) {
+    if( !is_mounted() || ( mounted_creature &&
+                             mounted_creature->has_effect( effect_combat_mount_trained ) ) ) {
         return false;
     }
     // chance to spook per monster nearby:
@@ -11564,11 +11574,14 @@ bool Character::wield_contents( item &container, item *internal_item, bool penal
         inv->unsort();
     }
 
-    // for holsters, we should not include the cost of wielding the holster itself
-    // The cost of wielding the holster was already added earlier in avatar_action::use_item.
-    // As we couldn't make sure back then what action was going to be used, we remove the cost now.
-    item_location il = item_location( *this, &container );
-    mv -= il.obtain_cost( *this );
+    // 对于刀鞘/枪套，wielding 刀鞘本身的消耗不应包含在内
+    // 该消耗已在 avatar_action::use_item 中提前加过了
+    // 由于当时无法确定具体要执行什么动作，所以在这里把消耗退还
+    // 只有非穿戴的刀鞘才需要退还，因为穿戴的刀鞘在上游从未加过消耗
+    if( !is_worn( container ) ) {
+        item_location il = item_location( *this, &container );
+        mv -= il.obtain_cost( *this );
+    }
     mv += item_retrieve_cost( *internal_item, container, penalties, base_cost );
 
     if( internal_item->stacks_with( weapon, true ) ) {

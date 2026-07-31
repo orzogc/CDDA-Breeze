@@ -10234,12 +10234,18 @@ std::vector<std::string> game::get_dangerous_tile( const tripoint &dest_loc ) co
 
 bool game::walk_move( const tripoint &dest_loc, const bool via_ramp, const bool furniture_move )
 {
+    // 为减少反复上下马的操作，允许坐骑通过可通行的窗户。其他狭窄通道仍按体型限制，
+    // 避免马匹钻过通风口、裂缝等并非门窗的地形。
+    const bool mounted_window_passage = u.is_mounted() &&
+                                        m.has_flag_ter_or_furn( ter_furn_flag::TFLAG_WINDOW,
+                                                dest_loc ) &&
+                                        m.passable_ter_furn( dest_loc );
     if( m.has_flag_ter( ter_furn_flag::TFLAG_SMALL_PASSAGE, dest_loc ) ) {
         if( u.get_size() > creature_size::medium ) {
             add_msg( m_warning, _( "You can't fit there." ) );
             return false; // character too large to fit through a tight passage
         }
-        if( u.is_mounted() ) {
+        if( u.is_mounted() && !mounted_window_passage ) {
             monster *mount = u.mounted_creature.get();
             if( mount->get_size() > creature_size::medium ) {
                 add_msg( m_warning, _( "Your mount can't fit there." ) );
@@ -10391,18 +10397,52 @@ bool game::walk_move( const tripoint &dest_loc, const bool via_ramp, const bool 
     const int previous_moves = u.moves;
     if( u.is_mounted() ) {
         auto *crit = u.mounted_creature.get();
-        if( !crit->has_flag( MF_RIDEABLE_MECH ) &&
-            ( m.has_flag_ter_or_furn( ter_furn_flag::TFLAG_MOUNTABLE, dest_loc ) ||
-              m.has_flag_ter_or_furn( ter_furn_flag::TFLAG_BARRICADABLE_DOOR, dest_loc ) ||
-              m.has_flag_ter_or_furn( ter_furn_flag::TFLAG_OPENCLOSE_INSIDE, dest_loc ) ||
-              m.has_flag_ter_or_furn( ter_furn_flag::TFLAG_BARRICADABLE_DOOR_DAMAGED, dest_loc ) ||
-              m.has_flag_ter_or_furn( ter_furn_flag::TFLAG_BARRICADABLE_DOOR_REINFORCED, dest_loc ) ) ) {
+        // 打开的木门仍保留门类标记，打开的窗户则带有 MOUNTABLE 与 OPENCLOSE_INSIDE。
+        // 只放行门和可通行窗户，栅栏、柜台、路障等障碍仍不能骑乘越过。
+        const bool mounted_doorway =
+            m.has_flag_ter_or_furn( ter_furn_flag::TFLAG_DOOR, dest_loc ) ||
+            m.has_flag_ter_or_furn( ter_furn_flag::TFLAG_BARRICADABLE_DOOR, dest_loc ) ||
+            m.has_flag_ter_or_furn( ter_furn_flag::TFLAG_BARRICADABLE_DOOR_DAMAGED, dest_loc ) ||
+            m.has_flag_ter_or_furn( ter_furn_flag::TFLAG_BARRICADABLE_DOOR_REINFORCED, dest_loc );
+        const bool blocked_mounted_obstacle =
+            m.has_flag_ter_or_furn( ter_furn_flag::TFLAG_MOUNTABLE, dest_loc ) &&
+            !mounted_window_passage;
+        const bool blocked_inside_openable =
+            m.has_flag_ter_or_furn( ter_furn_flag::TFLAG_OPENCLOSE_INSIDE, dest_loc ) &&
+            !mounted_window_passage;
+        if( !crit->has_flag( MF_RIDEABLE_MECH ) && !mounted_doorway &&
+            ( blocked_mounted_obstacle || blocked_inside_openable ) ) {
             add_msg( m_warning, _( "You cannot pass obstacles whilst mounted." ) );
             return false;
         }
-        const double base_moves = u.run_cost( mcost, diag ) * 100.0 / crit->get_speed();
-        const double encumb_moves = u.get_weight() / 4800.0_gram;
-        u.moves -= static_cast<int>( std::ceil( base_moves + encumb_moves ) );
+        double base_moves;
+        if( crit->has_flag( MF_RIDEABLE_MECH ) ) {
+            base_moves = u.run_cost( mcost, diag ) * 100.0 / crit->get_speed();
+        } else {
+            // 动物坐骑不再提高角色行动速度，步态只调整每格移动消耗。
+            double gait_cost_mult = 1.0;
+            switch( u.current_movement_mode()->type() ) {
+                case move_mode_type::RUNNING:
+                    gait_cost_mult = 0.25;  // 疾驰：平地 25 点
+                    break;
+                case move_mode_type::WALKING:
+                    gait_cost_mult = 0.30;  // 快步：平地 30 点
+                    break;
+                case move_mode_type::CROUCHING:
+                    gait_cost_mult = 0.50;  // 慢行：平地 50 点
+                    break;
+                case move_mode_type::PRONE:
+                    gait_cost_mult = 1.0;   // 缓步：平地 100 点
+                    break;
+            }
+            base_moves = u.run_cost( mcost, diag ) * gait_cost_mult;
+        }
+        // 动物坐骑在上马时已经检查承载能力，不再按骑手重量逐格重复收费。
+        // 动力装甲和机甲仍保留原有重量附加消耗。
+        if( crit->has_flag( MF_RIDEABLE_MECH ) ) {
+            base_moves += u.get_weight() / 4800.0_gram;
+        }
+        u.moves -= static_cast<int>( std::ceil( base_moves ) );
         crit->use_mech_power( u.current_movement_mode()->mech_power_use() );
     } else {
         u.moves -= u.run_cost( mcost, diag );

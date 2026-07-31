@@ -228,6 +228,7 @@ void study_spell_finish( player_activity *act, Character *you );
 void teach_finish( player_activity *act, Character *you );
 void toolmod_add_finish( player_activity *act, Character *you );
 void train_finish( player_activity *act, Character *you );
+void train_combat_mount_finish( player_activity *act, Character *you );
 void vehicle_finish( player_activity *act, Character *you );
 void vibe_finish( player_activity *act, Character *you );
 void view_recipe_finish( player_activity *act, Character *you );

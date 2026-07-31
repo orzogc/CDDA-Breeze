@@ -10444,7 +10444,7 @@ bool item::mod_damage( int qty, damage_type dt )
     if( !count_by_charges() ) {
         destroy |= current_damage + qty > max_damage();
 
-        damage_ = std::max( std::min( current_damage + qty, max_damage() ), damage_floor( false ) );
+        damage_ = std::max( std::min( current_damage + qty, max_damage() ), damage_floor( qty < 0 ) );
     }
 
     if( qty > 0 && !destroy ) {

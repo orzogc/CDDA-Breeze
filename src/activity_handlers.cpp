@@ -155,6 +155,7 @@ static const activity_id ACT_STUDY_SPELL( "ACT_STUDY_SPELL" );
 static const activity_id ACT_TIDY_UP( "ACT_TIDY_UP" );
 static const activity_id ACT_TOOLMOD_ADD( "ACT_TOOLMOD_ADD" );
 static const activity_id ACT_TRAIN( "ACT_TRAIN" );
+static const activity_id ACT_TRAIN_COMBAT_MOUNT( "ACT_TRAIN_COMBAT_MOUNT" );
 static const activity_id ACT_TRAIN_TEACHER( "ACT_TRAIN_TEACHER" );
 static const activity_id ACT_TRAVELLING( "ACT_TRAVELLING" );
 static const activity_id ACT_TREE_COMMUNION( "ACT_TREE_COMMUNION" );
@@ -174,10 +175,12 @@ static const ammotype ammo_battery( "battery" );
 static const bionic_id bio_painkiller( "bio_painkiller" );
 
 static const efftype_id effect_blind( "blind" );
+static const efftype_id effect_combat_mount_trained( "combat_mount_trained" );
 static const efftype_id effect_controlled( "controlled" );
 static const efftype_id effect_narcosis( "narcosis" );
 static const efftype_id effect_pet( "pet" );
 static const efftype_id effect_sleep( "sleep" );
+static const efftype_id effect_tied( "tied" );
 static const efftype_id effect_under_operation( "under_operation" );
 
 static const harvest_drop_type_id harvest_drop_blood( "blood" );
@@ -196,6 +199,8 @@ static const json_character_flag json_flag_PSYCHOPATH( "PSYCHOPATH" );
 static const json_character_flag json_flag_SAPIOVORE( "SAPIOVORE" );
 
 static const mongroup_id GROUP_FISH( "GROUP_FISH" );
+
+static const mtype_id mon_horse( "mon_horse" );
 
 static const quality_id qual_BUTCHER( "BUTCHER" );
 static const quality_id qual_CUT_FINE( "CUT_FINE" );
@@ -287,6 +292,7 @@ activity_handlers::finish_functions = {
     { ACT_START_FIRE, start_fire_finish },
     { ACT_GENERIC_GAME, generic_game_finish },
     { ACT_TRAIN, train_finish },
+    { ACT_TRAIN_COMBAT_MOUNT, train_combat_mount_finish },
     { ACT_TRAIN_TEACHER, teach_finish },
     { ACT_PLANT_SEED, plant_seed_finish },
     { ACT_VEHICLE, vehicle_finish },
@@ -1778,6 +1784,36 @@ static bool magic_train( player_activity *act, Character *you )
         return true;
     }
     return false;
+}
+
+void activity_handlers::train_combat_mount_finish( player_activity *act, Character *you )
+{
+    if( act->monsters.empty() ) {
+        debugmsg( "No horse assigned in ACT_TRAIN_COMBAT_MOUNT" );
+        act->set_to_null();
+        return;
+    }
+
+    shared_ptr_fast<monster> horse = act->monsters.front().lock();
+    act->monsters.clear();
+    const std::string horse_name = act->str_values.empty() ? _( "这匹马" ) : act->str_values.front();
+
+    if( !horse || horse->type->id != mon_horse || !horse->has_effect( effect_pet ) ||
+        !horse->has_effect( effect_tied ) || rl_dist( you->pos(), horse->pos() ) > 1 ) {
+        you->add_msg_if_player( m_warning, _( "训练中断了，那匹马已经不在身边或没有拴好。" ) );
+        act->set_to_null();
+        return;
+    }
+    if( you->get_skill_level( skill_survival ) < 3 ) {
+        you->add_msg_if_player( m_warning, _( "你的生存技能不足以完成战马训练。" ) );
+        act->set_to_null();
+        return;
+    }
+
+    horse->add_effect( effect_combat_mount_trained, 1_turns, true );
+    you->add_msg_if_player( m_good, _( "经过反复训练，%s已经能在怪物面前保持镇定。" ),
+                            horse_name );
+    act->set_to_null();
 }
 
 void activity_handlers::teach_finish( player_activity *act, Character *you )
