@@ -2279,12 +2279,6 @@ void repair_item_finish( player_activity *act, Character *you, bool no_menu )
         const bool destroyed = attempt == repair_item_actor::AS_DESTROYED;
         const bool cannot_continue_repair = attempt == repair_item_actor::AS_CANT || destroyed ||
                                             !actor->can_repair_target( *you, *fix_location, !destroyed, true );
-        if( cannot_continue_repair ) {
-            // Cannot continue to repair target, select another target.
-            // **Warning**: as soon as the item is popped back, it is destroyed and can't be used anymore!
-            act->targets.pop_back();
-        }
-
         const bool event_happened = attempt == repair_item_actor::AS_FAILURE ||
                                     attempt == repair_item_actor::AS_SUCCESS ||
                                     old_level != you->get_skill_level( actor->used_skill );
@@ -2294,11 +2288,17 @@ void repair_item_finish( player_activity *act, Character *you, bool no_menu )
 
         const bool need_input =
             ( repeat == repeat_type::ONCE ) ||
+            ( repeat == repeat_type::FOREVER && cannot_continue_repair ) ||
             ( repeat == repeat_type::EVENT && event_happened ) ||
             ( repeat == repeat_type::FULL && ( cannot_continue_repair ||
                                                fix_location->damage() <= fix_location->damage_floor( false ) ) ) ||
             ( repeat == repeat_type::REFIT_ONCE ) ||
             ( repeat == repeat_type::REFIT_FULL && !can_refit );
+        if( cannot_continue_repair ) {
+            // Cannot continue to repair target, select another target.
+            // **Warning**: as soon as the item is popped back, it is destroyed and can't be used anymore!
+            act->targets.pop_back();
+        }
         if( need_input ) {
             repeat = repeat_type::INIT;
             if( no_menu ) {
