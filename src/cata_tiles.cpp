@@ -2742,9 +2742,11 @@ bool cata_tiles::draw_sprite_at(
     const SDL_RendererFlip flip ) {
         int result = sprite_tex->render_copy_ex( renderer, &destination, angle, nullptr, flip );
         if( z_overlay_tex ) {
-            // CBN uses a much gentler tint on the overmap than on the local map.
+            // Keep CBN's gentler 12-alpha-per-level overmap curve, but do not
+            // stop progressing after the seventh lower level.  CBN caps this
+            // overlay at 192, while the local-map curve remains capped at 160.
             const int alpha = drawing_overmap_transparency
-                              ? std::min( 96, 24 + ( z_overlay_depth - 1 ) * 12 )
+                              ? std::min( 192, 24 + ( z_overlay_depth - 1 ) * 12 )
                               : std::min( 160, 56 + ( z_overlay_depth - 1 ) * 32 );
             z_overlay_tex->set_alpha_mod( alpha );
             const int overlay_result =
