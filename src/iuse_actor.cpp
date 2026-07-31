@@ -3216,8 +3216,14 @@ repair_item_actor::attempt_hint repair_item_actor::repair( Character &pl, item &
         }
 
         if( roll == SUCCESS ) {
-            pl.add_msg_if_player( m_good, _( "You make your %s extra sturdy." ), fix->tname() );
+            const int old_damage = fix->damage();
             fix->mod_damage( -itype::damage_scale );
+            if( fix->damage() >= old_damage ) {
+                pl.add_msg_if_player( m_info, _( "You cannot improve your %s any more this way." ),
+                                      fix->tname() );
+                return AS_CANT;
+            }
+            pl.add_msg_if_player( m_good, _( "You make your %s extra sturdy." ), fix->tname() );
             handle_components( pl, *fix, false, false, true );
             return AS_SUCCESS;
         }

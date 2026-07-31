@@ -69,6 +69,12 @@ inline SDL_Color color_pixel_custom( const SDL_Color &color )
     return color_pixel_mixer( color, get_option<float>( "MEMORY_GAMMA" ), dark, light );
 }
 
+// CBN-style pale-cyan texture used to distinguish lower z-levels.
+inline SDL_Color color_pixel_z_overlay( const SDL_Color &color )
+{
+    return { 128, 255, 255, color.a };
+}
+
 SDL_Color curses_color_to_SDL( const nc_color &color );
 
 ///@throws std::exception upon errors.
