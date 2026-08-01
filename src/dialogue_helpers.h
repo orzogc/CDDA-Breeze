@@ -67,6 +67,8 @@ struct talk_effect_fun_t {
         void set_remove_item_with( const JsonObject &jo, const std::string &member, bool is_npc = false );
         void set_npc_change_faction( const JsonObject &jo, const std::string &member );
         void set_npc_change_class( const JsonObject &jo, const std::string &member );
+        void set_npc_personality( const JsonObject &jo, const std::string &member, bool modify );
+        void set_npc_movement_policy( const JsonObject &jo, const std::string &member );
         void set_change_faction_rep( const JsonObject &jo, const std::string &member );
         void set_add_debt( const std::vector<trial_mod> &debt_modifiers );
         void set_toggle_npc_rule( const JsonObject &jo, const std::string &member );

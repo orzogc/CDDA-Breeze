@@ -136,6 +136,7 @@ static const npc_class_id NC_EVAC_SHOPKEEP( "NC_EVAC_SHOPKEEP" );
 static const skill_id skill_firstaid( "firstaid" );
 
 static const trait_id trait_IGNORE_SOUND( "IGNORE_SOUND" );
+static const trait_id trait_NPC_HOLD_POSITION( "NPC_HOLD_POSITION" );
 static const trait_id trait_RETURN_TO_START_POS( "RETURN_TO_START_POS" );
 
 static const zone_type_id zone_type_NO_NPC_PICKUP( "NO_NPC_PICKUP" );
@@ -826,15 +827,29 @@ void npc::move()
      * them from inadvertently getting themselves run over and/or cause vehicle related errors.
      * NPCs flee from uncontained fires within 3 tiles
      */
-    if( !in_vehicle && ( sees_dangerous_field( pos() ) || has_effect( effect_npc_fire_bad ) ) ) {
-        if( sees_dangerous_field( pos() ) ) {
+    const bool hold_position = has_trait( trait_NPC_HOLD_POSITION );
+    const bool dangerous_here = sees_dangerous_field( pos() );
+    const field &field_here = get_map().field_at( pos() );
+    const bool emergency_field = field_here.find_field( fd_fire ) != nullptr ||
+                                 field_here.find_field( fd_acid ) != nullptr;
+    const bool should_escape_field = hold_position ? emergency_field :
+                                     dangerous_here || has_effect( effect_npc_fire_bad );
+    if( !in_vehicle && should_escape_field ) {
+        if( dangerous_here ) {
             path.clear();
         }
-        const tripoint escape_dir = good_escape_direction( sees_dangerous_field( pos() ) );
+        const tripoint escape_dir = good_escape_direction( dangerous_here );
         if( escape_dir != pos() ) {
             move_to( escape_dir );
             return;
         }
+    }
+
+    // A held NPC ignores threats, sounds, needs, and tactical repositioning.  Fire and acid
+    // are handled above so a static quest giver can still step off an immediately lethal tile.
+    if( hold_position ) {
+        move_pause();
+        return;
     }
 
     // TODO: Place player-aiding actions here, with a weight

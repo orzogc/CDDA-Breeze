@@ -334,6 +334,15 @@ void npc_template::load( const JsonObject &jsobj )
         guy.myclass = npc_class_id( jsobj.get_string( "class" ) );
     }
 
+    if( jsobj.has_object( "personality" ) ) {
+        const JsonObject personality = jsobj.get_object( "personality" );
+        tem.personality = npc_personality();
+        tem.personality->aggression = std::clamp( personality.get_int( "aggression" ), -10, 10 );
+        tem.personality->bravery = std::clamp( personality.get_int( "bravery" ), -10, 10 );
+        tem.personality->collector = std::clamp( personality.get_int( "collector" ), -10, 10 );
+        tem.personality->altruism = std::clamp( personality.get_int( "altruism" ), -10, 10 );
+    }
+
     guy.set_attitude( static_cast<npc_attitude>( jsobj.get_int( "attitude" ) ) );
     guy.mission = static_cast<npc_mission>( jsobj.get_int( "mission" ) );
     guy.chatbin.first_topic = jsobj.get_string( "chat" );
@@ -681,6 +690,10 @@ void npc::load_npc_template( const string_id<npc_template> &ident )
     idz = tguy.idz;
     myclass = npc_class_id( tguy.myclass );
     randomize( myclass );
+    if( tem.personality.has_value() ) {
+        personality = *tem.personality;
+        refresh_personality_traits();
+    }
     if( tem.gender_override != npc_template::gender::random ) {
         male = tem.gender_override == npc_template::gender::male;
     }
@@ -935,6 +948,8 @@ void npc::randomize( const npc_class_id &type )
         set_mutation( tid, tid->variant( var ) );
     }
 
+    generate_personality_traits();
+
     // Run mutation rounds
     for( const auto &mr : type->mutation_rounds ) {
         int rounds = mr.second.roll();
@@ -1022,6 +1037,42 @@ void npc::select_best_martial_art( bool announce )
         add_msg_if_player_sees( *this, m_info, _( "%1$s改用%2$s！" ),
                                 disp_name(), martial_arts_data->selected_style_name( *this ) );
     }
+}
+
+void npc::clear_personality_traits()
+{
+    const std::vector<trait_id> traits = get_mutations();
+    for( const trait_id &trait : traits ) {
+        if( trait->personality_score ) {
+            unset_mutation( trait );
+        }
+    }
+}
+
+void npc::generate_personality_traits()
+{
+    for( const mutation_branch &mdata : mutation_branch::get_all() ) {
+        if( !mdata.personality_score ) {
+            continue;
+        }
+        const mut_personality_score &required = *mdata.personality_score;
+        if( required.min_aggression <= personality.aggression &&
+            personality.aggression <= required.max_aggression &&
+            required.min_bravery <= personality.bravery &&
+            personality.bravery <= required.max_bravery &&
+            required.min_collector <= personality.collector &&
+            personality.collector <= required.max_collector &&
+            required.min_altruism <= personality.altruism &&
+            personality.altruism <= required.max_altruism ) {
+            set_mutation( mdata.id );
+        }
+    }
+}
+
+void npc::refresh_personality_traits()
+{
+    clear_personality_traits();
+    generate_personality_traits();
 }
 
 void npc::randomize_from_faction( faction *fac )
@@ -3337,6 +3388,7 @@ void npc::npc_update_body()
 
 void npc::on_load()
 {
+    refresh_personality_traits();
     const auto advance_effects = [&]( const time_duration & elapsed_dur ) {
         for( auto &elem : *effects ) {
             for( auto &_effect_it : elem.second ) {

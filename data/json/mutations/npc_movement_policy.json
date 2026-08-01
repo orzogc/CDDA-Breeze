@@ -1,0 +1,12 @@
+[
+  {
+    "type": "mutation",
+    "id": "NPC_HOLD_POSITION",
+    "name": { "str": "NPC hold position" },
+    "description": "Internal marker used by NPC movement-policy EOCs.",
+    "points": 0,
+    "valid": false,
+    "purifiable": false,
+    "player_display": false
+  }
+]
