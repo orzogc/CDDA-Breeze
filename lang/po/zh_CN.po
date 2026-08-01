@@ -464570,7 +464570,7 @@ msgstr "谨慎"
 #: data/json/mutations/npc_personality.json
 #. ~ Description of mutation "Timid"
 msgid "<npc_name> tries to avoid conflict, even when they have good reason not to."
-msgstr "<npc_name> 总是试图避免冲突，即便他们本有充分的理由去面对"
+msgstr "<npc_name>总是试图避免冲突，即便他们本有充分的理由去面对。"
 
 #: data/json/mutations/npc_personality.json
 #. ~ Mutation name
