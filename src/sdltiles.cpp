@@ -1300,6 +1300,13 @@ void cata_tiles::draw_om( const point &dest, const tripoint_abs_omt &center_abs_
     }
 
     if( !viewing_weather && uistate.overmap_show_city_labels ) {
+        // Above ground, terrain is projected from z=0.  Query labels from the
+        // same layer and compare only their screen-plane coordinates.
+        const tripoint_abs_omt label_center = center_abs_omt.z() > 0 ?
+                                               tripoint_abs_omt( center_abs_omt.xy(), 0 ) : center_abs_omt;
+        const auto label_in_view = [&]( const tripoint_abs_omt & label_pos ) {
+            return overmap_area.contains( tripoint( label_pos.raw().xy(), center_abs_omt.z() ) );
+        };
 
         const auto abs_sm_to_draw_label = [&]( const tripoint_abs_sm & city_pos, const int label_length ) {
             const tripoint tile_draw_pos = global_omt_to_draw_position( project_to<coords::omt>
@@ -1329,17 +1336,17 @@ void cata_tiles::draw_om( const point &dest, const tripoint_abs_omt &center_abs_
                            0, 0 ) ).x() / 2;
 
         for( const city_reference &city : overmap_buffer.get_cities_near(
-                 project_to<coords::sm>( center_abs_omt ), radius ) ) {
+                 project_to<coords::sm>( label_center ), radius ) ) {
             const tripoint_abs_omt city_center = project_to<coords::omt>( city.abs_sm_pos );
-            if( overmap_buffer.seen( city_center ) && overmap_area.contains( city_center.raw() ) ) {
+            if( overmap_buffer.seen( city_center ) && label_in_view( city_center ) ) {
                 label_bg( city.abs_sm_pos, city.city->name );
             }
         }
 
         for( const camp_reference &camp : overmap_buffer.get_camps_near(
-                 project_to<coords::sm>( center_abs_omt ), radius ) ) {
+                 project_to<coords::sm>( label_center ), radius ) ) {
             const tripoint_abs_omt camp_center = project_to<coords::omt>( camp.abs_sm_pos );
-            if( overmap_buffer.seen( camp_center ) && overmap_area.contains( camp_center.raw() ) ) {
+            if( overmap_buffer.seen( camp_center ) && label_in_view( camp_center ) ) {
                 const std::string camp_name = camp.camp->camp_name().empty() ?
                                               _( "Faction Camp" ) : camp.camp->camp_name();
                 label_bg( camp.abs_sm_pos, camp_name );
@@ -1347,9 +1354,9 @@ void cata_tiles::draw_om( const point &dest, const tripoint_abs_omt &center_abs_
         }
 
         for( const faction_camp_reference &camp : overmap_buffer.get_faction_camps_near(
-                 center_abs_omt, max_col / 2 + 1, max_row / 2 + 1 ) ) {
+                 label_center, max_col / 2 + 1, max_row / 2 + 1 ) ) {
             if( overmap_buffer.seen( camp.abs_omt_pos ) &&
-                overmap_area.contains( camp.abs_omt_pos.raw() ) ) {
+                label_in_view( camp.abs_omt_pos ) ) {
                 label_bg( project_to<coords::sm>( camp.abs_omt_pos ), camp.name );
             }
         }
