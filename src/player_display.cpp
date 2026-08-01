@@ -666,9 +666,13 @@ static std::string personality_summary_description( const Character &you )
     const std::vector<trait_and_var> personality_traits = get_personality_traits_for_display( you );
     std::string result;
     for( const trait_and_var &entry : personality_traits ) {
-        std::string description = you.mutation_desc( entry.trait );
+        std::string description = entry.desc();
+        replace_substring( description, "<npc_name>", "", true );
+        while( !description.empty() && description.front() == ' ' ) {
+            description.erase( description.begin() );
+        }
         if( !result.empty() ) {
-            result += " ";
+            result += "\n";
         }
         result += string_format(
                       pgettext( "personality summary entry", "%1$s, %2$s" ),
