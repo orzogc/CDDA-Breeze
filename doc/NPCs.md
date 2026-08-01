@@ -116,6 +116,8 @@ Faction determines what faction, if any, the NPC belongs to.  Some examples are 
 
 Mutations may define a `personality_score` object containing any of `min_aggression`, `max_aggression`, `min_bravery`, `max_bravery`, `min_collector`, `max_collector`, `min_altruism`, and `max_altruism`.  Supplied bounds are clamped to -10 through 10; omitted bounds are unrestricted so class-adjusted NPC personality values outside that range still match.  NPCs automatically gain every matching descriptive trait when generated, loaded, or changed by a personality EOC.  These traits should be descriptive only and should not add gameplay bonuses.
 
+The interface option `NPC_PERSONALITY_TRAIT_DISPLAY` controls how matching personality traits appear in an NPC's character information.  `SEPARATE` keeps every matching trait as an individual entry.  `COMBINED` replaces them with one `Personality` entry and lists each matching trait and description in the information pane.  The combined view also includes personality traits added by mods through `personality_score`.
+
 # Writing dialogues
 Dialogues work like state machines. They start with a certain topic (the NPC says something), the player character can then respond (choosing one of several responses), and that response sets the new talk topic. This goes on until the dialogue is finished, or the NPC turns hostile.
 

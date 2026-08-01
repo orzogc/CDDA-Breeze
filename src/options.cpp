@@ -1617,6 +1617,17 @@ void options_manager::add_options_interface()
         true
     );
 
+    add( "NPC_PERSONALITY_TRAIT_DISPLAY", "interface",
+         to_translation( "NPC personality trait display" ),
+         to_translation( "Choose how personality traits are shown in an NPC's character information.  "
+                         "Combined displays one Personality entry and lists every matching personality "
+                         "in the description pane.  Separate displays each personality as its own trait." ),
+    {
+        { "COMBINED", to_translation( "Combined" ) },
+        { "SEPARATE", to_translation( "Separate" ) }
+    },
+    "COMBINED" );
+
     add_empty_line();
 
     add( "USE_CELSIUS", "interface", to_translation( "Temperature units" ),
