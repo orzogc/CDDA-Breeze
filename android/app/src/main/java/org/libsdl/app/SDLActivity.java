@@ -68,6 +68,8 @@ import android.window.OnBackInvokedDispatcher;
 
 import android.preference.PreferenceManager;
 
+import com.cleverraven.cataclysmdda.R;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -960,12 +962,9 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
         if (mBrokenLibraries) {
             mSingleton = this;
             AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
-            dlgAlert.setMessage("An error occurred while trying to start the application. Please try again and/or reinstall."
-                + System.getProperty("line.separator")
-                + System.getProperty("line.separator")
-                + "Error: " + errorMsgBrokenLib);
-            dlgAlert.setTitle("SDL Error");
-            dlgAlert.setPositiveButton("Exit",
+            dlgAlert.setMessage(getString(R.string.sdlErrorMessage, errorMsgBrokenLib));
+            dlgAlert.setTitle(R.string.sdlErrorTitle);
+            dlgAlert.setPositiveButton(R.string.exit,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {

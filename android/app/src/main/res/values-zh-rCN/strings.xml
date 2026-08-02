@@ -22,6 +22,11 @@
 （该设置仅在[首次启动]与[覆盖更新]时可调整！）</string>
     <string name="startGame">开始游戏</string>
     <string name="showHelp">查看帮助</string>
+    <string name="showAccessibilitySettings">显示无障碍设置菜单</string>
+    <string name="installationFailed">安装失败</string>
+    <string name="sdlErrorTitle">SDL 错误</string>
+    <string name="sdlErrorMessage">启动应用时发生错误，请重试或重新安装。\n\n错误：%1$s</string>
+    <string name="exit">退出</string>
     <string name="crashAlert">检测到上次游戏未正常退出</string>
     <string name="crashMessage">崩溃日志已保存至安装目录 ./config/debug.log，上传至官方论坛协助开发者解决游戏异常提供帮助。</string>
     <string name="yes">是</string>
@@ -30,4 +35,6 @@
     <string name="cancel">取消</string>
     <string name="unavailable">不可选</string>
     <string name="unavailableOption">该选项已被禁用。</string>
+    <string name="accessibilityServicesTitle">无障碍服务警告</string>
+    <string name="accessibilityServicesMessage">如果游戏中的滑动命令和快捷键菜单无法正常使用，可以尝试停用下列会与触摸屏交互的无障碍服务或软件，例如滑动辅助、自动点击器、单手模式等：\n%1$s</string>
 </resources>

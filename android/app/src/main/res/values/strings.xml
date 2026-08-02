@@ -12,6 +12,10 @@
     <string name="startGame">Start game</string>
     <string name="showHelp">Show help</string>
     <string name="showAccessibilitySettings">Show accessibility settings menu</string>
+    <string name="installationFailed">Installation failed</string>
+    <string name="sdlErrorTitle">SDL error</string>
+    <string name="sdlErrorMessage">An error occurred while trying to start the application. Please try again or reinstall.\n\nError: %1$s</string>
+    <string name="exit">Exit</string>
     <string name="crashAlert">The game did not quit properly last time</string>
     <string name="crashMessage">The crash report located in ./config/crash.log may help developers troubleshoot program errors.</string>
     <string name="yes">Yes</string>

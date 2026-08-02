@@ -90,7 +90,7 @@ public class SplashScreen extends Activity {
                 .setTitle(getString(R.string.crashAlert))
                 .setCancelable(false)
                 .setMessage(message)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         SplashScreen.this.startGameActivity(false);
                     }
@@ -156,7 +156,7 @@ public class SplashScreen extends Activity {
         accessibilityServicesAlert = new AlertDialog.Builder(SplashScreen.this)
             .setTitle(getString(R.string.accessibilityServicesTitle))
             .setCancelable(false)
-            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     SplashScreen.this.installOrRun();
                     return;
@@ -230,9 +230,9 @@ public class SplashScreen extends Activity {
         @Override
         protected void onPreExecute() {
             installationAlert = new AlertDialog.Builder(SplashScreen.this)
-                .setTitle("Installation Failed")
+                .setTitle(R.string.installationFailed)
                 .setCancelable(false)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         SplashScreen.this.finish();
                         return;
@@ -256,7 +256,7 @@ public class SplashScreen extends Activity {
                 .setTitle(getString(R.string.helpTitle))
                 .setCancelable(false)
                 .setMessage(getString(R.string.helpMessage))
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         settingsAlert.show();
                         return;
