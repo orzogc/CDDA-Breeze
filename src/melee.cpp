@@ -970,9 +970,9 @@ void Character::reach_attack( const tripoint &p )
     for( const tripoint &path_point : path ) {
         // Possibly hit some unintended target instead
         Creature *inter = creatures.creature_at( path_point );
-        // Adjacent allies can make room for a reach attack.  The intended target was removed above.
+        // Adjacent non-hostile creatures can make room for a reach attack.  The intended target was removed above.
         if( inter != nullptr && rl_dist( pos(), path_point ) == 1 &&
-            attitude_to( *inter ) == Creature::Attitude::FRIENDLY ) {
+            attitude_to( *inter ) != Creature::Attitude::HOSTILE ) {
             continue;
         }
         /** @EFFECT_MELEE decreases chance of hitting intervening target on reach attack */

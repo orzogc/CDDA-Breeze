@@ -389,10 +389,10 @@ dealt_projectile_attack projectile_attack( const projectile &proj_arg, const tri
             critter = nullptr;
         }
 
-        // Adjacent allies can make room for aimed shots.  The intended target is never ignored.
+        // Adjacent non-hostile creatures can make room for aimed shots.  The intended target is never ignored.
         if( critter != nullptr && origin != nullptr && tp != target_arg &&
             rl_dist( source, tp ) == 1 &&
-            origin->attitude_to( *critter ) == Creature::Attitude::FRIENDLY ) {
+            origin->attitude_to( *critter ) != Creature::Attitude::HOSTILE ) {
             critter = nullptr;
         }
 

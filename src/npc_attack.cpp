@@ -233,8 +233,8 @@ void npc_attack_melee::use( npc &source, const tripoint &location ) const
             bool can_attack = true;
             for( const tripoint &path_point : path ) {
                 Creature *inter = get_creature_tracker().creature_at( path_point );
-                if( inter != nullptr && source.attitude_to( *inter ) == Creature::Attitude::FRIENDLY ) {
-                    // Adjacent allies can make room for a reach attack.
+                if( inter != nullptr && source.attitude_to( *inter ) != Creature::Attitude::HOSTILE ) {
+                    // Adjacent non-hostile creatures can make room for a reach attack.
                     if( rl_dist( source.pos(), path_point ) == 1 ) {
                         continue;
                     }
