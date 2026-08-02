@@ -2247,13 +2247,20 @@ bool cata_tiles::draw_from_id_string( const std::string &id, TILE_CATEGORY categ
 
     if( !tt ) {
 
-        // Use fog overlay as fallback for transparent terrain
+        // Use fog overlay as fallback for transparent terrain.
         if (category == TILE_CATEGORY::TERRAIN && !here.dont_draw_lower_floor(pos)) {
+            // Treetops are transparent roof placeholders.  If the tileset has no
+            // dedicated treetop tile, the projected tree below has already received
+            // the normal z-level tint; do not cover it with the gray fallback fog.
+            if( string_starts_with( id, "t_treetop" ) ) {
+                return true;
+            }
+
             draw_zlevel_overlay(pos, ll, height_3d);
 
-            // t_open_air is plentiful at high z-levels
-            // Skipping the rest of the fallback code will significantly improve performance
-            if (id == "t_open_air") {
+            // t_open_air is plentiful at high z-levels.  Skipping the rest of the
+            // fallback code significantly improves performance.
+            if( id == "t_open_air" ) {
                 return true;
             }
         }
