@@ -1459,6 +1459,7 @@ class npc_template
         std::vector<matype_id> martial_arts;
         std::optional<matype_id> selected_martial_art;
         std::optional<npc_personality> personality;
+        std::map<std::string, std::string> speech_overrides;
         enum class gender : int {
             random,
             male,

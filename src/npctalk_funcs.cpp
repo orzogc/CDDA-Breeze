@@ -1510,7 +1510,11 @@ void talk_function::morale_chat_activity( npc &p )
     player_character.assign_activity( ACT_SOCIALIZE, moves );
     player_character.activity.str_values.push_back( p.get_name() );
     if( one_in( 3 ) ) {
-        p.say( SNIPPET.random_from_category( "npc_socialize" ).value_or( translation() ).translated() );
+        if( p.chatbin.snip_socialize.empty() ) {
+            p.say( SNIPPET.random_from_category( "npc_socialize" ).value_or( translation() ).translated() );
+        } else {
+            p.say( _( p.chatbin.snip_socialize ) );
+        }
     }
     add_msg( m_good, _( "That was a pleasant conversation with %s." ), p.disp_name() );
     player_character.add_morale( MORALE_CHAT, rng( 3, 10 ), 10, 200_minutes, 5_minutes / 2 );
@@ -1535,9 +1539,9 @@ void talk_function::drop_items_in_place( npc &p )
         p.assign_activity( player_activity( drop_activity_actor(
                                                 to_drop, tripoint_zero, false
                                             ) ) );
-        p.say( "<acknowledged>" );
+        p.say( p.chatbin.snip_acknowledged );
     } else {
-        p.say( _( "I don't have anything to drop off." ) );
+        p.say( _( p.chatbin.snip_no_dropoff ) );
     }
 }
 

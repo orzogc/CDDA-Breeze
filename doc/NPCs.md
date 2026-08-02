@@ -151,6 +151,30 @@ Field | Default topic ID  | Uses for...
 NPCs have dialogue depending on the situation.
 This dialogue can be customized in `"type": "npc"` json entries.
 
+For new content, prefer the structured `npc_speech` object.  Every key is the old speech field name with the `snip_` prefix or angle brackets removed.  Unspecified entries keep the normal game text, and snippet tags remain valid.  Unknown keys are reported as JSON errors.
+
+```json
+{
+  "type": "npc",
+  "id": "NPC_EXAMPLE",
+  "class": "NC_EXAMPLE",
+  "attitude": 3,
+  "mission": 0,
+  "chat": "TALK_FRIEND",
+  "faction": "your_followers",
+  "npc_speech": {
+    "hungry": "I need something to eat.",
+    "thirsty": "I need some water.",
+    "let_me_pass": "Excuse me, I need to get through.",
+    "monster_warning": "Watch that",
+    "pickup_item": "Hold on, I want to pick up that %s.",
+    "socialize": "It is good to have a quiet moment together."
+  }
+}
+```
+
+Structured overrides are reapplied from the current NPC template when a save is loaded.  This lets a mod update the voice of an already generated named NPC.  The older top-level fields remain supported for compatibility, but only the structured object receives this live template refresh.
+
 If `npc` has one of the following fields, the NPCs will speak the indicated message or snippet instead of the default message.
 
 All messages can be used with snippets.
@@ -250,6 +274,10 @@ Field | Default messages/snippets | Used for...
 `snip_pulp_zombie` | `Hold on, I want to pulp that %s.` | NPC try to pulp %s.
 `snip_radiation_sickness` | `I'm suffering from radiation sickness…` | NPC are in radiation sickness.
 `snip_wear` | `Thanks, I'll wear that now.` | You gave a clothes or armor and NPC wear it.
+`snip_mutiny` | `<follower_mutiny>  Adios, motherfucker!` | The follower leaves the player's faction because of mistreatment.
+`snip_pickup_item` | `Hold on, I want to pick up that %s.` | A walking follower detours to pick up an item.
+`snip_no_dropoff` | `I don't have anything to drop off.` | The player asks the NPC to unload but they have nothing eligible.
+`snip_socialize` | empty | A line spoken during a socializing activity. Empty keeps the default random `npc_socialize` category.
 
 ### Special Custom Entries
 

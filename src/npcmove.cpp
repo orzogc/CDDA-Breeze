@@ -3132,7 +3132,7 @@ void npc::find_item()
     }
 
     if( fetching_item && rl_dist( wanted_item_pos, pos() ) > 1 && is_walking_with() ) {
-        say( _( "Hold on, I want to pick up that %s." ), wanted_name );
+        say( string_format( _( chatbin.snip_pickup_item ), wanted_name ) );
     }
 }
 

@@ -606,6 +606,32 @@ void npc_template::load( const JsonObject &jsobj )
     if( jsobj.has_string( "snip_wear" ) ) {
         guy.chatbin.snip_wear = jsobj.get_string( "snip_wear" );
     }
+    if( jsobj.has_string( "snip_mutiny" ) ) {
+        guy.chatbin.snip_mutiny = jsobj.get_string( "snip_mutiny" );
+    }
+    if( jsobj.has_string( "snip_pickup_item" ) ) {
+        guy.chatbin.snip_pickup_item = jsobj.get_string( "snip_pickup_item" );
+    }
+    if( jsobj.has_string( "snip_no_dropoff" ) ) {
+        guy.chatbin.snip_no_dropoff = jsobj.get_string( "snip_no_dropoff" );
+    }
+    if( jsobj.has_string( "snip_socialize" ) ) {
+        guy.chatbin.snip_socialize = jsobj.get_string( "snip_socialize" );
+    }
+
+    if( jsobj.has_object( "npc_speech" ) ) {
+        for( const JsonMember member : jsobj.get_object( "npc_speech" ) ) {
+            if( member.is_comment() ) {
+                continue;
+            }
+            const std::string key = member.name();
+            const std::string value = member.get_string();
+            if( !guy.chatbin.set_speech_override( key, value ) ) {
+                member.throw_error( string_format( "unknown NPC speech key '%s'", key ) );
+            }
+            tem.speech_overrides[key] = value;
+        }
+    }
     if( jsobj.has_int( "age" ) ) {
         guy.set_base_age( jsobj.get_int( "age" ) );
     }
@@ -798,6 +824,10 @@ void npc::load_npc_template( const string_id<npc_template> &ident )
     chatbin.snip_give_carry_cant_no_space = tguy.chatbin.snip_give_carry_cant_no_space;
     chatbin.snip_give_carry_too_heavy = tguy.chatbin.snip_give_carry_too_heavy;
     chatbin.snip_wear = tguy.chatbin.snip_wear;
+    chatbin.snip_mutiny = tguy.chatbin.snip_mutiny;
+    chatbin.snip_pickup_item = tguy.chatbin.snip_pickup_item;
+    chatbin.snip_no_dropoff = tguy.chatbin.snip_no_dropoff;
+    chatbin.snip_socialize = tguy.chatbin.snip_socialize;
 
     set_base_age( tguy.base_age() );
     set_base_height( tguy.base_height() );
@@ -1905,7 +1935,7 @@ void npc::mutiny()
     }
     chatbin.first_topic = chatbin.talk_stranger_neutral;
     set_attitude( NPCATT_NULL );
-    say( _( "<follower_mutiny>  Adios, motherfucker!" ), sounds::sound_t::order );
+    say( _( chatbin.snip_mutiny ), sounds::sound_t::order );
     if( seen ) {
         my_fac->known_by_u = true;
     }

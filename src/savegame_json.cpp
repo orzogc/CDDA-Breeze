@@ -2002,6 +2002,10 @@ void dialogue_chatbin::serialize( JsonOut &json ) const
     json.member( "snip_give_carry_cant_no_space", snip_give_carry_cant_no_space );
     json.member( "snip_give_carry_too_heavy", snip_give_carry_too_heavy );
     json.member( "snip_wear", snip_wear );
+    json.member( "snip_mutiny", snip_mutiny );
+    json.member( "snip_pickup_item", snip_pickup_item );
+    json.member( "snip_no_dropoff", snip_no_dropoff );
+    json.member( "snip_socialize", snip_socialize );
 
     if( mission_selected != nullptr ) {
         json.member( "mission_selected", mission_selected->get_id() );
@@ -2113,6 +2117,10 @@ void dialogue_chatbin::deserialize( const JsonObject &data )
     data.read( "snip_give_carry_cant_no_space", snip_give_carry_cant_no_space );
     data.read( "snip_give_carry_too_heavy", snip_give_carry_too_heavy );
     data.read( "snip_wear", snip_wear );
+    data.read( "snip_mutiny", snip_mutiny );
+    data.read( "snip_pickup_item", snip_pickup_item );
+    data.read( "snip_no_dropoff", snip_no_dropoff );
+    data.read( "snip_socialize", snip_socialize );
 
     std::vector<int> tmpmissions;
     data.read( "missions", tmpmissions );
@@ -2420,6 +2428,12 @@ void npc::load( const JsonObject &data )
 
     data.read( "op_of_u", op_of_u );
     data.read( "chatbin", chatbin );
+    const string_id<npc_template> template_id( idz.str() );
+    if( template_id.is_valid() ) {
+        // Structured speech overrides are reapplied from the current template so mods can
+        // update the voice of already generated named NPCs without editing save files.
+        chatbin.apply_speech_overrides( template_id.obj().speech_overrides );
+    }
     if( !data.read( "rules", rules ) ) {
         data.read( "misc_rules", rules );
         data.read( "combat_rules", rules );
