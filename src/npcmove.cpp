@@ -2919,7 +2919,8 @@ void npc::find_item()
         return;
     }
 
-    if( is_player_ally() && !rules.has_flag( ally_rule::allow_pick_up ) ) {
+    if( ( is_player_ally() || is_following() ) &&
+        !rules.has_flag( ally_rule::allow_pick_up ) ) {
         // Grabbing stuff not allowed by our "owner"
         return;
     }
@@ -2991,7 +2992,8 @@ void npc::find_item()
     for( const tripoint &p : closest_points_first( pos(), range ) ) {
         // TODO: Make this sight check not overdraw nearby tiles
         // TODO: Optimize that zone check
-        if( is_player_ally() && g->check_zone( zone_type_NO_NPC_PICKUP, p ) ) {
+        if( ( is_player_ally() || is_following() ) &&
+            g->check_zone( zone_type_NO_NPC_PICKUP, p ) ) {
             continue;
         }
 
@@ -3087,7 +3089,8 @@ void npc::pick_up_item()
         return;
     }
 
-    if( !rules.has_flag( ally_rule::allow_pick_up ) && is_player_ally() ) {
+    if( !rules.has_flag( ally_rule::allow_pick_up ) &&
+        ( is_player_ally() || is_following() ) ) {
         add_msg_debug( debugmode::DF_NPC, "%s::pick_up_item(); Canceling on player's request", get_name() );
         fetching_item = false;
         moves -= 1;
@@ -3101,7 +3104,8 @@ void npc::pick_up_item()
 
     if( ( !here.has_items( wanted_item_pos ) && !has_cargo &&
           !here.is_harvestable( wanted_item_pos ) && sees( wanted_item_pos ) ) ||
-        ( is_player_ally() && g->check_zone( zone_type_NO_NPC_PICKUP, wanted_item_pos ) ) ) {
+        ( ( is_player_ally() || is_following() ) &&
+          g->check_zone( zone_type_NO_NPC_PICKUP, wanted_item_pos ) ) ) {
         // Items we wanted no longer exist and we can see it
         // Or player who is leading us doesn't want us to pick it up
         fetching_item = false;
