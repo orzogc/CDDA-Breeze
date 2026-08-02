@@ -369,7 +369,7 @@ jobs:
         env:
           TAG_NAME: ${{ needs.prepare.outputs.tag_name }}
         run: |
-          gh release edit "${TAG_NAME}" --draft=false
+          gh release edit "${TAG_NAME}" --draft=false --repo "${GITHUB_REPOSITORY}"
 
   cleanup:
     name: 清理失败的草稿发布
