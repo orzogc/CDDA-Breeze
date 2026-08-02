@@ -175,6 +175,7 @@ enum npc_action : int {
     npc_noop,
     npc_reach_attack,
     npc_do_attack,
+    npc_pursue_target,
     npc_aim,
     npc_investigate_sound,
     npc_return_to_guard_pos,
@@ -615,6 +616,11 @@ void npc::assess_danger()
             float priority = std::max( foe_threat - 2.0f * ( scaled_distance - 1 ),
                                        is_too_close ? std::max( foe_threat, NPC_DANGER_VERY_LOW ) :
                                        0.0f );
+            // JSON-defined hostile profiles using ENGAGE_ALL should actively pursue
+            // visible enemies instead of dropping them when distance lowers threat priority.
+            if( rules.apply_to_all && rules.engagement == combat_engagement::ALL && is_enemy() ) {
+                priority = std::max( priority, NPC_DANGER_VERY_LOW );
+            }
             cur_threat_map[direction_from( pos(), foe.pos() )] += priority;
             if( priority > highest_priority ) {
                 warn_about( warning, 1_minutes );
@@ -1090,6 +1096,18 @@ void npc::execute_action( npc_action action )
             ai_cache.current_attack.reset();
             ai_cache.current_attack_evaluation = npc_attack_rating{};
             break;
+        case npc_pursue_target:
+            if( cur != nullptr ) {
+                update_path( cur->pos() );
+                if( !path.empty() ) {
+                    move_to_next();
+                } else {
+                    move_pause();
+                }
+            } else {
+                move_pause();
+            }
+            break;
         case npc_pause:
             move_pause();
             break;
@@ -1532,10 +1550,13 @@ npc_action npc::method_of_attack()
     std::optional<int> potential = ai_cache.current_attack_evaluation.value();
     if( potential && *potential > 0 ) {
         return npc_do_attack;
-    } else {
-        add_msg_debug( debugmode::debug_filter::DF_NPC, "%s can't figure out what to do", disp_name() );
-        return npc_undecided;
     }
+    if( rules.apply_to_all && rules.engagement == combat_engagement::ALL && is_enemy() &&
+        critter != nullptr && sees( *critter ) ) {
+        return npc_pursue_target;
+    }
+    add_msg_debug( debugmode::debug_filter::DF_NPC, "%s can't figure out what to do", disp_name() );
+    return npc_undecided;
 }
 
 void npc::evaluate_best_attack( const Creature *target )
@@ -4432,6 +4453,8 @@ std::string npc_action_name( npc_action action )
             return "Do nothing";
         case npc_do_attack:
             return "Attack";
+        case npc_pursue_target:
+            return "Pursue target";
         case npc_goto_to_this_pos:
             return "Go to position";
         case num_npc_actions:
