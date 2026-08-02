@@ -338,7 +338,7 @@
     "symbol": "#",
     "color": [ "light_green", "green", "yellow_yellow", "brown" ],
     "move_cost": 8,
-    "flags": [ "TRANSPARENT", "FLAMMABLE_ASH", "UNSTABLE", "CLIMBABLE", "SINGLE_SUPPORT" ]
+    "flags": [ "TRANSPARENT", "FLAMMABLE_ASH", "UNSTABLE", "CLIMBABLE", "SINGLE_SUPPORT", "Z_TRANSPARENT" ]
   },
   {
     "type": "terrain",
@@ -348,7 +348,7 @@
     "symbol": "#",
     "color": [ "green" ],
     "move_cost": 8,
-    "flags": [ "TRANSPARENT", "FLAMMABLE_ASH", "UNSTABLE", "SINGLE_SUPPORT" ]
+    "flags": [ "TRANSPARENT", "FLAMMABLE_ASH", "UNSTABLE", "SINGLE_SUPPORT", "Z_TRANSPARENT" ]
   },
   {
     "type": "terrain",
@@ -358,7 +358,7 @@
     "symbol": "#",
     "color": "brown",
     "move_cost": 8,
-    "flags": [ "TRANSPARENT", "FLAMMABLE_ASH", "UNSTABLE", "SINGLE_SUPPORT" ]
+    "flags": [ "TRANSPARENT", "FLAMMABLE_ASH", "UNSTABLE", "SINGLE_SUPPORT", "Z_TRANSPARENT" ]
   },
   {
     "type": "terrain",
@@ -368,6 +368,6 @@
     "symbol": "#",
     "color": "red",
     "move_cost": 8,
-    "flags": [ "TRANSPARENT", "FLAMMABLE_ASH", "UNSTABLE", "SINGLE_SUPPORT" ]
+    "flags": [ "TRANSPARENT", "FLAMMABLE_ASH", "UNSTABLE", "SINGLE_SUPPORT", "Z_TRANSPARENT" ]
   }
 ]

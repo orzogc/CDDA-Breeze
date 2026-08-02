@@ -2251,9 +2251,10 @@ bool cata_tiles::draw_from_id_string( const std::string &id, TILE_CATEGORY categ
         if (category == TILE_CATEGORY::TERRAIN && !here.dont_draw_lower_floor(pos)) {
             draw_zlevel_overlay(pos, ll, height_3d);
 
-            // t_open_air is plentiful at high z-levels
-            // Skipping the rest of the fallback code will significantly improve performance
-            if (id == "t_open_air") {
+            // t_open_air is plentiful at high z-levels.  Treetops are transparent
+            // roof placeholders: when a tileset has no dedicated treetop tile, leave
+            // the projected tree below visible instead of covering it with ASCII '#'.
+            if( id == "t_open_air" || string_starts_with( id, "t_treetop" ) ) {
                 return true;
             }
         }
