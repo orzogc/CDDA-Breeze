@@ -487,6 +487,8 @@ struct npc_follower_rules {
     bool allow_improvised_throwing = true;
     // Ignore morale-based retreat while still avoiding fire, explosions and vehicles.
     bool never_flee = false;
+    // Prefer a usable firearm over melee attacks, while retaining melee as a fallback.
+    bool prefer_guns = false;
     ally_rule flags = ally_rule::DEFAULT; // NOLINT(cata-serialize)
     ally_rule override_enable = ally_rule::DEFAULT; // NOLINT(cata-serialize)
     ally_rule overrides = ally_rule::DEFAULT; // NOLINT(cata-serialize)

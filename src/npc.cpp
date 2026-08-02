@@ -3969,6 +3969,7 @@ void npc_follower_rules::load_from_template( const JsonObject &data )
     data.read( "apply_to_all", apply_to_all );
     data.read( "allow_improvised_throwing", allow_improvised_throwing );
     data.read( "never_flee", never_flee );
+    data.read( "prefer_guns", prefer_guns );
 
     for( const auto &rule : ally_rule_strs ) {
         if( !data.has_bool( rule.first ) ) {

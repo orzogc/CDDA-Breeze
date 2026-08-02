@@ -1542,6 +1542,8 @@ void npc::evaluate_best_attack( const Creature *target )
 {
     std::shared_ptr<npc_attack> best_attack;
     npc_attack_rating best_evaluated_attack;
+    std::shared_ptr<npc_attack> best_gun_attack;
+    npc_attack_rating best_evaluated_gun_attack;
     const auto compare = [&best_attack, &best_evaluated_attack, this, &target]
     ( const std::shared_ptr<npc_attack> &potential_attack ) {
         const npc_attack_rating evaluated = potential_attack->evaluate( *this, target );
@@ -1549,14 +1551,25 @@ void npc::evaluate_best_attack( const Creature *target )
             best_attack = potential_attack;
             best_evaluated_attack = evaluated;
         }
+        return evaluated;
+    };
+    const auto compare_gun = [&best_gun_attack, &best_evaluated_gun_attack, &compare]
+    ( const std::shared_ptr<npc_attack> &potential_attack ) {
+        const npc_attack_rating evaluated = compare( potential_attack );
+        if( evaluated > best_evaluated_gun_attack ) {
+            best_gun_attack = potential_attack;
+            best_evaluated_gun_attack = evaluated;
+        }
     };
 
     // punching things is always available
     compare( std::make_shared<npc_attack_melee>( null_item_reference() ) );
     const units::energy ups_charges = available_ups();
-    visit_items( [&compare, &ups_charges, this]( item * it, item * ) {
-        // you can theoretically melee with anything.
-        compare( std::make_shared<npc_attack_melee>( *it ) );
+    visit_items( [&compare, &compare_gun, &ups_charges, this]( item * it, item * ) {
+        // Do not turn worn clothing and armor into improvised melee weapons.
+        if( !it->is_armor() || is_wielding( *it ) ) {
+            compare( std::make_shared<npc_attack_melee>( *it ) );
+        }
         const bool dedicated_throwing_item = it->has_flag( flag_NPC_THROW_NOW ) ||
                                              it->has_flag( flag_NPC_THROWN );
         if( ( rules.allow_improvised_throwing || dedicated_throwing_item ) &&
@@ -1573,7 +1586,7 @@ void npc::evaluate_best_attack( const Creature *target )
                        ( rules.has_flag( ally_rule::use_silent ) && uses_follower_rules() &&
                          !mode.second->is_silent() ) ) ) {
                     if( it->ammo_sufficient( this ) || can_reload_current() ) {
-                        compare( std::make_shared<npc_attack_gun>( *it, mode.second ) );
+                        compare_gun( std::make_shared<npc_attack_gun>( *it, mode.second ) );
                     } else {
                         compare( std::make_shared<npc_attack_melee>( *it ) );
                     }
@@ -1584,6 +1597,11 @@ void npc::evaluate_best_attack( const Creature *target )
     } );
     for( const spell_id &sp : magic->spells() ) {
         compare( std::make_shared<npc_attack_spell>( sp ) );
+    }
+
+    if( rules.prefer_guns && best_evaluated_gun_attack > 0 ) {
+        best_attack = best_gun_attack;
+        best_evaluated_attack = best_evaluated_gun_attack;
     }
 
     ai_cache.current_attack = best_attack;

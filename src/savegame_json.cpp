@@ -1814,6 +1814,7 @@ void npc_follower_rules::serialize( JsonOut &json ) const
     json.member( "apply_to_all", apply_to_all );
     json.member( "allow_improvised_throwing", allow_improvised_throwing );
     json.member( "never_flee", never_flee );
+    json.member( "prefer_guns", prefer_guns );
 
     // serialize the flags so they can be changed between save games
     for( const auto &rule : ally_rule_strs ) {
@@ -1849,6 +1850,10 @@ void npc_follower_rules::deserialize( const JsonObject &data )
     data.read( "apply_to_all", apply_to_all );
     data.read( "allow_improvised_throwing", allow_improvised_throwing );
     data.read( "never_flee", never_flee );
+    if( !data.read( "prefer_guns", prefer_guns ) && apply_to_all && never_flee ) {
+        // Compatibility with the first version of the hostile NPC rule patch.
+        prefer_guns = true;
+    }
 
     // deserialize the flags so they can be changed between save games
     for( const auto &rule : ally_rule_strs ) {

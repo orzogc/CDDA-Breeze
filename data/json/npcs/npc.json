@@ -28,7 +28,8 @@
       "ignore_noise": true,
       "forbid_engage": false,
       "allow_improvised_throwing": false,
-      "never_flee": true
+      "never_flee": true,
+      "prefer_guns": true
     }
   },
   {
@@ -60,7 +61,8 @@
       "ignore_noise": true,
       "forbid_engage": false,
       "allow_improvised_throwing": false,
-      "never_flee": true
+      "never_flee": true,
+      "prefer_guns": true
     }
   },
   {
