@@ -984,7 +984,7 @@ $(TEST_MO): data/mods/TEST_DATA/lang/po/ru.po
 	msgfmt -f -o $@ $<
 
 MO_DEPS := \
-  $(wildcard lang/*.sh lang/*.py src/*.cpp src/*.h) \
+  $(wildcard lang/*.sh lang/*.py lang/po/*.po src/*.cpp src/*.h) \
   $(shell find data/raw data/json data/mods data/core data/help -type f -name '*.json')
 
 lang/mo_built.stamp: $(MO_DEPS)

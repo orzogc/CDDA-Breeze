@@ -240,6 +240,16 @@ task makeLocalization(type: Exec) {
     commandLine args
 }
 
+task syncLocalizationAssets(type: Sync) {
+    onlyIf {
+        localize && OperatingSystem.current() != OperatingSystem.WINDOWS
+    }
+    dependsOn unzipDeps
+    dependsOn makeLocalization
+    from file("$projectRoot/lang/mo")
+    into file("$assetsDir/lang/mo")
+}
+
 task generateVersionHeader() {
     // Keep the header synchronized during Gradle configuration, before native tasks are scheduled.
     def define = "// NOLINT(cata-header-guard)\n#define VERSION \"$resolved_version\"\n"
@@ -295,6 +305,7 @@ task createWindowsJunctionLinks() {
 
 preBuild.dependsOn unzipDeps
 preBuild.dependsOn makeLocalization
+preBuild.dependsOn syncLocalizationAssets
 preBuild.dependsOn generateVersionHeader
 preBuild.dependsOn createWindowsJunctionLinks
 createWindowsJunctionLinks.dependsOn makeLocalization
