@@ -346,6 +346,73 @@ std::string enum_to_string<butcher_type>( butcher_type data )
 
 } // namespace io
 
+std::string butcher_progress_var( const butcher_type action )
+{
+    return io::enum_to_string( action ) + "_progress";
+}
+
+double butcher_get_progress( const item &corpse_item, const butcher_type action )
+{
+    return std::clamp( corpse_item.get_var( butcher_progress_var( action ), 0.0 ), 0.0, 1.0 );
+}
+
+static butcher_type get_butcher_type( const player_activity &act )
+{
+    if( act.id() == ACT_BUTCHER_FULL ) {
+        return butcher_type::FULL;
+    } else if( act.id() == ACT_FIELD_DRESS ) {
+        return butcher_type::FIELD_DRESS;
+    } else if( act.id() == ACT_QUARTER ) {
+        return butcher_type::QUARTER;
+    } else if( act.id() == ACT_DISSECT ) {
+        return butcher_type::DISSECT;
+    } else if( act.id() == ACT_BLEED ) {
+        return butcher_type::BLEED;
+    } else if( act.id() == ACT_SKIN ) {
+        return butcher_type::SKIN;
+    } else if( act.id() == ACT_DISMEMBER ) {
+        return butcher_type::DISMEMBER;
+    }
+    return butcher_type::QUICK;
+}
+
+static bool is_butchery_activity( const player_activity &act )
+{
+    return act.id() == ACT_BLEED || act.id() == ACT_BUTCHER ||
+           act.id() == ACT_BUTCHER_FULL || act.id() == ACT_FIELD_DRESS ||
+           act.id() == ACT_SKIN || act.id() == ACT_QUARTER ||
+           act.id() == ACT_DISMEMBER || act.id() == ACT_DISSECT;
+}
+
+static void save_butchery_progress( player_activity &act )
+{
+    if( !is_butchery_activity( act ) || act.index || act.targets.empty() ||
+        act.moves_total <= 0 ) {
+        return;
+    }
+
+    item_location &target = act.targets.back();
+    if( !target || !target->is_corpse() ) {
+        return;
+    }
+
+    const butcher_type action = get_butcher_type( act );
+    const double completed = std::clamp(
+                                 static_cast<double>( act.moves_total - act.moves_left ) /
+                                 act.moves_total, 0.0, 1.0 );
+    item &corpse_item = *target;
+    const std::string progress_var = butcher_progress_var( action );
+    corpse_item.set_var( progress_var,
+                         std::max( completed, corpse_item.get_var( progress_var, 0.0 ) ) );
+}
+
+void activity_handlers::butcher_canceled( player_activity *act, Character * /*you*/ )
+{
+    if( act != nullptr ) {
+        save_butchery_progress( *act );
+    }
+}
+
 bool activity_handlers::resume_for_multi_activities( Character &you )
 {
     if( !you.backlog.empty() ) {
@@ -541,7 +608,12 @@ static void set_up_butchery( player_activity &act, Character &you, butcher_type 
         }
     }
 
-    act.moves_left = butcher_time_to_cut( you, corpse_item, action ) * butchery_requirements.first;
+    const int total_moves = butcher_time_to_cut( you, corpse_item, action ) *
+                            butchery_requirements.first;
+    const double completed = butcher_get_progress( corpse_item, action );
+    act.moves_total = total_moves;
+    act.moves_left = std::max( 0, static_cast<int>(
+                                   std::round( total_moves * ( 1.0 - completed ) ) ) );
 
     // We have a valid target, so preform the full finish function
     // instead of just selecting the next valid target
@@ -1118,24 +1190,7 @@ void activity_handlers::butcher_finish( player_activity *act, Character *you )
         return;
     }
 
-    butcher_type action = butcher_type::QUICK;
-    if( act->id() == ACT_BUTCHER ) {
-        action = butcher_type::QUICK;
-    } else if( act->id() == ACT_BUTCHER_FULL ) {
-        action = butcher_type::FULL;
-    } else if( act->id() == ACT_FIELD_DRESS ) {
-        action = butcher_type::FIELD_DRESS;
-    } else if( act->id() == ACT_QUARTER ) {
-        action = butcher_type::QUARTER;
-    } else if( act->id() == ACT_DISSECT ) {
-        action = butcher_type::DISSECT;
-    } else if( act->id() == ACT_BLEED ) {
-        action = butcher_type::BLEED;
-    } else if( act->id() == ACT_SKIN ) {
-        action = butcher_type::SKIN;
-    } else if( act->id() == ACT_DISMEMBER ) {
-        action = butcher_type::DISMEMBER;
-    }
+    const butcher_type action = get_butcher_type( *act );
 
     // index is a bool that determines if we are ready to start the next target
     if( act->index ) {
@@ -1144,6 +1199,7 @@ void activity_handlers::butcher_finish( player_activity *act, Character *you )
     }
 
     item &corpse_item = *target;
+    corpse_item.erase_var( butcher_progress_var( action ) );
     const mtype *corpse = corpse_item.get_mtype();
     const field_type_id type_blood = corpse->bloodType();
     const field_type_id type_gib = corpse->gibType();
@@ -2762,8 +2818,9 @@ void activity_handlers::repair_item_do_turn( player_activity *act, Character *yo
     }
 }
 
-void activity_handlers::butcher_do_turn( player_activity * /*act*/, Character *you )
+void activity_handlers::butcher_do_turn( player_activity *act, Character *you )
 {
+    save_butchery_progress( *act );
     you->mod_stamina( -20 );
 }
 

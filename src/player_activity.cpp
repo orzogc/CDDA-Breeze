@@ -29,6 +29,9 @@ static const activity_id ACT_ADV_INVENTORY( "ACT_ADV_INVENTORY" );
 static const activity_id ACT_AIM( "ACT_AIM" );
 static const activity_id ACT_ARMOR_LAYERS( "ACT_ARMOR_LAYERS" );
 static const activity_id ACT_ATM( "ACT_ATM" );
+static const activity_id ACT_BLEED( "ACT_BLEED" );
+static const activity_id ACT_BUTCHER( "ACT_BUTCHER" );
+static const activity_id ACT_BUTCHER_FULL( "ACT_BUTCHER_FULL" );
 static const activity_id ACT_BUILD( "ACT_BUILD" );
 static const activity_id ACT_CHOP_LOGS( "ACT_CHOP_LOGS" );
 static const activity_id ACT_CHOP_PLANKS( "ACT_CHOP_PLANKS" );
@@ -38,7 +41,10 @@ static const activity_id ACT_CONSUME( "ACT_CONSUME" );
 static const activity_id ACT_CONSUME_DRINK_MENU( "ACT_CONSUME_DRINK_MENU" );
 static const activity_id ACT_CONSUME_FOOD_MENU( "ACT_CONSUME_FOOD_MENU" );
 static const activity_id ACT_CONSUME_MEDS_MENU( "ACT_CONSUME_MEDS_MENU" );
+static const activity_id ACT_DISMEMBER( "ACT_DISMEMBER" );
+static const activity_id ACT_DISSECT( "ACT_DISSECT" );
 static const activity_id ACT_EAT_MENU( "ACT_EAT_MENU" );
+static const activity_id ACT_FIELD_DRESS( "ACT_FIELD_DRESS" );
 static const activity_id ACT_FIRSTAID( "ACT_FIRSTAID" );
 static const activity_id ACT_FISH( "ACT_FISH" );
 static const activity_id ACT_GAME( "ACT_GAME" );
@@ -52,7 +58,9 @@ static const activity_id ACT_NULL( "ACT_NULL" );
 static const activity_id ACT_OXYTORCH( "ACT_OXYTORCH" );
 static const activity_id ACT_PICKAXE( "ACT_PICKAXE" );
 static const activity_id ACT_PICKUP_MENU( "ACT_PICKUP_MENU" );
+static const activity_id ACT_QUARTER( "ACT_QUARTER" );
 static const activity_id ACT_READ( "ACT_READ" );
+static const activity_id ACT_SKIN( "ACT_SKIN" );
 static const activity_id ACT_START_FIRE( "ACT_START_FIRE" );
 static const activity_id ACT_TRAVELLING( "ACT_TRAVELLING" );
 static const activity_id ACT_VEHICLE( "ACT_VEHICLE" );
@@ -201,9 +209,18 @@ std::optional<std::string> player_activity::get_progress_message( const avatar &
             type == ACT_CHOP_TREE ||
             type == ACT_CHOP_LOGS ||
             type == ACT_CHOP_PLANKS ||
-            type == ACT_HEATING
+            type == ACT_HEATING ||
+            type == ACT_BLEED ||
+            type == ACT_BUTCHER ||
+            type == ACT_BUTCHER_FULL ||
+            type == ACT_FIELD_DRESS ||
+            type == ACT_SKIN ||
+            type == ACT_QUARTER ||
+            type == ACT_DISMEMBER ||
+            type == ACT_DISSECT
           ) {
-            const int percentage = ( ( moves_total - moves_left ) * 100 ) / moves_total;
+            const int percentage = std::clamp( ( ( moves_total - moves_left ) * 100 ) / moves_total,
+                                               0, 100 );
 
             extra_info = string_format( "%d%%", percentage );
         }
@@ -392,8 +409,13 @@ void player_activity::do_turn( Character &you )
 
 void player_activity::canceled( Character &who )
 {
-    if( *this && actor ) {
+    if( !*this ) {
+        return;
+    }
+    if( actor ) {
         actor->canceled( *this, who );
+    } else {
+        activity_handlers::butcher_canceled( this, &who );
     }
 }
 

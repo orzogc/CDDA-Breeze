@@ -464720,3 +464720,7 @@ msgstr "这里汇总了这个NPC的性格标签。"
 msgctxt "personality summary entry"
 msgid "%1$s, %2$s"
 msgstr "%1$s，%2$s"
+
+#: src/game.cpp
+msgid "other type started"
+msgstr "其他处理已经开始"

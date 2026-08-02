@@ -6,6 +6,7 @@
 #include <list>
 #include <map>
 #include <new>
+#include <string>
 #include <unordered_set>
 #include <vector>
 
@@ -120,6 +121,8 @@ struct activity_reason_info {
 };
 
 int butcher_time_to_cut( Character &you, const item &corpse_item, butcher_type action );
+std::string butcher_progress_var( butcher_type action );
+double butcher_get_progress( const item &corpse_item, butcher_type action );
 
 // activity_item_handling.cpp
 void activity_on_turn_drop();
@@ -159,6 +162,7 @@ void armor_layers_do_turn( player_activity *act, Character *you );
 void atm_do_turn( player_activity *act, Character *you );
 void build_do_turn( player_activity *act, Character *you );
 void butcher_do_turn( player_activity *act, Character *you );
+void butcher_canceled( player_activity *act, Character *you );
 void chop_trees_do_turn( player_activity *act, Character *you );
 void consume_drink_menu_do_turn( player_activity *act, Character *you );
 void consume_food_menu_do_turn( player_activity *act, Character *you );
