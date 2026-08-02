@@ -6,6 +6,7 @@
 #include <list>
 #include <map>
 #include <new>
+#include <string>
 #include <unordered_set>
 #include <vector>
 
@@ -120,6 +121,8 @@ struct activity_reason_info {
 };
 
 int butcher_time_to_cut( Character &you, const item &corpse_item, butcher_type action );
+std::string butcher_progress_var( butcher_type action );
+double butcher_get_progress( const item &corpse_item, butcher_type action );
 
 // activity_item_handling.cpp
 void activity_on_turn_drop();

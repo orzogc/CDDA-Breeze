@@ -464720,3 +464720,11 @@ msgstr "这里汇总了这个NPC的性格标签。"
 msgctxt "personality summary entry"
 msgid "%1$s, %2$s"
 msgstr "%1$s，%2$s"
+
+#: src/game.cpp
+msgid "other type started"
+msgstr "其他处理已经开始"
+
+#: src/game.cpp
+msgid "A more careful butchery method is already in progress. Starting this cruder method will prevent continuing that work. Continue."
+msgstr "已经开始了更精细的尸体处理，改用更粗糙的方式后将无法继续之前的工作，是否继续。"

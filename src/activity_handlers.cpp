@@ -346,9 +346,14 @@ std::string enum_to_string<butcher_type>( butcher_type data )
 
 } // namespace io
 
-static std::string butcher_progress_var( const butcher_type action )
+std::string butcher_progress_var( const butcher_type action )
 {
     return io::enum_to_string( action ) + "_progress";
+}
+
+double butcher_get_progress( const item &corpse_item, const butcher_type action )
+{
+    return std::clamp( corpse_item.get_var( butcher_progress_var( action ), 0.0 ), 0.0, 1.0 );
 }
 
 static butcher_type get_butcher_type( const player_activity &act )
@@ -605,8 +610,7 @@ static void set_up_butchery( player_activity &act, Character &you, butcher_type 
 
     const int total_moves = butcher_time_to_cut( you, corpse_item, action ) *
                             butchery_requirements.first;
-    const double completed = std::clamp( corpse_item.get_var( butcher_progress_var( action ), 0.0 ),
-                                        0.0, 1.0 );
+    const double completed = butcher_get_progress( corpse_item, action );
     act.moves_total = total_moves;
     act.moves_left = std::max( 0, static_cast<int>(
                                    std::round( total_moves * ( 1.0 - completed ) ) ) );
