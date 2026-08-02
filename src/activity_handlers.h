@@ -159,6 +159,7 @@ void armor_layers_do_turn( player_activity *act, Character *you );
 void atm_do_turn( player_activity *act, Character *you );
 void build_do_turn( player_activity *act, Character *you );
 void butcher_do_turn( player_activity *act, Character *you );
+void butcher_canceled( player_activity *act, Character *you );
 void chop_trees_do_turn( player_activity *act, Character *you );
 void consume_drink_menu_do_turn( player_activity *act, Character *you );
 void consume_food_menu_do_turn( player_activity *act, Character *you );
