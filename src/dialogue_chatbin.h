@@ -3,6 +3,8 @@
 #define CATA_SRC_DIALOGUE_CHATBIN_H
 
 #include <iosfwd>
+#include <map>
+#include <string>
 #include <vector>
 
 #include "translations.h"
@@ -149,11 +151,23 @@ struct dialogue_chatbin {
     // talk from npc.cpp(can use snippets in json)
     std::string snip_wear = _( "Thanks, I'll wear that now." );
 
+    // NPC AI speech that was historically hardcoded and could not be customized by mods.
+    std::string snip_mutiny = _( "<follower_mutiny>  Adios, motherfucker!" );
+    std::string snip_pickup_item = _( "Hold on, I want to pick up that %s." );
+    std::string snip_no_dropoff = _( "I don't have anything to drop off." );
+    // Empty keeps the legacy random npc_socialize snippet category.
+    std::string snip_socialize;
+
     dialogue_chatbin() = default;
 
     void clear_all();
     void serialize( JsonOut &json ) const;
     void deserialize( const JsonObject &data );
+
+    // Set one entry from the structured NPC template "npc_speech" object.
+    // Returns false for an unknown key so JSON loaders can report typos.
+    bool set_speech_override( const std::string &key, const std::string &value );
+    void apply_speech_overrides( const std::map<std::string, std::string> &overrides );
 };
 
 #endif // CATA_SRC_DIALOGUE_CHATBIN_H

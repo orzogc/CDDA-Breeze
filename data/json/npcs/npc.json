@@ -8,7 +8,29 @@
     "attitude": 0,
     "mission": 8,
     "chat": "TALK_DONE",
-    "faction": "hells_raiders"
+    "faction": "hells_raiders",
+    "personality": { "aggression": 10, "bravery": 10, "collector": 0, "altruism": -10 },
+    "follower_rules": {
+      "apply_to_all": true,
+      "engagement": "ENGAGE_ALL",
+      "aim": "AIM_WHEN_CONVENIENT",
+      "use_guns": true,
+      "use_grenades": true,
+      "use_silent": false,
+      "avoid_friendly_fire": true,
+      "allow_pick_up": false,
+      "allow_bash": true,
+      "allow_sleep": false,
+      "allow_complain": false,
+      "allow_pulp": false,
+      "close_doors": false,
+      "avoid_doors": false,
+      "ignore_noise": true,
+      "forbid_engage": false,
+      "allow_improvised_throwing": false,
+      "never_flee": true,
+      "prefer_guns": true
+    }
   },
   {
     "type": "npc",
@@ -19,7 +41,29 @@
     "attitude": 0,
     "mission": 8,
     "chat": "TALK_DONE",
-    "faction": "hells_raiders"
+    "faction": "hells_raiders",
+    "personality": { "aggression": 10, "bravery": 10, "collector": 0, "altruism": -10 },
+    "follower_rules": {
+      "apply_to_all": true,
+      "engagement": "ENGAGE_ALL",
+      "aim": "AIM_WHEN_CONVENIENT",
+      "use_guns": true,
+      "use_grenades": true,
+      "use_silent": false,
+      "avoid_friendly_fire": true,
+      "allow_pick_up": false,
+      "allow_bash": true,
+      "allow_sleep": false,
+      "allow_complain": false,
+      "allow_pulp": false,
+      "close_doors": false,
+      "avoid_doors": false,
+      "ignore_noise": true,
+      "forbid_engage": false,
+      "allow_improvised_throwing": false,
+      "never_flee": true,
+      "prefer_guns": true
+    }
   },
   {
     "type": "npc",

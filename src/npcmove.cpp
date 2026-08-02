@@ -175,6 +175,7 @@ enum npc_action : int {
     npc_noop,
     npc_reach_attack,
     npc_do_attack,
+    npc_pursue_target,
     npc_aim,
     npc_investigate_sound,
     npc_return_to_guard_pos,
@@ -422,7 +423,7 @@ void npc::assess_danger()
                               !too_close( pos(), player_character.pos(), follow_distance() ) &&
                               !is_guarding();
 
-    if( is_player_ally() ) {
+    if( uses_follower_rules() ) {
         if( rules.engagement == combat_engagement::FREE_FIRE ) {
             def_radius = std::max( 6, max_range );
         } else if( self_defense_only ) {
@@ -563,7 +564,8 @@ void npc::assess_danger()
             }
         }
         // ignore distant monsters that our rules prevent us from attacking
-        if( !is_too_close && is_player_ally() && !ok_by_rules( critter, dist, scaled_distance ) ) {
+        if( !is_too_close && uses_follower_rules() &&
+            !ok_by_rules( critter, dist, scaled_distance ) ) {
             continue;
         }
         // prioritize the biggest, nearest threats, or the biggest threats that are threatening
@@ -610,10 +612,15 @@ void npc::assess_danger()
             }
         }
 
-        if( !is_player_ally() || is_too_close || ok_by_rules( foe, dist, scaled_distance ) ) {
+        if( !uses_follower_rules() || is_too_close || ok_by_rules( foe, dist, scaled_distance ) ) {
             float priority = std::max( foe_threat - 2.0f * ( scaled_distance - 1 ),
                                        is_too_close ? std::max( foe_threat, NPC_DANGER_VERY_LOW ) :
                                        0.0f );
+            // JSON-defined hostile profiles using ENGAGE_ALL should actively pursue
+            // visible enemies instead of dropping them when distance lowers threat priority.
+            if( rules.apply_to_all && rules.engagement == combat_engagement::ALL && is_enemy() ) {
+                priority = std::max( priority, NPC_DANGER_VERY_LOW );
+            }
             cur_threat_map[direction_from( pos(), foe.pos() )] += priority;
             if( priority > highest_priority ) {
                 warn_about( warning, 1_minutes );
@@ -656,7 +663,8 @@ void npc::assess_danger()
         }
     }
     assessment *= 0.1f;
-    if( !has_effect( effect_npc_run_away ) && !has_effect( effect_npc_fire_bad ) ) {
+    if( !rules.never_flee && !has_effect( effect_npc_run_away ) &&
+        !has_effect( effect_npc_fire_bad ) ) {
         float my_diff = evaluate_enemy( *this );
         if( ( my_diff * 0.5f + personality.bravery + rng( 0, 10 ) ) < assessment ) {
             time_duration run_away_for = 5_turns + 1_turns * rng( 0, 5 );
@@ -782,7 +790,16 @@ void npc::move()
     // don't just return from this function without doing something
     // that will eventually subtract moves, or change the NPC to a different type of action.
     // because this will result in an infinite loop
-    if( attitude == NPCATT_FLEE ) {
+    if( rules.never_flee && has_effect( effect_npc_run_away ) ) {
+        remove_effect( effect_npc_run_away );
+    }
+    if( rules.never_flee && ( attitude == NPCATT_FLEE || attitude == NPCATT_FLEE_TEMP ) ) {
+        npc_attitude restored_attitude = guaranteed_hostile() ? NPCATT_KILL : previous_attitude;
+        if( get_attitude_group( restored_attitude ) == attitude_group::fearful ) {
+            restored_attitude = NPCATT_NULL;
+        }
+        set_attitude( restored_attitude );
+    } else if( attitude == NPCATT_FLEE ) {
         set_attitude( NPCATT_FLEE_TEMP );  // Only run for so many hours
     } else if( attitude == NPCATT_FLEE_TEMP && !has_effect( effect_npc_flee_player ) ) {
         set_attitude( NPCATT_NULL );
@@ -1078,6 +1095,18 @@ void npc::execute_action( npc_action action )
             ai_cache.current_attack->use( *this, ai_cache.current_attack_evaluation.target() );
             ai_cache.current_attack.reset();
             ai_cache.current_attack_evaluation = npc_attack_rating{};
+            break;
+        case npc_pursue_target:
+            if( cur != nullptr ) {
+                update_path( cur->pos() );
+                if( !path.empty() ) {
+                    move_to_next();
+                } else {
+                    move_pause();
+                }
+            } else {
+                move_pause();
+            }
             break;
         case npc_pause:
             move_pause();
@@ -1521,16 +1550,21 @@ npc_action npc::method_of_attack()
     std::optional<int> potential = ai_cache.current_attack_evaluation.value();
     if( potential && *potential > 0 ) {
         return npc_do_attack;
-    } else {
-        add_msg_debug( debugmode::debug_filter::DF_NPC, "%s can't figure out what to do", disp_name() );
-        return npc_undecided;
     }
+    if( rules.apply_to_all && rules.engagement == combat_engagement::ALL && is_enemy() &&
+        critter != nullptr && sees( *critter ) ) {
+        return npc_pursue_target;
+    }
+    add_msg_debug( debugmode::debug_filter::DF_NPC, "%s can't figure out what to do", disp_name() );
+    return npc_undecided;
 }
 
 void npc::evaluate_best_attack( const Creature *target )
 {
     std::shared_ptr<npc_attack> best_attack;
     npc_attack_rating best_evaluated_attack;
+    std::shared_ptr<npc_attack> best_gun_attack;
+    npc_attack_rating best_evaluated_gun_attack;
     const auto compare = [&best_attack, &best_evaluated_attack, this, &target]
     ( const std::shared_ptr<npc_attack> &potential_attack ) {
         const npc_attack_rating evaluated = potential_attack->evaluate( *this, target );
@@ -1538,15 +1572,29 @@ void npc::evaluate_best_attack( const Creature *target )
             best_attack = potential_attack;
             best_evaluated_attack = evaluated;
         }
+        return evaluated;
+    };
+    const auto compare_gun = [&best_gun_attack, &best_evaluated_gun_attack, &compare]
+    ( const std::shared_ptr<npc_attack> &potential_attack ) {
+        const npc_attack_rating evaluated = compare( potential_attack );
+        if( evaluated > best_evaluated_gun_attack ) {
+            best_gun_attack = potential_attack;
+            best_evaluated_gun_attack = evaluated;
+        }
     };
 
     // punching things is always available
     compare( std::make_shared<npc_attack_melee>( null_item_reference() ) );
     const units::energy ups_charges = available_ups();
-    visit_items( [&compare, &ups_charges, this]( item * it, item * ) {
-        // you can theoretically melee with anything.
-        compare( std::make_shared<npc_attack_melee>( *it ) );
-        if( !is_wielding( *it ) || !it->has_flag( flag_NO_UNWIELD ) ) {
+    visit_items( [&compare, &compare_gun, &ups_charges, this]( item * it, item * ) {
+        // Do not turn worn clothing and armor into improvised melee weapons.
+        if( !it->is_armor() || is_wielding( *it ) ) {
+            compare( std::make_shared<npc_attack_melee>( *it ) );
+        }
+        const bool dedicated_throwing_item = it->has_flag( flag_NPC_THROW_NOW ) ||
+                                             it->has_flag( flag_NPC_THROWN );
+        if( ( rules.allow_improvised_throwing || dedicated_throwing_item ) &&
+            ( !is_wielding( *it ) || !it->has_flag( flag_NO_UNWIELD ) ) ) {
             compare( std::make_shared<npc_attack_throw>( *it ) );
         }
         if( !it->type->use_methods.empty() ) {
@@ -1556,10 +1604,10 @@ void npc::evaluate_best_attack( const Creature *target )
             for( const std::pair<const gun_mode_id, gun_mode> &mode : it->gun_all_modes() ) {
                 if( !( mode.second.melee() || mode.second.flags.count( "NPC_AVOID" ) ||
                        !can_use( *mode.second.target ) || mode.second->get_gun_ups_drain() > ups_charges ||
-                       ( rules.has_flag( ally_rule::use_silent ) && is_player_ally() &&
+                       ( rules.has_flag( ally_rule::use_silent ) && uses_follower_rules() &&
                          !mode.second->is_silent() ) ) ) {
                     if( it->ammo_sufficient( this ) || can_reload_current() ) {
-                        compare( std::make_shared<npc_attack_gun>( *it, mode.second ) );
+                        compare_gun( std::make_shared<npc_attack_gun>( *it, mode.second ) );
                     } else {
                         compare( std::make_shared<npc_attack_melee>( *it ) );
                     }
@@ -1570,6 +1618,11 @@ void npc::evaluate_best_attack( const Creature *target )
     } );
     for( const spell_id &sp : magic->spells() ) {
         compare( std::make_shared<npc_attack_spell>( sp ) );
+    }
+
+    if( rules.prefer_guns && best_evaluated_gun_attack > 0 ) {
+        best_attack = best_gun_attack;
+        best_evaluated_attack = best_evaluated_gun_attack;
     }
 
     ai_cache.current_attack = best_attack;
@@ -2018,7 +2071,7 @@ npc_action npc::address_needs( float danger )
     };
     // TODO: More risky attempts at sleep when exhausted
     if( one_in( 3 ) && could_sleep() ) {
-        if( !is_player_ally() ) {
+        if( !uses_follower_rules() ) {
             // TODO: Make tired NPCs handle sleep offscreen
             set_fatigue( 0 );
             return npc_undecided;
@@ -2125,7 +2178,7 @@ npc_action npc::long_term_goal_action()
 
 double npc::confidence_mult() const
 {
-    if( !is_player_ally() ) {
+    if( !uses_follower_rules() ) {
         return 1.0f;
     }
 
@@ -2564,7 +2617,8 @@ void npc::move_to( const tripoint &pt, bool no_bashing, std::set<tripoint> *nomo
         }
 
         // Close doors behind self (if you can)
-        if( ( rules.has_flag( ally_rule::close_doors ) && is_player_ally() ) && !is_hallucination() ) {
+        if( rules.has_flag( ally_rule::close_doors ) && uses_follower_rules() &&
+            !is_hallucination() ) {
             doors::close_door( here, *this, old_pos );
         }
 
@@ -2919,7 +2973,7 @@ void npc::find_item()
         return;
     }
 
-    if( is_player_ally() && !rules.has_flag( ally_rule::allow_pick_up ) ) {
+    if( uses_follower_rules() && !rules.has_flag( ally_rule::allow_pick_up ) ) {
         // Grabbing stuff not allowed by our "owner"
         return;
     }
@@ -2991,7 +3045,8 @@ void npc::find_item()
     for( const tripoint &p : closest_points_first( pos(), range ) ) {
         // TODO: Make this sight check not overdraw nearby tiles
         // TODO: Optimize that zone check
-        if( is_player_ally() && g->check_zone( zone_type_NO_NPC_PICKUP, p ) ) {
+        if( ( is_player_ally() || is_following() ) &&
+            g->check_zone( zone_type_NO_NPC_PICKUP, p ) ) {
             continue;
         }
 
@@ -3077,7 +3132,7 @@ void npc::find_item()
     }
 
     if( fetching_item && rl_dist( wanted_item_pos, pos() ) > 1 && is_walking_with() ) {
-        say( _( "Hold on, I want to pick up that %s." ), wanted_name );
+        say( string_format( _( chatbin.snip_pickup_item ), wanted_name ) );
     }
 }
 
@@ -3087,7 +3142,7 @@ void npc::pick_up_item()
         return;
     }
 
-    if( !rules.has_flag( ally_rule::allow_pick_up ) && is_player_ally() ) {
+    if( !rules.has_flag( ally_rule::allow_pick_up ) && uses_follower_rules() ) {
         add_msg_debug( debugmode::DF_NPC, "%s::pick_up_item(); Canceling on player's request", get_name() );
         fetching_item = false;
         moves -= 1;
@@ -3101,7 +3156,8 @@ void npc::pick_up_item()
 
     if( ( !here.has_items( wanted_item_pos ) && !has_cargo &&
           !here.is_harvestable( wanted_item_pos ) && sees( wanted_item_pos ) ) ||
-        ( is_player_ally() && g->check_zone( zone_type_NO_NPC_PICKUP, wanted_item_pos ) ) ) {
+        ( ( is_player_ally() || is_following() ) &&
+          g->check_zone( zone_type_NO_NPC_PICKUP, wanted_item_pos ) ) ) {
         // Items we wanted no longer exist and we can see it
         // Or player who is leading us doesn't want us to pick it up
         fetching_item = false;
@@ -3211,7 +3267,7 @@ std::list<item> npc::pick_up_item_vehicle( vehicle &veh, int part_index )
 bool npc::find_corpse_to_pulp()
 {
     Character &player_character = get_player_character();
-    if( ( is_player_ally() && ( !rules.has_flag( ally_rule::allow_pulp ) ||
+    if( ( uses_follower_rules() && ( !rules.has_flag( ally_rule::allow_pulp ) ||
                                 player_character.in_vehicle ) ) ||
         is_hallucination() ) {
         return false;
@@ -3379,8 +3435,9 @@ double npc::evaluate_weapon(item& maybe_weapon, bool can_use_gun, bool use_silen
 
 item* npc::evaluate_best_weapon() const
 {
-    bool can_use_gun = !is_player_ally() || rules.has_flag(ally_rule::use_guns);
-    bool use_silent = is_player_ally() && rules.has_flag(ally_rule::use_silent);
+    const bool use_rules = uses_follower_rules();
+    bool can_use_gun = !use_rules || rules.has_flag( ally_rule::use_guns );
+    bool use_silent = use_rules && rules.has_flag( ally_rule::use_silent );
 
     item_location weapon = get_wielded_item();
     item& weap = weapon ? *weapon : null_item_reference();
@@ -3428,8 +3485,9 @@ item* npc::evaluate_best_weapon() const
 bool npc::wield_better_weapon()
 {
     // These are also assigned here so npc::evaluate_best_weapon() can be called by itself
-    bool can_use_gun = !is_player_ally() || rules.has_flag(ally_rule::use_guns);
-    bool use_silent = is_player_ally() && rules.has_flag(ally_rule::use_silent);
+    const bool use_rules = uses_follower_rules();
+    bool can_use_gun = !use_rules || rules.has_flag( ally_rule::use_guns );
+    bool use_silent = use_rules && rules.has_flag( ally_rule::use_silent );
 
     item_location weapon = get_wielded_item();
     item& weap = weapon ? *weapon : null_item_reference();
@@ -3492,7 +3550,8 @@ static void npc_throw( npc &np, item &it, const tripoint &pos )
 
 bool npc::alt_attack()
 {
-    if( ( is_player_ally() && !rules.has_flag( ally_rule::use_grenades ) ) || is_hallucination() ) {
+    if( ( uses_follower_rules() && !rules.has_flag( ally_rule::use_grenades ) ) ||
+        is_hallucination() ) {
         return false;
     }
 
@@ -4394,6 +4453,8 @@ std::string npc_action_name( npc_action action )
             return "Do nothing";
         case npc_do_attack:
             return "Attack";
+        case npc_pursue_target:
+            return "Pursue target";
         case npc_goto_to_this_pos:
             return "Go to position";
         case num_npc_actions:
@@ -4562,7 +4623,7 @@ bool npc::complain()
     static const std::string hunger_string = "hunger";
     static const std::string thirst_string = "thirst";
 
-    if( !is_player_ally() || !get_player_view().sees( *this ) ) {
+    if( !uses_follower_rules() || !get_player_view().sees( *this ) ) {
         return false;
     }
 

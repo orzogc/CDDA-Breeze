@@ -480,6 +480,15 @@ struct npc_follower_rules {
     aim_rule aim = aim_rule::WHEN_CONVENIENT;
     cbm_recharge_rule cbm_recharge = cbm_recharge_rule::CBM_RECHARGE_SOME;
     cbm_reserve_rule cbm_reserve = cbm_reserve_rule::CBM_RESERVE_SOME;
+    // Apply these rules even when the NPC is not formally in the player's faction.
+    // This is useful for temporary followers and JSON-defined hostile NPC profiles.
+    bool apply_to_all = false;
+    // Permit throwing ordinary inventory items as improvised weapons.
+    bool allow_improvised_throwing = true;
+    // Ignore morale-based retreat while still avoiding fire, explosions and vehicles.
+    bool never_flee = false;
+    // Prefer a usable firearm over melee attacks, while retaining melee as a fallback.
+    bool prefer_guns = false;
     ally_rule flags = ally_rule::DEFAULT; // NOLINT(cata-serialize)
     ally_rule override_enable = ally_rule::DEFAULT; // NOLINT(cata-serialize)
     ally_rule overrides = ally_rule::DEFAULT; // NOLINT(cata-serialize)
@@ -490,6 +499,7 @@ struct npc_follower_rules {
 
     void serialize( JsonOut &json ) const;
     void deserialize( const JsonObject &data );
+    void load_from_template( const JsonObject &data );
 
     bool has_flag( ally_rule test, bool check_override = true ) const;
     void set_flag( ally_rule setit );
@@ -895,6 +905,8 @@ class npc : public Character
         bool is_ally( const Character &p ) const;
         // Is an ally of the player
         bool is_player_ally() const;
+        // Whether follower-rule settings should control this NPC in its current state.
+        bool uses_follower_rules() const;
         // Isn't moving
         bool is_stationary( bool include_guards = true ) const;
         // Has a guard mission
@@ -1447,6 +1459,7 @@ class npc_template
         std::vector<matype_id> martial_arts;
         std::optional<matype_id> selected_martial_art;
         std::optional<npc_personality> personality;
+        std::map<std::string, std::string> speech_overrides;
         enum class gender : int {
             random,
             male,

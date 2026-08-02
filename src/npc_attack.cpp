@@ -573,7 +573,7 @@ bool npc_attack_activate_item::can_use( const npc &source ) const
         //TODO: make this more complete. only does BOMB type items
         return false;
     }
-    const bool can_use_grenades = !source.is_hallucination() && ( !source.is_player_ally() ||
+    const bool can_use_grenades = !source.is_hallucination() && ( !source.uses_follower_rules() ||
                                   source.rules.has_flag( ally_rule::use_grenades ) );
     return can_use_grenades;
 }
@@ -659,7 +659,7 @@ bool npc_attack_throw::can_use( const npc &source ) const
         return true;
     }
 
-    if( source.is_player_ally() && !source.rules.has_flag( ally_rule::use_guns ) ) {
+    if( source.uses_follower_rules() && !source.rules.has_flag( ally_rule::use_guns ) ) {
         return false;
     }
 

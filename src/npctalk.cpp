@@ -6090,7 +6090,7 @@ std::string const &npc::get_specified_talk_topic( std::string const &topic_id )
 
 bool npc::has_item_whitelist() const
 {
-    return is_player_ally() && !rules.pickup_whitelist->empty();
+    return ( is_player_ally() || is_following() ) && !rules.pickup_whitelist->empty();
 }
 
 bool npc::item_name_whitelisted( const std::string &to_match )
