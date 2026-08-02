@@ -17,7 +17,7 @@
     "name": { "str": "Expert Debug Weakpoint" },
     "description": "Expert improvement on the chance of hitting the Weakpoint Monster's weak points.",
     "can_learn": true,
-    "time_to_learn": "12 h",
+    "time_to_learn": "1 h",
     "required_proficiencies": [ "prof_debug_weakpoint" ]
   },
   {
@@ -27,7 +27,7 @@
     "name": { "str": "Principles of Zombie Biology" },
     "description": "Very basic familiarity with various types of undead creatures.",
     "can_learn": true,
-    "time_to_learn": "6 h",
+    "time_to_learn": "30 m",
     "required_proficiencies": [ "prof_intro_biology" ],
     "default_weakpoint_bonus": 2,
     "default_weakpoint_penalty": 0
@@ -39,7 +39,7 @@
     "name": { "str": "Principles of Near Human Biology" },
     "description": "Very basic familiarity with various types of demihuman creatures.",
     "can_learn": true,
-    "time_to_learn": "6 h",
+    "time_to_learn": "30 m",
     "required_proficiencies": [ "prof_intro_biology" ],
     "default_weakpoint_bonus": 2,
     "default_weakpoint_penalty": 0
@@ -51,7 +51,7 @@
     "name": { "str": "Anatomy of Amalgamations" },
     "description": "You are familiar with the common anatomy of these purpose-built abominations, as far as they have one.",
     "can_learn": true,
-    "time_to_learn": "20 h",
+    "time_to_learn": "30 m",
     "default_weakpoint_bonus": 4,
     "default_weakpoint_penalty": -2
   },
@@ -62,7 +62,7 @@
     "name": { "str": "Synthetic Armors" },
     "description": "Understanding of man-made armors and ways to exploit them.  You're able to find openings in certain kinds of body armor.",
     "can_learn": true,
-    "time_to_learn": "6 h",
+    "time_to_learn": "30 m",
     "default_weakpoint_bonus": 4,
     "default_weakpoint_penalty": -4
   },
@@ -73,7 +73,7 @@
     "name": { "str": "Natural Armors" },
     "description": "You're somewhat familiar with naturally armored creatures.  You're able to find openings in certain kinds of hardened shells.",
     "can_learn": true,
-    "time_to_learn": "8 h",
+    "time_to_learn": "30 m",
     "default_weakpoint_bonus": 4,
     "default_weakpoint_penalty": -4
   },
@@ -84,7 +84,7 @@
     "name": { "str": "Cyborg Anatomy" },
     "description": "You're somewhat familiar with cybernetic creatures.  You're able to find openings and gaps that aren't as hardened.",
     "can_learn": true,
-    "time_to_learn": "19 h",
+    "time_to_learn": "30 m",
     "default_weakpoint_bonus": 4,
     "default_weakpoint_penalty": -4
   },
@@ -95,7 +95,7 @@
     "name": { "str": "Bird Biology" },
     "description": "Basic familiarity with various types of birds.",
     "can_learn": true,
-    "time_to_learn": "8 h",
+    "time_to_learn": "30 m",
     "required_proficiencies": [ "prof_intro_biology" ],
     "default_weakpoint_bonus": 1,
     "default_weakpoint_penalty": 0
@@ -107,7 +107,7 @@
     "name": { "str": "Invertebrate Biology" },
     "description": "Basic familiarity with various types of insects, arachnids, and worms.",
     "can_learn": true,
-    "time_to_learn": "8 h",
+    "time_to_learn": "30 m",
     "required_proficiencies": [ "prof_intro_biology" ],
     "default_weakpoint_bonus": 1,
     "default_weakpoint_penalty": 0
@@ -119,7 +119,7 @@
     "name": { "str": "Beetle Anatomy" },
     "description": "You are familiar with the anatomy of mutated beetles - bypassing their thick armor should be easier.",
     "can_learn": true,
-    "time_to_learn": "12 h",
+    "time_to_learn": "1 h",
     "required_proficiencies": [ "prof_wp_basic_bug" ],
     "default_weakpoint_bonus": 4,
     "default_weakpoint_penalty": -2
@@ -131,7 +131,7 @@
     "name": { "str": "Centipede Anatomy" },
     "description": "You are familiar with the anatomy of mutated centipedes, letting you target their less-deadly parts with ease.",
     "can_learn": true,
-    "time_to_learn": "12 h",
+    "time_to_learn": "30 m",
     "required_proficiencies": [ "prof_wp_basic_bug" ],
     "default_weakpoint_bonus": 4,
     "default_weakpoint_penalty": -2
@@ -144,7 +144,7 @@
     "name": { "str": "Hymenopteran Anatomy" },
     "description": "Familiarity with the comparative anatomy of mutant Hymenopterans - ants, bees, and wasps of all kinds.  You find it easier to exploit their weak points, and possibly disable their natural weaponry.",
     "can_learn": true,
-    "time_to_learn": "12 h",
+    "time_to_learn": "30 m",
     "required_proficiencies": [ "prof_wp_basic_bug" ],
     "default_weakpoint_bonus": 4,
     "default_weakpoint_penalty": -2
@@ -156,7 +156,7 @@
     "name": { "str": "Arachnid Anatomy" },
     "description": "You are familiar with the anatomy of mutated spiders of all shapes and sizes.",
     "can_learn": true,
-    "time_to_learn": "12 h",
+    "time_to_learn": "30 m",
     "required_proficiencies": [ "prof_wp_basic_bug" ],
     "default_weakpoint_bonus": 4,
     "default_weakpoint_penalty": -2
@@ -168,7 +168,7 @@
     "name": { "str": "Creatures of Flight" },
     "description": "Basic understanding of what's needed for certain creatures to fly, as well as ways of preventing it.",
     "can_learn": true,
-    "time_to_learn": "6 h",
+    "time_to_learn": "30 m",
     "default_weakpoint_bonus": 1,
     "default_weakpoint_penalty": 0
   },
@@ -179,7 +179,7 @@
     "name": { "str": "Ossified Exoskeletons" },
     "description": "You're familiar with creatures presenting unsettling bones on their outer structure.",
     "can_learn": true,
-    "time_to_learn": "6 h",
+    "time_to_learn": "30 m",
     "default_weakpoint_bonus": 4,
     "default_weakpoint_penalty": -2
   },
@@ -190,7 +190,7 @@
     "name": { "str": "Small Humanoids" },
     "description": "You have some practice in fighting small humanoids like children.  You don't necessarily feel good about it.",
     "can_learn": true,
-    "time_to_learn": "4 h",
+    "time_to_learn": "30 m",
     "required_proficiencies": [ "prof_intro_biology" ],
     "default_weakpoint_bonus": 2,
     "default_weakpoint_penalty": 0
@@ -202,7 +202,7 @@
     "name": { "str": "Large Humanoids" },
     "description": "You have some practice in fighting large hulking humanoids.  You're better at reaching certain weak points.",
     "can_learn": true,
-    "time_to_learn": "6 h",
+    "time_to_learn": "30 m",
     "required_proficiencies": [ "prof_intro_biology" ],
     "default_weakpoint_bonus": 4,
     "default_weakpoint_penalty": -2
