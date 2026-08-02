@@ -3132,6 +3132,10 @@ std::vector<weak_ptr_fast<Creature>> target_ui::list_friendlies_in_lof()
                     ( cr->is_npc() && a != Creature::Attitude::HOSTILE ) ||
                     ( !cr->is_npc() && a == Creature::Attitude::FRIENDLY )
                 ) {
+                    // Adjacent non-hostile creatures are protected from aimed shots and do not need a warning.
+                    if( rl_dist( src, p ) == 1 ) {
+                        continue;
+                    }
                     ret.emplace_back( g->shared_from( *cr ) );
                 }
             }
