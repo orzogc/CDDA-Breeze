@@ -9236,15 +9236,6 @@ static void butcher_submenu( const std::vector<map_stack::iterator> &corpses, in
         }
         return false;
     };
-    auto has_started_finer_type = [&]( butcher_type bt ) {
-        const int bt_i = static_cast<int>( bt );
-        for( int other_bt = 0; other_bt < num_butcher_types; other_bt++ ) {
-            if( has_started[other_bt] && total_cut_moves[other_bt] > total_cut_moves[bt_i] ) {
-                return true;
-            }
-        }
-        return false;
-    };
     const bool enough_light = player_character.fine_detail_vision_mod() <= 4;
 
     const int factor = player_character.max_quality( qual_BUTCHER, PICKUP_RANGE );
@@ -9335,12 +9326,6 @@ static void butcher_submenu( const std::vector<map_stack::iterator> &corpses, in
         }
         return cut_time( bt );
     };
-    auto confirm_cruder_switch = [&]( butcher_type bt ) {
-        return !has_started_finer_type( bt ) || query_yn(
-                   _( "A more careful butchery method is already in progress. "
-                      "Starting this cruder method will prevent continuing that work. Continue." ) );
-    };
-
     uilist smenu;
     smenu.desc_enabled = true;
     smenu.desc_lines_hint += dissect_wp_hint_lines;
@@ -9426,35 +9411,30 @@ static void butcher_submenu( const std::vector<map_stack::iterator> &corpses, in
                                        msgFactorD, dissect_wp_hint ) );
     smenu.query();
 
-    auto assign_butchery_activity = [&]( butcher_type bt, const activity_id &activity ) {
-        if( confirm_cruder_switch( bt ) ) {
-            player_character.assign_activity( activity, 0, true );
-        }
-    };
     switch( smenu.ret ) {
         case static_cast<int>( butcher_type::QUICK ):
-            assign_butchery_activity( butcher_type::QUICK, ACT_BUTCHER );
+            player_character.assign_activity( ACT_BUTCHER, 0, true );
             break;
         case static_cast<int>( butcher_type::FULL ):
-            assign_butchery_activity( butcher_type::FULL, ACT_BUTCHER_FULL );
+            player_character.assign_activity( ACT_BUTCHER_FULL, 0, true );
             break;
         case static_cast<int>( butcher_type::FIELD_DRESS ):
-            assign_butchery_activity( butcher_type::FIELD_DRESS, ACT_FIELD_DRESS );
+            player_character.assign_activity( ACT_FIELD_DRESS, 0, true );
             break;
         case static_cast<int>( butcher_type::SKIN ):
-            assign_butchery_activity( butcher_type::SKIN, ACT_SKIN );
+            player_character.assign_activity( ACT_SKIN, 0, true );
             break;
         case static_cast<int>( butcher_type::BLEED ):
-            assign_butchery_activity( butcher_type::BLEED, ACT_BLEED );
+            player_character.assign_activity( ACT_BLEED, 0, true );
             break;
         case static_cast<int>( butcher_type::QUARTER ):
-            assign_butchery_activity( butcher_type::QUARTER, ACT_QUARTER );
+            player_character.assign_activity( ACT_QUARTER, 0, true );
             break;
         case static_cast<int>( butcher_type::DISMEMBER ):
-            assign_butchery_activity( butcher_type::DISMEMBER, ACT_DISMEMBER );
+            player_character.assign_activity( ACT_DISMEMBER, 0, true );
             break;
         case static_cast<int>( butcher_type::DISSECT ):
-            assign_butchery_activity( butcher_type::DISSECT, ACT_DISSECT );
+            player_character.assign_activity( ACT_DISSECT, 0, true );
             break;
         default:
             return;
