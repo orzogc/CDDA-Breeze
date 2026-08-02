@@ -967,6 +967,101 @@ void conditional_t<T>::set_npc_override( const JsonObject &jo, const std::string
 }
 
 template<class T>
+void conditional_t<T>::set_npc_personality( const JsonObject &jo, const std::string &member )
+{
+    JsonObject scores = jo.get_object( member );
+    scores.allow_omitted_members();
+
+    std::optional<int_or_var_part<T>> min_aggression;
+    std::optional<int_or_var_part<T>> max_aggression;
+    std::optional<int_or_var_part<T>> min_bravery;
+    std::optional<int_or_var_part<T>> max_bravery;
+    std::optional<int_or_var_part<T>> min_collector;
+    std::optional<int_or_var_part<T>> max_collector;
+    std::optional<int_or_var_part<T>> min_altruism;
+    std::optional<int_or_var_part<T>> max_altruism;
+
+    const auto read_bounds = [&]( const std::string &name,
+                                  std::optional<int_or_var_part<T>> &minimum,
+                                  std::optional<int_or_var_part<T>> &maximum ) {
+        if( !scores.has_member( name ) ) {
+            return;
+        }
+        JsonValue value = scores.get_member( name );
+        if( value.test_int() ) {
+            int_or_var_part<T> exact = get_int_or_var_part<T>( value, name );
+            minimum = exact;
+            maximum = exact;
+            return;
+        }
+        if( !value.test_object() ) {
+            value.throw_error( "npc_personality member must be an integer or min/max object" );
+        }
+        JsonObject bounds = value.get_object();
+        bounds.allow_omitted_members();
+        if( bounds.has_member( "min" ) ) {
+            minimum = get_int_or_var_part<T>( bounds.get_member( "min" ), "min" );
+        }
+        if( bounds.has_member( "max" ) ) {
+            maximum = get_int_or_var_part<T>( bounds.get_member( "max" ), "max" );
+        }
+        if( !minimum && !maximum ) {
+            bounds.throw_error( "npc_personality range requires min and/or max" );
+        }
+    };
+
+    read_bounds( "aggression", min_aggression, max_aggression );
+    read_bounds( "bravery", min_bravery, max_bravery );
+    read_bounds( "collector", min_collector, max_collector );
+    read_bounds( "altruism", min_altruism, max_altruism );
+
+    if( !min_aggression && !max_aggression && !min_bravery && !max_bravery &&
+        !min_collector && !max_collector && !min_altruism && !max_altruism ) {
+        scores.throw_error( "npc_personality requires at least one personality member" );
+    }
+
+    condition = [min_aggression, max_aggression, min_bravery, max_bravery,
+                 min_collector, max_collector, min_altruism, max_altruism]( const T & d ) {
+        const npc *guy = d.actor( true )->get_npc();
+        if( guy == nullptr ) {
+            return false;
+        }
+        const auto within = [&]( int value,
+                                 const std::optional<int_or_var_part<T>> &minimum,
+                                 const std::optional<int_or_var_part<T>> &maximum ) {
+            return ( !minimum || value >= minimum->evaluate( d ) ) &&
+                   ( !maximum || value <= maximum->evaluate( d ) );
+        };
+        return within( guy->personality.aggression, min_aggression, max_aggression ) &&
+               within( guy->personality.bravery, min_bravery, max_bravery ) &&
+               within( guy->personality.collector, min_collector, max_collector ) &&
+               within( guy->personality.altruism, min_altruism, max_altruism );
+    };
+}
+
+template<class T>
+void conditional_t<T>::set_npc_movement_policy( const JsonObject &jo,
+        const std::string &member )
+{
+    str_or_var<T> policy = get_str_or_var<T>( jo.get_member( member ), member, true );
+    condition = [policy]( const T & d ) {
+        const npc *guy = d.actor( true )->get_npc();
+        if( guy == nullptr ) {
+            return false;
+        }
+        const std::string value = policy.evaluate( d );
+        const bool holds = guy->has_trait( trait_id( "NPC_HOLD_POSITION" ) );
+        if( value == "HOLD_POSITION" ) {
+            return holds;
+        }
+        if( value == "NORMAL" ) {
+            return !holds;
+        }
+        return false;
+    };
+}
+
+template<class T>
 void conditional_t<T>::set_days_since( const JsonObject &jo, const std::string &member )
 {
     int_or_var<T> iov = get_int_or_var<T>( jo, member );
@@ -3002,6 +3097,10 @@ conditional_t<T>::conditional_t( const JsonObject &jo )
         set_npc_override( jo, "npc_override", true );
     } else if( jo.has_string( "u_override" ) ) {
         set_npc_override( jo, "u_override", false );
+    } else if( jo.has_object( "npc_personality" ) ) {
+        set_npc_personality( jo, "npc_personality" );
+    } else if( jo.has_member( "npc_movement_policy" ) ) {
+        set_npc_movement_policy( jo, "npc_movement_policy" );
     } else if( jo.has_int( "days_since_cataclysm" ) || jo.has_object( "days_since_cataclysm" ) ) {
         set_days_since( jo, "days_since_cataclysm" );
     } else if( jo.has_string( "is_season" ) ) {

@@ -6,6 +6,7 @@
 #include <iosfwd>
 #include <map>
 #include <new>
+#include <optional>
 #include <set>
 #include <string>
 #include <unordered_map>
@@ -17,7 +18,6 @@
 #include "damage.h"
 #include "hash_utils.h"
 #include "memory_fast.h"
-#include <optional>
 #include "point.h"
 #include "translations.h"
 #include "type_id.h"
@@ -89,6 +89,21 @@ struct mut_transform {
     /** subtracted from @ref Creature::moves when transformation is successful */
     int moves = 0;
     mut_transform();
+    bool load( const JsonObject &jsobj, const std::string &member );
+};
+
+/** Personality bounds used to derive descriptive NPC traits. */
+struct mut_personality_score {
+    int min_aggression = INT_MIN;
+    int max_aggression = INT_MAX;
+    int min_bravery = INT_MIN;
+    int max_bravery = INT_MAX;
+    int min_collector = INT_MIN;
+    int max_collector = INT_MAX;
+    int min_altruism = INT_MIN;
+    int max_altruism = INT_MAX;
+
+    mut_personality_score();
     bool load( const JsonObject &jsobj, const std::string &member );
 };
 
@@ -236,6 +251,7 @@ struct mutation_branch {
         int butchering_quality = 0;
 
         cata::value_ptr<mut_transform> transform;
+        cata::value_ptr<mut_personality_score> personality_score;
 
         // Cosmetic variants of this mutation
         std::map<std::string, mutation_variant> variants;

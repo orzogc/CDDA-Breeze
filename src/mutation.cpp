@@ -2076,11 +2076,15 @@ std::string Character::mutation_name( const trait_id &mut ) const
 std::string Character::mutation_desc( const trait_id &mut ) const
 {
     auto it = my_mutations.find( mut );
+    std::string description;
     if( it != my_mutations.end() && it->second.variant != nullptr ) {
-        return mut->desc( it->second.variant->id );
+        description = mut->desc( it->second.variant->id );
+    } else {
+        description = mut->desc();
     }
 
-    return mut->desc();
+    replace_substring( description, "<npc_name>", get_name(), true );
+    return description;
 }
 
 void Character::customize_appearance( customize_appearance_choice choice )

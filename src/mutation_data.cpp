@@ -1,5 +1,6 @@
 #include "mutation.h" // IWYU pragma: associated
 
+#include <algorithm>
 #include <cstdlib>
 #include <map>
 #include <memory>
@@ -235,6 +236,52 @@ bool mut_transform::load( const JsonObject &jsobj, const std::string &member )
     return true;
 }
 
+mut_personality_score::mut_personality_score() = default;
+
+bool mut_personality_score::load( const JsonObject &jsobj, const std::string &member )
+{
+    JsonObject j = jsobj.get_object( member );
+    optional( j, false, "min_aggression", min_aggression, INT_MIN );
+    optional( j, false, "max_aggression", max_aggression, INT_MAX );
+    optional( j, false, "min_bravery", min_bravery, INT_MIN );
+    optional( j, false, "max_bravery", max_bravery, INT_MAX );
+    optional( j, false, "min_collector", min_collector, INT_MIN );
+    optional( j, false, "max_collector", max_collector, INT_MAX );
+    optional( j, false, "min_altruism", min_altruism, INT_MIN );
+    optional( j, false, "max_altruism", max_altruism, INT_MAX );
+
+    if( j.has_member( "min_aggression" ) ) {
+        min_aggression = std::clamp( min_aggression, -10, 10 );
+    }
+    if( j.has_member( "max_aggression" ) ) {
+        max_aggression = std::clamp( max_aggression, -10, 10 );
+    }
+    if( j.has_member( "min_bravery" ) ) {
+        min_bravery = std::clamp( min_bravery, -10, 10 );
+    }
+    if( j.has_member( "max_bravery" ) ) {
+        max_bravery = std::clamp( max_bravery, -10, 10 );
+    }
+    if( j.has_member( "min_collector" ) ) {
+        min_collector = std::clamp( min_collector, -10, 10 );
+    }
+    if( j.has_member( "max_collector" ) ) {
+        max_collector = std::clamp( max_collector, -10, 10 );
+    }
+    if( j.has_member( "min_altruism" ) ) {
+        min_altruism = std::clamp( min_altruism, -10, 10 );
+    }
+    if( j.has_member( "max_altruism" ) ) {
+        max_altruism = std::clamp( max_altruism, -10, 10 );
+    }
+
+    if( min_aggression > max_aggression || min_bravery > max_bravery ||
+        min_collector > max_collector || min_altruism > max_altruism ) {
+        j.throw_error( "personality_score minimum cannot exceed maximum" );
+    }
+    return true;
+}
+
 void reflex_activation_data::load( const JsonObject &jsobj )
 {
     read_condition<dialogue>( jsobj, "condition", trigger, false );
@@ -348,6 +395,10 @@ void mutation_branch::load( const JsonObject &jo, const std::string & )
     if( jo.has_object( "transform" ) ) {
         transform = cata::make_value<mut_transform>();
         transform->load( jo, "transform" );
+    }
+    if( jo.has_object( "personality_score" ) ) {
+        personality_score = cata::make_value<mut_personality_score>();
+        personality_score->load( jo, "personality_score" );
     }
 
     optional( jo, was_loaded, "triggers", trigger_list );

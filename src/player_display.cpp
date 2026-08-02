@@ -57,6 +57,7 @@ static const trait_id trait_SUNLIGHT_DEPENDENT( "SUNLIGHT_DEPENDENT" );
 static const trait_id trait_TROGLO( "TROGLO" );
 static const trait_id trait_TROGLO2( "TROGLO2" );
 static const trait_id trait_TROGLO3( "TROGLO3" );
+static const trait_id trait_NPC_PERSONALITY_SUMMARY( "NPC_PERSONALITY_SUMMARY" );
 
 static const std::string title_STATS = translate_marker( "STATS" );
 static const std::string title_ENCUMB = translate_marker( "ENCUMBRANCE AND WARMTH" );
@@ -643,15 +644,60 @@ static void draw_traits_tab( ui_adaptor &ui, const catacurses::window &w_traits,
     wnoutrefresh( w_traits );
 }
 
-static void draw_traits_info( const catacurses::window &w_info, const unsigned line,
-                              const std::vector<trait_and_var> &traitslist )
+static bool is_personality_trait( const trait_and_var &entry )
+{
+    return static_cast<bool>( entry.trait->personality_score );
+}
+
+static std::vector<trait_and_var> get_personality_traits_for_display( const Character &you )
+{
+    std::vector<trait_and_var> result;
+    for( const trait_and_var &entry : you.get_mutations_variants( false ) ) {
+        if( is_personality_trait( entry ) ) {
+            result.push_back( entry );
+        }
+    }
+    std::sort( result.begin(), result.end(), trait_display_sort );
+    return result;
+}
+
+static std::string personality_summary_description( const Character &you )
+{
+    const std::vector<trait_and_var> personality_traits = get_personality_traits_for_display( you );
+    std::string result;
+    for( const trait_and_var &entry : personality_traits ) {
+        std::string description = entry.desc();
+        replace_substring( description, "<npc_name>", "", true );
+        while( !description.empty() && description.front() == ' ' ) {
+            description.erase( description.begin() );
+        }
+        if( !result.empty() ) {
+            result += "\n";
+        }
+        result += string_format(
+                      pgettext( "personality summary entry", "%1$s, %2$s" ),
+                      colorize( you.mutation_name( entry.trait ), entry.trait->get_display_color() ),
+                      description );
+    }
+    return result;
+}
+
+static void draw_traits_info( const catacurses::window &w_info, const Character &you,
+                              const unsigned line, const std::vector<trait_and_var> &traitslist )
 {
     werase( w_info );
     if( line < traitslist.size() ) {
         const trait_and_var &cur = traitslist[line];
-        // NOLINTNEXTLINE(cata-use-named-point-constants)
-        fold_and_print( w_info, point( 1, 0 ), FULL_SCREEN_WIDTH - 2, c_light_gray, string_format( "%s: %s",
-                        colorize( cur.name(), cur.trait->get_display_color() ), cur.desc() ) );
+        if( cur.trait == trait_NPC_PERSONALITY_SUMMARY ) {
+            fold_and_print( w_info, point( 1, 0 ), FULL_SCREEN_WIDTH - 2, c_light_gray,
+                            personality_summary_description( you ) );
+        } else {
+            // NOLINTNEXTLINE(cata-use-named-point-constants)
+            fold_and_print( w_info, point( 1, 0 ), FULL_SCREEN_WIDTH - 2, c_light_gray,
+                            string_format( "%s: %s",
+                                           colorize( cur.name(), cur.trait->get_display_color() ),
+                                           you.mutation_desc( cur.trait ) ) );
+        }
     }
     wnoutrefresh( w_info );
 }
@@ -1034,7 +1080,7 @@ static void draw_info_window( const catacurses::window &w_info, const Character 
             draw_skills_info( w_info, you, line, skillslist );
             break;
         case player_display_tab::traits:
-            draw_traits_info( w_info, line, traitslist );
+            draw_traits_info( w_info, you, line, traitslist );
             break;
         case player_display_tab::bionics:
             draw_bionics_info( w_info, line, bionicslist );
@@ -1201,7 +1247,8 @@ static bool handle_player_display_action( Character &you, unsigned int &line,
         info_line = 0;
         ui_info.invalidate_ui();
     } else if( action == "SELECT_TRAIT_VARIANT" ) {
-        if( curtab == player_display_tab::traits ) {
+        if( curtab == player_display_tab::traits &&
+            traitslist[line].trait != trait_NPC_PERSONALITY_SUMMARY ) {
             const mutation_variant *var = traitslist[line].trait->pick_variant_menu();
             you.set_mut_variant( traitslist[line].trait, var );
             const std::string &varid = var == nullptr ? "" : var->id;
@@ -1413,6 +1460,16 @@ void Character::disp_info( bool customize_character )
 
     std::vector<trait_and_var> traitslist = get_mutations_variants( false );
     std::sort( traitslist.begin(), traitslist.end(), trait_display_sort );
+    if( is_npc() && get_option<std::string>( "NPC_PERSONALITY_TRAIT_DISPLAY" ) == "COMBINED" ) {
+        const auto personality_begin = std::remove_if( traitslist.begin(), traitslist.end(),
+        []( const trait_and_var & entry ) {
+            return is_personality_trait( entry );
+        } );
+        if( personality_begin != traitslist.end() ) {
+            traitslist.erase( personality_begin, traitslist.end() );
+            traitslist.insert( traitslist.begin(), trait_and_var( trait_NPC_PERSONALITY_SUMMARY, "" ) );
+        }
+    }
     const unsigned int trait_win_size_y_max = 1 + static_cast<unsigned>( traitslist.size() );
 
     std::vector<bionic_grouping> bionicslist;

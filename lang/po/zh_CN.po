@@ -426762,6 +426762,7 @@ msgid "Disliked"
 msgstr "厌恶"
 
 #: src/faction.cpp:222
+#: data/json/mutations/npc_personality.json
 msgid "Hero"
 msgstr "人民英雄"
 
@@ -464547,3 +464548,175 @@ msgstr "选择时间"
 #: data/raw/keybindings.json
 msgid "Reset time point to initial value"
 msgstr "将时间重置为初始值"
+
+
+#: data/json/mutations/npc_personality.json
+#. ~ Mutation name
+msgid "Survivor at any cost"
+msgstr "全力求生"
+
+#: data/json/mutations/npc_personality.json
+#. ~ Description of mutation "Survivor at any cost"
+msgid ""
+"<npc_name> is certainly a survivor.  You can only wonder how many they've "
+"abandoned to save themself."
+msgstr "<npc_name>把活下去看得比什么都重要，为了保全自己，他们很可能抛下任何拖累。"
+
+#: data/json/mutations/npc_personality.json
+#. ~ Mutation name
+msgid "Timid"
+msgstr "谨慎"
+
+#: data/json/mutations/npc_personality.json
+#. ~ Description of mutation "Timid"
+msgid "<npc_name> tries to avoid conflict, even when they have good reason not to."
+msgstr "<npc_name>总会先避开冲突，即便眼前的麻烦已经很难靠退让解决。"
+
+#: data/json/mutations/npc_personality.json
+#. ~ Mutation name
+msgid "Hardass"
+msgstr "硬汉"
+
+#: data/json/mutations/npc_personality.json
+#. ~ Description of mutation "Hardass"
+msgid "<npc_name> loves to fight a good fight, but only for themself."
+msgstr "<npc_name>喜欢用拳头解决问题，只要最终受益的是自己，他们并不介意把事情闹大。"
+
+#: data/json/mutations/npc_personality.json
+#. ~ Mutation name
+msgid "Freedom fighter"
+msgstr "自由战神"
+
+#: data/json/mutations/npc_personality.json
+#. ~ Description of mutation "Freedom fighter"
+msgid ""
+"<npc_name> believes in fighting… mostly for others, even at risk to their own "
+"wellbeing."
+msgstr "<npc_name>愿意为他人挺身而出，即便需要承担伤痛和危险，他们也很少退让。"
+
+#: data/json/mutations/npc_personality.json
+#. ~ Mutation name
+msgid "Volatile"
+msgstr "易怒"
+
+#: data/json/mutations/npc_personality.json
+#. ~ Description of mutation "Volatile"
+msgid "<npc_name> is just looking for an excuse."
+msgstr "<npc_name>的耐心十分有限，只要找到一点借口，他们就可能立刻诉诸暴力。"
+
+#: data/json/mutations/npc_personality.json
+#: data/mods/Xedra_Evolved/eocs/eoc_riddles.json
+#. ~ Mutation name
+#. ~ EOC option name in effect in EoC "EOC_XE_RIDDLE_09"
+msgid "Coward"
+msgstr "胆小"
+
+#: data/json/mutations/npc_personality.json
+#. ~ Description of mutation "Coward"
+msgid ""
+"<npc_name> flinches at the thought of fighting, whether it be other people or "
+"the undead."
+msgstr "<npc_name>一想到战斗就会退缩，无论对手是活人还是不死生物，他们都更愿意避开。"
+
+#: data/json/mutations/npc_personality.json
+#. ~ Mutation name
+msgid "Craven"
+msgstr "懦夫"
+
+#: data/json/mutations/npc_personality.json
+#. ~ Description of mutation "Craven"
+msgid ""
+"<npc_name> is afraid of the dark, spiders, and unexplained sounds.  So are "
+"you, but only because you've lived through the apocalypse.  <npc_name> has "
+"always been like this."
+msgstr "<npc_name>害怕黑暗，蜘蛛和无法解释的声响，灾变并没有造成这种恐惧，他们一直如此。"
+
+#: data/json/mutations/npc_personality.json
+#. ~ Mutation name
+msgid "Brave"
+msgstr "勇敢"
+
+#: data/json/mutations/npc_personality.json
+#. ~ Description of mutation "Brave"
+msgid ""
+"<npc_name> knows the name of fear, but only as a long-defeated foe.  Little "
+"can shake them."
+msgstr "<npc_name>知道恐惧是什么，也早已学会压住它，寻常危险很难让他们动摇。"
+
+#: data/json/mutations/npc_personality.json
+#. ~ Description of mutation "Hero"
+msgid ""
+"<npc_name> is an ideal ally to those they call friend, always willing to help "
+"others."
+msgstr "<npc_name>会认真保护被自己视作同伴的人，只要有人需要帮助，他们通常愿意承担风险。"
+
+#: data/json/mutations/npc_personality.json
+#. ~ Mutation name
+msgid "Miser"
+msgstr "吝啬鬼"
+
+#: data/json/mutations/npc_personality.json
+#. ~ Description of mutation "Miser"
+msgid "<npc_name> loves their trinkets, and hates giving them away."
+msgstr "<npc_name>异常爱惜自己的财物，也很难接受把它们交给别人，即便这些东西并不贵重。"
+
+#: data/json/mutations/npc_personality.json
+#. ~ Mutation name
+msgid "Scrooge"
+msgstr "麦克老鸭"
+
+#: data/json/mutations/npc_personality.json
+#. ~ Description of mutation "Scrooge"
+msgid "<npc_name> collects trash like a RPG protagonist collects potions."
+msgstr "<npc_name>看到能带走的东西就很难放手，哪怕只是无用的零碎，他们也想收入囊中。"
+
+#: data/json/mutations/npc_personality.json
+#. ~ Mutation name
+msgid "Kind"
+msgstr "仁善"
+
+#: data/json/mutations/npc_personality.json
+#. ~ Description of mutation "Kind"
+msgid "<npc_name> just wants to help."
+msgstr "<npc_name>愿意主动提供帮助，也会认真顾及他人的处境，很少只考虑自己的得失。"
+
+#: data/json/mutations/npc_personality.json
+#. ~ Mutation name
+msgid "Self-centered"
+msgstr "利己"
+
+#: data/json/mutations/npc_personality.json
+#. ~ Description of mutation "Self-centered"
+msgid "<npc_name> steers every interaction into discussing how it will help them."
+msgstr "<npc_name>总会把事情引向自己的利益，别人的需要只有在对自己有利时才值得考虑。"
+
+#: src/options.cpp
+msgid "NPC personality trait display"
+msgstr "NPC性格标签显示"
+
+#: src/options.cpp
+msgid "Choose how personality traits are shown in an NPC's character information.  Combined displays one Personality entry and lists every matching personality in the description pane.  Separate displays each personality as its own trait."
+msgstr "控制NPC信息界面中的性格标签显示方式。合并显示会在特性栏中只保留一个性格条目，并在说明栏列出全部性格。独立显示会把每项性格分别列为特性。"
+
+#: src/options.cpp
+msgid "Combined"
+msgstr "合并显示"
+
+#: src/options.cpp
+msgid "Separate"
+msgstr "独立显示"
+
+#: data/json/mutations/npc_personality.json
+#. ~ Mutation name
+msgid "Personality"
+msgstr "性格"
+
+#: data/json/mutations/npc_personality.json
+#. ~ Description of mutation "Personality"
+msgid "The NPC's personality traits are shown here."
+msgstr "这里汇总了这个NPC的性格标签。"
+
+#: src/player_display.cpp
+msgctxt "personality summary entry"
+msgid "%1$s, %2$s"
+msgstr "%1$s，%2$s"

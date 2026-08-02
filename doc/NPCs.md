@@ -103,6 +103,21 @@ Faction determines what faction, if any, the NPC belongs to.  Some examples are 
 
 `age` and `height` are optional fields that can be used to define the age and height (in cm) of the NPC respectively.
 
+`personality` optionally fixes the NPC's four personality values instead of using randomized values.  All four members are required and are clamped to the range -10 to 10:
+
+```json
+"personality": {
+  "aggression": 1,
+  "bravery": 6,
+  "collector": -4,
+  "altruism": 7
+}
+```
+
+Mutations may define a `personality_score` object containing any of `min_aggression`, `max_aggression`, `min_bravery`, `max_bravery`, `min_collector`, `max_collector`, `min_altruism`, and `max_altruism`.  Supplied bounds are clamped to -10 through 10; omitted bounds are unrestricted so class-adjusted NPC personality values outside that range still match.  NPCs automatically gain every matching descriptive trait when generated, loaded, or changed by a personality EOC.  These traits should be descriptive only and should not add gameplay bonuses.
+
+The interface option `NPC_PERSONALITY_TRAIT_DISPLAY` controls how matching personality traits appear in an NPC's character information.  `SEPARATE` keeps every matching trait as an individual entry.  `COMBINED` replaces them with one `Personality` entry and lists each matching trait and description in the information pane.  The combined view also includes personality traits added by mods through `personality_score`.
+
 # Writing dialogues
 Dialogues work like state machines. They start with a certain topic (the NPC says something), the player character can then respond (choosing one of several responses), and that response sets the new talk topic. This goes on until the dialogue is finished, or the NPC turns hostile.
 
@@ -802,6 +817,9 @@ Effect | Description
 `bionic_remove` | The NPC removes a bionic from your character, using very high skill, and charging you according to the operation's difficulty.
 `npc_class_change: `string or [variable object](#variable-object) | Change the NPC's class to the new value.
 `npc_faction_change: `string or [variable object](#variable-object) | Change the NPC's faction membership to the new value.
+`npc_set_personality: `object | Sets any listed NPC personality values (`aggression`, `bravery`, `collector`, `altruism`) to ints or [variable objects](#variable-object), clamps them to -10 through 10, and refreshes descriptive personality traits.
+`npc_mod_personality: `object | Adds the supplied ints or [variable objects](#variable-object) to the listed NPC personality values, clamps them to -10 through 10, and refreshes descriptive personality traits.
+`npc_set_movement_policy: `string or [variable object](#variable-object) | `HOLD_POSITION` makes the NPC remain on its tile and ignore ordinary threat, sound, need, and tactical movement.  It may step away only when standing directly in fire or acid.  `NORMAL` restores regular AI movement.
 `u_faction_rep: `int or [variable object](#variable-object) | Increases your reputation with the NPC's current faction, or decreases it if the value is negative.
 `toggle_npc_rule: `string or [variable object](#variable-object) | Toggles the value of a boolean NPC follower AI rule such as `"use_silent"` or `"allow_bash"`
 `set_npc_rule: `string or [variable object](#variable-object) | Sets the value of a boolean NPC follower AI rule such as `"use_silent"` or `"allow_bash"`
@@ -976,6 +994,8 @@ Condition | Type | Description
 `"u_cbm_recharge_rule" or "npc_cbm_recharge_rule"` | string or [variable object](#variable-object) | `true` if u or the NPC follower AI rule for cbm recharge matches the string.
 `"u_rule" or "npc_rule"` | string or [variable object](#variable-object) | `true` if u or the NPC follower AI rule for that matches string is set.
 `"u_override" or "npc_override"` | string or [variable object](#variable-object)| `true` if u or the NPC has an override for the string.
+`"npc_personality"` | object | Tests one or more NPC personality values.  A direct integer requires an exact match; a `{ "min": ..., "max": ... }` object tests a range, and either bound may be omitted or use a [variable object](#variable-object).  Example: `{ "npc_personality": { "bravery": { "min": 5 }, "altruism": { "min": 2 } } }`.
+`"npc_movement_policy"` | string or [variable object](#variable-object) | Tests whether the NPC movement policy is `NORMAL` or `HOLD_POSITION`.
 `"has_pickup_list" or "u_has_pickup_list" or "npc_has_pickup_list"` | simple string | `true` if u or the NPC has a pickup list.
 `"roll_contested""`, `difficulty`: int or [variable object](#variable-object), (*optional* `die_size : `int or [variable object](#variable-object) ) | [int expression](#compare-integers-and-arithmetics) | Compares a roll against a difficulty. Returns true if a random number between 1 and `die_size` (defaults to 10) plus the integer expression is greater than `difficulty`. For example { "u_roll_contested": { "u_val": "strength" }, "difficulty": 6 } will return whether a random number between 1 and 10 plus strength is greater than 6.
 

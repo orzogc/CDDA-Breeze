@@ -3417,6 +3417,76 @@ void talk_effect_fun_t<T>::set_npc_change_class( const JsonObject &jo, const std
 }
 
 template<class T>
+void talk_effect_fun_t<T>::set_npc_personality( const JsonObject &jo, const std::string &member,
+        bool modify )
+{
+    JsonObject values = jo.get_object( member );
+    values.allow_omitted_members();
+    std::optional<int_or_var<T>> aggression;
+    std::optional<int_or_var<T>> bravery;
+    std::optional<int_or_var<T>> collector;
+    std::optional<int_or_var<T>> altruism;
+    if( values.has_member( "aggression" ) ) {
+        aggression = get_int_or_var<T>( values, "aggression" );
+    }
+    if( values.has_member( "bravery" ) ) {
+        bravery = get_int_or_var<T>( values, "bravery" );
+    }
+    if( values.has_member( "collector" ) ) {
+        collector = get_int_or_var<T>( values, "collector" );
+    }
+    if( values.has_member( "altruism" ) ) {
+        altruism = get_int_or_var<T>( values, "altruism" );
+    }
+    if( !aggression && !bravery && !collector && !altruism ) {
+        values.throw_error( member + " requires at least one personality member" );
+    }
+
+    function = [aggression, bravery, collector, altruism, modify]( const T & d ) {
+        npc *guy = d.actor( true )->get_npc();
+        if( guy == nullptr ) {
+            debugmsg( "npc personality effect requires an NPC beta talker" );
+            return;
+        }
+        const auto apply = [&]( const std::optional<int_or_var<T>> &value, int8_t &field ) {
+            if( !value ) {
+                return;
+            }
+            const int base = modify ? static_cast<int>( field ) : 0;
+            field = static_cast<int8_t>( std::clamp( base + value->evaluate( d ), -10, 10 ) );
+        };
+        apply( aggression, guy->personality.aggression );
+        apply( bravery, guy->personality.bravery );
+        apply( collector, guy->personality.collector );
+        apply( altruism, guy->personality.altruism );
+        guy->refresh_personality_traits();
+    };
+}
+
+template<class T>
+void talk_effect_fun_t<T>::set_npc_movement_policy( const JsonObject &jo,
+        const std::string &member )
+{
+    str_or_var<T> policy = get_str_or_var<T>( jo.get_member( member ), member, true );
+    function = [policy]( const T & d ) {
+        npc *guy = d.actor( true )->get_npc();
+        if( guy == nullptr ) {
+            debugmsg( "npc movement policy effect requires an NPC beta talker" );
+            return;
+        }
+        const std::string value = policy.evaluate( d );
+        const trait_id hold_position( "NPC_HOLD_POSITION" );
+        if( value == "HOLD_POSITION" ) {
+            guy->set_mutation( hold_position );
+        } else if( value == "NORMAL" ) {
+            guy->unset_mutation( hold_position );
+        } else {
+            debugmsg( "invalid npc movement policy '%s'; expected NORMAL or HOLD_POSITION", value );
+        }
+    };
+}
+
+template<class T>
 void talk_effect_fun_t<T>::set_change_faction_rep( const JsonObject &jo, const std::string &member )
 {
     int_or_var<T> rep_change = get_int_or_var<T>( jo, member );
@@ -5104,6 +5174,12 @@ void talk_effect_t<T>::parse_sub_effect( const JsonObject &jo )
         subeffect_fun.set_npc_change_faction( jo, "npc_change_faction" );
     } else if( jo.has_string( "npc_change_class" ) ) {
         subeffect_fun.set_npc_change_class( jo, "npc_change_class" );
+    } else if( jo.has_object( "npc_set_personality" ) ) {
+        subeffect_fun.set_npc_personality( jo, "npc_set_personality", false );
+    } else if( jo.has_object( "npc_mod_personality" ) ) {
+        subeffect_fun.set_npc_personality( jo, "npc_mod_personality", true );
+    } else if( jo.has_member( "npc_set_movement_policy" ) ) {
+        subeffect_fun.set_npc_movement_policy( jo, "npc_set_movement_policy" );
     } else if( jo.has_int( "u_faction_rep" ) ) {
         subeffect_fun.set_change_faction_rep( jo, "u_faction_rep" );
     } else if( jo.has_string( "add_mission" ) ) {
