@@ -328,6 +328,10 @@ void npc_template::load( const JsonObject &jsobj )
         guy.set_fac_id( jsobj.get_string( "faction" ) );
     }
 
+    if( jsobj.has_object( "follower_rules" ) ) {
+        guy.rules.load_from_template( jsobj.get_object( "follower_rules" ) );
+    }
+
     if( jsobj.has_int( "class" ) ) {
         guy.myclass = npc_class::from_legacy_int( jsobj.get_int( "class" ) );
     } else if( jsobj.has_string( "class" ) ) {
@@ -690,6 +694,7 @@ void npc::load_npc_template( const string_id<npc_template> &ident )
     idz = tguy.idz;
     myclass = npc_class_id( tguy.myclass );
     randomize( myclass );
+    rules = tguy.rules;
     if( tem.personality.has_value() ) {
         personality = *tem.personality;
         refresh_personality_traits();
@@ -1005,8 +1010,9 @@ void npc::select_best_martial_art( bool announce )
 {
     item_location wielded = get_wielded_item();
     item &weapon = wielded ? *wielded : null_item_reference();
-    const bool can_use_gun = !is_player_ally() || rules.has_flag( ally_rule::use_guns );
-    const bool use_silent = is_player_ally() && rules.has_flag( ally_rule::use_silent );
+    const bool use_rules = uses_follower_rules();
+    const bool can_use_gun = !use_rules || rules.has_flag( ally_rule::use_guns );
+    const bool use_silent = use_rules && rules.has_flag( ally_rule::use_silent );
 
     const matype_id starting_style = martial_arts_data->selected_style();
     matype_id best_style = starting_style;
@@ -2649,6 +2655,11 @@ bool npc::is_player_ally() const
     return is_ally( get_player_character() );
 }
 
+bool npc::uses_follower_rules() const
+{
+    return rules.apply_to_all || is_player_ally() || is_following();
+}
+
 bool npc::is_friendly( const Character &p ) const
 {
     return is_ally( p ) || ( p.is_avatar() && ( is_walking_with() || is_player_ally() ) );
@@ -2836,7 +2847,8 @@ void npc::npc_dismount()
 
 int npc::smash_ability() const
 {
-    if( !is_hallucination() && ( !is_player_ally() || rules.has_flag( ally_rule::allow_bash ) ) ) {
+    if( !is_hallucination() && ( !uses_follower_rules() ||
+                                 rules.has_flag( ally_rule::allow_bash ) ) ) {
         ///\EFFECT_STR_NPC increases smash ability
         int dmg = get_wielded_item() ? get_wielded_item()->damage_melee( damage_type::BASH ) : 0;
         return str_cur + dmg;
@@ -3863,6 +3875,14 @@ npc_attitude npc::get_attitude() const
 
 void npc::set_attitude( npc_attitude new_attitude )
 {
+    if( rules.never_flee && ( new_attitude == NPCATT_FLEE ||
+                              new_attitude == NPCATT_FLEE_TEMP ) ) {
+        if( get_attitude_group( attitude ) == attitude_group::hostile || guaranteed_hostile() ) {
+            new_attitude = NPCATT_KILL;
+        } else {
+            return;
+        }
+    }
     if( new_attitude == attitude ) {
         return;
     }
@@ -3922,6 +3942,44 @@ npc_follower_rules::npc_follower_rules()
     clear_flag( ally_rule::ignore_noise );
     clear_flag( ally_rule::forbid_engage );
     set_flag( ally_rule::follow_distance_2 );
+}
+
+template<typename T>
+static void load_npc_rule_enum( const JsonObject &data, const char *member,
+                                const std::unordered_map<std::string, T> &values, T &target )
+{
+    if( !data.has_string( member ) ) {
+        return;
+    }
+    const std::string value = data.get_string( member );
+    const auto found = values.find( value );
+    if( found == values.end() ) {
+        data.throw_error_at( member, string_format( "invalid NPC rule value: %s", value ) );
+    }
+    target = found->second;
+}
+
+void npc_follower_rules::load_from_template( const JsonObject &data )
+{
+    load_npc_rule_enum( data, "engagement", combat_engagement_strs, engagement );
+    load_npc_rule_enum( data, "aim", aim_rule_strs, aim );
+    load_npc_rule_enum( data, "cbm_recharge", cbm_recharge_strs, cbm_recharge );
+    load_npc_rule_enum( data, "cbm_reserve", cbm_reserve_strs, cbm_reserve );
+
+    data.read( "apply_to_all", apply_to_all );
+    data.read( "allow_improvised_throwing", allow_improvised_throwing );
+    data.read( "never_flee", never_flee );
+
+    for( const auto &rule : ally_rule_strs ) {
+        if( !data.has_bool( rule.first ) ) {
+            continue;
+        }
+        if( data.get_bool( rule.first ) ) {
+            set_flag( rule.second.rule );
+        } else {
+            clear_flag( rule.second.rule );
+        }
+    }
 }
 
 bool npc_follower_rules::has_flag( ally_rule test, bool check_override ) const

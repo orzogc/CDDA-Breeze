@@ -1811,6 +1811,9 @@ void npc_follower_rules::serialize( JsonOut &json ) const
     json.member( "aim", static_cast<int>( aim ) );
     json.member( "cbm_reserve", static_cast<int>( cbm_reserve ) );
     json.member( "cbm_recharge", static_cast<int>( cbm_recharge ) );
+    json.member( "apply_to_all", apply_to_all );
+    json.member( "allow_improvised_throwing", allow_improvised_throwing );
+    json.member( "never_flee", never_flee );
 
     // serialize the flags so they can be changed between save games
     for( const auto &rule : ally_rule_strs ) {
@@ -1843,6 +1846,9 @@ void npc_follower_rules::deserialize( const JsonObject &data )
     int tmprecharge = 50;
     data.read( "cbm_recharge", tmprecharge );
     cbm_recharge = static_cast<cbm_recharge_rule>( tmprecharge );
+    data.read( "apply_to_all", apply_to_all );
+    data.read( "allow_improvised_throwing", allow_improvised_throwing );
+    data.read( "never_flee", never_flee );
 
     // deserialize the flags so they can be changed between save games
     for( const auto &rule : ally_rule_strs ) {
