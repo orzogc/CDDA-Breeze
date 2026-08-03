@@ -422,7 +422,7 @@ void npc_attack_gun::use( npc &source, const tripoint &location ) const
         add_msg_debug( debugmode::debug_filter::DF_NPC, "%s is aiming", source.disp_name() );
         Creature *target = get_creature_tracker().creature_at( location );
         if( target != nullptr && target->is_avatar() && get_player_character().sees( source ) ) {
-            add_msg( m_bad, _( "%s takes aim at you." ), source.disp_name() );
+            add_msg( m_warning, _( "%s takes aim at you." ), source.disp_name() );
         }
 
         source.aim( target_attributes );
