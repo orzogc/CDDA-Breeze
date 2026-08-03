@@ -5100,6 +5100,20 @@ void game::clear_zombies()
     critter_tracker->clear();
 }
 
+static bool can_place_npc( const tripoint &p )
+{
+    creature_tracker &creatures = get_creature_tracker();
+    if( const monster *const critter = creatures.creature_at<monster>( p ) ) {
+        if( !critter->is_hallucination() ) {
+            return false;
+        }
+    }
+    if( creatures.creature_at<Character>( p ) ) {
+        return false;
+    }
+    return get_map().passable( p ) && !g->is_dangerous_tile( p );
+}
+
 bool game::find_nearby_spawn_point( const tripoint &target, const mtype_id &mt, int min_radius,
                                     int max_radius, tripoint &point, bool outdoor_only, bool open_air_allowed )
 {
@@ -5112,6 +5126,26 @@ bool game::find_nearby_spawn_point( const tripoint &target, const mtype_id &mt, 
         if( can_place_monster( monster( mt->id ), target_point ) &&
             ( open_air_allowed || get_map().has_floor( target_point ) ) &&
             ( !outdoor_only || get_map().is_outside( target_point ) ) &&
+            rl_dist( target_point, target ) >= min_radius ) {
+            point = target_point;
+            return true;
+        }
+    }
+    return false;
+}
+
+bool game::find_nearby_spawn_point( const tripoint &target, int min_radius,
+                                    int max_radius, tripoint &point, bool outdoor_only,
+                                    bool indoor_only, bool open_air_allowed )
+{
+    tripoint target_point;
+    for( int attempts = 0; attempts < 75; attempts++ ) {
+        target_point = target + tripoint( rng( -max_radius, max_radius ),
+                                          rng( -max_radius, max_radius ), 0 );
+        if( can_place_npc( target_point ) &&
+            ( open_air_allowed || get_map().has_floor( target_point ) ) &&
+            ( !outdoor_only || get_map().is_outside( target_point ) ) &&
+            ( !indoor_only || !get_map().is_outside( target_point ) ) &&
             rl_dist( target_point, target ) >= min_radius ) {
             point = target_point;
             return true;
@@ -5177,6 +5211,46 @@ bool game::spawn_hallucination( const tripoint &p, const mtype_id &mt,
     } else {
         return false;
     }
+}
+
+bool game::spawn_npc( const tripoint &p, const string_id<npc_template> &npc_class,
+                      const std::string &unique_id, const std::vector<trait_id> &traits,
+                      std::optional<time_duration> lifespan )
+{
+    if( !npc_class.is_valid() ) {
+        add_msg_debug( debugmode::DF_NPC, "Invalid NPC template id %s.", npc_class.str() );
+        return false;
+    }
+    if( !unique_id.empty() && unique_npc_exists( unique_id ) ) {
+        add_msg_debug( debugmode::DF_NPC, "NPC with unique id %s already exists.", unique_id );
+        return false;
+    }
+
+    shared_ptr_fast<npc> tmp = make_shared_fast<npc>();
+    tmp->normalize();
+    tmp->load_npc_template( npc_class );
+    tmp->spawn_at_precise( tripoint_abs_ms( get_map().getabs( p ) ) );
+    if( get_creature_tracker().creature_at( p, true ) ) {
+        return false;
+    }
+
+    for( const trait_id &new_trait : traits ) {
+        if( new_trait.is_valid() ) {
+            tmp->set_mutation( new_trait );
+        } else {
+            add_msg_debug( debugmode::DF_NPC, "Invalid trait id %s for spawned NPC.", new_trait.str() );
+        }
+    }
+    if( !unique_id.empty() ) {
+        tmp->set_unique_id( unique_id );
+    }
+    if( lifespan && lifespan.value() > 0_seconds ) {
+        tmp->set_summon_time( lifespan.value() );
+    }
+
+    overmap_buffer.insert_npc( tmp );
+    load_npcs();
+    return true;
 }
 
 bool game::swap_critters( Creature &a, Creature &b )

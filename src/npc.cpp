@@ -3232,9 +3232,9 @@ void npc::die( Creature *nkiller )
     dead = true;
     Character::die( nkiller );
     
-    if( is_hallucination() ) {
-        if( !has_effect(effect_hallucination_npc_die_no_message) ){
-            add_msg_if_player_sees(*this, _("%s disappears."), get_name().c_str());
+    if( is_hallucination() || lifespan_end ) {
+        if( !has_effect( effect_hallucination_npc_die_no_message ) ) {
+            add_msg_if_player_sees( *this, _( "%s disappears." ), get_name().c_str() );
         }
         return;
     }
@@ -3543,6 +3543,11 @@ bool npc::dispose_item( item_location &&obj, const std::string & )
 
 void npc::process_turn()
 {
+    if( lifespan_end && lifespan_end.value() <= calendar::turn ) {
+        die( nullptr );
+        return;
+    }
+
     Character::process_turn();
 
     // NPCs shouldn't be using stamina, but if they have, set it back to max
@@ -3865,6 +3870,11 @@ attitude_group npc::get_attitude_group( npc_attitude att ) const
             break;
     }
     return attitude_group::neutral;
+}
+
+void npc::set_summon_time( const time_duration &length )
+{
+    lifespan_end = calendar::turn + length;
 }
 
 void npc::set_unique_id( const std::string &id )

@@ -777,6 +777,8 @@ class npc : public Character
             return this;
         }
         void load_npc_template( const string_id<npc_template> &ident );
+        /** Sets a finite lifetime for dynamically spawned NPCs. */
+        void set_summon_time( const time_duration &length );
         void npc_dismount();
         weak_ptr_fast<monster> chosen_mount;
         // Generating our stats, etc.
@@ -1435,6 +1437,7 @@ class npc : public Character
         npc_companion_mission comp_mission;
 
         std::string unique_id;
+        std::optional<time_point> lifespan_end = std::nullopt;
 };
 
 /** An NPC with standard stats */

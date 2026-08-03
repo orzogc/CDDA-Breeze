@@ -2298,6 +2298,7 @@ void npc::load( const JsonObject &data )
     }
 
     data.read( "marked_for_death", marked_for_death );
+    data.read( "lifespan_end", lifespan_end );
     data.read( "dead", dead );
     data.read( "patience", patience );
     if( data.has_number( "myclass" ) ) {
@@ -2475,6 +2476,7 @@ void npc::store( JsonOut &json ) const
     Character::store( json );
 
     json.member( "marked_for_death", marked_for_death );
+    json.member( "lifespan_end", lifespan_end );
     json.member( "dead", dead );
     json.member( "patience", patience );
     json.member( "myclass", myclass.str() );

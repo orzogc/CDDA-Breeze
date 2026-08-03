@@ -1268,3 +1268,22 @@ Example | Description
   ]
 }
 ```
+
+
+### Dynamically spawning an NPC template
+
+The `u_spawn_npc` and `npc_spawn_npc` EOC effects create NPCs from an exact NPC template near the alpha or beta talker.  Unlike mapgen `place_npcs`, this works at runtime around a moving actor.
+
+```json
+{
+  "u_spawn_npc": "my_bandit_template",
+  "real_count": 2,
+  "min_radius": 20,
+  "max_radius": 35,
+  "outdoor_only": true,
+  "spawn_message": "A raider emerges from the darkness.",
+  "spawn_message_plural": "Raiders emerge from the darkness."
+}
+```
+
+Supported optional members are `unique_id`, `traits`, `real_count`, `hallucination_count`, `min_radius`, `max_radius`, `outdoor_only`, `indoor_only`, `open_air_allowed`, `lifespan`, `target_var`, `spawn_message`, `spawn_message_plural`, `true_eocs`, and `false_eocs`.  `outdoor_only` and `indoor_only` cannot both be true.  A non-empty `unique_id` is applied only to the first real NPC, because unique IDs may exist only once in a world.
