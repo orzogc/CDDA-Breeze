@@ -356,7 +356,7 @@ bool avatar_action::move( avatar &you, map &m, const tripoint &d )
                 critter.attitude_to( you ) == Creature::Attitude::NEUTRAL ) {
                 const std::string msg_safe_mode = press_x( ACTION_TOGGLE_SAFEMODE );
                 add_msg( m_warning,
-                         _( "不会攻击%1$s，安全模式已开启，按%2$s关闭安全模式。" ),
+                         _( "不会攻击%1$s，安全模式已开启，%2$s关闭安全模式。" ),
                          critter.name(), msg_safe_mode );
                 return false;
             }
