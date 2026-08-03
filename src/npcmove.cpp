@@ -2323,7 +2323,8 @@ bool npc::enough_time_to_reload( const item &gun ) const
 void npc::aim( const Target_attributes &target_attributes )
 {
     const item_location weapon = get_wielded_item();
-    double aim_amount = weapon ? aim_per_move( *weapon, recoil ) : 0.0;
+    double aim_amount = weapon ? aim_per_move( *weapon, recoil,
+                        target_attributes ) : 0.0;
     while( aim_amount > 0 && recoil > 0 && moves > 0 ) {
         moves--;
         recoil -= aim_amount;
@@ -2858,8 +2859,6 @@ void npc::move_pause()
             return;
         }
     }
-    // NPCs currently always aim when using a gun, even with no target
-    // This simulates them aiming at stuff just at the edge of their range
     if( !get_wielded_item() || !get_wielded_item()->is_gun() ) {
         pause();
         return;
@@ -2868,10 +2867,18 @@ void npc::move_pause()
     // Stop, drop, and roll
     if( has_effect( effect_onfire ) ) {
         pause();
-    } else {
-        aim( Target_attributes() );
-        moves = std::min( moves, 0 );
+        return;
     }
+
+    Creature *target = current_target();
+    if( target == nullptr || !sees( *target ) ) {
+        recoil = MAX_RECOIL;
+        pause();
+        return;
+    }
+
+    aim( Target_attributes( pos(), target->pos() ) );
+    moves = std::min( moves, 0 );
 }
 
 static std::optional<tripoint> nearest_passable( const tripoint &p, const tripoint &closest_to )
