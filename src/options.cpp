@@ -2234,6 +2234,14 @@ void options_manager::add_options_graphics()
 
     get_option( "OVERMAP_TILES" ).setPrerequisite( "USE_OVERMAP_TILES" );
 
+    add( "ZLEVEL_OVERLAY_COLOR", "graphics", to_translation( "高层透视颜色" ),
+         to_translation( "选择现实地图与大地图中，下层贴图的渲染颜色。淡青色为默认效果，白色为微风原本效果。" ), {
+        { "pale_cyan", to_translation( "淡青色" ) },
+        { "white", to_translation( "白色" ) }
+    }, "pale_cyan", COPT_CURSES_HIDE
+       );
+    get_option( "ZLEVEL_OVERLAY_COLOR" ).setPrerequisite( "USE_TILES" );
+
     add_empty_line();
 
     add( "NV_GREEN_TOGGLE", "graphics", to_translation( "Night vision color overlay" ),
