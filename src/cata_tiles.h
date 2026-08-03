@@ -122,6 +122,12 @@ class texture
                                      flip );
         }
 
+        int set_color_mod( int red, int green, int blue ) const {
+            return SDL_SetTextureColorMod( sdl_texture_ptr.get(), static_cast<Uint8>( red ),
+                                           static_cast<Uint8>( green ),
+                                           static_cast<Uint8>( blue ) );
+        }
+
         int set_alpha_mod( int alpha ) const {
             return SDL_SetTextureAlphaMod( sdl_texture_ptr.get(), static_cast<Uint8>( alpha ) );
         }
@@ -798,6 +804,8 @@ class cata_tiles
 
         // Depth of the z-level currently being rendered.  Zero means the viewed level.
         int z_overlay_depth = 0;
+        // Tint applied to the white lower-z-level mask at draw time.
+        SDL_Color z_overlay_color = { 128, 255, 255, 255 };
         // Transparent overmap tiles draw only their foreground after the lower tile.
         bool overmap_transparency_foreground_only = false;
         // Uses the gentler CBN overmap alpha curve instead of the local-map curve.

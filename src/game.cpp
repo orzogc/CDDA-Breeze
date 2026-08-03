@@ -11466,9 +11466,17 @@ void game::on_move_effects()
 
 void game::on_options_changed()
 {
-
-    tilecontext->on_options_changed();
-
+    // Keep every loaded tileset context in sync. The active local context is
+    // either the close or distant one, while the overmap owns a separate context.
+    if( closetilecontext ) {
+        closetilecontext->on_options_changed();
+    }
+    if( fartilecontext ) {
+        fartilecontext->on_options_changed();
+    }
+    if( overmap_tilecontext ) {
+        overmap_tilecontext->on_options_changed();
+    }
 }
 
 void game::water_affect_items( Character &ch ) const
