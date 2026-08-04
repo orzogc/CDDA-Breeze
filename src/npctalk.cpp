@@ -4557,14 +4557,15 @@ void talk_effect_fun_t<T>::set_run_eocs_for_nearby_camp( const JsonObject &jo,
     int_or_var<T> radius = get_int_or_var<T>( jo, "radius", false, 2 );
     function = [eocs, radius]( const T &d ) {
         const int omt_radius = std::max( 0, radius.evaluate( d ) );
-        std::vector<basecamp *> camps = overmap_buffer.get_camps_near(
-                                           get_player_character().global_sm_location(), omt_radius * 2 );
+        const std::vector<camp_reference> camps = overmap_buffer.get_camps_near(
+                get_player_character().global_sm_location(), omt_radius * 2 );
         if( camps.empty() ) {
             return;
         }
         basecamp *camp = nullptr;
         int nearest_distance = omt_radius + 1;
-        for( basecamp *candidate : camps ) {
+        for( const camp_reference &reference : camps ) {
+            basecamp *candidate = reference.camp;
             const int distance = candidate->mod_player_distance();
             if( distance < nearest_distance ) {
                 camp = candidate;
