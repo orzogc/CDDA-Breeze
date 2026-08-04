@@ -277,6 +277,43 @@ void options_manager::add_value( const std::string &lvar, const std::string &lva
 }
 
 // MOD_CAMP_API_V1_BEGIN，模组世界选项动态注册支持。
+bool options_manager::add_separator_before_option( const std::string &name )
+{
+    for( Page &page : pages_ ) {
+        const auto option_it = std::find_if( page.items_.begin(), page.items_.end(),
+        [&name]( const std::optional<std::string> &item ) {
+            return item.has_value() && item.value() == name;
+        } );
+        if( option_it == page.items_.end() ) {
+            continue;
+        }
+        if( option_it != page.items_.begin() && !std::prev( option_it )->has_value() ) {
+            return false;
+        }
+        page.items_.insert( option_it, std::nullopt );
+        return true;
+    }
+    return false;
+}
+
+void options_manager::remove_separator_before_option( const std::string &name )
+{
+    for( Page &page : pages_ ) {
+        const auto option_it = std::find_if( page.items_.begin(), page.items_.end(),
+        [&name]( const std::optional<std::string> &item ) {
+            return item.has_value() && item.value() == name;
+        } );
+        if( option_it == page.items_.end() || option_it == page.items_.begin() ) {
+            continue;
+        }
+        const auto separator_it = std::prev( option_it );
+        if( !separator_it->has_value() ) {
+            page.items_.erase( separator_it );
+        }
+        return;
+    }
+}
+
 void options_manager::remove_option( const std::string &name )
 {
     options.erase( name );
@@ -820,11 +857,20 @@ std::string options_manager::cOpt::getDefaultText( const bool bTranslated ) cons
     } else if( sType == "int_map" ) {
         const std::optional<int_and_option> opt = findInt( iDefault );
         if( opt ) {
+            std::string default_text;
             if( verbose ) {
-                return string_format( _( "Default: %d: %s" ), iDefault, opt->second );
+                default_text = string_format( _( "Default: %d: %s" ), iDefault, opt->second );
             } else {
-                return string_format( _( "Default: %s" ), opt->second );
+                default_text = string_format( _( "Default: %s" ), opt->second );
             }
+            if( show_values ) {
+                const std::string values = enumerate_as_string( mIntValues.begin(), mIntValues.end(),
+                [bTranslated]( const int_and_option &elem ) {
+                    return bTranslated ? elem.second.translated() : std::to_string( elem.first );
+                }, enumeration_conjunction::none );
+                return string_format( _( "%s - Values: %s" ), default_text, values );
+            }
+            return default_text;
         }
 
     } else if( sType == "float" ) {

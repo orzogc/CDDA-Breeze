@@ -402,6 +402,10 @@ bool mod_manager::copy_mod_contents( const t_mod_list &mods_to_copy,
 void mod_manager::apply_world_options( WORLD *world )
 {
     options_manager &opts = get_options();
+    for( const std::string &id : registered_world_option_group_heads ) {
+        opts.remove_separator_before_option( id );
+    }
+    registered_world_option_group_heads.clear();
     for( const std::string &id : registered_world_options ) {
         opts.remove_option( id );
     }
@@ -421,6 +425,7 @@ void mod_manager::apply_world_options( WORLD *world )
         if( mod_it == mod_map.end() ) {
             continue;
         }
+        bool first_registered_option = true;
         for( const mod_world_option &option : mod_it->second.world_options ) {
             if( option.id.empty() || !seen.insert( option.id ).second || opts.has_option( option.id ) ) {
                 debugmsg( "模组世界设置编号重复或与本体冲突，已忽略，%s", option.id );
@@ -439,6 +444,7 @@ void mod_manager::apply_world_options( WORLD *world )
                 }
                 opts.add( option.id, "world_default", option.name, option.description, values,
                           option.int_default, option.int_default );
+                opts.get_option( option.id ).setShowValues( true );
             } else if( option.type == "string_select" ) {
                 std::vector<options_manager::id_and_option> values;
                 values.reserve( option.string_values.size() );
@@ -447,6 +453,12 @@ void mod_manager::apply_world_options( WORLD *world )
                 }
                 opts.add( option.id, "world_default", option.name, option.description, values,
                           option.string_default );
+            }
+            if( first_registered_option ) {
+                if( opts.add_separator_before_option( option.id ) ) {
+                    registered_world_option_group_heads.insert( option.id );
+                }
+                first_registered_option = false;
             }
             registered_world_options.insert( option.id );
             world->WORLD_OPTIONS[option.id] = opts.get_option( option.id );

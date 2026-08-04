@@ -182,6 +182,7 @@ class mod_manager
 
         std::vector<mod_id> usable_mods;
         std::set<std::string> registered_world_options; // MOD_CAMP_API_V1
+        std::set<std::string> registered_world_option_group_heads; // MOD_CAMP_API_V1
 
         void set_usable_mods();
 };

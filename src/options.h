@@ -141,6 +141,9 @@ class options_manager
                 void setPrerequisite( const std::string &sOption, const std::string &sAllowedValue = "true" ) {
                     setPrerequisites( sOption, { sAllowedValue } );
                 }
+                void setShowValues( const bool value ) {
+                    show_values = value;
+                }
                 std::string getPrerequisite() const;
                 bool hasPrerequisite() const;
                 bool checkPrerequisite() const;
@@ -163,6 +166,7 @@ class options_manager
                 translation sTooltip;
                 std::string sType;
                 bool verbose = false;
+                bool show_values = false;
 
                 std::string format;
 
