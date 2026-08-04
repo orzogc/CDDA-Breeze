@@ -175,6 +175,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\*.cpp" Exclude="..\src\main.cpp;..\src\messages.cpp" />
+    <ClCompile Include="..\src\lua\*.c">
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="flatbuffers.vcxproj">

@@ -8,7 +8,8 @@ LOCAL_CPP_FEATURES := exceptions rtti
 
 # Add your application source files here...
 CATA_SRCS := $(sort $(wildcard $(LOCAL_PATH)/*.cpp))
-LOCAL_SRC_FILES := $(sort $(CATA_SRCS:$(LOCAL_PATH)/%=%))
+LUA_SRCS := $(sort $(wildcard $(LOCAL_PATH)/lua/*.c))
+LOCAL_SRC_FILES := $(sort $(CATA_SRCS:$(LOCAL_PATH)/%=%) $(LUA_SRCS:$(LOCAL_PATH)/%=%))
 
 LOCAL_STATIC_LIBRARIES := third-party
 
