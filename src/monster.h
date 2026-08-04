@@ -616,6 +616,7 @@ class monster : public Creature
          */
         std::optional<tripoint_abs_ms> failed_pathfinding_target;
         int failed_pathfinding_cooldown = 0;
+        int pathfinding_mode_generation_seen = 0;
         /** patrol points for monsters that can pathfind and have a patrol route! **/
         std::vector<tripoint_abs_ms> patrol_route;
         int next_patrol_point = -1;
