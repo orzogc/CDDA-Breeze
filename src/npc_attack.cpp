@@ -1,5 +1,6 @@
 #include "npc_attack.h"
 
+#include "avatar.h"
 #include "cata_utility.h"
 #include "character.h"
 #include "creature_tracker.h"
@@ -15,6 +16,7 @@
 #include "point.h"
 #include "projectile.h"
 #include "ranged.h"
+#include "translations.h"
 
 static const bionic_id bio_hydraulics( "bio_hydraulics" );
 
@@ -411,23 +413,33 @@ void npc_attack_gun::use( npc &source, const tripoint &location ) const
     }
 
     const int dist = rl_dist_exact( source.pos(), location );
+    const Target_attributes target_attributes( source.pos(), location );
 
     // Only aim if we aren't in risk of being hit
     // TODO: Get distance to closest enemy
-    if( dist > 1 && source.aim_per_move( gun, source.recoil ) > 0 &&
+    if( dist > 1 && source.aim_per_move( gun, source.recoil, target_attributes ) > 0 &&
         source.confident_gun_mode_range( gunmode, source.recoil ) < dist ) {
         add_msg_debug( debugmode::debug_filter::DF_NPC, "%s is aiming", source.disp_name() );
-        source.aim( Target_attributes( source.pos(), location ) );
-    } else {
-        if( source.is_hallucination() ) {
-            gun_mode mode = source.get_wielded_item()->gun_current_mode();
-            source.pretend_fire( &source, mode.qty, *mode );
-        } else {
-            source.fire_gun( location );
+        Creature *target = get_creature_tracker().creature_at( location );
+        if( target != nullptr && target->is_avatar() && get_player_character().sees( source ) ) {
+            add_msg( m_warning, _( "%s takes aim at you." ), source.disp_name() );
         }
-        add_msg_debug( debugmode::debug_filter::DF_NPC, "%s fires %s", source.disp_name(),
-                       gun.display_name() );
+
+        source.aim( target_attributes );
+        if( source.moves > 0 ) {
+            source.moves = 0;
+        }
+        return;
     }
+
+    if( source.is_hallucination() ) {
+        gun_mode mode = source.get_wielded_item()->gun_current_mode();
+        source.pretend_fire( &source, mode.qty, *mode );
+    } else {
+        source.fire_gun( location );
+    }
+    add_msg_debug( debugmode::debug_filter::DF_NPC, "%s fires %s", source.disp_name(),
+                   gun.display_name() );
 }
 
 bool npc_attack_gun::can_use( const npc &source ) const

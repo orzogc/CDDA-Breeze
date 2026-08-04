@@ -464724,3 +464724,8 @@ msgstr "%1$s，%2$s"
 #: src/game.cpp
 msgid "other type started"
 msgstr "其他处理已经开始"
+
+#: src/npc_attack.cpp
+#, c-format
+msgid "%s takes aim at you."
+msgstr "%s正在瞄准你。"
