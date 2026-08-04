@@ -236,6 +236,9 @@ class options_manager
 
         // MOD_CAMP_API_V1，移除动态注册的模组世界选项。
         void remove_option( const std::string &name );
+        // MOD_CAMP_API_V1，给模组世界设置组增加和移除分隔空行。
+        bool add_separator_before_option( const std::string &name );
+        void remove_separator_before_option( const std::string &name );
 
         /** Check if an option exists? */
         bool has_option( const std::string &name ) const;
