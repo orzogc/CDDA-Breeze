@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "basecamp.h"
+#include "calendar.h"
 #include "debug.h"
 #include "filesystem.h"
 #include "messages.h"
@@ -73,6 +74,12 @@ int l_add_msg( lua_State *state )
     const char *text = luaL_checkstring( state, 1 );
     add_msg( m_info, "%s", text );
     return 0;
+}
+
+int l_get_turn( lua_State *state )
+{
+    lua_pushinteger( state, to_turns<int>( calendar::turn - calendar::turn_zero ) );
+    return 1;
 }
 
 int l_get_world_option( lua_State *state )
@@ -153,13 +160,16 @@ int l_clear_camp_value( lua_State *state )
     return 0;
 }
 
-void push_game_api()
+void push_game_api( const std::string &mod_id )
 {
     lua_newtable( lua_state );
     lua_pushstring( lua_state, api_version );
     lua_setfield( lua_state, -2, "api_version" );
+    set_table_string( lua_state, "mod_id", mod_id );
     lua_pushcfunction( lua_state, l_add_msg );
     lua_setfield( lua_state, -2, "add_msg" );
+    lua_pushcfunction( lua_state, l_get_turn );
+    lua_setfield( lua_state, -2, "get_turn" );
     lua_pushcfunction( lua_state, l_get_world_option );
     lua_setfield( lua_state, -2, "get_world_option" );
     lua_pushcfunction( lua_state, l_get_camp );
@@ -174,7 +184,7 @@ void push_game_api()
 
 void register_game_api()
 {
-    push_game_api();
+    push_game_api( "" );
     lua_setglobal( lua_state, "game" );
 }
 
@@ -236,13 +246,13 @@ bool read_script( const MOD_INFORMATION &mod, const std::string &relative,
     return true;
 }
 
-int create_environment()
+int create_environment( const std::string &mod_id )
 {
     lua_newtable( lua_state );
     lua_pushvalue( lua_state, -1 );
     lua_setfield( lua_state, -2, "_G" );
     // 每个模组拥有独立的 game 表，避免脚本互相覆盖接口字段。
-    push_game_api();
+    push_game_api( mod_id );
     lua_setfield( lua_state, -2, "game" );
 
     lua_newtable( lua_state );
@@ -278,6 +288,23 @@ bool load_script( const MOD_INFORMATION &mod, int environment, const std::string
     return protected_call( mod.ident.str(), stage, 0, 0 );
 }
 
+bool run_environment_function( const std::string &mod_id, int environment,
+                               const std::string &function_name, const std::string &stage,
+                               bool required )
+{
+    lua_rawgeti( lua_state, LUA_REGISTRYINDEX, environment );
+    lua_getfield( lua_state, -1, function_name.c_str() );
+    lua_remove( lua_state, -2 );
+    if( !lua_isfunction( lua_state, -1 ) ) {
+        lua_pop( lua_state, 1 );
+        if( required ) {
+            report_error( mod_id, stage, "没有找到函数，" + function_name );
+        }
+        return !required;
+    }
+    return protected_call( mod_id, stage + "，" + function_name, 0, 0 );
+}
+
 class camp_scope
 {
     public:
@@ -299,6 +326,17 @@ void shutdown()
     if( lua_state != nullptr ) {
         lua_close( lua_state );
         lua_state = nullptr;
+    }
+}
+
+void run_hook( const std::string &function_name )
+{
+    if( lua_state == nullptr || function_name.empty() ) {
+        return;
+    }
+    for( const auto &environment : mod_environments ) {
+        run_environment_function( environment.first, environment.second, function_name,
+                                  "运行脚本钩子", false );
     }
 }
 
@@ -325,13 +363,14 @@ void load_world()
             report_error( mod.ident.str(), "Lua 接口版本不兼容", mod.lua_api );
             continue;
         }
-        const int environment = create_environment();
+        const int environment = create_environment( mod.ident.str() );
         mod_environments.emplace( mod.ident.str(), environment );
         if( !load_script( mod, environment, mod.lua_preload, "载入预处理脚本" ) ) {
             continue;
         }
         load_script( mod, environment, mod.lua_main, "载入主脚本" );
     }
+    run_hook( "on_world_loaded" );
 }
 
 bool run_camp_action( const std::string &source_mod, const std::string &function_name,
@@ -346,15 +385,8 @@ bool run_camp_action( const std::string &source_mod, const std::string &function
         report_error( source_mod, "运行营地操作", "没有找到该模组的脚本环境" );
         return false;
     }
-    lua_rawgeti( lua_state, LUA_REGISTRYINDEX, environment->second );
-    lua_getfield( lua_state, -1, function_name.c_str() );
-    lua_remove( lua_state, -2 );
-    if( !lua_isfunction( lua_state, -1 ) ) {
-        lua_pop( lua_state, 1 );
-        report_error( source_mod, "运行营地操作", "没有找到函数，" + function_name );
-        return false;
-    }
     camp_scope scope( &camp );
-    return protected_call( source_mod, "运行营地操作，" + function_name, 0, 0 );
+    return run_environment_function( source_mod, environment->second, function_name,
+                                     "运行营地操作", true );
 }
 } // namespace breeze_lua

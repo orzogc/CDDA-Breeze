@@ -314,6 +314,86 @@ void options_manager::remove_separator_before_option( const std::string &name )
     }
 }
 
+bool options_manager::move_option_before( const std::string &name,
+        const std::string &before_name )
+{
+    if( name == before_name ) {
+        return false;
+    }
+    for( Page &page : pages_ ) {
+        auto option_it = std::find( page.items_.begin(), page.items_.end(), name );
+        auto anchor_it = std::find( page.items_.begin(), page.items_.end(), before_name );
+        if( option_it == page.items_.end() || anchor_it == page.items_.end() ) {
+            continue;
+        }
+        const std::optional<std::string> moved = *option_it;
+        page.items_.erase( option_it );
+        anchor_it = std::find( page.items_.begin(), page.items_.end(), before_name );
+        page.items_.insert( anchor_it, moved );
+        return true;
+    }
+    return false;
+}
+
+bool options_manager::move_option_after( const std::string &name,
+        const std::string &after_name )
+{
+    if( name == after_name ) {
+        return false;
+    }
+    for( Page &page : pages_ ) {
+        auto option_it = std::find( page.items_.begin(), page.items_.end(), name );
+        auto anchor_it = std::find( page.items_.begin(), page.items_.end(), after_name );
+        if( option_it == page.items_.end() || anchor_it == page.items_.end() ) {
+            continue;
+        }
+        const std::optional<std::string> moved = *option_it;
+        page.items_.erase( option_it );
+        anchor_it = std::find( page.items_.begin(), page.items_.end(), after_name );
+        page.items_.insert( std::next( anchor_it ), moved );
+        return true;
+    }
+    return false;
+}
+
+bool options_manager::move_option_to_page_start( const std::string &name,
+        const std::string &page_name )
+{
+    for( Page &page : pages_ ) {
+        if( page.id_ != page_name ) {
+            continue;
+        }
+        const auto option_it = std::find( page.items_.begin(), page.items_.end(), name );
+        if( option_it == page.items_.end() ) {
+            return false;
+        }
+        const std::optional<std::string> moved = *option_it;
+        page.items_.erase( option_it );
+        page.items_.insert( page.items_.begin(), moved );
+        return true;
+    }
+    return false;
+}
+
+bool options_manager::move_option_to_page_end( const std::string &name,
+        const std::string &page_name )
+{
+    for( Page &page : pages_ ) {
+        if( page.id_ != page_name ) {
+            continue;
+        }
+        const auto option_it = std::find( page.items_.begin(), page.items_.end(), name );
+        if( option_it == page.items_.end() ) {
+            return false;
+        }
+        const std::optional<std::string> moved = *option_it;
+        page.items_.erase( option_it );
+        page.items_.emplace_back( moved );
+        return true;
+    }
+    return false;
+}
+
 void options_manager::remove_option( const std::string &name )
 {
     options.erase( name );
@@ -843,7 +923,8 @@ std::string options_manager::cOpt::getDefaultText( const bool bTranslated ) cons
         [bTranslated]( const id_and_option & elem ) {
             return bTranslated ? elem.second.translated() : elem.first;
         }, enumeration_conjunction::none );
-        return string_format( _( "Default: %s - Values: %s" ), defaultName, sItems );
+        const std::string default_text = string_format( _( "Default: %s" ), defaultName );
+        return string_format( "%s，可选值，%s", default_text, sItems );
 
     } else if( sType == "string_input" ) {
         return string_format( _( "Default: %s" ), sDefault );
@@ -868,7 +949,7 @@ std::string options_manager::cOpt::getDefaultText( const bool bTranslated ) cons
                 [bTranslated]( const int_and_option &elem ) {
                     return bTranslated ? elem.second.translated() : std::to_string( elem.first );
                 }, enumeration_conjunction::none );
-                return string_format( _( "%s - Values: %s" ), default_text, values );
+                return string_format( "%s，可选值，%s", default_text, values );
             }
             return default_text;
         }

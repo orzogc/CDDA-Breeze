@@ -239,6 +239,11 @@ class options_manager
         // MOD_CAMP_API_V1，给模组世界设置组增加和移除分隔空行。
         bool add_separator_before_option( const std::string &name );
         void remove_separator_before_option( const std::string &name );
+        // MOD_CAMP_API_V2，允许整组或单个模组选项自由定位。
+        bool move_option_before( const std::string &name, const std::string &before_name );
+        bool move_option_after( const std::string &name, const std::string &after_name );
+        bool move_option_to_page_start( const std::string &name, const std::string &page_name );
+        bool move_option_to_page_end( const std::string &name, const std::string &page_name );
 
         /** Check if an option exists? */
         bool has_option( const std::string &name ) const;

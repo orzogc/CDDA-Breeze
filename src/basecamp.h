@@ -39,6 +39,11 @@ struct basecamp_action {
     std::string lua_function; // BREEZE_LUA_CAMP_API_V1
     int priority = 0;
     bool allow_radio = false;
+    std::string required_world_option;
+    std::string required_world_value;
+    std::string required_camp_value;
+    std::string required_camp_value_value;
+    std::string required_camp_value_default;
 };
 void load_basecamp_action( const JsonObject &jo, const std::string &src );
 void reset_basecamp_actions();

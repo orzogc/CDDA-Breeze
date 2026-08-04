@@ -26,6 +26,17 @@ const std::vector<std::pair<std::string, translation>> &get_mod_list_tabs();
 const std::map<std::string, std::string> &get_mod_list_cat_tab();
 
 // MOD_CAMP_API_V1_BEGIN，模组可在 MOD_INFO 中声明该世界独立保存的设置。
+struct mod_world_option_position {
+    std::string before;
+    std::string after;
+    std::string at;
+    bool separator_before = false;
+
+    bool empty() const {
+        return before.empty() && after.empty() && at.empty();
+    }
+};
+
 struct mod_world_option {
     std::string id;
     std::string type;
@@ -38,6 +49,7 @@ struct mod_world_option {
     std::vector<std::pair<int, translation>> int_values;
     std::vector<std::pair<std::string, translation>> string_values;
     std::string string_default;
+    mod_world_option_position position;
 };
 // MOD_CAMP_API_V1_END
 
@@ -78,6 +90,8 @@ struct MOD_INFORMATION {
 
         std::pair<int, translation> category = { -1, translation() };
         std::vector<mod_world_option> world_options; // MOD_CAMP_API_V1
+        mod_world_option_position world_options_position; // MOD_CAMP_API_V1，整组选项的位置。
+        bool world_options_separator = true; // MOD_CAMP_API_V1，是否在整组选项前保留空行。
         std::string lua_api; // BREEZE_LUA_CAMP_API_V1
         std::string lua_preload; // BREEZE_LUA_CAMP_API_V1
         std::string lua_main; // BREEZE_LUA_CAMP_API_V1

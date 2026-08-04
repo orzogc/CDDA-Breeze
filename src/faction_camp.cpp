@@ -794,6 +794,24 @@ namespace
 {
 std::vector<basecamp_action> mod_basecamp_actions;
 basecamp *active_eoc_camp = nullptr;
+
+bool basecamp_action_is_visible( const basecamp_action &action, const basecamp &camp )
+{
+    if( !action.required_world_option.empty() ) {
+        options_manager &opts = get_options();
+        if( !opts.has_option( action.required_world_option ) ||
+            opts.get_option( action.required_world_option ).getValue( true ) !=
+            action.required_world_value ) {
+            return false;
+        }
+    }
+    if( !action.required_camp_value.empty() &&
+        camp.get_mod_value( action.required_camp_value, action.required_camp_value_default ) !=
+        action.required_camp_value_value ) {
+        return false;
+    }
+    return true;
+}
 }
 
 void load_basecamp_action( const JsonObject &jo, const std::string &src )
@@ -813,6 +831,11 @@ void load_basecamp_action( const JsonObject &jo, const std::string &src )
     }
     action.priority = jo.get_int( "priority", 0 );
     action.allow_radio = jo.get_bool( "allow_radio", false );
+    action.required_world_option = jo.get_string( "required_world_option", "" );
+    action.required_world_value = jo.get_string( "required_world_value", "" );
+    action.required_camp_value = jo.get_string( "required_camp_value", "" );
+    action.required_camp_value_value = jo.get_string( "required_camp_value_value", "" );
+    action.required_camp_value_default = jo.get_string( "required_camp_value_default", "" );
     auto old = std::find_if( mod_basecamp_actions.begin(), mod_basecamp_actions.end(),
     [&action]( const basecamp_action &entry ) {
         return entry.id == action.id;
@@ -1605,7 +1628,7 @@ void basecamp::get_available_missions( mission_data &mission_key )
 
     // MOD_CAMP_API_V1_BEGIN，模组操作进入原生营地任务主分页。
     for( const basecamp_action &action : get_basecamp_actions() ) {
-        if( by_radio && !action.allow_radio ) {
+        if( !basecamp_action_is_visible( action, *this ) || ( by_radio && !action.allow_radio ) ) {
             continue;
         }
         const mission_id miss_id = { Camp_Assign_Jobs, "mod_action:" + action.id, base_dir };
@@ -1645,6 +1668,10 @@ bool basecamp::handle_mission( const ui_mission_id &miss_id )
         } );
         if( action == get_basecamp_actions().end() ) {
             popup( _( "这个模组营地操作已经不存在。" ) );
+            return true;
+        }
+        if( !basecamp_action_is_visible( *action, *this ) ) {
+            popup( _( "这个模组营地操作当前不可用。" ) );
             return true;
         }
         scoped_basecamp_eoc_context camp_context( this );
