@@ -13,7 +13,6 @@
 
 #include "coordinates.h"
 #include "craft_command.h"
-#include "effect_on_condition.h"
 #include "game_inventory.h"
 #include "inventory.h"
 #include "memory_fast.h"
