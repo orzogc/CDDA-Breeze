@@ -5,6 +5,9 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := main
 
 LOCAL_CPP_FEATURES := exceptions rtti
+# Lua is distributed as C sources but the embedded headers intentionally use
+# the C++ ABI, matching the desktop CMake/MSVC builds.
+LOCAL_CPP_EXTENSION := .cpp .c
 
 # Add your application source files here...
 CATA_SRCS := $(sort $(wildcard $(LOCAL_PATH)/*.cpp))
