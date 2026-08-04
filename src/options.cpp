@@ -276,6 +276,19 @@ void options_manager::add_value( const std::string &lvar, const std::string &lva
     }
 }
 
+// MOD_CAMP_API_V1_BEGIN，模组世界选项动态注册支持。
+void options_manager::remove_option( const std::string &name )
+{
+    options.erase( name );
+    for( Page &page : pages_ ) {
+        page.items_.erase( std::remove_if( page.items_.begin(), page.items_.end(),
+        [&name]( const std::optional<std::string> &item ) {
+            return item.has_value() && item.value() == name;
+        } ), page.items_.end() );
+    }
+}
+// MOD_CAMP_API_V1_END
+
 void options_manager::addOptionToPage( const std::string &name, const std::string &page )
 {
     for( Page &p : pages_ ) {

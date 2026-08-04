@@ -16,6 +16,7 @@
 #include "activity_type.h"
 #include "avatar.h"
 #include "basecamp.h"
+#include "breeze_lua.h" // BREEZE_LUA_CAMP_API_V1
 #include "calendar.h"
 #include "cata_utility.h"
 #include "catacharset.h"
@@ -27,6 +28,8 @@
 #include "coordinates.h"
 #include "cursesdef.h"
 #include "debug.h"
+#include "dialogue.h"
+#include "effect_on_condition.h"
 #include "enums.h"
 #include "faction.h"
 #include "flag.h"
@@ -71,6 +74,7 @@
 #include "skill.h"
 #include "stomach.h"
 #include "string_formatter.h"
+#include "talker.h"
 #include "string_input_popup.h"
 #include "translations.h"
 #include "type_id.h"
@@ -785,6 +789,126 @@ void basecamp::add_available_recipes( mission_data &mission_key, mission_kind ki
     }
 }
 
+// MOD_CAMP_API_V1_BEGIN，营地操作注册表，当前营地上下文与低成本营地指标。
+namespace
+{
+std::vector<basecamp_action> mod_basecamp_actions;
+basecamp *active_eoc_camp = nullptr;
+}
+
+void load_basecamp_action( const JsonObject &jo, const std::string &src )
+{
+    basecamp_action action;
+    action.id = jo.get_string( "id" );
+    action.source_mod = src;
+    jo.read( "name", action.name );
+    jo.read( "description", action.description );
+    const bool has_eoc = jo.has_string( "eoc" );
+    if( has_eoc ) {
+        action.eoc = effect_on_condition_id( jo.get_string( "eoc" ) );
+    }
+    action.lua_function = jo.get_string( "lua_function", "" );
+    if( action.lua_function.empty() && !has_eoc ) {
+        jo.throw_error( "营地操作至少需要 eoc 或 lua_function" );
+    }
+    action.priority = jo.get_int( "priority", 0 );
+    action.allow_radio = jo.get_bool( "allow_radio", false );
+    auto old = std::find_if( mod_basecamp_actions.begin(), mod_basecamp_actions.end(),
+    [&action]( const basecamp_action &entry ) {
+        return entry.id == action.id;
+    } );
+    if( old != mod_basecamp_actions.end() ) {
+        *old = action;
+    } else {
+        mod_basecamp_actions.emplace_back( std::move( action ) );
+    }
+    std::stable_sort( mod_basecamp_actions.begin(), mod_basecamp_actions.end(),
+    []( const basecamp_action &a, const basecamp_action &b ) {
+        return a.priority == b.priority ? a.id < b.id : a.priority < b.priority;
+    } );
+}
+
+void reset_basecamp_actions()
+{
+    mod_basecamp_actions.clear();
+    active_eoc_camp = nullptr;
+}
+
+const std::vector<basecamp_action> &get_basecamp_actions()
+{
+    return mod_basecamp_actions;
+}
+
+basecamp *get_active_eoc_camp()
+{
+    return active_eoc_camp;
+}
+
+scoped_basecamp_eoc_context::scoped_basecamp_eoc_context( basecamp *camp )
+    : previous( active_eoc_camp )
+{
+    active_eoc_camp = camp;
+}
+
+scoped_basecamp_eoc_context::~scoped_basecamp_eoc_context()
+{
+    active_eoc_camp = previous;
+}
+
+std::string basecamp::get_mod_value( const std::string &key, const std::string &fallback ) const
+{
+    const auto it = mod_data.find( key );
+    return it == mod_data.end() ? fallback : it->second;
+}
+
+void basecamp::set_mod_value( const std::string &key, const std::string &value )
+{
+    mod_data[key] = value;
+}
+
+void basecamp::erase_mod_value( const std::string &key )
+{
+    mod_data.erase( key );
+}
+
+int basecamp::mod_expansion_count() const
+{
+    return std::max( 0, static_cast<int>( expansions.size() ) - 1 );
+}
+
+int basecamp::mod_development_score() const
+{
+    int score = 10 + mod_expansion_count() * 12;
+    for( const auto &expansion : expansions ) {
+        for( const auto &provided : expansion.second.provides ) {
+            score += std::clamp( provided.second, 0, 20 ) * 2;
+        }
+    }
+    return score;
+}
+
+int basecamp::mod_survivor_count()
+{
+    validate_assignees();
+    return static_cast<int>( assigned_npcs.size() );
+}
+
+int basecamp::mod_worker_count() const
+{
+    return static_cast<int>( camp_workers.size() );
+}
+
+int basecamp::mod_player_distance() const
+{
+    return rl_dist( omt_pos.xy(), get_player_character().global_omt_location().xy() );
+}
+
+const tripoint_abs_omt &basecamp::mod_center() const
+{
+    return omt_pos;
+}
+// MOD_CAMP_API_V1_END
+
 void basecamp::get_available_missions_by_dir( mission_data &mission_key, const point &dir )
 {
     std::string entry;
@@ -1479,6 +1603,15 @@ void basecamp::get_available_missions( mission_data &mission_key )
                                 entry, avail );
     }
 
+    // MOD_CAMP_API_V1_BEGIN，模组操作进入原生营地任务主分页。
+    for( const basecamp_action &action : get_basecamp_actions() ) {
+        if( by_radio && !action.allow_radio ) {
+            continue;
+        }
+        const mission_id miss_id = { Camp_Assign_Jobs, "mod_action:" + action.id, base_dir };
+        mission_key.add( { miss_id, false }, action.name.translated(), action.description.translated() );
+    }
+    // MOD_CAMP_API_V1_END
     std::vector<ui_mission_id> k;
     for( int tab_num = base_camps::TAB_MAIN; tab_num <= base_camps::TAB_NW; tab_num++ ) {
         if( temp_ui_mission_keys.size() < size_t( tab_num ) + 1 ) {
@@ -1502,6 +1635,34 @@ bool basecamp::handle_mission( const ui_mission_id &miss_id )
         return true;
     }
 
+    // MOD_CAMP_API_V1_BEGIN，运行操作时将本营地压入 EOC 上下文。
+    static const std::string mod_action_prefix = "mod_action:";
+    if( miss_id.id.parameters.rfind( mod_action_prefix, 0 ) == 0 ) {
+        const std::string action_id = miss_id.id.parameters.substr( mod_action_prefix.size() );
+        const auto action = std::find_if( get_basecamp_actions().begin(), get_basecamp_actions().end(),
+        [&action_id]( const basecamp_action &entry ) {
+            return entry.id == action_id;
+        } );
+        if( action == get_basecamp_actions().end() ) {
+            popup( _( "这个模组营地操作已经不存在。" ) );
+            return true;
+        }
+        scoped_basecamp_eoc_context camp_context( this );
+        if( !action->lua_function.empty() ) {
+            if( !breeze_lua::run_camp_action( action->source_mod, action->lua_function, *this ) ) {
+                popup( _( "这个模组营地操作运行失败，详情已经写入调试日志。" ) );
+            }
+            return true;
+        }
+        if( !action->eoc.is_valid() ) {
+            popup( _( "这个模组营地操作引用了无效的效果。" ) );
+            return true;
+        }
+        dialogue d( get_talker_for( get_avatar() ), nullptr );
+        action->eoc->activate( d );
+        return true;
+    }
+    // MOD_CAMP_API_V1_END
     const point &miss_dir = miss_id.id.dir.value();
     //  All missions should supply dir. Bug if they don't, so blow up during testing.
 

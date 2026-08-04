@@ -15,6 +15,7 @@
 #include "filesystem.h"
 #include "json.h"
 #include "localized_comparator.h"
+#include "options.h"
 #include "path_info.h"
 #include "string_formatter.h"
 #include "worldfactory.h"
@@ -248,6 +249,42 @@ void mod_manager::load_modfile( const JsonObject &jo, const cata_path &path )
     modfile.ident = m_ident;
     modfile.name_ = m_name;
     modfile.category = p_cat;
+    modfile.root_path = path; // BREEZE_LUA_CAMP_API_V1
+    // MOD_CAMP_API_V1_BEGIN，世界选项只从 MOD_INFO 预扫描，不等待完整模组 JSON 加载。
+    if( jo.has_array( "world_options" ) ) {
+        for( JsonObject option_jo : jo.get_array( "world_options" ) ) {
+            mod_world_option option;
+            option.id = option_jo.get_string( "id" );
+            option.type = option_jo.get_string( "type" );
+            option_jo.read( "name", option.name );
+            option_jo.read( "description", option.description );
+            if( option.type == "bool" ) {
+                option.bool_default = option_jo.get_bool( "default", false );
+            } else if( option.type == "int" ) {
+                option.int_min = option_jo.get_int( "min", 0 );
+                option.int_max = option_jo.get_int( "max", 100 );
+                option.int_default = option_jo.get_int( "default", option.int_min );
+            } else if( option.type == "int_map" ) {
+                option.int_default = option_jo.get_int( "default" );
+                for( JsonObject value_jo : option_jo.get_array( "values" ) ) {
+                    translation label;
+                    value_jo.read( "name", label );
+                    option.int_values.emplace_back( value_jo.get_int( "value" ), label );
+                }
+            } else if( option.type == "string_select" ) {
+                option.string_default = option_jo.get_string( "default" );
+                for( JsonObject value_jo : option_jo.get_array( "values" ) ) {
+                    translation label;
+                    value_jo.read( "name", label );
+                    option.string_values.emplace_back( value_jo.get_string( "value" ), label );
+                }
+            } else {
+                option_jo.throw_error_at( "type", "模组世界设置只支持 bool，int，int_map，string_select" );
+            }
+            modfile.world_options.emplace_back( std::move( option ) );
+        }
+    }
+    // MOD_CAMP_API_V1_END
 
     std::string mod_json_path;
     if( assign( jo, "path", mod_json_path ) ) {
@@ -263,6 +300,14 @@ void mod_manager::load_modfile( const JsonObject &jo, const cata_path &path )
     assign( jo, "dependencies", modfile.dependencies );
     assign( jo, "core", modfile.core );
     assign( jo, "obsolete", modfile.obsolete );
+    // BREEZE_LUA_CAMP_API_V1_BEGIN，最小 Lua 模组入口。
+    assign( jo, "lua_api", modfile.lua_api );
+    assign( jo, "lua_preload", modfile.lua_preload );
+    assign( jo, "lua_main", modfile.lua_main );
+    if( !modfile.lua_api.empty() && modfile.lua_preload.empty() && modfile.lua_main.empty() ) {
+        jo.throw_error( "声明 lua_api 的模组至少需要 lua_preload 或 lua_main" );
+    }
+    // BREEZE_LUA_CAMP_API_V1_END
 
     if( std::find( modfile.dependencies.begin(), modfile.dependencies.end(),
                    modfile.ident ) != modfile.dependencies.end() ) {
@@ -352,6 +397,67 @@ bool mod_manager::copy_mod_contents( const t_mod_list &mods_to_copy,
     }
     return true;
 }
+
+// MOD_CAMP_API_V1_BEGIN，按世界的活动模组重建世界设置页。
+void mod_manager::apply_world_options( WORLD *world )
+{
+    options_manager &opts = get_options();
+    for( const std::string &id : registered_world_options ) {
+        opts.remove_option( id );
+    }
+    registered_world_options.clear();
+    if( world == nullptr ) {
+        return;
+    }
+
+    std::map<std::string, std::string> saved_values;
+    for( const auto &entry : world->WORLD_OPTIONS ) {
+        saved_values.emplace( entry.first, entry.second.getValue( true ) );
+    }
+
+    std::set<std::string> seen;
+    for( const mod_id &id : world->active_mod_order ) {
+        const auto mod_it = mod_map.find( id );
+        if( mod_it == mod_map.end() ) {
+            continue;
+        }
+        for( const mod_world_option &option : mod_it->second.world_options ) {
+            if( option.id.empty() || !seen.insert( option.id ).second || opts.has_option( option.id ) ) {
+                debugmsg( "模组世界设置编号重复或与本体冲突，已忽略，%s", option.id );
+                continue;
+            }
+            if( option.type == "bool" ) {
+                opts.add( option.id, "world_default", option.name, option.description, option.bool_default );
+            } else if( option.type == "int" ) {
+                opts.add( option.id, "world_default", option.name, option.description,
+                          option.int_min, option.int_max, option.int_default );
+            } else if( option.type == "int_map" ) {
+                std::vector<options_manager::int_and_option> values;
+                values.reserve( option.int_values.size() );
+                for( const auto &value : option.int_values ) {
+                    values.emplace_back( value.first, value.second );
+                }
+                opts.add( option.id, "world_default", option.name, option.description, values,
+                          option.int_default, option.int_default );
+            } else if( option.type == "string_select" ) {
+                std::vector<options_manager::id_and_option> values;
+                values.reserve( option.string_values.size() );
+                for( const auto &value : option.string_values ) {
+                    values.emplace_back( value.first, value.second );
+                }
+                opts.add( option.id, "world_default", option.name, option.description, values,
+                          option.string_default );
+            }
+            registered_world_options.insert( option.id );
+            world->WORLD_OPTIONS[option.id] = opts.get_option( option.id );
+            const auto old = saved_values.find( option.id );
+            if( old != saved_values.end() ) {
+                world->WORLD_OPTIONS[option.id].setValue( old->second );
+            }
+        }
+    }
+}
+// MOD_CAMP_API_V1_END
 
 void mod_manager::load_mod_info( const cata_path &info_file_path )
 {

@@ -4604,6 +4604,7 @@ void basecamp::serialize( JsonOut &json ) const
         json.member( "pos", omt_pos );
         json.member( "bb_pos", bb_pos );
         json.member( "dumping_spot", dumping_spot );
+    json.member( "mod_data", mod_data ); // MOD_CAMP_API_V1
         json.member( "hidden_missions" );
         json.start_array();
         for( const auto &list : hidden_missions ) {
@@ -4688,6 +4689,7 @@ void basecamp::deserialize( const JsonObject &data )
     data.read( "pos", omt_pos );
     data.read( "bb_pos", bb_pos );
     data.read( "dumping_spot", dumping_spot );
+    data.read( "mod_data", mod_data ); // MOD_CAMP_API_V1
     for( int tab_num = base_camps::TAB_MAIN; tab_num <= base_camps::TAB_NW; tab_num++ ) {
         std::vector<ui_mission_id> temp;
         hidden_missions.push_back( temp );

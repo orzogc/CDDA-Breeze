@@ -34,6 +34,7 @@
 #include "disease.h"
 #include "effect.h"
 #include "effect_on_condition.h"
+#include "basecamp.h"
 #include "emit.h"
 #include "event_statistics.h"
 #include "faction.h"
@@ -248,6 +249,7 @@ void DynamicDataLoader::initialize()
     add( "fault", &fault::load_fault );
     add( "relic_procgen_data", &relic_procgen_data::load_relic_procgen_data );
     add( "effect_on_condition", &effect_on_conditions::load );
+    add( "BASECAMP_ACTION", &load_basecamp_action ); // MOD_CAMP_API_V1
     add( "field_type", &field_types::load );
     add( "weather_type", &weather_types::load );
     add( "ammo_effect", &ammo_effects::load );
@@ -559,6 +561,7 @@ void DynamicDataLoader::unload_data()
     enchantment::reset();
     event_statistic::reset();
     effect_on_conditions::reset();
+    reset_basecamp_actions(); // MOD_CAMP_API_V1
     event_transformation::reset();
     faction_template::reset();
     fault::reset();

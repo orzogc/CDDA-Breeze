@@ -832,6 +832,7 @@ endif
 
 # Enumerations of all the source files and headers.
 SOURCES := $(wildcard $(SRC_DIR)/*.cpp)
+LUA_SOURCES := $(wildcard $(SRC_DIR)/lua/*.c) # BREEZE_LUA_CAMP_API_V1
 THIRD_PARTY_SOURCES := $(wildcard $(SRC_DIR)/third-party/flatbuffers/*.cpp)
 HEADERS := $(wildcard $(SRC_DIR)/*.h)
 TESTSRC := $(wildcard tests/*.cpp)
@@ -859,6 +860,7 @@ ASTYLE_SOURCES := $(sort \
 SOURCES += $(THIRD_PARTY_SOURCES)
 
 _OBJS = $(SOURCES:$(SRC_DIR)/%.cpp=%.o)
+_OBJS += $(LUA_SOURCES:$(SRC_DIR)/%.c=%.o) # BREEZE_LUA_CAMP_API_V1
 ifeq ($(TARGETSYSTEM),WINDOWS)
   RSRC = $(wildcard $(SRC_DIR)/*.rc)
   _OBJS += $(RSRC:$(SRC_DIR)/%.rc=%.o)
@@ -967,6 +969,10 @@ includes: $(OBJS:.o=.inc)
 
 $(ODIR)/%.o: $(SRC_DIR)/%.cpp $(PCH_P)
 	$(CXX) $(CPPFLAGS) $(DEFINES) $(CXXFLAGS) -MMD -MP $(PCHFLAGS) -c $< -o $@
+
+# BREEZE_LUA_CAMP_API_V1，保持 Make 与 CMake 的 Lua C++ ABI 一致。
+$(ODIR)/lua/%.o: $(SRC_DIR)/lua/%.c $(PCH_P)
+	$(CXX) $(CPPFLAGS) $(DEFINES) $(CXXFLAGS) -x c++ -w -MMD -MP $(PCHFLAGS) -c $< -o $@
 
 $(ODIR)/%.o: $(SRC_DIR)/%.rc
 	$(RC) $(RFLAGS) $< -o $@

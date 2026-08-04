@@ -147,6 +147,7 @@ WORLD *worldfactory::make_new_world( const std::vector<mod_id> &mods )
 {
     std::unique_ptr<WORLD> retworld = std::make_unique<WORLD>();
     retworld->active_mod_order = mods;
+    mman->apply_world_options( retworld.get() ); // MOD_CAMP_API_V1
     return add_world( std::move( retworld ) );
 }
 
@@ -154,6 +155,7 @@ WORLD *worldfactory::make_new_world( const std::string &name, const std::vector<
 {
     std::unique_ptr<WORLD> retworld = std::make_unique<WORLD>( name );
     retworld->active_mod_order = mods;
+    mman->apply_world_options( retworld.get() ); // MOD_CAMP_API_V1
     return add_world( std::move( retworld ) );
 }
 
@@ -286,6 +288,7 @@ WORLD *worldfactory::make_new_world( special_game_type special_type )
 void worldfactory::set_active_world( WORLD *world )
 {
     world_generator->active_world = world;
+    mman->apply_world_options( world ); // MOD_CAMP_API_V1
     if( world ) {
         get_options().set_world_options( &world->WORLD_OPTIONS );
     } else {
@@ -370,7 +373,7 @@ void worldfactory::init()
             all_worlds[worldname]->world_saves.push_back( save_t::from_base_path( world_sav_file ) );
         }
         mman->load_mods_list( all_worlds[worldname].get() );
-
+        mman->apply_world_options( all_worlds[worldname].get() ); // MOD_CAMP_API_V1
         // load options into the world
         if( !all_worlds[worldname]->load_options() ) {
             all_worlds[worldname]->WORLD_OPTIONS = get_options().get_world_defaults();
@@ -762,6 +765,7 @@ std::string worldfactory::pick_random_name()
 int worldfactory::show_worldgen_tab_options( const catacurses::window &, WORLD *world,
         bool with_tabs )
 {
+    mman->apply_world_options( world ); // MOD_CAMP_API_V1
     get_options().set_world_options( &world->WORLD_OPTIONS );
     const std::string action = get_options().show( false, true, with_tabs );
     get_options().set_world_options( nullptr );

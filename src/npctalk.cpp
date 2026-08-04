@@ -20,6 +20,8 @@
 #include "activity_type.h"
 #include "auto_pickup.h"
 #include "avatar.h"
+#include "basecamp.h"
+#include "coordinate_conversions.h"
 #include "calendar.h"
 #include "cata_utility.h"
 #include "catacharset.h"
@@ -4523,6 +4525,64 @@ void talk_effect_fun_t<T>::set_make_sound( const JsonObject &jo, const std::stri
     };
 }
 
+// MOD_CAMP_API_V1_BEGIN，模组可读写当前营地数据，并只对玩家附近最近的营地执行。
+template<class T>
+void talk_effect_fun_t<T>::set_camp_value( const JsonObject &jo, const std::string &member )
+{
+    str_or_var<T> key = get_str_or_var<T>( jo.get_member( member ), member, true );
+    str_or_var<T> value = get_str_or_var<T>( jo.get_member( "value" ), "value", true );
+    function = [key, value]( const T &d ) {
+        if( basecamp *camp = get_active_eoc_camp() ) {
+            camp->set_mod_value( key.evaluate( d ), value.evaluate( d ) );
+        }
+    };
+}
+
+template<class T>
+void talk_effect_fun_t<T>::set_clear_camp_value( const JsonObject &jo, const std::string &member )
+{
+    str_or_var<T> key = get_str_or_var<T>( jo.get_member( member ), member, true );
+    function = [key]( const T &d ) {
+        if( basecamp *camp = get_active_eoc_camp() ) {
+            camp->erase_mod_value( key.evaluate( d ) );
+        }
+    };
+}
+
+template<class T>
+void talk_effect_fun_t<T>::set_run_eocs_for_nearby_camp( const JsonObject &jo,
+        const std::string &member )
+{
+    std::vector<effect_on_condition_id> eocs = load_eoc_vector( jo, member );
+    int_or_var<T> radius = get_int_or_var<T>( jo, "radius", false, 2 );
+    function = [eocs, radius]( const T &d ) {
+        const int omt_radius = std::max( 0, radius.evaluate( d ) );
+        std::vector<basecamp *> camps = overmap_buffer.get_camps_near(
+                                           get_player_character().global_sm_location(), omt_radius * 2 );
+        if( camps.empty() ) {
+            return;
+        }
+        basecamp *camp = nullptr;
+        int nearest_distance = omt_radius + 1;
+        for( basecamp *candidate : camps ) {
+            const int distance = candidate->mod_player_distance();
+            if( distance < nearest_distance ) {
+                camp = candidate;
+                nearest_distance = distance;
+            }
+        }
+        if( camp == nullptr ) {
+            return;
+        }
+        scoped_basecamp_eoc_context camp_context( camp );
+        dialogue new_dialog = copy_dialogue( d );
+        for( const effect_on_condition_id &eoc : eocs ) {
+            eoc->activate( new_dialog );
+        }
+    };
+}
+// MOD_CAMP_API_V1_END
+
 template<class T>
 void talk_effect_fun_t<T>::set_run_eocs( const JsonObject &jo,
         const std::string &member )
@@ -5404,6 +5464,12 @@ void talk_effect_t<T>::parse_sub_effect( const JsonObject &jo )
         subeffect_fun.set_make_sound( jo, "npc_make_sound", true );
     } else if( jo.has_array( "run_eocs" ) || jo.has_member( "run_eocs" ) ) {
         subeffect_fun.set_run_eocs( jo, "run_eocs" );
+    } else if( jo.has_member( "set_camp_value" ) ) {
+        subeffect_fun.set_camp_value( jo, "set_camp_value" );
+    } else if( jo.has_member( "clear_camp_value" ) ) {
+        subeffect_fun.set_clear_camp_value( jo, "clear_camp_value" );
+    } else if( jo.has_member( "run_eocs_for_nearby_camp" ) ) {
+        subeffect_fun.set_run_eocs_for_nearby_camp( jo, "run_eocs_for_nearby_camp" );
     } else if( jo.has_array( "queue_eocs" ) || jo.has_member( "queue_eocs" ) ) {
         subeffect_fun.set_queue_eocs( jo, "queue_eocs" );
     } else if( jo.has_array( "u_run_npc_eocs" ) ) {

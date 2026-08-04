@@ -25,6 +25,22 @@ const std::vector<std::pair<std::string, translation>> &get_mod_list_categories(
 const std::vector<std::pair<std::string, translation>> &get_mod_list_tabs();
 const std::map<std::string, std::string> &get_mod_list_cat_tab();
 
+// MOD_CAMP_API_V1_BEGIN，模组可在 MOD_INFO 中声明该世界独立保存的设置。
+struct mod_world_option {
+    std::string id;
+    std::string type;
+    translation name;
+    translation description;
+    bool bool_default = false;
+    int int_min = 0;
+    int int_max = 100;
+    int int_default = 0;
+    std::vector<std::pair<int, translation>> int_values;
+    std::vector<std::pair<std::string, translation>> string_values;
+    std::string string_default;
+};
+// MOD_CAMP_API_V1_END
+
 struct MOD_INFORMATION {
     private:
         friend mod_manager;
@@ -37,6 +53,7 @@ struct MOD_INFORMATION {
 
         /** Directory to load JSON from relative to directory containing modinfo.json */
         cata_path path;
+        cata_path root_path; // BREEZE_LUA_CAMP_API_V1，模组根目录，只用于受限脚本加载。
 
         /** All authors who have added content to the mod (excluding maintenance changes) */
         std::set<std::string> authors;
@@ -60,6 +77,10 @@ struct MOD_INFORMATION {
         bool obsolete = false;
 
         std::pair<int, translation> category = { -1, translation() };
+        std::vector<mod_world_option> world_options; // MOD_CAMP_API_V1
+        std::string lua_api; // BREEZE_LUA_CAMP_API_V1
+        std::string lua_preload; // BREEZE_LUA_CAMP_API_V1
+        std::string lua_main; // BREEZE_LUA_CAMP_API_V1
 };
 
 class mod_manager
@@ -108,6 +129,7 @@ class mod_manager
          * world.
          */
         void load_mods_list( WORLD *world ) const;
+        void apply_world_options( WORLD *world ); // MOD_CAMP_API_V1
         const t_mod_list &get_default_mods() const;
         bool set_default_mods( const t_mod_list &mods );
         const std::vector<mod_id> &get_usable_mods() const {
@@ -159,6 +181,7 @@ class mod_manager
         std::map<mod_id, mod_id> mod_replacements;
 
         std::vector<mod_id> usable_mods;
+        std::set<std::string> registered_world_options; // MOD_CAMP_API_V1
 
         void set_usable_mods();
 };

@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.21)
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/third-party)
+add_subdirectory(${CMAKE_SOURCE_DIR}/src/lua) # BREEZE_LUA_CAMP_API_V1
 
 set(MAIN_CPP ${CMAKE_SOURCE_DIR}/src/main.cpp)
 set(MESSAGES_CPP ${CMAKE_SOURCE_DIR}/src/messages.cpp)
@@ -44,7 +45,7 @@ if (TILES)
             ${CATACLYSM_DDA_HEADERS})
     target_include_directories(cataclysm-tiles-common INTERFACE ${CMAKE_SOURCE_DIR}/src)
 
-    target_link_libraries(cataclysm-tiles-common PUBLIC third-party)
+    target_link_libraries(cataclysm-tiles-common PUBLIC third-party liblua) # BREEZE_LUA_CAMP_API_V1
 
     if (WIN32)
         add_definitions(-DUSE_WINMAIN)
@@ -170,7 +171,7 @@ if (CURSES)
             ${CATACLYSM_DDA_HEADERS})
     target_include_directories(cataclysm-common INTERFACE ${CMAKE_SOURCE_DIR}/src)
 
-    target_link_libraries(cataclysm-common PUBLIC third-party)
+    target_link_libraries(cataclysm-common PUBLIC third-party liblua) # BREEZE_LUA_CAMP_API_V1
 
     if (WIN32)
         add_executable(cataclysm

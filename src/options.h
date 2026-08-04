@@ -230,6 +230,9 @@ class options_manager
 
         void set_world_options( options_container *options );
 
+        // MOD_CAMP_API_V1，移除动态注册的模组世界选项。
+        void remove_option( const std::string &name );
+
         /** Check if an option exists? */
         bool has_option( const std::string &name ) const;
 

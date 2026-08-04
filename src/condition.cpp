@@ -14,6 +14,7 @@
 #include <vector>
 
 #include "avatar.h"
+#include "basecamp.h"
 #include "calendar.h"
 #include "character.h"
 #include "coordinates.h"
@@ -34,6 +35,7 @@
 #include "mission.h"
 #include "mtype.h"
 #include "npc.h"
+#include "options.h"
 #include <optional>
 #include "overmap.h"
 #include "overmapbuffer.h"
@@ -2055,6 +2057,66 @@ std::function<int( const T & )> conditional_t<T>::get_get_int( const JsonObject 
             tripoint_abs_ms first_point = get_tripoint_from_string( first, d );
             tripoint_abs_ms second_point = get_tripoint_from_string( second, d );
             return rl_dist( first_point, second_point );
+        };
+    // MOD_CAMP_API_V1_BEGIN，读取模组世界设置与当前营地指标。
+    } else if( jo.has_member( "world_option" ) ) {
+        const std::string option_id = jo.get_string( "world_option" );
+        return [option_id]( const T & ) {
+            if( !get_options().has_option( option_id ) ) {
+                return 0;
+            }
+            const std::string value = get_options().get_option( option_id ).getValue( true );
+            if( value == "true" || value == "True" ) {
+                return 1;
+            }
+            if( value == "false" || value == "False" ) {
+                return 0;
+            }
+            try {
+                return std::stoi( value );
+            } catch( const std::exception & ) {
+                return 0;
+            }
+        };
+    } else if( jo.has_member( "camp_metric" ) ) {
+        const std::string metric = jo.get_string( "camp_metric" );
+        return [metric]( const T & ) {
+            basecamp *camp = get_active_eoc_camp();
+            if( camp == nullptr ) {
+                return 0;
+            }
+            if( metric == "development" ) {
+                return camp->mod_development_score();
+            } else if( metric == "expansions" ) {
+                return camp->mod_expansion_count();
+            } else if( metric == "survivors" ) {
+                return camp->mod_survivor_count();
+            } else if( metric == "workers" ) {
+                return camp->mod_worker_count();
+            } else if( metric == "distance" ) {
+                return camp->mod_player_distance();
+            } else if( metric == "center_x" ) {
+                return camp->mod_center().x();
+            } else if( metric == "center_y" ) {
+                return camp->mod_center().y();
+            } else if( metric == "center_z" ) {
+                return camp->mod_center().z();
+            }
+            return 0;
+        };
+    } else if( jo.has_member( "camp_value" ) ) {
+        const std::string key = jo.get_string( "camp_value" );
+        const int fallback = jo.get_int( "default", 0 );
+        return [key, fallback]( const T & ) {
+            basecamp *camp = get_active_eoc_camp();
+            if( camp == nullptr ) {
+                return fallback;
+            }
+            try {
+                return std::stoi( camp->get_mod_value( key, std::to_string( fallback ) ) );
+            } catch( const std::exception & ) {
+                return fallback;
+            }
         };
     } else if( jo.has_member( "mod_load_order" ) ) {
         const mod_id our_mod_id = mod_id( jo.get_string( "mod_load_order" ) );
