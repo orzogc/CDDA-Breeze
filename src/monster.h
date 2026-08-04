@@ -610,6 +610,12 @@ class monster : public Creature
         monster_horde_attraction horde_attraction = MHA_NULL;
         /** Found path. Note: Not used by monsters that don't pathfind! **/
         std::vector<tripoint> path;
+        /**
+         * Transient backoff after a failed bounded route.  These values are not
+         * serialized because they are only a CPU-rate limiter, not game state.
+         */
+        std::optional<tripoint_abs_ms> failed_pathfinding_target;
+        int failed_pathfinding_cooldown = 0;
         /** patrol points for monsters that can pathfind and have a patrol route! **/
         std::vector<tripoint_abs_ms> patrol_route;
         int next_patrol_point = -1;

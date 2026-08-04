@@ -8,9 +8,12 @@
 #include <cstdlib>
 #include <iterator>
 #include <list>
+#include <map>
 #include <memory>
+#include <optional>
 #include <ostream>
 #include <string>
+#include <tuple>
 #include <unordered_map>
 
 #include "behavior.h"
@@ -74,6 +77,65 @@ static const material_id material_iflesh( "iflesh" );
 
 static const species_id species_FUNGUS( "FUNGUS" );
 static const species_id species_ZOMBIE( "ZOMBIE" );
+
+namespace
+{
+// Breeze does not yet have CBN's reusable destination Dijkstra maps.  This
+// compact cache provides the most useful part of that optimisation without
+// replacing map::route: monsters of the same type can reuse suffixes of a
+// route calculated earlier in the same turn.
+constexpr int fallback_monster_path_radius = 24;
+constexpr std::size_t monster_route_cache_max_edges = 8192;
+
+int quantize_monster_bash_strength( int strength )
+{
+    if( strength <= 0 ) {
+        return 0;
+    }
+
+    // Powers of two keep creatures with nearly identical abilities on the
+    // same cache entry and mirror the coarse capability grouping used by CBN.
+    int result = 1;
+    while( result < strength && result < 128 ) {
+        result *= 2;
+    }
+    return result;
+}
+
+struct monster_route_cache_key {
+    mtype_id type_id;
+    tripoint target;
+    int bash_strength_quanta = 0;
+    bool can_open_doors = false;
+
+    bool operator<( const monster_route_cache_key &rhs ) const
+    {
+        return std::tie( type_id, target.x, target.y, target.z,
+                         bash_strength_quanta, can_open_doors ) <
+               std::tie( rhs.type_id, rhs.target.x, rhs.target.y, rhs.target.z,
+                         rhs.bash_strength_quanta, rhs.can_open_doors );
+    }
+};
+
+struct monster_route_cache_entry {
+    // For a route A,B,C,target this stores A->B, B->C and C->target.  A later
+    // monster standing on any recorded tile can rebuild the remaining suffix.
+    std::map<tripoint, tripoint> next_steps;
+};
+
+std::optional<time_point> monster_route_cache_turn;
+std::map<monster_route_cache_key, monster_route_cache_entry> monster_route_cache;
+std::size_t monster_route_cache_edges = 0;
+
+void refresh_monster_route_cache()
+{
+    if( !monster_route_cache_turn || *monster_route_cache_turn != calendar::turn ) {
+        monster_route_cache_turn = calendar::turn;
+        monster_route_cache.clear();
+        monster_route_cache_edges = 0;
+    }
+}
+} // namespace
 
 bool monster::is_immune_field( const field_type_id &fid ) const
 {
@@ -993,43 +1055,174 @@ void monster::move()
         return;
     }
 
-    bool moved = false;
-    tripoint destination;
+    if( failed_pathfinding_cooldown > 0 ) {
+        --failed_pathfinding_cooldown;
+    }
 
+    bool moved = false;
+    tripoint destination = pos();
     bool try_to_move = false;
     creature_tracker &creatures = get_creature_tracker();
+    const bool can_open_doors = has_flag( MF_CAN_OPEN_DOORS ) && !is_hallucination();
+    const int current_bash_estimate = bash_estimate();
+    const bool can_bash = current_bash_estimate > 0;
+
     for( const tripoint &dest : here.points_in_radius( pos(), 1 ) ) {
-        if( dest != pos() ) {
-            if( can_move_to( dest ) &&
-                creatures.creature_at( dest, true ) == nullptr ) {
-                try_to_move = true;
-                break;
-            }
+        if( dest == pos() ) {
+            continue;
+        }
+
+        const Creature *occupant = creatures.creature_at( dest, true );
+        const bool can_enter = can_move_to( dest ) && occupant == nullptr;
+        const bool can_attack_occupant = occupant != nullptr &&
+                                         attitude_to( *occupant ) == Attitude::HOSTILE;
+        const bool can_open = can_open_doors &&
+                              here.open_door( *this, dest, !here.is_outside( pos() ), true );
+        const bool can_break = can_bash && here.bash_rating( current_bash_estimate, dest ) > 0;
+
+        if( can_enter || can_attack_occupant || can_open || can_break ) {
+            try_to_move = true;
+            break;
         }
     }
     // If true, don't try to greedily avoid locally bad paths
     bool pathed = false;
     const tripoint local_dest = here.getlocal( get_dest() );
+
+    pathfinding_settings pf_settings = get_pathfinding_settings();
+    pf_settings.allow_open_doors = pf_settings.allow_open_doors || can_open_doors;
+    pf_settings.bash_strength = std::max( pf_settings.bash_strength, current_bash_estimate );
+
+    // Many old monster definitions have no path radius at all.  Give them a
+    // bounded local search rather than an unlimited one.  Long-distance travel
+    // stays on the cheap greedy movement used by Breeze.
+    if( pf_settings.max_dist <= 0 ) {
+        pf_settings.max_dist = fallback_monster_path_radius;
+        pf_settings.max_length = fallback_monster_path_radius * 5;
+    }
+
+    auto cached_step_is_usable = [&]( const tripoint &step ) {
+        if( !here.inbounds( step ) || rl_dist( pos(), step ) >= 2 ) {
+            return false;
+        }
+        if( can_move_to( step ) ) {
+            return true;
+        }
+        if( can_open_doors &&
+            here.open_door( *this, step, !here.is_outside( pos() ), true ) ) {
+            return true;
+        }
+        return can_bash && here.bash_rating( current_bash_estimate, step ) > 0;
+    };
+
+    auto try_route_to = [&]( const tripoint &route_dest ) {
+        const int route_distance = rl_dist( pos(), route_dest );
+        if( route_dest == pos() || route_distance > pf_settings.max_dist ) {
+            return false;
+        }
+
+        const tripoint_abs_ms absolute_route_dest = here.getglobal( route_dest );
+        if( failed_pathfinding_target && *failed_pathfinding_target != absolute_route_dest ) {
+            failed_pathfinding_target.reset();
+            failed_pathfinding_cooldown = 0;
+        }
+
+        while( !path.empty() && path.front() == pos() ) {
+            path.erase( path.begin() );
+        }
+        if( !path.empty() && !cached_step_is_usable( path.front() ) ) {
+            path.clear();
+        }
+
+        const bool need_new_path = path.empty() || rl_dist( pos(), path.front() ) >= 2 ||
+                                   path.back() != route_dest;
+        if( need_new_path ) {
+            if( failed_pathfinding_target && *failed_pathfinding_target == absolute_route_dest &&
+                failed_pathfinding_cooldown > 0 ) {
+                return false;
+            }
+
+            refresh_monster_route_cache();
+            const monster_route_cache_key cache_key {
+                type->id,
+                route_dest,
+                quantize_monster_bash_strength( pf_settings.bash_strength ),
+                pf_settings.allow_open_doors
+            };
+
+            const auto cache_iter = monster_route_cache.find( cache_key );
+            if( cache_iter != monster_route_cache.end() ) {
+                std::vector<tripoint> cached_path;
+                std::set<tripoint> visited;
+                tripoint cursor = pos();
+                const std::size_t max_cached_steps = static_cast<std::size_t>(
+                            std::max( 1, pf_settings.max_length ) );
+
+                while( cached_path.size() < max_cached_steps && cursor != route_dest &&
+                       visited.insert( cursor ).second ) {
+                    const auto next_iter = cache_iter->second.next_steps.find( cursor );
+                    if( next_iter == cache_iter->second.next_steps.end() ||
+                        next_iter->second == cursor ) {
+                        break;
+                    }
+                    cached_path.push_back( next_iter->second );
+                    cursor = next_iter->second;
+                }
+
+                if( !cached_path.empty() && cached_path.back() == route_dest &&
+                    cached_step_is_usable( cached_path.front() ) ) {
+                    path = std::move( cached_path );
+                }
+            }
+
+            if( path.empty() || path.back() != route_dest ) {
+                path = here.route( pos(), route_dest, pf_settings, get_path_avoid() );
+            }
+
+            if( !path.empty() && path.back() == route_dest ) {
+                failed_pathfinding_target.reset();
+                failed_pathfinding_cooldown = 0;
+
+                if( monster_route_cache_edges < monster_route_cache_max_edges ) {
+                    monster_route_cache_entry &entry = monster_route_cache[cache_key];
+                    tripoint from = pos();
+                    for( const tripoint &step : path ) {
+                        if( monster_route_cache_edges >= monster_route_cache_max_edges ) {
+                            break;
+                        }
+                        const auto inserted = entry.next_steps.emplace( from, step );
+                        if( inserted.second ) {
+                            ++monster_route_cache_edges;
+                        }
+                        from = step;
+                    }
+                }
+            } else {
+                // Different monsters spread retries across several actions, avoiding
+                // a synchronized search spike around an impossible sealed target.
+                failed_pathfinding_target = absolute_route_dest;
+                failed_pathfinding_cooldown = 2 +
+                                               ( std::abs( posx() + posy() + posz() ) % 3 );
+                return false;
+            }
+        }
+
+        if( !path.empty() && path.back() == route_dest ) {
+            destination = path.front();
+            moved = true;
+            pathed = true;
+            return true;
+        }
+        return false;
+    };
+
     if( try_to_move ) {
         if( !is_wandering() ) {
-            while( !path.empty() && path.front() == pos() ) {
-                path.erase( path.begin() );
-            }
-
-            const pathfinding_settings &pf_settings = get_pathfinding_settings();
-            if( pf_settings.max_dist >= rl_dist( get_location(), get_dest() ) &&
-                ( path.empty() || rl_dist( pos(), path.front() ) >= 2 || path.back() != local_dest ) ) {
-                // We need a new path
-                path = here.route( pos(), local_dest, pf_settings, get_path_avoid() );
-            }
-
-            // Try to respect old paths, even if we can't pathfind at the moment
-            if( !path.empty() && path.back() == local_dest ) {
-                destination = path.front();
-                moved = true;
-                pathed = true;
-            } else {
-                // Straight line forward, probably because we can't pathfind (well enough)
+            const int target_distance = rl_dist( pos(), local_dest );
+            if( !try_route_to( local_dest ) && target_distance > pf_settings.max_dist ) {
+                // Keep Breeze's inexpensive long-range steering.  Inside the
+                // bounded path radius a failed route no longer becomes blind
+                // wall-banging.
                 destination = local_dest;
                 moved = true;
             }
@@ -1054,10 +1247,18 @@ void monster::move()
         }
     }
     if( wandf > 0 && !moved && friendly == 0 ) { // No LOS, no scent, so as a fall-back follow sound
-        unset_dest();
         if( wander_pos != get_location() ) {
-            destination = here.getlocal( wander_pos );
-            moved = true;
+            const tripoint sound_dest = here.getlocal( wander_pos );
+            const int sound_distance = rl_dist( pos(), sound_dest );
+            unset_dest();
+
+            if( !try_route_to( sound_dest ) && sound_distance > pf_settings.max_dist ) {
+                // Very distant sounds retain cheap directional pursuit.  Once
+                // close enough, route costs choose doors, windows, stairs or a
+                // bashable weak point instead of the nearest wall.
+                destination = sound_dest;
+                moved = true;
+            }
         }
     }
 
@@ -1080,13 +1281,11 @@ void monster::move()
     }
 
     tripoint_abs_ms next_step;
-    const bool can_open_doors = has_flag( MF_CAN_OPEN_DOORS ) && !is_hallucination();
     const bool staggers = has_flag( MF_STUMBLES );
     if( moved ) {
         // Implement both avoiding obstacles and staggering.
         moved = false;
         float switch_chance = 0.0f;
-        const bool can_bash = bash_skill() > 0;
         // This is a float and using trig_dist() because that Does the Right Thing(tm)
         // in both circular and roguelike distance modes.
         const float distance_to_target = trig_dist( pos(), destination );
