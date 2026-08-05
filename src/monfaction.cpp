@@ -54,6 +54,13 @@ bool string_id<monfaction>::is_valid() const
 template<>
 int_id<monfaction>::int_id( const string_id<monfaction> &id ) : _id( id.id() ) {}
 
+/** @relates int_id */
+template<>
+bool int_id<monfaction>::is_valid() const
+{
+    return faction_factory.is_valid( *this );
+}
+
 bool monfaction::is_root() const
 {
     return id == base_faction;
