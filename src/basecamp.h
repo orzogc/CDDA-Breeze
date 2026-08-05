@@ -32,11 +32,9 @@ class time_duration;
 // MOD_CAMP_API_V1_BEGIN，模组可向原生营地任务界面注册 EOC 操作。
 struct basecamp_action {
     std::string id;
-    std::string source_mod; // BREEZE_LUA_CAMP_API_V1
     translation name;
     translation description;
     effect_on_condition_id eoc;
-    std::string lua_function; // BREEZE_LUA_CAMP_API_V1
     int priority = 0;
     bool allow_radio = false;
     std::string required_world_option;

@@ -278,7 +278,6 @@ void mod_manager::load_modfile( const JsonObject &jo, const cata_path &path )
     modfile.ident = m_ident;
     modfile.name_ = m_name;
     modfile.category = p_cat;
-    modfile.root_path = path; // BREEZE_LUA_CAMP_API_V1
     // MOD_CAMP_API_V1_BEGIN，世界选项只从 MOD_INFO 预扫描，不等待完整模组 JSON 加载。
     modfile.world_options_position = read_world_option_position( jo, "world_options_", false );
     modfile.world_options_separator = jo.get_bool( "world_options_separator", true );
@@ -332,14 +331,6 @@ void mod_manager::load_modfile( const JsonObject &jo, const cata_path &path )
     assign( jo, "dependencies", modfile.dependencies );
     assign( jo, "core", modfile.core );
     assign( jo, "obsolete", modfile.obsolete );
-    // BREEZE_LUA_CAMP_API_V1_BEGIN，最小 Lua 模组入口。
-    assign( jo, "lua_api", modfile.lua_api );
-    assign( jo, "lua_preload", modfile.lua_preload );
-    assign( jo, "lua_main", modfile.lua_main );
-    if( !modfile.lua_api.empty() && modfile.lua_preload.empty() && modfile.lua_main.empty() ) {
-        jo.throw_error( "声明 lua_api 的模组至少需要 lua_preload 或 lua_main" );
-    }
-    // BREEZE_LUA_CAMP_API_V1_END
 
     if( std::find( modfile.dependencies.begin(), modfile.dependencies.end(),
                    modfile.ident ) != modfile.dependencies.end() ) {

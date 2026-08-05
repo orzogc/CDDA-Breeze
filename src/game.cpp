@@ -44,7 +44,6 @@
 #include "avatar.h"
 #include "avatar_action.h"
 #include "basecamp.h"
-#include "breeze_lua.h"
 #include "bionics.h"
 #include "bodygraph.h"
 #include "bodypart.h"
@@ -768,7 +767,6 @@ void game::setup()
     faction_manager_ptr->clear();
     mission::clear_all();
     Messages::clear_messages();
-    breeze_lua::load_world(); // BREEZE_LUA_CAMP_API_V1
     timed_events = timed_event_manager();
 
     SCT.vSCT.clear(); //Delete pending messages

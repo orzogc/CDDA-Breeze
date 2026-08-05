@@ -16,7 +16,6 @@
 #include "activity_type.h"
 #include "avatar.h"
 #include "basecamp.h"
-#include "breeze_lua.h" // BREEZE_LUA_CAMP_API_V1
 #include "calendar.h"
 #include "cata_utility.h"
 #include "catacharset.h"
@@ -814,21 +813,16 @@ bool basecamp_action_is_visible( const basecamp_action &action, const basecamp &
 }
 }
 
-void load_basecamp_action( const JsonObject &jo, const std::string &src )
+void load_basecamp_action( const JsonObject &jo, const std::string & )
 {
     basecamp_action action;
     action.id = jo.get_string( "id" );
-    action.source_mod = src;
     jo.read( "name", action.name );
     jo.read( "description", action.description );
-    const bool has_eoc = jo.has_string( "eoc" );
-    if( has_eoc ) {
-        action.eoc = effect_on_condition_id( jo.get_string( "eoc" ) );
+    if( !jo.has_string( "eoc" ) ) {
+        jo.throw_error( "营地操作需要 eoc" );
     }
-    action.lua_function = jo.get_string( "lua_function", "" );
-    if( action.lua_function.empty() && !has_eoc ) {
-        jo.throw_error( "营地操作至少需要 eoc 或 lua_function" );
-    }
+    action.eoc = effect_on_condition_id( jo.get_string( "eoc" ) );
     action.priority = jo.get_int( "priority", 0 );
     action.allow_radio = jo.get_bool( "allow_radio", false );
     action.required_world_option = jo.get_string( "required_world_option", "" );
@@ -1675,12 +1669,6 @@ bool basecamp::handle_mission( const ui_mission_id &miss_id )
             return true;
         }
         scoped_basecamp_eoc_context camp_context( this );
-        if( !action->lua_function.empty() ) {
-            if( !breeze_lua::run_camp_action( action->source_mod, action->lua_function, *this ) ) {
-                popup( _( "这个模组营地操作运行失败，详情已经写入调试日志。" ) );
-            }
-            return true;
-        }
         if( !action->eoc.is_valid() ) {
             popup( _( "这个模组营地操作引用了无效的效果。" ) );
             return true;

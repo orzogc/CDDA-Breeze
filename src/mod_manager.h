@@ -65,7 +65,6 @@ struct MOD_INFORMATION {
 
         /** Directory to load JSON from relative to directory containing modinfo.json */
         cata_path path;
-        cata_path root_path; // BREEZE_LUA_CAMP_API_V1，模组根目录，只用于受限脚本加载。
 
         /** All authors who have added content to the mod (excluding maintenance changes) */
         std::set<std::string> authors;
@@ -92,9 +91,6 @@ struct MOD_INFORMATION {
         std::vector<mod_world_option> world_options; // MOD_CAMP_API_V1
         mod_world_option_position world_options_position; // MOD_CAMP_API_V1，整组选项的位置。
         bool world_options_separator = true; // MOD_CAMP_API_V1，是否在整组选项前保留空行。
-        std::string lua_api; // BREEZE_LUA_CAMP_API_V1
-        std::string lua_preload; // BREEZE_LUA_CAMP_API_V1
-        std::string lua_main; // BREEZE_LUA_CAMP_API_V1
 };
 
 class mod_manager
