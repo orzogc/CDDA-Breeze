@@ -2104,6 +2104,11 @@ void WORLD::load_options( const JsonArray &options_json )
                                   jo.get_string( "value" ) );
 
         if( opts.has_option( name ) && opts.get_option( name ).getPage() == "world_default" ) {
+            // get_world_defaults() 只返回本体设置。旧存档或模组选项在此处首次出现时，
+            // 先从全局注册表导入完整 schema，再应用存档值，避免生成空类型占位项。
+            if( WORLD_OPTIONS.count( name ) == 0 ) {
+                WORLD_OPTIONS[name] = opts.get_option( name );
+            }
             WORLD_OPTIONS[ name ].setValue( value );
         }
     }

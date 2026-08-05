@@ -434,6 +434,16 @@ bool mod_manager::copy_mod_contents( const t_mod_list &mods_to_copy,
 void mod_manager::apply_world_options( WORLD *world )
 {
     options_manager &opts = get_options();
+
+    // 收集所有已安装模组声明的世界设置。这个集合只用于清理旧版遗留的临时架构，
+    // 不代表这些模组在当前世界中处于启用状态。
+    std::set<std::string> declared_mod_world_options;
+    for( const auto &mod_entry : mod_map ) {
+        for( const mod_world_option &option : mod_entry.second.world_options ) {
+            declared_mod_world_options.insert( option.id );
+        }
+    }
+
     for( const std::string &id : registered_world_option_group_heads ) {
         opts.remove_separator_before_option( id );
     }
@@ -442,6 +452,15 @@ void mod_manager::apply_world_options( WORLD *world )
         opts.remove_option( id );
     }
     registered_world_options.clear();
+
+    // 兼容旧版和热重载：未被 registered_world_options 追踪、但又不是本体设置的
+    // 同名架构可以安全删除。真正的本体设置绝不允许模组覆盖。
+    for( const std::string &id : declared_mod_world_options ) {
+        if( !id.empty() && !opts.is_native_world_option( id ) && opts.has_option( id ) ) {
+            opts.remove_option( id );
+        }
+    }
+
     if( world == nullptr ) {
         return;
     }
@@ -449,6 +468,18 @@ void mod_manager::apply_world_options( WORLD *world )
     std::map<std::string, std::string> saved_values;
     for( const auto &entry : world->WORLD_OPTIONS ) {
         saved_values.emplace( entry.first, entry.second.getValue( true ) );
+    }
+
+    // WORLD_OPTIONS 是每个世界自己的设置分身。先移除旧版遗留、已卸载模组和
+    // 当前世界未启用模组的动态设置，稍后只按当前活动模组重新建立。
+    std::vector<std::string> stale_world_options;
+    for( const auto &entry : world->WORLD_OPTIONS ) {
+        if( !opts.is_native_world_option( entry.first ) ) {
+            stale_world_options.push_back( entry.first );
+        }
+    }
+    for( const std::string &id : stale_world_options ) {
+        world->WORLD_OPTIONS.erase( id );
     }
 
     struct registered_group {
@@ -468,9 +499,23 @@ void mod_manager::apply_world_options( WORLD *world )
         registered_group group;
         group.mod = &mod_it->second;
         for( const mod_world_option &option : mod_it->second.world_options ) {
-            if( option.id.empty() || !seen.insert( option.id ).second || opts.has_option( option.id ) ) {
-                debugmsg( "模组世界设置编号重复或与本体冲突，已忽略，%s", option.id );
+            if( option.id.empty() ) {
+                debugmsg( "模组世界设置编号为空，已忽略，%s", id.str() );
                 continue;
+            }
+            if( !seen.insert( option.id ).second ) {
+                debugmsg( "当前世界的活动模组使用了重复的世界设置编号，已忽略，%s",
+                          option.id );
+                continue;
+            }
+            if( opts.is_native_world_option( option.id ) ) {
+                debugmsg( "模组世界设置编号与本体冲突，已忽略，%s，%s", id.str(), option.id );
+                continue;
+            }
+            if( opts.has_option( option.id ) ) {
+                // 理论上已在上面的旧架构清理中移除。保留这一层防御，避免刷新模组
+                // 列表或异常中断后留下无法重新注册的临时设置。
+                opts.remove_option( option.id );
             }
             if( option.type == "bool" ) {
                 opts.add( option.id, "world_default", option.name, option.description, option.bool_default );

@@ -7,6 +7,7 @@
 #include <functional>
 #include <iosfwd>
 #include <map>
+#include <set>
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
@@ -232,6 +233,12 @@ class options_manager
          */
         options_container get_world_defaults() const;
 
+        /**
+         * Returns true only for world options created by the game itself during init().
+         * Temporarily installed mod option schemas are deliberately excluded.
+         */
+        bool is_native_world_option( const std::string &name ) const;
+
         void set_world_options( options_container *options );
 
         // MOD_CAMP_API_V1，移除动态注册的模组世界选项。
@@ -296,6 +303,9 @@ class options_manager
 
     private:
         options_container options;
+        // MOD_CAMP_API_V3，本体世界设置的稳定快照。模组设置只作为当前世界的临时界面架构。
+        std::set<std::string> native_world_option_ids;
+
         std::optional<options_container *> world_options; // NOLINT(cata-serialize)
 
         /**

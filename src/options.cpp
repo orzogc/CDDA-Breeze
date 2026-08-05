@@ -396,6 +396,11 @@ bool options_manager::move_option_to_page_end( const std::string &name,
 
 void options_manager::remove_option( const std::string &name )
 {
+    if( is_native_world_option( name ) ) {
+        DebugLog( D_WARNING, DC_ALL ) << "拒绝移除本体世界设置，" << name;
+        return;
+    }
+
     options.erase( name );
     for( Page &page : pages_ ) {
         page.items_.erase( std::remove_if( page.items_.begin(), page.items_.end(),
@@ -1455,6 +1460,15 @@ void options_manager::init()
     add_options_debug();
     add_options_android();
     add_options_ai();
+
+    // MOD_CAMP_API_V3，记录本体设置架构。之后动态加入的模组设置不会进入这个集合，
+    // 因而不会成为新世界的全局默认值，也不会写进主界面的 options.json。
+    native_world_option_ids.clear();
+    for( const auto &elem : options ) {
+        if( elem.second.getPage() == "world_default" ) {
+            native_world_option_ids.insert( elem.first );
+        }
+    }
 
     for( Page &p : pages_ ) {
         p.removeRepeatedEmptyLines();
@@ -3824,6 +3838,10 @@ void options_manager::serialize( JsonOut &json ) const
             if( iter != options.end() ) {
                 const options_manager::cOpt &opt = iter->second;
 
+                if( opt.getPage() == "world_default" && !is_native_world_option( *opt_name ) ) {
+                    continue;
+                }
+
                 json.start_object();
 
                 json.member( "info", opt.getTooltip() );
@@ -3848,8 +3866,16 @@ void options_manager::deserialize( const JsonArray &ja )
         const std::string value = migrateOptionValue( joOptions.get_string( "name" ),
                                   joOptions.get_string( "value" ) );
 
+        auto option = options.find( name );
+        if( option == options.end() ) {
+            // 旧版曾把临时模组世界设置写进全局 options.json。不要用 operator[]
+            // 为它们建立 VOID 占位项，否则之后会被误判成与本体冲突。
+            DebugLog( D_WARNING, DC_ALL ) << "忽略未注册的全局设置，" << name;
+            continue;
+        }
+
         add_retry( name, value );
-        options[ name ].setValue( value );
+        option->second.setValue( value );
     }
 }
 
@@ -3984,11 +4010,21 @@ options_manager::cOpt &options_manager::get_option( const std::string &name )
     return wopt->second;
 }
 
+bool options_manager::is_native_world_option( const std::string &name ) const
+{
+    // init() 之前保持旧行为，避免极早期测试或工具代码构造 WORLD 时得到空设置表。
+    if( native_world_option_ids.empty() ) {
+        const auto option = options.find( name );
+        return option != options.end() && option->second.getPage() == "world_default";
+    }
+    return native_world_option_ids.count( name ) != 0;
+}
+
 options_manager::options_container options_manager::get_world_defaults() const
 {
     phmap::flat_hash_map<std::string, cOpt> result;
     for( const auto &elem : options ) {
-        if( elem.second.getPage() == "world_default" ) {
+        if( elem.second.getPage() == "world_default" && is_native_world_option( elem.first ) ) {
             result.insert( elem );
         }
     }
