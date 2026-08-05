@@ -3841,6 +3841,7 @@ void monster::hear_sound( const tripoint &source, const int vol, const int dist,
         }
     }
 
+    bool cross_z_priority_sound = false;
     if( improved_pathfinding && hostile_target_memory_turns > 0 &&
         last_hostile_target_position ) {
         const bool urgent_sound = source_info.provocative ||
@@ -3848,12 +3849,30 @@ void monster::hear_sound( const tripoint &source, const int vol, const int dist,
                                   volume >= 70;
         const bool pulls_to_another_level =
             source.z != last_hostile_target_position->z();
-        // A monster that has just confirmed a hostile target should not abandon
-        // that floor for ordinary background noise.  Gunfire, alarms and very
-        // loud destruction can still interrupt it.
+        // Ordinary noise remains below a recently confirmed target.  An urgent,
+        // clearly audible sound on another floor is different: it is the missing
+        // hand-off between hearing and cross-Z pathfinding, so retire the stale
+        // visual memory and let the sound route take over.
         if( !urgent_sound && ( pulls_to_another_level || volume < 40 ) ) {
             return;
         }
+        cross_z_priority_sound = urgent_sound && pulls_to_another_level &&
+                                 volume >= 10;
+        if( cross_z_priority_sound ) {
+            last_hostile_target_position.reset();
+            hostile_target_memory_turns = 0;
+            hostile_search_turns = 0;
+            hostile_search_step = 0;
+            hostile_search_waypoint_turns = 0;
+            hostile_search_lane = 0;
+            hostile_transition_attempts = 0;
+            unset_dest();
+        }
+    } else if( improved_pathfinding && source.z != posz() ) {
+        cross_z_priority_sound =
+            ( source_info.provocative ||
+              source_info.category >= sounds::sound_t::alarm ) &&
+            volume >= 10;
     }
 
     const bool tmp_provocative = source_info.provocative ||
@@ -3877,7 +3896,7 @@ void monster::hear_sound( const tripoint &source, const int vol, const int dist,
                              point( rng( -max_error, max_error ),
                                     rng( -max_error, max_error ) );
     const int wander_turns = volume * ( goodhearing ? 6 : 1 );
-    if( wander_turns < wandf ) {
+    if( wander_turns < wandf && !cross_z_priority_sound ) {
         return;
     }
     if( friendly == 0 || source != get_player_character().pos() ) {

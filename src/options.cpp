@@ -2527,7 +2527,7 @@ void options_manager::add_options_world_default()
     add("怪物可以积累经验值而升级", "world_default", to_translation("怪物可以积累经验值而升级"), to_translation("当此选项的值为 是 时，怪物可以通过击杀敌人来获取经验值，当经验值达到标准后，怪物即可升级。"), false);
     add( "MONSTER_PATHFINDING", "world_default",
          to_translation( "怪物寻路" ),
-    to_translation( "经典使用微风原本的怪物移动逻辑，改进启用门窗判断，声音寻路，声源阵营识别，跨层追击，有限搜索和共享反向距离图。" ), {
+    to_translation( "经典使用微风原本的怪物移动逻辑，改进启用门窗判断，声源阵营识别，楼梯声道，跨层追击，有限搜索和共享反向距离图。" ), {
         { "classic", to_translation( "经典" ) },
         { "improved", to_translation( "改进" ) }
     }, "improved"

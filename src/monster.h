@@ -628,6 +628,8 @@ class monster : public Creature
         int hostile_search_step = 0;
         int hostile_search_waypoint_turns = 0;
         int hostile_search_lane = 0;
+        // At most one speculative stair hand-off per confirmed sighting.
+        int hostile_transition_attempts = 0;
         /** patrol points for monsters that can pathfind and have a patrol route! **/
         std::vector<tripoint_abs_ms> patrol_route;
         int next_patrol_point = -1;

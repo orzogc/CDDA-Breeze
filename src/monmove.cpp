@@ -218,6 +218,79 @@ const std::array<point, 16> hostile_search_offsets = {{
     point( 6, 3 ), point( -3, 6 ), point( -6, -3 ), point( 3, -6 )
 }};
 
+
+constexpr int hostile_transition_hint_radius = 2;
+
+std::optional<tripoint_abs_ms> infer_hostile_memory_transition(
+    monster &critter, map &here, const tripoint_abs_ms &memory_origin,
+    int search_lane )
+{
+    const tripoint local_origin = here.getlocal( memory_origin );
+    if( !here.inbounds( local_origin ) ) {
+        return std::nullopt;
+    }
+
+    std::optional<tripoint> best_destination;
+    std::tuple<int, int, int, int> best_score(
+        std::numeric_limits<int>::max(), 0, 0, 0 );
+    const bool can_bash = critter.bash_estimate() > 0;
+
+    for( const tripoint &candidate :
+         here.points_in_radius( local_origin, hostile_transition_hint_radius ) ) {
+        if( candidate.z != local_origin.z ) {
+            continue;
+        }
+
+        const bool can_go_down =
+            here.has_flag( ter_furn_flag::TFLAG_GOES_DOWN, candidate ) ||
+            here.has_flag( ter_furn_flag::TFLAG_RAMP_DOWN, candidate );
+        const bool can_go_up =
+            here.has_flag( ter_furn_flag::TFLAG_GOES_UP, candidate ) ||
+            here.has_flag( ter_furn_flag::TFLAG_RAMP_UP, candidate );
+
+        for( const int dz : { -1, 1 } ) {
+            if( ( dz < 0 && !can_go_down ) || ( dz > 0 && !can_go_up ) ) {
+                continue;
+            }
+
+            const tripoint destination( candidate.x, candidate.y,
+                                        candidate.z + dz );
+            if( !here.inbounds( destination ) ) {
+                continue;
+            }
+
+            const bool paired_stair = dz < 0 ?
+                here.has_flag( ter_furn_flag::TFLAG_GOES_UP, destination ) :
+                here.has_flag( ter_furn_flag::TFLAG_GOES_DOWN, destination );
+            const bool explicit_landing = paired_stair ||
+                                          !here.impassable( destination );
+            if( !explicit_landing &&
+                !here.valid_move( candidate, destination, can_bash, true ) ) {
+                continue;
+            }
+
+            // Exact last-seen tile wins.  In a rare stairwell which goes both
+            // ways, stable lanes split a horde instead of making every monster
+            // choose the same speculative floor.
+            const int distance = rl_dist( local_origin, candidate );
+            const int direction_bias = ( search_lane & 1 ) == 0 ?
+                                       ( dz < 0 ? 0 : 1 ) :
+                                       ( dz > 0 ? 0 : 1 );
+            const std::tuple<int, int, int, int> score(
+                distance, direction_bias, candidate.x, candidate.y );
+            if( score < best_score ) {
+                best_score = score;
+                best_destination = destination;
+            }
+        }
+    }
+
+    if( !best_destination ) {
+        return std::nullopt;
+    }
+    return here.getglobal( *best_destination );
+}
+
 std::optional<time_point> monster_path_cache_turn;
 std::map<monster_route_cache_key, monster_route_cache_entry> monster_route_cache;
 std::map<monster_z_route_cache_key, monster_z_route_plan> monster_z_route_cache;
@@ -611,6 +684,7 @@ void monster::plan()
         hostile_search_step = 0;
         hostile_search_waypoint_turns = 0;
         hostile_search_lane = 0;
+        hostile_transition_attempts = 0;
     } else {
         if( hostile_target_memory_turns > 0 ) {
             --hostile_target_memory_turns;
@@ -629,6 +703,7 @@ void monster::plan()
             hostile_search_step = 0;
             hostile_search_waypoint_turns = 0;
             hostile_search_lane = 0;
+            hostile_transition_attempts = 0;
         }
     }
     Creature *target = nullptr;
@@ -979,6 +1054,7 @@ void monster::plan()
                 hostile_search_turns = 0;
                 hostile_search_step = 0;
                 hostile_search_waypoint_turns = 0;
+                hostile_transition_attempts = 0;
                 hostile_search_lane =
                     std::abs( posx() * 31 + posy() * 17 + posz() * 13 ) % 4;
             }
@@ -1014,35 +1090,57 @@ void monster::plan()
             // First honour the exact last-known position, including its Z level.
             set_dest( memory_origin );
         } else {
-            const int search_count = smart_planning ? 16 : 8;
-            const int lane = hostile_search_lane;
-            const int waypoint_hold = smart_planning ? 4 : 3;
-
-            if( hostile_search_step == 0 ) {
-                hostile_search_step = 1;
-                hostile_search_turns = smart_planning ? 36 : 18;
-                hostile_search_waypoint_turns = waypoint_hold;
-            } else {
-                const int current_index =
-                    ( hostile_search_step - 1 + lane * 2 ) % search_count;
-                tripoint_abs_ms current_waypoint =
-                    memory_origin + hostile_search_offsets[current_index];
-                current_waypoint.z() = memory_origin.z();
-                if( rl_dist( get_location(), current_waypoint ) <= 1 ||
-                    hostile_search_waypoint_turns <= 0 ) {
-                    ++hostile_search_step;
-                    hostile_search_waypoint_turns = waypoint_hold;
-                } else {
-                    --hostile_search_waypoint_turns;
+            bool followed_transition = false;
+            if( hostile_search_step == 0 && hostile_transition_attempts == 0 &&
+                get_pathfinding_settings().allow_climb_stairs ) {
+                const std::optional<tripoint_abs_ms> transition =
+                    infer_hostile_memory_transition( *this, here, memory_origin,
+                                                     hostile_search_lane );
+                if( transition ) {
+                    hostile_transition_attempts = 1;
+                    last_hostile_target_position = *transition;
+                    hostile_target_memory_turns = std::max(
+                        hostile_target_memory_turns,
+                        smart_planning ? 90 : 45 );
+                    hostile_search_turns = 0;
+                    hostile_search_step = 0;
+                    hostile_search_waypoint_turns = 0;
+                    set_dest( *transition );
+                    followed_transition = true;
                 }
             }
 
-            const int waypoint_index =
-                ( hostile_search_step - 1 + lane * 2 ) % search_count;
-            tripoint_abs_ms search_destination =
-                memory_origin + hostile_search_offsets[waypoint_index];
-            search_destination.z() = memory_origin.z();
-            set_dest( search_destination );
+            if( !followed_transition ) {
+                const int search_count = smart_planning ? 16 : 8;
+                const int lane = hostile_search_lane;
+                const int waypoint_hold = smart_planning ? 4 : 3;
+
+                if( hostile_search_step == 0 ) {
+                    hostile_search_step = 1;
+                    hostile_search_turns = smart_planning ? 36 : 18;
+                    hostile_search_waypoint_turns = waypoint_hold;
+                } else {
+                    const int current_index =
+                        ( hostile_search_step - 1 + lane * 2 ) % search_count;
+                    tripoint_abs_ms current_waypoint =
+                        memory_origin + hostile_search_offsets[current_index];
+                    current_waypoint.z() = memory_origin.z();
+                    if( rl_dist( get_location(), current_waypoint ) <= 1 ||
+                        hostile_search_waypoint_turns <= 0 ) {
+                        ++hostile_search_step;
+                        hostile_search_waypoint_turns = waypoint_hold;
+                    } else {
+                        --hostile_search_waypoint_turns;
+                    }
+                }
+
+                const int waypoint_index =
+                    ( hostile_search_step - 1 + lane * 2 ) % search_count;
+                tripoint_abs_ms search_destination =
+                    memory_origin + hostile_search_offsets[waypoint_index];
+                search_destination.z() = memory_origin.z();
+                set_dest( search_destination );
+            }
         }
     } else if( !patrol_route.empty() ) {
         // If we have a patrol route and no target, find the current step on the route

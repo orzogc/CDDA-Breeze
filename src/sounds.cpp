@@ -4,7 +4,9 @@
 #include <chrono>
 #include <cmath>
 #include <cstdlib>
+#include <map>
 #include <memory>
+#include <tuple>
 #include <type_traits>
 #include <unordered_map>
 
@@ -266,6 +268,156 @@ static int sound_distance( const tripoint &source, const tripoint &sink )
     vertical_attenuation *= 5;
     return rl_dist( source.xy(), sink.xy() ) + vertical_attenuation;
 }
+
+// Phase four: a small acoustic portal cache for monster AI.  The old sound
+// distance remains the fallback for sealed floors.  When a nearby stair, ramp
+// or open shaft exists, sounds may instead travel to the listener's level via
+// that portal.  One route is calculated per sound centroid and target Z level,
+// then shared by every monster on that level.
+namespace
+{
+constexpr int monster_sound_portal_search_radius = 30;
+constexpr int monster_sound_portal_step_cost = 3;
+constexpr int monster_sound_max_z_steps = 3;
+constexpr std::size_t monster_sound_route_cache_max_entries = 96;
+
+struct monster_vertical_sound_route {
+    int source_to_exit_distance = 0;
+    tripoint exit;
+};
+
+std::optional<time_point> monster_sound_route_cache_turn;
+std::optional<point> monster_sound_route_cache_origin;
+std::map<std::pair<tripoint, int>, std::optional<monster_vertical_sound_route>>
+monster_sound_route_cache;
+
+void refresh_monster_sound_route_cache()
+{
+    const point current_origin = get_map().getabs( point_zero );
+    if( !monster_sound_route_cache_turn ||
+        *monster_sound_route_cache_turn != calendar::turn ||
+        !monster_sound_route_cache_origin ||
+        *monster_sound_route_cache_origin != current_origin ) {
+        monster_sound_route_cache_turn = calendar::turn;
+        monster_sound_route_cache_origin = current_origin;
+        monster_sound_route_cache.clear();
+    }
+}
+
+bool is_vertical_sound_portal( map &here, const tripoint &candidate, int dz )
+{
+    const tripoint next( candidate.x, candidate.y, candidate.z + dz );
+    if( !here.inbounds( candidate ) || !here.inbounds( next ) ) {
+        return false;
+    }
+
+    if( dz > 0 ) {
+        const bool explicit_transition =
+            here.has_flag( ter_furn_flag::TFLAG_GOES_UP, candidate ) ||
+            here.has_flag( ter_furn_flag::TFLAG_RAMP_UP, candidate ) ||
+            here.has_flag( ter_furn_flag::TFLAG_GOES_DOWN, next );
+        const bool open_shaft =
+            here.has_flag( ter_furn_flag::TFLAG_NO_FLOOR, next );
+        return explicit_transition || open_shaft;
+    }
+
+    const bool explicit_transition =
+        here.has_flag( ter_furn_flag::TFLAG_GOES_DOWN, candidate ) ||
+        here.has_flag( ter_furn_flag::TFLAG_RAMP_DOWN, candidate ) ||
+        here.has_flag( ter_furn_flag::TFLAG_GOES_UP, next );
+    const bool open_shaft =
+        here.has_flag( ter_furn_flag::TFLAG_NO_FLOOR, candidate );
+    return explicit_transition || open_shaft;
+}
+
+std::optional<tripoint> nearest_vertical_sound_portal( map &here,
+        const tripoint &origin, int dz )
+{
+    std::optional<tripoint> best;
+    int best_distance = monster_sound_portal_search_radius + 1;
+
+    for( const tripoint &candidate :
+         here.points_in_radius( origin, monster_sound_portal_search_radius ) ) {
+        if( candidate.z != origin.z ||
+            !is_vertical_sound_portal( here, candidate, dz ) ) {
+            continue;
+        }
+
+        const int distance = rl_dist( origin, candidate );
+        if( distance < best_distance ||
+            ( distance == best_distance && best &&
+              std::tie( candidate.x, candidate.y, candidate.z ) <
+              std::tie( best->x, best->y, best->z ) ) ) {
+            best = candidate;
+            best_distance = distance;
+        }
+    }
+    return best;
+}
+
+std::optional<monster_vertical_sound_route> vertical_sound_route_to_level(
+    const tripoint &source, int target_z )
+{
+    if( source.z == target_z ) {
+        return monster_vertical_sound_route { 0, source };
+    }
+    if( std::abs( source.z - target_z ) > monster_sound_max_z_steps ) {
+        return std::nullopt;
+    }
+
+    refresh_monster_sound_route_cache();
+    const std::pair<tripoint, int> key( source, target_z );
+    const auto cached = monster_sound_route_cache.find( key );
+    if( cached != monster_sound_route_cache.end() ) {
+        return cached->second;
+    }
+
+    // Refuse to grow without bound in pathological multi-faction sound storms.
+    if( monster_sound_route_cache.size() >=
+        monster_sound_route_cache_max_entries ) {
+        return std::nullopt;
+    }
+
+    map &here = get_map();
+    monster_vertical_sound_route route;
+    route.exit = source;
+    const int dz = target_z > source.z ? 1 : -1;
+
+    while( route.exit.z != target_z ) {
+        const std::optional<tripoint> portal =
+            nearest_vertical_sound_portal( here, route.exit, dz );
+        if( !portal ) {
+            monster_sound_route_cache.emplace( key, std::nullopt );
+            return std::nullopt;
+        }
+
+        route.source_to_exit_distance += rl_dist( route.exit, *portal );
+        route.source_to_exit_distance += monster_sound_portal_step_cost;
+        route.exit = tripoint( portal->x, portal->y, portal->z + dz );
+    }
+
+    monster_sound_route_cache.emplace( key, route );
+    return route;
+}
+
+int monster_sound_distance( const tripoint &source, const tripoint &listener )
+{
+    const int sealed_distance = sound_distance( source, listener );
+    if( source.z == listener.z ) {
+        return sealed_distance;
+    }
+
+    const std::optional<monster_vertical_sound_route> route =
+        vertical_sound_route_to_level( source, listener.z );
+    if( !route ) {
+        return sealed_distance;
+    }
+
+    const int portal_distance = route->source_to_exit_distance +
+                                rl_dist( route->exit, listener );
+    return std::min( sealed_distance, portal_distance );
+}
+} // namespace
 
 static std::string season_str( const season_type &season )
 {
@@ -583,7 +735,7 @@ void sounds::process_sounds()
                 continue;
             }
 
-            const int dist = sound_distance( source, critter.pos() );
+            const int dist = monster_sound_distance( source, critter.pos() );
             if( vol * 2 > dist ) {
                 critter.hear_sound( source, vol, dist, source_info );
             }
