@@ -265,6 +265,12 @@ void cata_tiles::on_options_changed()
 {
     memory_map_mode = get_option <std::string>( "MEMORY_MAP_MODE" );
 
+    if( get_option<std::string>( "ZLEVEL_OVERLAY_COLOR" ) == "white" ) {
+        z_overlay_color = SDL_Color{ 255, 255, 255, 255 };
+    } else {
+        z_overlay_color = SDL_Color{ 128, 255, 255, 255 };
+    }
+
     pixel_minimap_settings settings;
 
     settings.mode =
@@ -2756,10 +2762,13 @@ bool cata_tiles::draw_sprite_at(
             const int alpha = drawing_overmap_transparency
                               ? std::min( 192, 24 + ( z_overlay_depth - 1 ) * 12 )
                               : std::min( 240, 56 + ( z_overlay_depth - 1 ) * 20 );
+            z_overlay_tex->set_color_mod( z_overlay_color.r, z_overlay_color.g,
+                                          z_overlay_color.b );
             z_overlay_tex->set_alpha_mod( alpha );
             const int overlay_result =
                 z_overlay_tex->render_copy_ex( renderer, &destination, angle, nullptr, flip );
             z_overlay_tex->set_alpha_mod( 255 );
+            z_overlay_tex->set_color_mod( 255, 255, 255 );
             if( result == 0 ) {
                 result = overlay_result;
             }

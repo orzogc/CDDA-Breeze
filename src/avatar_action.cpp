@@ -343,10 +343,6 @@ bool avatar_action::move( avatar &you, map &m, const tripoint &d )
                 you.clear_destination();
                 return false;
             }
-            if (critter.attitude(&you) != MATT_ATTACK && uistate.distraction_neutral_monsters_in_the_direction_of_movement 
-                && !query_yn("移动方向存在中立怪物，这将会变成对怪物的攻击行为，确定要继续吗？")) {
-                return false;
-            }
             if( you.has_effect( effect_relax_gas ) ) {
                 if( one_in( 8 ) ) {
                     add_msg( m_good, _( "Your willpower asserts itself, and so do you!" ) );
@@ -355,6 +351,14 @@ bool avatar_action::move( avatar &you, map &m, const tripoint &d )
                     add_msg( m_bad, _( "You're too pacified to strike anything…" ) );
                     return false;
                 }
+            }
+            if( g->safe_mode == SAFE_MODE_ON &&
+                critter.attitude_to( you ) == Creature::Attitude::NEUTRAL ) {
+                const std::string msg_safe_mode = press_x( ACTION_TOGGLE_SAFEMODE );
+                add_msg( m_warning,
+                         _( "不会攻击%1$s，安全模式已开启，%2$s关闭安全模式。" ),
+                         critter.name(), msg_safe_mode );
+                return false;
             }
             you.melee_attack( critter, true );
             if( critter.is_hallucination() ) {
