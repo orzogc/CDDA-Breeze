@@ -185,7 +185,7 @@ static const trait_id trait_NOPAIN( "NOPAIN" );
 
 struct monster_sound_event {
     int volume;
-    bool provocative;
+    monster_sound_source source;
 };
 
 struct sound_event {
@@ -206,7 +206,7 @@ struct centroid {
     float z;
     float volume;
     float weight;
-    bool provocative;
+    monster_sound_source source;
 };
 
 namespace io
@@ -306,6 +306,20 @@ static bool is_provocative( sounds::sound_t category )
     cata_fatal( "Invalid sound_t category" );
 }
 
+static monster_sound_source make_monster_sound_source(
+    sounds::sound_t category, const monster *source, bool movement_noise )
+{
+    monster_sound_source result;
+    result.category = category;
+    result.provocative = is_provocative( category );
+    result.movement_noise = movement_noise;
+    result.from_monster = source != nullptr;
+    if( source != nullptr ) {
+        result.monster_faction = source->get_monster_faction();
+    }
+    return result;
+}
+
 void sounds::ambient_sound( const tripoint &p, int vol, sound_t category,
                             const std::string &description )
 {
@@ -326,7 +340,9 @@ void sounds::sound( const tripoint &p, int vol, sound_t category, const std::str
     }
     const season_type seas = season_of_year( calendar::turn );
     const std::string seas_str = season_str( seas );
-    recent_sounds.emplace_back( std::make_pair( p, monster_sound_event{ vol, is_provocative( category ) } ) );
+    recent_sounds.emplace_back( std::make_pair( p, monster_sound_event { vol,
+                                         make_monster_sound_source( category, nullptr,
+                                                 category == sound_t::movement ) } ) );
     sounds_since_last_turn.emplace_back( std::make_pair( p,
                                          sound_event { vol, category, description, ambient,
                                                  false, id, variant, seas_str } ) );
@@ -338,13 +354,59 @@ void sounds::sound( const tripoint &p, int vol, sound_t category, const translat
     sounds::sound( p, vol, category, description.translated(), ambient, id, variant );
 }
 
-void sounds::add_footstep( const tripoint &p, int volume, int, monster *,
+void sounds::sound( const tripoint &p, int vol, sound_t category,
+                    const std::string &description, bool ambient,
+                    const std::string &id, const std::string &variant,
+                    const monster *source )
+{
+    if( vol < 0 ) {
+        debugmsg( "negative sound volume %d", vol );
+        return;
+    }
+    if( description.empty() ) {
+        debugmsg( "Sound at %d:%d has no description!", p.x, p.y );
+    }
+    const season_type seas = season_of_year( calendar::turn );
+    const std::string seas_str = season_str( seas );
+    recent_sounds.emplace_back( std::make_pair( p, monster_sound_event { vol,
+                                         make_monster_sound_source( category, source,
+                                                 category == sound_t::movement ) } ) );
+    sounds_since_last_turn.emplace_back( std::make_pair( p,
+                                         sound_event { vol, category, description, ambient,
+                                                 false, id, variant, seas_str } ) );
+}
+
+void sounds::tag_recent_sound_from_monster( const tripoint &p, const monster *source,
+        sound_t category )
+{
+    if( source == nullptr ) {
+        return;
+    }
+    for( auto event = recent_sounds.rbegin(); event != recent_sounds.rend(); ++event ) {
+        if( event->first == p && !event->second.source.from_monster &&
+            event->second.source.category >= sounds::sound_t::destructive_activity ) {
+            event->second.source = make_monster_sound_source( category, source,
+                                   category == sound_t::movement );
+            return;
+        }
+    }
+}
+
+void sounds::add_footstep( const tripoint &p, int volume, int, monster *source,
                            const std::string &footstep )
 {
     const season_type seas = season_of_year( calendar::turn );
     const std::string seas_str = season_str( seas );
+    // Normal medium footsteps remain a player-facing marker only.  Large and
+    // huge movement is loud enough to matter to hostile factions, while allied
+    // listeners discard it before distance calculations.
+    if( volume >= 10 ) {
+        recent_sounds.emplace_back( std::make_pair( p, monster_sound_event { volume,
+                                             make_monster_sound_source( sound_t::movement,
+                                                     source, true ) } ) );
+    }
     sounds_since_last_turn.emplace_back( std::make_pair( p, sound_event { volume,
-                                         sound_t::movement, footstep, false, true, "", "", seas_str} ) );
+                                         sound_t::movement, footstep, false, true, "", "", seas_str } ) );
 }
 
 template <typename C>
@@ -358,70 +420,99 @@ static void vector_quick_remove( std::vector<C> &source, int index )
     source.pop_back();
 }
 
+static bool compatible_monster_sound_sources( const monster_sound_source &lhs,
+        const monster_sound_source &rhs )
+{
+    if( lhs.from_monster != rhs.from_monster ||
+        lhs.movement_noise != rhs.movement_noise ) {
+        return false;
+    }
+    return !lhs.from_monster || lhs.monster_faction == rhs.monster_faction;
+}
+
+static centroid make_sound_centroid(
+    const std::pair<tripoint, monster_sound_event> &event )
+{
+    return centroid {
+        static_cast<float>( event.first.x ),
+        static_cast<float>( event.first.y ),
+        static_cast<float>( event.first.z ),
+        static_cast<float>( event.second.volume ),
+        static_cast<float>( event.second.volume ),
+        event.second.source
+    };
+}
+
 static std::vector<centroid> cluster_sounds( std::vector<std::pair<tripoint, monster_sound_event>>
         input_sounds )
 {
-    // If there are too many monsters and too many noise sources (which can be monsters, go figure),
-    // applying sound events to monsters can dominate processing time for the whole game,
-    // so we cluster sounds and apply the centroids of the sounds to the monster AI
-    // to fight the combinatorial explosion.
+    // Keep source factions in separate clusters.  This avoids the old failure
+    // mode where several zombie footsteps became one anonymous centroid which
+    // then attracted the same zombies that created it.
     std::vector<centroid> sound_clusters;
     if( input_sounds.empty() ) {
         return sound_clusters;
     }
+
     const int num_seed_clusters =
         std::max( std::min( input_sounds.size(), static_cast<size_t>( 10 ) ),
                   static_cast<size_t>( std::log( input_sounds.size() ) ) );
     const size_t stopping_point = input_sounds.size() - num_seed_clusters;
     const size_t max_map_distance = sound_distance( tripoint( point_zero, OVERMAP_DEPTH ),
                                     tripoint( MAPSIZE_X, MAPSIZE_Y, OVERMAP_HEIGHT ) );
-    // Randomly choose cluster seeds.
-    for( size_t i = input_sounds.size(); i > stopping_point; i-- ) {
-        size_t index = rng( 0, i - 1 );
-        // The volume and cluster weight are the same for the first element.
-        sound_clusters.push_back(
-            // Assure the compiler that these int->float conversions are safe.
-        {
-            static_cast<float>( input_sounds[index].first.x ), static_cast<float>( input_sounds[index].first.y ),
-            static_cast<float>( input_sounds[index].first.z ),
-            static_cast<float>( input_sounds[index].second.volume ), static_cast<float>( input_sounds[index].second.volume ),
-            input_sounds[index].second.provocative
-        } );
+
+    for( size_t i = input_sounds.size(); i > stopping_point; --i ) {
+        const size_t index = rng( 0, i - 1 );
+        sound_clusters.push_back( make_sound_centroid( input_sounds[index] ) );
         vector_quick_remove( input_sounds, index );
     }
-    for( const auto &sound_event_pair : input_sounds ) {
-        auto found_centroid = sound_clusters.begin();
-        float dist_factor = max_map_distance;
-        const auto cluster_end = sound_clusters.end();
-        for( auto centroid_iter = sound_clusters.begin(); centroid_iter != cluster_end;
-             ++centroid_iter ) {
-            // Scale the distance between the two by the max possible distance.
-            tripoint centroid_pos { static_cast<int>( centroid_iter->x ), static_cast<int>( centroid_iter->y ), static_cast<int>( centroid_iter->z ) };
-            const int dist = sound_distance( sound_event_pair.first, centroid_pos );
+
+    for( const auto &event : input_sounds ) {
+        auto found_centroid = sound_clusters.end();
+        float dist_factor = static_cast<float>( max_map_distance ) *
+                            static_cast<float>( max_map_distance );
+        for( auto centroid_iter = sound_clusters.begin();
+             centroid_iter != sound_clusters.end(); ++centroid_iter ) {
+            if( !compatible_monster_sound_sources( event.second.source,
+                                                   centroid_iter->source ) ) {
+                continue;
+            }
+            const tripoint centroid_pos {
+                static_cast<int>( centroid_iter->x ),
+                static_cast<int>( centroid_iter->y ),
+                static_cast<int>( centroid_iter->z )
+            };
+            const int dist = sound_distance( event.first, centroid_pos );
             if( dist * dist < dist_factor ) {
                 found_centroid = centroid_iter;
-                dist_factor = dist * dist;
+                dist_factor = static_cast<float>( dist * dist );
             }
         }
-        const float volume_sum = static_cast<float>( sound_event_pair.second.volume ) +
+
+        if( found_centroid == sound_clusters.end() ) {
+            sound_clusters.push_back( make_sound_centroid( event ) );
+            continue;
+        }
+
+        const float volume_sum = static_cast<float>( event.second.volume ) +
                                  found_centroid->weight;
-        // Set the centroid location to the average of the two locations, weighted by volume.
-        found_centroid->x = static_cast<float>( ( sound_event_pair.first.x *
-                                                sound_event_pair.second.volume ) +
-                                                ( found_centroid->x * found_centroid->weight ) ) / volume_sum;
-        found_centroid->y = static_cast<float>( ( sound_event_pair.first.y *
-                                                sound_event_pair.second.volume ) +
-                                                ( found_centroid->y * found_centroid->weight ) ) / volume_sum;
-        found_centroid->z = static_cast<float>( ( sound_event_pair.first.z *
-                                                sound_event_pair.second.volume ) +
-                                                ( found_centroid->z * found_centroid->weight ) ) / volume_sum;
-        // Set the centroid volume to the larger of the volumes.
+        found_centroid->x = static_cast<float>( ( event.first.x * event.second.volume ) +
+                                                ( found_centroid->x * found_centroid->weight ) ) /
+                            volume_sum;
+        found_centroid->y = static_cast<float>( ( event.first.y * event.second.volume ) +
+                                                ( found_centroid->y * found_centroid->weight ) ) /
+                            volume_sum;
+        found_centroid->z = static_cast<float>( ( event.first.z * event.second.volume ) +
+                                                ( found_centroid->z * found_centroid->weight ) ) /
+                            volume_sum;
         found_centroid->volume = std::max( found_centroid->volume,
-                                           static_cast<float>( sound_event_pair.second.volume ) );
-        // Set the centroid weight to the sum of the weights.
+                                           static_cast<float>( event.second.volume ) );
         found_centroid->weight = volume_sum;
-        // Set and keep provocative if any sound in the centroid is provocative
-        found_centroid->provocative |= sound_event_pair.second.provocative;
+        found_centroid->source.provocative |= event.second.source.provocative;
+        if( static_cast<int>( event.second.source.category ) >
+            static_cast<int>( found_centroid->source.category ) ) {
+            found_centroid->source.category = event.second.source.category;
+        }
     }
     return sound_clusters;
 }
@@ -456,30 +547,45 @@ void sounds::process_sounds()
 {
     std::vector<centroid> sound_clusters = cluster_sounds( recent_sounds );
     const int weather_vol = get_weather().weather_id->sound_attn;
+    creature_tracker &creatures = get_creature_tracker();
+
     for( const centroid &this_centroid : sound_clusters ) {
-        // Since monsters don't go deaf ATM we can just use the weather modified volume
-        // If they later get physical effects from loud noises we'll have to change this
-        // to use the unmodified volume for those effects.
         const int vol = this_centroid.volume - weather_vol;
-        const tripoint source = tripoint( this_centroid.x, this_centroid.y, this_centroid.z );
-        // --- Monster sound handling here ---
-        // Alert all hordes
+        const tripoint source( this_centroid.x, this_centroid.y, this_centroid.z );
+        monster_sound_source source_info = this_centroid.source;
+
+        // Older callers do not yet pass an explicit source.  Recover it when the
+        // sound centroid still lands on a monster.  Explicit metadata always wins.
+        if( !source_info.from_monster ) {
+            Creature *origin_creature = creatures.creature_at( source, true );
+            monster *origin_monster = dynamic_cast<monster *>( origin_creature );
+            if( origin_monster != nullptr ) {
+                source_info.from_monster = true;
+                source_info.monster_faction = origin_monster->get_monster_faction();
+            }
+        }
+
         int sig_power = get_signal_for_hordes( this_centroid );
         if( sig_power > 0 ) {
-
             const point abs_ms = get_map().getabs( source.xy() );
-            // TODO: fix point types
             const point_abs_sm abs_sm( ms_to_sm_copy( abs_ms ) );
             const tripoint_abs_sm target( abs_sm, source.z );
             overmap_buffer.signal_hordes( target, sig_power );
         }
-        // Alert all monsters (that can hear) to the sound.
+
         for( monster &critter : g->all_monsters() ) {
-            // TODO: Generalize this to Creature::hear_sound
+            // This is the hottest case in a horde.  Reject allied footsteps
+            // before doing distance and hearing calculations.
+            if( source_info.from_monster && source_info.monster_faction.is_valid() &&
+                critter.get_monster_faction() == source_info.monster_faction &&
+                ( source_info.movement_noise ||
+                  ( source_info.category < sounds::sound_t::alarm && vol < 90 ) ) ) {
+                continue;
+            }
+
             const int dist = sound_distance( source, critter.pos() );
             if( vol * 2 > dist ) {
-                // Exclude monsters that certainly won't hear the sound
-                critter.hear_sound( source, vol, dist, this_centroid.provocative );
+                critter.hear_sound( source, vol, dist, source_info );
             }
         }
     }

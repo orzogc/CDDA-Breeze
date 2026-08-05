@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "units_fwd.h"
+#include "type_id.h"
 #include <optional>
 
 class Character;
@@ -58,6 +59,11 @@ void sound( const tripoint &p, int vol, sound_t category, const std::string &des
 void sound( const tripoint &p, int vol, sound_t category, const translation &description,
             bool ambient = false, const std::string &id = "",
             const std::string &variant = "default" );
+void sound( const tripoint &p, int vol, sound_t category, const std::string &description,
+            bool ambient, const std::string &id, const std::string &variant,
+            const monster *source );
+void tag_recent_sound_from_monster( const tripoint &p, const monster *source,
+                                    sound_t category );
 /** Functions identical to sound(..., true). */
 void ambient_sound( const tripoint &p, int vol, sound_t category, const std::string &description );
 /** Creates a list of coordinates at which to draw footsteps. */
@@ -87,6 +93,20 @@ extern bool sound_enabled;
 template<>
 struct enum_traits<sounds::sound_t> {
     static constexpr sounds::sound_t last = sounds::sound_t::LAST;
+};
+
+/** Lightweight source metadata used by monster hearing.
+ *
+ * This deliberately stores a faction id instead of a monster pointer.  Sound
+ * processing is deferred, so the original creature may already have moved or
+ * died by the time listeners react.
+ */
+struct monster_sound_source {
+    sounds::sound_t category = sounds::sound_t::background;
+    bool provocative = false;
+    bool movement_noise = false;
+    bool from_monster = false;
+    mfaction_id monster_faction;
 };
 
 namespace sfx

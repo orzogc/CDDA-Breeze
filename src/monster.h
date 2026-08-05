@@ -39,6 +39,7 @@ class window;
 }  // namespace catacurses
 struct dealt_projectile_attack;
 struct pathfinding_settings;
+struct monster_sound_source;
 struct trap;
 
 enum class mon_trigger : int;
@@ -473,6 +474,8 @@ class monster : public Creature
          * @param distance Distance to sound source (currently just rl_dist)
          */
         void hear_sound( const tripoint &source, int vol, int distance, bool provocative );
+        void hear_sound( const tripoint &source, int vol, int distance,
+                         const monster_sound_source &source_info );
 
         bool is_hallucination() const override;    // true if the monster isn't actually real
 
@@ -617,6 +620,14 @@ class monster : public Creature
         std::optional<tripoint_abs_ms> failed_pathfinding_target;
         int failed_pathfinding_cooldown = 0;
         int pathfinding_mode_generation_seen = 0;
+        // Transient confirmed-hostile memory.  Kept out of saves on purpose;
+        // loading a game must not grant monsters knowledge they did not reacquire.
+        std::optional<tripoint_abs_ms> last_hostile_target_position;
+        int hostile_target_memory_turns = 0;
+        int hostile_search_turns = 0;
+        int hostile_search_step = 0;
+        int hostile_search_waypoint_turns = 0;
+        int hostile_search_lane = 0;
         /** patrol points for monsters that can pathfind and have a patrol route! **/
         std::vector<tripoint_abs_ms> patrol_route;
         int next_patrol_point = -1;

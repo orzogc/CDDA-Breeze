@@ -2,6 +2,7 @@
 #include "monster.h" // IWYU pragma: associated
 
 #include <algorithm>
+#include <array>
 #include <cfloat>
 #include <climits>
 #include <cmath>
@@ -206,6 +207,16 @@ struct monster_reverse_field_entry {
         frontier.push( { 0, target } );
     }
 };
+
+// Fixed, tiny search pattern around a confirmed last-known position.  Four
+// deterministic lanes spread a horde over nearby rooms without creating one
+// unique reverse field per monster.
+const std::array<point, 16> hostile_search_offsets = {{
+    point( 2, 0 ), point( 0, 2 ), point( -2, 0 ), point( 0, -2 ),
+    point( 3, 3 ), point( -3, 3 ), point( -3, -3 ), point( 3, -3 ),
+    point( 5, 0 ), point( 0, 5 ), point( -5, 0 ), point( 0, -5 ),
+    point( 6, 3 ), point( -3, 6 ), point( -6, -3 ), point( 3, -6 )
+}};
 
 std::optional<time_point> monster_path_cache_turn;
 std::map<monster_route_cache_key, monster_route_cache_entry> monster_route_cache;
@@ -588,6 +599,38 @@ void monster::plan()
 
     // Bots are more intelligent than most living stuff
     bool smart_planning = has_flag( MF_PRIORITIZE_TARGETS );
+    const bool improved_pathfinding =
+        get_option<std::string>( "MONSTER_PATHFINDING" ) != "classic";
+    if( !improved_pathfinding ) {
+        if( last_hostile_target_position ) {
+            unset_dest();
+        }
+        last_hostile_target_position.reset();
+        hostile_target_memory_turns = 0;
+        hostile_search_turns = 0;
+        hostile_search_step = 0;
+        hostile_search_waypoint_turns = 0;
+        hostile_search_lane = 0;
+    } else {
+        if( hostile_target_memory_turns > 0 ) {
+            --hostile_target_memory_turns;
+        }
+        if( hostile_search_turns > 0 ) {
+            --hostile_search_turns;
+        }
+        if( hostile_target_memory_turns <= 0 ||
+            ( hostile_search_step > 0 && hostile_search_turns <= 0 ) ) {
+            if( last_hostile_target_position ) {
+                unset_dest();
+            }
+            last_hostile_target_position.reset();
+            hostile_target_memory_turns = 0;
+            hostile_search_turns = 0;
+            hostile_search_step = 0;
+            hostile_search_waypoint_turns = 0;
+            hostile_search_lane = 0;
+        }
+    }
     Creature *target = nullptr;
     int max_sight_range = std::max( type->vision_day, type->vision_night );
     // 8.6f is rating for tank drone 60 tiles away, moose 16 or boomer 33
@@ -930,6 +973,15 @@ void monster::plan()
         const tripoint_abs_ms dest = target->get_location();
         Creature::Attitude att_to_target = attitude_to( *target );
         if( att_to_target == Attitude::HOSTILE && !fleeing ) {
+            if( improved_pathfinding ) {
+                last_hostile_target_position = dest;
+                hostile_target_memory_turns = smart_planning ? 150 : 60;
+                hostile_search_turns = 0;
+                hostile_search_step = 0;
+                hostile_search_waypoint_turns = 0;
+                hostile_search_lane =
+                    std::abs( posx() * 31 + posy() * 17 + posz() * 13 ) % 4;
+            }
             set_dest( dest );
         } else if( fleeing ) {
             tripoint_abs_ms away = get_location() - dest + get_location();
@@ -953,6 +1005,44 @@ void monster::plan()
                     anger -= 10 - static_cast<int>( hp_per / 10 );
                 }
             }
+        }
+    } else if( improved_pathfinding && friendly == 0 &&
+               last_hostile_target_position && hostile_target_memory_turns > 0 ) {
+        const tripoint_abs_ms memory_origin = *last_hostile_target_position;
+        if( hostile_search_step == 0 &&
+            rl_dist( get_location(), memory_origin ) > 1 ) {
+            // First honour the exact last-known position, including its Z level.
+            set_dest( memory_origin );
+        } else {
+            const int search_count = smart_planning ? 16 : 8;
+            const int lane = hostile_search_lane;
+            const int waypoint_hold = smart_planning ? 4 : 3;
+
+            if( hostile_search_step == 0 ) {
+                hostile_search_step = 1;
+                hostile_search_turns = smart_planning ? 36 : 18;
+                hostile_search_waypoint_turns = waypoint_hold;
+            } else {
+                const int current_index =
+                    ( hostile_search_step - 1 + lane * 2 ) % search_count;
+                tripoint_abs_ms current_waypoint =
+                    memory_origin + hostile_search_offsets[current_index];
+                current_waypoint.z() = memory_origin.z();
+                if( rl_dist( get_location(), current_waypoint ) <= 1 ||
+                    hostile_search_waypoint_turns <= 0 ) {
+                    ++hostile_search_step;
+                    hostile_search_waypoint_turns = waypoint_hold;
+                } else {
+                    --hostile_search_waypoint_turns;
+                }
+            }
+
+            const int waypoint_index =
+                ( hostile_search_step - 1 + lane * 2 ) % search_count;
+            tripoint_abs_ms search_destination =
+                memory_origin + hostile_search_offsets[waypoint_index];
+            search_destination.z() = memory_origin.z();
+            set_dest( search_destination );
         }
     } else if( !patrol_route.empty() ) {
         // If we have a patrol route and no target, find the current step on the route
@@ -1602,7 +1692,10 @@ void monster::move()
             }
         }
     }
-    if( wandf > 0 && !moved && friendly == 0 ) { // No LOS, no scent, so as a fall-back follow sound
+    const bool pursuing_confirmed_hostile = improved_pathfinding &&
+            last_hostile_target_position && hostile_target_memory_turns > 0;
+    if( wandf > 0 && !moved && friendly == 0 &&
+        !pursuing_confirmed_hostile ) { // Sound is below confirmed hostile memory
         if( improved_pathfinding ) {
             if( wander_pos != get_location() ) {
                 const tripoint sound_dest = here.getlocal( wander_pos );
@@ -2180,6 +2273,8 @@ bool monster::bash_at( const tripoint &p )
 
     int bashskill = group_bash_skill( p );
     here.bash( p, bashskill );
+    sounds::tag_recent_sound_from_monster( p, this,
+            sounds::sound_t::destructive_activity );
     moves -= 100;
     return true;
 }
