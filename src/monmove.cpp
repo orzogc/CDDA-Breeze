@@ -219,6 +219,37 @@ const std::array<point, 16> hostile_search_offsets = {{
 }};
 
 
+
+// Search waypoints are clues, not omniscient destinations.  Keep them inside
+// the open area visible from the last confirmed point.  Closed doors and walls
+// require a new sound or sighting instead of being opened by a blind spiral.
+std::optional<std::pair<int, tripoint_abs_ms>> next_hostile_search_waypoint(
+    map &here, const tripoint_abs_ms &memory_origin, int lane,
+    int first_step, int search_count )
+{
+    const tripoint local_origin = here.getlocal( memory_origin );
+    if( !here.inbounds( local_origin ) ) {
+        return std::nullopt;
+    }
+
+    for( int step = std::max( 1, first_step ); step <= search_count; ++step ) {
+        const int index = ( step - 1 + lane * 2 ) % search_count;
+        const tripoint candidate = local_origin + hostile_search_offsets[index];
+        if( candidate.z != local_origin.z || !here.inbounds( candidate ) ||
+            here.impassable( candidate ) ) {
+            continue;
+        }
+
+        const int range = std::max( 1, rl_dist( local_origin, candidate ) + 1 );
+        if( !here.clear_path( local_origin, candidate, range, 1, 100 ) ) {
+            continue;
+        }
+
+        return std::make_pair( step, here.getglobal( candidate ) );
+    }
+    return std::nullopt;
+}
+
 constexpr int hostile_transition_hint_radius = 2;
 
 std::optional<tripoint_abs_ms> infer_hostile_memory_transition(
@@ -685,6 +716,8 @@ void monster::plan()
         hostile_search_waypoint_turns = 0;
         hostile_search_lane = 0;
         hostile_transition_attempts = 0;
+        hostile_search_deadline.reset();
+        last_hostile_sighting_turn.reset();
     } else {
         if( hostile_target_memory_turns > 0 ) {
             --hostile_target_memory_turns;
@@ -692,8 +725,11 @@ void monster::plan()
         if( hostile_search_turns > 0 ) {
             --hostile_search_turns;
         }
+        const bool search_deadline_expired = hostile_search_deadline &&
+            calendar::turn >= *hostile_search_deadline;
         if( hostile_target_memory_turns <= 0 ||
-            ( hostile_search_step > 0 && hostile_search_turns <= 0 ) ) {
+            ( hostile_search_step > 0 &&
+              ( hostile_search_turns <= 0 || search_deadline_expired ) ) ) {
             if( last_hostile_target_position ) {
                 unset_dest();
             }
@@ -704,6 +740,7 @@ void monster::plan()
             hostile_search_waypoint_turns = 0;
             hostile_search_lane = 0;
             hostile_transition_attempts = 0;
+            hostile_search_deadline.reset();
         }
     }
     Creature *target = nullptr;
@@ -1055,6 +1092,15 @@ void monster::plan()
                 hostile_search_step = 0;
                 hostile_search_waypoint_turns = 0;
                 hostile_transition_attempts = 0;
+                hostile_search_deadline.reset();
+                last_hostile_sighting_turn = calendar::turn;
+                // Direct sight is absolute priority.  Do not let an old search,
+                // sound marker or failed route survive into the new pursuit.
+                wandf = 0;
+                provocative_sound = false;
+                path.clear();
+                failed_pathfinding_target.reset();
+                failed_pathfinding_cooldown = 0;
                 hostile_search_lane =
                     std::abs( posx() * 31 + posy() * 17 + posz() * 13 ) % 4;
             }
@@ -1105,6 +1151,8 @@ void monster::plan()
                     hostile_search_turns = 0;
                     hostile_search_step = 0;
                     hostile_search_waypoint_turns = 0;
+                    hostile_search_deadline.reset();
+                    wandf = 0;
                     set_dest( *transition );
                     followed_transition = true;
                 }
@@ -1113,33 +1161,54 @@ void monster::plan()
             if( !followed_transition ) {
                 const int search_count = smart_planning ? 16 : 8;
                 const int lane = hostile_search_lane;
-                const int waypoint_hold = smart_planning ? 4 : 3;
+                const int waypoint_hold = smart_planning ? 12 : 8;
 
                 if( hostile_search_step == 0 ) {
                     hostile_search_step = 1;
                     hostile_search_turns = smart_planning ? 36 : 18;
                     hostile_search_waypoint_turns = waypoint_hold;
+                    hostile_search_deadline = calendar::turn +
+                        time_duration::from_turns( hostile_search_turns );
+                } else if( hostile_search_waypoint_turns <= 0 ) {
+                    ++hostile_search_step;
+                    hostile_search_waypoint_turns = waypoint_hold;
                 } else {
-                    const int current_index =
-                        ( hostile_search_step - 1 + lane * 2 ) % search_count;
-                    tripoint_abs_ms current_waypoint =
-                        memory_origin + hostile_search_offsets[current_index];
-                    current_waypoint.z() = memory_origin.z();
-                    if( rl_dist( get_location(), current_waypoint ) <= 1 ||
-                        hostile_search_waypoint_turns <= 0 ) {
-                        ++hostile_search_step;
-                        hostile_search_waypoint_turns = waypoint_hold;
-                    } else {
-                        --hostile_search_waypoint_turns;
-                    }
+                    --hostile_search_waypoint_turns;
                 }
 
-                const int waypoint_index =
-                    ( hostile_search_step - 1 + lane * 2 ) % search_count;
-                tripoint_abs_ms search_destination =
-                    memory_origin + hostile_search_offsets[waypoint_index];
-                search_destination.z() = memory_origin.z();
-                set_dest( search_destination );
+                if( hostile_search_deadline &&
+                    calendar::turn >= *hostile_search_deadline ) {
+                    hostile_search_step = search_count + 1;
+                }
+
+                std::optional<std::pair<int, tripoint_abs_ms>> waypoint;
+                if( hostile_search_step <= search_count ) {
+                    waypoint = next_hostile_search_waypoint(
+                        here, memory_origin, lane, hostile_search_step,
+                        search_count );
+                }
+
+                if( !waypoint ) {
+                    // Every safe local clue was exhausted.  End the search now
+                    // instead of wrapping around the same offsets indefinitely.
+                    unset_dest();
+                    last_hostile_target_position.reset();
+                    hostile_target_memory_turns = 0;
+                    hostile_search_turns = 0;
+                    hostile_search_step = 0;
+                    hostile_search_waypoint_turns = 0;
+                    hostile_search_lane = 0;
+                    hostile_transition_attempts = 0;
+                    hostile_search_deadline.reset();
+                } else {
+                    hostile_search_step = waypoint->first;
+                    const tripoint_abs_ms &search_destination = waypoint->second;
+                    if( rl_dist( get_location(), search_destination ) <= 1 ) {
+                        ++hostile_search_step;
+                        hostile_search_waypoint_turns = waypoint_hold;
+                    }
+                    set_dest( search_destination );
+                }
             }
         }
     } else if( !patrol_route.empty() ) {

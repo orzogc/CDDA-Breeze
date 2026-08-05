@@ -630,6 +630,10 @@ class monster : public Creature
         int hostile_search_lane = 0;
         // At most one speculative stair hand-off per confirmed sighting.
         int hostile_transition_attempts = 0;
+        // Wall-clock deadline makes search expiry independent of plan cadence.
+        std::optional<time_point> hostile_search_deadline;
+        // Cheap sensor-priority stamp, avoids a target lookup for every sound.
+        std::optional<time_point> last_hostile_sighting_turn;
         /** patrol points for monsters that can pathfind and have a patrol route! **/
         std::vector<tripoint_abs_ms> patrol_route;
         int next_patrol_point = -1;

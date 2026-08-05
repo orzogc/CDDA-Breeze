@@ -3841,7 +3841,16 @@ void monster::hear_sound( const tripoint &source, const int vol, const int dist,
         }
     }
 
-    bool cross_z_priority_sound = false;
+    // Sight is the top-level sensor.  Use a one-turn stamp instead of an
+    // attack-target lookup here, because this runs in the sound-by-monster hot
+    // loop during a horde event.
+    if( improved_pathfinding && last_hostile_sighting_turn &&
+        calendar::turn <= *last_hostile_sighting_turn +
+        time_duration::from_turns( 1 ) ) {
+        return;
+    }
+
+    bool priority_sound = false;
     if( improved_pathfinding && hostile_target_memory_turns > 0 &&
         last_hostile_target_position ) {
         const bool urgent_sound = source_info.provocative ||
@@ -3849,16 +3858,20 @@ void monster::hear_sound( const tripoint &source, const int vol, const int dist,
                                   volume >= 70;
         const bool pulls_to_another_level =
             source.z != last_hostile_target_position->z();
-        // Ordinary noise remains below a recently confirmed target.  An urgent,
-        // clearly audible sound on another floor is different: it is the missing
-        // hand-off between hearing and cross-Z pathfinding, so retire the stale
-        // visual memory and let the sound route take over.
-        if( !urgent_sound && ( pulls_to_another_level || volume < 40 ) ) {
-            return;
-        }
-        cross_z_priority_sound = urgent_sound && pulls_to_another_level &&
-                                 volume >= 10;
-        if( cross_z_priority_sound ) {
+        const bool searching_last_seen =
+            ( hostile_search_step > 0 || hostile_transition_attempts > 0 ) &&
+            last_hostile_target_position->z() == posz();
+        const bool relevant_search_lead = searching_last_seen &&
+            source.z == posz() && volume >= 4 &&
+            ( source_info.provocative || source_info.movement_noise ||
+              source_info.category >= sounds::sound_t::speech || volume >= 20 );
+
+        // Visual memory wins while the monster is still travelling to the exact
+        // last-seen tile.  Once local search has begun, a plausible sound on the
+        // same floor is better evidence than a blind search pattern and may take
+        // over immediately.  Allied movement was already rejected above.
+        if( relevant_search_lead ) {
+            priority_sound = true;
             last_hostile_target_position.reset();
             hostile_target_memory_turns = 0;
             hostile_search_turns = 0;
@@ -3866,10 +3879,30 @@ void monster::hear_sound( const tripoint &source, const int vol, const int dist,
             hostile_search_waypoint_turns = 0;
             hostile_search_lane = 0;
             hostile_transition_attempts = 0;
+            hostile_search_deadline.reset();
             unset_dest();
+        } else {
+            // Ordinary noise remains below a recently confirmed visual target.
+            // Urgent cross-Z sound is the explicit hand-off to acoustic pursuit.
+            if( !urgent_sound && ( pulls_to_another_level || volume < 40 ) ) {
+                return;
+            }
+            priority_sound = urgent_sound && pulls_to_another_level &&
+                             volume >= 10;
+            if( priority_sound ) {
+                last_hostile_target_position.reset();
+                hostile_target_memory_turns = 0;
+                hostile_search_turns = 0;
+                hostile_search_step = 0;
+                hostile_search_waypoint_turns = 0;
+                hostile_search_lane = 0;
+                hostile_transition_attempts = 0;
+                hostile_search_deadline.reset();
+                unset_dest();
+            }
         }
     } else if( improved_pathfinding && source.z != posz() ) {
-        cross_z_priority_sound =
+        priority_sound =
             ( source_info.provocative ||
               source_info.category >= sounds::sound_t::alarm ) &&
             volume >= 10;
@@ -3896,7 +3929,7 @@ void monster::hear_sound( const tripoint &source, const int vol, const int dist,
                              point( rng( -max_error, max_error ),
                                     rng( -max_error, max_error ) );
     const int wander_turns = volume * ( goodhearing ? 6 : 1 );
-    if( wander_turns < wandf && !cross_z_priority_sound ) {
+    if( wander_turns < wandf && !priority_sound ) {
         return;
     }
     if( friendly == 0 || source != get_player_character().pos() ) {
