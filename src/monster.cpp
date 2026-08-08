@@ -3799,66 +3799,149 @@ float monster::get_mountable_weight_ratio() const
     return type->mountable_weight_ratio;
 }
 
-void monster::hear_sound(const tripoint& source, const int vol, const int dist, bool provocative)
+void monster::hear_sound( const tripoint &source, const int vol, const int dist,
+                          bool provocative )
 {
-    if (!can_hear()) {
+    monster_sound_source source_info;
+    source_info.provocative = provocative;
+    hear_sound( source, vol, dist, source_info );
+}
+
+void monster::hear_sound( const tripoint &source, const int vol, const int dist,
+                          const monster_sound_source &source_info )
+{
+    if( !can_hear() ) {
         return;
     }
 
-    const bool goodhearing = has_flag(MF_GOODHEARING);
+    const bool goodhearing = has_flag( MF_GOODHEARING );
     const int volume = goodhearing ? 2 * vol - dist : vol - dist;
-    // Error is based on volume, louder sound = less error
-    if (volume <= 0) {
+    if( volume <= 0 ) {
         return;
     }
 
-    int tmp_provocative = provocative || volume >= normal_roll(30, 5);
-    // already following a more interesting sound
-    if (provocative_sound && !tmp_provocative && wandf > 0) {
+    const bool improved_pathfinding =
+        get_option<std::string>( "MONSTER_PATHFINDING" ) != "classic";
+    if( improved_pathfinding && source_info.from_monster &&
+        source_info.monster_faction.is_valid() ) {
+        const mf_attitude source_attitude =
+            faction.obj().attitude( source_info.monster_faction );
+        const bool allied_source =
+            get_monster_faction() == source_info.monster_faction ||
+            source_attitude == MFA_FRIENDLY;
+
+        // CBN's most important sound-AI rule.  Allied movement cannot create a
+        // feedback loop, while destructive or urgent allied sounds remain usable.
+        if( allied_source && source_info.movement_noise ) {
+            return;
+        }
+        if( allied_source && source_info.category < sounds::sound_t::alarm &&
+            vol < 90 ) {
+            return;
+        }
+    }
+
+    // Sight is the top-level sensor.  Use a one-turn stamp instead of an
+    // attack-target lookup here, because this runs in the sound-by-monster hot
+    // loop during a horde event.
+    if( improved_pathfinding && last_hostile_sighting_turn &&
+        calendar::turn <= *last_hostile_sighting_turn +
+        time_duration::from_turns( 1 ) ) {
+        return;
+    }
+
+    bool priority_sound = false;
+    if( improved_pathfinding && hostile_target_memory_turns > 0 &&
+        last_hostile_target_position ) {
+        const bool urgent_sound = source_info.provocative ||
+                                  source_info.category >= sounds::sound_t::alarm ||
+                                  volume >= 70;
+        const bool pulls_to_another_level =
+            source.z != last_hostile_target_position->z();
+        const bool searching_last_seen =
+            ( hostile_search_step > 0 || hostile_transition_attempts > 0 ) &&
+            last_hostile_target_position->z() == posz();
+        const bool relevant_search_lead = searching_last_seen &&
+            source.z == posz() && volume >= 4 &&
+            ( source_info.provocative || source_info.movement_noise ||
+              source_info.category >= sounds::sound_t::speech || volume >= 20 );
+
+        // Visual memory wins while the monster is still travelling to the exact
+        // last-seen tile.  Once local search has begun, a plausible sound on the
+        // same floor is better evidence than a blind search pattern and may take
+        // over immediately.  Allied movement was already rejected above.
+        if( relevant_search_lead ) {
+            priority_sound = true;
+            last_hostile_target_position.reset();
+            hostile_target_memory_turns = 0;
+            hostile_search_turns = 0;
+            hostile_search_step = 0;
+            hostile_search_waypoint_turns = 0;
+            hostile_search_lane = 0;
+            hostile_transition_attempts = 0;
+            hostile_search_deadline.reset();
+            unset_dest();
+        } else {
+            // Ordinary noise remains below a recently confirmed visual target.
+            // Urgent cross-Z sound is the explicit hand-off to acoustic pursuit.
+            if( !urgent_sound && ( pulls_to_another_level || volume < 40 ) ) {
+                return;
+            }
+            priority_sound = urgent_sound && pulls_to_another_level &&
+                             volume >= 10;
+            if( priority_sound ) {
+                last_hostile_target_position.reset();
+                hostile_target_memory_turns = 0;
+                hostile_search_turns = 0;
+                hostile_search_step = 0;
+                hostile_search_waypoint_turns = 0;
+                hostile_search_lane = 0;
+                hostile_transition_attempts = 0;
+                hostile_search_deadline.reset();
+                unset_dest();
+            }
+        }
+    } else if( improved_pathfinding && source.z != posz() ) {
+        priority_sound =
+            ( source_info.provocative ||
+              source_info.category >= sounds::sound_t::alarm ) &&
+            volume >= 10;
+    }
+
+    const bool tmp_provocative = source_info.provocative ||
+                                 volume >= normal_roll( 30, 5 );
+    if( provocative_sound && !tmp_provocative && wandf > 0 ) {
         return;
     }
 
     int max_error = 0;
-    if (volume < 2) {
+    if( volume < 2 ) {
         max_error = 10;
-    }
-    else if (volume < 5) {
+    } else if( volume < 5 ) {
         max_error = 5;
-    }
-    else if (volume < 10) {
+    } else if( volume < 10 ) {
         max_error = 3;
-    }
-    else if (volume < 20) {
+    } else if( volume < 20 ) {
         max_error = 1;
     }
 
-    tripoint_abs_ms target = get_map().getglobal(source) + point(rng(-max_error, max_error),
-        rng(-max_error, max_error));
-    // target_z will require some special check due to soil muffling sounds
-
-    const int wander_turns = volume * (goodhearing ? 6 : 1);
-    // again, already following a more interesting sound
-    if (wander_turns < wandf) {
+    tripoint_abs_ms target = get_map().getglobal( source ) +
+                             point( rng( -max_error, max_error ),
+                                    rng( -max_error, max_error ) );
+    const int wander_turns = volume * ( goodhearing ? 6 : 1 );
+    if( wander_turns < wandf && !priority_sound ) {
         return;
     }
-    // only trigger this if the monster is not friendly or the source isn't the player
-    if (friendly == 0 || source != get_player_character().pos()) {
-        process_trigger(mon_trigger::SOUND, volume);
+    if( friendly == 0 || source != get_player_character().pos() ) {
+        process_trigger( mon_trigger::SOUND, volume );
     }
     provocative_sound = tmp_provocative;
-    if (morale >= 0 && anger >= 10) {
-        // TODO: Add a proper check for fleeing attitude
-        // but cache it nicely, because this part is called a lot
-        wander_to(target, wander_turns);
-    }
-    else if (morale < 0) {
-        // Monsters afraid of sound should not go towards sound.
-        // Move towards a point on the opposite side of us from the target.
-        // TODO: make the destination scale with the sound and handle
-        // the case when (x,y) is the same by picking a random direction
-        tripoint_abs_ms away = get_location() + (get_location() - target);
+    if( morale >= 0 && anger >= 10 ) {
+        wander_to( target, wander_turns );
+    } else if( morale < 0 ) {
+        tripoint_abs_ms away = get_location() + ( get_location() - target );
         away.z() = posz();
-        wander_to(away, wander_turns);
+        wander_to( away, wander_turns );
     }
 }
 
