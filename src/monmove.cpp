@@ -1660,7 +1660,20 @@ void monster::move()
 
                     int result_cost = impassable_cost;
                     if( will_move_to( to ) ) {
-                        result_cost = std::max( 1, calc_movecost( from, to ) );
+                        const int base_move_cost =
+                            std::max( 1, calc_movecost( from, to ) );
+                        const bool diagonal_step =
+                            from.x != to.x && from.y != to.y;
+
+                        // Breeze's calc_movecost() contains terrain cost but not
+                        // diagonal geometry. Actual movement applies that later
+                        // through get_stagger_adjust(). The reverse field must
+                        // price diagonals itself or a straight pursuit has many
+                        // equally-cheap sideways detours. CBN's destination
+                        // Dijkstra uses a 1.5x diagonal/cardinal ratio.
+                        result_cost = diagonal_step ?
+                                      ( base_move_cost * 3 + 1 ) / 2 :
+                                      base_move_cost;
                     } else if( can_open_doors &&
                                here.open_door( *this, to, !here.is_outside( from ), true ) ) {
                         result_cost = 100;
@@ -1922,6 +1935,7 @@ void monster::move()
     // Current CBN treats a valid path step as authoritative: STUMBLES only
     // randomizes greedy movement when no path step is available.  Keep Breeze's
     // old loop as a fallback if that immediate step is dynamically blocked.
+    // phase seven reverse-field geometry also makes a valid path step exact.
     const bool path_step_is_authoritative = improved_pathfinding && pathed;
     if( moved ) {
         // Implement both avoiding obstacles and staggering.
@@ -1930,7 +1944,22 @@ void monster::move()
         // This is a float and using trig_dist() because that Does the Right Thing(tm)
         // in both circular and roguelike distance modes.
         const float distance_to_target = trig_dist( pos(), destination );
-        for( tripoint &candidate : squares_closer_to( pos(), destination ) ) {
+        std::vector<tripoint> movement_candidates;
+        if( path_step_is_authoritative ) {
+            // Match CBN's pathed_to_goal behavior first. A valid route's
+            // immediate next step must win whenever it is usable; retain the
+            // old local candidates only as a fallback when that step is
+            // dynamically rejected below.
+            movement_candidates.push_back( destination );
+            const std::vector<tripoint> fallback_candidates =
+                squares_closer_to( pos(), destination );
+            movement_candidates.insert( movement_candidates.end(),
+                                        fallback_candidates.begin(), fallback_candidates.end() );
+        } else {
+            movement_candidates = squares_closer_to( pos(), destination );
+        }
+
+        for( tripoint &candidate : movement_candidates ) {
             // rare scenario when monster is on the border of the map and it's goal is outside of the map
             if( !here.inbounds( candidate ) ) {
                 continue;
