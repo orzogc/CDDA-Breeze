@@ -2395,6 +2395,7 @@ bool npc::can_move_to( const tripoint &p, bool no_bashing ) const
 
 void npc::move_to( const tripoint &pt, bool no_bashing, std::set<tripoint> *nomove )
 {   
+    const int preaim_start_moves = moves;
     bool has_special_effect_want_trade = has_effect(effect_want_trade);
     tripoint p = pt;
     map &here = get_map();
@@ -2629,6 +2630,7 @@ void npc::move_to( const tripoint &pt, bool no_bashing, std::set<tripoint> *nomo
 
         here.creature_on_trap( *this );
         here.creature_in_field( *this );
+        update_moving_preaim( std::max( 0, preaim_start_moves - moves ), false );
     }
 }
 
@@ -2860,6 +2862,7 @@ void npc::move_pause()
         }
     }
     if( !get_wielded_item() || !get_wielded_item()->is_gun() ) {
+        clear_moving_preaim();
         pause();
         return;
     }
@@ -2870,14 +2873,18 @@ void npc::move_pause()
         return;
     }
 
+    item &weapon = *get_wielded_item();
     Creature *target = current_target();
     if( target == nullptr || !sees( *target ) ) {
+        update_moving_preaim( std::max( moves, 0 ), true );
         recoil = MAX_RECOIL;
         pause();
         return;
     }
 
+    recoil = std::min( recoil, moving_preaim_recoil( weapon, *target ) );
     aim( Target_attributes( pos(), target->pos() ) );
+    remember_moving_preaim_recoil( weapon, *target, recoil );
     moves = std::min( moves, 0 );
 }
 

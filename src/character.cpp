@@ -11768,6 +11768,9 @@ void Character::environmental_revert_effect()
 
 void Character::pause()
 {
+    if( is_avatar() ) {
+        as_avatar()->update_moving_preaim( std::max( moves, 0 ), true );
+    }
     moves = 0;
     recoil = MAX_RECOIL;
     map &here = get_map();

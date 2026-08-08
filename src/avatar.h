@@ -262,6 +262,10 @@ class avatar : public Character
         // Preferred aim mode - ranged.cpp aim mode defaults to this if possible
         std::string preferred_aiming_mode;
 
+        void clear_moving_preaim();
+        void update_moving_preaim( int spent_moves, bool stationary );
+        double moving_preaim_recoil( const item &weapon, const Creature &target ) const;
+
         // checks if the point is blocked based on characters current aiming state
         bool cant_see( const tripoint &p );
 
@@ -425,6 +429,12 @@ class avatar : public Character
 
         // true when the space is still visible when aiming
         cata::mdarray<bool, point_bub_ms> aim_cache;
+
+        struct moving_preaim_target_state {
+            weak_ptr_fast<Creature> target;
+            double recoil = MAX_RECOIL;
+        };
+        std::vector<moving_preaim_target_state> moving_preaim_targets; // NOLINT(cata-serialize)
 };
 
 avatar &get_avatar();
