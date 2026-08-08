@@ -386,6 +386,7 @@ void npc_attack_gun::use( npc &source, const tripoint &location ) const
     map& m = get_map();
 
     if( !source.is_wielding( gun ) ) {
+        source.clear_moving_preaim();
         if( !source.wield( gun ) ) {
             debugmsg( "ERROR: npc tried to equip a weapon it couldn't wield" );
         }
@@ -393,6 +394,7 @@ void npc_attack_gun::use( npc &source, const tripoint &location ) const
     }
 
     if( !gun.ammo_sufficient( &source ) ) {
+        source.clear_moving_preaim();
         // todo: make gun an item_location instead of getting wielded item here
         // but since wielding is required before this, it should be fine
         source.do_reload( source.get_wielded_item() );
@@ -415,17 +417,24 @@ void npc_attack_gun::use( npc &source, const tripoint &location ) const
     const int dist = rl_dist_exact( source.pos(), location );
     const Target_attributes target_attributes( source.pos(), location );
 
+    Creature *target = get_creature_tracker().creature_at( location );
+    if( target != nullptr && source.sees( *target ) ) {
+        source.recoil = std::min( source.recoil, source.moving_preaim_recoil( gun, *target ) );
+    }
+
     // Only aim if we aren't in risk of being hit
     // TODO: Get distance to closest enemy
     if( dist > 1 && source.aim_per_move( gun, source.recoil, target_attributes ) > 0 &&
         source.confident_gun_mode_range( gunmode, source.recoil ) < dist ) {
         add_msg_debug( debugmode::debug_filter::DF_NPC, "%s is aiming", source.disp_name() );
-        Creature *target = get_creature_tracker().creature_at( location );
         if( target != nullptr && target->is_avatar() && get_player_character().sees( source ) ) {
             add_msg( m_warning, _( "%s takes aim at you." ), source.disp_name() );
         }
 
         source.aim( target_attributes );
+        if( target != nullptr ) {
+            source.remember_moving_preaim_recoil( gun, *target, source.recoil );
+        }
         if( source.moves > 0 ) {
             source.moves = 0;
         }
@@ -438,6 +447,7 @@ void npc_attack_gun::use( npc &source, const tripoint &location ) const
     } else {
         source.fire_gun( location );
     }
+    source.clear_moving_preaim();
     add_msg_debug( debugmode::debug_filter::DF_NPC, "%s fires %s", source.disp_name(),
                    gun.display_name() );
 }

@@ -1142,6 +1142,11 @@ class npc : public Character
         item_location find_usable_ammo( const item_location &weap );
         item_location find_usable_ammo( const item_location &weap ) const;
 
+        void clear_moving_preaim();
+        void update_moving_preaim( int spent_moves, bool stationary );
+        double moving_preaim_recoil( const item &weapon, const Creature &target ) const;
+        void remember_moving_preaim_recoil( const item &weapon, const Creature &target, double recoil );
+
         bool dispose_item( item_location &&obj, const std::string &prompt = std::string() ) override;
 
         void update_cardio_acc() override {};
@@ -1313,6 +1318,10 @@ class npc : public Character
         std::map<std::string, time_point> complaints;
 
         npc_short_term_cache ai_cache;
+
+        weak_ptr_fast<Creature> moving_preaim_target; // NOLINT(cata-serialize)
+        itype_id moving_preaim_weapon = itype_id::NULL_ID(); // NOLINT(cata-serialize)
+        double moving_preaim_recoil_cache = MAX_RECOIL; // NOLINT(cata-serialize)
 
         std::map<npc_need, npc_need_goal_cache> goal_cache;
 

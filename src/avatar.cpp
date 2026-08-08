@@ -1305,6 +1305,7 @@ bool avatar::wield( item &target, const int obtain_cost )
     }
     cached_info.erase( "weapon_value" );
     if( target.is_null() ) {
+        clear_moving_preaim();
         return true;
     }
 
@@ -1343,6 +1344,7 @@ bool avatar::wield( item &target, const int obtain_cost )
     weapon = get_wielded_item();
     last_item = weapon->typeId();
     recoil = MAX_RECOIL;
+    clear_moving_preaim();
 
     weapon->on_wield( *this );
 

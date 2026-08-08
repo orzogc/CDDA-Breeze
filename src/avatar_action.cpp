@@ -158,6 +158,19 @@ static bool check_water_affect_items( avatar &you )
 
 bool avatar_action::move( avatar &you, map &m, const tripoint &d )
 {
+    const tripoint preaim_start_pos = you.pos();
+    const int preaim_start_moves = you.moves;
+    struct moving_preaim_guard {
+        avatar &you;
+        tripoint start_pos;
+        int start_moves;
+        ~moving_preaim_guard() {
+            if( you.pos() != start_pos ) {
+                you.update_moving_preaim( std::max( 0, start_moves - you.moves ), false );
+            }
+        }
+    } preaim_guard{ you, preaim_start_pos, preaim_start_moves };
+
     bool in_shell = you.has_active_mutation( trait_SHELL2 ) ||
                     you.has_active_mutation( trait_SHELL3 );
     if( ( !g->check_safe_mode_allowed() ) || in_shell ) {
@@ -326,6 +339,9 @@ bool avatar_action::move( avatar &you, map &m, const tripoint &d )
     bool attacking = false;
     if( creatures.creature_at( dest_loc ) ) {
         attacking = true;
+    }
+    if( attacking ) {
+        you.clear_moving_preaim();
     }
 
     if( !you.move_effects( attacking ) ) {

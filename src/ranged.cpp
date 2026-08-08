@@ -12,6 +12,8 @@
 #include <string>
 #include <tuple>
 #include <type_traits>
+#include <unordered_map>
+#include <unordered_set>
 #include <utility>
 #include <vector>
 
@@ -142,6 +144,27 @@ static const std::set<material_id> ferric = { material_iron, material_steel, mat
 // Maximum duration of aim-and-fire loop, in turns
 static constexpr int AIF_DURATION_LIMIT = 10;
 
+static constexpr double MOVING_PREAIM_WALK_EFFICIENCY = 0.40;
+static constexpr double MOVING_PREAIM_CROUCH_EFFICIENCY = 0.50;
+static constexpr double MOVING_PREAIM_RUN_EFFICIENCY = 0.20;
+static constexpr double MOVING_PREAIM_PRONE_EFFICIENCY = 0.35;
+static constexpr double MOVING_PREAIM_WALK_CAP = 0.65;
+static constexpr double MOVING_PREAIM_CROUCH_CAP = 0.75;
+static constexpr double MOVING_PREAIM_RUN_CAP = 0.35;
+static constexpr double MOVING_PREAIM_PRONE_CAP = 0.85;
+static constexpr double MOVING_PREAIM_OUT_OF_RANGE_EFFICIENCY = 0.25;
+static constexpr double MOVING_PREAIM_OUT_OF_RANGE_CAP = 0.25;
+static constexpr double MOVING_PREAIM_BOW_CAP = 0.50;
+// A completely prepared aim fades to an unprepared state after about five seconds
+// without visual contact.  This keeps short corner peeks useful without allowing
+// permanent wall tracking.
+static constexpr int MOVING_PREAIM_LOST_SIGHT_DECAY_MOVES = 500;
+
+struct moving_preaim_parameters {
+    double efficiency = 1.0;
+    double cap = 1.0;
+};
+
 static projectile make_gun_projectile( const item &gun );
 static int time_to_attack( const Character &p, const itype &firing );
 /**
@@ -152,6 +175,262 @@ static int time_to_attack( const Character &p, const itype &firing );
 */
 static void cycle_action( item &weap, const itype_id &ammo, const tripoint &pos );
 static void make_gun_sound_effect( const Character &p, bool burst, item *weapon );
+
+static moving_preaim_parameters moving_preaim_params( const Character &who, const bool stationary )
+{
+    if( stationary ) {
+        return { 1.0, 1.0 };
+    }
+    if( who.is_running() ) {
+        return { MOVING_PREAIM_RUN_EFFICIENCY, MOVING_PREAIM_RUN_CAP };
+    }
+    if( who.is_prone() ) {
+        return { MOVING_PREAIM_PRONE_EFFICIENCY, MOVING_PREAIM_PRONE_CAP };
+    }
+    if( who.is_crouching() ) {
+        return { MOVING_PREAIM_CROUCH_EFFICIENCY, MOVING_PREAIM_CROUCH_CAP };
+    }
+    return { MOVING_PREAIM_WALK_EFFICIENCY, MOVING_PREAIM_WALK_CAP };
+}
+
+static double moving_preaim_floor( const Character &who, const item &weapon,
+                                   double cap, const bool out_of_range )
+{
+    if( out_of_range ) {
+        cap = std::min( cap, MOVING_PREAIM_OUT_OF_RANGE_CAP );
+    }
+    if( weapon.ammo_types().count( ammo_arrow ) > 0 ) {
+        cap = std::min( cap, MOVING_PREAIM_BOW_CAP );
+    }
+
+    const double best = who.most_accurate_aiming_method_limit( weapon );
+    return MAX_RECOIL - ( MAX_RECOIL - best ) * cap;
+}
+
+static double improve_moving_preaim( const Character &who, item &weapon,
+                                     const Creature &target, double recoil,
+                                     const int spent_moves, const bool stationary )
+{
+    if( spent_moves <= 0 ) {
+        return recoil;
+    }
+
+    const moving_preaim_parameters params = moving_preaim_params( who, stationary );
+    int effective_moves = std::max( 1, static_cast<int>( std::round( spent_moves *
+                                    params.efficiency ) ) );
+    gun_mode mode = weapon.gun_current_mode();
+    const bool out_of_range = mode && rl_dist( who.pos(), target.pos() ) > mode.target->gun_range( &who );
+    if( out_of_range ) {
+        effective_moves = std::max( 1, static_cast<int>( std::round( effective_moves *
+                                        MOVING_PREAIM_OUT_OF_RANGE_EFFICIENCY ) ) );
+    }
+
+    const double floor = moving_preaim_floor( who, weapon, params.cap, out_of_range );
+    // Entering a less stable movement mode immediately sheds aim that the new posture
+    // cannot physically maintain.
+    double result = std::max( recoil, floor );
+    const Target_attributes attributes( who.pos(), target.pos() );
+    for( int i = 0; i < effective_moves; ++i ) {
+        const double amount = who.aim_per_move( weapon, result, attributes );
+        if( amount <= MIN_RECOIL_IMPROVEMENT ) {
+            break;
+        }
+        result = std::max( floor, result - amount );
+    }
+    return result;
+}
+
+static double decay_moving_preaim( const double recoil, const int spent_moves )
+{
+    if( recoil >= MAX_RECOIL || spent_moves <= 0 ) {
+        return recoil;
+    }
+    const double loss = MAX_RECOIL * static_cast<double>( spent_moves ) /
+                        MOVING_PREAIM_LOST_SIGHT_DECAY_MOVES;
+    return std::min( MAX_RECOIL, recoil + loss );
+}
+
+void avatar::clear_moving_preaim()
+{
+    moving_preaim_targets.clear();
+}
+
+void avatar::update_moving_preaim( const int spent_moves, const bool stationary )
+{
+    if( !get_option<bool>( "MOVING_PREAIM" ) ) {
+        clear_moving_preaim();
+        return;
+    }
+    if( spent_moves <= 0 ) {
+        return;
+    }
+    if( is_driving() || is_mounted() || is_underwater() ) {
+        clear_moving_preaim();
+        return;
+    }
+
+    item_location weapon_loc = get_wielded_item();
+    if( !weapon_loc || !weapon_loc->is_gun() ) {
+        clear_moving_preaim();
+        return;
+    }
+    item *weapon = &*weapon_loc;
+    gun_mode current_mode = weapon->gun_current_mode();
+    if( !current_mode || current_mode.melee() ) {
+        clear_moving_preaim();
+        return;
+    }
+
+    std::vector<Creature *> hostiles = g->get_creatures_if( [this]( const Creature &cr ) {
+        return &cr != this && attitude_to( cr ) == Creature::Attitude::HOSTILE &&
+               ( sees( cr ) || sees_with_infrared( cr ) );
+    } );
+
+    std::unordered_map<const Creature *, double> previous_recoil;
+    previous_recoil.reserve( moving_preaim_targets.size() );
+    for( const moving_preaim_target_state &state : moving_preaim_targets ) {
+        if( shared_ptr_fast<Creature> previous = state.target.lock() ) {
+            previous_recoil.emplace( previous.get(), state.recoil );
+        }
+    }
+
+    std::unordered_set<const Creature *> visible;
+    visible.reserve( hostiles.size() );
+    std::vector<moving_preaim_target_state> next_targets;
+    next_targets.reserve( hostiles.size() + moving_preaim_targets.size() );
+    for( Creature *cr : hostiles ) {
+        visible.emplace( cr );
+        const auto previous = previous_recoil.find( cr );
+        double tracked_recoil = previous != previous_recoil.end() ? previous->second : MAX_RECOIL;
+        // A target exposed by the movement that just finished starts at zero progress.
+        // Waiting is sampled before the world advances, so a target visible during a wait
+        // was already visible when that action began.
+        if( previous != previous_recoil.end() || stationary ) {
+            tracked_recoil = improve_moving_preaim( *this, *weapon, *cr, tracked_recoil,
+                                                    spent_moves, stationary );
+        }
+        next_targets.push_back( { g->shared_from( *cr ), tracked_recoil } );
+    }
+
+    for( const moving_preaim_target_state &state : moving_preaim_targets ) {
+        shared_ptr_fast<Creature> previous = state.target.lock();
+        if( !previous || visible.count( previous.get() ) > 0 ) {
+            continue;
+        }
+        if( attitude_to( *previous ) != Creature::Attitude::HOSTILE ) {
+            continue;
+        }
+        const double faded = decay_moving_preaim( state.recoil, spent_moves );
+        if( faded < MAX_RECOIL ) {
+            next_targets.push_back( { state.target, faded } );
+        }
+    }
+    moving_preaim_targets.swap( next_targets );
+}
+
+double avatar::moving_preaim_recoil( const item &weapon, const Creature &target ) const
+{
+    if( !get_option<bool>( "MOVING_PREAIM" ) || !weapon.is_gun() ||
+        attitude_to( target ) != Creature::Attitude::HOSTILE ||
+        !( sees( target ) || sees_with_infrared( target ) ) ) {
+        return MAX_RECOIL;
+    }
+    item_location wielded = get_wielded_item();
+    if( !wielded || &*wielded != &weapon ) {
+        return MAX_RECOIL;
+    }
+    for( const moving_preaim_target_state &state : moving_preaim_targets ) {
+        if( state.target.lock().get() == &target ) {
+            return state.recoil;
+        }
+    }
+    return MAX_RECOIL;
+}
+
+void npc::clear_moving_preaim()
+{
+    moving_preaim_target.reset();
+    moving_preaim_weapon = itype_id::NULL_ID();
+    moving_preaim_recoil_cache = MAX_RECOIL;
+}
+
+void npc::update_moving_preaim( const int spent_moves, const bool stationary )
+{
+    if( !get_option<bool>( "MOVING_PREAIM" ) ) {
+        clear_moving_preaim();
+        return;
+    }
+    if( is_driving() || is_mounted() || is_underwater() ) {
+        clear_moving_preaim();
+        return;
+    }
+
+    item_location weapon_loc = get_wielded_item();
+    if( !weapon_loc || !weapon_loc->is_gun() ) {
+        clear_moving_preaim();
+        return;
+    }
+    item *weapon = &*weapon_loc;
+    gun_mode current_mode = weapon->gun_current_mode();
+    if( !current_mode || current_mode.melee() ) {
+        clear_moving_preaim();
+        return;
+    }
+
+    Creature *target = current_target();
+    shared_ptr_fast<Creature> previous = moving_preaim_target.lock();
+    if( target == nullptr || attitude_to( *target ) != Creature::Attitude::HOSTILE ) {
+        if( previous && spent_moves > 0 ) {
+            moving_preaim_recoil_cache = decay_moving_preaim( moving_preaim_recoil_cache,
+                                          spent_moves );
+            if( moving_preaim_recoil_cache >= MAX_RECOIL ) {
+                clear_moving_preaim();
+            }
+        }
+        return;
+    }
+
+    const bool same_target = previous && previous.get() == target &&
+                             moving_preaim_weapon == weapon->typeId();
+    if( !same_target ) {
+        moving_preaim_target = g->shared_from( *target );
+        moving_preaim_weapon = weapon->typeId();
+        moving_preaim_recoil_cache = MAX_RECOIL;
+    }
+
+    if( !( sees( *target ) || sees_with_infrared( *target ) ) ) {
+        moving_preaim_recoil_cache = decay_moving_preaim( moving_preaim_recoil_cache,
+                                      spent_moves );
+        return;
+    }
+
+    if( same_target || stationary ) {
+        moving_preaim_recoil_cache = improve_moving_preaim( *this, *weapon, *target,
+                                      moving_preaim_recoil_cache, spent_moves, stationary );
+    }
+}
+
+double npc::moving_preaim_recoil( const item &weapon, const Creature &target ) const
+{
+    if( !get_option<bool>( "MOVING_PREAIM" ) || moving_preaim_weapon != weapon.typeId() ||
+        attitude_to( target ) != Creature::Attitude::HOSTILE ||
+        !( sees( target ) || sees_with_infrared( target ) ) ) {
+        return MAX_RECOIL;
+    }
+    shared_ptr_fast<Creature> tracked = moving_preaim_target.lock();
+    return tracked && tracked.get() == &target ? moving_preaim_recoil_cache : MAX_RECOIL;
+}
+
+void npc::remember_moving_preaim_recoil( const item &weapon, const Creature &target,
+        const double new_recoil )
+{
+    if( !get_option<bool>( "MOVING_PREAIM" ) || attitude_to( target ) != Creature::Attitude::HOSTILE ) {
+        return;
+    }
+    moving_preaim_target = g->shared_from( target );
+    moving_preaim_weapon = weapon.typeId();
+    moving_preaim_recoil_cache = std::min( moving_preaim_recoil_cache, new_recoil );
+}
 
 class target_ui
 {
@@ -207,6 +486,10 @@ class target_ui
         aim_type get_selected_aim_type() const;
 
         int get_sight_dispersion() const;
+
+        double get_predicted_recoil() const {
+            return predicted_recoil;
+        }
 
     private:
         enum class Status : int {
@@ -947,6 +1230,10 @@ int Character::fire_gun( const tripoint &target, int shots, item &gun )
     // Use different amounts of time depending on the type of gun and our skill
     moves -= time_to_attack( *this, *gun_id );
 
+    if( curshot > 0 && is_avatar() ) {
+        as_avatar()->clear_moving_preaim();
+    }
+
     // Practice the base gun skill proportionally to number of hits, but always by one.
     if( !gun.has_flag( flag_WONT_TRAIN_MARKSMANSHIP ) ) {
         practice( skill_gun, ( hits + 1 ) * 5 );
@@ -1607,18 +1894,21 @@ static std::vector<aim_type_prediction> calculate_ranged_chances(
         if( mode == target_ui::TargetMode::Throw || mode == target_ui::TargetMode::ThrowBlind ) {
             prediction.moves = throw_cost( you, weapon );
         } else {
-            prediction.moves = you.gun_engagement_moves( weapon, aim_type.threshold, you.recoil, target )
+            prediction.moves = you.gun_engagement_moves( weapon, aim_type.threshold,
+                               static_cast<int>( ui.get_predicted_recoil() ), target )
                                + time_to_attack( you, *weapon.type );
         }
+        const double start_recoil = mode == target_ui::TargetMode::Fire ?
+                                    ui.get_predicted_recoil() : you.recoil;
         // predict how long it'll take to reach from current recoil
         // to the current aim mode's threshold.
         const recoil_prediction aim_to_type = predict_recoil( you, weapon, target,
-                                              ui.get_sight_dispersion(), aim_type, you.recoil );
+                                              ui.get_sight_dispersion(), aim_type, start_recoil );
 
         // predict how long it'll take to reach from current recoil
         // to the ui's selected default aim mode threshold.
         const recoil_prediction aim_to_selected = predict_recoil( you, weapon, target,
-                ui.get_sight_dispersion(), ui.get_selected_aim_type(), you.recoil );
+                ui.get_sight_dispersion(), ui.get_selected_aim_type(), start_recoil );
 
         // if the default method is "behind" the selected; e.g. you are in immediate
         // firing mode with almost close no chances of hitting, but UI has selected
@@ -2599,6 +2889,9 @@ target_handler::trajectory target_ui::run()
                 continue;
             }
             set_last_target();
+            if( mode == TargetMode::Fire ) {
+                apply_aim_turning_penalty();
+            }
             loop_exit_code = ExitCode::Fire;
             break;
         } else if( action == "AIM" ) {
@@ -2938,6 +3231,10 @@ bool target_ui::set_cursor_pos( const tripoint &new_pos )
 
     // Update UI controls & colors
     update_status();
+    if( mode == TargetMode::Fire && status == Status::Good && dst_critter != nullptr ) {
+        predicted_recoil = std::min( predicted_recoil,
+                                     you->moving_preaim_recoil( *relevant, *dst_critter ) );
+    }
 
     return true;
 }
