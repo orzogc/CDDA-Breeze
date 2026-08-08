@@ -317,6 +317,7 @@ private:
 
     std::vector<dist_point_pair> blast_map;
     std::vector<dist_point_pair> shrapnel_map;
+    std::set<tripoint> blast_tiles;
     std::priority_queue<time_event_pair, std::vector<time_event_pair>, pair_greater_cmp_first>
         event_queue;
 
@@ -415,6 +416,7 @@ void ExplosionProcess::fill_maps()
         //   which, as stated above, converts trig_dist into int implicitly
         if (blast_radius > 0 && static_cast<int>(z_aware_distance) <= blast_radius) {
             blast_map.push_back({ z_aware_distance, target });
+            blast_tiles.insert(target);
         }
 
         if (shrapnel && static_cast<int>(distance) <= shrapnel_range && target.z == center.z &&
@@ -746,12 +748,16 @@ void ExplosionProcess::blast_tile(const tripoint position, const int rl_distance
         const float blast_force_decay = (ExplosionConstants::VEHICLE_DAMAGE_MULT - 1.0) *
             blast_power / ExplosionConstants::MULTIBASH_COUNT;
         cata_assert(blast_force_decay > 0);
+        const tripoint below = position + tripoint_below;
+        // Lower z-levels are processed later. If the blast reaches the tile below,
+        // allow this floor to be breached without waiting for that tile to become passable.
+        const bool blast_reaches_below = blast_tiles.count(below) > 0;
         while (terrain_blast_force > 0) {
             bash_params bash{
                 static_cast<int>(terrain_blast_force * 0.1),
                 true,
                 false,
-                here.passable(position + tripoint_below),
+                here.passable(below) || blast_reaches_below,
                 terrain_factor,
                 center.z > position.z,
                 true
