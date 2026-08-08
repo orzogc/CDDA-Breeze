@@ -15,6 +15,7 @@
 #include "filesystem.h"
 #include "json.h"
 #include "localized_comparator.h"
+#include "options.h"
 #include "path_info.h"
 #include "string_formatter.h"
 #include "worldfactory.h"
@@ -23,6 +24,35 @@ static const mod_id MOD_INFORMATION_dev_default( "dev:default" );
 static const mod_id MOD_INFORMATION_user_default( "user:default" );
 
 static const std::string MOD_SEARCH_FILE( "modinfo.json" );
+
+namespace
+{
+mod_world_option_position read_world_option_position( const JsonObject &jo,
+        const std::string &prefix, bool read_separator )
+{
+    mod_world_option_position position;
+    const std::string before_key = prefix + "before";
+    const std::string after_key = prefix + "after";
+    const std::string at_key = prefix + "at";
+    position.before = jo.get_string( before_key, "" );
+    position.after = jo.get_string( after_key, "" );
+    position.at = jo.get_string( at_key, "" );
+    if( read_separator ) {
+        position.separator_before = jo.get_bool( "separator_before", false );
+    }
+
+    const int specified = static_cast<int>( !position.before.empty() ) +
+                          static_cast<int>( !position.after.empty() ) +
+                          static_cast<int>( !position.at.empty() );
+    if( specified > 1 ) {
+        jo.throw_error( "设置位置只能在 before，after，at 中选择一种" );
+    }
+    if( !position.at.empty() && position.at != "first" && position.at != "last" ) {
+        jo.throw_error_at( at_key, "设置位置 at 只支持 first 或 last" );
+    }
+    return position;
+}
+} // namespace
 
 template<>
 const MOD_INFORMATION &string_id<MOD_INFORMATION>::obj() const
@@ -248,6 +278,44 @@ void mod_manager::load_modfile( const JsonObject &jo, const cata_path &path )
     modfile.ident = m_ident;
     modfile.name_ = m_name;
     modfile.category = p_cat;
+    // MOD_CAMP_API_V1_BEGIN，世界选项只从 MOD_INFO 预扫描，不等待完整模组 JSON 加载。
+    modfile.world_options_position = read_world_option_position( jo, "world_options_", false );
+    modfile.world_options_separator = jo.get_bool( "world_options_separator", true );
+    if( jo.has_array( "world_options" ) ) {
+        for( JsonObject option_jo : jo.get_array( "world_options" ) ) {
+            mod_world_option option;
+            option.id = option_jo.get_string( "id" );
+            option.type = option_jo.get_string( "type" );
+            option_jo.read( "name", option.name );
+            option_jo.read( "description", option.description );
+            option.position = read_world_option_position( option_jo, "", true );
+            if( option.type == "bool" ) {
+                option.bool_default = option_jo.get_bool( "default", false );
+            } else if( option.type == "int" ) {
+                option.int_min = option_jo.get_int( "min", 0 );
+                option.int_max = option_jo.get_int( "max", 100 );
+                option.int_default = option_jo.get_int( "default", option.int_min );
+            } else if( option.type == "int_map" ) {
+                option.int_default = option_jo.get_int( "default" );
+                for( JsonObject value_jo : option_jo.get_array( "values" ) ) {
+                    translation label;
+                    value_jo.read( "name", label );
+                    option.int_values.emplace_back( value_jo.get_int( "value" ), label );
+                }
+            } else if( option.type == "string_select" ) {
+                option.string_default = option_jo.get_string( "default" );
+                for( JsonObject value_jo : option_jo.get_array( "values" ) ) {
+                    translation label;
+                    value_jo.read( "name", label );
+                    option.string_values.emplace_back( value_jo.get_string( "value" ), label );
+                }
+            } else {
+                option_jo.throw_error_at( "type", "模组世界设置只支持 bool，int，int_map，string_select" );
+            }
+            modfile.world_options.emplace_back( std::move( option ) );
+        }
+    }
+    // MOD_CAMP_API_V1_END
 
     std::string mod_json_path;
     if( assign( jo, "path", mod_json_path ) ) {
@@ -352,6 +420,220 @@ bool mod_manager::copy_mod_contents( const t_mod_list &mods_to_copy,
     }
     return true;
 }
+
+// MOD_CAMP_API_V1_BEGIN，按世界的活动模组重建世界设置页。
+void mod_manager::apply_world_options( WORLD *world )
+{
+    options_manager &opts = get_options();
+
+    // 收集所有已安装模组声明的世界设置。这个集合只用于清理旧版遗留的临时架构，
+    // 不代表这些模组在当前世界中处于启用状态。
+    std::set<std::string> declared_mod_world_options;
+    for( const auto &mod_entry : mod_map ) {
+        for( const mod_world_option &option : mod_entry.second.world_options ) {
+            declared_mod_world_options.insert( option.id );
+        }
+    }
+
+    for( const std::string &id : registered_world_option_group_heads ) {
+        opts.remove_separator_before_option( id );
+    }
+    registered_world_option_group_heads.clear();
+    for( const std::string &id : registered_world_options ) {
+        opts.remove_option( id );
+    }
+    registered_world_options.clear();
+
+    // 兼容旧版和热重载：未被 registered_world_options 追踪、但又不是本体设置的
+    // 同名架构可以安全删除。真正的本体设置绝不允许模组覆盖。
+    for( const std::string &id : declared_mod_world_options ) {
+        if( !id.empty() && !opts.is_native_world_option( id ) && opts.has_option( id ) ) {
+            opts.remove_option( id );
+        }
+    }
+
+    if( world == nullptr ) {
+        return;
+    }
+
+    std::map<std::string, std::string> saved_values;
+    for( const auto &entry : world->WORLD_OPTIONS ) {
+        saved_values.emplace( entry.first, entry.second.getValue( true ) );
+    }
+
+    // WORLD_OPTIONS 是每个世界自己的设置分身。先移除旧版遗留、已卸载模组和
+    // 当前世界未启用模组的动态设置，稍后只按当前活动模组重新建立。
+    std::vector<std::string> stale_world_options;
+    for( const auto &entry : world->WORLD_OPTIONS ) {
+        if( !opts.is_native_world_option( entry.first ) ) {
+            stale_world_options.push_back( entry.first );
+        }
+    }
+    for( const std::string &id : stale_world_options ) {
+        world->WORLD_OPTIONS.erase( id );
+    }
+
+    struct registered_group {
+        const MOD_INFORMATION *mod = nullptr;
+        std::vector<const mod_world_option *> options;
+        std::vector<std::string> ids;
+    };
+    std::vector<registered_group> groups;
+    std::set<std::string> seen;
+
+    // 第一遍只注册。等所有模组选项都存在后再排序，跨模组锚点才可靠。
+    for( const mod_id &id : world->active_mod_order ) {
+        const auto mod_it = mod_map.find( id );
+        if( mod_it == mod_map.end() ) {
+            continue;
+        }
+        registered_group group;
+        group.mod = &mod_it->second;
+        for( const mod_world_option &option : mod_it->second.world_options ) {
+            if( option.id.empty() ) {
+                debugmsg( "模组世界设置编号为空，已忽略，%s", id.str() );
+                continue;
+            }
+            if( !seen.insert( option.id ).second ) {
+                debugmsg( "当前世界的活动模组使用了重复的世界设置编号，已忽略，%s",
+                          option.id );
+                continue;
+            }
+            if( opts.is_native_world_option( option.id ) ) {
+                debugmsg( "模组世界设置编号与本体冲突，已忽略，%s，%s", id.str(), option.id );
+                continue;
+            }
+            if( opts.has_option( option.id ) ) {
+                // 理论上已在上面的旧架构清理中移除。保留这一层防御，避免刷新模组
+                // 列表或异常中断后留下无法重新注册的临时设置。
+                opts.remove_option( option.id );
+            }
+            if( option.type == "bool" ) {
+                opts.add( option.id, "world_default", option.name, option.description, option.bool_default );
+            } else if( option.type == "int" ) {
+                opts.add( option.id, "world_default", option.name, option.description,
+                          option.int_min, option.int_max, option.int_default );
+            } else if( option.type == "int_map" ) {
+                std::vector<options_manager::int_and_option> values;
+                values.reserve( option.int_values.size() );
+                for( const auto &value : option.int_values ) {
+                    values.emplace_back( value.first, value.second );
+                }
+                opts.add( option.id, "world_default", option.name, option.description, values,
+                          option.int_default, option.int_default );
+                opts.get_option( option.id ).setShowValues( true );
+            } else if( option.type == "string_select" ) {
+                std::vector<options_manager::id_and_option> values;
+                values.reserve( option.string_values.size() );
+                for( const auto &value : option.string_values ) {
+                    values.emplace_back( value.first, value.second );
+                }
+                opts.add( option.id, "world_default", option.name, option.description, values,
+                          option.string_default );
+            }
+
+            registered_world_options.insert( option.id );
+            group.options.push_back( &option );
+            group.ids.push_back( option.id );
+            world->WORLD_OPTIONS[option.id] = opts.get_option( option.id );
+            const auto old = saved_values.find( option.id );
+            if( old != saved_values.end() ) {
+                world->WORLD_OPTIONS[option.id].setValue( old->second );
+            }
+        }
+        if( !group.ids.empty() ) {
+            groups.emplace_back( std::move( group ) );
+        }
+    }
+
+    const auto warn_missing_anchor = []( const MOD_INFORMATION &mod, const std::string &anchor ) {
+        DebugLog( D_WARNING, DC_ALL ) << "模组世界设置定位锚点不存在，" << mod.ident.str()
+                                      << "，" << anchor;
+    };
+    const auto move_one = [&]( const MOD_INFORMATION &mod, const std::string &option_id,
+    const mod_world_option_position &position ) {
+        bool moved = true;
+        std::string anchor;
+        if( !position.before.empty() ) {
+            anchor = position.before;
+            moved = opts.move_option_before( option_id, anchor );
+        } else if( !position.after.empty() ) {
+            anchor = position.after;
+            moved = opts.move_option_after( option_id, anchor );
+        } else if( position.at == "first" ) {
+            moved = opts.move_option_to_page_start( option_id, "world_default" );
+        } else if( position.at == "last" ) {
+            moved = opts.move_option_to_page_end( option_id, "world_default" );
+        }
+        if( !moved && !anchor.empty() ) {
+            warn_missing_anchor( mod, anchor );
+        }
+        return moved;
+    };
+
+    // 第二遍移动整组，组内顺序保持不变。
+    for( const registered_group &group : groups ) {
+        const mod_world_option_position &position = group.mod->world_options_position;
+        if( position.empty() ) {
+            continue;
+        }
+        if( !position.before.empty() ) {
+            for( const std::string &option_id : group.ids ) {
+                if( !opts.move_option_before( option_id, position.before ) ) {
+                    warn_missing_anchor( *group.mod, position.before );
+                    break;
+                }
+            }
+        } else if( !position.after.empty() ) {
+            std::string anchor = position.after;
+            for( const std::string &option_id : group.ids ) {
+                if( !opts.move_option_after( option_id, anchor ) ) {
+                    warn_missing_anchor( *group.mod, anchor );
+                    break;
+                }
+                anchor = option_id;
+            }
+        } else if( position.at == "first" ) {
+            for( auto it = group.ids.rbegin(); it != group.ids.rend(); ++it ) {
+                opts.move_option_to_page_start( *it, "world_default" );
+            }
+        } else if( position.at == "last" ) {
+            for( const std::string &option_id : group.ids ) {
+                opts.move_option_to_page_end( option_id, "world_default" );
+            }
+        }
+    }
+
+    // 第三遍应用单项位置。多个 first 需要倒序处理，避免顺序反转。
+    for( const registered_group &group : groups ) {
+        for( auto it = group.options.rbegin(); it != group.options.rend(); ++it ) {
+            if( ( *it )->position.at == "first" ) {
+                move_one( *group.mod, ( *it )->id, ( *it )->position );
+            }
+        }
+        for( const mod_world_option *option : group.options ) {
+            if( option->position.empty() || option->position.at == "first" ) {
+                continue;
+            }
+            move_one( *group.mod, option->id, option->position );
+        }
+    }
+
+    // 所有移动结束后再添加分隔行，避免分隔行被遗留在旧位置。
+    for( const registered_group &group : groups ) {
+        if( group.mod->world_options_separator &&
+            opts.add_separator_before_option( group.ids.front() ) ) {
+            registered_world_option_group_heads.insert( group.ids.front() );
+        }
+        for( const mod_world_option *option : group.options ) {
+            if( option->position.separator_before &&
+                opts.add_separator_before_option( option->id ) ) {
+                registered_world_option_group_heads.insert( option->id );
+            }
+        }
+    }
+}
+// MOD_CAMP_API_V1_END
 
 void mod_manager::load_mod_info( const cata_path &info_file_path )
 {

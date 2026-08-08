@@ -44,6 +44,10 @@ struct talk_effect_fun_t {
         void set_offer_mission( const JsonObject &jo, const std::string &member );
         void set_make_sound( const JsonObject &jo, const std::string &member, bool is_npc );
         void set_run_eocs( const JsonObject &jo, const std::string &member );
+        // MOD_CAMP_API_V1，当前营地持久数据与就近营地调度。
+        void set_camp_value( const JsonObject &jo, const std::string &member );
+        void set_clear_camp_value( const JsonObject &jo, const std::string &member );
+        void set_run_eocs_for_nearby_camp( const JsonObject &jo, const std::string &member );
         void set_run_npc_eocs( const JsonObject &jo, const std::string &member, bool is_npc );
         void set_queue_eocs( const JsonObject &jo, const std::string &member );
         void set_switch( const JsonObject &jo, const std::string &member );
@@ -101,6 +105,7 @@ struct talk_effect_fun_t {
         void set_set_string_var( const JsonObject &jo, const std::string &member );
         void set_custom_light_level( const JsonObject &jo, const std::string &member );
         void set_spawn_monster( const JsonObject &jo, const std::string &member, bool is_npc );
+        void set_spawn_npc( const JsonObject &jo, const std::string &member, bool is_npc );
         void set_field( const JsonObject &jo, const std::string &member, bool is_npc );
         void set_teleport( const JsonObject &jo, const std::string &member, bool is_npc );
         void set_give_equipment( const JsonObject &jo, const std::string &member );

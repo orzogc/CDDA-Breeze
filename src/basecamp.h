@@ -29,6 +29,34 @@ class character_id;
 class npc;
 class time_duration;
 
+// MOD_CAMP_API_V1_BEGIN，模组可向原生营地任务界面注册 EOC 操作。
+struct basecamp_action {
+    std::string id;
+    translation name;
+    translation description;
+    effect_on_condition_id eoc;
+    int priority = 0;
+    bool allow_radio = false;
+    std::string required_world_option;
+    std::string required_world_value;
+    std::string required_camp_value;
+    std::string required_camp_value_value;
+    std::string required_camp_value_default;
+};
+void load_basecamp_action( const JsonObject &jo, const std::string &src );
+void reset_basecamp_actions();
+const std::vector<basecamp_action> &get_basecamp_actions();
+class basecamp;
+basecamp *get_active_eoc_camp();
+class scoped_basecamp_eoc_context {
+    public:
+        explicit scoped_basecamp_eoc_context( basecamp *camp );
+        ~scoped_basecamp_eoc_context();
+    private:
+        basecamp *previous;
+};
+// MOD_CAMP_API_V1_END
+
 enum class farm_ops : int;
 class item;
 class mission_data;
@@ -284,6 +312,16 @@ class basecamp
         comp_list get_mission_workers( const mission_id &miss_id, bool contains = false );
         // main mission start/return dispatch function
         bool handle_mission( const ui_mission_id &miss_id );
+        // MOD_CAMP_API_V1，以下数据不扫描地图物品，可安全用于周期性调度。
+        std::string get_mod_value( const std::string &key, const std::string &fallback = "" ) const;
+        void set_mod_value( const std::string &key, const std::string &value );
+        void erase_mod_value( const std::string &key );
+        int mod_expansion_count() const;
+        int mod_development_score() const;
+        int mod_survivor_count();
+        int mod_worker_count() const;
+        int mod_player_distance() const;
+        const tripoint_abs_omt &mod_center() const;
 
         // mission start functions
         /// generic mission start function that wraps individual mission
@@ -410,6 +448,7 @@ class basecamp
         std::vector<basecamp_resource> resources; // NOLINT(cata-serialize)
         std::vector<std::vector<ui_mission_id>> temp_ui_mission_keys;   // NOLINT(cata-serialize)
         inventory _inv; // NOLINT(cata-serialize)
+        std::map<std::string, std::string> mod_data; // MOD_CAMP_API_V1
         bool by_radio = false; // NOLINT(cata-serialize)
 };
 

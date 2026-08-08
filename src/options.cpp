@@ -276,6 +276,141 @@ void options_manager::add_value( const std::string &lvar, const std::string &lva
     }
 }
 
+// MOD_CAMP_API_V1_BEGIN，模组世界选项动态注册支持。
+bool options_manager::add_separator_before_option( const std::string &name )
+{
+    for( Page &page : pages_ ) {
+        const auto option_it = std::find_if( page.items_.begin(), page.items_.end(),
+        [&name]( const std::optional<std::string> &item ) {
+            return item.has_value() && item.value() == name;
+        } );
+        if( option_it == page.items_.end() ) {
+            continue;
+        }
+        if( option_it != page.items_.begin() && !std::prev( option_it )->has_value() ) {
+            return false;
+        }
+        page.items_.insert( option_it, std::nullopt );
+        return true;
+    }
+    return false;
+}
+
+void options_manager::remove_separator_before_option( const std::string &name )
+{
+    for( Page &page : pages_ ) {
+        const auto option_it = std::find_if( page.items_.begin(), page.items_.end(),
+        [&name]( const std::optional<std::string> &item ) {
+            return item.has_value() && item.value() == name;
+        } );
+        if( option_it == page.items_.end() || option_it == page.items_.begin() ) {
+            continue;
+        }
+        const auto separator_it = std::prev( option_it );
+        if( !separator_it->has_value() ) {
+            page.items_.erase( separator_it );
+        }
+        return;
+    }
+}
+
+bool options_manager::move_option_before( const std::string &name,
+        const std::string &before_name )
+{
+    if( name == before_name ) {
+        return false;
+    }
+    for( Page &page : pages_ ) {
+        auto option_it = std::find( page.items_.begin(), page.items_.end(), name );
+        auto anchor_it = std::find( page.items_.begin(), page.items_.end(), before_name );
+        if( option_it == page.items_.end() || anchor_it == page.items_.end() ) {
+            continue;
+        }
+        const std::optional<std::string> moved = *option_it;
+        page.items_.erase( option_it );
+        anchor_it = std::find( page.items_.begin(), page.items_.end(), before_name );
+        page.items_.insert( anchor_it, moved );
+        return true;
+    }
+    return false;
+}
+
+bool options_manager::move_option_after( const std::string &name,
+        const std::string &after_name )
+{
+    if( name == after_name ) {
+        return false;
+    }
+    for( Page &page : pages_ ) {
+        auto option_it = std::find( page.items_.begin(), page.items_.end(), name );
+        auto anchor_it = std::find( page.items_.begin(), page.items_.end(), after_name );
+        if( option_it == page.items_.end() || anchor_it == page.items_.end() ) {
+            continue;
+        }
+        const std::optional<std::string> moved = *option_it;
+        page.items_.erase( option_it );
+        anchor_it = std::find( page.items_.begin(), page.items_.end(), after_name );
+        page.items_.insert( std::next( anchor_it ), moved );
+        return true;
+    }
+    return false;
+}
+
+bool options_manager::move_option_to_page_start( const std::string &name,
+        const std::string &page_name )
+{
+    for( Page &page : pages_ ) {
+        if( page.id_ != page_name ) {
+            continue;
+        }
+        const auto option_it = std::find( page.items_.begin(), page.items_.end(), name );
+        if( option_it == page.items_.end() ) {
+            return false;
+        }
+        const std::optional<std::string> moved = *option_it;
+        page.items_.erase( option_it );
+        page.items_.insert( page.items_.begin(), moved );
+        return true;
+    }
+    return false;
+}
+
+bool options_manager::move_option_to_page_end( const std::string &name,
+        const std::string &page_name )
+{
+    for( Page &page : pages_ ) {
+        if( page.id_ != page_name ) {
+            continue;
+        }
+        const auto option_it = std::find( page.items_.begin(), page.items_.end(), name );
+        if( option_it == page.items_.end() ) {
+            return false;
+        }
+        const std::optional<std::string> moved = *option_it;
+        page.items_.erase( option_it );
+        page.items_.emplace_back( moved );
+        return true;
+    }
+    return false;
+}
+
+void options_manager::remove_option( const std::string &name )
+{
+    if( is_native_world_option( name ) ) {
+        DebugLog( D_WARNING, DC_ALL ) << "拒绝移除本体世界设置，" << name;
+        return;
+    }
+
+    options.erase( name );
+    for( Page &page : pages_ ) {
+        page.items_.erase( std::remove_if( page.items_.begin(), page.items_.end(),
+        [&name]( const std::optional<std::string> &item ) {
+            return item.has_value() && item.value() == name;
+        } ), page.items_.end() );
+    }
+}
+// MOD_CAMP_API_V1_END
+
 void options_manager::addOptionToPage( const std::string &name, const std::string &page )
 {
     for( Page &p : pages_ ) {
@@ -793,7 +928,8 @@ std::string options_manager::cOpt::getDefaultText( const bool bTranslated ) cons
         [bTranslated]( const id_and_option & elem ) {
             return bTranslated ? elem.second.translated() : elem.first;
         }, enumeration_conjunction::none );
-        return string_format( _( "Default: %s - Values: %s" ), defaultName, sItems );
+        const std::string default_text = string_format( _( "Default: %s" ), defaultName );
+        return string_format( "%s，可选值，%s", default_text, sItems );
 
     } else if( sType == "string_input" ) {
         return string_format( _( "Default: %s" ), sDefault );
@@ -807,11 +943,20 @@ std::string options_manager::cOpt::getDefaultText( const bool bTranslated ) cons
     } else if( sType == "int_map" ) {
         const std::optional<int_and_option> opt = findInt( iDefault );
         if( opt ) {
+            std::string default_text;
             if( verbose ) {
-                return string_format( _( "Default: %d: %s" ), iDefault, opt->second );
+                default_text = string_format( _( "Default: %d: %s" ), iDefault, opt->second );
             } else {
-                return string_format( _( "Default: %s" ), opt->second );
+                default_text = string_format( _( "Default: %s" ), opt->second );
             }
+            if( show_values ) {
+                const std::string values = enumerate_as_string( mIntValues.begin(), mIntValues.end(),
+                [bTranslated]( const int_and_option &elem ) {
+                    return bTranslated ? elem.second.translated() : std::to_string( elem.first );
+                }, enumeration_conjunction::none );
+                return string_format( "%s，可选值，%s", default_text, values );
+            }
+            return default_text;
         }
 
     } else if( sType == "float" ) {
@@ -1315,6 +1460,15 @@ void options_manager::init()
     add_options_debug();
     add_options_android();
     add_options_ai();
+
+    // MOD_CAMP_API_V3，记录本体设置架构。之后动态加入的模组设置不会进入这个集合，
+    // 因而不会成为新世界的全局默认值，也不会写进主界面的 options.json。
+    native_world_option_ids.clear();
+    for( const auto &elem : options ) {
+        if( elem.second.getPage() == "world_default" ) {
+            native_world_option_ids.insert( elem.first );
+        }
+    }
 
     for( Page &p : pages_ ) {
         p.removeRepeatedEmptyLines();
@@ -3692,6 +3846,10 @@ void options_manager::serialize( JsonOut &json ) const
             if( iter != options.end() ) {
                 const options_manager::cOpt &opt = iter->second;
 
+                if( opt.getPage() == "world_default" && !is_native_world_option( *opt_name ) ) {
+                    continue;
+                }
+
                 json.start_object();
 
                 json.member( "info", opt.getTooltip() );
@@ -3716,8 +3874,16 @@ void options_manager::deserialize( const JsonArray &ja )
         const std::string value = migrateOptionValue( joOptions.get_string( "name" ),
                                   joOptions.get_string( "value" ) );
 
+        auto option = options.find( name );
+        if( option == options.end() ) {
+            // 旧版曾把临时模组世界设置写进全局 options.json。不要用 operator[]
+            // 为它们建立 VOID 占位项，否则之后会被误判成与本体冲突。
+            DebugLog( D_WARNING, DC_ALL ) << "忽略未注册的全局设置，" << name;
+            continue;
+        }
+
         add_retry( name, value );
-        options[ name ].setValue( value );
+        option->second.setValue( value );
     }
 }
 
@@ -3852,11 +4018,21 @@ options_manager::cOpt &options_manager::get_option( const std::string &name )
     return wopt->second;
 }
 
+bool options_manager::is_native_world_option( const std::string &name ) const
+{
+    // init() 之前保持旧行为，避免极早期测试或工具代码构造 WORLD 时得到空设置表。
+    if( native_world_option_ids.empty() ) {
+        const auto option = options.find( name );
+        return option != options.end() && option->second.getPage() == "world_default";
+    }
+    return native_world_option_ids.count( name ) != 0;
+}
+
 options_manager::options_container options_manager::get_world_defaults() const
 {
     phmap::flat_hash_map<std::string, cOpt> result;
     for( const auto &elem : options ) {
-        if( elem.second.getPage() == "world_default" ) {
+        if( elem.second.getPage() == "world_default" && is_native_world_option( elem.first ) ) {
             result.insert( elem );
         }
     }

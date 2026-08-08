@@ -7,6 +7,7 @@
 #include <functional>
 #include <iosfwd>
 #include <map>
+#include <set>
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
@@ -141,6 +142,9 @@ class options_manager
                 void setPrerequisite( const std::string &sOption, const std::string &sAllowedValue = "true" ) {
                     setPrerequisites( sOption, { sAllowedValue } );
                 }
+                void setShowValues( const bool value ) {
+                    show_values = value;
+                }
                 std::string getPrerequisite() const;
                 bool hasPrerequisite() const;
                 bool checkPrerequisite() const;
@@ -163,6 +167,7 @@ class options_manager
                 translation sTooltip;
                 std::string sType;
                 bool verbose = false;
+                bool show_values = false;
 
                 std::string format;
 
@@ -228,7 +233,24 @@ class options_manager
          */
         options_container get_world_defaults() const;
 
+        /**
+         * Returns true only for world options created by the game itself during init().
+         * Temporarily installed mod option schemas are deliberately excluded.
+         */
+        bool is_native_world_option( const std::string &name ) const;
+
         void set_world_options( options_container *options );
+
+        // MOD_CAMP_API_V1，移除动态注册的模组世界选项。
+        void remove_option( const std::string &name );
+        // MOD_CAMP_API_V1，给模组世界设置组增加和移除分隔空行。
+        bool add_separator_before_option( const std::string &name );
+        void remove_separator_before_option( const std::string &name );
+        // MOD_CAMP_API_V2，允许整组或单个模组选项自由定位。
+        bool move_option_before( const std::string &name, const std::string &before_name );
+        bool move_option_after( const std::string &name, const std::string &after_name );
+        bool move_option_to_page_start( const std::string &name, const std::string &page_name );
+        bool move_option_to_page_end( const std::string &name, const std::string &page_name );
 
         /** Check if an option exists? */
         bool has_option( const std::string &name ) const;
@@ -281,6 +303,9 @@ class options_manager
 
     private:
         options_container options;
+        // MOD_CAMP_API_V3，本体世界设置的稳定快照。模组设置只作为当前世界的临时界面架构。
+        std::set<std::string> native_world_option_ids;
+
         std::optional<options_container *> world_options; // NOLINT(cata-serialize)
 
         /**

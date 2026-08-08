@@ -25,6 +25,34 @@ const std::vector<std::pair<std::string, translation>> &get_mod_list_categories(
 const std::vector<std::pair<std::string, translation>> &get_mod_list_tabs();
 const std::map<std::string, std::string> &get_mod_list_cat_tab();
 
+// MOD_CAMP_API_V1_BEGIN，模组可在 MOD_INFO 中声明该世界独立保存的设置。
+struct mod_world_option_position {
+    std::string before;
+    std::string after;
+    std::string at;
+    bool separator_before = false;
+
+    bool empty() const {
+        return before.empty() && after.empty() && at.empty();
+    }
+};
+
+struct mod_world_option {
+    std::string id;
+    std::string type;
+    translation name;
+    translation description;
+    bool bool_default = false;
+    int int_min = 0;
+    int int_max = 100;
+    int int_default = 0;
+    std::vector<std::pair<int, translation>> int_values;
+    std::vector<std::pair<std::string, translation>> string_values;
+    std::string string_default;
+    mod_world_option_position position;
+};
+// MOD_CAMP_API_V1_END
+
 struct MOD_INFORMATION {
     private:
         friend mod_manager;
@@ -60,6 +88,9 @@ struct MOD_INFORMATION {
         bool obsolete = false;
 
         std::pair<int, translation> category = { -1, translation() };
+        std::vector<mod_world_option> world_options; // MOD_CAMP_API_V1
+        mod_world_option_position world_options_position; // MOD_CAMP_API_V1，整组选项的位置。
+        bool world_options_separator = true; // MOD_CAMP_API_V1，是否在整组选项前保留空行。
 };
 
 class mod_manager
@@ -108,6 +139,7 @@ class mod_manager
          * world.
          */
         void load_mods_list( WORLD *world ) const;
+        void apply_world_options( WORLD *world ); // MOD_CAMP_API_V1
         const t_mod_list &get_default_mods() const;
         bool set_default_mods( const t_mod_list &mods );
         const std::vector<mod_id> &get_usable_mods() const {
@@ -159,6 +191,8 @@ class mod_manager
         std::map<mod_id, mod_id> mod_replacements;
 
         std::vector<mod_id> usable_mods;
+        std::set<std::string> registered_world_options; // MOD_CAMP_API_V1
+        std::set<std::string> registered_world_option_group_heads; // MOD_CAMP_API_V1
 
         void set_usable_mods();
 };
