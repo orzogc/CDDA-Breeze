@@ -1094,11 +1094,12 @@ void monster::plan()
                 hostile_transition_attempts = 0;
                 hostile_search_deadline.reset();
                 last_hostile_sighting_turn = calendar::turn;
-                // Direct sight is absolute priority.  Do not let an old search,
-                // sound marker or failed route survive into the new pursuit.
+                // Direct sight is absolute priority.  Cancel stale search and sound
+                // state, but keep the current route until move() validates its
+                // endpoint.  This mirrors CBN's rule that a target update does
+                // not by itself mean the next path step is broken.
                 wandf = 0;
                 provocative_sound = false;
-                path.clear();
                 failed_pathfinding_target.reset();
                 failed_pathfinding_cooldown = 0;
                 hostile_search_lane =
@@ -1537,15 +1538,27 @@ void monster::move()
         }
 
         const bool cross_z = route_dest.z != posz();
+        const tripoint_abs_ms absolute_route_dest = here.getglobal( route_dest );
+        const bool fresh_visual_route = last_hostile_sighting_turn &&
+            calendar::turn <= *last_hostile_sighting_turn +
+            time_duration::from_turns( 1 ) &&
+            absolute_route_dest == get_dest();
+
+        // CBN keeps a confirmed pursuit on its real path instead of dropping
+        // back to free-form stumbling.  Breeze already owns a bounded 64-tile
+        // shared reverse field, so use that existing budget for fresh sight.
+        const int same_z_route_radius = fresh_visual_route ?
+                                        std::max( pf_settings.max_dist,
+                                                  reverse_field_radius ) :
+                                        pf_settings.max_dist;
         const int route_radius = cross_z ?
-                                 std::max( pf_settings.max_dist, cross_z_monster_path_radius ) :
-                                 pf_settings.max_dist;
+                                 std::max( same_z_route_radius,
+                                           cross_z_monster_path_radius ) :
+                                 same_z_route_radius;
         const int route_distance = rl_dist( pos(), route_dest );
         if( route_distance > route_radius ) {
             return false;
         }
-
-        const tripoint_abs_ms absolute_route_dest = here.getglobal( route_dest );
         if( failed_pathfinding_target && *failed_pathfinding_target != absolute_route_dest ) {
             failed_pathfinding_target.reset();
             failed_pathfinding_cooldown = 0;
@@ -1906,6 +1919,10 @@ void monster::move()
 
     tripoint_abs_ms next_step;
     const bool staggers = has_flag( MF_STUMBLES );
+    // Current CBN treats a valid path step as authoritative: STUMBLES only
+    // randomizes greedy movement when no path step is available.  Keep Breeze's
+    // old loop as a fallback if that immediate step is dynamically blocked.
+    const bool path_step_is_authoritative = improved_pathfinding && pathed;
     if( moved ) {
         // Implement both avoiding obstacles and staggering.
         moved = false;
@@ -1998,6 +2015,9 @@ void monster::move()
                 here.open_door( *this, candidate, !here.is_outside( pos() ), true ) ) {
                 moved = true;
                 next_step = candidate_abs;
+                if( path_step_is_authoritative ) {
+                    break;
+                }
                 continue;
             }
 
@@ -2034,7 +2054,8 @@ void monster::move()
                 // which is the most direct path.
                 // Except if the direct path is bad, then check others
                 // Or if the path is given by pathfinder
-                if( !staggers && ( !bad_choice || pathed ) ) {
+                if( path_step_is_authoritative ||
+                    ( !staggers && ( !bad_choice || pathed ) ) ) {
                     break;
                 }
             }
