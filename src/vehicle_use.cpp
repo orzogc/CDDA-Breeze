@@ -123,6 +123,44 @@ void handbrake()
     player_character.moves = 0;
 }
 
+void vehicle::set_autodrive_speed()
+{
+    // One tile per second is 400 vmiph, which is about 6.44 km/h.  The player setting is
+    // a ceiling, not a promise: just like CCB, autodrive is also capped by the vehicle's
+    // calculated safe velocity.  This keeps bicycles, paddle craft, damaged vehicles, etc.
+    // from being assigned a highway-speed target they cannot safely reach.
+    constexpr double kph_per_tps = 6.437376;
+    constexpr int max_configurable_tps = 15;
+    const int safe_speed_tps = std::max(
+                                   1, safe_velocity() / static_cast<int>( vehicles::vmiph_per_tile ) );
+    const int max_allowed_tps = std::min( max_configurable_tps, safe_speed_tps );
+    const int effective_current_tps = std::min( max_autodrive_speed, max_allowed_tps );
+    const int current_kph = static_cast<int>( std::lround( effective_current_tps * kph_per_tps ) );
+    const int safe_kph = static_cast<int>( std::lround( max_allowed_tps * kph_per_tps ) );
+    const int requested_kph = string_input_popup()
+                              .title( string_format( _( "设置自动驾驶最高速度，单位公里每小时。当前载具安全上限约 %d 公里每小时。" ),
+                                                   safe_kph ) )
+                              .text( std::to_string( current_kph ) )
+                              .only_digits( true )
+                              .max_length( 3 )
+                              .query_int();
+    if( requested_kph <= 0 ) {
+        return;
+    }
+
+    const int requested_tps = std::clamp(
+                                  static_cast<int>( std::lround( requested_kph / kph_per_tps ) ),
+                                  1, max_configurable_tps );
+    max_autodrive_speed = std::min( requested_tps, max_allowed_tps );
+    const int actual_kph = static_cast<int>( std::lround( max_autodrive_speed * kph_per_tps ) );
+    if( requested_tps > max_allowed_tps ) {
+        add_msg( _( "当前载具的安全速度约为 %d 公里每小时，自动驾驶上限已限制为该速度。" ),
+                 actual_kph );
+    } else {
+        add_msg( _( "自动驾驶最高速度已设为约 %d 公里每小时。" ), actual_kph );
+    }
+}
+
 void vehicle::control_doors()
 {
     const auto open_or_close_all = [this]( bool new_open, const std::string & require_flag ) {
@@ -1906,6 +1944,10 @@ void vehicle::build_interact_menu( veh_menu &menu, const tripoint &p, bool with_
             cruise_on = !cruise_on;
             add_msg( cruise_on ? _( "Cruise control turned on" ) : _( "Cruise control turned off" ) );
         } );
+
+        menu.add( _( "设置自动驾驶速度" ) )
+        .keep_menu_open()
+        .on_submit( [this] { set_autodrive_speed(); } );
     }
 
     if( has_electronic_controls && has_part( "SMART_ENGINE_CONTROLLER" ) ) {
