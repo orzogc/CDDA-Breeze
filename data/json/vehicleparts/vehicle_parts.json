@@ -3392,6 +3392,7 @@
     },
     "flags": [
       "APPLIANCE",
+      "OBSTACLE",
       "WALL_MOUNTED",
       "ENABLED_DRAINS_EPOWER",
       "CTRL_ELECTRONIC",
