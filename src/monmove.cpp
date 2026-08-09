@@ -2053,7 +2053,7 @@ void monster::move()
             // Try to shove vehicle out of the way
             shove_vehicle( destination, candidate );
             // Bail out if we can't move there and we can't bash.
-            if( !pathed && !can_move_to( candidate ) ) {
+            if( ( !pathed || path_step_is_authoritative ) && !can_move_to( candidate ) ) {
                 if( !can_bash ) {
                     continue;
                 }
