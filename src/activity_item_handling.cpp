@@ -430,14 +430,15 @@ static bool put_into_vehicle( Character &c, item_drop_reason reason, const std::
     return retained_count > 0 || fallen_count > 0;
 }
 
-void drop_on_map( Character &you, item_drop_reason reason, const std::list<item> &items,
+bool drop_on_map( Character &you, item_drop_reason reason, const std::list<item> &items,
                   const tripoint_bub_ms &where )
 {
     you.invalidate_weight_carried_cache();
     if( items.empty() ) {
-        return;
+        return true;
     }
     map &here = get_map();
+    bool all_placed = true;
     const std::string ter_name = here.name( where );
     const bool can_move_there = here.passable( where );
 
@@ -515,11 +516,16 @@ void drop_on_map( Character &you, item_drop_reason reason, const std::list<item>
         }
     }
     for( const item &it : items ) {
-        here.add_item_or_charges( where, it );
+        item &dropped_item = here.add_item_or_charges( where, it );
+        if( &dropped_item == &null_item_reference() ) {
+            all_placed = false;
+            continue;
+        }
         item( it ).handle_pickup_ownership( you );
     }
 
     you.recoil = MAX_RECOIL;
+    return all_placed;
 }
 
 bool put_into_vehicle_or_drop( Character &you, item_drop_reason reason,

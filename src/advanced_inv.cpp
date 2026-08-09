@@ -1104,10 +1104,11 @@ bool advanced_inventory::move_all_items()
 
         } else {
             // Vehicle and map destinations are handled the same.
-            // Check first if the destination area still have enough room for moving all.
+            // Match modern DDA behavior: warn once, then attempt as much as will fit.
             const units::volume &src_volume = spane.in_vehicle() ? sarea.volume_veh : sarea.volume;
-            if( !is_processing() && src_volume > darea.free_volume( dpane.in_vehicle() ) &&
-                !query_yn( _( "There isn't enough room, do you really want to move all?" ) ) ) {
+            const bool destination_limited = src_volume > darea.free_volume( dpane.in_vehicle() );
+            if( !is_processing() && destination_limited &&
+                !query_yn( _( "There isn't enough room.  Attempt to move as much as you can?" ) ) ) {
                 return false;
             }
 
@@ -1169,6 +1170,26 @@ bool advanced_inventory::move_all_items()
             // move all the favorite items only if there are no other items.
             if( target_items.empty() ) {
                 target_items = target_items_favorites;
+            }
+
+            if( destination_limited && target_items.size() > 1 ) {
+                // move_items_activity_actor consumes from the back, so order large-to-small
+                // and let smaller items be attempted first. Cache each item's volume once so
+                // large move-all jobs do not repeatedly recalculate container volume during sort.
+                std::vector<std::pair<units::volume, item_location>> size_order;
+                size_order.reserve( target_items.size() );
+                for( item_location &loc : target_items ) {
+                    size_order.emplace_back( loc->volume(), std::move( loc ) );
+                }
+                std::stable_sort( size_order.begin(), size_order.end(),
+                []( const auto &lhs, const auto &rhs ) {
+                    return lhs.first > rhs.first;
+                } );
+                target_items.clear();
+                target_items.reserve( size_order.size() );
+                for( auto &entry : size_order ) {
+                    target_items.push_back( std::move( entry.second ) );
+                }
             }
 
             do_return_entry();
