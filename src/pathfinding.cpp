@@ -301,74 +301,74 @@ std::vector<tripoint> map::route( const tripoint &f, const tripoint &t,
                 const vehicle *veh = veh_at_internal( p, part );
 
                 const int cost = move_cost_internal( furniture, terrain, field, veh, part );
-                // Don't calculate bash rating unless we intend to actually use it
-                const int rating = ( bash == 0 || cost != 0 ) ? -1 :
-                                   bash_rating_internal( bash, furniture, terrain, false, veh, part );
-
-                if( cost == 0 && rating <= 0 && ( !doors || !terrain.open || !furniture.open ) && veh == nullptr &&
-                    climb_cost <= 0 ) {
-                    layer.state[index] = ASL_CLOSED; // Close it so that next time we won't try to calculate costs
-                    continue;
-                }
+                const int terrain_cost = move_cost_internal( furniture, terrain, field, nullptr, -1 );
+                // Vehicle obstacles and the underlying terrain/furniture are separate layers.
+                // Neither layer may make an otherwise impassable tile silently traversable.
+                const int terrain_rating = ( bash == 0 || terrain_cost != 0 ) ? -1 :
+                                           bash_rating_internal( bash, furniture, terrain, false, nullptr, -1 );
 
                 newg += cost;
                 if( cost == 0 ) {
-                    if( climb_cost > 0 && p_special & PF_CLIMBABLE ) {
-                        // Climbing fences
-                        newg += climb_cost;
-                    } else if( doors && ( terrain.open || furniture.open ) &&
-                               ( ( !terrain.has_flag( ter_furn_flag::TFLAG_OPENCLOSE_INSIDE ) &&
-                                   !furniture.has_flag( ter_furn_flag::TFLAG_OPENCLOSE_INSIDE ) ) ||
-                                 !is_outside( cur ) ) ) {
-                        // Only try to open INSIDE doors from the inside
-                        // To open and then move onto the tile
-                        newg += 4;
-                    } else if( veh != nullptr ) {
-                        const auto vpobst = vpart_position( const_cast<vehicle &>( *veh ), part ).obstacle_at_part();
-                        part = vpobst ? vpobst->part_index() : -1;
-                        int dummy = -1;
-                        if( doors && veh->part_flag( part, VPFLAG_OPENABLE ) &&
-                            ( !veh->part_flag( part, "OPENCLOSE_INSIDE" ) ||
-                              veh_at_internal( cur, dummy ) == veh ) ) {
-                            // Handle car doors, but don't try to path through curtains
-                            newg += 10; // One turn to open, 4 to move there
-                        } else if( part >= 0 && bash > 0 ) {
-                            // Car obstacle that isn't a door
-                            // TODO: Account for armor
-                            int hp = veh->part( part ).hp();
-                            if( hp / 20 > bash ) {
-                                // Threshold damage thing means we just can't bash this down
-                                layer.state[index] = ASL_CLOSED;
-                                continue;
-                            } else if( hp / 10 > bash ) {
-                                // Threshold damage thing means we will fail to deal damage pretty often
-                                hp *= 2;
-                            }
-
-                            newg += 2 * hp / bash + 8 + 4;
-                        } else if( part >= 0 ) {
-                            if( !doors || !veh->part_flag( part, VPFLAG_OPENABLE ) ) {
-                                // Won't be openable, don't try from other sides
-                                layer.state[index] = ASL_CLOSED;
-                            }
-
+                    // First account for the underlying terrain/furniture.  This prevents a vehicle or
+                    // appliance part from masking a wall, closed furniture, or an impassable field.
+                    if( terrain_cost == 0 ) {
+                        if( climb_cost > 0 && p_special & PF_CLIMBABLE ) {
+                            // Climbing fences
+                            newg += climb_cost;
+                        } else if( doors && ( terrain.open || furniture.open ) &&
+                                   ( ( !terrain.has_flag( ter_furn_flag::TFLAG_OPENCLOSE_INSIDE ) &&
+                                       !furniture.has_flag( ter_furn_flag::TFLAG_OPENCLOSE_INSIDE ) ) ||
+                                     !is_outside( cur ) ) ) {
+                            // Only try to open INSIDE doors from the inside
+                            // To open and then move onto the tile
+                            newg += 4;
+                        } else if( terrain_rating > 1 ) {
+                            // Expected number of turns to bash the terrain/furniture down.
+                            newg += ( 20 / terrain_rating ) + 2 + 10;
+                        } else if( terrain_rating == 1 ) {
+                            // Desperate measures, avoid whenever possible.
+                            newg += 500;
+                        } else {
+                            layer.state[index] = ASL_CLOSED;
                             continue;
                         }
-                    } else if( rating > 1 ) {
-                        // Expected number of turns to bash it down, 1 turn to move there
-                        // and 5 turns of penalty not to trash everything just because we can
-                        newg += ( 20 / rating ) + 2 + 10;
-                    } else if( rating == 1 ) {
-                        // Desperate measures, avoid whenever possible
-                        newg += 500;
-                    } else {
-                        // Unbashable and unopenable from here
-                        if( !doors || !terrain.open || !furniture.open ) {
-                            // Or anywhere else for that matter
-                            layer.state[index] = ASL_CLOSED;
-                        }
+                    }
 
-                        continue;
+                    // Then account for a real vehicle obstacle, if there is one.  A non-obstacle
+                    // vehicle part does not replace the underlying terrain/furniture decision above.
+                    if( veh != nullptr ) {
+                        const auto vpobst = vpart_position( const_cast<vehicle &>( *veh ), part ).obstacle_at_part();
+                        part = vpobst ? vpobst->part_index() : -1;
+                        if( part >= 0 ) {
+                            int dummy = -1;
+                            if( doors && veh->part_flag( part, VPFLAG_OPENABLE ) &&
+                                ( !veh->part_flag( part, "OPENCLOSE_INSIDE" ) ||
+                                  veh_at_internal( cur, dummy ) == veh ) ) {
+                                // Handle car doors, but don't try to path through curtains
+                                newg += 10; // One turn to open, 4 to move there
+                            } else if( bash > 0 ) {
+                                // Car obstacle that isn't a door
+                                // TODO: Account for armor
+                                int hp = veh->part( part ).hp();
+                                if( hp / 20 > bash ) {
+                                    // Threshold damage thing means we just can't bash this down
+                                    layer.state[index] = ASL_CLOSED;
+                                    continue;
+                                } else if( hp / 10 > bash ) {
+                                    // Threshold damage thing means we will fail to deal damage pretty often
+                                    hp *= 2;
+                                }
+
+                                newg += 2 * hp / bash + 8 + 4;
+                            } else {
+                                if( !doors || !veh->part_flag( part, VPFLAG_OPENABLE ) ) {
+                                    // Won't be openable, don't try from other sides
+                                    layer.state[index] = ASL_CLOSED;
+                                }
+
+                                continue;
+                            }
+                        }
                     }
                 }
 
