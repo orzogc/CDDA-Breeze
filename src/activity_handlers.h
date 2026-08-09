@@ -146,8 +146,9 @@ bool put_into_vehicle_or_drop( Character &you, item_drop_reason, const std::list
 bool put_into_vehicle_or_drop( Character &you, item_drop_reason, const std::list<item> &items,
                                const tripoint_bub_ms &where, bool force_ground = false,
                                std::list<item> *failed_items = nullptr );
-// Returns true only when every item was successfully placed on the map.
-// When failed_items is provided, copies that could not be placed are returned to the caller.
+// Returns false only when map capacity prevented at least one item from being placed.
+// Items intentionally handled by drop_action or rejected by map rules retain their legacy behavior.
+// When failed_items is provided, capacity-blocked copies are returned to the caller.
 bool drop_on_map( Character &you, item_drop_reason reason, const std::list<item> &items,
                   const tripoint_bub_ms &where, std::list<item> *failed_items = nullptr );
 // used in unit tests to avoid triggering user input

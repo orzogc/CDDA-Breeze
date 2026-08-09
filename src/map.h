@@ -90,6 +90,14 @@ using VehicleList = std::vector<wrapped_vehicle>;
 class map;
 
 enum class ter_furn_flag : int;
+
+// Detailed outcome for map::add_item_or_charges.  A null item reference alone is
+// ambiguous because a drop action may intentionally consume the item.  Callers
+// that must distinguish a handled drop from a capacity failure can request this.
+enum class map_item_add_result : int {
+    placed, handled, rejected, no_space
+};
+
 struct pathfinding_cache;
 struct pathfinding_settings;
 template<typename T>
@@ -1318,12 +1326,15 @@ class map
          *  @param pos Where to add item
          *  @param obj Item to add
          *  @param overflow if destination is full attempt to drop on adjacent tiles
+         *  @param result optional detailed outcome; no_space uniquely identifies a capacity failure
          *  @return reference to dropped (and possibly stacked) item or null item on failure
          *  @warning function is relatively expensive and meant for user initiated actions, not mapgen
          */
         // TODO: fix point types (remove the first overload)
-        item &add_item_or_charges( const tripoint &pos, item obj, bool overflow = true );
-        item &add_item_or_charges( const tripoint_bub_ms &pos, item obj, bool overflow = true );
+        item &add_item_or_charges( const tripoint &pos, item obj, bool overflow = true,
+                                   map_item_add_result *result = nullptr );
+        item &add_item_or_charges( const tripoint_bub_ms &pos, item obj, bool overflow = true,
+                                   map_item_add_result *result = nullptr );
         item &add_item_or_charges( const point &p, const item &obj, bool overflow = true ) {
             return add_item_or_charges( tripoint( p, abs_sub.z() ), obj, overflow );
         }
