@@ -140,13 +140,20 @@ void vehicle::set_autodrive_speed()
     const int effective_current_tps = std::min( max_autodrive_speed, max_allowed_tps );
     const int current_kph = static_cast<int>( std::lround( effective_current_tps * kph_per_tps ) );
     const int safe_kph = static_cast<int>( std::lround( max_allowed_tps * kph_per_tps ) );
-    const int requested_kph = string_input_popup()
-                              .title( string_format( _( "设置自动驾驶最高速度，单位公里每小时。当前自动驾驶最高支持约 %d 公里每小时。" ),
-                                                   safe_kph ) )
-                              .text( std::to_string( current_kph ) )
-                              .only_digits( true )
-                              .max_length( 3 )
-                              .query_int();
+    string_input_popup speed_input;
+    speed_input.title( _( "设置自动驾驶最高速度，公里每小时" ) )
+    .description( string_format(
+                      _( "当前约 %d 公里每小时，当前自动驾驶最高支持约 %d 公里每小时。输入新的速度，留空确认或按 Esc 取消。" ),
+                      current_kph, safe_kph ) )
+    .width( 6 )
+    .only_digits( true )
+    .max_length( 3 );
+
+    const std::string requested_text = speed_input.query_string();
+    if( speed_input.canceled() || requested_text.empty() ) {
+        return;
+    }
+    const int requested_kph = std::atoi( requested_text.c_str() );
     if( requested_kph <= 0 ) {
         return;
     }
