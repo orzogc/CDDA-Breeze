@@ -147,8 +147,10 @@ static constexpr int TURNING_INCREMENT = 15;
 static constexpr int NUM_ORIENTATIONS = 360 / TURNING_INCREMENT;
 // min and max speed in tiles/s
 static constexpr int MIN_SPEED_TPS = 1;
-// A* stays conservative around turns.  Straight, visible road can use the vehicle setting.
-static constexpr int MAX_CAUTIOUS_SPEED_TPS = 3;
+// Do not hard-cap ordinary A* at 3 tiles/s (~19 km/h).  Per-vehicle
+// max_autodrive_speed and safe_velocity() already provide the real ceilings.
+// 16 t/s is the highest configurable airborne value; ground/water settings cap lower.
+static constexpr int MAX_CAUTIOUS_SPEED_TPS = 16;
 static constexpr int VMIPH_PER_TPS = static_cast<int>( vehicles::vmiph_per_tile );
 
 /**
