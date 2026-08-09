@@ -3650,17 +3650,47 @@ void drop_or_stash_item_info::deserialize( const JsonObject &jsobj )
     jsobj.read( "count", _count );
 }
 
+// ACT_DROP removes items from their source before trying to place them.  If the map is at
+// MAX_ITEM_IN_SQUARE and overflow has nowhere legal to go, map::add_item_or_charges returns
+// the null item.  Keep failed drops alive by restoring them to the character.  The normal
+// path still uses the original fast batch handling; this recovery path only runs on failure.
+static void restore_failed_ground_drop( Character &who, const item &failed )
+{
+    item_location restored = who.i_add( failed, true, nullptr, nullptr,
+                                        /*allow_drop=*/false,
+                                        /*allow_wield=*/true,
+                                        /*ignore_pkt_settings=*/true );
+    if( restored ) {
+        return;
+    }
+
+    // A failed drop may have originated as worn equipment.  Taking it off can leave no
+    // pocket large enough to put it back into, so try restoring it as worn equipment.
+    if( failed.is_armor() && who.wear_item( failed, false ).has_value() ) {
+        return;
+    }
+
+    // Absolute data-loss guard.  This bypasses normal square capacity only when both the
+    // legal ground placement and character restoration failed.  One over-limit recovery
+    // item is preferable to silently deleting player equipment.
+    item &forced = get_map().add_item( who.pos(), failed );
+    if( forced.is_null() ) {
+        debugmsg( "Failed to restore item '%s' after a full-ground drop failure", failed.tname() );
+    }
+}
+
 void drop_activity_actor::do_turn( player_activity &, Character &who )
 {
     const tripoint_bub_ms pos = placement + who.pos_bub();
 
     // Do not spend another turn taking items out if the target cargo is already full.
+    map &here = get_map();
+    std::optional<vpart_reference> cargo;
     if( !force_ground ) {
-        map &here = get_map();
-        const std::optional<vpart_reference> vp = here.veh_at( pos ).part_with_feature( "CARGO", false );
-        if( vp ) {
-            vehicle &veh = vp->vehicle();
-            const int part = vp->part_index();
+        cargo = here.veh_at( pos ).part_with_feature( "CARGO", false );
+        if( cargo ) {
+            vehicle &veh = cargo->vehicle();
+            const int part = cargo->part_index();
             if( veh.free_volume( part ) <= 0_ml ||
                 veh.get_items( part ).size() >= MAX_ITEM_IN_VEHICLE_STORAGE ) {
                 who.add_msg_if_player( m_info,
@@ -3672,11 +3702,24 @@ void drop_activity_actor::do_turn( player_activity &, Character &who )
     }
 
     who.invalidate_weight_carried_cache();
-    const bool vehicle_full = put_into_vehicle_or_drop(
-                                  who, item_drop_reason::deliberate,
-                                  obtain_activity_items( items, handler, who ),
-                                  pos, force_ground );
-    if( vehicle_full ) {
+    std::list<item> obtained = obtain_activity_items( items, handler, who );
+    std::list<item> failed_items;
+    bool destination_full = false;
+
+    if( cargo ) {
+        destination_full = put_into_vehicle_or_drop(
+                               who, item_drop_reason::deliberate, obtained, pos, false );
+    } else {
+        destination_full = put_into_vehicle_or_drop(
+                               who, item_drop_reason::deliberate, obtained, pos, true, &failed_items );
+        if( !failed_items.empty() ) {
+            for( const item &failed : failed_items ) {
+                restore_failed_ground_drop( who, failed );
+            }
+        }
+    }
+
+    if( destination_full ) {
         who.add_msg_if_player( m_info, _( "Destination area is full.  Remove some items first." ) );
         who.cancel_activity();
         return;

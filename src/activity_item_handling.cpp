@@ -431,7 +431,7 @@ static bool put_into_vehicle( Character &c, item_drop_reason reason, const std::
 }
 
 bool drop_on_map( Character &you, item_drop_reason reason, const std::list<item> &items,
-                  const tripoint_bub_ms &where )
+                  const tripoint_bub_ms &where, std::list<item> *failed_items )
 {
     you.invalidate_weight_carried_cache();
     if( items.empty() ) {
@@ -519,6 +519,9 @@ bool drop_on_map( Character &you, item_drop_reason reason, const std::list<item>
         item &dropped_item = here.add_item_or_charges( where, it );
         if( &dropped_item == &null_item_reference() ) {
             all_placed = false;
+            if( failed_items != nullptr ) {
+                failed_items->push_back( it );
+            }
             continue;
         }
         item( it ).handle_pickup_ownership( you );
@@ -536,14 +539,15 @@ bool put_into_vehicle_or_drop( Character &you, item_drop_reason reason,
 
 bool put_into_vehicle_or_drop( Character &you, item_drop_reason reason,
                                const std::list<item> &items,
-                               const tripoint_bub_ms &where, bool force_ground )
+                               const tripoint_bub_ms &where, bool force_ground,
+                               std::list<item> *failed_items )
 {
     map &here = get_map();
     const std::optional<vpart_reference> vp = here.veh_at( where ).part_with_feature( "CARGO", false );
     if( vp && !force_ground ) {
         return put_into_vehicle( you, reason, items, vp->vehicle(), vp->part_index() );
     }
-    drop_on_map( you, reason, items, where );
+    const bool all_placed = drop_on_map( you, reason, items, where, failed_items );
 
 
     if (get_option<bool>("AUTO_NOTES_DROPPED_FAVORITES") && you.is_avatar()) {
@@ -594,7 +598,7 @@ bool put_into_vehicle_or_drop( Character &you, item_drop_reason reason,
 
     }
 
-    return false;
+    return !all_placed;
 }
 
 static std::list<act_item> convert_to_act_item( const player_activity &act, Character &guy )
