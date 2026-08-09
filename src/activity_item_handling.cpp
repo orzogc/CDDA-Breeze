@@ -281,18 +281,19 @@ static bool handle_spillable_contents( Character &c, item &it, map &m )
     return false;
 }
 
-static void put_into_vehicle( Character &c, item_drop_reason reason, const std::list<item> &items,
+static bool put_into_vehicle( Character &c, item_drop_reason reason, const std::list<item> &items,
                               vehicle &veh, int part )
 {
     c.invalidate_weight_carried_cache();
     if( items.empty() ) {
-        return;
+        return false;
     }
 
     const tripoint where = veh.global_part_pos3( part );
     map &here = get_map();
     const std::string ter_name = here.name( where );
     int fallen_count = 0;
+    int retained_count = 0;
     int into_vehicle_count = 0;
 
     // can't use constant reference here because of the spill_contents()
@@ -315,8 +316,18 @@ static void put_into_vehicle( Character &c, item_drop_reason reason, const std::
                 it.mod_charges( -charges_added );
                 into_vehicle_count += charges_added;
             }
-            here.add_item_or_charges( where, it );
-            fallen_count += it.count();
+            if( it.count() > 0 ) {
+                if( c.can_stash( it ) ) {
+                    retained_count += it.count();
+                    c.i_add( it );
+                } else if( !c.has_wield_conflicts( it ) && c.can_wield( it ).success() ) {
+                    retained_count += it.count();
+                    c.wield( it );
+                } else {
+                    here.add_item_or_charges( where, it );
+                    fallen_count += it.count();
+                }
+            }
         }
         it.handle_pickup_ownership( c );
     }
@@ -330,13 +341,15 @@ static void put_into_vehicle( Character &c, item_drop_reason reason, const std::
 
         switch( reason ) {
             case item_drop_reason::deliberate:
-                c.add_msg_player_or_npc(
-                    n_gettext( "You put your %1$s in the %2$s's %3$s.",
-                               "You put your %1$s in the %2$s's %3$s.", dropcount ),
-                    n_gettext( "<npcname> puts their %1$s in the %2$s's %3$s.",
-                               "<npcname> puts their %1$s in the %2$s's %3$s.", dropcount ),
-                    it_name, veh.name, part_name
-                );
+                if( retained_count == 0 && fallen_count == 0 ) {
+                    c.add_msg_player_or_npc(
+                        n_gettext( "You put your %1$s in the %2$s's %3$s.",
+                                   "You put your %1$s in the %2$s's %3$s.", dropcount ),
+                        n_gettext( "<npcname> puts their %1$s in the %2$s's %3$s.",
+                                   "<npcname> puts their %1$s in the %2$s's %3$s.", dropcount ),
+                        it_name, veh.name, part_name
+                    );
+                }
                 break;
             case item_drop_reason::too_large:
                 c.add_msg_if_player(
@@ -366,11 +379,13 @@ static void put_into_vehicle( Character &c, item_drop_reason reason, const std::
     } else {
         switch( reason ) {
             case item_drop_reason::deliberate:
-                c.add_msg_player_or_npc(
-                    _( "You put several items in the %1$s's %2$s." ),
-                    _( "<npcname> puts several items in the %1$s's %2$s." ),
-                    veh.name, part_name
-                );
+                if( retained_count == 0 && fallen_count == 0 ) {
+                    c.add_msg_player_or_npc(
+                        _( "You put several items in the %1$s's %2$s." ),
+                        _( "<npcname> puts several items in the %1$s's %2$s." ),
+                        veh.name, part_name
+                    );
+                }
                 break;
             case item_drop_reason::too_large:
             case item_drop_reason::too_heavy:
@@ -383,8 +398,20 @@ static void put_into_vehicle( Character &c, item_drop_reason reason, const std::
         }
     }
 
-    if( fallen_count > 0 ) {
-        if( into_vehicle_count > 0 ) {
+    if( ( retained_count > 0 || fallen_count > 0 ) && reason != item_drop_reason::deliberate ) {
+        if( retained_count > 0 && fallen_count > 0 ) {
+            c.add_msg_if_player(
+                m_warning,
+                _( "The %1$s is full, so items that do not fit stay with you when possible, and the rest fall to the %2$s." ),
+                part_name, ter_name
+            );
+        } else if( retained_count > 0 ) {
+            c.add_msg_if_player(
+                m_warning,
+                _( "The %s is full, so items that do not fit stay with you." ),
+                part_name
+            );
+        } else if( into_vehicle_count > 0 ) {
             c.add_msg_if_player(
                 m_warning,
                 n_gettext( "The %s is full, so something fell to the %s.",
@@ -400,6 +427,7 @@ static void put_into_vehicle( Character &c, item_drop_reason reason, const std::
             );
         }
     }
+    return retained_count > 0 || fallen_count > 0;
 }
 
 void drop_on_map( Character &you, item_drop_reason reason, const std::list<item> &items,
@@ -494,21 +522,20 @@ void drop_on_map( Character &you, item_drop_reason reason, const std::list<item>
     you.recoil = MAX_RECOIL;
 }
 
-void put_into_vehicle_or_drop( Character &you, item_drop_reason reason,
+bool put_into_vehicle_or_drop( Character &you, item_drop_reason reason,
                                const std::list<item> &items )
 {
     return put_into_vehicle_or_drop( you, reason, items, you.pos_bub() );
 }
 
-void put_into_vehicle_or_drop( Character &you, item_drop_reason reason,
+bool put_into_vehicle_or_drop( Character &you, item_drop_reason reason,
                                const std::list<item> &items,
                                const tripoint_bub_ms &where, bool force_ground )
 {
     map &here = get_map();
     const std::optional<vpart_reference> vp = here.veh_at( where ).part_with_feature( "CARGO", false );
     if( vp && !force_ground ) {
-        put_into_vehicle( you, reason, items, vp->vehicle(), vp->part_index() );
-        return;
+        return put_into_vehicle( you, reason, items, vp->vehicle(), vp->part_index() );
     }
     drop_on_map( you, reason, items, where );
 
@@ -561,6 +588,7 @@ void put_into_vehicle_or_drop( Character &you, item_drop_reason reason,
 
     }
 
+    return false;
 }
 
 static std::list<act_item> convert_to_act_item( const player_activity &act, Character &guy )

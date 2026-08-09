@@ -43,6 +43,8 @@
 #include "type_id.h"
 #include "ui.h"
 #include "uistate.h"
+#include "vehicle.h"
+#include "vpart_position.h"
 
 static const efftype_id effect_pet( "pet" );
 
@@ -680,6 +682,33 @@ static item wishitem_produce( const itype &type, std::string &flags, bool incont
     return granted;
 }
 
+static bool wishitem_put_in_vehicle( Character &you, item &it )
+{
+    map &here = get_map();
+    const optional_vpart_position vp = here.veh_at( you.pos() );
+    if( !vp ) {
+        return false;
+    }
+
+    vehicle &veh = vp->vehicle();
+    const int cargo_part = veh.part_with_feature( vp->part_index(), "CARGO", false );
+    if( cargo_part < 0 ) {
+        return false;
+    }
+
+    if( veh.add_item( cargo_part, it ) ) {
+        return true;
+    }
+
+    if( it.count_by_charges() ) {
+        const int charges_added = veh.add_charges( cargo_part, it );
+        it.mod_charges( -charges_added );
+        return it.charges <= 0;
+    }
+
+    return false;
+}
+
 class wish_item_callback: public uilist_callback
 {
     public:
@@ -969,7 +998,7 @@ void debug_menu::wishitem( Character *you, const tripoint &pos )
                             granted.charges = amount;
                             if( you->can_stash( granted ) ) {
                                 you->i_add( granted );
-                            } else {
+                            } else if( !wishitem_put_in_vehicle( *you, granted ) ) {
                                 get_map().add_item_or_charges( you->pos(), granted );
                             }
                         }
@@ -977,7 +1006,7 @@ void debug_menu::wishitem( Character *you, const tripoint &pos )
                         for( int i = 0; i < amount; i++ ) {
                             if( you->can_stash( granted ) ) {
                                 you->i_add( granted );
-                            } else {
+                            } else if( !wishitem_put_in_vehicle( *you, granted ) ) {
                                 get_map().add_item_or_charges( you->pos(), granted );
                             }
                         }

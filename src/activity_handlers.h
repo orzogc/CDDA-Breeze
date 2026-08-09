@@ -141,8 +141,9 @@ enum class item_drop_reason : int {
     tumbling
 };
 
-void put_into_vehicle_or_drop( Character &you, item_drop_reason, const std::list<item> &items );
-void put_into_vehicle_or_drop( Character &you, item_drop_reason, const std::list<item> &items,
+// Returns true when vehicle cargo was targeted but at least one item did not fit.
+bool put_into_vehicle_or_drop( Character &you, item_drop_reason, const std::list<item> &items );
+bool put_into_vehicle_or_drop( Character &you, item_drop_reason, const std::list<item> &items,
                                const tripoint_bub_ms &where, bool force_ground = false );
 void drop_on_map( Character &you, item_drop_reason reason, const std::list<item> &items,
                   const tripoint_bub_ms &where );

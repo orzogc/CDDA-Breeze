@@ -3595,10 +3595,34 @@ void drop_or_stash_item_info::deserialize( const JsonObject &jsobj )
 void drop_activity_actor::do_turn( player_activity &, Character &who )
 {
     const tripoint_bub_ms pos = placement + who.pos_bub();
+
+    // Do not spend another turn taking items out if the target cargo is already full.
+    if( !force_ground ) {
+        map &here = get_map();
+        const std::optional<vpart_reference> vp = here.veh_at( pos ).part_with_feature( "CARGO", false );
+        if( vp ) {
+            vehicle &veh = vp->vehicle();
+            const int part = vp->part_index();
+            if( veh.free_volume( part ) <= 0_ml ||
+                veh.get_items( part ).size() >= MAX_ITEM_IN_VEHICLE_STORAGE ) {
+                who.add_msg_if_player( m_info,
+                                       _( "Destination area is full.  Remove some items first." ) );
+                who.cancel_activity();
+                return;
+            }
+        }
+    }
+
     who.invalidate_weight_carried_cache();
-    put_into_vehicle_or_drop( who, item_drop_reason::deliberate,
-                              obtain_activity_items( items, handler, who ),
-                              pos, force_ground );
+    const bool vehicle_full = put_into_vehicle_or_drop(
+                                  who, item_drop_reason::deliberate,
+                                  obtain_activity_items( items, handler, who ),
+                                  pos, force_ground );
+    if( vehicle_full ) {
+        who.add_msg_if_player( m_info, _( "Destination area is full.  Remove some items first." ) );
+        who.cancel_activity();
+        return;
+    }
     // Cancel activity if items is empty. Otherwise, we modified in place and we will continue
     // to resolve the drop next turn. This is different from the pickup logic which creates
     // a brand new activity every turn and cancels the old activity
