@@ -1284,10 +1284,19 @@ std::optional<navigation_step> vehicle::autodrive_controller::compute_next_step(
 
     if( data.path.empty() ) {
         auto new_path = compute_path( data.max_cautious_speed_tps );
-        while( !new_path && data.max_cautious_speed_tps > MIN_SPEED_TPS ) {
-            // high speed did not work, try a lower speed
-            data.max_cautious_speed_tps /= 2;
-            new_path = compute_path( data.max_cautious_speed_tps );
+        if( !new_path && data.max_cautious_speed_tps > MIN_SPEED_TPS ) {
+            // Try every lower speed in descending order and keep the fastest
+            // path that actually works.  The old halving ladder could skip
+            // viable speeds when adjacent speeds differ in steering geometry.
+            for( int candidate_speed = data.max_cautious_speed_tps - 1;
+                 candidate_speed >= MIN_SPEED_TPS; --candidate_speed ) {
+                auto candidate_path = compute_path( candidate_speed );
+                if( candidate_path ) {
+                    data.max_cautious_speed_tps = candidate_speed;
+                    new_path = std::move( candidate_path );
+                    break;
+                }
+            }
         }
         if( !new_path ) {
             return std::nullopt;

@@ -3687,7 +3687,7 @@ int vehicle::acceleration( const bool fueled, int at_vel_in_vmi ) const
 {
     if( is_watercraft() ) {
         return water_acceleration( fueled, at_vel_in_vmi );
-    } else if( is_rotorcraft() && is_flying ) {
+    } else if( ( is_rotorcraft() || is_airship() ) && is_flying ) {
         return rotor_acceleration( fueled, at_vel_in_vmi );
     }
     return ground_acceleration( fueled, at_vel_in_vmi );
@@ -3776,7 +3776,7 @@ int vehicle::max_rotor_velocity( const bool fueled ) const
 
 int vehicle::max_velocity( const bool fueled ) const
 {
-    if( is_flying && is_rotorcraft() ) {
+    if( is_flying && ( is_rotorcraft() || is_airship() ) ) {
         return max_rotor_velocity( fueled );
     } else if( is_watercraft() ) {
         return max_water_velocity( fueled );
@@ -3832,7 +3832,7 @@ int vehicle::safe_water_velocity( const bool fueled ) const
 
 int vehicle::safe_velocity( const bool fueled ) const
 {
-    if( is_flying && is_rotorcraft() ) {
+    if( is_flying && ( is_rotorcraft() || is_airship() ) ) {
         return safe_rotor_velocity( fueled );
     } else if( is_watercraft() ) {
         return safe_water_velocity( fueled );

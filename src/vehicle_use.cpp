@@ -130,7 +130,10 @@ void vehicle::set_autodrive_speed()
     // calculated safe velocity.  This keeps bicycles, paddle craft, damaged vehicles, etc.
     // from being assigned a highway-speed target they cannot safely reach.
     constexpr double kph_per_tps = 6.437376;
-    constexpr int max_configurable_tps = 15;
+    // Flying aircraft get the higher airborne autodrive ceiling.  Ground and
+    // water vehicles keep the 15 t/s (~97 km/h) UI ceiling.  safe_velocity()
+    // remains the final physical limit for the actual vehicle.
+    const int max_configurable_tps = is_flying && ( is_rotorcraft() || is_airship() ) ? 16 : 15;
     const int safe_speed_tps = std::max(
                                    1, safe_velocity() / static_cast<int>( vehicles::vmiph_per_tile ) );
     const int max_allowed_tps = std::min( max_configurable_tps, safe_speed_tps );
