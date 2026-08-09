@@ -123,6 +123,54 @@ void handbrake()
     player_character.moves = 0;
 }
 
+void vehicle::set_autodrive_speed()
+{
+    // One tile per second is 400 vmiph, which is about 6.44 km/h.  The player setting is
+    // a ceiling, not a promise: just like CCB, autodrive is also capped by the vehicle's
+    // calculated safe velocity.  This keeps bicycles, paddle craft, damaged vehicles, etc.
+    // from being assigned a highway-speed target they cannot safely reach.
+    constexpr double kph_per_tps = 6.437376;
+    // Flying aircraft get the higher airborne autodrive ceiling.  Ground and
+    // water vehicles keep the 15 t/s (~97 km/h) UI ceiling.  safe_velocity()
+    // remains the final physical limit for the actual vehicle.
+    const int max_configurable_tps = is_flying && ( is_rotorcraft() || is_airship() ) ? 16 : 15;
+    const int safe_speed_tps = std::max(
+                                   1, safe_velocity() / static_cast<int>( vehicles::vmiph_per_tile ) );
+    const int max_allowed_tps = std::min( max_configurable_tps, safe_speed_tps );
+    const int effective_current_tps = std::min( max_autodrive_speed, max_allowed_tps );
+    const int current_kph = static_cast<int>( std::lround( effective_current_tps * kph_per_tps ) );
+    const int safe_kph = static_cast<int>( std::lround( max_allowed_tps * kph_per_tps ) );
+    string_input_popup speed_input;
+    speed_input.title( _( "设置自动驾驶最高速度，公里每小时" ) )
+    .description( string_format(
+                      _( "当前约 %d 公里每小时，自动驾驶最高支持约 %d 公里每小时。输入新的速度，留空确认或按 Esc 取消。" ),
+                      current_kph, safe_kph ) )
+    .width( 6 )
+    .only_digits( true )
+    .max_length( 3 );
+
+    const std::string requested_text = speed_input.query_string();
+    if( speed_input.canceled() || requested_text.empty() ) {
+        return;
+    }
+    const int requested_kph = std::atoi( requested_text.c_str() );
+    if( requested_kph <= 0 ) {
+        return;
+    }
+
+    const int requested_tps = std::clamp(
+                                  static_cast<int>( std::lround( requested_kph / kph_per_tps ) ),
+                                  1, max_configurable_tps );
+    max_autodrive_speed = std::min( requested_tps, max_allowed_tps );
+    const int actual_kph = static_cast<int>( std::lround( max_autodrive_speed * kph_per_tps ) );
+    if( requested_tps > max_allowed_tps ) {
+        add_msg( _( "当前自动驾驶最高支持约 %d 公里每小时，已使用该上限。" ),
+                 actual_kph );
+    } else {
+        add_msg( _( "自动驾驶最高速度已设为约 %d 公里每小时。" ), actual_kph );
+    }
+}
+
 void vehicle::control_doors()
 {
     const auto open_or_close_all = [this]( bool new_open, const std::string & require_flag ) {
@@ -1906,6 +1954,10 @@ void vehicle::build_interact_menu( veh_menu &menu, const tripoint &p, bool with_
             cruise_on = !cruise_on;
             add_msg( cruise_on ? _( "Cruise control turned on" ) : _( "Cruise control turned off" ) );
         } );
+
+        menu.add( _( "设置自动驾驶速度" ) )
+        .keep_menu_open()
+        .on_submit( [this] { set_autodrive_speed(); } );
     }
 
     if( has_electronic_controls && has_part( "SMART_ENGINE_CONTROLLER" ) ) {

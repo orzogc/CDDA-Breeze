@@ -1860,6 +1860,8 @@ class vehicle
         void transform_terrain();
         //main method for the control of individual engines
         void control_engines();
+        // set the per-vehicle maximum speed used by overmap autodrive
+        void set_autodrive_speed();
         //returns whether the engine is enabled or not, and has fueltype
         bool is_engine_type_on( int e, const itype_id &ft ) const;
         //returns whether the engine is enabled or not
@@ -2234,6 +2236,9 @@ class vehicle
         // TODO: change these to a bitset + enum?
         // cruise control on/off
         bool cruise_on = true;
+        // Maximum overmap autodrive speed in tiles per second.  Safe-mode remains fixed at
+        // one tile per second so low visibility and obstacle handling cannot be bypassed.
+        int max_autodrive_speed = 10;
         // at least one engine is on, of any type
         bool engine_on = false;
         // vehicle tracking on/off
