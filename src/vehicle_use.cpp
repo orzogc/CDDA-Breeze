@@ -143,7 +143,7 @@ void vehicle::set_autodrive_speed()
     string_input_popup speed_input;
     speed_input.title( _( "设置自动驾驶最高速度，公里每小时" ) )
     .description( string_format(
-                      _( "当前约 %d 公里每小时，当前自动驾驶最高支持约 %d 公里每小时。输入新的速度，留空确认或按 Esc 取消。" ),
+                      _( "当前约 %d 公里每小时，自动驾驶最高支持约 %d 公里每小时。输入新的速度，留空确认或按 Esc 取消。" ),
                       current_kph, safe_kph ) )
     .width( 6 )
     .only_digits( true )
