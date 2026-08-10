@@ -273,11 +273,44 @@ static bool handle_spillable_contents( Character &c, item &it, map &m )
                 _( "To avoid spilling its contents, <npcname> sets their %1$s on the %2$s." ),
                 it.display_name(), m.name( c.pos() )
             );
-            m.add_item_or_charges( c.pos(), it );
+            map_item_add_result add_result = map_item_add_result::rejected;
+            item &placed = m.add_item_or_charges( c.pos(), it, true, &add_result );
+            if( placed.is_null() && add_result == map_item_add_result::no_space &&
+                m.can_put_items_ter_furn( c.pos() ) ) {
+                // This path has already detached/spilled the container state.  Preserve it
+                // over the square limit rather than silently losing it.
+                m.add_item( c.pos(), it );
+            }
             return true;
         }
     }
 
+    return false;
+}
+
+// Capacity overflow is the one map-placement failure that must never silently delete an item.
+// Keep normal NO_DROP, destructive-terrain and drop_action semantics intact, but if every legal
+// square is simply full, preserve the item by bypassing only the normal square capacity limit.
+static bool force_preserve_capacity_drop( Character &c, map &here,
+        const tripoint &preferred, const item &it )
+{
+    const auto force_at = [&]( const tripoint & p ) {
+        if( !here.can_put_items_ter_furn( p ) ) {
+            return false;
+        }
+        item &forced = here.add_item( p, it );
+        if( forced.is_null() ) {
+            return false;
+        }
+        forced.handle_pickup_ownership( c );
+        return true;
+    };
+
+    if( force_at( preferred ) || ( preferred != c.pos() && force_at( c.pos() ) ) ) {
+        return true;
+    }
+
+    debugmsg( "Failed to preserve item '%s' after a capacity-blocked drop", it.tname() );
     return false;
 }
 
@@ -303,7 +336,11 @@ static bool put_into_vehicle( Character &c, item_drop_reason reason, const std::
         }
 
         if( it.made_of( phase_id::LIQUID ) ) {
-            here.add_item_or_charges( c.pos(), it );
+            map_item_add_result add_result = map_item_add_result::rejected;
+            item &spilled = here.add_item_or_charges( c.pos(), it, true, &add_result );
+            if( spilled.is_null() && add_result == map_item_add_result::no_space ) {
+                force_preserve_capacity_drop( c, here, c.pos(), it );
+            }
             it.charges = 0;
         }
 
@@ -324,8 +361,17 @@ static bool put_into_vehicle( Character &c, item_drop_reason reason, const std::
                     retained_count += it.count();
                     c.wield( it );
                 } else {
-                    here.add_item_or_charges( where, it );
-                    fallen_count += it.count();
+                    map_item_add_result add_result = map_item_add_result::rejected;
+                    item &fallen = here.add_item_or_charges( where, it, true, &add_result );
+                    if( !fallen.is_null() ) {
+                        fallen_count += it.count();
+                    } else if( add_result == map_item_add_result::no_space &&
+                               force_preserve_capacity_drop( c, here, where, it ) ) {
+                        // The cargo and legal ground overflow are both full.  Keep the item on
+                        // the map even if that means one exceptional over-limit square.
+                        fallen_count += it.count();
+                    }
+                    // handled/rejected outcomes intentionally keep their previous semantics.
                 }
             }
         }
@@ -430,14 +476,15 @@ static bool put_into_vehicle( Character &c, item_drop_reason reason, const std::
     return retained_count > 0 || fallen_count > 0;
 }
 
-void drop_on_map( Character &you, item_drop_reason reason, const std::list<item> &items,
-                  const tripoint_bub_ms &where )
+bool drop_on_map( Character &you, item_drop_reason reason, const std::list<item> &items,
+                  const tripoint_bub_ms &where, std::list<item> *failed_items )
 {
     you.invalidate_weight_carried_cache();
     if( items.empty() ) {
-        return;
+        return true;
     }
     map &here = get_map();
+    bool all_placed = true;
     const std::string ter_name = here.name( where );
     const bool can_move_there = here.passable( where );
 
@@ -515,11 +562,22 @@ void drop_on_map( Character &you, item_drop_reason reason, const std::list<item>
         }
     }
     for( const item &it : items ) {
-        here.add_item_or_charges( where, it );
-        item( it ).handle_pickup_ownership( you );
+        map_item_add_result add_result = map_item_add_result::rejected;
+        item &dropped_item = here.add_item_or_charges( where, it, true, &add_result );
+        if( dropped_item.is_null() && add_result == map_item_add_result::no_space ) {
+            all_placed = false;
+            if( failed_items != nullptr ) {
+                failed_items->push_back( it );
+            }
+            continue;
+        }
+        if( !dropped_item.is_null() ) {
+            dropped_item.handle_pickup_ownership( you );
+        }
     }
 
     you.recoil = MAX_RECOIL;
+    return all_placed;
 }
 
 bool put_into_vehicle_or_drop( Character &you, item_drop_reason reason,
@@ -530,14 +588,26 @@ bool put_into_vehicle_or_drop( Character &you, item_drop_reason reason,
 
 bool put_into_vehicle_or_drop( Character &you, item_drop_reason reason,
                                const std::list<item> &items,
-                               const tripoint_bub_ms &where, bool force_ground )
+                               const tripoint_bub_ms &where, bool force_ground,
+                               std::list<item> *failed_items )
 {
     map &here = get_map();
     const std::optional<vpart_reference> vp = here.veh_at( where ).part_with_feature( "CARGO", false );
     if( vp && !force_ground ) {
         return put_into_vehicle( you, reason, items, vp->vehicle(), vp->part_index() );
     }
-    drop_on_map( you, reason, items, where );
+    // Legacy callers often pass a temporary copy and ignore the return value.  Preserve those
+    // copies on a capacity failure instead of letting them vanish.  ACT_DROP supplies its own
+    // failed_items list and restores the original character item itself, while ACT_MOVE_ITEMS
+    // calls drop_on_map directly and therefore remains fully transactional.
+    std::list<item> local_failed_items;
+    std::list<item> *failure_sink = failed_items != nullptr ? failed_items : &local_failed_items;
+    const bool all_placed = drop_on_map( you, reason, items, where, failure_sink );
+    if( failed_items == nullptr ) {
+        for( const item &failed : local_failed_items ) {
+            force_preserve_capacity_drop( you, here, where.raw(), failed );
+        }
+    }
 
 
     if (get_option<bool>("AUTO_NOTES_DROPPED_FAVORITES") && you.is_avatar()) {
@@ -588,7 +658,7 @@ bool put_into_vehicle_or_drop( Character &you, item_drop_reason reason,
 
     }
 
-    return false;
+    return !all_placed;
 }
 
 static std::list<act_item> convert_to_act_item( const player_activity &act, Character &guy )

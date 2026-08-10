@@ -5546,8 +5546,17 @@ units::volume map::free_volume( const tripoint_bub_ms &p )
     return free_volume( p.raw() );
 }
 
-item &map::add_item_or_charges( const tripoint &pos, item obj, bool overflow )
+item &map::add_item_or_charges( const tripoint &pos, item obj, bool overflow,
+                                map_item_add_result *result )
 {
+    const auto set_result = [result]( map_item_add_result value ) {
+        if( result != nullptr ) {
+            *result = value;
+        }
+    };
+    set_result( map_item_add_result::rejected );
+    bool capacity_limited = false;
+
     // Checks if item would not be destroyed if added to this tile
     auto valid_tile = [&]( const tripoint & e ) {
         if( !inbounds( e ) ) {
@@ -5579,13 +5588,17 @@ item &map::add_item_or_charges( const tripoint &pos, item obj, bool overflow )
         {
             for( item &e : i_at( tile ) ) {
                 if( e.merge_charges( obj ) ) {
+                    set_result( map_item_add_result::placed );
                     return e;
                 }
             }
         }
 
         support_dirty( tile );
-        return add_item( tile, obj );
+        item &placed = add_item( tile, obj );
+        set_result( placed.is_null() ? map_item_add_result::rejected :
+                    map_item_add_result::placed );
+        return placed;
     };
 
     if( item_is_blacklisted( obj.typeId() ) ) {
@@ -5602,12 +5615,14 @@ item &map::add_item_or_charges( const tripoint &pos, item obj, bool overflow )
         return null_item_reference();
     }
 
-    if( ( !has_flag( ter_furn_flag::TFLAG_NOITEM, pos ) ||
-          ( has_flag( ter_furn_flag::TFLAG_LIQUIDCONT, pos ) && obj.made_of( phase_id::LIQUID ) ) )
-        && valid_limits( pos ) ) {
+    const bool target_accepts_items =
+        !has_flag( ter_furn_flag::TFLAG_NOITEM, pos ) ||
+        ( has_flag( ter_furn_flag::TFLAG_LIQUIDCONT, pos ) && obj.made_of( phase_id::LIQUID ) );
+    if( target_accepts_items && valid_limits( pos ) ) {
         // Pass map into on_drop, because this map may not be the global map object (in mapgen, for instance).
         if( obj.made_of( phase_id::LIQUID ) || !obj.has_flag( flag_DROP_ACTION_ONLY_IF_LIQUID ) ) {
             if( obj.on_drop( pos, *this ) ) {
+                set_result( map_item_add_result::handled );
                 return null_item_reference();
             }
 
@@ -5616,6 +5631,7 @@ item &map::add_item_or_charges( const tripoint &pos, item obj, bool overflow )
         return place_item( pos );
 
     } else if( overflow ) {
+        capacity_limited = target_accepts_items;
         // ...otherwise try to overflow to adjacent tiles (if permitted)
         const int max_dist = 2;
         std::vector<tripoint> tiles = closest_points_first( pos, max_dist );
@@ -5633,25 +5649,34 @@ item &map::add_item_or_charges( const tripoint &pos, item obj, bool overflow )
             }
             if( obj.made_of( phase_id::LIQUID ) || !obj.has_flag( flag_DROP_ACTION_ONLY_IF_LIQUID ) ) {
                 if( obj.on_drop( e, *this ) ) {
+                    set_result( map_item_add_result::handled );
                     return null_item_reference();
                 }
             }
 
-            if( !valid_tile( e ) || !valid_limits( e ) ||
-                has_flag( ter_furn_flag::TFLAG_NOITEM, e ) || has_flag( ter_furn_flag::TFLAG_SEALED, e ) ) {
+            if( !valid_tile( e ) || has_flag( ter_furn_flag::TFLAG_NOITEM, e ) ||
+                has_flag( ter_furn_flag::TFLAG_SEALED, e ) ) {
+                continue;
+            }
+            if( !valid_limits( e ) ) {
+                capacity_limited = true;
                 continue;
             }
             return place_item( e );
         }
+    } else if( target_accepts_items ) {
+        capacity_limited = true;
     }
 
-    // failed due to lack of space at target tile (+/- overflow tiles)
+    set_result( capacity_limited ? map_item_add_result::no_space :
+                map_item_add_result::rejected );
     return null_item_reference();
 }
 
-item &map::add_item_or_charges( const tripoint_bub_ms &pos, item obj, bool overflow )
+item &map::add_item_or_charges( const tripoint_bub_ms &pos, item obj, bool overflow,
+                                map_item_add_result *result )
 {
-    return add_item_or_charges( pos.raw(), std::move( obj ), overflow );
+    return add_item_or_charges( pos.raw(), std::move( obj ), overflow, result );
 }
 
 item &map::add_item( const tripoint &p, item new_item )

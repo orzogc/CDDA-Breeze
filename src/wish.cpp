@@ -709,6 +709,22 @@ static bool wishitem_put_in_vehicle( Character &you, item &it )
     return false;
 }
 
+static void wishitem_put_on_map( const tripoint &pos, const item &it )
+{
+    map &here = get_map();
+    map_item_add_result add_result = map_item_add_result::rejected;
+    item &placed = here.add_item_or_charges( pos, it, true, &add_result );
+    if( !placed.is_null() || add_result != map_item_add_result::no_space ) {
+        return;
+    }
+
+    // Debug wishes should never silently vanish merely because MAX_ITEM_IN_SQUARE was reached.
+    // Bypass only the capacity limit; ordinary NO_DROP/destructive-tile rules remain unchanged.
+    if( here.can_put_items_ter_furn( pos ) && here.add_item( pos, it ).is_null() ) {
+        debugmsg( "Failed to preserve wished item '%s' on a full map square", it.tname() );
+    }
+}
+
 class wish_item_callback: public uilist_callback
 {
     public:
@@ -999,7 +1015,7 @@ void debug_menu::wishitem( Character *you, const tripoint &pos )
                             if( you->can_stash( granted ) ) {
                                 you->i_add( granted );
                             } else if( !wishitem_put_in_vehicle( *you, granted ) ) {
-                                get_map().add_item_or_charges( you->pos(), granted );
+                                wishitem_put_on_map( you->pos(), granted );
                             }
                         }
                     } else {
@@ -1007,13 +1023,13 @@ void debug_menu::wishitem( Character *you, const tripoint &pos )
                             if( you->can_stash( granted ) ) {
                                 you->i_add( granted );
                             } else if( !wishitem_put_in_vehicle( *you, granted ) ) {
-                                get_map().add_item_or_charges( you->pos(), granted );
+                                wishitem_put_on_map( you->pos(), granted );
                             }
                         }
                     }
                     you->invalidate_crafting_inventory();
                 } else if( pos.x >= 0 && pos.y >= 0 ) {
-                    get_map().add_item_or_charges( pos, granted );
+                    wishitem_put_on_map( pos, granted );
                     wmenu.ret = -1;
                 }
                 if( amount > 0 ) {

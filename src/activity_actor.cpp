@@ -1883,6 +1883,7 @@ std::unique_ptr<activity_actor> read_activity_actor::deserialize( JsonValue &jsi
 void move_items_activity_actor::do_turn( player_activity &act, Character &who )
 {
     const tripoint_bub_ms dest = relative_destination + who.pos_bub();
+    map &here = get_map();
 
     while( who.moves > 0 && !target_items.empty() ) {
         item_location target = std::move( target_items.back() );
@@ -1897,9 +1898,9 @@ void move_items_activity_actor::do_turn( player_activity &act, Character &who )
 
         // Check that we can pick it up.
         if( target->made_of_from_type( phase_id::SOLID ) ) {
-            item &leftovers = *target;
-            // Make a copy to be put in the destination location
-            item newit = leftovers;
+            // Keep the source untouched until destination placement succeeds.
+            item newit = *target;
+            item leftovers = newit;
 
             if( newit.is_owned_by( who, true ) ) {
                 newit.set_owner( who );
@@ -1907,10 +1908,12 @@ void move_items_activity_actor::do_turn( player_activity &act, Character &who )
                 continue;
             }
 
-            // Handle charges, quantity == 0 means move all
+            // Handle charges, quantity == 0 means move all.
+            // Work on copies so failed placement cannot consume source charges.
             if( quantity != 0 && newit.count_by_charges() ) {
-                newit.charges = std::min( newit.charges, quantity );
-                leftovers.charges -= quantity;
+                const int moved_charges = std::min( newit.charges, quantity );
+                newit.charges = moved_charges;
+                leftovers.charges -= moved_charges;
             } else {
                 leftovers.charges = 0;
             }
@@ -1919,17 +1922,72 @@ void move_items_activity_actor::do_turn( player_activity &act, Character &who )
             // is no longer teleportation
             const tripoint_bub_ms src = target.pos_bub();
             const int distance = src.z() == dest.z() ? std::max( rl_dist( src, dest ), 1 ) : 1;
-            // Yuck, I'm sticking weariness scaling based on activity level here
+
+            bool placement_succeeded = false;
+            bool destination_full_after_partial = false;
+
+            if( to_vehicle ) {
+                // ACT_MOVE_ITEMS must be transactional.  Do not use
+                // put_into_vehicle_or_drop here: that helper may partially fill cargo and then
+                // retain, wield or drop the remainder, which makes it impossible to know how
+                // much of the source can safely be committed afterwards.
+                const std::optional<vpart_reference> cargo =
+                    here.veh_at( dest ).part_with_feature( "CARGO", false );
+
+                if( cargo ) {
+                    vehicle &veh = cargo->vehicle();
+                    const int part = cargo->part_index();
+
+                    // vehicle::add_item is all-or-nothing.  For charge-counted items,
+                    // fall back to add_charges so that "move as much as possible" can
+                    // still fill the remaining cargo capacity without duplicating items.
+                    if( veh.add_item( part, newit ).has_value() ) {
+                        placement_succeeded = true;
+                    } else if( newit.count_by_charges() ) {
+                        const int requested_charges = newit.charges;
+                        const int charges_added = veh.add_charges( part, newit );
+                        if( charges_added > 0 ) {
+                            placement_succeeded = true;
+                            destination_full_after_partial = charges_added < requested_charges;
+
+                            // Commit only the charges that really entered the cargo.
+                            newit.charges = charges_added;
+                            leftovers = *target;
+                            leftovers.charges -= charges_added;
+                        }
+                    }
+                }
+            } else {
+                placement_succeeded = drop_on_map( who, item_drop_reason::deliberate, { newit }, dest );
+            }
+
+            if( !placement_succeeded ) {
+                who.add_msg_if_player( m_info,
+                                       _( "Destination area is full.  Remove some items first." ) );
+                act.set_to_null();
+                return;
+            }
+
+            // Charge movement cost only after destination placement succeeded, using the
+            // exact amount that was really transferred for partially filled vehicle cargo.
             const float weary_mult = who.exertion_adjusted_move_multiplier( exertion_level() );
             who.mod_moves( -Pickup::cost_to_move_item( who, newit ) * distance * weary_mult );
-            if( to_vehicle ) {
-                put_into_vehicle_or_drop( who, item_drop_reason::deliberate, { newit }, dest );
+
+            // Commit source changes only after the destination accepted the item.
+            if( leftovers.charges > 0 ) {
+                *target = std::move( leftovers );
             } else {
-                drop_on_map( who, item_drop_reason::deliberate, { newit }, dest );
-            }
-            // If we picked up a whole stack, remove the leftover item
-            if( leftovers.charges <= 0 ) {
                 target.remove_item();
+            }
+
+            // A charge stack may have partially filled the final bit of vehicle cargo.
+            // The successful portion is already committed, leave the remainder at source
+            // and stop once, rather than repeatedly retrying and spamming messages.
+            if( destination_full_after_partial ) {
+                who.add_msg_if_player( m_info,
+                                       _( "Destination area is full.  Remove some items first." ) );
+                act.set_to_null();
+                return;
             }
         }
     }
@@ -1937,7 +1995,7 @@ void move_items_activity_actor::do_turn( player_activity &act, Character &who )
     if( target_items.empty() ) {
         // Nuke the current activity, leaving the backlog alone.
         act.set_to_null();
-        if( who.is_hauling() && !get_map().has_haulable_items( who.pos() ) ) {
+        if( who.is_hauling() && !here.has_haulable_items( who.pos() ) ) {
             who.stop_hauling();
         }
     }
@@ -3592,17 +3650,47 @@ void drop_or_stash_item_info::deserialize( const JsonObject &jsobj )
     jsobj.read( "count", _count );
 }
 
+// ACT_DROP removes items from their source before trying to place them.  If the map is at
+// MAX_ITEM_IN_SQUARE and overflow has nowhere legal to go, map::add_item_or_charges returns
+// the null item.  Keep failed drops alive by restoring them to the character.  The normal
+// path still uses the original fast batch handling; this recovery path only runs on failure.
+static void restore_failed_ground_drop( Character &who, const item &failed )
+{
+    item_location restored = who.i_add( failed, true, nullptr, nullptr,
+                                        /*allow_drop=*/false,
+                                        /*allow_wield=*/true,
+                                        /*ignore_pkt_settings=*/true );
+    if( restored ) {
+        return;
+    }
+
+    // A failed drop may have originated as worn equipment.  Taking it off can leave no
+    // pocket large enough to put it back into, so try restoring it as worn equipment.
+    if( failed.is_armor() && who.wear_item( failed, false ).has_value() ) {
+        return;
+    }
+
+    // Absolute data-loss guard.  This bypasses normal square capacity only when both the
+    // legal ground placement and character restoration failed.  One over-limit recovery
+    // item is preferable to silently deleting player equipment.
+    item &forced = get_map().add_item( who.pos(), failed );
+    if( forced.is_null() ) {
+        debugmsg( "Failed to restore item '%s' after a full-ground drop failure", failed.tname() );
+    }
+}
+
 void drop_activity_actor::do_turn( player_activity &, Character &who )
 {
     const tripoint_bub_ms pos = placement + who.pos_bub();
 
     // Do not spend another turn taking items out if the target cargo is already full.
+    map &here = get_map();
+    std::optional<vpart_reference> cargo;
     if( !force_ground ) {
-        map &here = get_map();
-        const std::optional<vpart_reference> vp = here.veh_at( pos ).part_with_feature( "CARGO", false );
-        if( vp ) {
-            vehicle &veh = vp->vehicle();
-            const int part = vp->part_index();
+        cargo = here.veh_at( pos ).part_with_feature( "CARGO", false );
+        if( cargo ) {
+            vehicle &veh = cargo->vehicle();
+            const int part = cargo->part_index();
             if( veh.free_volume( part ) <= 0_ml ||
                 veh.get_items( part ).size() >= MAX_ITEM_IN_VEHICLE_STORAGE ) {
                 who.add_msg_if_player( m_info,
@@ -3614,11 +3702,24 @@ void drop_activity_actor::do_turn( player_activity &, Character &who )
     }
 
     who.invalidate_weight_carried_cache();
-    const bool vehicle_full = put_into_vehicle_or_drop(
-                                  who, item_drop_reason::deliberate,
-                                  obtain_activity_items( items, handler, who ),
-                                  pos, force_ground );
-    if( vehicle_full ) {
+    std::list<item> obtained = obtain_activity_items( items, handler, who );
+    std::list<item> failed_items;
+    bool destination_full = false;
+
+    if( cargo ) {
+        destination_full = put_into_vehicle_or_drop(
+                               who, item_drop_reason::deliberate, obtained, pos, false );
+    } else {
+        destination_full = put_into_vehicle_or_drop(
+                               who, item_drop_reason::deliberate, obtained, pos, true, &failed_items );
+        if( !failed_items.empty() ) {
+            for( const item &failed : failed_items ) {
+                restore_failed_ground_drop( who, failed );
+            }
+        }
+    }
+
+    if( destination_full ) {
         who.add_msg_if_player( m_info, _( "Destination area is full.  Remove some items first." ) );
         who.cancel_activity();
         return;
