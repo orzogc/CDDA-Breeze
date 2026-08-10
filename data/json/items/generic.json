@@ -2678,7 +2678,6 @@
   },
   {
     "type": "GENERIC",
-    "stackable": true,
     "id": "amethyst",
     "copy-from": "garnet",
     "color": "blue",
@@ -2687,7 +2686,6 @@
   },
   {
     "type": "GENERIC",
-    "stackable": true,
     "id": "aquamarine",
     "copy-from": "garnet",
     "color": "cyan",
@@ -2696,7 +2694,6 @@
   },
   {
     "type": "GENERIC",
-    "stackable": true,
     "id": "emerald",
     "copy-from": "garnet",
     "color": "green",
@@ -2705,7 +2702,6 @@
   },
   {
     "type": "GENERIC",
-    "stackable": true,
     "id": "alexandrite",
     "copy-from": "garnet",
     "color": "green",
@@ -2714,7 +2710,6 @@
   },
   {
     "type": "GENERIC",
-    "stackable": true,
     "id": "malachite",
     "copy-from": "garnet",
     "color": "green",
@@ -2723,7 +2718,6 @@
   },
   {
     "type": "GENERIC",
-    "stackable": true,
     "id": "pearl",
     "copy-from": "garnet",
     "color": "white",
@@ -2732,7 +2726,6 @@
   },
   {
     "type": "GENERIC",
-    "stackable": true,
     "id": "ruby",
     "copy-from": "garnet",
     "color": "red",
@@ -2741,7 +2734,6 @@
   },
   {
     "type": "GENERIC",
-    "stackable": true,
     "id": "peridot",
     "copy-from": "garnet",
     "color": "green",
@@ -2750,7 +2742,6 @@
   },
   {
     "type": "GENERIC",
-    "stackable": true,
     "id": "sapphire",
     "copy-from": "garnet",
     "color": "blue",
@@ -2759,7 +2750,6 @@
   },
   {
     "type": "GENERIC",
-    "stackable": true,
     "id": "opal",
     "copy-from": "garnet",
     "color": "white",
@@ -2768,7 +2758,6 @@
   },
   {
     "type": "GENERIC",
-    "stackable": true,
     "id": "tourmaline",
     "copy-from": "garnet",
     "color": "light_red",
@@ -2777,7 +2766,6 @@
   },
   {
     "type": "GENERIC",
-    "stackable": true,
     "id": "citrine",
     "copy-from": "garnet",
     "color": "yellow",
@@ -2786,7 +2774,6 @@
   },
   {
     "type": "GENERIC",
-    "stackable": true,
     "id": "blue_topaz",
     "copy-from": "garnet",
     "color": "light_blue",
@@ -2795,7 +2782,6 @@
   },
   {
     "type": "GENERIC",
-    "stackable": true,
     "id": "onyx",
     "copy-from": "garnet",
     "color": "dark_gray",

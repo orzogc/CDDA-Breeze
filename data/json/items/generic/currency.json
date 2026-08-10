@@ -256,7 +256,6 @@
   },
   {
     "type": "GENERIC",
-    "stackable": true,
     "id": "money_two",
     "name": { "str": "two-dollar bill" },
     "description": "A two-dollar bill, featuring a portrait of Thomas Jefferson.",
@@ -270,7 +269,6 @@
   },
   {
     "type": "GENERIC",
-    "stackable": true,
     "id": "money_five",
     "name": { "str": "five-dollar bill" },
     "description": "A five-dollar bill, featuring a portrait of Abraham Lincoln.",
@@ -284,7 +282,6 @@
   },
   {
     "type": "GENERIC",
-    "stackable": true,
     "id": "money_ten",
     "name": { "str": "ten-dollar bill" },
     "description": "A ten-dollar bill, featuring a portrait of Alexander Hamilton.",
@@ -298,7 +295,6 @@
   },
   {
     "type": "GENERIC",
-    "stackable": true,
     "id": "money_twenty",
     "name": { "str": "twenty-dollar bill" },
     "description": "A twenty-dollar bill, featuring a portrait of Andrew Jackson.",
@@ -312,7 +308,6 @@
   },
   {
     "type": "GENERIC",
-    "stackable": true,
     "id": "money_fifty",
     "name": { "str": "fifty-dollar bill" },
     "description": "A fifty-dollar bill, featuring a portrait of Ulysses S Grant.",
@@ -326,7 +321,6 @@
   },
   {
     "type": "GENERIC",
-    "stackable": true,
     "id": "money_hundred",
     "name": { "str": "hundred-dollar bill" },
     "description": "A hundred-dollar bill, featuring a portrait of Benjamin Franklin.",
@@ -358,7 +352,6 @@
   },
   {
     "type": "GENERIC",
-    "stackable": true,
     "id": "money_strap_two",
     "name": { "str": "two-dollar currency strap" },
     "description": "A hundred two-dollar bills held together by a green currency strap.",
@@ -371,7 +364,6 @@
   },
   {
     "type": "GENERIC",
-    "stackable": true,
     "id": "money_strap_five",
     "name": { "str": "five-dollar currency strap" },
     "description": "A hundred five-dollar bills held together by a red currency strap.",
@@ -384,7 +376,6 @@
   },
   {
     "type": "GENERIC",
-    "stackable": true,
     "id": "money_strap_ten",
     "name": { "str": "ten-dollar currency strap" },
     "description": "A hundred ten-dollar bills held together by a yellow currency strap.",
@@ -397,7 +388,6 @@
   },
   {
     "type": "GENERIC",
-    "stackable": true,
     "id": "money_strap_twenty",
     "name": { "str": "twenty-dollar currency strap" },
     "description": "A hundred twenty-dollar bills held together by a violet currency strap.",
@@ -410,7 +400,6 @@
   },
   {
     "type": "GENERIC",
-    "stackable": true,
     "id": "money_strap_fifty",
     "name": { "str": "fifty-dollar currency strap" },
     "description": "A hundred fifty-dollar bills held together by a brown currency strap.",
@@ -423,7 +412,6 @@
   },
   {
     "type": "GENERIC",
-    "stackable": true,
     "id": "money_strap_hundred",
     "name": { "str": "hundred-dollar currency strap" },
     "description": "A hundred hundred-dollar bills held together by a mustard currency strap.",
@@ -436,7 +424,6 @@
   },
   {
     "type": "GENERIC",
-    "stackable": true,
     "id": "money_strap_FMCNote",
     "name": { "str": "merch currency strap" },
     "description": "A hundred Free Merchant Certified Notes held together by an improvised currency strap.  This can be exchanged for food, water, and other services through the Free Merchants at the Refugee Center.",
@@ -467,7 +454,6 @@
   },
   {
     "type": "GENERIC",
-    "stackable": true,
     "id": "money_bundle_two",
     "name": { "str": "two-dollar currency bundle" },
     "description": "A thousand two-dollar bills, divided evenly between ten green currency straps, and bundled together with rubber bands.",
@@ -480,7 +466,6 @@
   },
   {
     "type": "GENERIC",
-    "stackable": true,
     "id": "money_bundle_five",
     "name": { "str": "five-dollar currency bundle" },
     "description": "A thousand five-dollar bills, divided evenly between ten red currency straps, and bundled together with rubber bands.",
@@ -493,7 +478,6 @@
   },
   {
     "type": "GENERIC",
-    "stackable": true,
     "id": "money_bundle_ten",
     "name": { "str": "ten-dollar currency bundle" },
     "description": "A thousand ten-dollar bills, divided evenly between ten yellow currency straps, and bundled together with rubber bands.",
@@ -506,7 +490,6 @@
   },
   {
     "type": "GENERIC",
-    "stackable": true,
     "id": "money_bundle_twenty",
     "name": { "str": "twenty-dollar currency bundle" },
     "description": "A thousand twenty-dollar bills, divided evenly between ten violet currency straps, and bundled together with rubber bands.",
@@ -519,7 +502,6 @@
   },
   {
     "type": "GENERIC",
-    "stackable": true,
     "id": "money_bundle_fifty",
     "name": { "str": "fifty-dollar currency bundle" },
     "description": "A thousand fifty-dollar bills, divided evenly between ten brown currency straps, and bundled together with rubber bands.",
@@ -532,7 +514,6 @@
   },
   {
     "type": "GENERIC",
-    "stackable": true,
     "id": "money_bundle_hundred",
     "name": { "str": "hundred-dollar currency bundle" },
     "description": "A thousand hundred-dollar bills, divided evenly between ten mustard currency straps, and bundled together with rubber bands.",
@@ -545,7 +526,6 @@
   },
   {
     "type": "GENERIC",
-    "stackable": true,
     "id": "money_bundle_FMCNote",
     "name": { "str": "merch currency bundle" },
     "description": "A thousand Free Merchant Certified Notes, divided evenly between ten improvised currency straps, and bundled together with rubber bands.  This can be exchanged for food, water, and other services through the Free Merchants at the Refugee Center.",
