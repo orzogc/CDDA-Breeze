@@ -444,10 +444,17 @@ void npc_attack_gun::use( npc &source, const tripoint &location ) const
     if( source.is_hallucination() ) {
         gun_mode mode = source.get_wielded_item()->gun_current_mode();
         source.pretend_fire( &source, mode.qty, *mode );
+        source.clear_moving_preaim();
     } else {
-        source.fire_gun( location );
+        const int shots_fired = source.fire_gun( location );
+        if( shots_fired > 0 ) {
+            if( gun.is_gun() ) {
+                source.apply_moving_preaim_recoil( source.recoil );
+            } else {
+                source.clear_moving_preaim();
+            }
+        }
     }
-    source.clear_moving_preaim();
     add_msg_debug( debugmode::debug_filter::DF_NPC, "%s fires %s", source.disp_name(),
                    gun.display_name() );
 }

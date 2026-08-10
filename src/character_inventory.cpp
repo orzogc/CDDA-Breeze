@@ -203,6 +203,26 @@ item_location Character::try_add( item it, const item *avoid, const item *origin
     return ret;
 }
 
+// add_item_or_charges returns a null item both for intentional drop actions and for a full map
+// square.  Only the latter should trigger an over-limit preservation fallback.
+static item *add_to_ground_preserving_capacity( map &here, const tripoint &where, const item &it,
+        map_item_add_result &result )
+{
+    item &dropped = here.add_item_or_charges( where, it, true, &result );
+    if( !dropped.is_null() ) {
+        return &dropped;
+    }
+
+    if( result == map_item_add_result::no_space && here.can_put_items_ter_furn( where ) ) {
+        item &forced = here.add_item( where, it );
+        if( !forced.is_null() ) {
+            result = map_item_add_result::placed;
+            return &forced;
+        }
+    }
+    return nullptr;
+}
+
 item_location Character::i_add( item it, bool /* should_stack */, const item *avoid,
                                 const item *original_inventory_item, const bool allow_drop,
                                 const bool allow_wield, bool ignore_pkt_settings )
@@ -214,7 +234,12 @@ item_location Character::i_add( item it, bool /* should_stack */, const item *av
     if( added == item_location::nowhere ) {
         if( !allow_wield || !wield( it ) ) {
             if( allow_drop ) {
-                return item_location( map_cursor( pos() ), &get_map().add_item_or_charges( pos(), it ) );
+                map &here = get_map();
+                map_item_add_result add_result = map_item_add_result::rejected;
+                if( item *dropped = add_to_ground_preserving_capacity( here, pos(), it, add_result ) ) {
+                    return item_location( map_cursor( pos() ), dropped );
+                }
+                return item_location::nowhere;
             } else {
                 return added;
             }
@@ -246,7 +271,11 @@ ret_val<item_location> Character::i_add_or_fill( item &it, bool should_stack, co
         if( new_charge >= 1 ) {
             if( !allow_wield || !wield( it ) ) {
                 if( allow_drop ) {
-                    loc = item_location( map_cursor( pos() ), &get_map().add_item_or_charges( pos(), it ) );
+                    map &here = get_map();
+                    map_item_add_result add_result = map_item_add_result::rejected;
+                    if( item *dropped = add_to_ground_preserving_capacity( here, pos(), it, add_result ) ) {
+                        loc = item_location( map_cursor( pos() ), dropped );
+                    }
                 }
             } else {
                 loc = item_location( *this, &weapon );
@@ -311,7 +340,9 @@ bool Character::i_add_or_drop( item &it, int qty, const item *avoid,
     for( int i = 0; i < qty; ++i ) {
         drop |= !can_pickWeight( it, !get_option<bool>( "DANGEROUS_PICKUPS" ) ) || !can_pickVolume( it );
         if( drop ) {
-            retval &= !here.add_item_or_charges( pos(), it ).is_null();
+            map_item_add_result add_result = map_item_add_result::rejected;
+            item *dropped = add_to_ground_preserving_capacity( here, pos(), it, add_result );
+            retval &= dropped != nullptr || add_result == map_item_add_result::handled;
         } else if( add ) {
             i_add( it, true, avoid,
                    original_inventory_item, /*allow_drop=*/true, /*allow_wield=*/!has_wield_conflicts( it ) );
@@ -326,7 +357,9 @@ bool Character::i_drop_at( item &it, int qty )
     bool retval = true;
     map &here = get_map();
     for( int i = 0; i < qty; ++i ) {
-        retval &= !here.add_item_or_charges( pos(), it ).is_null();
+        map_item_add_result add_result = map_item_add_result::rejected;
+        item *dropped = add_to_ground_preserving_capacity( here, pos(), it, add_result );
+        retval &= dropped != nullptr || add_result == map_item_add_result::handled;
     }
 
     return retval;

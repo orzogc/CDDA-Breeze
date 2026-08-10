@@ -1,6 +1,7 @@
 [
   {
     "type": "GENERIC",
+    "stackable": true,
     "category": "currency",
     "id": "FMCNote",
     "name": { "str_sp": "merch" },
@@ -17,6 +18,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "category": "currency",
     "id": "RobofacCoin",
     "name": { "str": "Hub 01 Gold Coin" },
@@ -33,6 +35,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "category": "currency",
     "id": "FlatCoin",
     "name": { "str": "FlatCoin" },
@@ -48,6 +51,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "category": "currency",
     "id": "signed_chit",
     "name": { "str": "chit" },
@@ -63,6 +67,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "category": "currency",
     "id": "icon",
     "name": { "str": "icon" },
@@ -78,6 +83,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "category": "currency",
     "id": "coin_penny",
     "name": { "str": "penny", "str_pl": "pennies" },
@@ -94,6 +100,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "category": "currency",
     "id": "coin_nickel",
     "name": { "str": "nickel" },
@@ -110,6 +117,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "category": "currency",
     "id": "coin_dime",
     "name": { "str": "dime" },
@@ -126,6 +134,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "category": "currency",
     "id": "coin_quarter",
     "name": { "str": "quarter" },
@@ -142,6 +151,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "category": "currency",
     "id": "coin_half_dollar",
     "name": { "str": "half-dollar coin" },
@@ -158,6 +168,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "category": "currency",
     "id": "coin_dollar",
     "name": { "str": "dollar coin" },
@@ -174,6 +185,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "category": "currency",
     "id": "coin_silver",
     "name": { "str": "Silver Eagle coin" },
@@ -189,6 +201,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "category": "currency",
     "id": "coin_gold",
     "name": { "str": "American Buffalo coin" },
@@ -226,6 +239,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "category": "currency",
     "id": "money_one",
     "name": { "str": "one-dollar bill" },
@@ -320,6 +334,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "category": "currency",
     "id": "money_strap_one",
     "name": { "str": "one-dollar currency strap" },
@@ -421,6 +436,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "category": "currency",
     "id": "money_bundle_one",
     "name": { "str": "one-dollar currency bundle" },
@@ -522,6 +538,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "category": "currency",
     "id": "tacoma_drink_token",
     "name": { "str": "Tacoma drink token" },

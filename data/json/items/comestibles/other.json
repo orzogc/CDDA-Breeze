@@ -324,6 +324,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "cardboard",
     "name": { "str": "cardboard" },
     "looks_like": "paper",

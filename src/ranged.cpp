@@ -229,6 +229,11 @@ static double improve_moving_preaim( const Character &who, item &weapon,
     // Entering a less stable movement mode immediately sheds aim that the new posture
     // cannot physically maintain.
     double result = std::max( recoil, floor );
+    // Once the posture/range cap is reached there is no reason to replay aim_per_move
+    // for every spent move.  This is especially important when many hostiles are tracked.
+    if( result <= floor ) {
+        return floor;
+    }
     const Target_attributes attributes( who.pos(), target.pos() );
     for( int i = 0; i < effective_moves; ++i ) {
         const double amount = who.aim_per_move( weapon, result, attributes );
@@ -236,6 +241,9 @@ static double improve_moving_preaim( const Character &who, item &weapon,
             break;
         }
         result = std::max( floor, result - amount );
+        if( result <= floor ) {
+            break;
+        }
     }
     return result;
 }
@@ -253,6 +261,21 @@ static double decay_moving_preaim( const double recoil, const int spent_moves )
 void avatar::clear_moving_preaim()
 {
     moving_preaim_targets.clear();
+}
+
+void avatar::apply_moving_preaim_recoil( const double new_recoil )
+{
+    if( !get_option<bool>( "MOVING_PREAIM" ) || moving_preaim_targets.empty() ) {
+        return;
+    }
+
+    // Firing disturbs the weapon, not the shooter's knowledge of tracked targets.
+    // Raise every cached target to at least the real post-shot recoil without doing
+    // any extra LOS, range, or aiming calculations on the firing path.
+    const double recoil_floor = std::clamp( new_recoil, 0.0, static_cast<double>( MAX_RECOIL ) );
+    for( moving_preaim_target_state &state : moving_preaim_targets ) {
+        state.recoil = std::max( state.recoil, recoil_floor );
+    }
 }
 
 void avatar::update_moving_preaim( const int spent_moves, const bool stationary )
@@ -352,6 +375,16 @@ void npc::clear_moving_preaim()
     moving_preaim_target.reset();
     moving_preaim_weapon = itype_id::NULL_ID();
     moving_preaim_recoil_cache = MAX_RECOIL;
+}
+
+void npc::apply_moving_preaim_recoil( const double new_recoil )
+{
+    if( !get_option<bool>( "MOVING_PREAIM" ) || !moving_preaim_target.lock() ) {
+        return;
+    }
+
+    const double recoil_floor = std::clamp( new_recoil, 0.0, static_cast<double>( MAX_RECOIL ) );
+    moving_preaim_recoil_cache = std::max( moving_preaim_recoil_cache, recoil_floor );
 }
 
 void npc::update_moving_preaim( const int spent_moves, const bool stationary )
@@ -1230,10 +1263,6 @@ int Character::fire_gun( const tripoint &target, int shots, item &gun )
     // Use different amounts of time depending on the type of gun and our skill
     moves -= time_to_attack( *this, *gun_id );
 
-    if( curshot > 0 && is_avatar() ) {
-        as_avatar()->clear_moving_preaim();
-    }
-
     // Practice the base gun skill proportionally to number of hits, but always by one.
     if( !gun.has_flag( flag_WONT_TRAIN_MARKSMANSHIP ) ) {
         practice( skill_gun, ( hits + 1 ) * 5 );
@@ -1244,6 +1273,9 @@ int Character::fire_gun( const tripoint &target, int shots, item &gun )
 
     if( !gun.is_gun() ) {
         // If we lose our gun as a side effect of firing it, skip the rest of the function.
+        if( curshot > 0 && is_avatar() ) {
+            as_avatar()->clear_moving_preaim();
+        }
         return curshot;
     }
 
@@ -1265,6 +1297,10 @@ int Character::fire_gun( const tripoint &target, int shots, item &gun )
         }
         // Cap
         recoil = std::min( MAX_RECOIL, recoil );
+    }
+
+    if( curshot > 0 && is_avatar() ) {
+        as_avatar()->apply_moving_preaim_recoil( recoil );
     }
 
     if( is_avatar() ) {
