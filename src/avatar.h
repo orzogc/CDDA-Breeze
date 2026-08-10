@@ -263,6 +263,7 @@ class avatar : public Character
         std::string preferred_aiming_mode;
 
         void clear_moving_preaim();
+        void apply_moving_preaim_recoil( double recoil );
         void update_moving_preaim( int spent_moves, bool stationary );
         double moving_preaim_recoil( const item &weapon, const Creature &target ) const;
 
