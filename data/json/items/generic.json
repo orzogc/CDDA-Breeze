@@ -2152,7 +2152,7 @@
     "looks_like": "mobile_memory_card",
     "symbol": ",",
     "color": "white",
-    "name": { "str": "SD存储卡", "str_pl": "SD存储卡" },
+    "name": { "str": "SD存储卡（空）", "str_pl": "SD存储卡（空）" },
     "conditional_names": [
       { "type": "FLAG", "condition": "MC_HAS_DATA", "name": { "str": "SD存储卡（有数据）", "str_pl": "SD存储卡（有数据）" } }
     ],

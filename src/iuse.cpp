@@ -6610,7 +6610,9 @@ std::optional<int> iuse::einktabletpc( Character *p, item *it, bool t, const tri
             }
 
             inventory_filter_preset preset( []( const item_location &loc ) {
-                return loc->has_flag( flag_MC_MOBILE );
+                // Do not offer cards already converted to empty writable cards.
+                return loc->has_flag( flag_MC_TURN_USED ) ||
+                       ( loc->has_flag( flag_MC_USED ) && loc->has_flag( flag_MC_HAS_DATA ) );
             } );
             inventory_multiselector selector( *p, preset );
             selector.set_title( "选择要读取的存储卡" );
