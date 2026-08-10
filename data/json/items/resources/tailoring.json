@@ -1,6 +1,7 @@
 [
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "grass_yarn",
     "symbol": ",",
     "color": "light_gray",
@@ -15,6 +16,7 @@
   {
     "id": "scrap_cotton",
     "type": "GENERIC",
+    "stackable": true,
     "category": "other",
     "name": { "str_sp": "cotton scraps" },
     "description": "Oddly-shaped smallish bits of cotton, waste material from tailoring projects.  Not useful for much and usually disposed of, but can be recycled into some thread if you really want.",
@@ -123,6 +125,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "fur",
     "symbol": ",",
     "color": "brown",
@@ -149,6 +152,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "leather",
     "symbol": ",",
     "color": "brown",
@@ -164,6 +168,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "felt_patch",
     "symbol": ",",
     "color": "white",
@@ -179,6 +184,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "nomex",
     "category": "spare_parts",
     "symbol": ",",
@@ -194,6 +200,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "cured_hide",
     "symbol": ",",
     "color": "white",
@@ -210,6 +217,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "tanned_hide",
     "symbol": ",",
     "color": "brown",
@@ -224,6 +232,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "sheet_leather_patchwork",
     "symbol": ",",
     "color": "brown",
@@ -238,6 +247,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "cured_pelt",
     "symbol": ",",
     "color": "brown",
@@ -254,6 +264,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "tanned_pelt",
     "symbol": ",",
     "color": "brown",
@@ -268,6 +279,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "sheet_fur_patchwork",
     "symbol": ",",
     "color": "brown",
@@ -283,6 +295,7 @@
   {
     "id": "sheet_cotton",
     "type": "GENERIC",
+    "stackable": true,
     "category": "spare_parts",
     "name": { "str": "cotton sheet" },
     "description": "A 12 inch by 24 inch sheet of cotton fabric, suitable for making clothing.",
@@ -308,6 +321,7 @@
   {
     "id": "sheet_faux_fur",
     "type": "GENERIC",
+    "stackable": true,
     "category": "spare_parts",
     "name": { "str": "faux fur sheet" },
     "description": "A 12 inch by 24 inch sheet of fake synthetic colorful fur, suitable for making clothing.",
@@ -333,6 +347,7 @@
   {
     "id": "sheet_felt",
     "type": "GENERIC",
+    "stackable": true,
     "category": "spare_parts",
     "name": { "str": "felt sheet" },
     "description": "A sheet of felt, suitable for making clothing.",
@@ -358,6 +373,7 @@
   {
     "id": "sheet_kevlar",
     "type": "GENERIC",
+    "stackable": true,
     "category": "spare_parts",
     "name": { "str": "Kevlar sheet" },
     "description": "A 12 inch by 24 inch sheet of Kevlar synthetic fabric, suitable for making cut-resistant, durable clothing.  In this form, unlike rigid plates, it can be stitched.",
@@ -373,6 +389,7 @@
   {
     "id": "sheet_lycra",
     "type": "GENERIC",
+    "stackable": true,
     "category": "spare_parts",
     "name": { "str": "Lycra sheet" },
     "description": "A sheet of synthetic fabric blended with stretchy Lycra fibers, suitable for making flexible yet strong clothing.",
@@ -430,6 +447,7 @@
   {
     "id": "sheet_neoprene",
     "type": "GENERIC",
+    "stackable": true,
     "category": "spare_parts",
     "name": { "str": "neoprene sheet" },
     "description": "A sheet of neoprene, a synthetic rubber, suitable for making underwater gear.",
@@ -455,6 +473,7 @@
   {
     "id": "sheet_nomex",
     "type": "GENERIC",
+    "stackable": true,
     "category": "spare_parts",
     "name": { "str": "Nomex sheet" },
     "description": "A sheet of Nomex synthetic fabric, suitable for making heat-resistant clothing.",
@@ -480,6 +499,7 @@
   {
     "id": "sheet_nylon",
     "type": "GENERIC",
+    "stackable": true,
     "category": "spare_parts",
     "name": { "str": "synthetic fabric sheet" },
     "description": "A sheet of synthetic fabric, suitable for making clothing.",
@@ -545,6 +565,7 @@
   {
     "id": "sheet_canvas",
     "type": "GENERIC",
+    "stackable": true,
     "category": "spare_parts",
     "name": { "str": "canvas sheet" },
     "description": "A 12 inch by 24 inch sheet of durable and waterproof waxed canvas fabric, suitable for making tough bags and clothing.",
@@ -580,6 +601,7 @@
   {
     "id": "scrap_canvas",
     "type": "GENERIC",
+    "stackable": true,
     "category": "other",
     "name": { "str_sp": "canvas scraps" },
     "description": "Oddly-shaped smallish bits of canvas, waste material from tailoring projects.  Not useful for much and usually disposed of, but can be recycled into some tough thread.",
@@ -594,6 +616,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "canvas_patch",
     "symbol": ",",
     "color": "white",
@@ -611,6 +634,7 @@
   {
     "id": "sheet_canvas_patchwork",
     "type": "GENERIC",
+    "stackable": true,
     "category": "spare_parts",
     "name": { "str": "patchwork canvas sheet" },
     "description": "A selection of various sections of canvas, sewn together in a patchwork fashion.  Suitable for tailoring, though it's much less time-efficient than if using proper material sheets.",

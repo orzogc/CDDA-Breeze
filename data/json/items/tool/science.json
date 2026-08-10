@@ -1206,6 +1206,7 @@
   {
     "id": "stopcock",
     "type": "GENERIC",
+    "stackable": true,
     "category": "spare_parts",
     "name": { "str": "plastic stopcock" },
     "description": "Stop giggling.  This is a tiny plastic valve, get your mind out of the gutter.",

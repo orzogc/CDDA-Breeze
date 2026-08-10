@@ -19,6 +19,7 @@
   {
     "id": "magnetron",
     "type": "GENERIC",
+    "stackable": true,
     "category": "spare_parts",
     "name": { "str": "magnetron" },
     "description": "This electrical component is designed to produce microwaves, for use in your microwave.",
