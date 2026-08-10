@@ -5924,7 +5924,7 @@ static std::vector<std::string> breeze_media_entries( const item &it,
         return values;
     }
 
-    const int count = std::max( 0, it.get_var( legacy_var, 0 ) );
+    const int count = std::max( 0, static_cast<int>( it.get_var( legacy_var, 0 ) ) );
     values.reserve( count );
     for( int i = 0; i < count; i++ ) {
         // Legacy scalar values have no identity.  Index-based IDs preserve the
@@ -5939,7 +5939,7 @@ static int breeze_media_count( const item &it, const std::string &list_var,
 {
     const std::string count_var = list_var + "_count";
     if( it.has_var( count_var ) ) {
-        return std::max( 0, it.get_var( count_var, 0 ) );
+        return std::max( 0, static_cast<int>( it.get_var( count_var, 0 ) ) );
     }
 
     std::vector<std::string> values;
@@ -5947,7 +5947,7 @@ static int breeze_media_count( const item &it, const std::string &list_var,
         const_cast<item &>( it ).set_var( count_var, static_cast<int>( values.size() ) );
         return static_cast<int>( values.size() );
     }
-    return std::max( 0, it.get_var( legacy_var, 0 ) );
+    return std::max( 0, static_cast<int>( it.get_var( legacy_var, 0 ) ) );
 }
 
 static std::vector<std::string> breeze_materialize_media_list( item &it,
@@ -5963,7 +5963,7 @@ static std::vector<std::string> breeze_materialize_media_list( item &it,
         return values;
     }
 
-    const int count = std::max( 0, it.get_var( legacy_var, 0 ) );
+    const int count = std::max( 0, static_cast<int>( it.get_var( legacy_var, 0 ) ) );
     if( count <= 0 ) {
         return values;
     }
@@ -6753,7 +6753,7 @@ static int breeze_extended_photo_count( const item &it, const std::string &var_n
 {
     const std::string count_var = var_name + "_count";
     if( it.has_var( count_var ) ) {
-        return std::max( 0, it.get_var( count_var, 0 ) );
+        return std::max( 0, static_cast<int>( it.get_var( count_var, 0 ) ) );
     }
 
     const std::vector<extended_photo_def> photos = breeze_read_extended_photo_list( it, var_name );
