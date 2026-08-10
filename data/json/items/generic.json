@@ -2126,6 +2126,9 @@
     "material": [ "plastic" ],
     "ascii_picture": "mobile_memory_card",
     "flags": [ "MC_MOBILE", "MC_RANDOM_STUFF", "MC_MAY_BE_ENCRYPTED", "MC_TURN_USED" ],
+    "conditional_names": [
+      { "type": "FLAG", "condition": "MC_ENCRYPTED", "name": { "str": "SD-Memory card (encrypted)", "str_pl": "SD-Memory cards (encrypted)" } }
+    ],
     "memory_card": {
       "data_chance": 0.875,
       "on_read_convert_to": "mobile_memory_card_used",
