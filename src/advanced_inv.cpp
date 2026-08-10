@@ -1104,11 +1104,11 @@ bool advanced_inventory::move_all_items()
 
         } else {
             // Vehicle and map destinations are handled the same.
-            // Match modern DDA behavior: warn once, then attempt as much as will fit.
             const units::volume &src_volume = spane.in_vehicle() ? sarea.volume_veh : sarea.volume;
-            const bool destination_limited = src_volume > darea.free_volume( dpane.in_vehicle() );
+            const bool destination_limited =
+                src_volume > darea.free_volume( dpane.in_vehicle() );
             if( !is_processing() && destination_limited &&
-                !query_yn( _( "There isn't enough room.  Attempt to move as much as you can?" ) ) ) {
+                !query_yn( "目标区域空间不足，仍要尽可能移动可以放入的物品。" ) ) {
                 return false;
             }
 
@@ -1173,9 +1173,6 @@ bool advanced_inventory::move_all_items()
             }
 
             if( destination_limited && target_items.size() > 1 ) {
-                // move_items_activity_actor consumes from the back, so order large-to-small
-                // and let smaller items be attempted first. Cache each item's volume once so
-                // large move-all jobs do not repeatedly recalculate container volume during sort.
                 std::vector<std::pair<units::volume, item_location>> size_order;
                 size_order.reserve( target_items.size() );
                 for( item_location &loc : target_items ) {
@@ -1984,7 +1981,7 @@ bool advanced_inventory::query_charges( aim_location destarea, const advanced_in
     const int room_for = it.charges_per_volume( free_volume );
     if( amount > room_for && squares[destarea].id != AIM_WORN ) {
         if( room_for <= 0 ) {
-            popup( _( "Destination area is full.  Remove some items first." ) );
+            popup( _( "目标区域已满，请先移走一些物品。" ) );
             return false;
         }
         amount = std::min( room_for, amount );

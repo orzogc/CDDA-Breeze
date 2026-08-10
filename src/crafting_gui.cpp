@@ -1307,6 +1307,9 @@ item_info_data recipe_result_info_cache::get_result_data( const recipe *rec, con
 
     //Make a temporary item for the result.  NOTE: If the result would normally be in a container, this is not.
     item dummy_result = item( rec->result(), calendar::turn, item::default_charges_tag{} );
+    if( !rec->variant().empty() ) {
+        dummy_result.set_itype_variant( rec->variant() );
+    }
     //Check if recipe result is a clothing item that can be properly fitted
     if( dummy_result.has_flag( flag_VARSIZE ) && !dummy_result.has_flag( flag_FIT ) ) {
         //Check if it can actually fit.  If so, list the fitted info

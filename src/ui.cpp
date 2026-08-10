@@ -1265,6 +1265,12 @@ void uilist::settext( const std::string &str )
     text = str;
 }
 
+void uilist::set_selected( int index )
+{
+    selected = entries.empty() ? 0 : std::clamp( index, 0,
+               static_cast<int>( entries.size() - 1 ) );
+}
+
 void uilist::add_category(const std::string& key, const std::string& name)
 {
     categories.emplace_back(key, name);

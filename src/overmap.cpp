@@ -2912,6 +2912,7 @@ void overmap_special::load( const JsonObject &jo, const std::string &src )
 
         assign( jo, "city_sizes", constraints_.city_size, strict );
         assign( jo, "city_distance", constraints_.city_distance, strict );
+        assign( jo, "priority", priority_, strict );
     }
 
     assign( jo, "spawns", monster_spawns_, strict );
@@ -5491,6 +5492,7 @@ void overmap::place_cities()
 
         tripoint_om_omt p;
         city tmp;
+        tmp.pos_om = pos();
         if( use_random_cities ) {
             // randomly make some cities smaller or larger
             int size = rng(op_city_size - 1, max_city_size);
@@ -5930,6 +5932,10 @@ pf::directed_path<point_om_omt> overmap::lay_out_connection(
     const overmap_connection &connection, const point_om_omt &source, const point_om_omt &dest,
     int z, const bool must_be_unexplored ) const
 {
+    // Existing roads are normally preferred so new connections merge into the road network.
+    // If that preference produces a very large detour, retry without the strong bias.  The
+    // terrain basic_cost still makes an existing road slightly preferable at equal distance.
+    bool prefer_existing_connections = true;
     const pf::two_node_scoring_fn<point_om_omt> estimate =
     [&]( pf::directed_node<point_om_omt> cur, std::optional<pf::directed_node<point_om_omt>> prev ) {
         const oter_id id = ter( tripoint_om_omt( cur.pos, z ) );
@@ -5978,12 +5984,37 @@ pf::directed_path<point_om_omt> overmap::lay_out_connection(
         const int dist = subtype->is_orthogonal() ?
                          manhattan_dist( dest, cur.pos ) :
                          trig_dist( dest, cur.pos );
-        const int existency_mult = existing_connection ? 1 : 5; // Prefer existing connections.
+        const int existency_mult =
+            existing_connection && prefer_existing_connections ? 1 : 5;
 
         return pf::node_score( subtype->basic_cost, existency_mult * dist );
     };
 
-    return pf::greedy_path( source, dest, point_om_omt( OMAPX, OMAPY ), estimate );
+    pf::directed_path<point_om_omt> preferred_path =
+        pf::greedy_path( source, dest, point_om_omt( OMAPX, OMAPY ), estimate );
+
+    // Only local roads get the geometric detour guard.  Sewer, subway, forest trail and other
+    // connection types retain their historical pathing behavior.
+    if( &connection != &*overmap_connection_local_road || preferred_path.nodes.empty() ) {
+        return preferred_path;
+    }
+
+    const size_t straight_nodes = static_cast<size_t>( manhattan_dist( source, dest ) ) + 1;
+    const size_t detour_limit = straight_nodes + straight_nodes / 2 + 4;
+    if( preferred_path.nodes.size() <= detour_limit ) {
+        return preferred_path;
+    }
+
+    // The first pass can follow a zero-cost existing road a long way because the historical
+    // greedy scorer gives existing roads a 5:1 distance advantage.  Retry with equal distance
+    // weighting and keep it only when it actually shortens the connection.
+    prefer_existing_connections = false;
+    pf::directed_path<point_om_omt> direct_path =
+        pf::greedy_path( source, dest, point_om_omt( OMAPX, OMAPY ), estimate );
+    if( !direct_path.nodes.empty() && direct_path.nodes.size() < preferred_path.nodes.size() ) {
+        return direct_path;
+    }
+    return preferred_path;
 }
 
 static pf::directed_path<point_om_omt> straight_path( const point_om_omt &source,
@@ -6630,33 +6661,34 @@ bool overmap::place_special_attempt(
     const city &nearest_city = get_nearest_city( p );
 
     std::shuffle( enabled_specials.begin(), enabled_specials.end(), rng_get_engine() );
-    for( auto iter = enabled_specials.begin(); iter != enabled_specials.end(); ++iter ) {
-        const overmap_special &special = *iter->special_details;
-        const overmap_special_placement_constraints &constraints = special.get_constraints();
-        // If we haven't finished placing minimum instances of all specials,
-        // skip specials that are at their minimum count already.
-        if( !place_optional && iter->instances_placed >= constraints.occurrences.min ) {
-            continue;
-        }
-        // City check is the fastest => it goes first.
-        if( !special.can_belong_to_city( p, nearest_city ) ) {
-            continue;
-        }
-        // See if we can actually place the special there.
-        const om_direction::type rotation = random_special_rotation( special, p, must_be_unexplored );
-        if( rotation == om_direction::type::invalid ) {
-            continue;
-        }
-
-        place_special( special, p, rotation, nearest_city, false, must_be_unexplored );
-
-        if( ++iter->instances_placed >= constraints.occurrences.max ) {
-            enabled_specials.erase( iter );
-        }
-
-        return true;
+    std::set<int> priorities;
+    for( const overmap_special_placement &os : enabled_specials ) {
+        priorities.emplace( os.special_details->get_priority() );
     }
-
+    for( auto pri_iter = priorities.rbegin(); pri_iter != priorities.rend(); ++pri_iter ) {
+        for( auto iter = enabled_specials.begin(); iter != enabled_specials.end(); ++iter ) {
+            const overmap_special &special = *iter->special_details;
+            if( *pri_iter != special.get_priority() ) {
+                continue;
+            }
+            const overmap_special_placement_constraints &constraints = special.get_constraints();
+            if( !place_optional && iter->instances_placed >= constraints.occurrences.min ) {
+                continue;
+            }
+            if( !special.can_belong_to_city( p, nearest_city ) ) {
+                continue;
+            }
+            const om_direction::type rotation = random_special_rotation( special, p, must_be_unexplored );
+            if( rotation == om_direction::type::invalid ) {
+                continue;
+            }
+            place_special( special, p, rotation, nearest_city, false, must_be_unexplored );
+            if( ++iter->instances_placed >= constraints.occurrences.max ) {
+                enabled_specials.erase( iter );
+            }
+            return true;
+        }
+    }
     return false;
 }
 
@@ -6841,6 +6873,67 @@ void overmap::place_specials( overmap_special_batch &enabled_specials )
 
 void overmap::place_mongroups()
 {
+    const int city_spawn_threshold = get_option<int>( "SPAWN_CITY_HORDE_THRESHOLD" );
+    if( city_spawn_threshold > -1 ) {
+        const int city_spawn_chance = std::max( get_option<int>( "SPAWN_CITY_HORDE_SMALL_CITY_CHANCE" ), 1 );
+        const float city_spawn_scalar = get_option<float>( "SPAWN_CITY_HORDE_SCALAR" );
+        const float city_spawn_spread = get_option<float>( "SPAWN_CITY_HORDE_SPREAD" );
+        const float spawn_density = get_option<float>( "SPAWN_DENSITY" );
+        for( city &elem : cities ) {
+            if( elem.size >= city_spawn_threshold || one_in( city_spawn_chance ) ) {
+                int desired_zombies = static_cast<int>( elem.size * city_spawn_scalar * spawn_density );
+                const float city_effective_radius = elem.size * city_spawn_spread;
+                const int city_distance_increment = std::max(
+                        static_cast<int>( std::ceil( city_effective_radius / 4 ) ), 1 );
+                const tripoint_abs_omt city_center = project_combine( elem.pos_om,
+                        tripoint_om_omt( elem.pos, 0 ) );
+                std::vector<tripoint_abs_sm> submap_list;
+                for( const tripoint_om_omt &temp_omt : points_in_radius(
+                         tripoint_om_omt( elem.pos, 0 ), static_cast<int>( city_effective_radius ), 0 ) ) {
+                    if( !inbounds( temp_omt, 2 ) ) {
+                        continue;
+                    }
+                    const tripoint_abs_omt target_omt = project_combine( elem.pos_om, temp_omt );
+                    if( overmap_buffer.ter( target_omt )->get_type_id() != oter_type_road ) {
+                        continue;
+                    }
+                    const tripoint_abs_sm this_sm = project_to<coords::sm>( target_omt );
+                    std::vector<tripoint_abs_sm> local_sm_list = {
+                        this_sm, this_sm + point_east, this_sm + point_south, this_sm + point_south_east
+                    };
+                    const int new_size = 4 - ( trig_dist( target_omt, city_center ) / city_distance_increment );
+                    if( new_size > 0 ) {
+                        std::shuffle( local_sm_list.begin(), local_sm_list.end(), rng_get_engine() );
+                        local_sm_list.resize( std::min( new_size, static_cast<int>( local_sm_list.size() ) ) );
+                        submap_list.insert( submap_list.end(), local_sm_list.begin(), local_sm_list.end() );
+                    }
+                }
+                if( submap_list.empty() ) {
+                    add_msg_debug( debugmode::DF_OVERMAP,
+                                   "tried to add zombie hordes to city %s centered at omt %s, but there were no roads!",
+                                   elem.name, city_center.to_string_writable() );
+                    continue;
+                }
+                while( desired_zombies > 0 ) {
+                    std::shuffle( submap_list.begin(), submap_list.end(), rng_get_engine() );
+                    for( const tripoint_abs_sm &s : submap_list ) {
+                        if( desired_zombies <= 0 ) {
+                            break;
+                        }
+                        const int group_size = std::min( desired_zombies, 10 );
+                        mongroup m( GROUP_ZOMBIE, s, group_size );
+                        m.horde = true;
+                        if( get_option<bool>( "WANDER_SPAWNS" ) ) {
+                            m.wander( *this );
+                        }
+                        add_mon_group( m );
+                        desired_zombies -= group_size;
+                    }
+                }
+            }
+        }
+    }
+
     if( get_option<bool>( "DISABLE_ANIMAL_CLASH" ) ) {
         // Figure out where swamps are, and place swamp monsters
         for( int x = 3; x < OMAPX - 3; x += 7 ) {

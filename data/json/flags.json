@@ -606,7 +606,8 @@
   },
   {
     "id": "MC_HAS_DATA",
-    "type": "json_flag"
+    "type": "json_flag",
+    "info": "这张存储卡中保存着一些数据。"
   },
   {
     "id": "MC_MAY_BE_ENCRYPTED",

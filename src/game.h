@@ -1265,9 +1265,13 @@ class game
         /**
         Checks if player is able to successfully climb to/from some terrain and not slip down
         @param check_for_traps Used if needed to call trap function on player's location after slipping down
+        @param show_chance_messages If true, prints explanatory messages while calculating the chance
         @return whether player has slipped down
         */
-        bool slip_down( bool check_for_traps = false );
+        bool slip_down( bool check_for_traps = false, bool show_chance_messages = true );
+        int slip_down_chance( bool show_messages = false );
+        std::string climb_down_summary( const tripoint &examp );
+        void climb_down( const tripoint &examp, bool ledge_menu_confirmed = false );
 };
 
 // Returns temperature modifier from direct heat radiation of nearby sources

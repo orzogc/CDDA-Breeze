@@ -790,7 +790,7 @@ std::unordered_set<tripoint> zone_manager::get_point_set_loot( const tripoint_ab
 {
     std::unordered_set<tripoint> res;
     map &here = get_map();
-    for( const tripoint &elem : here.points_in_radius( here.getlocal( where ), radius ) ) {
+    for( const tripoint &elem : here.points_in_radius( here.getlocal( where ), radius, radius ) ) {
         const zone_data *zone = get_zone_at( here.getglobal( elem ), true, fac );
         if( zone == nullptr ) {
             continue;

@@ -97,6 +97,8 @@ static const oter_str_id oter_unexplored( "unexplored" );
 
 static const oter_type_str_id oter_type_forest_trail( "forest_trail" );
 
+static const trait_id trait_DEBUG_CLAIRVOYANCE( "DEBUG_CLAIRVOYANCE" );
+
 static const trait_id trait_DEBUG_NIGHTVISION( "DEBUG_NIGHTVISION" );
 
 static const efftype_id effect_pet("pet");
@@ -818,7 +820,9 @@ static void draw_ascii(
                 ter_sym = "!";
             } else if( blink && showhordes &&
                        overmap_buffer.get_horde_size( omp ) >= HORDE_VISIBILITY_SIZE &&
-                       get_and_assign_los( los, player_character, omp, sight_points ) ) {
+                       ( get_and_assign_los( los, player_character, omp, sight_points ) ||
+                         uistate.overmap_debug_mongroup ||
+                         player_character.has_trait( trait_DEBUG_CLAIRVOYANCE ) ) ) {
                 // Display Hordes only when within player line-of-sight
                 ter_color = c_green;
                 ter_sym = overmap_buffer.get_horde_size( omp ) > HORDE_VISIBILITY_SIZE * 2 ? "Z" : "z";

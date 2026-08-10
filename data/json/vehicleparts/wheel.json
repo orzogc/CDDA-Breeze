@@ -396,6 +396,73 @@
     "flags": [ "WHEEL", "NEEDS_JACKING", "STABLE", "STEERABLE" ]
   },
   {
+    "id": "wheel_skateboard",
+    "type": "vehicle_part",
+    "name": { "str": "滑板轮" },
+    "item": "wheel_skateboard",
+    "location": "under",
+    "categories": [ "movement" ],
+    "symbol": "o",
+    "broken_symbol": "x",
+    "color": "dark_gray",
+    "broken_color": "light_gray",
+    "durability": 70,
+    "description": "四个小型滑板轮。",
+    "damage_modifier": 50,
+    "folded_volume": "1250 ml",
+    "folding_time": "0 seconds",
+    "unfolding_time": "0 seconds",
+    "rolling_resistance": 1.5,
+    "contact_area": 4,
+    "wheel_type": "rigid",
+    "requirements": {
+      "install": {
+        "skills": [ [ "mechanics", 0 ] ],
+        "time": "1 m",
+        "qualities": [ { "id": "WRENCH", "level": 2 } ]
+      },
+      "removal": {
+        "skills": [ [ "mechanics", 0 ] ],
+        "time": "1 m",
+        "qualities": [ { "id": "WRENCH", "level": 2 } ]
+      }
+    },
+    "flags": [ "WHEEL", "NEEDS_WHEEL_MOUNT_SKATEBOARD", "STABLE", "STEERABLE" ]
+  },
+  {
+    "id": "wheel_mount_skateboard",
+    "type": "vehicle_part",
+    "name": { "str": "滑板桥架" },
+    "item": "wheel_mount_skateboard",
+    "location": "axle",
+    "categories": [ "movement" ],
+    "symbol": "-",
+    "broken_symbol": "X",
+    "color": "dark_gray",
+    "broken_color": "light_gray",
+    "damage_modifier": 80,
+    "folded_volume": "200 ml",
+    "folding_time": "0 seconds",
+    "unfolding_time": "0 seconds",
+    "durability": 120,
+    "description": "一对固定滑板轮的金属桥架。",
+    "flags": [ "WHEEL_MOUNT_SKATEBOARD" ],
+    "requirements": {
+      "install": {
+        "skills": [ [ "mechanics", 0 ] ],
+        "time": "3 m",
+        "qualities": [ { "id": "WRENCH", "level": 2 }, { "id": "SCREW", "level": 1 } ]
+      },
+      "removal": {
+        "skills": [ [ "mechanics", 0 ] ],
+        "time": "3 m",
+        "qualities": [ { "id": "WRENCH", "level": 2 }, { "id": "SCREW", "level": 1 } ]
+      }
+    },
+    "breaks_into": [ { "item": "scrap", "count": [ 0, 1 ] }, { "item": "scrap_aluminum", "count": [ 0, 2 ] } ],
+    "damage_reduction": { "all": 10 }
+  },
+  {
     "id": "wheel_10",
     "type": "vehicle_part",
     "name": { "str": "wheels" },

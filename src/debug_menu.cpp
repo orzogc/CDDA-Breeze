@@ -2589,15 +2589,8 @@ void debug()
     const bool should_disable_achievements = action && !is_debug_character() &&
             !non_cheaty_options.count( *action );
     if( should_disable_achievements && achievements.is_enabled() ) {
-        static const std::string query(
-            translate_marker(
-                "Using this will disable achievements.  Proceed?"
-                "\nThey can be reenabled in the 'game' section of the menu." ) );
-        if( query_yn( _( query ) ) ) {
-            achievements.set_enabled( false );
-        } else {
-            action = std::nullopt;
-        }
+        add_msg( m_mixed, "成就已被禁用。" );
+        achievements.set_enabled( false );
     }
 
     if( !action ) {
@@ -3065,10 +3058,10 @@ void debug()
             break;
         case debug_menu_index::ENABLE_ACHIEVEMENTS:
             if( achievements.is_enabled() ) {
-                popup( _( "Achievements are already enabled" ) );
+                popup( "成就已经启用。" );
             } else {
                 achievements.set_enabled( true );
-                popup( _( "Achievements enabled" ) );
+                popup( "成就已启用。" );
             }
             break;
         case debug_menu_index::UNLOCK_ALL:

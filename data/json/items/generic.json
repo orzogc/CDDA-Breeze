@@ -2142,17 +2142,40 @@
     "material": [ "plastic" ],
     "ascii_picture": "mobile_memory_card",
     "flags": [ "MC_MOBILE", "MC_RANDOM_STUFF", "MC_MAY_BE_ENCRYPTED", "MC_TURN_USED" ],
+    "conditional_names": [
+      { "type": "FLAG", "condition": "MC_ENCRYPTED", "name": { "str": "SD-Memory card (encrypted)", "str_pl": "SD-Memory cards (encrypted)" } }
+    ],
+    "memory_card": {
+      "data_chance": 0.875,
+      "on_read_convert_to": "mobile_memory_card_used",
+      "encryption_chance": 0.125,
+      "encryption_difficulty_min": 2,
+      "encryption_difficulty_max": 5,
+      "photos_chance": 0.33,
+      "photos_amount": 30,
+      "songs_chance": 0.33,
+      "songs_amount": 15,
+      "recipes_chance": 0.33,
+      "recipes_amount": 3,
+      "recipes_level_min": 0,
+      "recipes_level_max": 5,
+      "recipes_categories": [ "CC_AMMO", "CC_ARMOR", "CC_CHEM", "CC_ELECTRONIC", "CC_FOOD", "CC_WEAPON" ],
+      "secret_recipes": false
+    },
     "weight": "5 g",
-    "volume": "2 ml"
-  },
+    "volume": "2 ml",
+    "longest_side": "32 mm"},
   {
     "type": "TOOL",
     "id": "mobile_memory_card_used",
     "looks_like": "mobile_memory_card",
     "symbol": ",",
     "color": "white",
-    "name": { "str": "SD-Memory card (clean)", "str_pl": "SD-Memory cards (clean)" },
-    "description": "This memory card is either unused or has been wiped clean.  You could use it to store your data, though!",
+    "name": { "str": "SD存储卡（空）", "str_pl": "SD存储卡（空）" },
+    "conditional_names": [
+      { "type": "FLAG", "condition": "MC_HAS_DATA", "name": { "str": "SD存储卡（有数据）", "str_pl": "SD存储卡（有数据）" } }
+    ],
+    "description": "这是一张可写的SD存储卡，可以保存电子书和其他数字资料。",
     "price": 500,
     "price_postapoc": 10,
     "material": [ "plastic" ],
@@ -2168,8 +2191,8 @@
       }
     ],
     "weight": "5 g",
-    "volume": "1 ml"
-  },
+    "volume": "1 ml",
+    "longest_side": "32 mm"},
   {
     "type": "GENERIC",
     "id": "mobile_memory_card_encrypted",
@@ -2183,9 +2206,26 @@
     "material": [ "plastic" ],
     "ascii_picture": "mobile_memory_card",
     "flags": [ "MC_MOBILE", "MC_ENCRYPTED", "MC_TURN_USED" ],
+    "memory_card": {
+      "data_chance": 1.0,
+      "on_read_convert_to": "mobile_memory_card_used",
+      "encryption_chance": 1.0,
+      "encryption_difficulty_min": 3,
+      "encryption_difficulty_max": 6,
+      "photos_chance": 0.4,
+      "photos_amount": 30,
+      "songs_chance": 0.4,
+      "songs_amount": 15,
+      "recipes_chance": 0.4,
+      "recipes_amount": 3,
+      "recipes_level_min": 0,
+      "recipes_level_max": 5,
+      "recipes_categories": [ "CC_AMMO", "CC_ARMOR", "CC_CHEM", "CC_ELECTRONIC", "CC_FOOD", "CC_WEAPON" ],
+      "secret_recipes": false
+    },
     "weight": "5 g",
-    "volume": "1 ml"
-  },
+    "volume": "1 ml",
+    "longest_side": "32 mm"},
   {
     "type": "GENERIC",
     "id": "mobile_memory_card_science",
@@ -2199,9 +2239,22 @@
     "material": [ "plastic" ],
     "ascii_picture": "mobile_memory_card",
     "flags": [ "MC_MOBILE", "MC_ENCRYPTED", "MC_TURN_USED", "MC_SCIENCE_STUFF" ],
+    "memory_card": {
+      "data_chance": 1.0,
+      "on_read_convert_to": "mobile_memory_card_used",
+      "encryption_chance": 1.0,
+      "encryption_difficulty_min": 5,
+      "encryption_difficulty_max": 8,
+      "recipes_chance": 1.0,
+      "recipes_amount": 3,
+      "recipes_level_min": 6,
+      "recipes_level_max": 10,
+      "recipes_categories": [ "CC_CHEM" ],
+      "secret_recipes": true
+    },
     "weight": "5 g",
-    "volume": "1 ml"
-  },
+    "volume": "1 ml",
+    "longest_side": "32 mm"},
   {
     "type": "GENERIC",
     "id": "mirror",

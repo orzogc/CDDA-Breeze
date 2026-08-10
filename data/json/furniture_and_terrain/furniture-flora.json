@@ -532,5 +532,71 @@
         { "item": "leaves", "count": [ 7, 10 ] }
       ]
     }
+  },
+  {
+    "type": "furniture",
+    "id": "f_lake_liverwort",
+    "name": "湖底地钱",
+    "description": "一簇贴着湖底生长的水生地钱。",
+    "symbol": "#",
+    "color": "green",
+    "looks_like": "f_burdock",
+    "move_cost_mod": 1,
+    "required_str": -1,
+    "flags": [ "TRANSPARENT", "TINY", "NOCOLLIDE" ],
+    "bash": { "str_min": 4, "str_max": 30, "sound": "哗啦。", "sound_fail": "咕噜。", "items": [ { "item": "withered", "count": [ 1, 2 ] } ] }
+  },
+  {
+    "type": "furniture",
+    "id": "f_lake_pondweed",
+    "name": "眼子菜",
+    "description": "一片高大的眼子菜生长在湖底，密集的叶片遮挡着水中的视线。",
+    "symbol": "#",
+    "color": "green",
+    "looks_like": "f_brambles",
+    "move_cost_mod": 4,
+    "coverage": 40,
+    "required_str": -1,
+    "flags": [ "CONTAINER" ],
+    "bash": { "str_min": 4, "str_max": 30, "sound": "哗啦。", "sound_fail": "咕噜。", "items": [ { "item": "withered", "count": [ 2, 4 ] } ] }
+  },
+  {
+    "type": "furniture",
+    "id": "f_lake_eelgrass",
+    "name": "苦草",
+    "description": "成片苦草贴着湖底生长，细长叶片在水中摆动。",
+    "symbol": "#",
+    "color": "green",
+    "looks_like": "f_cattails_harvested",
+    "move_cost_mod": 1,
+    "required_str": -1,
+    "flags": [ "TRANSPARENT", "TINY", "NOCOLLIDE" ],
+    "bash": { "str_min": 4, "str_max": 30, "sound": "哗啦。", "sound_fail": "咕噜。", "items": [ { "item": "withered", "count": [ 1, 2 ] } ] }
+  },
+  {
+    "type": "furniture",
+    "id": "f_lake_hornwort",
+    "name": "金鱼藻",
+    "description": "一簇沉水生长的金鱼藻，枝叶细碎而茂密。",
+    "symbol": "#",
+    "color": "green",
+    "looks_like": "f_chamomile",
+    "move_cost_mod": 1,
+    "required_str": -1,
+    "flags": [ "TRANSPARENT", "TINY", "NOCOLLIDE" ],
+    "bash": { "str_min": 4, "str_max": 30, "sound": "哗啦。", "sound_fail": "咕噜。", "items": [ { "item": "withered", "count": [ 1, 2 ] } ] }
+  },
+  {
+    "type": "furniture",
+    "id": "f_lake_detritus",
+    "name": "湖底腐殖物",
+    "description": "腐烂的叶片，细枝和有机残渣沉积在这里，形成一层松软的腐殖物。",
+    "symbol": "#",
+    "color": "green",
+    "looks_like": "f_leaves_pile",
+    "move_cost_mod": 1,
+    "required_str": -1,
+    "flags": [ "TRANSPARENT", "TINY", "NOCOLLIDE" ],
+    "bash": { "str_min": 4, "str_max": 30, "sound": "哗啦。", "sound_fail": "咕噜。", "items": [ { "item": "withered", "count": [ 1, 2 ] } ] }
   }
 ]

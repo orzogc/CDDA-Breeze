@@ -41,6 +41,7 @@
 #include "harvest.h"
 #include "iexamine.h"
 #include "item.h"
+#include "iuse.h"
 #include "item_group.h"
 #include "item_location.h"
 #include "itype.h"
@@ -98,6 +99,7 @@ static const activity_id ACT_CONSUME( "ACT_CONSUME" );
 static const activity_id ACT_CONSUME_MEDS_MENU( "ACT_CONSUME_MEDS_MENU" );
 static const activity_id ACT_CRACKING( "ACT_CRACKING" );
 static const activity_id ACT_CRAFT( "ACT_CRAFT" );
+static const activity_id ACT_DATA_HANDLING( "ACT_DATA_HANDLING" );
 static const activity_id ACT_DISABLE( "ACT_DISABLE" );
 static const activity_id ACT_DISASSEMBLE( "ACT_DISASSEMBLE" );
 static const activity_id ACT_DROP( "ACT_DROP" );
@@ -944,6 +946,120 @@ std::unique_ptr<activity_actor> bookbinder_copy_activity_actor::deserialize( Jso
     jsobj.read( "rec_id", actor.rec_id );
     jsobj.read( "pages", actor.pages );
 
+    return actor.clone();
+}
+
+void data_handling_activity_actor::start( player_activity &act, Character & )
+{
+    act.moves_left = act.moves_total = targets.size() * to_moves<int>( time_per_card );
+    time_until_next_card = time_per_card;
+}
+
+void data_handling_activity_actor::do_turn( player_activity &act, Character &who )
+{
+    if( !reader || !reader->ammo_sufficient( &who ) ) {
+        who.add_msg_if_player( m_warning, "读取设备已经没有足够的电量。" );
+        who.cancel_activity();
+        return;
+    }
+    if( calendar::once_every( 5_minutes ) ) {
+        reader->ammo_consume( reader->type->charges_to_use(), who.pos(), &who );
+    }
+
+    time_until_next_card -= 1_seconds;
+    if( time_until_next_card > 0_seconds ) {
+        return;
+    }
+    if( targets.empty() ) {
+        act.moves_left = 0;
+        return;
+    }
+
+    item_location target = targets.back();
+    targets.pop_back();
+    time_until_next_card = time_per_card;
+    if( targets.empty() ) {
+        act.moves_left = 0;
+    }
+    if( !target ) {
+        return;
+    }
+    handled_cards++;
+
+    item &mc = *target;
+    iuse::init_memory_card_with_random_stuff( mc );
+    if( mc.has_flag( flag_MC_ENCRYPTED ) ) {
+        encrypted_cards++;
+        return;
+    }
+    if( !mc.has_flag( flag_MC_HAS_DATA ) && !mc.has_flag( flag_MC_USED ) ) {
+        empty_cards++;
+        if( mc.type->memory_card_data && mc.type->memory_card_data->on_read_convert_to.is_valid() ) {
+            const itype_id convert_to = mc.type->memory_card_data->on_read_convert_to;
+            mc.clear_vars();
+            mc.unset_flags();
+            mc.convert( convert_to );
+        }
+        return;
+    }
+
+    if( iuse::einkpc_download_memory_card( who, *reader, mc, false ) ) {
+        downloaded_cards++;
+    } else {
+        empty_cards++;
+    }
+}
+
+static void print_memory_card_batch_result( Character &who, int handled, int downloaded,
+        int encrypted, int empty )
+{
+    if( handled <= 0 ) {
+        return;
+    }
+    who.add_msg_if_player( m_info,
+                           "存储卡读取完成，共处理%d张，成功读取%d张，加密%d张，无新数据%d张。",
+                           handled, downloaded, encrypted, empty );
+}
+
+void data_handling_activity_actor::finish( player_activity &act, Character &who )
+{
+    print_memory_card_batch_result( who, handled_cards, downloaded_cards, encrypted_cards, empty_cards );
+    act.set_to_null();
+}
+
+void data_handling_activity_actor::canceled( player_activity &act, Character &who )
+{
+    print_memory_card_batch_result( who, handled_cards, downloaded_cards, encrypted_cards, empty_cards );
+    act.set_to_null();
+}
+
+void data_handling_activity_actor::serialize( JsonOut &jsout ) const
+{
+    jsout.start_object();
+    jsout.member( "reader", reader );
+    jsout.member( "targets", targets );
+    jsout.member( "time_until_next_card", time_until_next_card );
+    jsout.member( "handled_cards", handled_cards );
+    jsout.member( "downloaded_cards", downloaded_cards );
+    jsout.member( "encrypted_cards", encrypted_cards );
+    jsout.member( "empty_cards", empty_cards );
+    jsout.end_object();
+}
+
+std::unique_ptr<activity_actor> data_handling_activity_actor::deserialize( JsonValue &jsin )
+{
+    data_handling_activity_actor actor;
+    JsonObject obj = jsin.get_object();
+    obj.read( "reader", actor.reader );
+    obj.read( "targets", actor.targets );
+    obj.read( "time_until_next_card", actor.time_until_next_card );
+    obj.read( "handled_cards", actor.handled_cards );
+    obj.read( "downloaded_cards", actor.downloaded_cards );
+    obj.read( "encrypted_cards", actor.encrypted_cards );
+    obj.read( "empty_cards", actor.empty_cards );
+    if( !actor.targets.empty() && actor.time_until_next_card <= 0_seconds ) {
+        actor.time_until_next_card = time_per_card;
+    }
     return actor.clone();
 }
 
@@ -1896,9 +2012,8 @@ void move_items_activity_actor::do_turn( player_activity &act, Character &who )
             continue;
         }
 
-        // Check that we can pick it up.
         if( target->made_of_from_type( phase_id::SOLID ) ) {
-            // Keep the source untouched until destination placement succeeds.
+            // 目标落点成功前不修改源物品，避免满载时吞掉或复制物品。
             item newit = *target;
             item leftovers = newit;
 
@@ -1908,8 +2023,6 @@ void move_items_activity_actor::do_turn( player_activity &act, Character &who )
                 continue;
             }
 
-            // Handle charges, quantity == 0 means move all.
-            // Work on copies so failed placement cannot consume source charges.
             if( quantity != 0 && newit.count_by_charges() ) {
                 const int moved_charges = std::min( newit.charges, quantity );
                 newit.charges = moved_charges;
@@ -1918,8 +2031,6 @@ void move_items_activity_actor::do_turn( player_activity &act, Character &who )
                 leftovers.charges = 0;
             }
 
-            // This is for hauling across zlevels, remove when going up and down stairs
-            // is no longer teleportation
             const tripoint_bub_ms src = target.pos_bub();
             const int distance = src.z() == dest.z() ? std::max( rl_dist( src, dest ), 1 ) : 1;
 
@@ -1927,10 +2038,6 @@ void move_items_activity_actor::do_turn( player_activity &act, Character &who )
             bool destination_full_after_partial = false;
 
             if( to_vehicle ) {
-                // ACT_MOVE_ITEMS must be transactional.  Do not use
-                // put_into_vehicle_or_drop here: that helper may partially fill cargo and then
-                // retain, wield or drop the remainder, which makes it impossible to know how
-                // much of the source can safely be committed afterwards.
                 const std::optional<vpart_reference> cargo =
                     here.veh_at( dest ).part_with_feature( "CARGO", false );
 
@@ -1938,9 +2045,6 @@ void move_items_activity_actor::do_turn( player_activity &act, Character &who )
                     vehicle &veh = cargo->vehicle();
                     const int part = cargo->part_index();
 
-                    // vehicle::add_item is all-or-nothing.  For charge-counted items,
-                    // fall back to add_charges so that "move as much as possible" can
-                    // still fill the remaining cargo capacity without duplicating items.
                     if( veh.add_item( part, newit ).has_value() ) {
                         placement_succeeded = true;
                     } else if( newit.count_by_charges() ) {
@@ -1949,8 +2053,6 @@ void move_items_activity_actor::do_turn( player_activity &act, Character &who )
                         if( charges_added > 0 ) {
                             placement_succeeded = true;
                             destination_full_after_partial = charges_added < requested_charges;
-
-                            // Commit only the charges that really entered the cargo.
                             newit.charges = charges_added;
                             leftovers = *target;
                             leftovers.charges -= charges_added;
@@ -1968,24 +2070,17 @@ void move_items_activity_actor::do_turn( player_activity &act, Character &who )
                 return;
             }
 
-            // Charge movement cost only after destination placement succeeded, using the
-            // exact amount that was really transferred for partially filled vehicle cargo.
             const float weary_mult = who.exertion_adjusted_move_multiplier( exertion_level() );
             who.mod_moves( -Pickup::cost_to_move_item( who, newit ) * distance * weary_mult );
 
-            // Commit source changes only after the destination accepted the item.
             if( leftovers.charges > 0 ) {
                 *target = std::move( leftovers );
             } else {
                 target.remove_item();
             }
 
-            // A charge stack may have partially filled the final bit of vehicle cargo.
-            // The successful portion is already committed, leave the remainder at source
-            // and stop once, rather than repeatedly retrying and spamming messages.
             if( destination_full_after_partial ) {
-                who.add_msg_if_player( m_info,
-                                       _( "Destination area is full.  Remove some items first." ) );
+                who.add_msg_if_player( m_info, "目标区域已满，请先移走一些物品。" );
                 act.set_to_null();
                 return;
             }
@@ -1993,7 +2088,6 @@ void move_items_activity_actor::do_turn( player_activity &act, Character &who )
     }
 
     if( target_items.empty() ) {
-        // Nuke the current activity, leaving the backlog alone.
         act.set_to_null();
         if( who.is_hauling() && !here.has_haulable_items( who.pos() ) ) {
             who.stop_hauling();
@@ -3694,7 +3788,7 @@ void drop_activity_actor::do_turn( player_activity &, Character &who )
             if( veh.free_volume( part ) <= 0_ml ||
                 veh.get_items( part ).size() >= MAX_ITEM_IN_VEHICLE_STORAGE ) {
                 who.add_msg_if_player( m_info,
-                                       _( "Destination area is full.  Remove some items first." ) );
+                                       _( "目标区域已满，请先移走一些物品。" ) );
                 who.cancel_activity();
                 return;
             }
@@ -3720,7 +3814,7 @@ void drop_activity_actor::do_turn( player_activity &, Character &who )
     }
 
     if( destination_full ) {
-        who.add_msg_if_player( m_info, _( "Destination area is full.  Remove some items first." ) );
+        who.add_msg_if_player( m_info, _( "目标区域已满，请先移走一些物品。" ) );
         who.cancel_activity();
         return;
     }
@@ -7085,6 +7179,7 @@ deserialize_functions = {
     { ACT_CONSUME, &consume_activity_actor::deserialize },
     { ACT_CRACKING, &safecracking_activity_actor::deserialize },
     { ACT_CRAFT, &craft_activity_actor::deserialize },
+    { ACT_DATA_HANDLING, &data_handling_activity_actor::deserialize },
     { ACT_DISABLE, &disable_activity_actor::deserialize },
     { ACT_DISASSEMBLE, &disassemble_activity_actor::deserialize },
     { ACT_DROP, &drop_activity_actor::deserialize },

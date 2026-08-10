@@ -29,6 +29,10 @@ template<typename T> class ret_val;
 namespace iuse
 {
 
+// Breeze batch memory-card handling.
+void init_memory_card_with_random_stuff( item & );
+bool einkpc_download_memory_card( Character &, item &, item &, bool report = true );
+
 // FOOD AND DRUGS (ADMINISTRATION)
 std::optional<int> alcohol_medium( Character *, item *, bool, const tripoint & );
 std::optional<int> alcohol_strong( Character *, item *, bool, const tripoint & );

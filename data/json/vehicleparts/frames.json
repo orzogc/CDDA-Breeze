@@ -86,6 +86,32 @@
     "damage_reduction": { "all": 5 }
   },
   {
+    "id": "frame_wood_deck",
+    "type": "vehicle_part",
+    "name": { "str": "滑板板面" },
+    "copy-from": "frame_wood",
+    "item": "frame_wood_deck",
+    "looks_like": "frame_wood",
+    "folded_volume": "2500 ml",
+    "folding_time": "0 seconds",
+    "unfolding_time": "0 seconds",
+    "categories": [ "hull" ],
+    "durability": 100,
+    "description": "一块轻巧的木制滑板板面，可以安装滑板的其他部件。",
+    "power": 360,
+    "muscle_power_factor": 60,
+    "fuel_type": "muscle",
+    "m2c": 45,
+    "breaks_into": [ { "item": "splinter", "count": [ 3, 5 ] } ],
+    "requirements": {
+      "install": { "skills": [ [ "fabrication", 0 ] ], "time": "0 m" },
+      "removal": { "skills": [ [ "fabrication", 0 ] ], "time": "0 m" },
+      "repair": { "skills": [ [ "fabrication", 0 ] ], "time": "5 m", "using": [ [ "adhesive", 1 ] ] }
+    },
+    "extend": { "flags": [ "SEAT", "NONBELTABLE", "SEAT_REQUIRES_BALANCE", "BOARDABLE", "ENGINE", "E_STARTS_INSTANTLY", "MUSCLE_LEGS", "CONTROLS" ] },
+    "damage_reduction": { "all": 2 }
+  },
+  {
     "id": "frame_wood_light",
     "type": "vehicle_part",
     "name": { "str": "light wooden frame" },

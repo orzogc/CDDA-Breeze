@@ -404,11 +404,18 @@ static void item_save_monsters( Character &p, item &it, const std::vector<monste
                                 int photo_quality );
 static bool show_photo_selection( Character &p, item &it, const std::string &var_name );
 
-static bool item_read_extended_photos( item &, std::vector<extended_photo_def> &,
+static bool item_read_extended_photos( const item &, std::vector<extended_photo_def> &,
                                        const std::string &,
                                        bool = false );
 static void item_write_extended_photos( item &, const std::vector<extended_photo_def> &,
                                         const std::string & );
+static bool breeze_merge_extended_photos( item &, const std::string &, item &, const std::string & );
+static bool breeze_extended_photos_would_change( const item &, const std::string &,
+        const item &, const std::string & );
+static bool breeze_merge_monster_photos( const item &, const std::string &, item &, const std::string & );
+static bool breeze_monster_photos_would_change( const item &, const std::string &,
+        const item &, const std::string & );
+static int get_quality_from_string( const std::string & );
 
 static std::string format_object_pair( const std::pair<std::string, int> &pair,
                                        const std::string &article );
@@ -5825,61 +5832,397 @@ std::optional<int> iuse::robotcontrol( Character *p, item *it, bool active, cons
     return 0;
 }
 
-static void init_memory_card_with_random_stuff( item &it )
+
+// Breeze R5 R2 persistent storage helpers.
+// R5 keeps user backups persistent on writable cards using EIPC/EINK variables.
+// Random found-card loot continues to use MC_* variables.
+static std::set<std::string> breeze_storage_recipe_ids( const std::string &encoded )
 {
-    if( it.has_flag( flag_MC_MOBILE ) && ( it.has_flag( flag_MC_RANDOM_STUFF ) ||
-                                           it.has_flag( flag_MC_SCIENCE_STUFF ) ) && !( it.has_flag( flag_MC_USED ) ||
-                                                   it.has_flag( flag_MC_HAS_DATA ) ) ) {
+    std::set<std::string> result;
+    std::istringstream stream( encoded );
+    std::string id;
+    while( getline( stream, id, ',' ) ) {
+        if( !id.empty() ) {
+            result.insert( id );
+        }
+    }
+    return result;
+}
 
-        it.set_flag( flag_MC_HAS_DATA );
+static std::string breeze_encode_storage_recipe_ids( const std::set<std::string> &recipes )
+{
+    if( recipes.empty() ) {
+        return std::string();
+    }
 
-        bool encrypted = false;
+    std::string encoded = ",";
+    for( const std::string &id : recipes ) {
+        encoded += id + ",";
+    }
+    return encoded;
+}
 
-        //encrypted memory cards have a second chance to contain data
-        if( it.has_flag( flag_MC_MAY_BE_ENCRYPTED ) && one_in( 8 ) ) {
-            it.convert( itype_id( it.typeId().str() + "_encrypted" ) );
-            encrypted = true;
+static bool breeze_memory_card_has_random_data( const item &mc );
+
+static std::string breeze_new_media_id( const std::string &prefix )
+{
+    return string_format( "%s-%d-%d", prefix, rng( 0, INT_MAX ), rng( 0, INT_MAX ) );
+}
+
+static bool breeze_read_string_list( const item &it, const std::string &var_name,
+                                     std::vector<std::string> &values )
+{
+    values.clear();
+    if( !it.has_var( var_name ) ) {
+        return false;
+    }
+
+    std::optional<JsonValue> json_opt;
+    try {
+        json_opt = json_loader::from_string_opt( it.get_var( var_name ) );
+        if( !json_opt.has_value() ) {
+            return false;
+        }
+        return json_opt->read( values );
+    } catch( const JsonError &e ) {
+        debugmsg( "Error reading media list %s: %s", var_name, e.c_str() );
+        values.clear();
+        return false;
+    }
+}
+
+static void breeze_write_string_list( item &it, const std::string &var_name,
+                                      const std::vector<std::string> &values )
+{
+    if( values.empty() ) {
+        it.erase_var( var_name );
+        it.erase_var( var_name + "_count" );
+        return;
+    }
+
+    std::ostringstream list_data;
+    JsonOut json( list_data );
+    json.write( values );
+    it.set_var( var_name, list_data.str() );
+    it.set_var( var_name + "_count", static_cast<int>( values.size() ) );
+}
+
+static std::string breeze_media_namespace( item &it )
+{
+    static const std::string namespace_var = "BREEZE_MEDIA_NAMESPACE";
+    if( !it.has_var( namespace_var ) ) {
+        it.set_var( namespace_var, breeze_new_media_id( "namespace" ) );
+    }
+    return it.get_var( namespace_var );
+}
+
+static std::vector<std::string> breeze_media_entries( const item &it,
+        const std::string &list_var, const std::string &legacy_var )
+{
+    std::vector<std::string> values;
+    if( breeze_read_string_list( it, list_var, values ) ) {
+        return values;
+    }
+
+    const int count = std::max( 0, static_cast<int>( it.get_var( legacy_var, 0 ) ) );
+    values.reserve( count );
+    for( int i = 0; i < count; i++ ) {
+        // Legacy scalar values have no identity.  Index-based IDs preserve the
+        // old max/overlap behavior until the item is explicitly materialized.
+        values.emplace_back( string_format( "legacy:%s:%d", legacy_var, i ) );
+    }
+    return values;
+}
+
+static int breeze_media_count( const item &it, const std::string &list_var,
+                               const std::string &legacy_var )
+{
+    const std::string count_var = list_var + "_count";
+    if( it.has_var( count_var ) ) {
+        return std::max( 0, static_cast<int>( it.get_var( count_var, 0 ) ) );
+    }
+
+    std::vector<std::string> values;
+    if( breeze_read_string_list( it, list_var, values ) ) {
+        const_cast<item &>( it ).set_var( count_var, static_cast<int>( values.size() ) );
+        return static_cast<int>( values.size() );
+    }
+    return std::max( 0, static_cast<int>( it.get_var( legacy_var, 0 ) ) );
+}
+
+static std::vector<std::string> breeze_materialize_media_list( item &it,
+        const std::string &list_var, const std::string &legacy_var, bool unique_legacy )
+{
+    std::vector<std::string> values;
+    if( it.has_var( list_var ) ) {
+        if( !breeze_read_string_list( it, list_var, values ) ) {
+            return values;
+        }
+        it.set_var( list_var + "_count", static_cast<int>( values.size() ) );
+        it.erase_var( legacy_var );
+        return values;
+    }
+
+    const int count = std::max( 0, static_cast<int>( it.get_var( legacy_var, 0 ) ) );
+    if( count <= 0 ) {
+        return values;
+    }
+
+    const std::string prefix = unique_legacy ?
+                               breeze_media_namespace( it ) + ":" + legacy_var + ":" :
+                               "legacy:" + legacy_var + ":";
+    values.reserve( count );
+    for( int i = 0; i < count; i++ ) {
+        values.emplace_back( prefix + std::to_string( i ) );
+    }
+    breeze_write_string_list( it, list_var, values );
+    it.erase_var( legacy_var );
+    return values;
+}
+
+static bool breeze_media_list_would_change( const item &from, const std::string &from_list,
+        const std::string &from_legacy, const item &to, const std::string &to_list,
+        const std::string &to_legacy )
+{
+    if( breeze_media_count( from, from_list, from_legacy ) >
+        breeze_media_count( to, to_list, to_legacy ) ) {
+        return true;
+    }
+    const std::vector<std::string> source = breeze_media_entries( from, from_list, from_legacy );
+    if( source.empty() ) {
+        return false;
+    }
+
+    const std::vector<std::string> target = breeze_media_entries( to, to_list, to_legacy );
+    const std::unordered_set<std::string> target_ids( target.begin(), target.end() );
+    return std::any_of( source.begin(), source.end(), [&]( const std::string &id ) {
+        return !target_ids.count( id );
+    } );
+}
+
+static int breeze_merge_media_entries( const std::vector<std::string> &source, item &to,
+                                       const std::string &to_list, const std::string &to_legacy )
+{
+    if( source.empty() ) {
+        return 0;
+    }
+
+    std::vector<std::string> target = breeze_materialize_media_list( to, to_list, to_legacy, false );
+    std::unordered_set<std::string> target_ids( target.begin(), target.end() );
+    int added = 0;
+    for( const std::string &id : source ) {
+        if( target_ids.emplace( id ).second ) {
+            target.push_back( id );
+            added++;
+        }
+    }
+    if( added > 0 ) {
+        breeze_write_string_list( to, to_list, target );
+    }
+    return added;
+}
+
+static int breeze_merge_media_list( item &from, item &to, const std::string &from_list,
+                                    const std::string &from_legacy, const std::string &to_list,
+                                    const std::string &to_legacy, bool unique_legacy )
+{
+    const std::vector<std::string> source = breeze_materialize_media_list( from, from_list,
+            from_legacy, unique_legacy );
+    return breeze_merge_media_entries( source, to, to_list, to_legacy );
+}
+
+static bool breeze_storage_data_would_change( const item &from, const item &to )
+{
+    std::set<itype_id> target_ebooks;
+    for( const item *ebook : to.ebooks() ) {
+        if( ebook->is_book() ) {
+            target_ebooks.insert( ebook->typeId() );
+        }
+    }
+    for( const item *ebook : from.ebooks() ) {
+        if( ebook->is_book() && !target_ebooks.count( ebook->typeId() ) ) {
+            return true;
+        }
+    }
+
+    if( breeze_media_list_would_change( from, "EIPC_PHOTOS_LIST", "EIPC_PHOTOS",
+                                        to, "EIPC_PHOTOS_LIST", "EIPC_PHOTOS" ) ) {
+        return true;
+    }
+    if( breeze_media_list_would_change( from, "EIPC_MUSIC_LIST", "EIPC_MUSIC",
+                                        to, "EIPC_MUSIC_LIST", "EIPC_MUSIC" ) ) {
+        return true;
+    }
+
+    const std::set<std::string> source_recipes =
+        breeze_storage_recipe_ids( from.get_var( "EIPC_RECIPES" ) );
+    const std::set<std::string> target_recipes =
+        breeze_storage_recipe_ids( to.get_var( "EIPC_RECIPES" ) );
+    for( const std::string &id : source_recipes ) {
+        if( !target_recipes.count( id ) ) {
+            return true;
+        }
+    }
+
+    if( breeze_extended_photos_would_change( from, "EIPC_EXTENDED_PHOTOS",
+            to, "EIPC_EXTENDED_PHOTOS" ) ) {
+        return true;
+    }
+    if( breeze_monster_photos_would_change( from, "EINK_MONSTER_PHOTOS",
+            to, "EINK_MONSTER_PHOTOS" ) ) {
+        return true;
+    }
+
+    if( breeze_memory_card_has_random_data( from ) ) {
+        return true;
+    }
+
+    return false;
+}
+
+static bool breeze_copy_persistent_storage_data( item &from, item &to )
+{
+    bool changed = false;
+
+    if( to.has_pocket_type( item_pocket::pocket_type::EBOOK ) ) {
+        std::set<itype_id> target_ebooks;
+        for( const item *ebook : to.ebooks() ) {
+            if( ebook->is_book() ) {
+                target_ebooks.insert( ebook->typeId() );
+            }
         }
 
-        //some special cards can contain "MC_ENCRYPTED" flag
-        if( it.has_flag( flag_MC_ENCRYPTED ) ) {
-            encrypted = true;
+        for( const item *ebook : from.ebooks() ) {
+            if( !ebook->is_book() || target_ebooks.count( ebook->typeId() ) ) {
+                continue;
+            }
+            if( to.put_in( *ebook, item_pocket::pocket_type::EBOOK ).success() ) {
+                target_ebooks.insert( ebook->typeId() );
+                changed = true;
+            }
         }
+    }
 
-        //chance for data
-        const int photo_chance = 5;
-        const int music_chance = 5;
-        const int recipe_chance = 5;
+    const int new_photos = breeze_merge_media_list( from, to,
+                           "EIPC_PHOTOS_LIST", "EIPC_PHOTOS",
+                           "EIPC_PHOTOS_LIST", "EIPC_PHOTOS", false );
+    if( new_photos > 0 ) {
+        changed = true;
+    }
 
-        //encryption allows for a retry for data
-        const int photo_retry = 5;
-        const int music_retry = 5;
-        const int recipe_retry = 5;
+    const int new_songs = breeze_merge_media_list( from, to,
+                           "EIPC_MUSIC_LIST", "EIPC_MUSIC",
+                           "EIPC_MUSIC_LIST", "EIPC_MUSIC", false );
+    if( new_songs > 0 ) {
+        changed = true;
+    }
 
-        //add someone's personal photos
-        if( one_in( photo_chance ) || ( encrypted && one_in( photo_retry ) ) ) {
-            const int duckfaces_count = rng( 5, 30 );
-            it.set_var( "MC_PHOTOS", duckfaces_count );
-        }
+    std::set<std::string> merged_recipes =
+        breeze_storage_recipe_ids( to.get_var( "EIPC_RECIPES" ) );
+    const size_t old_recipe_count = merged_recipes.size();
+    const std::set<std::string> source_recipes =
+        breeze_storage_recipe_ids( from.get_var( "EIPC_RECIPES" ) );
+    merged_recipes.insert( source_recipes.begin(), source_recipes.end() );
+    if( merged_recipes.size() != old_recipe_count ) {
+        to.set_var( "EIPC_RECIPES",
+                    breeze_encode_storage_recipe_ids( merged_recipes ) );
+        changed = true;
+    }
 
-        //add some songs
-        if( one_in( music_chance ) || ( encrypted && one_in( music_retry ) ) ) {
-            const int new_songs_count = rng( 5, 15 );
-            it.set_var( "MC_MUSIC", new_songs_count );
-        }
+    if( breeze_merge_extended_photos( from, "EIPC_EXTENDED_PHOTOS",
+                                      to, "EIPC_EXTENDED_PHOTOS" ) ) {
+        changed = true;
+    }
 
-        //add random recipes
-        if( one_in( recipe_chance ) || ( encrypted && one_in( recipe_retry ) ) ) {
-            const std::array<std::string, 6> recipe_category = {
-                "CC_AMMO", "CC_ARMOR", "CC_CHEM", "CC_ELECTRONIC", "CC_FOOD", "CC_WEAPON"
-            };
-            int cc_random = rng( 0, 5 );
-            it.set_var( "MC_RECIPE", recipe_category[cc_random] );
-        }
+    if( breeze_merge_monster_photos( from, "EINK_MONSTER_PHOTOS",
+                                     to, "EINK_MONSTER_PHOTOS" ) ) {
+        changed = true;
+    }
 
-        if( it.has_flag( flag_MC_SCIENCE_STUFF ) ) {
-            it.set_var( "MC_RECIPE", "SCIENCE" );
-        }
+
+    return changed;
+}
+
+static bool breeze_memory_card_has_random_data( const item &mc )
+{
+    return breeze_media_count( mc, "MC_PHOTOS_LIST", "MC_PHOTOS" ) > 0 ||
+           breeze_media_count( mc, "MC_MUSIC_LIST", "MC_MUSIC" ) > 0 ||
+           !mc.get_var( "MC_RECIPE" ).empty() ||
+           !mc.get_var( "MC_EXTENDED_PHOTOS" ).empty() ||
+           !mc.get_var( "MC_MONSTER_PHOTOS" ).empty();
+}
+
+static bool breeze_memory_card_has_any_data( const item &mc )
+{
+    return !mc.empty() ||
+           breeze_media_count( mc, "EIPC_PHOTOS_LIST", "EIPC_PHOTOS" ) > 0 ||
+           breeze_media_count( mc, "EIPC_MUSIC_LIST", "EIPC_MUSIC" ) > 0 ||
+           !mc.get_var( "EIPC_RECIPES" ).empty() ||
+           !mc.get_var( "EIPC_EXTENDED_PHOTOS" ).empty() ||
+           !mc.get_var( "EINK_MONSTER_PHOTOS" ).empty() ||
+           breeze_memory_card_has_random_data( mc );
+}
+
+static void breeze_refresh_writable_card_data_flag( item &mc )
+{
+    if( !mc.has_flag( flag_MC_USED ) ) {
+        return;
+    }
+
+    if( breeze_memory_card_has_any_data( mc ) ) {
+        mc.set_flag( flag_MC_HAS_DATA );
+    } else {
+        mc.unset_flag( flag_MC_HAS_DATA );
+    }
+}
+
+
+void iuse::init_memory_card_with_random_stuff( item &it )
+{
+    if( !it.has_flag( flag_MC_MOBILE ) || it.has_var( "BREEZE_MC_INITIALIZED" ) ||
+        it.has_flag( flag_MC_USED ) || it.has_flag( flag_MC_HAS_DATA ) ) {
+        return;
+    }
+
+    const memory_card_info *mcd = it.type->memory_card_data ? &*it.type->memory_card_data : nullptr;
+    if( mcd == nullptr ) {
+        return;
+    }
+
+    it.set_var( "BREEZE_MC_INITIALIZED", 1 );
+
+    const bool encrypted = it.has_flag( flag_MC_ENCRYPTED ) ||
+                           mcd->encryption_chance >= rng_float( 0.0, 1.0 );
+    if( encrypted ) {
+        it.set_flag( flag_MC_ENCRYPTED );
+        const int diff_min = std::max( 1, mcd->encryption_difficulty_min );
+        const int diff_max = std::max( diff_min, mcd->encryption_difficulty_max );
+        it.set_var( "BREEZE_MC_ENCRYPTION_DIFFICULTY", rng( diff_min, diff_max ) );
+    }
+
+    if( mcd->data_chance < rng_float( 0.0, 1.0 ) ) {
+        return;
+    }
+
+    it.set_flag( flag_MC_HAS_DATA );
+    if( mcd->photos_amount > 0 && mcd->photos_chance >= rng_float( 0.0, 1.0 ) ) {
+        it.set_var( "MC_PHOTOS", rng( 1, mcd->photos_amount ) );
+        breeze_materialize_media_list( it, "MC_PHOTOS_LIST", "MC_PHOTOS", true );
+    }
+    if( mcd->songs_amount > 0 && mcd->songs_chance >= rng_float( 0.0, 1.0 ) ) {
+        it.set_var( "MC_MUSIC", rng( 1, mcd->songs_amount ) );
+        breeze_materialize_media_list( it, "MC_MUSIC_LIST", "MC_MUSIC", true );
+    }
+    if( mcd->recipes_amount > 0 && !mcd->recipes_categories.empty() &&
+        mcd->recipes_chance >= rng_float( 0.0, 1.0 ) ) {
+        const std::vector<std::string> categories( mcd->recipes_categories.begin(),
+                                                   mcd->recipes_categories.end() );
+        const std::string &category = random_entry( categories );
+        it.set_var( "MC_RECIPE", category );
+        it.set_var( "BREEZE_MC_RECIPE_COUNT", rng( 1, mcd->recipes_amount ) );
+        it.set_var( "BREEZE_MC_RECIPE_MIN", mcd->recipes_level_min );
+        it.set_var( "BREEZE_MC_RECIPE_MAX", mcd->recipes_level_max );
+        it.set_var( "BREEZE_MC_SECRET_RECIPES", mcd->secret_recipes ? 1 : 0 );
     }
 }
 
@@ -5894,39 +6237,44 @@ static int get_quality_from_string( const std::string &s )
     }
 }
 
-static bool einkpc_download_memory_card( Character &p, item &eink, item &mc )
+bool iuse::einkpc_download_memory_card( Character &p, item &eink, item &mc, bool report )
 {
-    bool something_downloaded = false;
-    if( mc.get_var( "MC_PHOTOS", 0 ) > 0 ) {
-        something_downloaded = true;
-
-        int new_photos = mc.get_var( "MC_PHOTOS", 0 );
+    bool something_downloaded = breeze_copy_persistent_storage_data( mc, eink );
+    if( mc.has_var( "MC_PHOTOS_LIST" ) || mc.get_var( "MC_PHOTOS", 0 ) > 0 ) {
+        const int new_photos = breeze_merge_media_list( mc, eink,
+                                "MC_PHOTOS_LIST", "MC_PHOTOS",
+                                "EIPC_PHOTOS_LIST", "EIPC_PHOTOS", true );
+        breeze_write_string_list( mc, "MC_PHOTOS_LIST", {} );
         mc.erase_var( "MC_PHOTOS" );
-
-        p.add_msg_if_player( m_good, n_gettext( "You download %d new photo into the internal memory.",
-                                                "You download %d new photos into the internal memory.", new_photos ), new_photos );
-
-        const int old_photos = eink.get_var( "EIPC_PHOTOS", 0 );
-        eink.set_var( "EIPC_PHOTOS", old_photos + new_photos );
+        if( new_photos > 0 ) {
+            something_downloaded = true;
+            if( report ) p.add_msg_if_player( m_good,
+                                                  n_gettext( "You download %d new photo into the internal memory.",
+                                                          "You download %d new photos into the internal memory.", new_photos ), new_photos );
+        }
     }
 
-    if( mc.get_var( "MC_MUSIC", 0 ) > 0 ) {
-        something_downloaded = true;
-
-        int new_songs = mc.get_var( "MC_MUSIC", 0 );
+    if( mc.has_var( "MC_MUSIC_LIST" ) || mc.get_var( "MC_MUSIC", 0 ) > 0 ) {
+        const int new_songs = breeze_merge_media_list( mc, eink,
+                               "MC_MUSIC_LIST", "MC_MUSIC",
+                               "EIPC_MUSIC_LIST", "EIPC_MUSIC", true );
+        breeze_write_string_list( mc, "MC_MUSIC_LIST", {} );
         mc.erase_var( "MC_MUSIC" );
-
-        p.add_msg_if_player( m_good, n_gettext( "You download %d new song into the internal memory.",
-                                                "You download %d new songs into the internal memory.", new_songs ), new_songs );
-
-        const int old_songs = eink.get_var( "EIPC_MUSIC", 0 );
-        eink.set_var( "EIPC_MUSIC", old_songs + new_songs );
+        if( new_songs > 0 ) {
+            something_downloaded = true;
+            if( report ) p.add_msg_if_player( m_good,
+                                                  n_gettext( "You download %d new song into the internal memory.",
+                                                          "You download %d new songs into the internal memory.", new_songs ), new_songs );
+        }
     }
 
     if( !mc.get_var( "MC_RECIPE" ).empty() ) {
         std::string category = mc.get_var( "MC_RECIPE" );
         const bool science = category == "SCIENCE";
-        int recipe_num = rng( 1, 3 );
+        int recipe_num = mc.get_var( "BREEZE_MC_RECIPE_COUNT", rng( 1, 3 ) );
+        const int recipe_min = mc.get_var( "BREEZE_MC_RECIPE_MIN", science ? 6 : 0 );
+        const int recipe_max = mc.get_var( "BREEZE_MC_RECIPE_MAX", science ? 10 : 5 );
+        const bool secret_recipes = mc.get_var( "BREEZE_MC_SECRET_RECIPES", 0 ) != 0;
 
         if( category == "SIMPLE" ) {
             category = "CC_FOOD";
@@ -5938,21 +6286,21 @@ static bool einkpc_download_memory_card( Character &p, item &eink, item &mc )
 
         for( const auto &e : recipe_dict ) {
             const recipe &r = e.second;
-            if( r.never_learn || r.obsolete ) {
+            if( r.never_learn || r.obsolete || r.difficulty < recipe_min ||
+                r.difficulty > recipe_max || ( r.has_flag( "SECRET" ) && !secret_recipes ) ) {
                 continue;
             }
             if( science ) {
-                if( r.difficulty >= 6 && r.category == "CC_CHEM" ) {
+                if( r.category == "CC_CHEM" ) {
                     candidates.push_back( &r );
                 }
-            } else {
-                if( r.difficulty <= 5 && ( r.category == category ) ) {
-                    candidates.push_back( &r );
-                }
+            } else if( r.category == category ) {
+                candidates.push_back( &r );
             }
         }
 
         if( !candidates.empty() ) {
+            recipe_num = std::min( recipe_num, static_cast<int>( candidates.size() ) );
             std::vector<const recipe *> new_recipes;
 
             for( int i = 0; i < recipe_num; i++ ) {
@@ -5973,17 +6321,17 @@ static bool einkpc_download_memory_card( Character &p, item &eink, item &mc )
                     something_downloaded = true;
                     eink.set_var( "EIPC_RECIPES", "," + rident.str() + "," );
 
-                    p.add_msg_if_player( m_good, _( "You download a recipe for %s into the tablet's memory." ),
+                    if( report ) p.add_msg_if_player( m_good, _( "You download a recipe for %s into the tablet's memory." ),
                                          r->result_name() );
                 } else {
                     if( old_recipes.find( "," + rident.str() + "," ) == std::string::npos ) {
                         something_downloaded = true;
                         eink.set_var( "EIPC_RECIPES", old_recipes + rident.str() + "," );
 
-                        p.add_msg_if_player( m_good, _( "You download a recipe for %s into the tablet's memory." ),
+                        if( report ) p.add_msg_if_player( m_good, _( "You download a recipe for %s into the tablet's memory." ),
                                              r->result_name() );
                     } else {
-                        p.add_msg_if_player( m_good, _( "The recipe for %s is already stored in the tablet's memory." ),
+                        if( report ) p.add_msg_if_player( m_good, _( "The recipe for %s is already stored in the tablet's memory." ),
                                              r->result_name() );
                     }
                 }
@@ -5991,60 +6339,19 @@ static bool einkpc_download_memory_card( Character &p, item &eink, item &mc )
         }
     }
 
-    if( mc.has_var( "MC_EXTENDED_PHOTOS" ) ) {
-        std::vector<extended_photo_def> extended_photos;
-        try {
-            item_read_extended_photos( mc, extended_photos, "MC_EXTENDED_PHOTOS" );
-            item_read_extended_photos( eink, extended_photos, "EIPC_EXTENDED_PHOTOS", true );
-            item_write_extended_photos( eink, extended_photos, "EIPC_EXTENDED_PHOTOS" );
-            something_downloaded = true;
+    if( breeze_merge_extended_photos( mc, "MC_EXTENDED_PHOTOS",
+                                      eink, "EIPC_EXTENDED_PHOTOS" ) ) {
+        something_downloaded = true;
+        if( report ) {
             p.add_msg_if_player( m_good, _( "You have downloaded your photos." ) );
-        } catch( const JsonError &e ) {
-            debugmsg( "Error card reading photos (loaded photos = %i) : %s", extended_photos.size(),
-                      e.c_str() );
         }
     }
 
-    const auto monster_photos = mc.get_var( "MC_MONSTER_PHOTOS" );
-    if( !monster_photos.empty() ) {
+    if( breeze_merge_monster_photos( mc, "MC_MONSTER_PHOTOS",
+                                     eink, "EINK_MONSTER_PHOTOS" ) ) {
         something_downloaded = true;
-        p.add_msg_if_player( m_good, _( "You have updated your monster collection." ) );
-
-        std::string photos = eink.get_var("EINK_MONSTER_PHOTOS");
-        if( photos.empty() ) {
-            eink.set_var( "EINK_MONSTER_PHOTOS", monster_photos );
-        } else {
-            std::istringstream f( monster_photos );
-            std::string s;
-            while( getline( f, s, ',' ) ) {
-
-                if( s.empty() ) {
-                    continue;
-                }
-
-                const std::string mtype = s;
-                getline( f, s, ',' );
-                const int quality = get_quality_from_string( s );
-
-                const size_t eink_strpos = photos.find( "," + mtype + "," );
-
-                if( eink_strpos == std::string::npos ) {
-                    photos += mtype + "," + string_format( "%d", quality ) + ",";
-                } else {
-                    const size_t strqpos = eink_strpos + mtype.size() + 2;
-                    const size_t next_comma = photos.find( ',', strqpos );
-                    const int old_quality =
-                        get_quality_from_string( photos.substr( strqpos, next_comma ) );
-
-                    if( quality > old_quality ) {
-                        const std::string quality_s = string_format( "%d", quality );
-                        cata_assert( quality_s.size() == 1 );
-                        photos[strqpos] = quality_s.front();
-                    }
-                }
-
-            }
-            eink.set_var( "EINK_MONSTER_PHOTOS", photos );
+        if( report ) {
+            p.add_msg_if_player( m_good, _( "You have updated your monster collection." ) );
         }
     }
 
@@ -6054,8 +6361,10 @@ static bool einkpc_download_memory_card( Character &p, item &eink, item &mc )
         mc.convert( itype_mobile_memory_card_used );
     }
 
+    breeze_refresh_writable_card_data_flag( mc );
+
     if( !something_downloaded ) {
-        p.add_msg_if_player( m_info, _( "This memory card does not contain any new data." ) );
+        if( report ) p.add_msg_if_player( m_info, _( "This memory card does not contain any new data." ) );
         return false;
     }
 
@@ -6084,7 +6393,7 @@ std::optional<int> iuse::einktabletpc( Character *p, item *it, bool t, const tri
             }
 
             //the more varied music, the better max mood.
-            const int songs = it->get_var( "EIPC_MUSIC", 0 );
+            const int songs = breeze_media_count( *it, "EIPC_MUSIC_LIST", "EIPC_MUSIC" );
             play_music( *p, pos, 8, std::min( 25, songs ) );
         }
         return std::nullopt;
@@ -6119,14 +6428,14 @@ std::optional<int> iuse::einktabletpc( Character *p, item *it, bool t, const tri
 
         amenu.text = _( "Choose menu option:" );
 
-        const int photos = it->get_var( "EIPC_PHOTOS", 0 );
+        const int photos = breeze_media_count( *it, "EIPC_PHOTOS_LIST", "EIPC_PHOTOS" );
         if( photos > 0 ) {
             amenu.addentry( ei_photo, true, 'p', _( "Unsorted photos [%d]" ), photos );
         } else {
             amenu.addentry( ei_photo, false, 'p', _( "No photos on device" ) );
         }
 
-        const int songs = it->get_var( "EIPC_MUSIC", 0 );
+        const int songs = breeze_media_count( *it, "EIPC_MUSIC_LIST", "EIPC_MUSIC" );
         if( songs > 0 ) {
             if( it->has_var( "EIPC_MUSIC_ON" ) ) {
                 amenu.addentry( ei_music, true, 'm', _( "Turn music off" ) );
@@ -6151,14 +6460,10 @@ std::optional<int> iuse::einktabletpc( Character *p, item *it, bool t, const tri
             amenu.addentry( ei_monsters, false, 'y', _( "Collection of monsters is empty" ) );
         }
 
-        amenu.addentry( ei_download, true, 'w', _( "Download data from memory card" ) );
+        amenu.addentry( ei_download, true, 'w', "批量读取存储卡" );
 
         /** @EFFECT_COMPUTER >2 allows decrypting memory cards more easily */
-        if( p->get_skill_level( skill_computer ) > 2 ) {
-            amenu.addentry( ei_decrypt, true, 'd', _( "Decrypt memory card" ) );
-        } else {
-            amenu.addentry( ei_decrypt, false, 'd', _( "Decrypt memory card (low skill)" ) );
-        }
+        amenu.addentry( ei_decrypt, true, 'd', "破解存储卡" );
 
         amenu.query();
 
@@ -6166,14 +6471,12 @@ std::optional<int> iuse::einktabletpc( Character *p, item *it, bool t, const tri
 
         if( ei_photo == choice ) {
 
-            const int photos = it->get_var( "EIPC_PHOTOS", 0 );
-            const int viewed = std::min( photos, static_cast<int>( rng( 10, 30 ) ) );
-            const int count = photos - viewed;
-            if( count == 0 ) {
-                it->erase_var( "EIPC_PHOTOS" );
-            } else {
-                it->set_var( "EIPC_PHOTOS", count );
-            }
+            std::vector<std::string> photo_list = breeze_materialize_media_list(
+                                                       *it, "EIPC_PHOTOS_LIST", "EIPC_PHOTOS", false );
+            const int viewed = std::min( static_cast<int>( photo_list.size() ),
+                                         static_cast<int>( rng( 10, 30 ) ) );
+            photo_list.erase( photo_list.begin(), photo_list.begin() + viewed );
+            breeze_write_string_list( *it, "EIPC_PHOTOS_LIST", photo_list );
 
             p->moves -= to_moves<int>( rng( 3_seconds, 7_seconds ) );
 
@@ -6298,40 +6601,38 @@ std::optional<int> iuse::einktabletpc( Character *p, item *it, bool t, const tri
         auto filter = []( const item & it ) {
             return it.has_flag( flag_MC_MOBILE );
         };
-        const std::string title = _( "Insert memory card:" );
+        const std::string title = "选择要破解的存储卡";
 
         if( ei_download == choice ) {
-
-            p->moves -= to_moves<int>( 2_seconds );
-
-            if( you != nullptr ) {
-                loc = game_menus::inv::titled_filter_menu( filter, *you, title );
-            }
-            if( !loc ) {
-                p->add_msg_if_player( m_info, _( "You don't have that item!" ) );
-                return 1;
-            }
-            item &mc = *loc;
-
-            if( !mc.has_flag( flag_MC_MOBILE ) ) {
-                p->add_msg_if_player( m_info, _( "This is not a compatible memory card." ) );
-                return 1;
+            if( !p->has_item( *it ) || !p->is_avatar() ) {
+                p->add_msg_if_player( m_info, "需要把读取设备带在身上。" );
+                return std::nullopt;
             }
 
-            init_memory_card_with_random_stuff( mc );
+            inventory_filter_preset preset( []( const item_location &loc ) {
+                // Do not offer cards already converted to empty writable cards.
+                return loc->has_flag( flag_MC_TURN_USED ) ||
+                       ( loc->has_flag( flag_MC_USED ) && loc->has_flag( flag_MC_HAS_DATA ) );
+            } );
+            inventory_multiselector selector( *p, preset );
+            selector.set_title( "选择要读取的存储卡" );
+            selector.set_display_stats( true );
+            selector.add_character_items( *p );
+            selector.add_nearby_items( 1 );
 
-            if( mc.has_flag( flag_MC_ENCRYPTED ) ) {
-                p->add_msg_if_player( m_info, _( "This memory card is encrypted." ) );
-                return 1;
+            const std::list<std::pair<item_location, int>> selected = selector.execute();
+            if( selected.empty() ) {
+                return std::nullopt;
             }
-            if( !mc.has_flag( flag_MC_HAS_DATA ) ) {
-                p->add_msg_if_player( m_info, _( "This memory card does not contain any new data." ) );
-                return 1;
+
+            std::vector<item_location> targets;
+            targets.reserve( selected.size() );
+            for( const auto &entry : selected ) {
+                targets.emplace_back( entry.first );
             }
-
-            einkpc_download_memory_card( *p, *it, mc );
-
-            return 1;
+            const item_location reader( *p, it );
+            p->assign_activity( player_activity( data_handling_activity_actor( reader, targets ) ) );
+            return 0;
         }
 
         if( ei_decrypt == choice ) {
@@ -6340,46 +6641,62 @@ std::optional<int> iuse::einktabletpc( Character *p, item *it, bool t, const tri
                 loc = game_menus::inv::titled_filter_menu( filter, *you, title );
             }
             if( !loc ) {
-                p->add_msg_if_player( m_info, _( "You don't have that item!" ) );
                 return 1;
             }
             item &mc = *loc;
-
             if( !mc.has_flag( flag_MC_MOBILE ) ) {
-                p->add_msg_if_player( m_info, _( "This is not a compatible memory card." ) );
+                p->add_msg_if_player( m_info, "这不是兼容的存储卡。" );
                 return 1;
             }
 
-            init_memory_card_with_random_stuff( mc );
-
+            iuse::init_memory_card_with_random_stuff( mc );
             if( !mc.has_flag( flag_MC_ENCRYPTED ) ) {
-                p->add_msg_if_player( m_info, _( "This memory card is not encrypted." ) );
+                p->add_msg_if_player( m_info, "这张存储卡没有加密。" );
                 return 1;
             }
 
-            p->practice( skill_computer, rng( 2, 5 ) );
+            const int difficulty = std::max( 1, static_cast<int>( mc.get_var(
+                                                   "BREEZE_MC_ENCRYPTION_DIFFICULTY", 3.0 ) ) );
+            if( !query_yn( "这张存储卡的加密强度约为%d，建议电脑技能%d。继续尝试破解。",
+                           difficulty, difficulty ) ) {
+                return 1;
+            }
 
-            /** @EFFECT_INT increases chance of safely decrypting memory card */
+            const int skill = std::max( 0, static_cast<int>( std::round(
+                                               p->get_skill_level( skill_computer ) ) ) );
+            const int attack = skill * 7 + p->int_cur * 2 + rng( 0, 24 );
+            const int defense = difficulty * 9 + rng( 0, 24 );
+            p->practice( skill_computer, rng( 3, 7 ) );
 
-            /** @EFFECT_COMPUTER increases chance of safely decrypting memory card */
-            const int success = p->get_skill_level( skill_computer ) * rng( 1,
-                                p->get_skill_level( skill_computer ) ) *
-                                rng( 1, p->int_cur ) - rng( 30, 80 );
-            if( success > 0 ) {
+            if( attack >= defense ) {
+                mc.unset_flag( flag_MC_ENCRYPTED );
                 p->practice( skill_computer, rng( 5, 10 ) );
-                p->add_msg_if_player( m_good, _( "You successfully decrypted content on %s!" ),
-                                      mc.tname() );
-                einkpc_download_memory_card( *p, *it, mc );
-            } else {
-                if( success > -10 || one_in( 5 ) ) {
-                    p->add_msg_if_player( m_neutral, _( "You failed to decrypt the %s." ), mc.tname() );
+                p->add_msg_if_player( m_good, "你成功破解了存储卡。" );
+                if( mc.has_flag( flag_MC_HAS_DATA ) ) {
+                    if( iuse::einkpc_download_memory_card( *p, *it, mc, false ) ) {
+                        p->add_msg_if_player( m_good, "存储卡中的新数据已经读取完成。" );
+                    }
                 } else {
-                    p->add_msg_if_player( m_bad,
-                                          _( "You tripped the firmware protection, and the card deleted its data!" ) );
-                    mc.clear_vars();
-                    mc.unset_flags();
-                    mc.convert( itype_mobile_memory_card_used );
+                    p->add_msg_if_player( m_info, "这张存储卡里没有发现可用的新数据。" );
+                    if( mc.type->memory_card_data &&
+                        mc.type->memory_card_data->on_read_convert_to.is_valid() ) {
+                        const itype_id target = mc.type->memory_card_data->on_read_convert_to;
+                        mc.clear_vars();
+                        mc.unset_flags();
+                        mc.convert( target );
+                    }
                 }
+            } else if( attack + 18 < defense && one_in( 4 ) ) {
+                p->add_msg_if_player( m_bad, "破解失败，存储卡中的数据已经损坏。" );
+                const itype_id target = mc.type->memory_card_data &&
+                                        mc.type->memory_card_data->on_read_convert_to.is_valid() ?
+                                        mc.type->memory_card_data->on_read_convert_to :
+                                        itype_mobile_memory_card_used;
+                mc.clear_vars();
+                mc.unset_flags();
+                mc.convert( target );
+            } else {
+                p->add_msg_if_player( m_neutral, "破解失败，存储卡保持原状。" );
             }
             return 1;
         }
@@ -6388,6 +6705,7 @@ std::optional<int> iuse::einktabletpc( Character *p, item *it, bool t, const tri
 }
 
 struct extended_photo_def {
+    std::string id;
     int quality = 0;
     std::string name;
     std::string description;
@@ -6395,6 +6713,7 @@ struct extended_photo_def {
     extended_photo_def() = default;
 
     void deserialize( const JsonObject &obj ) {
+        id = obj.get_string( "id", "" );
         quality = obj.get_int( "quality" );
         name = obj.get_string( "name" );
         description = obj.get_string( "description" );
@@ -6402,12 +6721,171 @@ struct extended_photo_def {
 
     void serialize( JsonOut &jsout ) const {
         jsout.start_object();
+        if( !id.empty() ) {
+            jsout.member( "id", id );
+        }
         jsout.member( "quality", quality );
         jsout.member( "name", name );
         jsout.member( "description", description );
         jsout.end_object();
     }
 };
+
+static std::string breeze_extended_photo_key( const extended_photo_def &photo )
+{
+    if( !photo.id.empty() ) {
+        return "id:" + photo.id;
+    }
+    return string_format( "%d\n%s\n%s", photo.quality, photo.name, photo.description );
+}
+
+static std::vector<extended_photo_def> breeze_read_extended_photo_list( const item &it,
+        const std::string &var_name )
+{
+    std::vector<extended_photo_def> photos;
+    try {
+        item_read_extended_photos( it, photos, var_name );
+    } catch( const JsonError &e ) {
+        debugmsg( "Error reading photo list %s: %s", var_name, e.c_str() );
+    }
+    return photos;
+}
+
+static int breeze_extended_photo_count( const item &it, const std::string &var_name )
+{
+    const std::string count_var = var_name + "_count";
+    if( it.has_var( count_var ) ) {
+        return std::max( 0, static_cast<int>( it.get_var( count_var, 0 ) ) );
+    }
+
+    const std::vector<extended_photo_def> photos = breeze_read_extended_photo_list( it, var_name );
+    const_cast<item &>( it ).set_var( count_var, static_cast<int>( photos.size() ) );
+    return static_cast<int>( photos.size() );
+}
+
+static bool breeze_extended_photos_would_change( const item &from, const std::string &from_var,
+        const item &to, const std::string &to_var )
+{
+    if( breeze_extended_photo_count( from, from_var ) >
+        breeze_extended_photo_count( to, to_var ) ) {
+        return true;
+    }
+    const std::vector<extended_photo_def> source = breeze_read_extended_photo_list( from, from_var );
+    if( source.empty() ) {
+        return false;
+    }
+
+    const std::vector<extended_photo_def> target = breeze_read_extended_photo_list( to, to_var );
+    std::unordered_set<std::string> target_ids;
+    for( const extended_photo_def &photo : target ) {
+        target_ids.emplace( breeze_extended_photo_key( photo ) );
+    }
+    return std::any_of( source.begin(), source.end(), [&]( const extended_photo_def &photo ) {
+        return !target_ids.count( breeze_extended_photo_key( photo ) );
+    } );
+}
+
+static bool breeze_merge_extended_photos( item &from, const std::string &from_var,
+        item &to, const std::string &to_var )
+{
+    const std::vector<extended_photo_def> source = breeze_read_extended_photo_list( from, from_var );
+    if( source.empty() ) {
+        return false;
+    }
+
+    std::vector<extended_photo_def> target = breeze_read_extended_photo_list( to, to_var );
+    std::unordered_set<std::string> target_ids;
+    for( const extended_photo_def &photo : target ) {
+        target_ids.emplace( breeze_extended_photo_key( photo ) );
+    }
+
+    int added = 0;
+    for( const extended_photo_def &photo : source ) {
+        if( target_ids.emplace( breeze_extended_photo_key( photo ) ).second ) {
+            target.push_back( photo );
+            added++;
+        }
+    }
+    if( added > 0 ) {
+        item_write_extended_photos( to, target, to_var );
+    }
+    return added > 0;
+}
+
+static std::map<std::string, int> breeze_monster_photo_map( const item &it,
+        const std::string &var_name )
+{
+    std::map<std::string, int> photos;
+    std::istringstream stream( it.get_var( var_name ) );
+    std::string type;
+    while( getline( stream, type, ',' ) ) {
+        if( type.empty() ) {
+            continue;
+        }
+        std::string quality_string;
+        if( !getline( stream, quality_string, ',' ) ) {
+            break;
+        }
+        const int quality = get_quality_from_string( quality_string );
+        auto [iter, inserted] = photos.emplace( type, quality );
+        if( !inserted ) {
+            iter->second = std::max( iter->second, quality );
+        }
+    }
+    return photos;
+}
+
+static std::string breeze_encode_monster_photo_map( const std::map<std::string, int> &photos )
+{
+    if( photos.empty() ) {
+        return std::string();
+    }
+
+    std::string encoded = ",";
+    for( const auto &[type, quality] : photos ) {
+        encoded += type + "," + std::to_string( quality ) + ",";
+    }
+    return encoded;
+}
+
+static bool breeze_monster_photos_would_change( const item &from, const std::string &from_var,
+        const item &to, const std::string &to_var )
+{
+    const std::map<std::string, int> source = breeze_monster_photo_map( from, from_var );
+    const std::map<std::string, int> target = breeze_monster_photo_map( to, to_var );
+    for( const auto &[type, quality] : source ) {
+        const auto iter = target.find( type );
+        if( iter == target.end() || quality > iter->second ) {
+            return true;
+        }
+    }
+    return false;
+}
+
+static bool breeze_merge_monster_photos( const item &from, const std::string &from_var,
+        item &to, const std::string &to_var )
+{
+    const std::map<std::string, int> source = breeze_monster_photo_map( from, from_var );
+    if( source.empty() ) {
+        return false;
+    }
+
+    std::map<std::string, int> merged = breeze_monster_photo_map( to, to_var );
+    bool changed = false;
+    for( const auto &[type, quality] : source ) {
+        auto [iter, inserted] = merged.emplace( type, quality );
+        if( inserted ) {
+            changed = true;
+        } else if( quality > iter->second ) {
+            iter->second = quality;
+            changed = true;
+        }
+    }
+    if( changed ) {
+        to.set_var( to_var, breeze_encode_monster_photo_map( merged ) );
+    }
+    return changed;
+}
 
 static std::string colorized_trap_name_at( const tripoint &point )
 {
@@ -7125,7 +7603,7 @@ static void item_save_monsters( Character &p, item &it, const std::vector<monste
 }
 
 // throws exception
-static bool item_read_extended_photos( item &it, std::vector<extended_photo_def> &extended_photos,
+static bool item_read_extended_photos( const item &it, std::vector<extended_photo_def> &extended_photos,
                                        const std::string &var_name, bool insert_at_begin )
 {
     bool result = false;
@@ -7150,10 +7628,18 @@ static void item_write_extended_photos( item &it,
                                         const std::vector<extended_photo_def> &extended_photos,
                                         const std::string &var_name )
 {
+    std::vector<extended_photo_def> normalized = extended_photos;
+    for( extended_photo_def &photo : normalized ) {
+        if( photo.id.empty() ) {
+            photo.id = breeze_new_media_id( "photo" );
+        }
+    }
+
     std::ostringstream extended_photos_data;
     JsonOut json( extended_photos_data );
-    json.write( extended_photos );
+    json.write( normalized );
     it.set_var( var_name, extended_photos_data.str() );
+    it.set_var( var_name + "_count", static_cast<int>( normalized.size() ) );
 }
 
 static bool show_photo_selection( Character &p, item &it, const std::string &var_name )
@@ -7478,7 +7964,8 @@ std::optional<int> iuse::camera( Character *p, item *it, bool t, const tripoint 
             return 1;
         }
 
-        init_memory_card_with_random_stuff( mc );
+        iuse::init_memory_card_with_random_stuff( mc );
+        breeze_refresh_writable_card_data_flag( mc );
 
         if( mc.has_flag( flag_MC_ENCRYPTED ) ) {
             if( !query_yn( _( "This memory card is encrypted.  Format and clear data?" ) ) ) {
@@ -7491,13 +7978,16 @@ std::optional<int> iuse::camera( Character *p, item *it, bool t, const tripoint 
             }
         }
 
-        mc.convert( itype_mobile_memory_card );
+        // Confirmed clearing must also remove old ebook and migration-pocket contents.
+        mc.clear_items();
         mc.clear_vars();
         mc.unset_flags();
+        mc.convert( itype_mobile_memory_card_used );
         mc.set_flag( flag_MC_HAS_DATA );
 
         mc.set_var( "MC_MONSTER_PHOTOS", it->get_var( "CAMERA_MONSTER_PHOTOS" ) );
-        mc.set_var( "MC_EXTENDED_PHOTOS", it->get_var( "CAMERA_EXTENDED_PHOTOS" ) );
+        breeze_merge_extended_photos( *it, "CAMERA_EXTENDED_PHOTOS",
+                                      mc, "MC_EXTENDED_PHOTOS" );
         p->add_msg_if_player( m_info,
                               _( "You upload your photos and monster collection to the memory card." ) );
 
@@ -9287,19 +9777,16 @@ std::optional<int> iuse::magic_8_ball( Character *p, item *it, bool, const tripo
     return 0;
 }
 
-std::optional<int> iuse::electricstorage( Character *p, item *it, bool t, const tripoint & )
+std::optional<int> iuse::electricstorage( Character *p, item *it, bool t,
+        const tripoint & )
 {
-    if( p->is_npc() ) {
+    if( p->is_npc() || t ) {
         return std::nullopt;
     }
 
-    // From item processing
-    if( t ) {
-        return std::nullopt;
-    }
-
+    // Restore safeguards present in the 2023 memory-card refactor.
     if( p->is_underwater() ) {
-        p->add_msg_if_player( m_info, _( "Unfortunately your device is not waterproof." ) );
+        p->add_msg_if_player( m_info, "这个设备不防水。" );
         return std::nullopt;
     }
 
@@ -9308,105 +9795,74 @@ std::optional<int> iuse::electricstorage( Character *p, item *it, bool t, const 
         return std::nullopt;
     }
 
-    if( p->has_flag( json_flag_HYPEROPIC ) && !p->worn_with_flag( flag_FIX_FARSIGHT ) &&
-        !p->has_effect( effect_contacts ) && !p->has_flag( json_flag_ENHANCED_VISION ) ) {
-        p->add_msg_if_player( m_info,
-                              _( "You'll need to put on reading glasses before you can see the screen." ) );
+    if( p->has_flag( json_flag_HYPEROPIC ) &&
+        !p->worn_with_flag( flag_FIX_FARSIGHT ) &&
+        !p->has_effect( effect_contacts ) &&
+        !p->has_flag( json_flag_ENHANCED_VISION ) ) {
+        p->add_msg_if_player( m_info, "你需要戴上阅读眼镜才能看清屏幕。" );
         return std::nullopt;
     }
 
-    auto filter = []( const item & itm ) {
+    auto filter = [it]( const item &itm ) {
         return !itm.is_broken() &&
+               &itm != it &&
                itm.has_flag( flag_MC_USED ) &&
                itm.has_pocket_type( item_pocket::pocket_type::EBOOK );
     };
 
     item_location storage_card = game_menus::inv::titled_filter_menu(
-                                     filter, *p->as_avatar(), _( "Use what storage device?" ),
-                                     -1, _( "You don't have any empty book storage devices." ) );
+                                     filter, *p->as_avatar(), "使用什么存储设备。",
+                                     -1, "你没有可写的存储设备。" );
 
     if( !storage_card ) {
         return std::nullopt;
     }
 
-    // list of books of from_it that are not in to_it
-    auto book_difference = []( const item & from_it, const item & to_it ) -> std::vector<const item *> {
-        std::set<itype_id> existing_ebooks;
-        for( const item *ebook : to_it.ebooks() )
-        {
-            if( !ebook->is_book() ) {
-                debugmsg( "ebook type pocket contains non-book item %s", ebook->typeId().str() );
-                continue;
-            }
+    // Migrate cards written by R1.  They can contain EIPC/EINK data without
+    // MC_HAS_DATA, which caused their item label to remain "empty".
+    breeze_refresh_writable_card_data_flag( *storage_card );
 
-            existing_ebooks.insert( ebook->typeId() );
-        }
-
-        std::vector<const item *> ebooks;
-        for( const item *ebook : from_it.ebooks() )
-        {
-            if( !ebook->is_book() ) {
-                debugmsg( "ebook type pocket contains non-book item %s", ebook->typeId().str() );
-                continue;
-            }
-
-            if( existing_ebooks.count( ebook->typeId() ) ) {
-                continue;
-            }
-
-            ebooks.emplace_back( ebook );
-        }
-        return ebooks;
-    };
-
-    std::vector<const item *> to_storage = book_difference( *it, *storage_card );
-    std::vector<const item *> to_device = book_difference( *storage_card, *it );
+    const bool to_device =
+        breeze_storage_data_would_change( *storage_card, *it );
+    const bool to_storage =
+        breeze_storage_data_would_change( *it, *storage_card );
 
     uilist smenu;
-    smenu.text = _( "What to do with your storage devices:" );
-
-    smenu.addentry( 1, !to_device.empty(), 't', _( "Copy to device from the card" ) );
-    smenu.addentry( 2, !to_storage.empty(), 'f', _( "Copy from device to the card" ) );
-    smenu.addentry( 3, !storage_card->ebooks().empty(), 'v', _( "View books in the card" ) );
+    smenu.text = "对存储设备做什么。";
+    smenu.addentry( 1, to_device, 't', "从卡复制到设备" );
+    smenu.addentry( 2, to_storage, 'f', "从设备复制到卡" );
+    smenu.addentry( 3, !storage_card->ebooks().empty(), 'v', "查看卡中书籍" );
     smenu.query();
 
-    // were any books moved to or from the device
-    int books_moved = 0;
-
-    auto move_books = [&books_moved]( const std::vector<const item *> &fromset, item & toit ) -> void {
-        books_moved = fromset.size();
-        for( const item *ebook : fromset )
-        {
-            toit.put_in( *ebook, item_pocket::pocket_type::EBOOK );
-        }
-    };
-
+    bool changed = false;
     if( smenu.ret == 1 ) {
-        // to device
-        move_books( to_device, *it );
+        changed = breeze_copy_persistent_storage_data( *storage_card, *it );
+        if( breeze_memory_card_has_random_data( *storage_card ) ) {
+            changed = iuse::einkpc_download_memory_card( *p, *it, *storage_card, false ) || changed;
+        }
     } else if( smenu.ret == 2 ) {
-        // from device
-        move_books( to_storage, *storage_card );
+        changed = breeze_copy_persistent_storage_data( *it, *storage_card );
+        breeze_refresh_writable_card_data_flag( *storage_card );
     } else if( smenu.ret == 3 ) {
-        game_menus::inv::ebookread( *p, storage_card );
+        item_location book = game_menus::inv::ebookread( *p, storage_card );
+        if( book ) {
+            p->as_avatar()->read( book, storage_card );
+        }
         return std::nullopt;
     } else {
         return std::nullopt;
     }
 
-    if( books_moved > 0 ) {
-        p->mod_moves( -to_moves<int>( 2_seconds ) );
-        if( smenu.ret == 1 ) {
-            p->add_msg_if_player( m_info,
-                                  n_gettext( "Copied one book to the device.",
-                                             "Copied %1$s books to the device.", books_moved ),
-                                  books_moved );
-        } else if( smenu.ret == 2 ) {
-            p->add_msg_if_player( m_info,
-                                  n_gettext( "Copied one book to the %2$s.",
-                                             "Copied %1$s books to the %2$s.", books_moved ),
-                                  books_moved, storage_card->tname() );
-        }
+    if( !changed ) {
+        p->add_msg_if_player( m_info, "没有需要复制的新数据。" );
+        return std::nullopt;
+    }
+
+    p->mod_moves( -to_moves<int>( 2_seconds ) );
+    if( smenu.ret == 1 ) {
+        p->add_msg_if_player( m_info, "存储卡中的新数据已复制到设备。" );
+    } else {
+        p->add_msg_if_player( m_info, "设备中的新数据已复制到存储卡。" );
     }
 
     return std::nullopt;

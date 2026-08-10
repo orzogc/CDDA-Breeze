@@ -1401,8 +1401,16 @@ bool item::stacks_with( const item &rhs, bool check_components, bool combine_liq
         return false;
     }
     // Guns that differ only by dirt/shot_counter can still stack,
-    // but other item_vars such as label/note will prevent stacking
-    const std::vector<std::string> ignore_keys = { "dirt", "shot_counter", "spawn_location_omt" };
+    // but other item_vars such as label/note will prevent stacking.
+    // Media counts are derived caches and are not part of item identity.
+    const std::vector<std::string> ignore_keys = {
+        "dirt", "shot_counter", "spawn_location_omt", "BREEZE_MEDIA_NAMESPACE",
+        "CAMERA_EXTENDED_PHOTOS_count", "CAMERA_MONSTER_PHOTOS_count",
+        "CAMERA_NPC_PHOTOS_count", "EIPC_EXTENDED_PHOTOS_count",
+        "MC_EXTENDED_PHOTOS_count", "EIPC_PHOTOS_LIST_count",
+        "EIPC_MUSIC_LIST_count", "MC_PHOTOS_LIST_count",
+        "MC_MUSIC_LIST_count"
+    };
     if( map_without_keys( item_vars, ignore_keys ) != map_without_keys( rhs.item_vars, ignore_keys ) ) {
         return false;
     }

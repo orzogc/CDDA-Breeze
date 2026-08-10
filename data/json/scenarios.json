@@ -279,6 +279,7 @@
   {
     "type": "scenario",
     "id": "medieval",
+    "reveal_locale": false,
     "name": "Challenge - Medieval Peasant",
     "points": -8,
     "description": "Som nigromancie hath brought yow hidder!  Ye have only the hoose on youre legges and the knyf at youre syde and youre prayeres to Marie moder of God.",
@@ -292,6 +293,7 @@
   {
     "type": "scenario",
     "id": "lab_chal",
+    "reveal_locale": false,
     "name": "Challenge - Lab Patient",
     "points": -8,
     "description": "The scientists stopped their experiments on you abruptly, leaving you behind while they evacuated before lockdown.  Find a way to escape or starve to death.",
@@ -474,6 +476,7 @@
   {
     "type": "scenario",
     "id": "alcatraz",
+    "reveal_locale": false,
     "name": "Challenge - Island Prison",
     "points": -6,
     "description": "You were in a high-security prison right before the Cataclysm.  Unfortunately, you're still in it, so you need to figure out how to escape.  It's located on a remote island to boot; you'll eventually need to escape that also.",
@@ -495,6 +498,7 @@
   {
     "type": "scenario",
     "id": "migo_prisoner",
+    "reveal_locale": false,
     "name": "Challenge - Mi-Go Camp",
     "points": -8,
     "description": "You find yourself in the most alien place you've ever seen.  The hot humid air and the organic aspect of the structure makes you feel like you're trapped inside a giant creature.  Whatever it is, you need to get out of here before They find you.",
@@ -737,6 +741,7 @@
   {
     "type": "scenario",
     "id": "portal_dependent",
+    "reveal_locale": false,
     "name": "Challenge - Portal Dependent",
     "points": -8,
     "description": "You were caught in a huge and unstable portal storm, and were utterly unprotected from the full force of its effects.  You're on the tail end of the storm now, and while you've survived, you feel… different.",
@@ -790,6 +795,7 @@
   {
     "type": "scenario",
     "id": "aircraft_carrier_start",
+    "reveal_locale": false,
     "name": "CVN Sailor",
     "points": 4,
     "description": "For some reason your mission off the coast of North Korea was ended in the middle of a lake, in an unknown location.  You have no idea what's happened, but now you have more important things to do.",

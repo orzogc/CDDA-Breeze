@@ -1592,6 +1592,8 @@ static activity_reason_info can_do_activity_there( const activity_id &act, Chara
     } else if( act == ACT_MULTIPLE_FARM ) {
         zones = mgr.get_zones( zone_type_FARM_PLOT, here.getglobal( src_loc ), _fac_id( you ) );
         for( const zone_data &zone : zones ) {
+            const plot_options &options = dynamic_cast<const plot_options &>( zone.get_options() );
+            const itype_id seed = options.get_seed();
             if( here.has_flag_furn( ter_furn_flag::TFLAG_GROWTH_HARVEST, src_loc ) ) {
                 // simple work, pulling up plants, nothing else required.
                 return activity_reason_info::ok( do_activity_reason::NEEDS_HARVESTING );
@@ -1603,15 +1605,15 @@ static activity_reason_info can_do_activity_there( const activity_id &act, Chara
                     // we need a shovel/hoe
                     return activity_reason_info::fail( do_activity_reason::NEEDS_TILLING );
                 }
-            } else if( here.has_flag_ter_or_furn( ter_furn_flag::TFLAG_PLANTABLE, src_loc ) &&
+            } else if( here.has_flag_ter_or_furn(
+                           seed.is_empty() ? ter_furn_flag::TFLAG_PLANTABLE :
+                           seed->seed->required_terrain_flag, src_loc ) &&
                        // TODO: fix point types
                        warm_enough_to_plant( src_loc.raw() ) ) {
                 if( here.has_items( src_loc ) ) {
                     return activity_reason_info::fail( do_activity_reason::BLOCKING_TILE );
                 } else {
                     // do we have the required seed on our person?
-                    const plot_options &options = dynamic_cast<const plot_options &>( zone.get_options() );
-                    const itype_id seed = options.get_seed();
                     // If its a farm zone with no specified seed, and we've checked for tilling and harvesting.
                     // then it means no further work can be done here
                     if( seed.is_empty() ) {
@@ -1834,7 +1836,7 @@ static std::vector<std::tuple<tripoint_bub_ms, itype_id, int>> requirements_map(
     map &here = get_map();
     tripoint_bub_ms src_loc = here.bub_from_abs( you.backlog.front().placement );
     for( const tripoint_bub_ms &elem : here.points_in_radius( src_loc,
-            PICKUP_RANGE - 1 ) ) {
+            PICKUP_RANGE - 1, PICKUP_RANGE - 1 ) ) {
         already_there_spots.push_back( elem );
         combined_spots.push_back( elem );
     }
@@ -3186,7 +3188,8 @@ static requirement_check_result generic_multi_activity_check_requirement(
             combined_spots.emplace_back( elem );
         }
         const int nearby_radius = act_id == ACT_MULTIPLE_CRAFT ? PICKUP_RANGE : PICKUP_RANGE - 1;
-        for( const tripoint_bub_ms &elem : here.points_in_radius( src_loc, nearby_radius ) ) {
+        for( const tripoint_bub_ms &elem : here.points_in_radius( src_loc, nearby_radius,
+                nearby_radius ) ) {
             combined_spots.push_back( elem );
         }
         add_basecamp_storage_to_loot_zone_list( mgr, src_loc, you, loot_zone_spots, combined_spots );
@@ -3315,7 +3318,7 @@ static requirement_check_result generic_multi_activity_check_requirement(
                     }
                     std::vector<tripoint_bub_ms> candidates;
                     for( const tripoint_bub_ms &point_elem : here.points_in_radius( src_loc,
-                            nearby_radius ) ) {
+                            nearby_radius, nearby_radius ) ) {
                         // we don't want to place the components where they could interfere with our ( or someone else's ) construction spots
                         if( !you.sees( point_elem ) || ( std::find( local_src_set.begin(), local_src_set.end(),
                                                          point_elem ) != local_src_set.end() ) || !here.can_put_items_ter_furn( point_elem ) ) {
@@ -3374,12 +3377,15 @@ static bool generic_multi_activity_do(
         you.backlog.push_front( player_activity( act_id ) );
         you.activity.placement = src;
         return false;
-    } else if( reason == do_activity_reason::NEEDS_PLANTING &&
-               here.has_flag_ter_or_furn( ter_furn_flag::TFLAG_PLANTABLE, src_loc ) ) {
+    } else if( reason == do_activity_reason::NEEDS_PLANTING ) {
         std::vector<zone_data> zones = mgr.get_zones( zone_type_FARM_PLOT, src, _fac_id( you ) );
         for( const zone_data &zone : zones ) {
             const itype_id seed =
                 dynamic_cast<const plot_options &>( zone.get_options() ).get_seed();
+            if( seed.is_empty() ||
+                !here.has_flag_ter_or_furn( seed->seed->required_terrain_flag, src_loc ) ) {
+                continue;
+            }
             std::vector<item *> seed_inv = you.items_with( [seed]( const item & itm ) {
                 return itm.typeId() == itype_id( seed );
             } );
