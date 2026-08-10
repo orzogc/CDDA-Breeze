@@ -6337,7 +6337,8 @@ std::optional<int> iuse::einktabletpc( Character *p, item *it, bool t, const tri
                 return 1;
             }
 
-            const int difficulty = std::max( 1, mc.get_var( "BREEZE_MC_ENCRYPTION_DIFFICULTY", 3 ) );
+            const int difficulty = std::max( 1, static_cast<int>( mc.get_var(
+                                                   "BREEZE_MC_ENCRYPTION_DIFFICULTY", 3.0 ) ) );
             if( !query_yn( "这张存储卡的加密强度约为%d，建议电脑技能%d。继续尝试破解。",
                            difficulty, difficulty ) ) {
                 return 1;
