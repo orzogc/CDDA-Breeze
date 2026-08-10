@@ -2688,7 +2688,7 @@ void options_manager::add_options_world_default()
        );
 
     add( "MOVING_PREAIM", "world_default", to_translation( "移动射击预瞄" ),
-         to_translation( "开启后，玩家和NPC只有在实际看见敌对目标时才会积累预瞄，移动和等待都可用于预瞄，不同移动姿态具有不同速度和精度上限，目标离开视野后已有预瞄会逐渐衰减。" ),
+         to_translation( "开启后，玩家和NPC只有在实际看见敌对目标时才会积累预瞄，移动和等待都可用于预瞄，不同移动姿态具有不同速度和精度上限，目标离开视野后已有预瞄会逐渐衰减，射击后后坐力会降低已有预瞄稳定度但不会清空目标跟踪。" ),
          true
        );
 
