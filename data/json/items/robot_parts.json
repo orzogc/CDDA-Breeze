@@ -15,6 +15,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "targeting_module",
     "name": { "str": "targeting module" },
     "description": "This module integrates visual and proprioceptive information from peripheric sensors and outputs information necessary for accurate aiming.",
@@ -22,6 +23,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "identification_module",
     "name": { "str": "identification module" },
     "description": "This module continuously runs image recognition algorithms to identify friends from foe.",
@@ -29,6 +31,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "pathfinding_module",
     "name": { "str": "pathfinding module" },
     "description": "This module uses a combination of vector integration and egocentric mapping to find the best path available.",
@@ -36,6 +39,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "memory_module",
     "name": { "str": "memory banks module" },
     "description": "Allows for storage and recovery of information.",
@@ -43,6 +47,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "sensor_module",
     "name": { "str": "sensor array" },
     "description": "A wide range of sensors meant to give the ability to perceive the surrounding world.",
@@ -57,6 +62,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "ai_module",
     "name": { "str": "AI core" },
     "description": "This module is responsible for decision-making, it basically runs the AI of the robot.",
@@ -79,6 +85,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "gun_module",
     "name": { "str": "gun operating system" },
     "description": "This system can operate most conventional weapons.",
@@ -128,6 +135,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "quad_rotors",
     "name": { "str": "set of rotors", "str_pl": "sets of rotors" },
     "description": "A set of rotors able to lift a small drone.",

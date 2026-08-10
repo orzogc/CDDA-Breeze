@@ -177,6 +177,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "peephole",
     "symbol": ".",
     "color": "yellow",
@@ -192,6 +193,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "screen_mesh",
     "symbol": "#",
     "color": "brown",

@@ -334,6 +334,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "chitin_piece",
     "category": "spare_parts",
     "symbol": ",",
@@ -353,6 +354,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "endochitin",
     "category": "spare_parts",
     "symbol": ",",
@@ -832,6 +834,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "wire",
     "symbol": ";",
     "color": "light_gray",
@@ -1012,6 +1015,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "spring",
     "symbol": ",",
     "color": "light_gray",
@@ -1723,6 +1727,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "processor",
     "symbol": ",",
     "color": "dark_gray",
@@ -1738,6 +1743,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "RAM",
     "symbol": ",",
     "color": "dark_gray",
@@ -1754,6 +1760,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "power_supply",
     "symbol": ",",
     "color": "light_gray",
@@ -1770,6 +1777,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "amplifier",
     "symbol": ",",
     "color": "light_gray",
@@ -1785,6 +1793,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "transponder",
     "symbol": ",",
     "color": "light_gray",
@@ -1800,6 +1809,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "receiver",
     "symbol": ",",
     "color": "light_gray",
@@ -1862,6 +1872,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "lens_small",
     "symbol": ".",
     "color": "light_cyan",
@@ -1959,6 +1970,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "antenna",
     "symbol": ",",
     "color": "light_gray",
@@ -1974,6 +1986,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "motor_micro",
     "symbol": ",",
     "color": "light_gray",
@@ -1988,6 +2001,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "circuit",
     "symbol": ",",
     "color": "green",
@@ -2002,6 +2016,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "e_scrap",
     "symbol": ",",
     "color": "green",
@@ -2102,6 +2117,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "clockworks",
     "category": "spare_parts",
     "symbol": ";",
@@ -2461,6 +2477,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "clay_lump",
     "symbol": ",",
     "color": "brown",
@@ -2476,6 +2493,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "brick",
     "symbol": ",",
     "color": "brown",
@@ -2630,6 +2648,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "diamond",
     "symbol": "*",
     "color": "white",
@@ -2644,6 +2663,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "garnet",
     "symbol": "*",
     "color": "red",
@@ -2658,6 +2678,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "amethyst",
     "copy-from": "garnet",
     "color": "blue",
@@ -2666,6 +2687,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "aquamarine",
     "copy-from": "garnet",
     "color": "cyan",
@@ -2674,6 +2696,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "emerald",
     "copy-from": "garnet",
     "color": "green",
@@ -2682,6 +2705,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "alexandrite",
     "copy-from": "garnet",
     "color": "green",
@@ -2690,6 +2714,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "malachite",
     "copy-from": "garnet",
     "color": "green",
@@ -2698,6 +2723,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "pearl",
     "copy-from": "garnet",
     "color": "white",
@@ -2706,6 +2732,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "ruby",
     "copy-from": "garnet",
     "color": "red",
@@ -2714,6 +2741,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "peridot",
     "copy-from": "garnet",
     "color": "green",
@@ -2722,6 +2750,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "sapphire",
     "copy-from": "garnet",
     "color": "blue",
@@ -2730,6 +2759,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "opal",
     "copy-from": "garnet",
     "color": "white",
@@ -2738,6 +2768,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "tourmaline",
     "copy-from": "garnet",
     "color": "light_red",
@@ -2746,6 +2777,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "citrine",
     "copy-from": "garnet",
     "color": "yellow",
@@ -2754,6 +2786,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "blue_topaz",
     "copy-from": "garnet",
     "color": "light_blue",
@@ -2762,6 +2795,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "onyx",
     "copy-from": "garnet",
     "color": "dark_gray",
@@ -3317,6 +3351,7 @@
   },
   {
     "type": "GENERIC",
+    "stackable": true,
     "id": "neoprene",
     "symbol": ",",
     "color": "dark_gray",

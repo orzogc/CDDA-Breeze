@@ -168,6 +168,7 @@
   {
     "id": "rubber_tire_chunk",
     "type": "GENERIC",
+    "stackable": true,
     "category": "spare_parts",
     "name": { "str": "thick rubber chunk" },
     "description": "This is a chunk of thick, semi-rigid rubber, similar to what tires are made from.",
@@ -272,6 +273,7 @@
   {
     "id": "radio_car_wheel",
     "type": "GENERIC",
+    "stackable": true,
     "category": "spare_parts",
     "name": { "str": "RC car wheel set" },
     "description": "Small set of wheels for a radio controlled car.  Could be improvised with caster wheels if given rubber treads for grip.",
