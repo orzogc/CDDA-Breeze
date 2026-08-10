@@ -3884,7 +3884,7 @@
     "name": { "male": "Skater Boy", "female": "Skater Girl" },
     "description": "You love to skate!  You've probably spent more time on a pair of blades than off.  Things have gotten pretty bad, but at least the grown-ups aren't telling you where you can't roll.",
     "points": 1,
-    "skills": [ { "level": 1, "name": "dodge" } ],
+    "skills": [ { "level": 1, "name": "dodge" }, { "level": 2, "name": "swimming" } ],
     "traits": [ "PROF_SKATER" ],
     "items": {
       "both": {
@@ -3901,6 +3901,27 @@
           "sports_drink"
         ],
         "entries": [ { "group": "charged_smart_phone" }, { "item": "tshirt", "variant": "generic_tshirt" } ]
+      },
+      "male": [ "briefs" ],
+      "female": [ "boy_shorts" ]
+    }
+  },
+  {
+    "type": "profession",
+    "id": "skaterkid_board",
+    "name": { "male": "滑板少年", "female": "滑板少女" },
+    "description": "你一直很喜欢滑板，站在板上的时间可能比走路还多。现在大人们已经顾不上告诉你哪里不能滑了。",
+    "points": 1,
+    "skills": [ { "level": 1, "name": "dodge" }, { "level": 2, "name": "driving" }, { "level": 2, "name": "swimming" } ],
+    "traits": [ "PROF_SKATER" ],
+    "items": {
+      "both": {
+        "items": [ "hoodie", "jeans", "socks", "elbow_pads", "knee_pads", "gloves_fingerless", "helmet_skid", "sneakers", "wristwatch", "sports_drink" ],
+        "entries": [
+          { "item": "folded_skateboard_generic", "custom-flags": [ "auto_wield" ] },
+          { "group": "charged_smart_phone" },
+          { "item": "tshirt", "variant": "generic_tshirt" }
+        ]
       },
       "male": [ "briefs" ],
       "female": [ "boy_shorts" ]

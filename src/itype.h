@@ -21,6 +21,7 @@
 #include "game_constants.h"
 #include "item_pocket.h"
 #include "iuse.h" // use_function
+#include "mapdata.h"
 #include <optional>
 #include "proficiency.h"
 #include "relic.h"
@@ -1034,6 +1035,8 @@ struct islot_seed {
      */
     std::vector<itype_id> byproducts;
 
+    ter_furn_flag required_terrain_flag = ter_furn_flag::TFLAG_PLANTABLE;
+
     islot_seed() = default;
 };
 
@@ -1074,6 +1077,28 @@ class islot_milling
 
         void load( const JsonObject &jo );
         void deserialize( const JsonObject &jo );
+};
+
+struct memory_card_info {
+    float data_chance = 1.0f;
+    itype_id on_read_convert_to;
+
+    float encryption_chance = 0.0f;
+    int encryption_difficulty_min = 0;
+    int encryption_difficulty_max = 0;
+
+    float photos_chance = 0.0f;
+    int photos_amount = 0;
+
+    float songs_chance = 0.0f;
+    int songs_amount = 0;
+
+    float recipes_chance = 0.0f;
+    int recipes_amount = 0;
+    int recipes_level_min = 0;
+    int recipes_level_max = 10;
+    std::set<std::string> recipes_categories;
+    bool secret_recipes = false;
 };
 
 struct itype {
@@ -1232,6 +1257,7 @@ struct itype {
         FlagsSetType item_tags;
 
     public:
+        cata::value_ptr<memory_card_info> memory_card_data;
         // How should the item explode
         explosion_data explosion;
 

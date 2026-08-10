@@ -2952,90 +2952,64 @@ void map::drop_items( const tripoint &p )
     if( !has_items( p ) ) {
         return;
     }
-
     map_stack items = i_at( p );
-    // TODO: Make items check the volume tile below can accept
-    // rather than disappearing if it would be overloaded
-
     tripoint below( p );
     int height_fallen = 0;
-
     while( !has_floor( below ) ) {
         below.z--;
         height_fallen++;
     }
-
     if( below == p ) {
         return;
     }
-
     float damage_total = 0.0f;
-    for (item& i : items) {
-        units::mass wt_dropped = i.weight();
-        float item_density = i.get_base_material().density();
-        float damage = 5 * to_kilogram(wt_dropped) * height_fallen * item_density;
+    for( item &i : items ) {
+        const float mass_kg = std::max( 0.0f, static_cast<float>( to_kilogram( i.weight() ) ) );
+        const float item_density = std::max( 0.0f, i.get_base_material().density() );
+        const float density_factor = std::clamp(
+                                         0.75f + 0.25f * std::sqrt( item_density ), 0.75f, 1.5f );
+        const float height_factor = std::sqrt( static_cast<float>( std::max( 1, height_fallen ) ) );
+        const float damage = std::max( 1.0f,
+                                       7.0f * std::sqrt( mass_kg ) * height_factor * density_factor );
         damage_total += damage;
-
-        // 如果掉落的地点有运输器，那么物品会直接掉落到运输器上，没有，直接掉落到地面上
-        const optional_vpart_position &vp = veh_at(below);
-        if (vp && vp->vehicle().part(0).info().has_flag("CONVEYOR_BELT")) {
-            vp->vehicle().add_item_new(0,i);
+        const optional_vpart_position &vp = veh_at( below );
+        if( vp && vp->vehicle().part( 0 ).info().has_flag( "CONVEYOR_BELT" ) ) {
+            vp->vehicle().add_item_new( 0, i );
+        } else {
+            add_item_or_charges( below, i );
         }
-        else {
-            add_item_or_charges(below, i);       
-        }
-
-
-
-        // Bash creature standing below
-        Creature* creature_below = get_creature_tracker().creature_at(below);
-        if (creature_below) {
-            // creature's dodge modifier
-            float dodge_mod = creature_below->dodge_roll();
-            // if item dropped by character their throwing skill modifier -1 if not dropped by a character
-            float throwing_mod = i.dropped_char_stats.throwing == -1.0f ? 0.0f : 5 *
-                i.dropped_char_stats.throwing;
-
-            // values calibrated so that %hit chance starts from 60% going up and down according to the two modifiers
-            float hit_mod = (throwing_mod + 18) / (dodge_mod + 15);
-
-            int creature_hit_chance = rng(0, 100);
-            creature_hit_chance /= hit_mod * occupied_tile_fraction(creature_below->get_size());
-
-            if (creature_hit_chance < 15) {
-                add_msg(_("落下的 %s 击中了 %s 的头部！"), i.tname(), creature_below->get_name());
-                creature_below->deal_damage(nullptr, bodypart_id("head"), damage_instance(damage_type::BASH,
-                    damage));
-            }
-            else if (creature_hit_chance < 30) {
-                add_msg(_("落下的 %s 击中了 %s 的躯干！"), i.tname(), creature_below->get_name());
-                creature_below->deal_damage(nullptr, bodypart_id("torso"), damage_instance(damage_type::BASH,
-                    damage));
-            }
-            else if (creature_hit_chance < 65) {
-                add_msg(_("落下的 %s 击中了 %s 的左臂！"), i.tname(), creature_below->get_name());
-                creature_below->deal_damage(nullptr, bodypart_id("arm_l"), damage_instance(damage_type::BASH,
-                    damage));
-            }
-            else if (creature_hit_chance < 100) {
-                add_msg(_("落下的 %s 击中了 %s 的右臂！"), i.tname(), creature_below->get_name());
-                creature_below->deal_damage(nullptr, bodypart_id("arm_r"), damage_instance(damage_type::BASH,
-                    damage));
-            }
-            else {
-                add_msg(_("落下的 %s 未命中 %s ！"), i.tname(), creature_below->get_name());
+        Creature *creature_below = get_creature_tracker().creature_at( below );
+        if( creature_below ) {
+            const float dodge_mod = creature_below->dodge_roll();
+            const float throwing_mod = i.dropped_char_stats.throwing == -1.0f ? 0.0f :
+                                       5 * i.dropped_char_stats.throwing;
+            const float hit_mod = ( throwing_mod + 18 ) / ( dodge_mod + 15 );
+            int creature_hit_chance = rng( 0, 100 );
+            creature_hit_chance /= hit_mod * occupied_tile_fraction( creature_below->get_size() );
+            const auto deal_falling_hit = [&]( const bodypart_id &bp, const std::string &bp_name ) {
+                const dealt_damage_instance dealt = creature_below->deal_damage(
+                            nullptr, bp, damage_instance( damage_type::BASH, damage ) );
+                add_msg( "落下的%s击中了%s的%s，造成%d点钝击伤害。",
+                         i.tname(), creature_below->get_name(), bp_name, dealt.total_damage() );
+            };
+            if( creature_hit_chance < 15 ) {
+                deal_falling_hit( bodypart_id( "head" ), "头部" );
+            } else if( creature_hit_chance < 30 ) {
+                deal_falling_hit( bodypart_id( "torso" ), "躯干" );
+            } else if( creature_hit_chance < 65 ) {
+                deal_falling_hit( bodypart_id( "arm_l" ), "左臂" );
+            } else if( creature_hit_chance < 100 ) {
+                deal_falling_hit( bodypart_id( "arm_r" ), "右臂" );
+            } else {
+                add_msg( "落下的%s没有命中%s。", i.tname(), creature_below->get_name() );
             }
         }
-        
-        // Bash items at bottom since currently bash_items only bash glass items      
-        int chance = static_cast<int>(200 * i.bash_resist(true) / damage + 1);
-        if (one_in(chance)) {
+        const int chance = std::max( 1, static_cast<int>( 200 * i.bash_resist( true ) / damage + 1 ) );
+        if( one_in( chance ) ) {
             i.inc_damage();
         }
     }
-
-    // Bash terain, furniture and vehicles on tile below
-    bash(below, damage_total / 2);
+    bash( below, damage_total / 2 );
     i_clear( p );
 }
 

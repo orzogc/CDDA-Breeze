@@ -133,5 +133,19 @@
     "symbol": "~",
     "color": "pink",
     "emissions": [ "emit_fog_plume" ]
+  },
+  {
+    "type": "furniture",
+    "id": "f_hot_spring",
+    "looks_like": "f_rubble_rock",
+    "name": "湖底温泉",
+    "description": "湖底岩缝中不断涌出温暖的水和气泡，附近的水生生物格外活跃。",
+    "symbol": "H",
+    "color": "white",
+    "move_cost_mod": 6,
+    "coverage": 30,
+    "light_emitted": 1,
+    "required_str": -1,
+    "flags": [ "TRANSPARENT", "TINY", "NOCOLLIDE" ]
   }
 ]

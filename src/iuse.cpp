@@ -5825,61 +5825,50 @@ std::optional<int> iuse::robotcontrol( Character *p, item *it, bool active, cons
     return 0;
 }
 
-static void init_memory_card_with_random_stuff( item &it )
+void iuse::init_memory_card_with_random_stuff( item &it )
 {
-    if( it.has_flag( flag_MC_MOBILE ) && ( it.has_flag( flag_MC_RANDOM_STUFF ) ||
-                                           it.has_flag( flag_MC_SCIENCE_STUFF ) ) && !( it.has_flag( flag_MC_USED ) ||
-                                                   it.has_flag( flag_MC_HAS_DATA ) ) ) {
+    if( !it.has_flag( flag_MC_MOBILE ) || it.has_var( "BREEZE_MC_INITIALIZED" ) ||
+        it.has_flag( flag_MC_USED ) || it.has_flag( flag_MC_HAS_DATA ) ) {
+        return;
+    }
 
-        it.set_flag( flag_MC_HAS_DATA );
+    const memory_card_info *mcd = it.type->memory_card_data ? &*it.type->memory_card_data : nullptr;
+    if( mcd == nullptr ) {
+        return;
+    }
 
-        bool encrypted = false;
+    it.set_var( "BREEZE_MC_INITIALIZED", 1 );
 
-        //encrypted memory cards have a second chance to contain data
-        if( it.has_flag( flag_MC_MAY_BE_ENCRYPTED ) && one_in( 8 ) ) {
-            it.convert( itype_id( it.typeId().str() + "_encrypted" ) );
-            encrypted = true;
-        }
+    const bool encrypted = it.has_flag( flag_MC_ENCRYPTED ) ||
+                           mcd->encryption_chance >= rng_float( 0.0, 1.0 );
+    if( encrypted ) {
+        it.set_flag( flag_MC_ENCRYPTED );
+        const int diff_min = std::max( 1, mcd->encryption_difficulty_min );
+        const int diff_max = std::max( diff_min, mcd->encryption_difficulty_max );
+        it.set_var( "BREEZE_MC_ENCRYPTION_DIFFICULTY", rng( diff_min, diff_max ) );
+    }
 
-        //some special cards can contain "MC_ENCRYPTED" flag
-        if( it.has_flag( flag_MC_ENCRYPTED ) ) {
-            encrypted = true;
-        }
+    if( mcd->data_chance < rng_float( 0.0, 1.0 ) ) {
+        return;
+    }
 
-        //chance for data
-        const int photo_chance = 5;
-        const int music_chance = 5;
-        const int recipe_chance = 5;
-
-        //encryption allows for a retry for data
-        const int photo_retry = 5;
-        const int music_retry = 5;
-        const int recipe_retry = 5;
-
-        //add someone's personal photos
-        if( one_in( photo_chance ) || ( encrypted && one_in( photo_retry ) ) ) {
-            const int duckfaces_count = rng( 5, 30 );
-            it.set_var( "MC_PHOTOS", duckfaces_count );
-        }
-
-        //add some songs
-        if( one_in( music_chance ) || ( encrypted && one_in( music_retry ) ) ) {
-            const int new_songs_count = rng( 5, 15 );
-            it.set_var( "MC_MUSIC", new_songs_count );
-        }
-
-        //add random recipes
-        if( one_in( recipe_chance ) || ( encrypted && one_in( recipe_retry ) ) ) {
-            const std::array<std::string, 6> recipe_category = {
-                "CC_AMMO", "CC_ARMOR", "CC_CHEM", "CC_ELECTRONIC", "CC_FOOD", "CC_WEAPON"
-            };
-            int cc_random = rng( 0, 5 );
-            it.set_var( "MC_RECIPE", recipe_category[cc_random] );
-        }
-
-        if( it.has_flag( flag_MC_SCIENCE_STUFF ) ) {
-            it.set_var( "MC_RECIPE", "SCIENCE" );
-        }
+    it.set_flag( flag_MC_HAS_DATA );
+    if( mcd->photos_amount > 0 && mcd->photos_chance >= rng_float( 0.0, 1.0 ) ) {
+        it.set_var( "MC_PHOTOS", rng( 1, mcd->photos_amount ) );
+    }
+    if( mcd->songs_amount > 0 && mcd->songs_chance >= rng_float( 0.0, 1.0 ) ) {
+        it.set_var( "MC_MUSIC", rng( 1, mcd->songs_amount ) );
+    }
+    if( mcd->recipes_amount > 0 && !mcd->recipes_categories.empty() &&
+        mcd->recipes_chance >= rng_float( 0.0, 1.0 ) ) {
+        const std::vector<std::string> categories( mcd->recipes_categories.begin(),
+                                                   mcd->recipes_categories.end() );
+        const std::string &category = random_entry( categories );
+        it.set_var( "MC_RECIPE", category );
+        it.set_var( "BREEZE_MC_RECIPE_COUNT", rng( 1, mcd->recipes_amount ) );
+        it.set_var( "BREEZE_MC_RECIPE_MIN", mcd->recipes_level_min );
+        it.set_var( "BREEZE_MC_RECIPE_MAX", mcd->recipes_level_max );
+        it.set_var( "BREEZE_MC_SECRET_RECIPES", mcd->secret_recipes ? 1 : 0 );
     }
 }
 
@@ -5894,7 +5883,7 @@ static int get_quality_from_string( const std::string &s )
     }
 }
 
-static bool einkpc_download_memory_card( Character &p, item &eink, item &mc )
+bool iuse::einkpc_download_memory_card( Character &p, item &eink, item &mc, bool report )
 {
     bool something_downloaded = false;
     if( mc.get_var( "MC_PHOTOS", 0 ) > 0 ) {
@@ -5903,7 +5892,7 @@ static bool einkpc_download_memory_card( Character &p, item &eink, item &mc )
         int new_photos = mc.get_var( "MC_PHOTOS", 0 );
         mc.erase_var( "MC_PHOTOS" );
 
-        p.add_msg_if_player( m_good, n_gettext( "You download %d new photo into the internal memory.",
+        if( report ) p.add_msg_if_player( m_good, n_gettext( "You download %d new photo into the internal memory.",
                                                 "You download %d new photos into the internal memory.", new_photos ), new_photos );
 
         const int old_photos = eink.get_var( "EIPC_PHOTOS", 0 );
@@ -5916,7 +5905,7 @@ static bool einkpc_download_memory_card( Character &p, item &eink, item &mc )
         int new_songs = mc.get_var( "MC_MUSIC", 0 );
         mc.erase_var( "MC_MUSIC" );
 
-        p.add_msg_if_player( m_good, n_gettext( "You download %d new song into the internal memory.",
+        if( report ) p.add_msg_if_player( m_good, n_gettext( "You download %d new song into the internal memory.",
                                                 "You download %d new songs into the internal memory.", new_songs ), new_songs );
 
         const int old_songs = eink.get_var( "EIPC_MUSIC", 0 );
@@ -5926,7 +5915,10 @@ static bool einkpc_download_memory_card( Character &p, item &eink, item &mc )
     if( !mc.get_var( "MC_RECIPE" ).empty() ) {
         std::string category = mc.get_var( "MC_RECIPE" );
         const bool science = category == "SCIENCE";
-        int recipe_num = rng( 1, 3 );
+        int recipe_num = mc.get_var( "BREEZE_MC_RECIPE_COUNT", rng( 1, 3 ) );
+        const int recipe_min = mc.get_var( "BREEZE_MC_RECIPE_MIN", science ? 6 : 0 );
+        const int recipe_max = mc.get_var( "BREEZE_MC_RECIPE_MAX", science ? 10 : 5 );
+        const bool secret_recipes = mc.get_var( "BREEZE_MC_SECRET_RECIPES", 0 ) != 0;
 
         if( category == "SIMPLE" ) {
             category = "CC_FOOD";
@@ -5938,17 +5930,16 @@ static bool einkpc_download_memory_card( Character &p, item &eink, item &mc )
 
         for( const auto &e : recipe_dict ) {
             const recipe &r = e.second;
-            if( r.never_learn || r.obsolete ) {
+            if( r.never_learn || r.obsolete || r.difficulty < recipe_min ||
+                r.difficulty > recipe_max || ( r.has_flag( "SECRET" ) && !secret_recipes ) ) {
                 continue;
             }
             if( science ) {
-                if( r.difficulty >= 6 && r.category == "CC_CHEM" ) {
+                if( r.category == "CC_CHEM" ) {
                     candidates.push_back( &r );
                 }
-            } else {
-                if( r.difficulty <= 5 && ( r.category == category ) ) {
-                    candidates.push_back( &r );
-                }
+            } else if( r.category == category ) {
+                candidates.push_back( &r );
             }
         }
 
@@ -5973,17 +5964,17 @@ static bool einkpc_download_memory_card( Character &p, item &eink, item &mc )
                     something_downloaded = true;
                     eink.set_var( "EIPC_RECIPES", "," + rident.str() + "," );
 
-                    p.add_msg_if_player( m_good, _( "You download a recipe for %s into the tablet's memory." ),
+                    if( report ) p.add_msg_if_player( m_good, _( "You download a recipe for %s into the tablet's memory." ),
                                          r->result_name() );
                 } else {
                     if( old_recipes.find( "," + rident.str() + "," ) == std::string::npos ) {
                         something_downloaded = true;
                         eink.set_var( "EIPC_RECIPES", old_recipes + rident.str() + "," );
 
-                        p.add_msg_if_player( m_good, _( "You download a recipe for %s into the tablet's memory." ),
+                        if( report ) p.add_msg_if_player( m_good, _( "You download a recipe for %s into the tablet's memory." ),
                                              r->result_name() );
                     } else {
-                        p.add_msg_if_player( m_good, _( "The recipe for %s is already stored in the tablet's memory." ),
+                        if( report ) p.add_msg_if_player( m_good, _( "The recipe for %s is already stored in the tablet's memory." ),
                                              r->result_name() );
                     }
                 }
@@ -5998,7 +5989,7 @@ static bool einkpc_download_memory_card( Character &p, item &eink, item &mc )
             item_read_extended_photos( eink, extended_photos, "EIPC_EXTENDED_PHOTOS", true );
             item_write_extended_photos( eink, extended_photos, "EIPC_EXTENDED_PHOTOS" );
             something_downloaded = true;
-            p.add_msg_if_player( m_good, _( "You have downloaded your photos." ) );
+            if( report ) p.add_msg_if_player( m_good, _( "You have downloaded your photos." ) );
         } catch( const JsonError &e ) {
             debugmsg( "Error card reading photos (loaded photos = %i) : %s", extended_photos.size(),
                       e.c_str() );
@@ -6008,7 +5999,7 @@ static bool einkpc_download_memory_card( Character &p, item &eink, item &mc )
     const auto monster_photos = mc.get_var( "MC_MONSTER_PHOTOS" );
     if( !monster_photos.empty() ) {
         something_downloaded = true;
-        p.add_msg_if_player( m_good, _( "You have updated your monster collection." ) );
+        if( report ) p.add_msg_if_player( m_good, _( "You have updated your monster collection." ) );
 
         std::string photos = eink.get_var("EINK_MONSTER_PHOTOS");
         if( photos.empty() ) {
@@ -6055,7 +6046,7 @@ static bool einkpc_download_memory_card( Character &p, item &eink, item &mc )
     }
 
     if( !something_downloaded ) {
-        p.add_msg_if_player( m_info, _( "This memory card does not contain any new data." ) );
+        if( report ) p.add_msg_if_player( m_info, _( "This memory card does not contain any new data." ) );
         return false;
     }
 
@@ -6151,14 +6142,10 @@ std::optional<int> iuse::einktabletpc( Character *p, item *it, bool t, const tri
             amenu.addentry( ei_monsters, false, 'y', _( "Collection of monsters is empty" ) );
         }
 
-        amenu.addentry( ei_download, true, 'w', _( "Download data from memory card" ) );
+        amenu.addentry( ei_download, true, 'w', "批量读取存储卡" );
 
         /** @EFFECT_COMPUTER >2 allows decrypting memory cards more easily */
-        if( p->get_skill_level( skill_computer ) > 2 ) {
-            amenu.addentry( ei_decrypt, true, 'd', _( "Decrypt memory card" ) );
-        } else {
-            amenu.addentry( ei_decrypt, false, 'd', _( "Decrypt memory card (low skill)" ) );
-        }
+        amenu.addentry( ei_decrypt, true, 'd', "破解存储卡" );
 
         amenu.query();
 
@@ -6298,40 +6285,36 @@ std::optional<int> iuse::einktabletpc( Character *p, item *it, bool t, const tri
         auto filter = []( const item & it ) {
             return it.has_flag( flag_MC_MOBILE );
         };
-        const std::string title = _( "Insert memory card:" );
+        const std::string title = "选择要破解的存储卡";
 
         if( ei_download == choice ) {
-
-            p->moves -= to_moves<int>( 2_seconds );
-
-            if( you != nullptr ) {
-                loc = game_menus::inv::titled_filter_menu( filter, *you, title );
-            }
-            if( !loc ) {
-                p->add_msg_if_player( m_info, _( "You don't have that item!" ) );
-                return 1;
-            }
-            item &mc = *loc;
-
-            if( !mc.has_flag( flag_MC_MOBILE ) ) {
-                p->add_msg_if_player( m_info, _( "This is not a compatible memory card." ) );
-                return 1;
+            if( !p->has_item( *it ) || !p->is_avatar() ) {
+                p->add_msg_if_player( m_info, "需要把读取设备带在身上。" );
+                return std::nullopt;
             }
 
-            init_memory_card_with_random_stuff( mc );
+            inventory_filter_preset preset( []( const item_location &loc ) {
+                return loc->has_flag( flag_MC_MOBILE );
+            } );
+            inventory_multiselector selector( *p, preset );
+            selector.set_title( "选择要读取的存储卡" );
+            selector.set_display_stats( true );
+            selector.add_character_items( *p );
+            selector.add_nearby_items( 1 );
 
-            if( mc.has_flag( flag_MC_ENCRYPTED ) ) {
-                p->add_msg_if_player( m_info, _( "This memory card is encrypted." ) );
-                return 1;
+            const std::list<std::pair<item_location, int>> selected = selector.execute();
+            if( selected.empty() ) {
+                return std::nullopt;
             }
-            if( !mc.has_flag( flag_MC_HAS_DATA ) ) {
-                p->add_msg_if_player( m_info, _( "This memory card does not contain any new data." ) );
-                return 1;
+
+            std::vector<item_location> targets;
+            targets.reserve( selected.size() );
+            for( const auto &entry : selected ) {
+                targets.emplace_back( entry.first );
             }
-
-            einkpc_download_memory_card( *p, *it, mc );
-
-            return 1;
+            const item_location reader( *p, it );
+            p->assign_activity( player_activity( data_handling_activity_actor( reader, targets ) ) );
+            return 0;
         }
 
         if( ei_decrypt == choice ) {
@@ -6340,46 +6323,61 @@ std::optional<int> iuse::einktabletpc( Character *p, item *it, bool t, const tri
                 loc = game_menus::inv::titled_filter_menu( filter, *you, title );
             }
             if( !loc ) {
-                p->add_msg_if_player( m_info, _( "You don't have that item!" ) );
                 return 1;
             }
             item &mc = *loc;
-
             if( !mc.has_flag( flag_MC_MOBILE ) ) {
-                p->add_msg_if_player( m_info, _( "This is not a compatible memory card." ) );
+                p->add_msg_if_player( m_info, "这不是兼容的存储卡。" );
                 return 1;
             }
 
-            init_memory_card_with_random_stuff( mc );
-
+            iuse::init_memory_card_with_random_stuff( mc );
             if( !mc.has_flag( flag_MC_ENCRYPTED ) ) {
-                p->add_msg_if_player( m_info, _( "This memory card is not encrypted." ) );
+                p->add_msg_if_player( m_info, "这张存储卡没有加密。" );
                 return 1;
             }
 
-            p->practice( skill_computer, rng( 2, 5 ) );
+            const int difficulty = std::max( 1, mc.get_var( "BREEZE_MC_ENCRYPTION_DIFFICULTY", 3 ) );
+            if( !query_yn( "这张存储卡的加密强度约为%d，建议电脑技能%d。继续尝试破解。",
+                           difficulty, difficulty ) ) {
+                return 1;
+            }
 
-            /** @EFFECT_INT increases chance of safely decrypting memory card */
+            const int skill = std::max( 0, static_cast<int>( std::round(
+                                               p->get_skill_level( skill_computer ) ) ) );
+            const int attack = skill * 7 + p->int_cur * 2 + rng( 0, 24 );
+            const int defense = difficulty * 9 + rng( 0, 24 );
+            p->practice( skill_computer, rng( 3, 7 ) );
 
-            /** @EFFECT_COMPUTER increases chance of safely decrypting memory card */
-            const int success = p->get_skill_level( skill_computer ) * rng( 1,
-                                p->get_skill_level( skill_computer ) ) *
-                                rng( 1, p->int_cur ) - rng( 30, 80 );
-            if( success > 0 ) {
+            if( attack >= defense ) {
+                mc.unset_flag( flag_MC_ENCRYPTED );
                 p->practice( skill_computer, rng( 5, 10 ) );
-                p->add_msg_if_player( m_good, _( "You successfully decrypted content on %s!" ),
-                                      mc.tname() );
-                einkpc_download_memory_card( *p, *it, mc );
-            } else {
-                if( success > -10 || one_in( 5 ) ) {
-                    p->add_msg_if_player( m_neutral, _( "You failed to decrypt the %s." ), mc.tname() );
+                p->add_msg_if_player( m_good, "你成功破解了存储卡。" );
+                if( mc.has_flag( flag_MC_HAS_DATA ) ) {
+                    if( iuse::einkpc_download_memory_card( *p, *it, mc, false ) ) {
+                        p->add_msg_if_player( m_good, "存储卡中的新数据已经读取完成。" );
+                    }
                 } else {
-                    p->add_msg_if_player( m_bad,
-                                          _( "You tripped the firmware protection, and the card deleted its data!" ) );
-                    mc.clear_vars();
-                    mc.unset_flags();
-                    mc.convert( itype_mobile_memory_card_used );
+                    p->add_msg_if_player( m_info, "这张存储卡里没有发现可用的新数据。" );
+                    if( mc.type->memory_card_data &&
+                        mc.type->memory_card_data->on_read_convert_to.is_valid() ) {
+                        const itype_id target = mc.type->memory_card_data->on_read_convert_to;
+                        mc.clear_vars();
+                        mc.unset_flags();
+                        mc.convert( target );
+                    }
                 }
+            } else if( attack + 18 < defense && one_in( 4 ) ) {
+                p->add_msg_if_player( m_bad, "破解失败，存储卡中的数据已经损坏。" );
+                const itype_id target = mc.type->memory_card_data &&
+                                        mc.type->memory_card_data->on_read_convert_to.is_valid() ?
+                                        mc.type->memory_card_data->on_read_convert_to :
+                                        itype_mobile_memory_card_used;
+                mc.clear_vars();
+                mc.unset_flags();
+                mc.convert( target );
+            } else {
+                p->add_msg_if_player( m_neutral, "破解失败，存储卡保持原状。" );
             }
             return 1;
         }
@@ -7478,7 +7476,7 @@ std::optional<int> iuse::camera( Character *p, item *it, bool t, const tripoint 
             return 1;
         }
 
-        init_memory_card_with_random_stuff( mc );
+        iuse::init_memory_card_with_random_stuff( mc );
 
         if( mc.has_flag( flag_MC_ENCRYPTED ) ) {
             if( !query_yn( _( "This memory card is encrypted.  Format and clear data?" ) ) ) {

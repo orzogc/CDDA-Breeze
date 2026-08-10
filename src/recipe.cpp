@@ -178,11 +178,17 @@ void recipe::load( const JsonObject &jo, const std::string &src )
         ident_ = recipe_id( result_.str() );
     }
 
-    if( type == "recipe" && jo.has_string( "id_suffix" ) ) {
-        if( abstract ) {
-            jo.throw_error_at( "id_suffix", "abstract recipe cannot specify id_suffix" );
+    if( type == "recipe" ) {
+        optional( jo, was_loaded, "variant", variant_ );
+        if( !variant_.empty() && !abstract ) {
+            ident_ = recipe_id( ident_.str() + "_" + variant_ );
         }
-        ident_ = recipe_id( ident_.str() + "_" + jo.get_string( "id_suffix" ) );
+        if( jo.has_string( "id_suffix" ) ) {
+            if( abstract ) {
+                jo.throw_error_at( "id_suffix", "abstract recipe cannot specify id_suffix" );
+            }
+            ident_ = recipe_id( ident_.str() + "_" + jo.get_string( "id_suffix" ) );
+        }
     }
 
     if( jo.has_bool( "obsolete" ) ) {
@@ -570,6 +576,10 @@ std::string recipe::get_consistency_error() const
 item recipe::create_result() const
 {
     item newit( result_, calendar::turn, item::default_charges_tag{} );
+
+    if( !variant().empty() ) {
+        newit.set_itype_variant( variant() );
+    }
 
     if( newit.has_flag( flag_VARSIZE ) ) {
         newit.set_flag( flag_FIT );
@@ -992,6 +1002,17 @@ std::string recipe::result_name( const bool decorated ) const
     std::string name;
     if( !name_.empty() ) {
         name = name_.translated();
+    } else if( !variant().empty() ) {
+        const auto iter_var = std::find_if( result_->variants.begin(), result_->variants.end(),
+        [this]( const itype_variant_data &itvar ) {
+            return itvar.id == variant();
+        } );
+        if( iter_var != result_->variants.end() ) {
+            name = iter_var->alt_name.translated();
+        }
+        if( name.empty() ) {
+            name = item::nname( result_ );
+        }
     } else {
         name = item::nname( result_ );
     }

@@ -207,6 +207,13 @@
     ]
   },
   {
+    "id": "skateboard",
+    "type": "vehicle",
+    "name": "滑板",
+    "blueprint": [ "$" ],
+    "parts": [ { "x": 0, "y": 0, "parts": [ "frame_wood_deck", "wheel_mount_skateboard", "wheel_skateboard" ] } ]
+  },
+  {
     "id": "scooter",
     "type": "vehicle",
     "name": "Scooter",

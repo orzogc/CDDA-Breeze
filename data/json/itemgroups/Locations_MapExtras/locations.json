@@ -2060,6 +2060,7 @@
       [ "roller_blades", 20 ],
       [ "rollerskates", 20 ],
       [ "roller_shoes_off", 20 ],
+      [ "folded_skateboard_generic", 20 ],
       [ "survnote", 3 ],
       { "group": "toy_radio_car", "prob": 3 },
       { "group": "toy_makerspace_kit", "prob": 1 },
@@ -2840,6 +2841,37 @@
         ]
       },
       { "item": "slippers", "prob": 50 }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "lake_bed_breeze",
+    "subtype": "distribution",
+    "entries": [
+      { "item": "bottle_glass", "prob": 30 },
+      { "item": "bag_plastic", "prob": 20 },
+      { "item": "rock", "prob": 20 },
+      { "item": "stick", "prob": 15 },
+      { "item": "survnote", "prob": 2, "container-item": "bottle_glass" }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "underwater_toxic_waste_breeze",
+    "subtype": "collection",
+    "entries": [
+      { "group": "toxic_waste", "prob": 40 },
+      { "group": "toxic_dump_equipment", "prob": 50 }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "lakebed_sunken_corpse_breeze",
+    "subtype": "collection",
+    "entries": [
+      { "item": "chain", "prob": 80 },
+      { "item": "rock", "prob": 80 },
+      { "group": "everyday_corpse", "prob": 100 }
     ]
   }
 ]

@@ -1166,8 +1166,9 @@
     "warmth": 10,
     "material_thickness": 4,
     "techniques": [ "WBLOCK_1" ],
-    "armor": [ { "encumbrance_modifiers": [ "NONE" ], "coverage": 65, "covers": [ "head" ] } ]
-  },
+    "armor": [ { "encumbrance_modifiers": [ "NONE" ], "coverage": 65, "covers": [ "head" ] } ],
+    "flags": [ "PADDED" ]
+},
   {
     "id": "pickelhaube",
     "repairs_like": "helmet_barbute",

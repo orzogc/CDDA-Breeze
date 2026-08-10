@@ -56,5 +56,21 @@
       "vehicle_name": "inflatable boat",
       "folded_parts": "[{\"id\":\"inflatable_section\",\"base\":{\"typeid\":\"inflatable_section\",\"item_tags\":[\"VEHICLE\"]},\"mount_dx\":0,\"mount_dy\":0},{\"id\":\"folding_seat\",\"base\":{\"typeid\":\"sheet\",\"item_tags\":[\"VEHICLE\"]},\"mount_dx\":0,\"mount_dy\":0},{\"id\":\"inflatable_airbag\",\"base\":{\"typeid\":\"inflatable_airbag\",\"item_tags\":[\"VEHICLE\"]},\"mount_dx\":0,\"mount_dy\":0},{\"id\":\"hand_paddles\",\"base\":{\"typeid\":\"hand_paddles\",\"item_tags\":[\"VEHICLE\"]},\"mount_dx\":0,\"mount_dy\":0},{\"id\":\"inflatable_section\",\"base\":{\"typeid\":\"inflatable_section\",\"item_tags\":[\"VEHICLE\"]},\"mount_dx\":1,\"mount_dy\":0},{\"id\":\"inflatable_airbag\",\"base\":{\"typeid\":\"inflatable_airbag\",\"item_tags\":[\"VEHICLE\"]},\"mount_dx\":1,\"mount_dy\":0},{\"id\":\"inflatable_section\",\"base\":{\"typeid\":\"inflatable_section\",\"item_tags\":[\"VEHICLE\"]},\"mount_dx\":1,\"mount_dy\":1},{\"id\":\"inflatable_airbag\",\"base\":{\"typeid\":\"inflatable_airbag\",\"item_tags\":[\"VEHICLE\"]},\"mount_dx\":1,\"mount_dy\":1},{\"id\":\"inflatable_section\",\"base\":{\"typeid\":\"inflatable_section\",\"item_tags\":[\"VEHICLE\"]},\"mount_dx\":0,\"mount_dy\":1},{\"id\":\"inflatable_airbag\",\"base\":{\"typeid\":\"inflatable_airbag\",\"item_tags\":[\"VEHICLE\"]},\"mount_dx\":0,\"mount_dy\":1}]"
     }
+  },
+  {
+    "id": "folded_skateboard_generic",
+    "type": "TOOL",
+    "copy-from": "generic_folded_vehicle",
+    "name": { "str": "滑板" },
+    "description": "一块可以随身携带并展开使用的滑板。",
+    "weight": "2898 g",
+    "volume": "3750 ml",
+    "longest_side": "80 cm",
+    "symbol": "/",
+    "color": "light_gray",
+    "variables": {
+      "vehicle_name": "滑板",
+      "folded_parts": "[{\"id\":\"frame_wood_deck\",\"base\":{\"typeid\":\"frame_wood_deck\",\"item_tags\":[\"VEHICLE\"]},\"mount_dx\":0,\"mount_dy\":0},{\"id\":\"wheel_mount_skateboard\",\"base\":{\"typeid\":\"wheel_mount_skateboard\",\"item_tags\":[\"VEHICLE\"]},\"mount_dx\":0,\"mount_dy\":0},{\"id\":\"wheel_skateboard\",\"base\":{\"typeid\":\"wheel_skateboard\",\"item_tags\":[\"VEHICLE\"]},\"mount_dx\":0,\"mount_dy\":0}]"
+    }
   }
 ]

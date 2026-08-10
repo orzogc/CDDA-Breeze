@@ -7450,8 +7450,12 @@ time_duration vehicle::unfolding_time() const
 
 item vehicle::get_folded_item() const
 {
-    item folded( "generic_folded_vehicle", calendar::turn );
     const std::vector<vehicle_part> parts = real_parts();
+    const bool is_skateboard = std::any_of( parts.begin(), parts.end(), []( const vehicle_part &part ) {
+        return part.id == vpart_id( "frame_wood_deck" );
+    } );
+    item folded( is_skateboard ? "folded_skateboard_generic" : "generic_folded_vehicle",
+                 calendar::turn );
     try {
         std::ostringstream veh_data;
         JsonOut json( veh_data );
@@ -7476,7 +7480,9 @@ item vehicle::get_folded_item() const
     folded.set_var( "tracking", tracking_on ? 1 : 0 );
     folded.set_var( "weight", to_milligram( total_mass() ) );
     folded.set_var( "volume", folded_volume / units::legacy_volume_factor );
-    folded.set_var( "name", string_format( _( "folded %s" ), name ) );
+    if( !is_skateboard ) {
+        folded.set_var( "name", string_format( _( "folded %s" ), name ) );
+    }
     folded.set_var( "vehicle_name", name );
     folded.set_var( "unfolding_time", to_moves<int>( unfolding_time() ) );
     folded.set_var( "avg_part_damage", avg_part_damage );
@@ -7485,7 +7491,9 @@ item vehicle::get_folded_item() const
     std::string desc = string_format( _( "A folded %s." ), name )
                        .append( "\n\n" )
                        .append( string_format( _( "It will take %s to unfold." ), to_string( unfolding_time() ) ) );
-    folded.set_var( "description", desc );
+    if( !is_skateboard ) {
+        folded.set_var( "description", desc );
+    }
 
     return folded;
 }

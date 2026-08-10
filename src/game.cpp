@@ -888,6 +888,15 @@ bool game::start_game()
     overmap_buffer.reveal( u.global_omt_location().xy(),
                            get_option<int>( "DISTANCE_INITIAL_VISIBILITY" ), 0 );
 
+    const int city_size = get_option<int>( "CITY_SIZE" );
+    if( get_scenario()->get_reveal_locale() && city_size > 0 ) {
+        const city_reference nearest_city = overmap_buffer.closest_city( m.get_abs_sub() );
+        const tripoint_abs_omt city_center_omt = project_to<coords::omt>( nearest_city.abs_sm_pos );
+        const tripoint_abs_omt nearest_road = overmap_buffer.find_closest( omtstart, "road", 3, false );
+        overmap_buffer.reveal_route( nearest_road, city_center_omt, 3 );
+        overmap_buffer.reveal( city_center_omt, city_size );
+    }
+
     u.moves = 0;
     u.process_turn(); // process_turn adds the initial move points
     u.set_stamina( u.get_stamina_max() );
@@ -12025,40 +12034,18 @@ void game::vertical_move( int movez, bool force, bool peeking, bool check_traps 
     }
 
     map &here = get_map();
-    // > and < are used for diving underwater.
-    if( !u.in_vehicle &&
-        here.has_flag( ter_furn_flag::TFLAG_SWIMMABLE, u.pos() ) &&
-        here.has_flag( ter_furn_flag::TFLAG_DEEP_WATER, u.pos() ) ) {
-        if( movez == -1 ) {
-            if( u.is_underwater() ) {
-                add_msg( m_info, _( "You are already underwater!" ) );
-                return;
-            }
-            if( u.worn_with_flag( flag_FLOTATION ) ) {
-                add_msg( m_info, _( "You can't dive while wearing a flotation device." ) );
-                return;
-            }
-            u.set_underwater( true );
-            add_msg( _( "You dive underwater!" ) );
-        } else {
-            if( u.swim_speed() < 500 || u.shoe_type_count( itype_swim_fins ) ) {
-                u.set_underwater( false );
-                add_msg( _( "You surface." ) );
-            } else {
-                add_msg( m_info, _( "You try to surface but can't!" ) );
-            }
-        }
-        u.moves -= 100;
-        return;
-    }
-
     // Force means we're going down, even if there's no staircase, etc.
     bool climbing = false;
     int move_cost = 100;
     tripoint stairs( u.posx(), u.posy(), u.posz() + movez );
     bool wall_cling = u.has_flag( json_flag_WALL_CLING );
+    const bool can_swim_vertically = !u.in_vehicle &&
+                                     here.has_flag( ter_furn_flag::TFLAG_SWIMMABLE, u.pos() ) &&
+                                     ( here.has_flag( ter_furn_flag::TFLAG_DEEP_WATER, u.pos() ) ||
+                                       here.has_flag( ter_furn_flag::TFLAG_WATER_CUBE, u.pos() ) );
     bool adjacent_climb = false;
-    if( !force && movez == 1 && !here.has_flag( ter_furn_flag::TFLAG_GOES_UP, u.pos() ) ) {
+    if( !force && movez == 1 && !here.has_flag( ter_furn_flag::TFLAG_GOES_UP, u.pos() ) &&
+        !u.is_underwater() ) {
         // Climbing
         for (const tripoint& p : here.points_in_radius(u.pos(), 2)) {
             if (here.has_flag(ter_furn_flag::TFLAG_CLIMB_ADJACENT, p)) {
@@ -12128,7 +12115,8 @@ void game::vertical_move( int movez, bool force, bool peeking, bool check_traps 
         }
     }
 
-    if( !force && movez == -1 && !here.has_flag( ter_furn_flag::TFLAG_GOES_DOWN, u.pos() ) ) {
+    if( !force && movez == -1 && !here.has_flag( ter_furn_flag::TFLAG_GOES_DOWN, u.pos() ) &&
+        !u.is_underwater() && !can_swim_vertically ) {
         if( wall_cling && here.passable( stairs ) ) {
             climbing = true;
             u.set_activity_level( EXTRA_EXERCISE );
@@ -12139,7 +12127,7 @@ void game::vertical_move( int movez, bool force, bool peeking, bool check_traps 
             return;
         }
     } else if( !climbing && !force && movez == 1 &&
-               !here.has_flag( ter_furn_flag::TFLAG_GOES_UP, u.pos() ) ) {
+               !here.has_flag( ter_furn_flag::TFLAG_GOES_UP, u.pos() ) && !u.is_underwater() ) {
         add_msg( m_info, _( "You can't go up here!" ) );
         return;
     }
@@ -12164,6 +12152,65 @@ void game::vertical_move( int movez, bool force, bool peeking, bool check_traps 
         return;
     }
 
+    bool swimming = false;
+    bool surfacing = false;
+    bool submerging = false;
+    if( can_swim_vertically ) {
+        swimming = true;
+        const ter_id &target_ter = here.ter( u.pos() + tripoint( 0, 0, movez ) );
+        const bool is_deep_water = here.has_flag( ter_furn_flag::TFLAG_DEEP_WATER, u.pos() );
+        const bool is_water_cube = here.has_flag( ter_furn_flag::TFLAG_WATER_CUBE, u.pos() );
+        if( is_deep_water && !is_water_cube ) {
+            if( movez == -1 ) {
+                if( u.is_underwater() ) {
+                    if( target_ter->has_flag( ter_furn_flag::TFLAG_WATER_CUBE ) ) {
+                        add_msg( "你向更深的水中游去。" );
+                    } else {
+                        add_msg( m_info, "你已经在水下了，下面没有更深的水可以继续下潜。" );
+                        return;
+                    }
+                } else {
+                    if( u.worn_with_flag( flag_FLOTATION ) ) {
+                        add_msg( m_info, "穿着浮力装置时无法下潜。" );
+                        return;
+                    }
+                    u.set_underwater( true );
+                    add_msg( "你潜入水中。" );
+                    submerging = true;
+                }
+            } else if( movez == 1 && u.is_underwater() ) {
+                if( u.swim_speed() < 500 || u.shoe_type_count( itype_swim_fins ) ) {
+                    u.set_underwater( false );
+                    add_msg( "你浮出了水面。" );
+                    surfacing = true;
+                } else {
+                    add_msg( m_info, "你试图上浮，但是失败了。" );
+                    return;
+                }
+            }
+        } else if( is_water_cube ) {
+            if( !u.is_underwater() ) {
+                u.set_underwater( true );
+            }
+            if( movez == -1 ) {
+                if( target_ter->has_flag( ter_furn_flag::TFLAG_WATER_CUBE ) ) {
+                    add_msg( "你向更深的水中游去。" );
+                } else {
+                    add_msg( m_info, "你已经到达水体底部，无法继续下潜。" );
+                    return;
+                }
+            } else if( movez == 1 ) {
+                if( target_ter->has_flag( ter_furn_flag::TFLAG_WATER_CUBE ) ||
+                    target_ter->has_flag( ter_furn_flag::TFLAG_DEEP_WATER ) ) {
+                    add_msg( "你向上游去。" );
+                } else {
+                    add_msg( m_info, "上方已经不是水体，无法继续向上游。" );
+                    return;
+                }
+            }
+        }
+    }
+
     if( climbing && slip_down( true ) ) {
         return;
     }
@@ -12171,7 +12218,7 @@ void game::vertical_move( int movez, bool force, bool peeking, bool check_traps 
     // Find the corresponding staircase
     bool rope_ladder = false;
     // TODO: Remove the stairfinding, make the mapgen gen aligned maps
-    if( !force && !climbing ) {
+    if( !force && !climbing && !swimming ) {
         const std::optional<tripoint> pnt = find_or_make_stairs( m, z_after, rope_ladder, peeking,
                                              u.pos() );
         if( !pnt ) {
@@ -12214,6 +12261,10 @@ void game::vertical_move( int movez, bool force, bool peeking, bool check_traps 
         u.moves -= move_cost;
         u.mod_stamina( -move_cost );
     }
+    if( surfacing || submerging ) {
+        return;
+    }
+
     const tripoint old_pos = u.pos();
     const tripoint old_abs_pos = here.getabs( old_pos );
     point submap_shift;
@@ -13234,95 +13285,105 @@ void game::shift_destination_preview( const point &delta )
     }
 }
 
-bool game::slip_down( bool check_for_traps )
+int game::slip_down_chance( bool show_messages )
 {
-    ///\EFFECT_DEX decreases chances of slipping while climbing
-    ///\EFFECT_STR decreases chances of slipping while climbing
-    /// Not using arm strength since lifting score comes into play later
-    int slip = 100 / std::max( 1, u.dex_cur + u.str_cur );
-    add_msg_debug( debugmode::DF_GAME, "Base slip chance %d%%", slip );
-
-    if( u.has_proficiency( proficiency_prof_parkour ) ) {
+    int slip = 100;
+    const bool parkour = u.has_proficiency( proficiency_prof_parkour );
+    const bool badknees = u.has_trait( trait_BADKNEES );
+    if( parkour && badknees ) {
+        if( show_messages ) {
+            add_msg( m_info, "跑酷技巧抵消了膝盖不适对攀爬的影响。" );
+        }
+    } else if( parkour ) {
         slip /= 2;
-        add_msg( m_info, _( "Your skill in parkour makes it easier to climb." ) );
-    }
-    if( u.has_trait( trait_BADKNEES ) ) {
+        if( show_messages ) {
+            add_msg( m_info, "跑酷技巧让攀爬更轻松。" );
+        }
+    } else if( badknees ) {
         slip *= 2;
-        add_msg( m_info, _( "Your bad knees make it difficult to climb." ) );
+        if( show_messages ) {
+            add_msg( m_info, "膝盖不适让攀爬更加困难。" );
+        }
     }
+    add_msg_debug( debugmode::DF_GAME, "熟练度和特性修正后的失手概率 %d%%", slip );
 
-    add_msg_debug( debugmode::DF_GAME, "Slip chance after proficiency/trait modifiers %d%%", slip );
-
-    // Climbing is difficult with wet hands and feet.
     float wet_penalty = 1.0f;
     bool wet_feet = false;
     bool wet_hands = false;
-
     for( const bodypart_id &bp : u.get_all_body_parts_of_type( body_part_type::type::foot,
             get_body_part_flags::primary_type ) ) {
         if( u.get_part_wetness( bp ) > 0 ) {
-            add_msg_debug( debugmode::DF_GAME, "Foot %s %.1f wet", body_part_name( bp ),
+            add_msg_debug( debugmode::DF_GAME, "脚部%s湿润程度 %.1f", body_part_name( bp ),
                            u.get_part( bp )->get_wetness_percentage() );
             wet_feet = true;
             wet_penalty += u.get_part( bp )->get_wetness_percentage() / 2;
         }
     }
-
     for( const bodypart_id &bp : u.get_all_body_parts_of_type( body_part_type::type::hand,
             get_body_part_flags::primary_type ) ) {
         if( u.get_part_wetness( bp ) > 0 ) {
-            add_msg_debug( debugmode::DF_GAME, "Hand %s %.1f wet", body_part_name( bp ),
+            add_msg_debug( debugmode::DF_GAME, "手部%s湿润程度 %.1f", body_part_name( bp ),
                            u.get_part( bp )->get_wetness_percentage() );
             wet_hands = true;
             wet_penalty += u.get_part( bp )->get_wetness_percentage() / 2;
         }
     }
-    if( wet_feet && wet_hands ) {
-        add_msg( m_info, _( "Your wet hands and feet make it harder to climb." ) );
-    } else if( wet_feet ) {
-        add_msg( m_info, _( "Your wet feet make it harder to climb." ) );
-    } else if( wet_hands ) {
-        add_msg( m_info, _( "Your wet hands make it harder to climb." ) );
+    if( show_messages ) {
+        if( wet_feet && wet_hands ) {
+            add_msg( m_info, "手脚湿滑，让攀爬更加困难。" );
+        } else if( wet_feet ) {
+            add_msg( m_info, "双脚湿滑，让攀爬更加困难。" );
+        } else if( wet_hands ) {
+            add_msg( m_info, "双手湿滑，让攀爬更加困难。" );
+        }
     }
-
-    // Apply wetness penalty
     slip *= wet_penalty;
-    add_msg_debug( debugmode::DF_GAME, "Slip chance after wetness penalty %d%%", slip );
-
-    // Apply limb score penalties - grip, arm strength and footing are all relevant
-
+    add_msg_debug( debugmode::DF_GAME, "湿润修正后的失手概率 %d%%", slip );
+    slip /= std::max( 1, u.dex_cur + u.str_cur );
+    add_msg_debug( debugmode::DF_GAME, "属性修正后的失手概率 %d%%", slip );
     slip /= u.get_modifier( character_modifier_slip_prevent_mod );
-    add_msg_debug( debugmode::DF_GAME, "Slipping chance after limb scores %d%%", slip );
-
-    // Being weighed down makes it easier for you to slip.
-    double weight_ratio = static_cast<double>( units::to_gram( u.weight_carried() ) ) / units::to_gram(
-                              u.weight_capacity() );
+    add_msg_debug( debugmode::DF_GAME, "肢体状态修正后的失手概率 %d%%", slip );
+    const double weight_ratio = static_cast<double>( units::to_gram( u.weight_carried() ) ) /
+                                units::to_gram( u.weight_capacity() );
     slip += roll_remainder( 8.0 * weight_ratio );
-    add_msg_debug( debugmode::DF_GAME, "Weight ratio %.2f, slip chance %d%%", weight_ratio,
-                   slip );
-
-    // Decreasing stamina makes you slip up more often
+    add_msg_debug( debugmode::DF_GAME, "负重比例 %.2f，失手概率 %d%%", weight_ratio, slip );
     const float stamina_ratio = static_cast<float>( u.get_stamina() ) / u.get_stamina_max();
-    if( stamina_ratio < 0.8 ) {
-        slip /= stamina_ratio;
+    if( stamina_ratio < 0.8f ) {
+        slip /= std::max( stamina_ratio, .1f );
+        if( show_messages ) {
+            if( stamina_ratio > 0.6f ) {
+                add_msg( m_info, "你有些喘气，攀爬变得更困难。" );
+            } else if( stamina_ratio > 0.4f ) {
+                add_msg( m_info, "你已经气喘吁吁，攀爬变得困难许多。" );
+            } else if( stamina_ratio > 0.2f ) {
+                add_msg( m_info, "你几乎喘不过气，攀爬变得非常困难。" );
+            } else {
+                add_msg( m_info, "你感到头晕目眩，已经很难保持平衡。" );
+            }
+        }
     }
-    add_msg_debug( debugmode::DF_GAME, "Stamina ratio %.2f, final slip chance %d%%",
-                   stamina_ratio, slip );
-
-    if( weight_ratio >= 1 ) {
-        add_msg( m_info, _( "Your carried weight tries to drag you down." ) );
-    } else if( weight_ratio > .75 ) {
-        add_msg( m_info, _( "You strain to climb with the weight of your possessions." ) );
-    } else if( weight_ratio > .5 ) {
-        add_msg( m_info, _( "You feel the weight of your luggage makes it more difficult to climb." ) );
-    } else if( weight_ratio > .25 ) {
-        add_msg( m_info, _( "Your carried weight makes it a little harder to climb." ) );
+    add_msg_debug( debugmode::DF_GAME, "耐力比例 %.2f，最终失手概率 %d%%", stamina_ratio, slip );
+    if( show_messages ) {
+        if( weight_ratio >= 1 ) {
+            add_msg( m_info, "身上的负重几乎要把你拽下去。" );
+        } else if( weight_ratio > .75 ) {
+            add_msg( m_info, "身上的负重让攀爬十分吃力。" );
+        } else if( weight_ratio > .5 ) {
+            add_msg( m_info, "身上的负重让攀爬更加困难。" );
+        } else if( weight_ratio > .25 ) {
+            add_msg( m_info, "身上的负重让攀爬稍微困难了一些。" );
+        }
     }
+    return slip;
+}
 
+bool game::slip_down( bool check_for_traps, bool show_chance_messages )
+{
+    const int slip = slip_down_chance( show_chance_messages );
     if( x_in_y( slip, 100 ) ) {
-        add_msg( m_bad, _( "You slip while climbing and fall down." ) );
+        add_msg( m_bad, "你在攀爬时失手摔了下去。" );
         if( slip >= 100 ) {
-            add_msg( m_bad, _( "Climbing is impossible in your current state." ) );
+            add_msg( m_bad, "以你现在的状态无法安全攀爬。" );
         }
         if( check_for_traps ) {
             m.creature_on_trap( u );
@@ -13330,6 +13391,255 @@ bool game::slip_down( bool check_for_traps )
         return true;
     }
     return false;
+}
+
+std::string game::climb_down_summary( const tripoint &examp )
+{
+    map &here = get_map();
+    Character &you = get_player_character();
+    if( !here.valid_move( you.pos(), examp, false, true ) ) {
+        return "";
+    }
+    tripoint where = examp;
+    tripoint below = examp;
+    below.z--;
+    while( here.valid_move( where, below, false, true ) ) {
+        where.z--;
+        below.z--;
+    }
+    const int height = examp.z - where.z;
+    if( height <= 0 ) {
+        return "这里无法向下攀爬。";
+    }
+    const bool can_use_ladder = height == 1 &&
+                                ( here.has_flag( ter_furn_flag::TFLAG_LADDER, where ) ||
+                                  here.has_flag( ter_furn_flag::TFLAG_GOES_UP, where ) );
+    if( can_use_ladder ) {
+        return "下方有梯子，向下移动<color_green>看起来很安全</color>。\n"
+               "你<color_light_blue>应该能轻松</color>再爬上来。";
+    }
+
+    const int slip_chance = slip_down_chance( false );
+    const int climb_cost = you.climbing_cost( where, examp );
+    const float fall_mod = you.fall_damage_mod();
+    std::string hint_slip_risk;
+    std::string hint_fall_damage;
+    std::string hint_climb_back;
+    std::string hint_remaining_fall;
+
+    if( slip_chance < 3 ) {
+        hint_slip_risk = "这样向下攀爬<color_green>看起来很安全</color>。";
+    } else if( slip_chance < 8 ) {
+        hint_slip_risk = "这样向下攀爬<color_yellow>有一点难度</color>。";
+    } else if( slip_chance < 20 ) {
+        hint_slip_risk = "这样向下攀爬<color_yellow>有些危险</color>。";
+    } else if( slip_chance < 50 ) {
+        hint_slip_risk = "这样向下攀爬<color_red>非常危险</color>。";
+    } else if( slip_chance < 80 ) {
+        hint_slip_risk = "这样向下攀爬时<color_pink>很可能会失手</color>。";
+    } else {
+        hint_slip_risk = "以现在的状态<color_pink>几乎无法安全向下攀爬</color>。";
+    }
+
+    int damage_estimate = 10 * height;
+    if( damage_estimate <= 30 ) {
+        damage_estimate *= fall_mod;
+    } else {
+        damage_estimate *= std::pow( fall_mod, 30.f / damage_estimate );
+    }
+    if( damage_estimate >= 100 ) {
+        hint_fall_damage = "坠落<color_pink>几乎足以致命</color>。";
+    } else if( damage_estimate >= 60 ) {
+        hint_fall_damage = "坠落<color_pink>可能造成残疾或死亡</color>。";
+    } else if( damage_estimate >= 30 ) {
+        hint_fall_damage = "坠落<color_pink>可能造成骨折</color>。";
+    } else if( damage_estimate >= 15 ) {
+        hint_fall_damage = "坠落<color_red>会造成严重伤害</color>。";
+    } else if( damage_estimate >= 5 ) {
+        hint_fall_damage = "坠落<color_red>会造成伤害</color>。";
+    } else {
+        hint_fall_damage = "坠落<color_light_blue>应该不会造成太大伤害</color>。";
+    }
+    if( climb_cost <= 0 ) {
+        hint_climb_back = "你<color_red>很可能无法</color>再爬上来。";
+    } else if( climb_cost < 200 ) {
+        hint_climb_back = "你<color_light_blue>应该能轻松</color>再爬上来。";
+    } else {
+        hint_climb_back = "你想再爬上来时<color_yellow>可能会遇到困难</color>。";
+    }
+    if( height > 1 ) {
+        hint_remaining_fall = string_format(
+                                  "即使成功向下攀爬，你仍会继续坠落<color_red>至少%d层</color>。\n",
+                                  height - 1 );
+    }
+    return hint_slip_risk + "\n" + hint_remaining_fall + hint_fall_damage + "\n" + hint_climb_back;
+}
+
+void game::climb_down( const tripoint &examp, bool ledge_menu_confirmed )
+{
+    map &here = get_map();
+    Character &you = get_player_character();
+    if( !you.move_effects( false ) ) {
+        you.moves -= 100;
+        return;
+    }
+    if( !here.valid_move( you.pos(), examp, false, true ) ) {
+        return;
+    }
+    tripoint where = examp;
+    tripoint below = examp;
+    below.z--;
+    while( here.valid_move( where, below, false, true ) ) {
+        where.z--;
+        below.z--;
+    }
+    const int height = examp.z - where.z;
+    add_msg_debug( debugmode::DF_IEXAMINE, "边缘高度 %d", height );
+    if( height == 0 ) {
+        you.add_msg_if_player( "这里无法向下攀爬。" );
+        return;
+    }
+    const bool can_use_ladder = height == 1 &&
+                                ( here.has_flag( ter_furn_flag::TFLAG_LADDER, where ) ||
+                                  here.has_flag( ter_furn_flag::TFLAG_GOES_UP, where ) );
+    bool has_grapnel = you.has_amount( itype_grapnel, 1 );
+    bool web_rappel = you.has_flag( json_flag_WEB_RAPPEL );
+    const int climb_cost = you.climbing_cost( where, examp );
+    const float fall_mod = you.fall_damage_mod();
+    you.set_activity_level( ACTIVE_EXERCISE );
+    const float weary_mult = 1.0f / you.exertion_adjusted_move_multiplier( ACTIVE_EXERCISE );
+
+    std::string hint_remaining_fall;
+    if( height > 1 ) {
+        hint_remaining_fall = "\n" + string_format(
+                                  "即使成功向下攀爬，你仍会继续坠落<color_red>至少%d层</color>。", height - 1 );
+    }
+    if( can_use_ladder ) {
+        has_grapnel = false;
+        web_rappel = false;
+    } else if( has_grapnel ) {
+        std::string query = "使用抓钩向下攀爬。";
+        query += "%s";
+        if( !query_yn( query.c_str(), hint_remaining_fall ) ) {
+            has_grapnel = false;
+        } else {
+            web_rappel = false;
+        }
+    }
+    if( !can_use_ladder && !has_grapnel ) {
+        std::string query;
+        std::string hint_slip_risk;
+        std::string hint_fall_damage;
+        std::string hint_climb_back;
+        if( web_rappel ) {
+            if( height <= 1 ) {
+                query = "使用蛛网向下攀爬。";
+            } else {
+                query = string_format( "这里大约有%d层高，你的蛛网足以应付，继续下降。", height );
+            }
+        } else {
+            query = "确认向下攀爬。\n%s%s\n%s\n%s";
+            const int slip_chance = slip_down_chance( !ledge_menu_confirmed );
+            int damage_estimate = 10 * height;
+            if( damage_estimate <= 30 ) {
+                damage_estimate *= fall_mod;
+            } else {
+                damage_estimate *= std::pow( fall_mod, 30.f / damage_estimate );
+            }
+            if( slip_chance < 3 ) {
+                hint_slip_risk = "这样向下攀爬<color_green>看起来很安全</color>。";
+            } else if( slip_chance < 8 ) {
+                hint_slip_risk = "这样向下攀爬<color_yellow>有一点难度</color>。";
+            } else if( slip_chance < 20 ) {
+                hint_slip_risk = "这样向下攀爬<color_yellow>有些危险</color>。";
+            } else if( slip_chance < 50 ) {
+                hint_slip_risk = "这样向下攀爬<color_red>非常危险</color>。";
+            } else if( slip_chance < 80 ) {
+                hint_slip_risk = "这样向下攀爬时<color_pink>很可能会失手</color>。";
+            } else {
+                hint_slip_risk = "以现在的状态<color_pink>几乎无法安全向下攀爬</color>。";
+            }
+            if( damage_estimate >= 100 ) {
+                hint_fall_damage = "坠落<color_pink>几乎足以致命</color>。";
+            } else if( damage_estimate >= 60 ) {
+                hint_fall_damage = "坠落<color_pink>可能造成残疾或死亡</color>。";
+            } else if( damage_estimate >= 30 ) {
+                hint_fall_damage = "坠落<color_pink>可能造成骨折</color>。";
+            } else if( damage_estimate >= 15 ) {
+                hint_fall_damage = "坠落<color_red>会造成严重伤害</color>。";
+            } else if( damage_estimate >= 5 ) {
+                hint_fall_damage = "坠落<color_red>会造成伤害</color>。";
+            } else {
+                hint_fall_damage = "坠落<color_light_blue>应该不会造成太大伤害</color>。";
+            }
+            if( climb_cost <= 0 ) {
+                hint_climb_back = "你<color_red>很可能无法</color>再爬上来。";
+            } else if( climb_cost < 200 ) {
+                hint_climb_back = "你<color_light_blue>应该能轻松</color>再爬上来。";
+            } else {
+                hint_climb_back = "你想再爬上来时<color_yellow>可能会遇到困难</color>。";
+            }
+        }
+        if( web_rappel ) {
+            if( !query_yn( query.c_str(), hint_slip_risk, hint_remaining_fall,
+                           hint_fall_damage, hint_climb_back ) ) {
+                return;
+            }
+        } else if( !ledge_menu_confirmed &&
+                   !query_yn( query.c_str(), hint_slip_risk, hint_remaining_fall,
+                              hint_fall_damage, hint_climb_back ) ) {
+            return;
+        }
+    }
+    if( web_rappel || has_grapnel ) {
+        tripoint p = examp;
+        for( int i = 0; i < height; i++ ) {
+            p.z--;
+            if( here.has_furn( p ) ) {
+                you.add_msg_if_player( web_rappel ?
+                                       "下面有东西挡住了，蛛网无法固定在那里。" :
+                                       "下面有东西挡住了，无法在那里使用抓钩。" );
+                return;
+            }
+        }
+    }
+    you.moves -= to_moves<int>( 1_seconds + 1_seconds * fall_mod ) * weary_mult;
+    you.setpos( examp );
+    if( web_rappel ) {
+        you.add_msg_if_player( "你把一条长长的黏性蛛丝固定在边缘，开始向下移动。" );
+        tripoint web = examp;
+        web.z--;
+        for( int i = 0; i < height; i++ ) {
+            here.furn_set( web, furn_f_web_up );
+            web.z--;
+        }
+        g->vertical_move( -height, true );
+    } else if( has_grapnel ) {
+        you.add_msg_if_player( "你把绳索系在腰间，开始向下攀爬。" );
+        g->vertical_move( -1, true );
+        if( here.has_flag( ter_furn_flag::TFLAG_LADDER, you.pos() ) ) {
+            you.add_msg_if_player( "梯子已经在这里了，所以你不需要留下绳子。" );
+        } else {
+            you.use_amount( itype_grapnel, 1 );
+            here.furn_set( you.pos(), furn_f_rope_up );
+        }
+    } else if( can_use_ladder ) {
+        add_msg_debug( debugmode::DF_IEXAMINE, "安全移动到下方梯子" );
+        you.add_msg_if_player( "你沿着梯子爬了下去。" );
+        g->vertical_move( -height, true );
+    } else if( !g->slip_down( true, false ) ) {
+        add_msg_debug( debugmode::DF_IEXAMINE, "安全向下移动一层" );
+        you.add_msg_if_player( "你抓住边缘，慢慢放低身体。" );
+        g->vertical_move( -1, true );
+    } else {
+        you.add_msg_if_player( "从边缘摔了下去。" );
+        return;
+    }
+    if( here.has_flag( ter_furn_flag::TFLAG_DEEP_WATER, you.pos() ) ) {
+        you.set_underwater( true );
+        g->water_affect_items( you );
+        you.add_msg_if_player( "你继续向下，潜入水中。" );
+    }
 }
 
 namespace cata_event_dispatch

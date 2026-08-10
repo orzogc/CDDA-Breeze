@@ -2593,5 +2593,26 @@
       "ter_set": "t_dirt",
       "items": [ { "item": "withered", "prob": 50, "count": [ 1, 2 ] }, { "item": "leaves", "count": [ 1, 2 ] } ]
     }
+  },
+  {
+    "type": "terrain",
+    "id": "t_lake_trunk",
+    "name": "沉没树干",
+    "looks_like": "t_trunk",
+    "description": "一段泡透了水的树干沉在湖底，木质已经被水和虫蛀侵蚀。",
+    "symbol": "1",
+    "color": "brown",
+    "move_cost": 4,
+    "coverage": 50,
+    "flags": [ "TRANSPARENT", "LIQUID", "NO_SCENT", "SWIMMABLE", "DEEP_WATER", "WATER_CUBE", "GOES_UP", "DIGGABLE", "MOUNTABLE", "SHORT", "MUSHROOM_PLANTABLE", "WATER" ],
+    "bash": {
+      "str_min": 80,
+      "str_max": 180,
+      "sound": "咕咚。",
+      "sound_fail": "哗啦。",
+      "ter_set": "t_lake_bed",
+      "items": [ { "item": "splinter", "count": [ 5, 15 ] } ],
+      "ranged": { "reduction": [ 80, 80 ], "destroy_threshold": 180, "block_unaimed_chance": "50%" }
+    }
   }
 ]

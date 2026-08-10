@@ -32,6 +32,7 @@
   {
     "type": "scenario",
     "id": "lake_retreat",
+    "reveal_locale": false,
     "name": "The Wizard's Vacation",
     "flags": [ "LONE_START" ],
     "points": 3,
@@ -50,6 +51,7 @@
   {
     "type": "scenario",
     "id": "Exile",
+    "reveal_locale": false,
     "name": "Exile",
     "flags": [ "LONE_START" ],
     "points": 1,

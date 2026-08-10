@@ -2,6 +2,7 @@
   {
     "type": "scenario",
     "id": "evacuee",
+    "reveal_locale": false,
     "//": "Overriding evacuee to put it at the top of the list of available scenarios.",
     "name": "In a Cave",
     "points": 0,
@@ -13,6 +14,7 @@
   {
     "type": "scenario",
     "id": "cave_lonesome",
+    "reveal_locale": false,
     "name": "A Lonely Cave",
     "points": -1,
     "description": "Somehow, you found yourself in a cave.  Seems like you're on your own.",
@@ -26,6 +28,7 @@
     "description": "In the chaos and panic of evacuation, you got bitten by something!  You didn't get proper medical care, and now the wound has started turning green.",
     "flags": [ "CHALLENGE", "LONE_START" ],
     "id": "infected",
+    "reveal_locale": false,
     "points": -4,
     "start_name": "Wilderness",
     "allowed_locs": [ "sloc_field", "sloc_forest", "sloc_desert_island", "sloc_river" ],
@@ -34,6 +37,7 @@
   {
     "type": "scenario",
     "id": "hunted_start",
+    "reveal_locale": false,
     "name": "Challenge - Hunted",
     "points": -2,
     "forced_traits": [ "HAS_NEMESIS" ],
@@ -46,6 +50,7 @@
   {
     "type": "scenario",
     "id": "fungal_start",
+    "reveal_locale": false,
     "name": "Challenge - Fungal Infection",
     "points": -8,
     "description": "You feel spores crawling beneath your skin.  It's only a matter of time.",
@@ -57,6 +62,7 @@
   {
     "type": "scenario",
     "id": "bad_day",
+    "reveal_locale": false,
     "name": "Challenge - Really Bad Day",
     "points": -8,
     "description": "You start drunk to the point of incapacitation, depressed, infected, surrounded by fire, and sick with the flu.  This day went downhill really fast.",
@@ -80,6 +86,7 @@
   {
     "type": "scenario",
     "id": "bordered",
+    "reveal_locale": false,
     "name": "Challenge - Bordered",
     "points": -2,
     "description": "You have survived the initial wave of panic, and have achieved (relative) safety in a wilderness.  The only thing that really bothers you is a mysterious sky-high wall seen in the distance.",
@@ -90,6 +97,7 @@
   {
     "type": "scenario",
     "id": "ambushed",
+    "reveal_locale": false,
     "name": "Ambush",
     "points": -3,
     "description": "It is the winter after zero hour.  As you were scavenging for food and a warm place to stay at, you heard the sound of lots of movement nearby.",
@@ -104,6 +112,7 @@
   {
     "type": "scenario",
     "id": "summer_advanced_start",
+    "reveal_locale": false,
     "name": "The Next Summer",
     "points": 0,
     "description": "A little over a year has passed since the apocalypse started, and you're about to face your second summer in Hell.",
@@ -117,6 +126,7 @@
   {
     "type": "scenario",
     "id": "last_flight",
+    "reveal_locale": false,
     "name": "Last Flight",
     "//": "Doesn't seem to spawn the helicopter without a road nearby.  Dissabeled until this can be fixed.",
     "points": 2,
@@ -130,6 +140,7 @@
   {
     "type": "scenario",
     "id": "wilderness",
+    "reveal_locale": false,
     "name": "Wilderness",
     "points": 0,
     "description": "You find yourself amongst trees.  The screaming and the moaning is fainter this far from civilization, but you'd better know what you're doing out here.",
@@ -140,6 +151,7 @@
   {
     "type": "scenario",
     "id": "car_crash",
+    "reveal_locale": false,
     "name": "Car Crash",
     "points": -2,
     "description": "You decided the open road would be a better prospect than the zombie-filled cities.  While en route to your destination, you were involved in a wreck.  When you look around, you can no longer spot the road you were driving on.  Just how hard did you hit your head?",
@@ -151,6 +163,7 @@
   {
     "type": "scenario",
     "id": "medieval",
+    "reveal_locale": false,
     "name": "Challenge - Medieval Peasant",
     "points": -4,
     "description": "Som nigromancie hath brought yow hidder!  Ye have only the hoose on youre legges and the knyf at youre syde and youre prayeres to Marie moder of God.",

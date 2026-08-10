@@ -3065,7 +3065,7 @@ void debug()
             break;
         case debug_menu_index::ENABLE_ACHIEVEMENTS:
             if( achievements.is_enabled() ) {
-                popup( _( "Achievements are already enabled" ) );
+        add_msg( m_warning, "成就已被禁用。" );
             } else {
                 achievements.set_enabled( true );
                 popup( _( "Achievements enabled" ) );
