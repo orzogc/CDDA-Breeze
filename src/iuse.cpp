@@ -9286,106 +9286,174 @@ std::optional<int> iuse::magic_8_ball( Character *p, item *it, bool, const tripo
     return 0;
 }
 
-std::optional<int> iuse::electricstorage( Character *p, item *it, bool t, const tripoint & )
+std::optional<int> iuse::electricstorage( Character *p, item *it, bool t,
+        const tripoint & )
 {
-    if( p->is_npc() ) {
+    // Breeze R5 follow-up digital storage transfer.
+    if( p->is_npc() || t ) {
         return std::nullopt;
     }
 
-    // From item processing
-    if( t ) {
-        return std::nullopt;
-    }
-
-    if( p->is_underwater() ) {
-        p->add_msg_if_player( m_info, _( "Unfortunately your device is not waterproof." ) );
-        return std::nullopt;
-    }
-
-    if( !it->is_ebook_storage() ) {
-        debugmsg( "ELECTRICSTORAGE iuse called on item without ebook type pocket" );
-        return std::nullopt;
-    }
-
-    if( p->has_flag( json_flag_HYPEROPIC ) && !p->worn_with_flag( flag_FIX_FARSIGHT ) &&
-        !p->has_effect( effect_contacts ) && !p->has_flag( json_flag_ENHANCED_VISION ) ) {
-        p->add_msg_if_player( m_info,
-                              _( "You'll need to put on reading glasses before you can see the screen." ) );
-        return std::nullopt;
-    }
-
-    auto filter = []( const item & itm ) {
+    auto filter = []( const item &itm ) {
         return !itm.is_broken() &&
                itm.has_flag( flag_MC_USED ) &&
                itm.has_pocket_type( item_pocket::pocket_type::EBOOK );
     };
 
     item_location storage_card = game_menus::inv::titled_filter_menu(
-                                     filter, *p->as_avatar(), _( "Use what storage device?" ),
-                                     -1, _( "You don't have any empty book storage devices." ) );
+                                     filter, *p->as_avatar(), "使用什么存储设备。",
+                                     -1, "你没有可写的存储设备。" );
 
     if( !storage_card ) {
         return std::nullopt;
     }
 
-    // list of books of from_it that are not in to_it
-    auto book_difference = []( const item & from_it, const item & to_it ) -> std::vector<const item *> {
+    // 返回 from_it 中存在，而 to_it 中尚未保存的电子书。
+    auto book_difference = []( const item &from_it,
+                               const item &to_it ) -> std::vector<const item *> {
         std::set<itype_id> existing_ebooks;
-        for( const item *ebook : to_it.ebooks() )
-        {
+        for( const item *ebook : to_it.ebooks() ) {
             if( !ebook->is_book() ) {
                 debugmsg( "ebook type pocket contains non-book item %s", ebook->typeId().str() );
                 continue;
             }
-
             existing_ebooks.insert( ebook->typeId() );
         }
 
         std::vector<const item *> ebooks;
-        for( const item *ebook : from_it.ebooks() )
-        {
+        for( const item *ebook : from_it.ebooks() ) {
             if( !ebook->is_book() ) {
                 debugmsg( "ebook type pocket contains non-book item %s", ebook->typeId().str() );
                 continue;
             }
-
-            if( existing_ebooks.count( ebook->typeId() ) ) {
-                continue;
+            if( !existing_ebooks.count( ebook->typeId() ) ) {
+                ebooks.emplace_back( ebook );
             }
-
-            ebooks.emplace_back( ebook );
         }
         return ebooks;
     };
 
-    std::vector<const item *> to_storage = book_difference( *it, *storage_card );
-    std::vector<const item *> to_device = book_difference( *storage_card, *it );
-
-    uilist smenu;
-    smenu.text = _( "What to do with your storage devices:" );
-
-    smenu.addentry( 1, !to_device.empty(), 't', _( "Copy to device from the card" ) );
-    smenu.addentry( 2, !to_storage.empty(), 'f', _( "Copy from device to the card" ) );
-    smenu.addentry( 3, !storage_card->ebooks().empty(), 'v', _( "View books in the card" ) );
-    smenu.query();
-
-    // were any books moved to or from the device
-    int books_moved = 0;
-
-    auto move_books = [&books_moved]( const std::vector<const item *> &fromset, item & toit ) -> void {
-        books_moved = fromset.size();
-        for( const item *ebook : fromset )
-        {
-            toit.put_in( *ebook, item_pocket::pocket_type::EBOOK );
+    auto recipe_ids = []( const std::string &encoded ) {
+        std::set<std::string> result;
+        std::istringstream stream( encoded );
+        std::string id;
+        while( getline( stream, id, ',' ) ) {
+            if( !id.empty() ) {
+                result.insert( id );
+            }
         }
+        return result;
     };
 
+    auto digital_data_would_change =
+    [&recipe_ids]( const item &from, const item &to ) {
+        if( from.get_var( "EIPC_PHOTOS", 0 ) > to.get_var( "EIPC_PHOTOS", 0 ) ) {
+            return true;
+        }
+        if( from.get_var( "EIPC_MUSIC", 0 ) > to.get_var( "EIPC_MUSIC", 0 ) ) {
+            return true;
+        }
+
+        const std::set<std::string> source_recipes =
+            recipe_ids( from.get_var( "EIPC_RECIPES" ) );
+        const std::set<std::string> target_recipes =
+            recipe_ids( to.get_var( "EIPC_RECIPES" ) );
+        for( const std::string &id : source_recipes ) {
+            if( !target_recipes.count( id ) ) {
+                return true;
+            }
+        }
+
+        if( !from.get_var( "EIPC_EXTENDED_PHOTOS" ).empty() &&
+            to.get_var( "EIPC_EXTENDED_PHOTOS" ).empty() ) {
+            return true;
+        }
+        if( !from.get_var( "EINK_MONSTER_PHOTOS" ).empty() &&
+            to.get_var( "EINK_MONSTER_PHOTOS" ).empty() ) {
+            return true;
+        }
+        return false;
+    };
+
+    auto copy_digital_data =
+    [&recipe_ids]( const item &from, item &to ) {
+        bool changed = false;
+
+        const int source_photos = from.get_var( "EIPC_PHOTOS", 0 );
+        if( source_photos > to.get_var( "EIPC_PHOTOS", 0 ) ) {
+            to.set_var( "EIPC_PHOTOS", source_photos );
+            changed = true;
+        }
+
+        const int source_music = from.get_var( "EIPC_MUSIC", 0 );
+        if( source_music > to.get_var( "EIPC_MUSIC", 0 ) ) {
+            to.set_var( "EIPC_MUSIC", source_music );
+            changed = true;
+        }
+
+        std::set<std::string> merged_recipes =
+            recipe_ids( to.get_var( "EIPC_RECIPES" ) );
+        const size_t old_recipe_count = merged_recipes.size();
+        const std::set<std::string> source_recipes =
+            recipe_ids( from.get_var( "EIPC_RECIPES" ) );
+        merged_recipes.insert( source_recipes.begin(), source_recipes.end() );
+        if( merged_recipes.size() != old_recipe_count ) {
+            std::string encoded = ",";
+            for( const std::string &id : merged_recipes ) {
+                encoded += id + ",";
+            }
+            to.set_var( "EIPC_RECIPES", encoded );
+            changed = true;
+        }
+
+        // 这两类数据是序列化集合。空目标可以安全完整复制。
+        // 两边都已有集合时不做字符串拼接，避免制造损坏的序列化数据。
+        const std::string source_extended = from.get_var( "EIPC_EXTENDED_PHOTOS" );
+        if( !source_extended.empty() && to.get_var( "EIPC_EXTENDED_PHOTOS" ).empty() ) {
+            to.set_var( "EIPC_EXTENDED_PHOTOS", source_extended );
+            changed = true;
+        }
+
+        const std::string source_monsters = from.get_var( "EINK_MONSTER_PHOTOS" );
+        if( !source_monsters.empty() && to.get_var( "EINK_MONSTER_PHOTOS" ).empty() ) {
+            to.set_var( "EINK_MONSTER_PHOTOS", source_monsters );
+            changed = true;
+        }
+
+        return changed;
+    };
+
+    std::vector<const item *> to_storage = book_difference( *it, *storage_card );
+    std::vector<const item *> to_device = book_difference( *storage_card, *it );
+    const bool data_to_storage = digital_data_would_change( *it, *storage_card );
+    const bool data_to_device = digital_data_would_change( *storage_card, *it );
+
+    uilist smenu;
+    smenu.text = "对存储设备做什么。";
+    smenu.addentry( 1, !to_device.empty() || data_to_device, 't', "从卡复制到设备" );
+    smenu.addentry( 2, !to_storage.empty() || data_to_storage, 'f', "从设备复制到卡" );
+    smenu.addentry( 3, !storage_card->ebooks().empty(), 'v', "查看卡中书籍" );
+    smenu.query();
+
+    auto move_books = []( const std::vector<const item *> &fromset, item &toit ) {
+        int moved = 0;
+        for( const item *ebook : fromset ) {
+            if( toit.put_in( *ebook, item_pocket::pocket_type::EBOOK ).success() ) {
+                moved++;
+            }
+        }
+        return moved;
+    };
+
+    int books_moved = 0;
+    bool data_moved = false;
+
     if( smenu.ret == 1 ) {
-        // to device
-        move_books( to_device, *it );
+        books_moved = move_books( to_device, *it );
+        data_moved = copy_digital_data( *storage_card, *it );
     } else if( smenu.ret == 2 ) {
-        // from device
-        move_books( to_storage, *storage_card );
+        books_moved = move_books( to_storage, *storage_card );
+        data_moved = copy_digital_data( *it, *storage_card );
     } else if( smenu.ret == 3 ) {
         game_menus::inv::ebookread( *p, storage_card );
         return std::nullopt;
@@ -9393,18 +9461,26 @@ std::optional<int> iuse::electricstorage( Character *p, item *it, bool t, const 
         return std::nullopt;
     }
 
-    if( books_moved > 0 ) {
-        p->mod_moves( -to_moves<int>( 2_seconds ) );
-        if( smenu.ret == 1 ) {
-            p->add_msg_if_player( m_info,
-                                  n_gettext( "Copied one book to the device.",
-                                             "Copied %1$s books to the device.", books_moved ),
-                                  books_moved );
-        } else if( smenu.ret == 2 ) {
-            p->add_msg_if_player( m_info,
-                                  n_gettext( "Copied one book to the %2$s.",
-                                             "Copied %1$s books to the %2$s.", books_moved ),
-                                  books_moved, storage_card->tname() );
+    if( books_moved == 0 && !data_moved ) {
+        p->add_msg_if_player( m_info, "没有需要复制的新数据。" );
+        return std::nullopt;
+    }
+
+    p->mod_moves( -to_moves<int>( 2_seconds ) );
+
+    if( smenu.ret == 1 ) {
+        if( books_moved > 0 ) {
+            p->add_msg_if_player( m_info, "已从存储卡复制%d本电子书到设备。", books_moved );
+        }
+        if( data_moved ) {
+            p->add_msg_if_player( m_info, "存储卡中的数字资料已复制到设备。" );
+        }
+    } else {
+        if( books_moved > 0 ) {
+            p->add_msg_if_player( m_info, "已从设备复制%d本电子书到存储卡。", books_moved );
+        }
+        if( data_moved ) {
+            p->add_msg_if_player( m_info, "设备中的数字资料已复制到存储卡。" );
         }
     }
 
