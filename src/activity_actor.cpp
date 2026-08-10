@@ -952,6 +952,7 @@ std::unique_ptr<activity_actor> bookbinder_copy_activity_actor::deserialize( Jso
 void data_handling_activity_actor::start( player_activity &act, Character & )
 {
     act.moves_left = act.moves_total = targets.size() * to_moves<int>( time_per_card );
+    time_until_next_card = time_per_card;
 }
 
 void data_handling_activity_actor::do_turn( player_activity &act, Character &who )
@@ -977,13 +978,13 @@ void data_handling_activity_actor::do_turn( player_activity &act, Character &who
     item_location target = targets.back();
     targets.pop_back();
     time_until_next_card = time_per_card;
-    handled_cards++;
     if( targets.empty() ) {
         act.moves_left = 0;
     }
     if( !target ) {
         return;
     }
+    handled_cards++;
 
     item &mc = *target;
     iuse::init_memory_card_with_random_stuff( mc );
@@ -991,7 +992,7 @@ void data_handling_activity_actor::do_turn( player_activity &act, Character &who
         encrypted_cards++;
         return;
     }
-    if( !mc.has_flag( flag_MC_HAS_DATA ) ) {
+    if( !mc.has_flag( flag_MC_HAS_DATA ) && !mc.has_flag( flag_MC_USED ) ) {
         empty_cards++;
         if( mc.type->memory_card_data && mc.type->memory_card_data->on_read_convert_to.is_valid() ) {
             const itype_id convert_to = mc.type->memory_card_data->on_read_convert_to;
@@ -1056,6 +1057,9 @@ std::unique_ptr<activity_actor> data_handling_activity_actor::deserialize( JsonV
     obj.read( "downloaded_cards", actor.downloaded_cards );
     obj.read( "encrypted_cards", actor.encrypted_cards );
     obj.read( "empty_cards", actor.empty_cards );
+    if( !actor.targets.empty() && actor.time_until_next_card <= 0_seconds ) {
+        actor.time_until_next_card = time_per_card;
+    }
     return actor.clone();
 }
 

@@ -2152,8 +2152,11 @@
     "looks_like": "mobile_memory_card",
     "symbol": ",",
     "color": "white",
-    "name": { "str": "SD-Memory card (clean)", "str_pl": "SD-Memory cards (clean)" },
-    "description": "This memory card is either unused or has been wiped clean.  You could use it to store your data, though!",
+    "name": { "str": "SD存储卡", "str_pl": "SD存储卡" },
+    "conditional_names": [
+      { "type": "FLAG", "condition": "MC_HAS_DATA", "name": { "str": "SD存储卡（有数据）", "str_pl": "SD存储卡（有数据）" } }
+    ],
+    "description": "这是一张可写的SD存储卡，可以保存电子书和其他数字资料。",
     "price": 500,
     "price_postapoc": 10,
     "material": [ "plastic" ],
