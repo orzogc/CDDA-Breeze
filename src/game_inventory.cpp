@@ -1300,6 +1300,14 @@ class read_inventory_preset: public pickup_inventory_preset
                 !loc->type->can_use( "learn_spell" ) ) {
                 return denials.front();
             }
+            if( loc.has_parent() ) {
+                const item_location parent = loc.parent_item();
+                if( parent && parent->is_ebook_storage() ) {
+                    // The book stays in the reader; reading it does not require
+                    // an additional character inventory pocket.
+                    return std::string();
+                }
+            }
             return pickup_inventory_preset::get_denial( loc );
         }
 
