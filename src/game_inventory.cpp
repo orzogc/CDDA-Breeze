@@ -162,6 +162,7 @@ static item_location inv_internal( Character &u, const inventory_selector_preset
         inv_s.add_nearby_items( radius, add_ebooks );
         if( add_ebooks ) {
             inv_s.add_character_ebooks( u );
+            inv_s.deduplicate_books_by_source();
         }
     }
 
@@ -1235,11 +1236,6 @@ class read_inventory_preset: public pickup_inventory_preset
         explicit read_inventory_preset( const Character &you ) : pickup_inventory_preset( you ),
             you( you ) {
             std::string unknown = _( "<color_dark_gray>?</color>" );
-
-            append_cell( []( const item_location &loc ) {
-                const item_location parent = loc.has_parent() ? loc.parent_item() : item_location();
-                return parent && parent->is_ebook_storage() ? std::string( "电子" ) : std::string( "纸质" );
-            }, "介质" );
 
             append_cell( [ this, &you, unknown ]( const item_location & loc ) -> std::string {
                 if( loc->type->can_use( "MA_MANUAL" ) ) {

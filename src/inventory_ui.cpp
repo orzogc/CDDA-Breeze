@@ -1308,6 +1308,25 @@ inventory_entry *inventory_column::add_entry( const inventory_entry &entry )
     return &newent;
 }
 
+void inventory_column::remove_entries(
+    const std::function<bool( const inventory_entry & )> &predicate )
+{
+    const size_t old_entry_count = entries.size() + entries_hidden.size();
+    entries.erase( std::remove_if( entries.begin(), entries.end(), predicate ), entries.end() );
+    entries_hidden.erase( std::remove_if( entries_hidden.begin(), entries_hidden.end(), predicate ),
+                          entries_hidden.end() );
+
+    if( old_entry_count != entries.size() + entries_hidden.size() ) {
+        entries_cell_cache.clear();
+        paging_is_valid = false;
+        if( entries.empty() ) {
+            highlighted_index = std::numeric_limits<size_t>::max();
+        } else if( highlighted_index >= entries.size() ) {
+            highlighted_index = entries.size() - 1;
+        }
+    }
+}
+
 void inventory_column::move_entries_to( inventory_column &dest )
 {
     std::move( entries.begin(), entries.end(), std::back_inserter( dest.entries ) );
@@ -2341,6 +2360,68 @@ void inventory_selector::set_column_titles( const std::string &carried_title,
     if( !carried_title.empty() || !nearby_title.empty() ) {
         column_titles = { carried_title, nearby_title };
     }
+}
+
+void inventory_selector::deduplicate_books_by_source()
+{
+    struct book_choice {
+        const item *item = nullptr;
+        bool electronic = false;
+    };
+
+    const auto is_electronic_book = []( const item_location &loc ) {
+        if( !loc || !loc->is_book() || !loc.has_parent() ) {
+            return false;
+        }
+        const item_location parent = loc.parent_item();
+        return parent && parent->is_ebook_storage();
+    };
+
+    const auto deduplicate_columns = [ &is_electronic_book ](
+                                          const std::vector<inventory_column *> &source_columns ) {
+        std::map<itype_id, book_choice> preferred_books;
+        std::set<const item *> removed_books;
+
+        for( inventory_column * const column : source_columns ) {
+            for( inventory_entry * const entry : column->get_entries( always_yes, true ) ) {
+                if( !entry->is_item() ) {
+                    continue;
+                }
+
+                const item_location &loc = entry->any_item();
+                const item * const candidate = loc.get_item();
+                if( candidate == nullptr || !candidate->is_book() ) {
+                    continue;
+                }
+
+                const itype_id book_id = candidate->typeId();
+                const bool electronic = is_electronic_book( loc );
+                const auto iter = preferred_books.find( book_id );
+                if( iter == preferred_books.end() ) {
+                    preferred_books.emplace( book_id, book_choice{ candidate, electronic } );
+                } else if( iter->second.electronic && !electronic ) {
+                    removed_books.insert( iter->second.item );
+                    iter->second.item = candidate;
+                    iter->second.electronic = false;
+                } else {
+                    removed_books.insert( candidate );
+                }
+            }
+        }
+
+        for( inventory_column * const column : source_columns ) {
+            column->remove_entries( [ &removed_books ]( const inventory_entry &entry ) {
+                if( !entry.is_item() ) {
+                    return false;
+                }
+                const item * const candidate = entry.any_item().get_item();
+                return candidate != nullptr && removed_books.count( candidate ) != 0;
+            } );
+        }
+    };
+
+    deduplicate_columns( { &own_inv_column, &own_gear_column } );
+    deduplicate_columns( { &map_column } );
 }
 
 shared_ptr_fast<ui_adaptor> inventory_selector::create_or_get_ui_adaptor()

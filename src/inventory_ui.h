@@ -392,6 +392,8 @@ class inventory_column
                    std::vector< std::pair<inclusive_rectangle<point>, inventory_entry *>> &rect_entry_map );
 
         inventory_entry *add_entry( const inventory_entry &entry );
+        /** Remove entries matching the predicate from this column. */
+        void remove_entries( const std::function<bool( const inventory_entry & )> &predicate );
         void move_entries_to( inventory_column &dest );
         void clear();
         void set_stack_favorite( std::vector<item_location> &locations, bool favorite );
@@ -633,6 +635,8 @@ class inventory_selector
         /** Assign titles to the carried-item and nearby-item columns. */
         void set_column_titles( const std::string &carried_title,
                                 const std::string &nearby_title );
+        /** Keep one book per type in each source, preferring paper copies. */
+        void deduplicate_books_by_source();
         /** Assigns a hint. */
         void set_hint( const std::string &hint ) {
             this->hint = hint;

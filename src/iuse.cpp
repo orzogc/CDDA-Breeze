@@ -9913,6 +9913,7 @@ std::optional<int> iuse::ebooksave( Character *p, item *it, bool t, const tripoi
     selector.set_column_titles( "随身书籍", "周围书籍" );
     selector.add_character_items( *p );
     selector.add_nearby_items( 1 );
+    selector.deduplicate_books_by_source();
 
     const std::list<std::pair<item_location, int>> selected = selector.execute();
     if( selected.empty() ) {
