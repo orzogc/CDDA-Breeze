@@ -622,8 +622,9 @@ class lockpick_activity_actor : public activity_actor
 class ebooksave_activity_actor : public activity_actor
 {
     public:
-        explicit ebooksave_activity_actor( const item_location &book, const item_location &ereader ) :
-            book( book ), ereader( ereader ) {};
+        explicit ebooksave_activity_actor( const std::vector<item_location> &books,
+                                           const item_location &ereader ) :
+            books( books ), ereader( ereader ) {};
 
         activity_id get_type() const override {
             return activity_id( "ACT_EBOOKSAVE" );
@@ -646,7 +647,7 @@ class ebooksave_activity_actor : public activity_actor
         static std::unique_ptr<activity_actor> deserialize( JsonValue &jsin );
 
     private:
-        item_location book;
+        std::vector<item_location> books;
         item_location ereader;
         static constexpr time_duration time_per_page = 5_seconds;
 
@@ -654,7 +655,7 @@ class ebooksave_activity_actor : public activity_actor
                                        const Character &/*who*/ ) const override {
             const ebooksave_activity_actor &actor = static_cast<const ebooksave_activity_actor &>
                                                     ( other );
-            return actor.book == book && actor.ereader == ereader;
+            return actor.books == books && actor.ereader == ereader;
         }
 };
 

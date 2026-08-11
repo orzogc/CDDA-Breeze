@@ -9,6 +9,7 @@
 #include <list>
 #include <map>
 #include <new>
+#include <set>
 #include <string>
 #include <type_traits>
 #include <utility>
@@ -2601,9 +2602,14 @@ std::unique_ptr<activity_actor> lockpick_activity_actor::deserialize( JsonValue 
 
 void ebooksave_activity_actor::start( player_activity &act, Character &/*who*/ )
 {
-    const int pages = pages_in_book( book->typeId() );
-    const time_duration scanning_time = pages < 1 ? time_per_page : pages * time_per_page;
-    add_msg_debug( debugmode::DF_ACT_EBOOK, "ebooksave pages = %d", pages );
+    int total_pages = 0;
+    for( const item_location &b : books ) {
+        if( b ) {
+            total_pages += pages_in_book( b->typeId() );
+        }
+    }
+    const time_duration scanning_time = total_pages < 1 ? time_per_page : total_pages * time_per_page;
+    add_msg_debug( debugmode::DF_ACT_EBOOK, "ebooksave pages = %d", total_pages );
     add_msg_debug( debugmode::DF_ACT_EBOOK, "scanning_time time = %s",
                    to_string_writable( scanning_time ) );
     act.moves_total = to_moves<int>( scanning_time );
@@ -2627,18 +2633,40 @@ void ebooksave_activity_actor::do_turn( player_activity &/*act*/, Character &who
         ereader->ammo_consume( ereader->ammo_required(), who.pos(), &who );
     }
 }
-
 void ebooksave_activity_actor::finish( player_activity &act, Character &who )
 {
-    item book_copy = *book;
-    ereader->put_in( book_copy, item_pocket::pocket_type::EBOOK );
-    if( who.is_avatar() ) {
-        if( !who.has_identified( book->typeId() ) ) {
-            who.identify( *book );
+    std::set<itype_id> device_ebooks;
+    for( const item *ebook : ereader->ebooks() ) {
+        if( ebook->is_book() ) {
+            device_ebooks.insert( ebook->typeId() );
         }
-        add_msg( m_info, _( "You scan the book into your device." ) );
+    }
+
+    int scanned = 0;
+    for( const item_location &b : books ) {
+        if( !b || device_ebooks.count( b->typeId() ) ) {
+            continue;
+        }
+        item book_copy = *b;
+        if( !ereader->put_in( book_copy, item_pocket::pocket_type::EBOOK ).success() ) {
+            continue;
+        }
+        device_ebooks.insert( book_copy.typeId() );
+        scanned++;
+        if( who.is_avatar() && !who.has_identified( book_copy.typeId() ) ) {
+            who.identify( book_copy );
+        }
+    }
+
+    if( who.is_avatar() ) {
+        if( scanned > 0 ) {
+            add_msg( m_info, n_gettext( "You scan %d book into your device.",
+                                        "You scan %d books into your device.", scanned ), scanned );
+        } else {
+            add_msg( m_info, _( "There is no book to scan." ) );
+        }
     } else { // who.is_npc()
-        add_msg_if_player_sees( who, _( "%s scans the book into their device." ),
+        add_msg_if_player_sees( who, _( "%s scans books into their device." ),
                                 who.disp_name( false, true ) );
     }
     act.set_to_null();
@@ -2647,21 +2675,28 @@ void ebooksave_activity_actor::finish( player_activity &act, Character &who )
 void ebooksave_activity_actor::serialize( JsonOut &jsout ) const
 {
     jsout.start_object();
-    jsout.member( "book", book );
+    jsout.member( "books", books );
     jsout.member( "ereader", ereader );
     jsout.end_object();
 }
 
 std::unique_ptr<activity_actor> ebooksave_activity_actor::deserialize( JsonValue &jsin )
 {
-    ebooksave_activity_actor actor = ebooksave_activity_actor( {}, {} );
-
     JsonObject data = jsin.get_object();
-    data.read( "book", actor.book );
-    data.read( "ereader", actor.ereader );
+    std::vector<item_location> books;
+    data.read( "books", books );
+    if( books.empty() && data.has_member( "book" ) ) {
+        item_location legacy_book;
+        data.read( "book", legacy_book );
+        if( legacy_book ) {
+            books.emplace_back( legacy_book );
+        }
+    }
+    item_location ereader;
+    data.read( "ereader", ereader );
+    ebooksave_activity_actor actor( books, ereader );
     return actor.clone();
 }
-
 
 
 void migration_cancel_activity_actor::do_turn( player_activity &act, Character &who )
