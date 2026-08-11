@@ -2025,8 +2025,15 @@ static void read()
                 spell_book.active, player_character.pos());
         }
         else {
+            item_location ereader;
+            if( loc.has_parent() ) {
+                item_location parent = loc.parent_item();
+                if( parent && parent->is_ebook_storage() ) {
+                    ereader = parent;
+                }
+            }
             loc = loc.obtain(player_character);
-            player_character.read(loc);
+            player_character.read( loc, ereader );
         }
     }
     else {

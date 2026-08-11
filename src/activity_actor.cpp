@@ -1495,6 +1495,11 @@ void read_activity_actor::start( player_activity &act, Character &who )
     add_msg_debug( debugmode::DF_ACT_READ, "reading time = %s",
                    to_string_writable( time_duration::from_moves( moves_total ) ) );
 
+    // Starting the activity should cost a charge to boot up the ebook app.
+    if( using_ereader ) {
+        ereader->ammo_consume( ereader->ammo_required(), who.pos(), &who );
+    }
+
     act.moves_total = moves_total;
     act.moves_left = moves_total;
 }
@@ -1539,7 +1544,9 @@ void read_activity_actor::do_turn( player_activity &act, Character &who )
             _( "<npcname> no longer has the e-book!" ) );
         who.cancel_activity();
         return;
-    } else if( using_ereader && !ereader->ammo_sufficient( &who ) ) {
+    }
+
+    if( using_ereader && !ereader->ammo_sufficient( &who ) ) {
         add_msg_if_player_sees(
             who,
             _( "%1$s %2$s ran out of batteries." ),
@@ -1547,6 +1554,10 @@ void read_activity_actor::do_turn( player_activity &act, Character &who )
             item::nname( ereader->typeId() ) );
         who.cancel_activity();
         return;
+    }
+
+    if( using_ereader && calendar::once_every( 5_minutes ) ) {
+        ereader->ammo_consume( ereader->ammo_required(), who.pos(), &who );
     }
 }
 
