@@ -2032,8 +2032,26 @@ static void read()
                     ereader = parent;
                 }
             }
-            loc = loc.obtain(player_character);
-            player_character.read( loc, ereader );
+            if( ereader ) {
+                if( !ereader.held_by( player_character ) ) {
+                    const itype_id book_type = loc->typeId();
+                    ereader = ereader.obtain( player_character );
+                    if( !ereader ) {
+                        return;
+                    }
+                    item *book = ereader->get_item_with( [&]( const item &candidate ) {
+                        return candidate.typeId() == book_type;
+                    } );
+                    if( book == nullptr ) {
+                        return;
+                    }
+                    loc = item_location( ereader, book );
+                }
+                player_character.read( loc, ereader );
+            } else {
+                loc = loc.obtain( player_character );
+                player_character.read( loc );
+            }
         }
     }
     else {

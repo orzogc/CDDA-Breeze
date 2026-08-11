@@ -154,7 +154,7 @@ static item_location inv_internal( Character &u, const inventory_selector_preset
     } else {
         // Default behavior.
         inv_s.add_character_items( u );
-        inv_s.add_nearby_items( radius );
+        inv_s.add_nearby_items( radius, add_ebooks );
         if( add_ebooks ) {
             inv_s.add_character_ebooks( u );
         }
