@@ -3963,7 +3963,7 @@ void map::smash_items( const tripoint &p, const int power, const std::string &ca
             }
         }
 
-        const float material_factor = i->chip_resistance( true );
+        const float material_factor = std::max( 1.0f, static_cast<float>( i->chip_resistance( true ) ) );
         if( power < material_factor ) {
             i++;
             continue;
