@@ -1,0 +1,37 @@
+[
+  {
+    "id": "762R_clip",
+    "copy-from": "762R_clip",
+    "looks_like": "stanag30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "7.62x54mmR 5发弹夹"
+    },
+    "description": "一块体积小巧中有凹槽的金属片，用来让射手为兼容枪械快速装填5发7.62x39mmR弹。",
+    "weight": "40 g",
+    "volume": "10 ml",
+    "longest_side": "8 cm",
+    "price": 1000,
+    "price_postapoc": 50,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "762R"
+    ],
+    "flags": [
+      "SPEEDLOADER",
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "762R": 5
+        }
+      }
+    ]
+  }
+]

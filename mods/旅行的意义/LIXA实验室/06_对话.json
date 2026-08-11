@@ -1,0 +1,793 @@
+[
+  {
+    "id": "EOC_LIXA_presentation_computer",
+    "type": "effect_on_condition",
+    "effect": [
+      "open_dialogue"
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "LIXA_presentation_computer_main",
+    "dynamic_line": "这台电脑不知为何仍然通着电；墙壁上的插头发出令人震惊的蜂鸣声。电脑桌面上放满了数十个未分类的演示文稿。经过一番调查后，你找到了一个名为外行简报的演示文稿。",
+    "responses": [
+      {
+        "text": "打开外行简报。",
+        "topic": "LIXA_LAYMAN_BRIEFING"
+      },
+      {
+        "text": "转身离开。",
+        "topic": "TALK_DONE"
+      }
+    ],
+    "replace_built_in_responses": true
+  },
+  {
+    "type": "talk_topic",
+    "id": "LIXA_LAYMAN_BRIEFING",
+    "dynamic_line": "屏幕上显示着大号粗体的LIXA字母。在其下方，用较小的字母写着激光干涉异空间共振阵列。几个幻灯片整齐地排列在侧面分组标题下。",
+    "responses": [
+      {
+        "text": "阅读完整简报。",
+        "topic": "LIXA_briefing_full"
+      },
+      {
+        "text": "标题幻灯片。",
+        "topic": "LIXA_LAYMAN_BRIEFING"
+      },
+      {
+        "text": "什么是 LIXA？",
+        "topic": "LIXA_briefing_1"
+      },
+      {
+        "text": "LIGO 与空间压缩。",
+        "topic": "LIXA_briefing_2"
+      },
+      {
+        "text": "什么是激光干涉？",
+        "topic": "LIXA_briefing_3a"
+      },
+      {
+        "text": "LIXA 是如何运作的？",
+        "topic": "LIXA_briefing_4"
+      },
+      {
+        "text": "我们究竟在测量什么？",
+        "topic": "LIXA_briefing_5"
+      },
+      {
+        "text": "LIXA 的资金来源。",
+        "topic": "LIXA_briefing_6"
+      },
+      {
+        "text": "关闭页面。",
+        "topic": "TALK_DONE"
+      }
+    ],
+    "replace_built_in_responses": true
+  },
+  {
+    "type": "talk_topic",
+    "id": "LIXA_briefing_full",
+    "dynamic_line": "外行简报：激光干涉异空间共振阵列（LIXA）\n\n一、什么是LIXA？\nLIXA，或者我们喜欢称呼她为丽莎，是异空间研究的前沿。已经证实，来自我们本地N维空间（我们所在的4维时空坐标）的物质可以通过异维度传输。但它不能安全地进行！要了解异空间的现象，我们必须首先了解它的原理。\n\n二、LIGO与空间压缩\nLIXA 是基于一个名为 LIGO（激光干涉引力波测量仪）的装置的提议。它最初的设计目的是确认引力波的存在，引力波是由超大质量事件时空扩散扭曲引发的。这个设计已被重新用于令人兴奋的异空间研究领域，在这里我们已经知道可以找到空间扭曲！\n\n三、激光干涉\n激光干涉测量法是LIXA用于测量局部异空间变化的技术。原理很简单：激光被引导到一个长真空室中，其长度恰好是激光波长的整数倍。激光经反射镜进入另一真空室；若传播经过的时空没有变化，两束波形同相，合成信号便处于全振幅。若时空发生沿光束方向的扭曲，两束波形就会失相，合成信号的幅度也会低于正常值。简报中的前两幅波形图展示同相信号，第三幅展示失相后缩小的合成波峰。\n\n四、LIXA如何运作\nLIXA 的工作原理是利用局部异维度通量，即异空间缺口周围的环境时空穿过传送门的现象。LIXA 配备了多个局部维度压缩器。这些设备每秒打开和关闭传送门数百次。这导致通量反复将本地n维空间的微小碎片吸引到异空间中，从而产生压缩效果，在邻近异空间的这些碎片中存储大量的4维时空。\n\n五、我们究竟在测量什么\n存储在局部异空间中的压缩n维时空对于任何异时空通量来说都太小，但仍然位于异太空中。通过不停改变频率，我们可以在异时空的无限n维平面上旋转n维时空碎片，并测量它们之间的相对移动，这是采取对策的第一步，并且可能有一天会带来真正安全的超时空传送！！！\n\n六、资金来源\n这是一系列幻灯片。所有这些都包含财务数据，其中充满了其他项目简称和难以理解的名词定义。总之把这一切加起来是笔天文数字。",
+    "responses": [
+      {
+        "text": "阅读完整简报。",
+        "topic": "LIXA_briefing_full"
+      },
+      {
+        "text": "标题幻灯片。",
+        "topic": "LIXA_LAYMAN_BRIEFING"
+      },
+      {
+        "text": "什么是 LIXA？",
+        "topic": "LIXA_briefing_1"
+      },
+      {
+        "text": "LIGO 与空间压缩。",
+        "topic": "LIXA_briefing_2"
+      },
+      {
+        "text": "什么是激光干涉？",
+        "topic": "LIXA_briefing_3a"
+      },
+      {
+        "text": "LIXA 是如何运作的？",
+        "topic": "LIXA_briefing_4"
+      },
+      {
+        "text": "我们究竟在测量什么？",
+        "topic": "LIXA_briefing_5"
+      },
+      {
+        "text": "LIXA 的资金来源。",
+        "topic": "LIXA_briefing_6"
+      },
+      {
+        "text": "关闭页面。",
+        "topic": "TALK_DONE"
+      }
+    ],
+    "replace_built_in_responses": true
+  },
+  {
+    "type": "talk_topic",
+    "id": "LIXA_briefing_1",
+    "dynamic_line": "LIXA，或者我们喜欢称呼她为丽莎，是异空间研究的前沿。已经证实，来自我们本地N维空间（我们所在的4维时空坐标）的物质可以通过异维度传输。但它不能安全地进行！要了解异空间的现象，我们必须首先了解它的原理。",
+    "responses": [
+      {
+        "text": "阅读完整简报。",
+        "topic": "LIXA_briefing_full"
+      },
+      {
+        "text": "标题幻灯片。",
+        "topic": "LIXA_LAYMAN_BRIEFING"
+      },
+      {
+        "text": "什么是 LIXA？",
+        "topic": "LIXA_briefing_1"
+      },
+      {
+        "text": "LIGO 与空间压缩。",
+        "topic": "LIXA_briefing_2"
+      },
+      {
+        "text": "什么是激光干涉？",
+        "topic": "LIXA_briefing_3a"
+      },
+      {
+        "text": "LIXA 是如何运作的？",
+        "topic": "LIXA_briefing_4"
+      },
+      {
+        "text": "我们究竟在测量什么？",
+        "topic": "LIXA_briefing_5"
+      },
+      {
+        "text": "LIXA 的资金来源。",
+        "topic": "LIXA_briefing_6"
+      },
+      {
+        "text": "关闭页面。",
+        "topic": "TALK_DONE"
+      }
+    ],
+    "replace_built_in_responses": true
+  },
+  {
+    "type": "talk_topic",
+    "id": "LIXA_briefing_2",
+    "dynamic_line": "LIXA 是基于一个名为 LIGO（激光干涉引力波测量仪）的装置的提议。它最初的设计目的是确认引力波的存在，引力波是由超大质量事件时空扩散扭曲引发的。这个设计已被重新用于令人兴奋的异空间研究领域，在这里我们已经知道可以找到空间扭曲！",
+    "responses": [
+      {
+        "text": "阅读完整简报。",
+        "topic": "LIXA_briefing_full"
+      },
+      {
+        "text": "标题幻灯片。",
+        "topic": "LIXA_LAYMAN_BRIEFING"
+      },
+      {
+        "text": "什么是 LIXA？",
+        "topic": "LIXA_briefing_1"
+      },
+      {
+        "text": "LIGO 与空间压缩。",
+        "topic": "LIXA_briefing_2"
+      },
+      {
+        "text": "什么是激光干涉？",
+        "topic": "LIXA_briefing_3a"
+      },
+      {
+        "text": "LIXA 是如何运作的？",
+        "topic": "LIXA_briefing_4"
+      },
+      {
+        "text": "我们究竟在测量什么？",
+        "topic": "LIXA_briefing_5"
+      },
+      {
+        "text": "LIXA 的资金来源。",
+        "topic": "LIXA_briefing_6"
+      },
+      {
+        "text": "关闭页面。",
+        "topic": "TALK_DONE"
+      }
+    ],
+    "replace_built_in_responses": true
+  },
+  {
+    "type": "talk_topic",
+    "id": "LIXA_briefing_3a",
+    "dynamic_line": "激光干涉测量法是LIXA用于测量局部异空间变化的技术。原理很简单：激光被引导到一个长真空室中，其长度恰好是激光波长的整数倍。激光经反射镜进入另一真空室；若传播经过的时空没有变化，两束波形同相，合成信号便处于全振幅。若时空发生沿光束方向的扭曲，两束波形就会失相，合成信号的幅度也会低于正常值。简报中的前两幅波形图展示同相信号，第三幅展示失相后缩小的合成波峰。",
+    "responses": [
+      {
+        "text": "阅读完整简报。",
+        "topic": "LIXA_briefing_full"
+      },
+      {
+        "text": "标题幻灯片。",
+        "topic": "LIXA_LAYMAN_BRIEFING"
+      },
+      {
+        "text": "什么是 LIXA？",
+        "topic": "LIXA_briefing_1"
+      },
+      {
+        "text": "LIGO 与空间压缩。",
+        "topic": "LIXA_briefing_2"
+      },
+      {
+        "text": "什么是激光干涉？",
+        "topic": "LIXA_briefing_3a"
+      },
+      {
+        "text": "LIXA 是如何运作的？",
+        "topic": "LIXA_briefing_4"
+      },
+      {
+        "text": "我们究竟在测量什么？",
+        "topic": "LIXA_briefing_5"
+      },
+      {
+        "text": "LIXA 的资金来源。",
+        "topic": "LIXA_briefing_6"
+      },
+      {
+        "text": "关闭页面。",
+        "topic": "TALK_DONE"
+      }
+    ],
+    "replace_built_in_responses": true
+  },
+  {
+    "type": "talk_topic",
+    "id": "LIXA_briefing_3b",
+    "dynamic_line": "激光干涉测量法是LIXA用于测量局部异空间变化的技术。原理很简单：激光被引导到一个长真空室中，其长度恰好是激光波长的整数倍。激光经反射镜进入另一真空室；若传播经过的时空没有变化，两束波形同相，合成信号便处于全振幅。若时空发生沿光束方向的扭曲，两束波形就会失相，合成信号的幅度也会低于正常值。简报中的前两幅波形图展示同相信号，第三幅展示失相后缩小的合成波峰。",
+    "responses": [
+      {
+        "text": "阅读完整简报。",
+        "topic": "LIXA_briefing_full"
+      },
+      {
+        "text": "标题幻灯片。",
+        "topic": "LIXA_LAYMAN_BRIEFING"
+      },
+      {
+        "text": "什么是 LIXA？",
+        "topic": "LIXA_briefing_1"
+      },
+      {
+        "text": "LIGO 与空间压缩。",
+        "topic": "LIXA_briefing_2"
+      },
+      {
+        "text": "什么是激光干涉？",
+        "topic": "LIXA_briefing_3a"
+      },
+      {
+        "text": "LIXA 是如何运作的？",
+        "topic": "LIXA_briefing_4"
+      },
+      {
+        "text": "我们究竟在测量什么？",
+        "topic": "LIXA_briefing_5"
+      },
+      {
+        "text": "LIXA 的资金来源。",
+        "topic": "LIXA_briefing_6"
+      },
+      {
+        "text": "关闭页面。",
+        "topic": "TALK_DONE"
+      }
+    ],
+    "replace_built_in_responses": true
+  },
+  {
+    "type": "talk_topic",
+    "id": "LIXA_briefing_4",
+    "dynamic_line": "LIXA 的工作原理是利用局部异维度通量，即异空间缺口周围的环境时空穿过传送门的现象。LIXA 配备了多个局部维度压缩器。这些设备每秒打开和关闭传送门数百次。这导致通量反复将本地n维空间的微小碎片吸引到异空间中，从而产生压缩效果，在邻近异空间的这些碎片中存储大量的4维时空。",
+    "responses": [
+      {
+        "text": "阅读完整简报。",
+        "topic": "LIXA_briefing_full"
+      },
+      {
+        "text": "标题幻灯片。",
+        "topic": "LIXA_LAYMAN_BRIEFING"
+      },
+      {
+        "text": "什么是 LIXA？",
+        "topic": "LIXA_briefing_1"
+      },
+      {
+        "text": "LIGO 与空间压缩。",
+        "topic": "LIXA_briefing_2"
+      },
+      {
+        "text": "什么是激光干涉？",
+        "topic": "LIXA_briefing_3a"
+      },
+      {
+        "text": "LIXA 是如何运作的？",
+        "topic": "LIXA_briefing_4"
+      },
+      {
+        "text": "我们究竟在测量什么？",
+        "topic": "LIXA_briefing_5"
+      },
+      {
+        "text": "LIXA 的资金来源。",
+        "topic": "LIXA_briefing_6"
+      },
+      {
+        "text": "关闭页面。",
+        "topic": "TALK_DONE"
+      }
+    ],
+    "replace_built_in_responses": true
+  },
+  {
+    "type": "talk_topic",
+    "id": "LIXA_briefing_5",
+    "dynamic_line": "存储在局部异空间中的压缩n维时空对于任何异时空通量来说都太小，但仍然位于异太空中。通过不停改变频率，我们可以在异时空的无限n维平面上旋转n维时空碎片，并测量它们之间的相对移动，这是采取对策的第一步，并且可能有一天会带来真正安全的超时空传送！！！",
+    "responses": [
+      {
+        "text": "阅读完整简报。",
+        "topic": "LIXA_briefing_full"
+      },
+      {
+        "text": "标题幻灯片。",
+        "topic": "LIXA_LAYMAN_BRIEFING"
+      },
+      {
+        "text": "什么是 LIXA？",
+        "topic": "LIXA_briefing_1"
+      },
+      {
+        "text": "LIGO 与空间压缩。",
+        "topic": "LIXA_briefing_2"
+      },
+      {
+        "text": "什么是激光干涉？",
+        "topic": "LIXA_briefing_3a"
+      },
+      {
+        "text": "LIXA 是如何运作的？",
+        "topic": "LIXA_briefing_4"
+      },
+      {
+        "text": "我们究竟在测量什么？",
+        "topic": "LIXA_briefing_5"
+      },
+      {
+        "text": "LIXA 的资金来源。",
+        "topic": "LIXA_briefing_6"
+      },
+      {
+        "text": "关闭页面。",
+        "topic": "TALK_DONE"
+      }
+    ],
+    "replace_built_in_responses": true
+  },
+  {
+    "type": "talk_topic",
+    "id": "LIXA_briefing_6",
+    "dynamic_line": "这是一系列幻灯片。所有这些都包含财务数据，其中充满了其他项目简称和难以理解的名词定义。总之把这一切加起来是笔天文数字。",
+    "responses": [
+      {
+        "text": "阅读完整简报。",
+        "topic": "LIXA_briefing_full"
+      },
+      {
+        "text": "标题幻灯片。",
+        "topic": "LIXA_LAYMAN_BRIEFING"
+      },
+      {
+        "text": "什么是 LIXA？",
+        "topic": "LIXA_briefing_1"
+      },
+      {
+        "text": "LIGO 与空间压缩。",
+        "topic": "LIXA_briefing_2"
+      },
+      {
+        "text": "什么是激光干涉？",
+        "topic": "LIXA_briefing_3a"
+      },
+      {
+        "text": "LIXA 是如何运作的？",
+        "topic": "LIXA_briefing_4"
+      },
+      {
+        "text": "我们究竟在测量什么？",
+        "topic": "LIXA_briefing_5"
+      },
+      {
+        "text": "LIXA 的资金来源。",
+        "topic": "LIXA_briefing_6"
+      },
+      {
+        "text": "关闭页面。",
+        "topic": "TALK_DONE"
+      }
+    ],
+    "replace_built_in_responses": true
+  },
+  {
+    "id": "EOC_LIXA_personal_computer",
+    "type": "effect_on_condition",
+    "effect": [
+      "open_dialogue"
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "LIXA_personal_computer_main",
+    "dynamic_line": "一台个人电脑，屏幕旁的框架上装饰着鲸鱼贴纸。它已经严重故障，其内部文件目录结构完全混乱。",
+    "responses": [
+      {
+        "text": "尝试打开文件。",
+        "trial": {
+          "type": "SKILL_CHECK",
+          "difficulty": 3,
+          "skill_required": "computer"
+        },
+        "success": {
+          "topic": "LIXA_personal_success_1"
+        },
+        "failure": {
+          "topic": "LIXA_personal_failure"
+        }
+      },
+      {
+        "text": "转身离开。",
+        "topic": "TALK_DONE"
+      }
+    ],
+    "replace_built_in_responses": true
+  },
+  {
+    "type": "talk_topic",
+    "id": "LIXA_personal_success_1",
+    "dynamic_line": "<LIXA_personal_snip_1>",
+    "responses": [
+      {
+        "text": "尝试打开文件。",
+        "trial": {
+          "type": "SKILL_CHECK",
+          "difficulty": 3,
+          "skill_required": "computer"
+        },
+        "success": {
+          "topic": "LIXA_personal_success_2"
+        },
+        "failure": {
+          "topic": "LIXA_personal_failure"
+        }
+      },
+      {
+        "text": "转身离开。",
+        "topic": "TALK_DONE"
+      }
+    ],
+    "replace_built_in_responses": true
+  },
+  {
+    "type": "talk_topic",
+    "id": "LIXA_personal_success_2",
+    "dynamic_line": "<LIXA_personal_snip_2>",
+    "responses": [
+      {
+        "text": "尝试打开文件。",
+        "trial": {
+          "type": "SKILL_CHECK",
+          "difficulty": 3,
+          "skill_required": "computer"
+        },
+        "success": {
+          "topic": "LIXA_personal_success_3"
+        },
+        "failure": {
+          "topic": "LIXA_personal_failure"
+        }
+      },
+      {
+        "text": "转身离开。",
+        "topic": "TALK_DONE"
+      }
+    ],
+    "replace_built_in_responses": true
+  },
+  {
+    "type": "talk_topic",
+    "id": "LIXA_personal_success_3",
+    "dynamic_line": "<LIXA_personal_snip_3>",
+    "responses": [
+      {
+        "text": "尝试打开文件。",
+        "trial": {
+          "type": "SKILL_CHECK",
+          "difficulty": 3,
+          "skill_required": "computer"
+        },
+        "success": {
+          "topic": "LIXA_personal_success_4"
+        },
+        "failure": {
+          "topic": "LIXA_personal_failure"
+        }
+      },
+      {
+        "text": "转身离开。",
+        "topic": "TALK_DONE"
+      }
+    ],
+    "replace_built_in_responses": true
+  },
+  {
+    "type": "talk_topic",
+    "id": "LIXA_personal_success_4",
+    "dynamic_line": "<LIXA_personal_snip_4>",
+    "responses": [
+      {
+        "text": "尝试打开文件。",
+        "trial": {
+          "type": "SKILL_CHECK",
+          "difficulty": 3,
+          "skill_required": "computer"
+        },
+        "success": {
+          "topic": "LIXA_personal_success_1"
+        },
+        "failure": {
+          "topic": "LIXA_personal_failure"
+        }
+      },
+      {
+        "text": "转身离开。",
+        "topic": "TALK_DONE"
+      }
+    ],
+    "replace_built_in_responses": true
+  },
+  {
+    "type": "talk_topic",
+    "id": "LIXA_personal_failure",
+    "dynamic_line": "错误：文件路径已损坏。请联系你的系统管理员。 然后计算机死机并重启。",
+    "responses": [
+      {
+        "text": "转身离开。",
+        "topic": "TALK_DONE"
+      }
+    ],
+    "replace_built_in_responses": true
+  },
+  {
+    "id": "EOC_LIXA_experiment_computer",
+    "type": "effect_on_condition",
+    "effect": [
+      "open_dialogue"
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "LIXA_experiment_computer_main",
+    "dynamic_line": "警告：检测到多个系统故障！正在关机。",
+    "responses": [
+      {
+        "text": "错误：通量限制器",
+        "topic": "LIXA_experiment_flux_limiters"
+      },
+      {
+        "text": "错误：电量消耗",
+        "topic": "LIXA_experiment_power_draw"
+      },
+      {
+        "text": "关闭系统",
+        "topic": "LIXA_experiment_system_shutdown"
+      },
+      {
+        "text": "将研究档案复制到外设。",
+        "topic": "LIXA_experiment_backup_data_need_id",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_item": "id_LIXA_najma"
+              }
+            },
+            {
+              "not": {
+                "u_has_item": "id_LIXA_jason"
+              }
+            },
+            {
+              "not": {
+                "u_has_item": "id_LIXA_kai_mei"
+              }
+            },
+            {
+              "not": {
+                "u_has_item": "id_LIXA_rich"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "text": "将研究档案复制到外设。",
+        "topic": "LIXA_experiment_backup_data_no_drive",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_item": "usb_drive_nano"
+              }
+            },
+            {
+              "or": [
+                {
+                  "u_has_item": "id_LIXA_najma"
+                },
+                {
+                  "u_has_item": "id_LIXA_jason"
+                },
+                {
+                  "u_has_item": "id_LIXA_kai_mei"
+                },
+                {
+                  "u_has_item": "id_LIXA_rich"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "text": "将研究档案复制到外设。",
+        "topic": "LIXA_experiment_backup_data",
+        "condition": {
+          "and": [
+            {
+              "u_has_item": "usb_drive_nano"
+            },
+            {
+              "or": [
+                {
+                  "u_has_item": "id_LIXA_najma"
+                },
+                {
+                  "u_has_item": "id_LIXA_jason"
+                },
+                {
+                  "u_has_item": "id_LIXA_kai_mei"
+                },
+                {
+                  "u_has_item": "id_LIXA_rich"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "text": "转身离开。",
+        "topic": "TALK_DONE"
+      }
+    ],
+    "replace_built_in_responses": true
+  },
+  {
+    "type": "talk_topic",
+    "id": "LIXA_experiment_backup_data_need_id",
+    "dynamic_line": "错误：访问被拒绝！ 原因：访问权限不足。",
+    "responses": [
+      {
+        "text": "转身离开。",
+        "topic": "TALK_DONE"
+      }
+    ],
+    "replace_built_in_responses": true
+  },
+  {
+    "type": "talk_topic",
+    "id": "LIXA_experiment_backup_data_no_drive",
+    "dynamic_line": "错误：未检测到外部存储器。",
+    "responses": [
+      {
+        "text": "转身离开。",
+        "topic": "TALK_DONE"
+      }
+    ],
+    "replace_built_in_responses": true
+  },
+  {
+    "type": "talk_topic",
+    "id": "LIXA_experiment_backup_data",
+    "dynamic_line": "备份已完成！",
+    "responses": [
+      {
+        "text": "转身离开。",
+        "topic": "TALK_DONE",
+        "effect": [
+          {
+            "u_consume_item": "usb_drive_nano"
+          },
+          {
+            "u_spawn_item": "lixa_data"
+          }
+        ]
+      }
+    ],
+    "replace_built_in_responses": true
+  },
+  {
+    "type": "talk_topic",
+    "id": "LIXA_experiment_flux_limiters",
+    "dynamic_line": "超出安全外维度通量阈值！当前通量压缩：错 误 堆 栈 溢 出 m/s",
+    "responses": [
+      {
+        "text": "错误：电量消耗",
+        "topic": "LIXA_experiment_power_draw"
+      },
+      {
+        "text": "关闭系统",
+        "topic": "LIXA_experiment_system_shutdown"
+      },
+      {
+        "text": "转身离开。",
+        "topic": "TALK_DONE"
+      }
+    ],
+    "replace_built_in_responses": true
+  },
+  {
+    "type": "talk_topic",
+    "id": "LIXA_experiment_power_draw",
+    "dynamic_line": "能量消耗不稳定。当前功率输入：负 错 误 堆 栈 溢 出 kJ/s",
+    "responses": [
+      {
+        "text": "错误：通量限制器",
+        "topic": "LIXA_experiment_flux_limiters"
+      },
+      {
+        "text": "关闭系统",
+        "topic": "LIXA_experiment_system_shutdown"
+      },
+      {
+        "text": "转身离开。",
+        "topic": "TALK_DONE"
+      }
+    ],
+    "replace_built_in_responses": true
+  },
+  {
+    "type": "talk_topic",
+    "id": "LIXA_experiment_system_shutdown",
+    "dynamic_line": "紧急关机停止：错误 危险放电功率，错误 压缩器工作中",
+    "responses": [
+      {
+        "text": "错误：通量限制器",
+        "topic": "LIXA_experiment_flux_limiters"
+      },
+      {
+        "text": "错误：电量消耗",
+        "topic": "LIXA_experiment_power_draw"
+      },
+      {
+        "text": "关闭系统",
+        "topic": "LIXA_experiment_system_shutdown"
+      },
+      {
+        "text": "转身离开。",
+        "topic": "TALK_DONE"
+      }
+    ],
+    "replace_built_in_responses": true
+  }
+]

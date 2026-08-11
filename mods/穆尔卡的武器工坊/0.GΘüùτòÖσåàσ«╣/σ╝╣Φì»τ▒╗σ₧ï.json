@@ -1,0 +1,14 @@
+[
+  {
+    "type": "ammunition_type",
+    "id": "12755",
+    "name": "12.7x55",
+    "default": "12755"
+  },
+  {
+    "type": "ammunition_type",
+    "id": "5842",
+    "name": "5.8x42mm",
+    "default": "5842"
+  }
+]

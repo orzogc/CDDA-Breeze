@@ -1,0 +1,3801 @@
+[
+  {
+    "id": "k1_plate",
+    "type": "ARMOR",
+    "category": "armor",
+    "name": {
+      "str": "K-1 凯夫拉插板"
+    },
+    "repairs_like": "soft_3a_vest",
+    "description": "由欧洲的格兰尼服装所推出的一款防弹插板，它以比较便宜的价格和相对而言比较可靠的性能所闻名，或许它的确可以挡得住一些手枪弹，不过对于步枪弹可能就手足无措了，至少它很好修，可以从死者身上扒下来修修补补接着用。",
+    "weight": "1500 g",
+    "volume": "1900 ml",
+    "longest_side": "32 cm",
+    "price": 500,
+    "price_postapoc": 300,
+    "material": [
+      "kevlar"
+    ],
+    "symbol": ",",
+    "color": "yellow",
+    "material_thickness": 5,
+    "flags": [
+      "ABLATIVE_LARGE",
+      "CANT_WEAR"
+    ],
+    "armor": [
+      {
+        "encumbrance": 0,
+        "coverage": 45,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_upper"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "k1l_plate",
+    "type": "ARMOR",
+    "category": "armor",
+    "name": {
+      "str": "K-1L 凯夫拉插板"
+    },
+    "repairs_like": "soft_3a_vest",
+    "description": "K-1L防弹插板，与K-1配套使用在兼容中型插班的防弹衣上。",
+    "weight": "993 g",
+    "volume": "774 ml",
+    "longest_side": "20 cm",
+    "price": 400,
+    "price_postapoc": 250,
+    "material": [
+      "kevlar"
+    ],
+    "symbol": ",",
+    "color": "yellow",
+    "material_thickness": 4,
+    "flags": [
+      "ABLATIVE_MEDIUM",
+      "CANT_WEAR"
+    ],
+    "armor": [
+      {
+        "encumbrance": 0,
+        "coverage": 35,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_lower"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tln_plate",
+    "type": "ARMOR",
+    "category": "armor",
+    "name": {
+      "str": "TL-N 牦牛 合金插板"
+    },
+    "description": "俄罗斯联邦的新式插板，由高强度的钢合金制造，具有高韧性和高强度的特点，可以有效的抵挡多发子弹的射击而不像陶瓷装甲板那样产生形变，所以也更加耐用，不过代价也是相对的，也就是说它的重量要比ESAPI陶瓷装甲板略重也更累赘，并且使用者有可能被飞溅的子弹碎片伤到。",
+    "weight": "3000 g",
+    "volume": "1900 ml",
+    "longest_side": "32 cm",
+    "price": 4500,
+    "price_postapoc": 4500,
+    "material": [
+      "superalloy"
+    ],
+    "symbol": ",",
+    "color": "green",
+    "material_thickness": 10,
+    "flags": [
+      "ABLATIVE_LARGE",
+      "CANT_WEAR"
+    ],
+    "armor": [
+      {
+        "encumbrance": 3,
+        "coverage": 45,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_upper"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tln2_plate",
+    "type": "ARMOR",
+    "category": "armor",
+    "name": {
+      "str": "TL-N2 犊牛 合金插板"
+    },
+    "description": "TL-N2防弹插板，与TL-N配套使用在兼容中型插班的防弹衣上。",
+    "weight": "1800 g",
+    "volume": "770 ml",
+    "longest_side": "20 cm",
+    "price": 3500,
+    "price_postapoc": 3500,
+    "material": [
+      "superalloy"
+    ],
+    "symbol": ",",
+    "color": "green",
+    "material_thickness": 8,
+    "flags": [
+      "ABLATIVE_MEDIUM",
+      "CANT_WEAR"
+    ],
+    "armor": [
+      {
+        "encumbrance": 3,
+        "coverage": 35,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_lower"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cva_plate",
+    "type": "ARMOR",
+    "category": "armor",
+    "name": {
+      "str": "护卫者 超合金插板"
+    },
+    "description": "由CVA公司推出的防弹插板，使用了新式的超合金材料，这让它在拥有不俗的防御性能时同样也相当的轻，获得了使用者们的一致好评，它唯一的诟病就是它的价格了。",
+    "weight": "500 g",
+    "volume": "1900 ml",
+    "longest_side": "32 cm",
+    "price": 9500,
+    "price_postapoc": 7500,
+    "material": [
+      "superalloy"
+    ],
+    "symbol": ",",
+    "color": "light_gray",
+    "material_thickness": 20,
+    "flags": [
+      "ABLATIVE_LARGE",
+      "CANT_WEAR",
+      "STURDY"
+    ],
+    "armor": [
+      {
+        "encumbrance": 0,
+        "coverage": 45,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_upper"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cva2_plate",
+    "type": "ARMOR",
+    "category": "armor",
+    "name": {
+      "str": "侧卫 超合金插板"
+    },
+    "description": "侧卫防弹插板，与护卫者配套使用在兼容中型插班的防弹衣上。",
+    "weight": "300 g",
+    "volume": "700 ml",
+    "longest_side": "20 cm",
+    "price": 3500,
+    "price_postapoc": 3500,
+    "material": [
+      "superalloy"
+    ],
+    "symbol": ",",
+    "color": "light_gray",
+    "material_thickness": 18,
+    "flags": [
+      "ABLATIVE_MEDIUM",
+      "CANT_WEAR",
+      "STURDY"
+    ],
+    "armor": [
+      {
+        "encumbrance": 0,
+        "coverage": 35,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_lower"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ssh40",
+    "type": "ARMOR",
+    "category": "armor",
+    "name": {
+      "str": "SSh-40钢盔"
+    },
+    "description": "苏联于1940年采用的钢盔，也是红军在第二次世界大战后半程最具代表性的头部防具之一。它的设计朴素而坚固；放到今天早已落后于复合材料头盔，但仍胜过毫无遮护。",
+    "weight": "2300 g",
+    "volume": "1750 ml",
+    "price": 750,
+    "price_postapoc": 750,
+    "material": [
+      "steel"
+    ],
+    "symbol": "[",
+    "color": "green",
+    "warmth": 10,
+    "material_thickness": 6,
+    "techniques": [
+      "WBLOCK_1"
+    ],
+    "flags": [
+      "WATERPROOF",
+      "STURDY",
+      "PADDED"
+    ],
+    "armor": [
+      {
+        "encumbrance_modifiers": [
+          "NONE"
+        ],
+        "coverage": 50,
+        "covers": [
+          "head"
+        ]
+      }
+    ],
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "6b2",
+    "type": "ARMOR",
+    "category": "armor",
+    "name": {
+      "str": "6B2 防弹背心"
+    },
+    "description": "苏联列装的第一种相对正式的防弹衣,参与过阿富汗战役,放到现在款式相当老土.",
+    "weight": "2000 g",
+    "volume": "5000 ml",
+    "longest_side": "60 cm",
+    "price": 500,
+    "price_postapoc": 500,
+    "material": [
+      "cotton"
+    ],
+    "symbol": ",",
+    "color": "brown",
+    "material_thickness": 1,
+    "flags": [
+      "STURDY",
+      "OUTER"
+    ],
+    "armor": [
+      {
+        "encumbrance": 5,
+        "coverage": 85,
+        "covers": [
+          "torso"
+        ]
+      }
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "ablative": true,
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "2000 ml",
+        "max_contains_weight": "5 kg",
+        "max_item_length": "33 cm",
+        "moves": 800,
+        "description": "大装甲板口袋",
+        "flag_restriction": [
+          "ABLATIVE_LARGE"
+        ]
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "ablative": true,
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "2000 ml",
+        "max_contains_weight": "5 kg",
+        "max_item_length": "33 cm",
+        "moves": 800,
+        "description": "大装甲板口袋",
+        "flag_restriction": [
+          "ABLATIVE_LARGE"
+        ]
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "ablative": true,
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "800 ml",
+        "max_contains_weight": "2 kg",
+        "max_item_length": "21 cm",
+        "moves": 800,
+        "description": "中装甲板口袋",
+        "flag_restriction": [
+          "ABLATIVE_MEDIUM"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "6b3",
+    "type": "ARMOR",
+    "category": "armor",
+    "name": {
+      "str": "6B3TM-01M 弹挂甲"
+    },
+    "description": "改进型6B3通用陆军防弹衣6B3,曾在阿富汗战争期间频繁使用.",
+    "weight": "9200 g",
+    "volume": "8000 ml",
+    "longest_side": "75 cm",
+    "price": 7800,
+    "price_postapoc": 7800,
+    "symbol": ",",
+    "color": "brown",
+    "flags": [
+      "STURDY",
+      "OUTER"
+    ],
+    "armor": [
+      {
+        "material": [
+          {
+            "type": "cotton",
+            "covered_by_mat": 100,
+            "thickness": 1.0
+          },
+          {
+            "type": "hc_steel",
+            "covered_by_mat": 85,
+            "thickness": 6
+          }
+        ],
+        "encumbrance": 10,
+        "coverage": 100,
+        "cover_vitals": 85,
+        "covers": [
+          "torso"
+        ],
+        "volume_encumber_modifier": 0
+      }
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      }
+    ],
+    "use_action": {
+      "type": "holster",
+      "holster_prompt": "存储弹药",
+      "holster_msg": "你收好了%s。"
+    }
+  },
+  {
+    "id": "stsh",
+    "type": "ARMOR",
+    "category": "armor",
+    "name": {
+      "str": "STSh-81“球体”头盔"
+    },
+    "description": "苏联为特种警务与近距离突击任务研制的钛合金头盔，分瓣式外壳形成醒目的圆球轮廓，因此常被称作“球体”。它沉重且妨碍听觉，却能提供远超普通防暴盔的防护。",
+    "weight": "3500 g",
+    "volume": "2150 ml",
+    "price": 1750,
+    "price_postapoc": 1750,
+    "symbol": "[",
+    "color": "green",
+    "warmth": 10,
+    "material_thickness": 6,
+    "repairs_with": [
+      "hc_steel"
+    ],
+    "techniques": [
+      "WBLOCK_1"
+    ],
+    "flags": [
+      "WATERPROOF",
+      "STURDY",
+      "PADDED"
+    ],
+    "armor": [
+      {
+        "material": [
+          {
+            "type": "cotton",
+            "covered_by_mat": 100,
+            "thickness": 1
+          },
+          {
+            "type": "hc_steel",
+            "covered_by_mat": 100,
+            "thickness": 3
+          }
+        ],
+        "encumbrance": 8,
+        "coverage": 80,
+        "covers": [
+          "head"
+        ],
+        "volume_encumber_modifier": 0
+      }
+    ],
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "pilot_helmet",
+    "type": "ARMOR",
+    "category": "armor",
+    "name": {
+      "str": "飞行员头盔"
+    },
+    "description": "武装直升机飞行员标配的头盔，具有优秀的防护性和功能性。",
+    "weight": "3800 g",
+    "volume": "2550 ml",
+    "price": 1750,
+    "price_postapoc": 1750,
+    "repairs_like": "helmet_army",
+    "symbol": "[",
+    "color": "green",
+    "warmth": 20,
+    "material_thickness": 5,
+    "techniques": [
+      "WBLOCK_1"
+    ],
+    "flags": [
+      "WATERPROOF",
+      "STURDY",
+      "PADDED",
+      "SUN_GLASSES",
+      "PARTIAL_DEAF"
+    ],
+    "armor": [
+      {
+        "material": [
+          {
+            "type": "kevlar_rigid",
+            "covered_by_mat": 100,
+            "thickness": 5.0
+          },
+          {
+            "type": "thermo_resin",
+            "covered_by_mat": 100,
+            "thickness": 1.0
+          }
+        ],
+        "covers": [
+          "head"
+        ],
+        "coverage": 100,
+        "encumbrance": 12
+      },
+      {
+        "material": [
+          {
+            "type": "thermo_resin",
+            "covered_by_mat": 100,
+            "thickness": 3.0
+          }
+        ],
+        "covers": [
+          "eyes"
+        ],
+        "rigid_layer_only": true,
+        "coverage": 100,
+        "encumbrance": 2,
+        "layers": [
+          "OUTER"
+        ]
+      },
+      {
+        "material": [
+          {
+            "type": "kevlar_rigid",
+            "covered_by_mat": 100,
+            "thickness": 3.0
+          },
+          {
+            "type": "thermo_resin",
+            "covered_by_mat": 100,
+            "thickness": 1.0
+          }
+        ],
+        "covers": [
+          "mouth"
+        ],
+        "rigid_layer_only": true,
+        "coverage": 100,
+        "encumbrance": 15,
+        "layers": [
+          "OUTER"
+        ]
+      }
+    ],
+    "longest_side": "40 cm"
+  },
+  {
+    "id": "alytin",
+    "type": "TOOL_ARMOR",
+    "category": "armor",
+    "name": {
+      "str": "阿尔金头盔"
+    },
+    "description": "前苏联的阿尔金头盔，以奇特的外形而闻名，虽然现已停产，不过依旧有一些被投入使用，可以有效的抵挡伤害，这对于那个时间所生产出来的头盔而言是相当优秀的，并且这个是经过现代化改装的版本，内置一个耳机。",
+    "use_action": {
+      "type": "transform",
+      "target": "alytin_up",
+      "menu_text": "升起面罩",
+      "msg": "你升起了面罩。"
+    },
+    "weight": "4550 g",
+    "volume": "3550 ml",
+    "price": 35000,
+    "price_postapoc": 7700,
+    "repairs_with": [
+      "hc_steel"
+    ],
+    "material": [
+      "hc_steel",
+      "thermo_resin"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "warmth": 35,
+    "armor": [
+      {
+        "material": [
+          {
+            "type": "hc_steel",
+            "covered_by_mat": 100,
+            "thickness": 5.5
+          }
+        ],
+        "covers": [
+          "head"
+        ],
+        "coverage": 100,
+        "encumbrance": 15,
+        "layers": [
+          "OUTER"
+        ]
+      },
+      {
+        "material": [
+          {
+            "type": "hc_steel",
+            "covered_by_mat": 100,
+            "thickness": 5.5
+          },
+          {
+            "type": "thermo_resin",
+            "covered_by_mat": 45,
+            "thickness": 3
+          }
+        ],
+        "covers": [
+          "eyes"
+        ],
+        "rigid_layer_only": true,
+        "coverage": 100,
+        "encumbrance": 5,
+        "layers": [
+          "OUTER"
+        ]
+      },
+      {
+        "material": [
+          {
+            "type": "hc_steel",
+            "covered_by_mat": 100,
+            "thickness": 5.5
+          }
+        ],
+        "covers": [
+          "mouth"
+        ],
+        "rigid_layer_only": true,
+        "coverage": 100,
+        "encumbrance": 0,
+        "layers": [
+          "OUTER"
+        ]
+      }
+    ],
+    "environmental_protection": 5,
+    "techniques": [
+      "WBLOCK_1"
+    ],
+    "flags": [
+      "WATERPROOF",
+      "PARTIAL_DEAF",
+      "STURDY",
+      "PADDED"
+    ],
+    "longest_side": "40 cm"
+  },
+  {
+    "id": "alytin_up",
+    "type": "TOOL_ARMOR",
+    "repairs_like": "alytin",
+    "category": "armor",
+    "name": {
+      "str": "阿尔金头盔 (面罩升起)"
+    },
+    "description": "升起面罩可以获得更好的视野，不过这也就意味着你的面部将毫无防御。",
+    "use_action": {
+      "type": "transform",
+      "target": "alytin",
+      "menu_text": "降下面罩",
+      "msg": "你降下了面罩。"
+    },
+    "weight": "4550 g",
+    "volume": "3550 ml",
+    "price": 35000,
+    "price_postapoc": 7700,
+    "repairs_with": [
+      "hc_steel"
+    ],
+    "material": [
+      "hc_steel",
+      "thermo_resin"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "warmth": 25,
+    "armor": [
+      {
+        "material": [
+          {
+            "type": "hc_steel",
+            "covered_by_mat": 100,
+            "thickness": 5.5
+          }
+        ],
+        "covers": [
+          "head"
+        ],
+        "coverage": 100,
+        "encumbrance": 15,
+        "layers": [
+          "OUTER"
+        ]
+      }
+    ],
+    "environmental_protection": 5,
+    "techniques": [
+      "WBLOCK_1"
+    ],
+    "flags": [
+      "WATERPROOF",
+      "PARTIAL_DEAF",
+      "STURDY",
+      "PADDED"
+    ],
+    "longest_side": "40 cm"
+  },
+  {
+    "id": "maska",
+    "type": "TOOL_ARMOR",
+    "category": "armor",
+    "name": {
+      "str": "马斯卡头盔"
+    },
+    "description": "前苏联的马斯卡头盔，防护性强，但是视野极其糟糕，还非常累赘，戴上之后仿佛自己与世界完全隔离了一样…无论是视觉还是听觉。",
+    "use_action": {
+      "type": "transform",
+      "target": "maska_up",
+      "menu_text": "升起面罩",
+      "msg": "你升起了面罩。"
+    },
+    "weight": "4850 g",
+    "volume": "3900 ml",
+    "price": 32000,
+    "price_postapoc": 6300,
+    "repairs_with": [
+      "hc_steel"
+    ],
+    "material": [
+      "hc_steel"
+    ],
+    "symbol": "[",
+    "color": "green",
+    "warmth": 35,
+    "armor": [
+      {
+        "material": [
+          {
+            "type": "hc_steel",
+            "covered_by_mat": 100,
+            "thickness": 6.5
+          }
+        ],
+        "covers": [
+          "head"
+        ],
+        "coverage": 100,
+        "encumbrance": 20,
+        "layers": [
+          "OUTER"
+        ]
+      },
+      {
+        "material": [
+          {
+            "type": "hc_steel",
+            "covered_by_mat": 100,
+            "thickness": 6.5
+          }
+        ],
+        "covers": [
+          "eyes"
+        ],
+        "rigid_layer_only": true,
+        "coverage": 90,
+        "encumbrance": 12,
+        "layers": [
+          "OUTER"
+        ]
+      },
+      {
+        "material": [
+          {
+            "type": "hc_steel",
+            "covered_by_mat": 100,
+            "thickness": 6.5
+          }
+        ],
+        "covers": [
+          "mouth"
+        ],
+        "rigid_layer_only": true,
+        "coverage": 100,
+        "encumbrance": 0,
+        "layers": [
+          "OUTER"
+        ]
+      }
+    ],
+    "environmental_protection": 5,
+    "techniques": [
+      "WBLOCK_1"
+    ],
+    "flags": [
+      "WATERPROOF",
+      "DEAF",
+      "STURDY",
+      "PADDED"
+    ],
+    "longest_side": "40 cm"
+  },
+  {
+    "id": "maska_up",
+    "type": "TOOL_ARMOR",
+    "repairs_like": "alytin",
+    "category": "armor",
+    "name": {
+      "str": "马斯卡头盔 (面罩升起)"
+    },
+    "description": "升起面罩可以获得更好的视野，不过这也就意味着你的面部将毫无防御。",
+    "use_action": {
+      "type": "transform",
+      "target": "maska",
+      "menu_text": "降下面罩",
+      "msg": "你降下了面罩。"
+    },
+    "weight": "4850 g",
+    "volume": "3600 ml",
+    "price": 32000,
+    "price_postapoc": 6300,
+    "repairs_with": [
+      "hc_steel"
+    ],
+    "material": [
+      "hc_steel"
+    ],
+    "symbol": "[",
+    "color": "green",
+    "warmth": 30,
+    "armor": [
+      {
+        "material": [
+          {
+            "type": "hc_steel",
+            "covered_by_mat": 100,
+            "thickness": 6.5
+          }
+        ],
+        "covers": [
+          "head"
+        ],
+        "coverage": 100,
+        "encumbrance": 45,
+        "layers": [
+          "OUTER"
+        ]
+      }
+    ],
+    "environmental_protection": 7,
+    "techniques": [
+      "WBLOCK_1"
+    ],
+    "flags": [
+      "WATERPROOF",
+      "DEAF",
+      "STURDY",
+      "PADDED"
+    ],
+    "longest_side": "40 cm"
+  },
+  {
+    "id": "6b13",
+    "type": "ARMOR",
+    "category": "armor",
+    "name": {
+      "str": "6B13 防弹衣"
+    },
+    "description": "地面部队，空降部队，海军陆战队等单位人员使用的主要护甲，这种护甲旨在防止子弹，弹片，地雷，手榴弹，冷兵器对重要器官的攻击，也能减少执行战斗任务时护甲挫伤的严重性。",
+    "weight": "7200 g",
+    "volume": "7500 ml",
+    "longest_side": "80 cm",
+    "price": 13500,
+    "price_postapoc": 7500,
+    "repairs_like": "ballistic_vest_esapi",
+    "symbol": ",",
+    "color": "brown",
+    "flags": [
+      "STURDY",
+      "OUTER"
+    ],
+    "armor": [
+      {
+        "material": [
+          {
+            "type": "cotton",
+            "covered_by_mat": 100,
+            "thickness": 1.0
+          },
+          {
+            "type": "ceramic",
+            "covered_by_mat": 75,
+            "thickness": 18
+          }
+        ],
+        "encumbrance": 5,
+        "coverage": 100,
+        "cover_vitals": 85,
+        "covers": [
+          "torso"
+        ],
+        "volume_encumber_modifier": 0
+      }
+    ]
+  },
+  {
+    "id": "mlc1",
+    "type": "ARMOR",
+    "name": {
+      "str_sp": "MLC 携行具"
+    },
+    "description": "格兰尼服装生产的携行具，它的容量不大，只有两个大号弹匣包，不过它很便宜，仅此而已.",
+    "weight": "250 g",
+    "volume": "250 ml",
+    "price": 1500,
+    "price_postapoc": 1500,
+    "repairs_like": "tacvest",
+    "material": [
+      "cotton"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "material_thickness": 2,
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "650 mm",
+        "max_contains_volume": "1500 ml",
+        "max_contains_weight": "4 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "650 mm",
+        "max_contains_volume": "1500 ml",
+        "max_contains_weight": "4 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      }
+    ],
+    "use_action": {
+      "type": "holster",
+      "holster_prompt": "存储弹药",
+      "holster_msg": "你收好了%s。"
+    },
+    "flags": [
+      "WATER_FRIENDLY",
+      "BELTED"
+    ],
+    "armor": [
+      {
+        "encumbrance": 0,
+        "coverage": 20,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_lower"
+        ]
+      }
+    ],
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "mlc2",
+    "type": "ARMOR",
+    "name": {
+      "str_sp": "MLC2 携行具"
+    },
+    "description": "格兰尼服装生产的携行具，它比MLC1要多一个袋子，除此以外就没有什么明显的改动了。",
+    "weight": "275 g",
+    "volume": "275 ml",
+    "price": 1600,
+    "price_postapoc": 1600,
+    "repairs_like": "tacvest",
+    "material": [
+      "cotton"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "material_thickness": 4,
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      }
+    ],
+    "use_action": {
+      "type": "holster",
+      "holster_prompt": "存储弹药",
+      "holster_msg": "你收好了%s。"
+    },
+    "flags": [
+      "WATER_FRIENDLY",
+      "BELTED"
+    ],
+    "armor": [
+      {
+        "encumbrance": 0,
+        "coverage": 25,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_lower"
+        ]
+      }
+    ],
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "mlv",
+    "type": "ARMOR",
+    "name": {
+      "str_sp": "FLC 作战背心"
+    },
+    "description": "美军在2000年代采购的作战背心，可以外挂在otv防弹衣外面，并且配合molle ii系统的三联包和单联包可以携带十四个弹匣。",
+    "weight": "750 g",
+    "volume": "750 ml",
+    "price": "270 USD",
+    "price_postapoc": "27 USD",
+    "repairs_like": "tacvest",
+    "material": [
+      "cotton"
+    ],
+    "symbol": "[",
+    "flags": [
+      "BELTED"
+    ],
+    "color": "dark_gray",
+    "material_thickness": 6,
+    "use_action": [
+      {
+        "type": "attach_molle",
+        "size": 18
+      },
+      {
+        "type": "detach_molle"
+      }
+    ],
+    "armor": [
+      {
+        "encumbrance": 0,
+        "coverage": 75,
+        "covers": [
+          "torso"
+        ]
+      }
+    ],
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "6b43",
+    "type": "ARMOR",
+    "category": "armor",
+    "name": {
+      "str": "6B43 重型防弹衣"
+    },
+    "description": "俄罗斯联邦的重型防弹衣，可以极为有效的抵挡子弹射击，不过它的重量也相当沉重。",
+    "weight": "13000 g",
+    "volume": "7500 ml",
+    "price": 830000,
+    "price_postapoc": 13000,
+    "repairs_like": "armor_mc_heavy_chestplate",
+    "material": [
+      "hc_steel",
+      "kevlar"
+    ],
+    "symbol": "[",
+    "color": "green",
+    "warmth": 45,
+    "armor": [
+      {
+        "material": [
+          {
+            "type": "kevlar",
+            "covered_by_mat": 100,
+            "thickness": 1.0
+          },
+          {
+            "type": "hc_steel",
+            "covered_by_mat": 100,
+            "thickness": 10
+          }
+        ],
+        "covers": [
+          "torso"
+        ],
+        "coverage": 100,
+        "cover_vitals": 100,
+        "encumbrance": 10,
+        "layers": [
+          "OUTER"
+        ]
+      },
+      {
+        "material": [
+          {
+            "type": "kevlar",
+            "covered_by_mat": 100,
+            "thickness": 1.0
+          },
+          {
+            "type": "hc_steel",
+            "covered_by_mat": 100,
+            "thickness": 8.5
+          }
+        ],
+        "covers": [
+          "arm_l",
+          "arm_r"
+        ],
+        "specifically_covers": [
+          "arm_shoulder_l",
+          "arm_shoulder_r",
+          "arm_upper_l",
+          "arm_upper_r"
+        ],
+        "coverage": 100,
+        "encumbrance": 5,
+        "layers": [
+          "OUTER"
+        ]
+      },
+      {
+        "material": [
+          {
+            "type": "kevlar",
+            "covered_by_mat": 100,
+            "thickness": 1.0
+          },
+          {
+            "type": "hc_steel",
+            "covered_by_mat": 100,
+            "thickness": 8.5
+          }
+        ],
+        "covers": [
+          "leg_l",
+          "leg_r"
+        ],
+        "specifically_covers": [
+          "leg_hip_l",
+          "leg_hip_r"
+        ],
+        "coverage": 100,
+        "encumbrance": 8,
+        "layers": [
+          "OUTER"
+        ]
+      }
+    ],
+    "environmental_protection": 8,
+    "flags": [
+      "WATERPROOF",
+      "STURDY",
+      "PADDED"
+    ],
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "6sh117",
+    "type": "ARMOR",
+    "name": {
+      "str_sp": "6SH117 携行具"
+    },
+    "description": "俄罗斯的军用携行具，容量很大，足够让你携带很多弹匣。",
+    "weight": "1250 g",
+    "volume": "1250 ml",
+    "price": 85000,
+    "price_postapoc": 8500,
+    "repairs_like": "tacvest",
+    "material": [
+      "canvas"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "material_thickness": 5,
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      }
+    ],
+    "use_action": {
+      "type": "holster",
+      "holster_prompt": "存储弹药",
+      "holster_msg": "你收好了%s。"
+    },
+    "flags": [
+      "WATER_FRIENDLY",
+      "OUTER"
+    ],
+    "armor": [
+      {
+        "encumbrance": 0,
+        "coverage": 85,
+        "covers": [
+          "torso"
+        ]
+      }
+    ],
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "pzarmor_l",
+    "type": "ARMOR",
+    "category": "armor",
+    "name": {
+      "str": "PZA-L 防弹衣"
+    },
+    "description": "格兰尼服装面对私人保镖和执法人员推出的产品，具有极高的灵活性和隐蔽性，唯一的缺点就是防护面积少，不过足够保护要害部位。",
+    "weight": "1500 g",
+    "volume": "1500 ml",
+    "longest_side": "45 cm",
+    "price": 20000,
+    "price_postapoc": 4000,
+    "repairs_like": "ballistic_vest_esapi",
+    "symbol": ",",
+    "color": "dark_gray",
+    "flags": [
+      "STURDY",
+      "SKINTIGHT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "ablative": true,
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "2000 ml",
+        "max_contains_weight": "5 kg",
+        "max_item_length": "33 cm",
+        "moves": 800,
+        "description": "大装甲板口袋",
+        "flag_restriction": [
+          "ABLATIVE_LARGE"
+        ]
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "ablative": true,
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "2000 ml",
+        "max_contains_weight": "5 kg",
+        "max_item_length": "33 cm",
+        "moves": 800,
+        "description": "大装甲板口袋",
+        "flag_restriction": [
+          "ABLATIVE_LARGE"
+        ]
+      }
+    ],
+    "armor": [
+      {
+        "material": [
+          {
+            "type": "canvas",
+            "covered_by_mat": 100,
+            "thickness": 1
+          },
+          {
+            "type": "kevlar",
+            "covered_by_mat": 100,
+            "thickness": 1
+          }
+        ],
+        "encumbrance": 0,
+        "coverage": 100,
+        "cover_vitals": 100,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_upper"
+        ],
+        "volume_encumber_modifier": 0
+      }
+    ],
+    "use_action": [
+      {
+        "type": "attach_molle",
+        "size": 8
+      },
+      {
+        "type": "detach_molle"
+      }
+    ]
+  },
+  {
+    "id": "pzarmor_m",
+    "type": "ARMOR",
+    "category": "armor",
+    "name": {
+      "str": "PZA-M 防弹衣"
+    },
+    "description": "格兰尼服装面对私人保镖和执法人员推出的产品，这一款比L型防护面积更高，广泛被执法单位使用。",
+    "weight": "2200 g",
+    "volume": "2200 ml",
+    "longest_side": "60 cm",
+    "price": 35000,
+    "price_postapoc": 6500,
+    "repairs_like": "ballistic_vest_esapi",
+    "symbol": ",",
+    "color": "dark_gray",
+    "flags": [
+      "STURDY",
+      "OUTER"
+    ],
+    "use_action": [
+      {
+        "type": "attach_molle",
+        "size": 10
+      },
+      {
+        "type": "detach_molle"
+      }
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "ablative": true,
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "2000 ml",
+        "max_contains_weight": "5 kg",
+        "max_item_length": "33 cm",
+        "moves": 800,
+        "description": "大装甲板口袋",
+        "flag_restriction": [
+          "ABLATIVE_LARGE"
+        ]
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "ablative": true,
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "2000 ml",
+        "max_contains_weight": "5 kg",
+        "max_item_length": "33 cm",
+        "moves": 800,
+        "description": "大装甲板口袋",
+        "flag_restriction": [
+          "ABLATIVE_LARGE"
+        ]
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "ablative": true,
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "800 ml",
+        "max_contains_weight": "2 kg",
+        "max_item_length": "21 cm",
+        "moves": 800,
+        "description": "中装甲板口袋",
+        "flag_restriction": [
+          "ABLATIVE_MEDIUM"
+        ]
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "ablative": true,
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "800 ml",
+        "max_contains_weight": "2 kg",
+        "max_item_length": "21 cm",
+        "moves": 800,
+        "description": "中装甲板口袋",
+        "flag_restriction": [
+          "ABLATIVE_MEDIUM"
+        ]
+      }
+    ],
+    "armor": [
+      {
+        "material": [
+          {
+            "type": "canvas",
+            "covered_by_mat": 100,
+            "thickness": 1
+          },
+          {
+            "type": "kevlar",
+            "covered_by_mat": 100,
+            "thickness": 2
+          }
+        ],
+        "encumbrance": 0,
+        "coverage": 100,
+        "cover_vitals": 100,
+        "covers": [
+          "torso"
+        ],
+        "volume_encumber_modifier": 0
+      }
+    ]
+  },
+  {
+    "id": "pzarmor_h",
+    "type": "ARMOR",
+    "category": "armor",
+    "name": {
+      "str": "PZA-H 防弹衣"
+    },
+    "description": "格兰尼服装面对执法人员推出的产品，这一款是PZA系列防御性能最强大的一款，可以提供不俗的防御性能。",
+    "weight": "3500 g",
+    "volume": "3500 ml",
+    "longest_side": "60 cm",
+    "price": 75000,
+    "price_postapoc": 7500,
+    "repairs_like": "ballistic_vest_esapi",
+    "symbol": ",",
+    "color": "dark_gray",
+    "flags": [
+      "STURDY",
+      "OUTER"
+    ],
+    "use_action": [
+      {
+        "type": "attach_molle",
+        "size": 16
+      },
+      {
+        "type": "detach_molle"
+      }
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "ablative": true,
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "2000 ml",
+        "max_contains_weight": "5 kg",
+        "max_item_length": "33 cm",
+        "moves": 800,
+        "description": "大装甲板口袋",
+        "flag_restriction": [
+          "ABLATIVE_LARGE"
+        ]
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "ablative": true,
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "2000 ml",
+        "max_contains_weight": "5 kg",
+        "max_item_length": "33 cm",
+        "moves": 800,
+        "description": "大装甲板口袋",
+        "flag_restriction": [
+          "ABLATIVE_LARGE"
+        ]
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "ablative": true,
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "800 ml",
+        "max_contains_weight": "2 kg",
+        "max_item_length": "21 cm",
+        "moves": 800,
+        "description": "中装甲板口袋",
+        "flag_restriction": [
+          "ABLATIVE_MEDIUM"
+        ]
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "ablative": true,
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "800 ml",
+        "max_contains_weight": "2 kg",
+        "max_item_length": "21 cm",
+        "moves": 800,
+        "description": "中装甲板口袋",
+        "flag_restriction": [
+          "ABLATIVE_MEDIUM"
+        ]
+      }
+    ],
+    "armor": [
+      {
+        "material": [
+          {
+            "type": "canvas",
+            "covered_by_mat": 100,
+            "thickness": 0.5
+          },
+          {
+            "type": "kevlar",
+            "covered_by_mat": 100,
+            "thickness": 5
+          }
+        ],
+        "encumbrance": [
+          6,
+          6
+        ],
+        "coverage": 100,
+        "covers": [
+          "torso"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "material": [
+          {
+            "type": "kevlar",
+            "covered_by_mat": 100,
+            "thickness": 5.0
+          }
+        ],
+        "covers": [
+          "leg_l",
+          "leg_r"
+        ],
+        "specifically_covers": [
+          "leg_hip_l",
+          "leg_hip_r"
+        ],
+        "coverage": 100,
+        "volume_encumber_modifier": 0,
+        "encumbrance": [
+          3,
+          3
+        ],
+        "layers": [
+          "OUTER"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "fast_1",
+    "type": "ARMOR",
+    "category": "armor",
+    "name": {
+      "str": "FAST 头盔"
+    },
+    "description": "标准的FAST战术头盔，可以自行加装多种配件。",
+    "weight": "1800 g",
+    "volume": "1800 ml",
+    "price": 7350,
+    "price_postapoc": 6350,
+    "repairs_like": "helmet_army",
+    "material": [
+      "kevlar_rigid",
+      "plastic"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "warmth": 5,
+    "material_thickness": 6,
+    "techniques": [
+      "WBLOCK_1"
+    ],
+    "flags": [
+      "WATERPROOF",
+      "STURDY",
+      "PADDED"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "ablative": true,
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "500 ml",
+        "max_contains_weight": "500 g",
+        "moves": 250,
+        "description": "护目镜/面罩位",
+        "flag_restriction": [
+          "HELMET_FACE_SHIELD"
+        ]
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "ablative": true,
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "500 ml",
+        "max_contains_weight": "400 g",
+        "moves": 250,
+        "description": "护耳位",
+        "flag_restriction": [
+          "HELMET_EAR_ATTACHMENT"
+        ],
+        "inherits_flags": true
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "ablative": true,
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "500 ml",
+        "max_contains_weight": "250 g",
+        "moves": 250,
+        "description": "后颈护具位",
+        "flag_restriction": [
+          "HELMET_NAPE_PROTECTOR"
+        ]
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "ablative": true,
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "500 ml",
+        "max_contains_weight": "400 g",
+        "moves": 250,
+        "description": "系带护颌位",
+        "flag_restriction": [
+          "HELMET_MANDIBLE_GUARD_STRAPPED"
+        ]
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "400 ml",
+        "max_contains_weight": "400 g",
+        "moves": 250,
+        "description": "配重袋位",
+        "flag_restriction": [
+          "HELMET_BACK_POUCH"
+        ]
+      }
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          0,
+          0
+        ],
+        "coverage": 45,
+        "covers": [
+          "head"
+        ]
+      }
+    ],
+    "longest_side": "40 cm"
+  },
+  {
+    "id": "fast_2",
+    "type": "ARMOR",
+    "category": "armor",
+    "name": {
+      "str": "FAST 头盔"
+    },
+    "description": "标准的FAST战术头盔，可以自行加装多种配件，这一款是沙漠配色的。",
+    "weight": "1800 g",
+    "volume": "1800 ml",
+    "price": 7350,
+    "price_postapoc": 6350,
+    "repairs_like": "helmet_army",
+    "material": [
+      "kevlar_rigid",
+      "plastic"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "warmth": 5,
+    "material_thickness": 6,
+    "techniques": [
+      "WBLOCK_1"
+    ],
+    "flags": [
+      "WATERPROOF",
+      "STURDY",
+      "PADDED"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "ablative": true,
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "500 ml",
+        "max_contains_weight": "500 g",
+        "moves": 250,
+        "description": "护目镜/面罩位",
+        "flag_restriction": [
+          "HELMET_FACE_SHIELD"
+        ]
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "ablative": true,
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "500 ml",
+        "max_contains_weight": "400 g",
+        "moves": 250,
+        "description": "护耳位",
+        "flag_restriction": [
+          "HELMET_EAR_ATTACHMENT"
+        ],
+        "inherits_flags": true
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "ablative": true,
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "500 ml",
+        "max_contains_weight": "250 g",
+        "moves": 250,
+        "description": "后颈护具位",
+        "flag_restriction": [
+          "HELMET_NAPE_PROTECTOR"
+        ]
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "ablative": true,
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "500 ml",
+        "max_contains_weight": "400 g",
+        "moves": 250,
+        "description": "系带护颌位",
+        "flag_restriction": [
+          "HELMET_MANDIBLE_GUARD_STRAPPED"
+        ]
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "400 ml",
+        "max_contains_weight": "400 g",
+        "moves": 250,
+        "description": "配重袋位",
+        "flag_restriction": [
+          "HELMET_BACK_POUCH"
+        ]
+      }
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          0,
+          0
+        ],
+        "coverage": 45,
+        "covers": [
+          "head"
+        ]
+      }
+    ],
+    "longest_side": "40 cm"
+  },
+  {
+    "id": "avs",
+    "type": "ARMOR",
+    "category": "armor",
+    "name": {
+      "str": "CPC 防弹背心"
+    },
+    "description": "采用了复合材料的防弹背心，灵活性和防御性优秀。",
+    "weight": "2880 g",
+    "longest_side": "60 cm",
+    "volume": "2200 ml",
+    "price": "7500 USD",
+    "price_postapoc": "150 USD",
+    "repairs_like": "ballistic_vest_esapi",
+    "material": [
+      "kevlar_rigid",
+      "cotton"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "warmth": 25,
+    "use_action": [
+      {
+        "type": "attach_molle",
+        "size": 16
+      },
+      {
+        "type": "detach_molle"
+      }
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "ablative": true,
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "2000 ml",
+        "max_contains_weight": "5 kg",
+        "max_item_length": "33 cm",
+        "moves": 800,
+        "description": "大装甲板口袋",
+        "flag_restriction": [
+          "ABLATIVE_LARGE"
+        ]
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "ablative": true,
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "2000 ml",
+        "max_contains_weight": "5 kg",
+        "max_item_length": "33 cm",
+        "moves": 800,
+        "description": "大装甲板口袋",
+        "flag_restriction": [
+          "ABLATIVE_LARGE"
+        ]
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "ablative": true,
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "800 ml",
+        "max_contains_weight": "2 kg",
+        "max_item_length": "21 cm",
+        "moves": 800,
+        "description": "中装甲板口袋",
+        "flag_restriction": [
+          "ABLATIVE_MEDIUM"
+        ]
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "ablative": true,
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "800 ml",
+        "max_contains_weight": "2 kg",
+        "max_item_length": "21 cm",
+        "moves": 800,
+        "description": "中装甲板口袋",
+        "flag_restriction": [
+          "ABLATIVE_MEDIUM"
+        ]
+      }
+    ],
+    "armor": [
+      {
+        "material": [
+          {
+            "type": "cotton",
+            "covered_by_mat": 100,
+            "thickness": 1
+          },
+          {
+            "type": "kevlar",
+            "covered_by_mat": 100,
+            "thickness": 2
+          }
+        ],
+        "covers": [
+          "torso"
+        ],
+        "coverage": 100,
+        "cover_vitals": 100,
+        "encumbrance": 0,
+        "volume_encumber_modifier": 0,
+        "layers": [
+          "OUTER"
+        ]
+      },
+      {
+        "material": [
+          {
+            "type": "cotton",
+            "covered_by_mat": 100,
+            "thickness": 1.0
+          },
+          {
+            "type": "kevlar_rigid",
+            "covered_by_mat": 100,
+            "thickness": 7
+          }
+        ],
+        "covers": [
+          "leg_l",
+          "leg_r"
+        ],
+        "specifically_covers": [
+          "leg_hip_l",
+          "leg_hip_r"
+        ],
+        "coverage": 100,
+        "encumbrance": 0,
+        "volume_encumber_modifier": 0,
+        "layers": [
+          "OUTER"
+        ]
+      }
+    ],
+    "environmental_protection": 5,
+    "flags": [
+      "WATERPROOF",
+      "STURDY",
+      "PADDED",
+      "OUTER"
+    ]
+  },
+  {
+    "id": "shotbag",
+    "type": "ARMOR",
+    "name": {
+      "str": "特制组合式腰包"
+    },
+    "description": "一套精心制作的腰包，由一连串定制后的战术腰包，腰带和绑腿带组合而成，后方有一个大储物袋，大储物袋的上方是绑工具的带子，你可以把一根撬棍什么的绑上去，左右两侧均有副储物袋，其中一个储物袋旁边有个小刀鞘，这套腰包可以让你有额外的的空间来储存医疗物品和工具，可以和普通背包一起穿戴，功能性非常好。",
+    "weight": "1250 g",
+    "volume": "8500 ml",
+    "price": 3800,
+    "price_postapoc": 3800,
+    "repairs_like": "survivor_duffel_bag",
+    "material": [
+      "kevlar_rigid",
+      "cotton"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "material_thickness": 5,
+    "pocket_data": [
+      {
+        "description": "工具绑带",
+        "holster": true,
+        "volume_encumber_modifier": 0,
+        "weight_multiplier": 0.6,
+        "max_contains_volume": "3250 ml",
+        "max_contains_weight": "5000 g",
+        "max_item_length": "90 cm",
+        "moves": 200,
+        "flag_restriction": [
+          "BELT_CLIP"
+        ]
+      },
+      {
+        "description": "小刀鞘",
+        "magazine_well": "200 ml",
+        "holster": true,
+        "flag_restriction": [
+          "SHEATH_KNIFE"
+        ],
+        "moves": 10,
+        "volume_encumber_modifier": 0,
+        "weight_multiplier": 0.6,
+        "max_contains_volume": "700 ml",
+        "max_contains_weight": "5 kg",
+        "max_item_length": "50 cm"
+      },
+      {
+        "description": "双副储物袋",
+        "pocket_type": "CONTAINER",
+        "volume_encumber_modifier": 0,
+        "weight_multiplier": 0.6,
+        "max_contains_volume": "5 L",
+        "max_contains_weight": "50 kg",
+        "max_item_length": "40 cm",
+        "moves": 25
+      },
+      {
+        "description": "后储物袋",
+        "pocket_type": "CONTAINER",
+        "volume_encumber_modifier": 0,
+        "weight_multiplier": 0.6,
+        "max_contains_volume": "10 L",
+        "max_contains_weight": "100 kg",
+        "max_item_length": "60 cm",
+        "moves": 85
+      }
+    ],
+    "flags": [
+      "WATER_FRIENDLY",
+      "BELTED"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          0,
+          0
+        ],
+        "coverage": 85,
+        "covers": [
+          "leg_l",
+          "leg_r",
+          "torso"
+        ],
+        "specifically_covers": [
+          "leg_hip_l",
+          "leg_hip_r",
+          "torso_waist"
+        ]
+      }
+    ],
+    "longest_side": "38 cm"
+  },
+  {
+    "id": "tenacious_shot",
+    "type": "ARMOR",
+    "name": {
+      "str": "黄铜外壳霰弹"
+    },
+    "description": "一发来路不明的黄铜霰弹，看上去像是老古董了，它的底火已经被激发过了，但另一端的开口被蜡严严实实的封死了，并且抠不下来，这导致你不知道里面到底装着什么东西，可以通过重量确定里面不是空的，子弹底部则写着一圈单词……顽强，握在手里的时候就好像有什么东西在保护你，这让你感觉自己哪怕遇到再大的灾难也可以幸存下来，或者仅仅只是错觉。",
+    "weight": "50 g",
+    "volume": "5 ml",
+    "price": 10000,
+    "price_postapoc": 10000,
+    "material": [
+      "brass"
+    ],
+    "symbol": "*",
+    "color": "brown",
+    "flags": [
+      "PORTAL_PROOF",
+      "DIMENSIONAL_ANCHOR",
+      "BELTED",
+      "OVERSIZE"
+    ],
+    "longest_side": "8 cm",
+    "armor": [
+      {
+        "encumbrance": 0,
+        "coverage": 1,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_waist"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "shotbox_belt",
+    "type": "ARMOR",
+    "name": {
+      "str": "霰弹储存盒腰带"
+    },
+    "description": "一种内部有非常多插槽的塑料盒，它装在一条腰带上，可以非常快的从里面取出霰弹并装填，在竞技射击比赛中非常常见。",
+    "weight": "450 g",
+    "volume": "1000 ml",
+    "price": 2500,
+    "price_postapoc": 2500,
+    "material": [
+      "plastic"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "material_thickness": 5,
+    "pocket_data": [
+      {
+        "description": "霰弹储存盒",
+        "ammo_restriction": {
+          "shot": 40
+        },
+        "moves": 5
+      }
+    ],
+    "use_action": {
+      "type": "holster",
+      "holster_prompt": "存入物品",
+      "holster_msg": "你将 %1$s 收进 %2$s"
+    },
+    "flags": [
+      "PADDED",
+      "WATER_FRIENDLY",
+      "BELTED"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          0,
+          0
+        ],
+        "coverage": 25,
+        "covers": [
+          "leg_l",
+          "leg_r"
+        ],
+        "specifically_covers": [
+          "leg_hip_l",
+          "leg_hip_r"
+        ]
+      }
+    ],
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "shotbox2_belt",
+    "type": "ARMOR",
+    "name": {
+      "str": "双霰弹储存盒腰带"
+    },
+    "description": "一种内部有非常多插槽的塑料盒，它装在一条腰带上，可以非常快的从里面取出霰弹并装填，在竞技射击比赛中非常常见，这个是双储存盒设计的。",
+    "weight": "900 g",
+    "volume": "1500 ml",
+    "price": 4500,
+    "price_postapoc": 4500,
+    "material": [
+      "plastic"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "material_thickness": 5,
+    "pocket_data": [
+      {
+        "description": "霰弹储存盒",
+        "ammo_restriction": {
+          "shot": 80
+        },
+        "moves": 5
+      }
+    ],
+    "use_action": {
+      "type": "holster",
+      "holster_prompt": "存入物品",
+      "holster_msg": "你将 %1$s 收进 %2$s"
+    },
+    "flags": [
+      "PADDED",
+      "WATER_FRIENDLY",
+      "BELTED"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          0,
+          0
+        ],
+        "coverage": 25,
+        "covers": [
+          "leg_l",
+          "leg_r"
+        ],
+        "specifically_covers": [
+          "leg_hip_l",
+          "leg_hip_r"
+        ]
+      }
+    ],
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "ammo_storage_pack",
+    "type": "ARMOR",
+    "name": {
+      "str": "纳米弹药打印盒"
+    },
+    "description": "格科斯勒生产的一种先进的，适用于molle插槽的子弹储存盒，本质上是一台小型的3D纳米打印机，内置一个微型核反应堆，结构相当紧凑，将子弹放进去后这台机器会将子弹分解成粉末状并压缩，取出来时会将其复原，缺点是取出物品需要一定时间，并且价格一点也不便宜，适用于长距离行军时携带大量弹药。",
+    "weight": "300 g",
+    "volume": "500 ml",
+    "price": 82000,
+    "price_postapoc": 82000,
+    "material": [
+      "plastic"
+    ],
+    "symbol": "[",
+    "looks_like": "ragpouch",
+    "color": "brown",
+    "material_thickness": 8,
+    "pocket_data": [
+      {
+        "ammo_restriction": {
+          "50": 2000,
+          "4570": 2000,
+          "410shot": 2000,
+          "22": 2000,
+          "shot": 2000,
+          "9mm": 2000,
+          "357sig": 2000,
+          "9x18": 2000,
+          "380": 2000,
+          "38": 2000,
+          "40": 2000,
+          "10mm": 2000,
+          "44": 2000,
+          "45": 2000,
+          "460": 2000,
+          "454": 2000,
+          "45colt": 2000,
+          "500": 2000,
+          "57": 2000,
+          "46": 2000,
+          "762": 2000,
+          "545x39": 2000,
+          "223": 2000,
+          "3006": 2000,
+          "270win": 2000,
+          "308": 2000,
+          "12mm": 2000,
+          "8x40mm": 2000,
+          "20x66mm": 2000,
+          "5x50": 2000,
+          "300": 2000,
+          "32": 2000,
+          "762x25": 2000,
+          "737_cta": 2000,
+          "127108": 2000,
+          "145114": 2000,
+          "939": 2000,
+          "762R": 2000
+        },
+        "weight_multiplier": 0.0,
+        "rigid": true,
+        "volume_encumber_modifier": 0,
+        "moves": 150
+      }
+    ],
+    "flags": [
+      "TARDIS",
+      "BELTED",
+      "OVERSIZE",
+      "WATER_FRIENDLY",
+      "PALS_MEDIUM",
+      "STURDY",
+      "PADDED"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          0,
+          0
+        ],
+        "coverage": 100,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_waist"
+        ]
+      }
+    ],
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "speedloader_pouch",
+    "type": "ARMOR",
+    "name": {
+      "str": "霰弹装弹器容纳包",
+      "str_pl": "霰弹装弹器容纳包"
+    },
+    "description": "一个小型的类似弹匣包的小包，不一样的是这个包相对而言要更长，并且里面有绑带，可以用来装一些管型的快速装弹器，比如霰弹枪用的那些。",
+    "weight": "250 g",
+    "volume": "250 ml",
+    "price": 1250,
+    "price_postapoc": 2000,
+    "material": [
+      "kevlar_rigid"
+    ],
+    "symbol": "[",
+    "looks_like": "ragpouch",
+    "color": "brown",
+    "material_thickness": 2,
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "900 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "霰弹快速装弹器"
+        ],
+        "volume_encumber_modifier": 0
+      }
+    ],
+    "use_action": {
+      "type": "holster",
+      "holster_prompt": "存储弹药",
+      "holster_msg": "你收好了%s。"
+    },
+    "flags": [
+      "WATER_FRIENDLY",
+      "OVERSIZE",
+      "BELTED",
+      "PALS_SMALL"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          0,
+          0
+        ],
+        "coverage": 25,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_upper"
+        ]
+      }
+    ],
+    "longest_side": "38 cm"
+  },
+  {
+    "id": "pd_1",
+    "type": "ARMOR",
+    "repairs_like": "soft_3a_vest",
+    "category": "armor",
+    "symbol": "[",
+    "color": "dark_gray",
+    "name": {
+      "str": "“PD-1“宪兵”单兵防护套装"
+    },
+    "description": "格科斯勒步兵部队的基础服装，其中包括一套CU2作战服和一件DA30L防弹衣，提供了可观的防护和储存空间，无论是新兵还是军官，正规军还是大灾变后的志愿民兵团，格科斯勒中的大部分成员穿的都是这套装备，所以一般靠帽子或者臂带臂章等途径来辨认职位以避免一些不必要的针对。",
+    "flags": [
+      "STURDY",
+      "RAINPROOF",
+      "PADDED"
+    ],
+    "price": 100000,
+    "price_postapoc": 10000,
+    "material": [
+      "canvas",
+      "rubber",
+      "kevlar",
+      "ceramic"
+    ],
+    "weight": "8500 g",
+    "volume": "10 L",
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "4 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "4 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "4 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "4 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "4 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "4 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "description": "小刀鞘",
+        "magazine_well": "350 ml",
+        "holster": true,
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "5 kg",
+        "max_item_length": "70 cm",
+        "moves": 20,
+        "flag_restriction": [
+          "SHEATH_KNIFE"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "5 L",
+        "max_contains_weight": "10 kg",
+        "moves": 40,
+        "max_item_length": "20 cm",
+        "volume_encumber_modifier": 0,
+        "description": "小型随身储物袋."
+      }
+    ],
+    "environmental_protection": 10,
+    "warmth": 30,
+    "armor": [
+      {
+        "material": [
+          {
+            "type": "canvas",
+            "covered_by_mat": 100,
+            "thickness": 3
+          }
+        ],
+        "encumbrance": 2,
+        "coverage": 100,
+        "covers": [
+          "hand_l",
+          "hand_r"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "material": [
+          {
+            "type": "canvas",
+            "covered_by_mat": 100,
+            "thickness": 3
+          }
+        ],
+        "encumbrance": 5,
+        "rigid_layer_only": true,
+        "coverage": 100,
+        "covers": [
+          "foot_l",
+          "foot_r"
+        ],
+        "specifically_covers": [
+          "foot_toes_r",
+          "foot_toes_l",
+          "foot_ankle_r",
+          "foot_ankle_l",
+          "foot_heel_r",
+          "foot_heel_l",
+          "foot_arch_r",
+          "foot_arch_l"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "material": [
+          {
+            "type": "canvas",
+            "covered_by_mat": 80,
+            "thickness": 3
+          },
+          {
+            "type": "rubber",
+            "covered_by_mat": 100,
+            "thickness": 15
+          }
+        ],
+        "encumbrance": 0,
+        "rigid_layer_only": true,
+        "coverage": 100,
+        "covers": [
+          "foot_l",
+          "foot_r"
+        ],
+        "specifically_covers": [
+          "foot_sole_r",
+          "foot_sole_l"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "material": [
+          {
+            "type": "kevlar",
+            "covered_by_mat": 100,
+            "thickness": 5
+          },
+          {
+            "type": "canvas",
+            "covered_by_mat": 100,
+            "thickness": 5
+          },
+          {
+            "type": "ceramic",
+            "covered_by_mat": 95,
+            "thickness": 10
+          }
+        ],
+        "covers": [
+          "torso"
+        ],
+        "rigid_layer_only": true,
+        "coverage": 100,
+        "cover_vitals": 85,
+        "encumbrance": 6,
+        "layers": [
+          "OUTER"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "material": [
+          {
+            "type": "canvas",
+            "covered_by_mat": 100,
+            "thickness": 3
+          }
+        ],
+        "covers": [
+          "arm_l",
+          "arm_r"
+        ],
+        "coverage": 100,
+        "encumbrance": 3,
+        "volume_encumber_modifier": 0
+      },
+      {
+        "material": [
+          {
+            "type": "canvas",
+            "covered_by_mat": 100,
+            "thickness": 3
+          }
+        ],
+        "covers": [
+          "leg_l",
+          "leg_r"
+        ],
+        "coverage": 100,
+        "encumbrance": 3,
+        "volume_encumber_modifier": 0
+      }
+    ],
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "ch_1",
+    "type": "ARMOR",
+    "category": "armor",
+    "name": {
+      "str": "CH-1 战斗头盔"
+    },
+    "description": "格科斯勒步兵部队的基础头盔，使用了钢材质，中等重量，防护性能倒是不错，完全可以抵挡几乎所有手枪弹和部分小口径步枪弹，适用范围相当广泛。",
+    "weight": "1550 g",
+    "volume": "2550 ml",
+    "price": 45000,
+    "price_postapoc": 9600,
+    "repairs_like": "helmet_barbute",
+    "repairs_with": [
+      "hc_steel"
+    ],
+    "material": [
+      "hc_steel"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "warmth": 30,
+    "armor": [
+      {
+        "material": [
+          {
+            "type": "hc_steel",
+            "covered_by_mat": 100,
+            "thickness": 4
+          }
+        ],
+        "covers": [
+          "head"
+        ],
+        "coverage": 100,
+        "encumbrance": 5,
+        "layers": [
+          "OUTER"
+        ]
+      },
+      {
+        "material": [
+          {
+            "type": "cotton",
+            "covered_by_mat": 100,
+            "thickness": 3
+          }
+        ],
+        "covers": [
+          "mouth"
+        ],
+        "rigid_layer_only": true,
+        "coverage": 100,
+        "encumbrance": 2
+      }
+    ],
+    "environmental_protection": 10,
+    "techniques": [
+      "WBLOCK_1"
+    ],
+    "flags": [
+      "WATERPROOF",
+      "PARTIAL_DEAF",
+      "STURDY",
+      "PADDED"
+    ],
+    "longest_side": "40 cm"
+  },
+  {
+    "id": "pdh_2",
+    "type": "ARMOR",
+    "repairs_like": "soft_3a_vest",
+    "category": "armor",
+    "symbol": "[",
+    "color": "dark_gray",
+    "name": {
+      "str": "PDH-2“近卫”单兵防护套装"
+    },
+    "description": "格科斯勒步兵部队的作战套装之一，其中包括一套CU2作战服和DA32防弹衣，常被突击或重装单位使用，用于防御物理伤害，比如一些怪物或者人类，对环境与空间伤害的防护表现不佳。",
+    "flags": [
+      "STURDY",
+      "RAINPROOF",
+      "PADDED"
+    ],
+    "price": 180000,
+    "price_postapoc": 18000,
+    "material": [
+      "canvas",
+      "kevlar",
+      "ceramic"
+    ],
+    "weight": "15000 g",
+    "volume": "15 L",
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "4 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "4 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "4 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "4 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "4 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "4 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "300 mm",
+        "max_contains_volume": "1500 ml",
+        "max_contains_weight": "6 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT",
+          "MAG_BULKY"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "300 mm",
+        "max_contains_volume": "1500 ml",
+        "max_contains_weight": "6 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT",
+          "MAG_BULKY"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "description": "小刀鞘",
+        "magazine_well": "350 ml",
+        "holster": true,
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "5 kg",
+        "max_item_length": "70 cm",
+        "moves": 20,
+        "flag_restriction": [
+          "SHEATH_KNIFE"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "5 L",
+        "max_contains_weight": "10 kg",
+        "moves": 40,
+        "max_item_length": "20 cm",
+        "volume_encumber_modifier": 0,
+        "description": "小型随身储物袋."
+      }
+    ],
+    "environmental_protection": 10,
+    "warmth": 40,
+    "armor": [
+      {
+        "material": [
+          {
+            "type": "canvas",
+            "covered_by_mat": 100,
+            "thickness": 3
+          }
+        ],
+        "encumbrance": 2,
+        "coverage": 100,
+        "covers": [
+          "hand_l",
+          "hand_r"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "material": [
+          {
+            "type": "canvas",
+            "covered_by_mat": 100,
+            "thickness": 3
+          }
+        ],
+        "encumbrance": 5,
+        "rigid_layer_only": true,
+        "coverage": 100,
+        "covers": [
+          "foot_l",
+          "foot_r"
+        ],
+        "specifically_covers": [
+          "foot_toes_r",
+          "foot_toes_l",
+          "foot_ankle_r",
+          "foot_ankle_l",
+          "foot_heel_r",
+          "foot_heel_l",
+          "foot_arch_r",
+          "foot_arch_l"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "material": [
+          {
+            "type": "canvas",
+            "covered_by_mat": 80,
+            "thickness": 3
+          },
+          {
+            "type": "rubber",
+            "covered_by_mat": 100,
+            "thickness": 15
+          }
+        ],
+        "encumbrance": 0,
+        "rigid_layer_only": true,
+        "coverage": 100,
+        "covers": [
+          "foot_l",
+          "foot_r"
+        ],
+        "specifically_covers": [
+          "foot_sole_r",
+          "foot_sole_l"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "material": [
+          {
+            "type": "kevlar",
+            "covered_by_mat": 100,
+            "thickness": 5
+          },
+          {
+            "type": "canvas",
+            "covered_by_mat": 100,
+            "thickness": 5
+          },
+          {
+            "type": "ceramic",
+            "covered_by_mat": 95,
+            "thickness": 20
+          }
+        ],
+        "covers": [
+          "torso"
+        ],
+        "rigid_layer_only": true,
+        "coverage": 100,
+        "cover_vitals": 85,
+        "encumbrance": 12,
+        "layers": [
+          "OUTER"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "material": [
+          {
+            "type": "kevlar",
+            "covered_by_mat": 100,
+            "thickness": 5
+          },
+          {
+            "type": "canvas",
+            "covered_by_mat": 100,
+            "thickness": 5
+          },
+          {
+            "type": "ceramic",
+            "covered_by_mat": 95,
+            "thickness": 5
+          }
+        ],
+        "covers": [
+          "arm_l",
+          "arm_r"
+        ],
+        "specifically_covers": [
+          "arm_shoulder_l",
+          "arm_shoulder_r",
+          "arm_upper_l",
+          "arm_upper_r",
+          "arm_elbow_l",
+          "arm_elbow_r"
+        ],
+        "rigid_layer_only": true,
+        "coverage": 100,
+        "encumbrance": 8,
+        "layers": [
+          "OUTER"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "material": [
+          {
+            "type": "canvas",
+            "covered_by_mat": 100,
+            "thickness": 3
+          }
+        ],
+        "covers": [
+          "arm_l",
+          "arm_r"
+        ],
+        "specifically_covers": [
+          "arm_lower_l",
+          "arm_lower_r"
+        ],
+        "coverage": 100,
+        "encumbrance": 3,
+        "volume_encumber_modifier": 0
+      },
+      {
+        "material": [
+          {
+            "type": "canvas",
+            "covered_by_mat": 100,
+            "thickness": 3
+          }
+        ],
+        "covers": [
+          "leg_l",
+          "leg_r"
+        ],
+        "specifically_covers": [
+          "leg_lower_l",
+          "leg_lower_r",
+          "leg_upper_l",
+          "leg_upper_r",
+          "leg_knee_r",
+          "leg_knee_l"
+        ],
+        "coverage": 100,
+        "encumbrance": 3,
+        "volume_encumber_modifier": 0
+      },
+      {
+        "material": [
+          {
+            "type": "canvas",
+            "covered_by_mat": 100,
+            "thickness": 3
+          },
+          {
+            "type": "kevlar",
+            "covered_by_mat": 45,
+            "thickness": 5
+          },
+          {
+            "type": "ceramic",
+            "covered_by_mat": 45,
+            "thickness": 10
+          }
+        ],
+        "covers": [
+          "leg_l",
+          "leg_r"
+        ],
+        "specifically_covers": [
+          "leg_hip_l",
+          "leg_hip_r"
+        ],
+        "rigid_layer_only": true,
+        "coverage": 100,
+        "volume_encumber_modifier": 0,
+        "encumbrance": 8,
+        "layers": [
+          "OUTER"
+        ]
+      }
+    ],
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "ch_2",
+    "type": "ARMOR",
+    "category": "armor",
+    "name": {
+      "str": "CH-2 战斗头盔"
+    },
+    "description": "格科斯勒步兵部队的重型头盔，是由CH1改进后的版本，厚度更厚，并且添加了一个不可拆卸的一体式面罩，还有一个可拆卸的护目镜，这个头盔不轻，舒适性也不好，还没有其他功能，以至于有人认为戴着它是个蠢主意，但是它确确实实可以帮你抗住不少伤害，除了护目镜部位它有些时候甚至可以帮你挡住一发全威力步枪穿甲弹直射，如果你运气好的话。",
+    "weight": "3550 g",
+    "volume": "3120 ml",
+    "price": 65000,
+    "price_postapoc": 14500,
+    "repairs_like": "helmet_barbute",
+    "repairs_with": [
+      "hc_steel"
+    ],
+    "material": [
+      "hc_steel",
+      "thermo_resin"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "warmth": 40,
+    "armor": [
+      {
+        "material": [
+          {
+            "type": "hc_steel",
+            "covered_by_mat": 100,
+            "thickness": 6
+          }
+        ],
+        "covers": [
+          "head"
+        ],
+        "rigid_layer_only": true,
+        "coverage": 100,
+        "encumbrance": 10,
+        "layers": [
+          "OUTER"
+        ]
+      },
+      {
+        "material": [
+          {
+            "type": "thermo_resin",
+            "covered_by_mat": 100,
+            "thickness": 3
+          }
+        ],
+        "covers": [
+          "eyes"
+        ],
+        "rigid_layer_only": true,
+        "coverage": 100,
+        "encumbrance": 10,
+        "layers": [
+          "OUTER"
+        ]
+      },
+      {
+        "material": [
+          {
+            "type": "hc_steel",
+            "covered_by_mat": 100,
+            "thickness": 4
+          }
+        ],
+        "covers": [
+          "mouth"
+        ],
+        "rigid_layer_only": true,
+        "coverage": 100,
+        "encumbrance": 5,
+        "layers": [
+          "OUTER"
+        ]
+      }
+    ],
+    "environmental_protection": 10,
+    "techniques": [
+      "WBLOCK_1"
+    ],
+    "flags": [
+      "WATERPROOF",
+      "PARTIAL_DEAF",
+      "STURDY",
+      "PADDED"
+    ],
+    "longest_side": "40 cm"
+  },
+  {
+    "id": "potato_suit",
+    "type": "ARMOR",
+    "repairs_like": "survivor_duffel_bag",
+    "category": "armor",
+    "symbol": "[",
+    "color": "dark_gray",
+    "name": {
+      "str": "土豆玩偶服"
+    },
+    "description": "一套巨大的用于扮演成土豆的奇特服装，会让你看起来像个土豆，闻起来像个土豆，不幸的是，丧尸不是肉食主义。",
+    "flags": [
+      "PADDED"
+    ],
+    "price": 999999,
+    "price_postapoc": 50,
+    "material": [
+      "cotton"
+    ],
+    "weight": "10000 g",
+    "volume": "30 L",
+    "environmental_protection": 60,
+    "warmth": 60,
+    "armor": [
+      {
+        "material": [
+          {
+            "type": "cotton",
+            "covered_by_mat": 100,
+            "thickness": 20
+          }
+        ],
+        "covers": [
+          "torso"
+        ],
+        "coverage": 100,
+        "encumbrance": 20,
+        "layers": [
+          "OUTER"
+        ]
+      },
+      {
+        "material": [
+          {
+            "type": "cotton",
+            "covered_by_mat": 100,
+            "thickness": 20
+          }
+        ],
+        "covers": [
+          "leg_l",
+          "leg_r"
+        ],
+        "specifically_covers": [
+          "leg_hip_l",
+          "leg_hip_r"
+        ],
+        "coverage": 100,
+        "encumbrance": 20,
+        "layers": [
+          "OUTER"
+        ]
+      },
+      {
+        "material": [
+          {
+            "type": "cotton",
+            "covered_by_mat": 100,
+            "thickness": 20
+          }
+        ],
+        "covers": [
+          "head"
+        ],
+        "coverage": 100,
+        "encumbrance": 20,
+        "layers": [
+          "OUTER"
+        ]
+      }
+    ],
+    "longest_side": "90 cm"
+  },
+  {
+    "id": "edcu1v",
+    "type": "TOOL_ARMOR",
+    "repairs_like": "soft_3a_vest",
+    "category": "armor",
+    "symbol": "[",
+    "color": "dark_gray",
+    "name": {
+      "str": "EDCU-1-V “号令”三防作战服"
+    },
+    "description": "格科斯勒步兵部队的标准环境防护作战服，由一套全覆盖的ECU3B和加装了额外防护部件的DA32H组成，ECU3B作为ECU3的改版具有更好的防护性和耐用性并且额外添加了一个带面罩的头罩，头罩内部还配有一顶头盔，内置环境防护，呼吸循环与恒温功能，可以保护你免受任何辐射与化学伤害，DA32H是基于DA32的改版，防护性更好，添加了护肩与护腿，总的来说这是一套综合非常优秀的装备，就是有一点点重，常被需要接触化学或放射性物质的部队使用，或者纯粹只是为了高防御。",
+    "flags": [
+      "STURDY",
+      "RAINPROOF",
+      "PADDED",
+      "SWIM_GOGGLES",
+      "RAD_PROOF",
+      "ELECTRIC_IMMUNE",
+      "SUN_GLASSES",
+      "FLASH_PROTECTION",
+      "USE_UPS",
+      "WATERPROOF"
+    ],
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WORN",
+          "condition": "ACTIVE",
+          "values": [
+            {
+              "value": "CLIMATE_CONTROL_HEAT",
+              "add": 150
+            },
+            {
+              "value": "CLIMATE_CONTROL_CHILL",
+              "add": 150
+            }
+          ]
+        }
+      ]
+    },
+    "use_action": {
+      "type": "transform",
+      "msg": "过滤系统/恒温系统已开启。",
+      "target": "edcu1v_on",
+      "active": true,
+      "need_charges": 1,
+      "need_charges_msg": "未检测到可用电源。"
+    },
+    "price": 180000,
+    "price_postapoc": 18000,
+    "material": [
+      "canvas",
+      "rubber",
+      "kevlar",
+      "ceramic",
+      "carbide"
+    ],
+    "weight": "22000 g",
+    "volume": "25 L",
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "4 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "4 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "4 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "4 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "4 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "4 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "4 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "4 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "300 mm",
+        "max_contains_volume": "1500 ml",
+        "max_contains_weight": "6 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT",
+          "MAG_BULKY"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "300 mm",
+        "max_contains_volume": "1500 ml",
+        "max_contains_weight": "6 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT",
+          "MAG_BULKY"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "description": "小刀鞘",
+        "magazine_well": "350 ml",
+        "holster": true,
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "5 kg",
+        "max_item_length": "70 cm",
+        "moves": 20,
+        "flag_restriction": [
+          "SHEATH_KNIFE"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "10 L",
+        "max_contains_weight": "20 kg",
+        "moves": 40,
+        "max_item_length": "30 cm",
+        "volume_encumber_modifier": 0,
+        "description": "随身储物袋."
+      }
+    ],
+    "environmental_protection": 100,
+    "warmth": 40,
+    "armor": [
+      {
+        "material": [
+          {
+            "type": "canvas",
+            "covered_by_mat": 100,
+            "thickness": 3
+          },
+          {
+            "type": "carbide",
+            "covered_by_mat": 100,
+            "thickness": 1
+          }
+        ],
+        "encumbrance": 5,
+        "coverage": 100,
+        "covers": [
+          "hand_l",
+          "hand_r"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "material": [
+          {
+            "type": "canvas",
+            "covered_by_mat": 100,
+            "thickness": 3
+          },
+          {
+            "type": "carbide",
+            "covered_by_mat": 100,
+            "thickness": 3
+          }
+        ],
+        "encumbrance": 8,
+        "rigid_layer_only": true,
+        "coverage": 100,
+        "covers": [
+          "foot_l",
+          "foot_r"
+        ],
+        "specifically_covers": [
+          "foot_toes_r",
+          "foot_toes_l",
+          "foot_ankle_r",
+          "foot_ankle_l",
+          "foot_heel_r",
+          "foot_heel_l",
+          "foot_arch_r",
+          "foot_arch_l"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "material": [
+          {
+            "type": "canvas",
+            "covered_by_mat": 80,
+            "thickness": 3
+          },
+          {
+            "type": "rubber",
+            "covered_by_mat": 100,
+            "thickness": 15
+          }
+        ],
+        "encumbrance": 0,
+        "rigid_layer_only": true,
+        "coverage": 100,
+        "covers": [
+          "foot_l",
+          "foot_r"
+        ],
+        "specifically_covers": [
+          "foot_sole_r",
+          "foot_sole_l"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "material": [
+          {
+            "type": "kevlar",
+            "covered_by_mat": 100,
+            "thickness": 5
+          },
+          {
+            "type": "canvas",
+            "covered_by_mat": 100,
+            "thickness": 5
+          },
+          {
+            "type": "carbide",
+            "covered_by_mat": 100,
+            "thickness": 3
+          },
+          {
+            "type": "ceramic",
+            "covered_by_mat": 95,
+            "thickness": 20
+          }
+        ],
+        "covers": [
+          "torso"
+        ],
+        "rigid_layer_only": true,
+        "coverage": 100,
+        "cover_vitals": 85,
+        "encumbrance": 20,
+        "layers": [
+          "OUTER"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "material": [
+          {
+            "type": "kevlar",
+            "covered_by_mat": 100,
+            "thickness": 5
+          },
+          {
+            "type": "canvas",
+            "covered_by_mat": 100,
+            "thickness": 5
+          },
+          {
+            "type": "carbide",
+            "covered_by_mat": 100,
+            "thickness": 3
+          },
+          {
+            "type": "ceramic",
+            "covered_by_mat": 95,
+            "thickness": 5
+          }
+        ],
+        "covers": [
+          "arm_l",
+          "arm_r"
+        ],
+        "specifically_covers": [
+          "arm_shoulder_l",
+          "arm_shoulder_r",
+          "arm_upper_l",
+          "arm_upper_r",
+          "arm_elbow_l",
+          "arm_elbow_r"
+        ],
+        "rigid_layer_only": true,
+        "coverage": 100,
+        "cover_vitals": 85,
+        "encumbrance": 8,
+        "layers": [
+          "OUTER"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "material": [
+          {
+            "type": "canvas",
+            "covered_by_mat": 100,
+            "thickness": 3
+          },
+          {
+            "type": "carbide",
+            "covered_by_mat": 100,
+            "thickness": 3
+          }
+        ],
+        "covers": [
+          "arm_l",
+          "arm_r"
+        ],
+        "specifically_covers": [
+          "arm_lower_l",
+          "arm_lower_r"
+        ],
+        "coverage": 100,
+        "encumbrance": 5,
+        "volume_encumber_modifier": 0
+      },
+      {
+        "material": [
+          {
+            "type": "canvas",
+            "covered_by_mat": 100,
+            "thickness": 3
+          },
+          {
+            "type": "carbide",
+            "covered_by_mat": 100,
+            "thickness": 3
+          }
+        ],
+        "covers": [
+          "leg_l",
+          "leg_r"
+        ],
+        "specifically_covers": [
+          "leg_lower_l",
+          "leg_lower_r",
+          "leg_knee_r",
+          "leg_knee_l"
+        ],
+        "coverage": 100,
+        "encumbrance": 3,
+        "volume_encumber_modifier": 0
+      },
+      {
+        "material": [
+          {
+            "type": "canvas",
+            "covered_by_mat": 100,
+            "thickness": 3
+          },
+          {
+            "type": "kevlar",
+            "covered_by_mat": 45,
+            "thickness": 5
+          },
+          {
+            "type": "carbide",
+            "covered_by_mat": 100,
+            "thickness": 3
+          },
+          {
+            "type": "ceramic",
+            "covered_by_mat": 45,
+            "thickness": 10
+          }
+        ],
+        "covers": [
+          "leg_l",
+          "leg_r"
+        ],
+        "specifically_covers": [
+          "leg_hip_l",
+          "leg_hip_r",
+          "leg_upper_l",
+          "leg_upper_r"
+        ],
+        "rigid_layer_only": true,
+        "coverage": 100,
+        "cover_vitals": 85,
+        "volume_encumber_modifier": 0,
+        "encumbrance": 12,
+        "layers": [
+          "OUTER"
+        ]
+      },
+      {
+        "material": [
+          {
+            "type": "canvas",
+            "covered_by_mat": 100,
+            "thickness": 3
+          },
+          {
+            "type": "carbide",
+            "covered_by_mat": 100,
+            "thickness": 3
+          },
+          {
+            "type": "hc_steel",
+            "covered_by_mat": 100,
+            "thickness": 5
+          }
+        ],
+        "covers": [
+          "head"
+        ],
+        "coverage": 100,
+        "encumbrance": 10,
+        "layers": [
+          "OUTER"
+        ]
+      },
+      {
+        "material": [
+          {
+            "type": "thermo_resin",
+            "covered_by_mat": 100,
+            "thickness": 5
+          }
+        ],
+        "covers": [
+          "eyes"
+        ],
+        "rigid_layer_only": true,
+        "coverage": 100,
+        "encumbrance": 10,
+        "layers": [
+          "OUTER"
+        ]
+      },
+      {
+        "material": [
+          {
+            "type": "thermo_resin",
+            "covered_by_mat": 100,
+            "thickness": 5
+          },
+          {
+            "type": "plastic",
+            "covered_by_mat": 45,
+            "thickness": 10
+          }
+        ],
+        "covers": [
+          "mouth"
+        ],
+        "rigid_layer_only": true,
+        "coverage": 100,
+        "encumbrance": 10,
+        "layers": [
+          "OUTER"
+        ]
+      }
+    ],
+    "longest_side": "90 cm"
+  },
+  {
+    "id": "edcu1v_on",
+    "repairs_like": "soft_3a_vest",
+    "type": "TOOL_ARMOR",
+    "name": {
+      "str": "EDCU-1-V “号令”三防作战服（启动）"
+    },
+    "description": "格科斯勒步兵部队的标准环境防护作战服，由一套全覆盖的ECU3B和加装了额外防护部件的DA32H组成，ECU3B作为ECU3的改版具有更好的防护性和耐用性并且额外添加了一个带面罩的头罩，头罩内部还配有一顶头盔，内置环境防护，呼吸循环与恒温功能，可以保护你免受任何辐射与化学伤害，DA32H是基于DA32的改版，防护性更好，添加了护肩与护腿，总的来说这是一套综合非常优秀的装备，就是有一点点重，常被需要接触化学或放射性物质的部队使用，或者纯粹只是为了高防御。",
+    "turns_per_charge": 10,
+    "copy-from": "edcu1v",
+    "revert_to": "edcu1v",
+    "use_action": {
+      "type": "transform",
+      "menu_text": "关闭",
+      "msg": "过滤系统/恒温系统已关闭。",
+      "target": "edcu1v"
+    },
+    "longest_side": "90 cm",
+    "extend": {
+      "flags": [
+        "GAS_PROOF",
+        "REBREATHER"
+      ]
+    }
+  }
+]

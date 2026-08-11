@@ -1,0 +1,1079 @@
+[
+  {
+    "id": "939_magazine_10",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "VSS/VAL 10发弹匣"
+    },
+    "description": "一个VSS/VAL的9*39十发弹匣。",
+    "weight": "250 g",
+    "volume": "200 ml",
+    "price": 3500,
+    "price_postapoc": 280,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "939"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "939": 10
+        }
+      }
+    ],
+    "longest_side": "14 cm"
+  },
+  {
+    "id": "939_magazine_20",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "VSS/VAL 20发弹匣"
+    },
+    "description": "一个VSS/VAL的9*39二十发弹匣。",
+    "weight": "350 g",
+    "volume": "250 ml",
+    "price": 4500,
+    "price_postapoc": 580,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "939"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "939": 20
+        }
+      }
+    ],
+    "longest_side": "14 cm"
+  },
+  {
+    "id": "939_magazine_30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "VSS/VAL 30发弹匣"
+    },
+    "description": "一个VSS/VAL的9*39三十发弹匣。",
+    "weight": "450 g",
+    "volume": "350 ml",
+    "price": 5000,
+    "price_postapoc": 680,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "939"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "939": 30
+        }
+      }
+    ],
+    "longest_side": "14 cm"
+  },
+  {
+    "id": "svd_10",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "SVD 10发弹匣"
+    },
+    "description": "一个SVD的十发弹匣。",
+    "weight": "345 g",
+    "volume": "297 ml",
+    "price": 2500,
+    "price_postapoc": 480,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "762R"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "762R": 10
+        }
+      }
+    ],
+    "longest_side": "14 cm"
+  },
+  {
+    "id": "1901_30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "PP-19-01 30发弹匣"
+    },
+    "description": "一个PP-19-01的三十弹匣。",
+    "weight": "250 g",
+    "volume": "250 ml",
+    "price": 350,
+    "price_postapoc": 120,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "9x18"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "9x18": 30
+        }
+      }
+    ],
+    "longest_side": "14 cm"
+  },
+  {
+    "id": "pp91_30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "PP-91 30发弹匣"
+    },
+    "description": "一个PP91的三十发弹匣。",
+    "weight": "200 g",
+    "volume": "210 ml",
+    "price": 350,
+    "price_postapoc": 110,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "9x18"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "9x18": 30
+        }
+      }
+    ],
+    "longest_side": "14 cm"
+  },
+  {
+    "id": "hb_15",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "地狱之息 15发弹桶"
+    },
+    "description": "一个地狱之息的十五发弹桶.",
+    "weight": "100 g",
+    "volume": "100 ml",
+    "price": 7500,
+    "price_postapoc": 7500,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "BB"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "BB": 15
+        }
+      }
+    ],
+    "longest_side": "14 cm"
+  },
+  {
+    "id": "svch_20",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "SVCH 20发弹匣"
+    },
+    "description": "一个SVCH狙击步枪的的三十弹发匣，使用.308子弹。",
+    "weight": "250 g",
+    "volume": "350 ml",
+    "price": 1125,
+    "price_postapoc": 750,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "308"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "308": 20
+        }
+      }
+    ],
+    "longest_side": "14 cm"
+  },
+  {
+    "id": "pk_200",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "PKM 200发弹箱"
+    },
+    "description": "一个PKM机枪的二百发弹箱，并且内置不可散弹链。",
+    "weight": "1500 g",
+    "volume": "2000 ml",
+    "price": 7700,
+    "price_postapoc": 5920,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "green",
+    "ammo_type": [
+      "762R"
+    ],
+    "flags": [
+      "MAG_BULKY"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "762R": 200
+        }
+      }
+    ],
+    "longest_side": "22 cm"
+  },
+  {
+    "id": "pp19_64",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "PP-19 64发弹桶"
+    },
+    "description": "一个PP-19的六十四发弹筒。",
+    "weight": "450 g",
+    "volume": "430 ml",
+    "price": 720,
+    "price_postapoc": 340,
+    "material": [
+      "plastic"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "9x18"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "9x18": 64
+        }
+      }
+    ],
+    "longest_side": "14 cm"
+  },
+  {
+    "id": "vper_8",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "VPER-12 8发弹匣"
+    },
+    "description": "一个VPER的八发弹匣。",
+    "weight": "430 g",
+    "volume": "430 ml",
+    "price": 430,
+    "price_postapoc": 330,
+    "material": [
+      "plastic"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "shot"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "shot": 8
+        }
+      }
+    ],
+    "longest_side": "14 cm"
+  },
+  {
+    "id": "toz_5",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "TOZ-106 5发弹匣"
+    },
+    "description": "一个TOZ的五发弹匣。",
+    "weight": "230 g",
+    "volume": "230 ml",
+    "price": 500,
+    "price_postapoc": 210,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "shot"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "shot": 5
+        }
+      }
+    ],
+    "longest_side": "14 cm"
+  },
+  {
+    "id": "svt_10",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "SVT 10发弹匣"
+    },
+    "description": "一个SVT的十发弹匣。",
+    "weight": "345 g",
+    "volume": "297 ml",
+    "price": 7600,
+    "price_postapoc": 380,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "762R"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "762R": 10
+        }
+      }
+    ],
+    "longest_side": "14 cm"
+  },
+  {
+    "id": "ptrs_5",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "PTRS 5发弹夹"
+    },
+    "description": "一个RTRS的五发弹夹。",
+    "weight": "300 g",
+    "volume": "250 ml",
+    "price": 700,
+    "price_postapoc": 280,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "145114"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "145114": 5
+        }
+      }
+    ],
+    "longest_side": "14 cm"
+  },
+  {
+    "id": "ksvk_5",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "KSVK 5发弹匣"
+    },
+    "description": "一个KSVK的五发弹匣。",
+    "weight": "900 g",
+    "volume": "750 ml",
+    "price": 2000,
+    "price_postapoc": 680,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "127108"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "127108": 5
+        }
+      }
+    ],
+    "longest_side": "14 cm"
+  },
+  {
+    "id": "nsv_100",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "NSV 100发弹链"
+    },
+    "description": "一个NSV的一百发不可散弹链。",
+    "weight": "5000 g",
+    "volume": "5000 ml",
+    "price": 75000,
+    "price_postapoc": 6100,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "127108"
+    ],
+    "flags": [
+      "MAG_BULKY"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": false,
+        "ammo_restriction": {
+          "127108": 100
+        }
+      }
+    ],
+    "longest_side": "22 cm"
+  },
+  {
+    "id": "m3_30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "M3 30发弹匣"
+    },
+    "description": "M3冲锋枪的标配30发弹匣。",
+    "weight": "350 g",
+    "volume": "230 ml",
+    "longest_side": "26 cm",
+    "price": 125,
+    "price_postapoc": 30,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "45"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "45": 30
+        }
+      }
+    ]
+  },
+  {
+    "id": "evo_30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "EVO-3 30发弹匣"
+    },
+    "description": "一个EVO-3的三十弹匣。",
+    "weight": "250 g",
+    "volume": "250 ml",
+    "price": 423,
+    "price_postapoc": 250,
+    "material": [
+      "plastic"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "9mm"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "9mm": 30
+        }
+      }
+    ],
+    "longest_side": "14 cm"
+  },
+  {
+    "id": "737_cta_10",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "7.37x40mm 10发弹匣"
+    },
+    "description": "一个7.37x40mm十发弹匣，不过这东西……真的很没用，你也不应该看见这个。",
+    "weight": "200 g",
+    "volume": "200 ml",
+    "price": 1250,
+    "price_postapoc": 350,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "737_cta"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "737_cta": 10
+        }
+      }
+    ],
+    "longest_side": "11 cm"
+  },
+  {
+    "id": "737_cta_20",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "UNIVERSAL 20发弹匣"
+    },
+    "description": "一个7.37x40mm的二十发弹匣，命名为3M2，同时也可以兼容5.45和7.62的子弹。",
+    "weight": "300 g",
+    "volume": "250 ml",
+    "price": 2100,
+    "price_postapoc": 650,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "737_cta",
+      "545x39",
+      "762"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "737_cta": 20,
+          "545x39": 20,
+          "762": 20
+        }
+      }
+    ],
+    "longest_side": "14 cm"
+  },
+  {
+    "id": "737_cta_30",
+    "looks_like": "737_cta_20",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "UNIVERSAL 30发弹匣"
+    },
+    "description": "一个7.37x40mm的三十发弹匣，命名为4M3，同时也可以兼容5.45和7.62的子弹。",
+    "weight": "350 g",
+    "volume": "300 ml",
+    "price": 2500,
+    "price_postapoc": 750,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "737_cta",
+      "545x39",
+      "762"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "737_cta": 30,
+          "545x39": 30,
+          "762": 30
+        }
+      }
+    ],
+    "longest_side": "14 cm"
+  },
+  {
+    "id": "737_cta_50",
+    "looks_like": "737_cta_20",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "UNIVERSAL 50发弹鼓"
+    },
+    "description": "一个7.37x40mm的五十发弹鼓，命名为4D1，同时也可以兼容5.45和7.62的子弹。",
+    "weight": "1200 g",
+    "volume": "1000 ml",
+    "price": 13500,
+    "price_postapoc": 1750,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "737_cta",
+      "545x39",
+      "762"
+    ],
+    "flags": [
+      "MAG_BULKY"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "737_cta": 50,
+          "545x39": 50,
+          "762": 50
+        }
+      }
+    ],
+    "longest_side": "22 cm"
+  },
+  {
+    "id": "737_cta_100",
+    "looks_like": "737_cta_20",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "UNIVERSAL 100发弹鼓"
+    },
+    "description": "一个7.37x40mm的一百发弹鼓，命名为4D2，同时也可以兼容5.45和7.62的子弹。",
+    "weight": "2000 g",
+    "volume": "1500 ml",
+    "price": 13500,
+    "price_postapoc": 3750,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "737_cta",
+      "545x39",
+      "762"
+    ],
+    "flags": [
+      "MAG_BULKY"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "737_cta": 100,
+          "545x39": 100,
+          "762": 100
+        }
+      }
+    ],
+    "longest_side": "22 cm"
+  },
+  {
+    "id": "ak101_30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "AK-101 30发弹匣"
+    },
+    "description": "一个三十发的聚合物弹匣，适用于AK-100系列中使用5.56子弹的AK步枪，命名为6L29。",
+    "weight": "210 g",
+    "volume": "300 ml",
+    "price": 1800,
+    "price_postapoc": 200,
+    "material": [
+      "plastic"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "223"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "223": 30
+        }
+      }
+    ],
+    "longest_side": "14 cm"
+  },
+  {
+    "id": "mp5_10_30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "MP5/10 30发弹匣"
+    },
+    "description": "一个MP5/10的塑料弹匣，使用10mm子弹。",
+    "weight": "190 g",
+    "volume": "250 ml",
+    "price": 5100,
+    "price_postapoc": 550,
+    "material": [
+      "plastic"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "10mm": 30
+        }
+      }
+    ],
+    "ammo_type": [
+      "10mm"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "longest_side": "14 cm"
+  },
+  {
+    "id": "g43_10",
+    "looks_like": "svt_10",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "Gewehr 43 10发弹匣"
+    },
+    "description": "一个G43的十发弹匣。",
+    "weight": "350 g",
+    "volume": "270 ml",
+    "price": 9600,
+    "price_postapoc": 580,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "79257"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "79257": 10
+        }
+      }
+    ],
+    "longest_side": "14 cm"
+  },
+  {
+    "id": "zovk_30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "ZOVK-762T 30发弹匣"
+    },
+    "description": "一个ZOVK的三十发铁制弹匣，使用7.62托卡列夫弹。",
+    "weight": "190 g",
+    "volume": "250 ml",
+    "price": 2000,
+    "price_postapoc": 350,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "762x25": 30
+        }
+      }
+    ],
+    "ammo_type": [
+      "762x25"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "longest_side": "14 cm"
+  },
+  {
+    "id": "m200_7",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "M200 7发弹匣"
+    },
+    "description": "一个M200的七发弹匣。",
+    "weight": "650 g",
+    "volume": "450 ml",
+    "price": 7500,
+    "price_postapoc": 1120,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "408_ct"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "408_ct": 7
+        }
+      }
+    ],
+    "longest_side": "14 cm"
+  },
+  {
+    "id": "aa12_8",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "AA-12 8发弹匣"
+    },
+    "description": "一个AA-12的八发盒式弹匣。",
+    "weight": "500 g",
+    "volume": "500 ml",
+    "price": 600,
+    "price_postapoc": 600,
+    "material": [
+      "plastic"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "shot"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "shot": 8
+        }
+      }
+    ],
+    "longest_side": "14 cm"
+  },
+  {
+    "id": "aa12_20",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "AA-12 20发弹鼓"
+    },
+    "description": "一个AA-12的二十发圆盘式弹鼓。",
+    "weight": "1000 g",
+    "volume": "1500 ml",
+    "price": 2500,
+    "price_postapoc": 2500,
+    "material": [
+      "plastic"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "shot"
+    ],
+    "flags": [
+      "MAG_BULKY"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "shot": 20
+        }
+      }
+    ],
+    "longest_side": "22 cm"
+  },
+  {
+    "id": "kc14_20",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "KC-14 20发弹匣"
+    },
+    "description": "KC-14的9x39mm二十发弹匣。",
+    "weight": "350 g",
+    "volume": "250 ml",
+    "price": 3000,
+    "price_postapoc": 300,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "939"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "939": 20
+        }
+      }
+    ],
+    "longest_side": "14 cm"
+  },
+  {
+    "id": "greasegun30mag",
+    "looks_like": "mp5mag",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "M3冲锋枪30发弹匣"
+    },
+    "description": "一只供M3冲锋枪使用的标准30发 .45 ACP 钢制弹匣。",
+    "weight": "340 g",
+    "volume": "227 ml",
+    "longest_side": "235 mm",
+    "price": 3000,
+    "price_postapoc": 100,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "45"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "45": 30
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,87 @@
+[
+  {
+    "id": "9x18mm",
+    "copy-from": "9x18mm",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "9x18mm 57-N-181S 弹"
+    },
+    "description": "93格令的 9x18mm 马卡洛夫全金属被甲钢芯弹。类似欧洲的 9x19mm 弹，9x18mm 弹在20世纪被东欧社会主义国家广泛使用，在21世纪依然服务于俄罗斯军队。",
+    "weight": "10 g",
+    "volume": "97 ml",
+    "longest_side": "25 mm",
+    "price": 100,
+    "price_postapoc": 1000,
+    "flags": [
+      "IRREPLACEABLE_CONSUMABLE"
+    ],
+    "material": [
+      "brass",
+      "steel",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "yellow",
+    "count": 50,
+    "stack_size": 50,
+    "ammo_type": "9x18",
+    "casing": "9x18mm_casing",
+    "range": 13,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 24,
+      "armor_penetration": 2
+    },
+    "dispersion": 60,
+    "recoil": 300,
+    "effects": [
+      "COOKOFF"
+    ]
+  },
+  {
+    "id": "9x18mmP2",
+    "copy-from": "9x18mm",
+    "type": "AMMO",
+    "name": {
+      "str": "9x18mm SP-7弹"
+    },
+    "description": "9x18mm马卡洛夫SP-7高停止作用弹，采用较轻弹头并提高初速，主要面向近距离执法与特种用途。它保留马卡洛夫弹紧凑、后坐较低的特点，但不适合把它当作穿甲弹使用。",
+    "price": 150,
+    "price_postapoc": 1000,
+    "flags": [
+      "IRREPLACEABLE_CONSUMABLE"
+    ],
+    "count": 25,
+    "relative": {
+      "range": 2,
+      "damage": {
+        "damage_type": "bullet",
+        "amount": 4
+      },
+      "dispersion": -10
+    },
+    "proportional": {
+      "recoil": 1.1
+    },
+    "longest_side": "8 cm"
+  },
+  {
+    "id": "9x18mmfmj",
+    "copy-from": "9x18mm",
+    "type": "AMMO",
+    "name": {
+      "str": "9x18mm RG028弹"
+    },
+    "description": "9x18mm马卡洛夫RG028弹，弹头内含硬化钢芯，用于改善对轻型防护材料的穿透能力。它仍受限于9x18mm弹较小的弹壳容量，定位介于普通全被甲弹与专用高压穿甲弹之间。",
+    "price": 200,
+    "price_postapoc": 3100,
+    "relative": {
+      "damage": {
+        "damage_type": "bullet",
+        "amount": -2,
+        "armor_penetration": 8
+      }
+    },
+    "longest_side": "8 cm"
+  }
+]

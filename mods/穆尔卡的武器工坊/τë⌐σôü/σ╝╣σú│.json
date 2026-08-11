@@ -1,0 +1,117 @@
+[
+  {
+    "id": "939_casing",
+    "copy-from": "casing",
+    "type": "GENERIC",
+    "name": {
+      "str": "9x39mm 弹壳"
+    },
+    "description": "空的9*39弹壳。",
+    "weight": "5 g",
+    "volume": "5ml",
+    "longest_side": "10 cm"
+  },
+  {
+    "id": "23mm_casing",
+    "copy-from": "casing",
+    "type": "GENERIC",
+    "name": {
+      "str": "23x75mmR 弹壳"
+    },
+    "description": "空的23MM弹壳。",
+    "material": [
+      "plastic"
+    ],
+    "weight": "20 g",
+    "volume": "250ml",
+    "longest_side": "10 cm"
+  },
+  {
+    "id": "12755_casing",
+    "copy-from": "casing",
+    "type": "GENERIC",
+    "name": {
+      "str": "12.7x55 弹壳"
+    },
+    "description": "空的12.7x55弹壳。",
+    "weight": "20 g",
+    "volume": "140ml",
+    "longest_side": "10 cm"
+  },
+  {
+    "id": "5842_casing",
+    "copy-from": "casing",
+    "type": "GENERIC",
+    "name": {
+      "str": "5.8x42 弹壳"
+    },
+    "description": "空的5.8x42弹壳。",
+    "weight": "10 g",
+    "volume": "100ml",
+    "longest_side": "10 cm"
+  },
+  {
+    "id": "145114_casing",
+    "copy-from": "casing",
+    "type": "GENERIC",
+    "name": {
+      "str": "14.5x114mm 弹壳"
+    },
+    "description": "空的14.5x144弹壳。",
+    "weight": "145 g",
+    "volume": "180ml",
+    "longest_side": "10 cm"
+  },
+  {
+    "id": "127108_casing",
+    "copy-from": "casing",
+    "type": "GENERIC",
+    "name": {
+      "str": "12.7x108mm 弹壳"
+    },
+    "description": "空的12.7x108mm弹壳。",
+    "weight": "125 g",
+    "volume": "160ml",
+    "longest_side": "10 cm"
+  },
+  {
+    "id": "737_casing",
+    "copy-from": "casing",
+    "type": "GENERIC",
+    "material": [
+      "plastic"
+    ],
+    "name": {
+      "str": "7.37x40mm 埋头弹壳"
+    },
+    "description": "空的7.37x40mm埋头弹壳，弹壳上面还印着该子弹的参数。",
+    "weight": "5 g",
+    "volume": "5ml",
+    "longest_side": "10 cm"
+  },
+  {
+    "id": "79257_casing",
+    "copy-from": "casing",
+    "type": "GENERIC",
+    "name": {
+      "str": "7.92x57mm 弹壳"
+    },
+    "description": "空的7.92x57mm 弹壳。",
+    "weight": "7 g",
+    "volume": "10ml",
+    "longest_side": "10 cm"
+  },
+  {
+    "id": "408_ct_casing",
+    "copy-from": "casing",
+    "looks_like": "223_casing",
+    "type": "GENERIC",
+    "name": {
+      "str": ".408 CheyTac 弹壳"
+    },
+    "description": "一枚空的.408 CheyTac弹壳，这种优秀的子弹无论是在大灾变之前还是在这之后都是相对罕见且昂贵的，现如今它可能比一发金子还要金贵——至少对于知道如何使用好它的人来说是这样。",
+    "weight": "18 g",
+    "volume": "12ml",
+    "longest_side": "10 cm"
+  }
+]

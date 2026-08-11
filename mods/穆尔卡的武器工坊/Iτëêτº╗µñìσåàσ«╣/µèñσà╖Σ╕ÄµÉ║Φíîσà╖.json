@@ -1,0 +1,491 @@
+[
+  {
+    "id": "emb_belt",
+    "type": "ARMOR",
+    "name": {
+      "str_sp": "EMB-1 携行腰带"
+    },
+    "description": "格兰尼服装生产的一款腰带携行具，它是专门为了携带大号弹鼓而设计的，毕竟用腰带挂那么多工具远不如多带一堆弹匣实在，对吧？",
+    "weight": "750 g",
+    "volume": "800 ml",
+    "price": "70 USD",
+    "price_postapoc": "14 USD",
+    "repairs_like": "tacvest",
+    "material": [
+      "canvas"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "material_thickness": 4,
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "3000 ml",
+        "max_contains_weight": "8 kg",
+        "moves": 100,
+        "flag_restriction": [
+          "MAG_COMPACT",
+          "MAG_BULKY"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "3000 ml",
+        "max_contains_weight": "8 kg",
+        "moves": 100,
+        "flag_restriction": [
+          "MAG_COMPACT",
+          "MAG_BULKY"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "3000 ml",
+        "max_contains_weight": "8 kg",
+        "moves": 100,
+        "flag_restriction": [
+          "MAG_COMPACT",
+          "MAG_BULKY"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "3000 ml",
+        "max_contains_weight": "8 kg",
+        "moves": 100,
+        "flag_restriction": [
+          "MAG_COMPACT",
+          "MAG_BULKY"
+        ],
+        "volume_encumber_modifier": 0
+      }
+    ],
+    "use_action": {
+      "type": "holster",
+      "holster_prompt": "Stash ammo",
+      "holster_msg": "You stash your %s."
+    },
+    "flags": [
+      "WATER_FRIENDLY",
+      "BELTED"
+    ],
+    "armor": [
+      {
+        "encumbrance": 0,
+        "coverage": 25,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_waist"
+        ]
+      }
+    ],
+    "longest_side": "55 cm"
+  },
+  {
+    "id": "helmet_pasgt",
+    "type": "ARMOR",
+    "category": "armor",
+    "name": {
+      "str": "PASGT M81 头盔"
+    },
+    "description": "一顶覆盖M81林地迷彩布套的PASGT凯夫拉头盔，款式老旧，但仍能提供可靠的头部防护。",
+    "weight": "1590 g",
+    "volume": "1750 ml",
+    "longest_side": "28 cm",
+    "price": "150 USD",
+    "price_postapoc": "15 USD",
+    "to_hit": {
+      "grip": "none",
+      "length": "hand",
+      "surface": "any",
+      "balance": "clumsy"
+    },
+    "material": [
+      "kevlar_rigid",
+      "plastic"
+    ],
+    "symbol": "[",
+    "looks_like": "hat_hard",
+    "color": "green",
+    "warmth": 20,
+    "material_thickness": 9,
+    "techniques": [
+      "WBLOCK_1"
+    ],
+    "flags": [
+      "VARSIZE",
+      "WATERPROOF",
+      "STURDY",
+      "PADDED"
+    ],
+    "armor": [
+      {
+        "encumbrance_modifiers": [
+          "NONE"
+        ],
+        "coverage": 100,
+        "covers": [
+          "head"
+        ],
+        "specifically_covers": [
+          "head_crown",
+          "head_forehead"
+        ]
+      },
+      {
+        "encumbrance_modifiers": [
+          "NONE"
+        ],
+        "coverage": 50,
+        "covers": [
+          "head"
+        ],
+        "specifically_covers": [
+          "head_ear_l",
+          "head_ear_r"
+        ]
+      }
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "ablative": true,
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "2 L",
+        "max_contains_weight": "2 kg",
+        "moves": 250,
+        "description": "Pocket for a face shield, or a front night vision attachment.",
+        "flag_restriction": [
+          "HELMET_FACE_SHIELD",
+          "HELMET_FRONT_ATTACHMENT"
+        ],
+        "inherits_flags": false
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "ablative": true,
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "500 ml",
+        "max_contains_weight": "400 g",
+        "moves": 250,
+        "description": "Pocket for an ear attachment.",
+        "flag_restriction": [
+          "HELMET_EAR_ATTACHMENT"
+        ],
+        "inherits_flags": true
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "ablative": true,
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "500 ml",
+        "max_contains_weight": "250 g",
+        "moves": 250,
+        "description": "Pocket for a nape protector.",
+        "flag_restriction": [
+          "HELMET_NAPE_PROTECTOR"
+        ]
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "ablative": true,
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "500 ml",
+        "max_contains_weight": "400 g",
+        "moves": 250,
+        "description": "Pocket for a strapped mandible guard.",
+        "flag_restriction": [
+          "HELMET_MANDIBLE_GUARD_STRAPPED"
+        ]
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "400 ml",
+        "max_contains_weight": "400 g",
+        "moves": 250,
+        "description": "Pocket for a counterweight pouch.",
+        "flag_restriction": [
+          "HELMET_BACK_POUCH"
+        ]
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "300 ml",
+        "max_contains_weight": "500 g",
+        "max_item_length": "14 cm",
+        "moves": 100,
+        "description": "Pocket for a flashlight attachment.",
+        "flag_restriction": [
+          "HELMET_HEAD_ATTACHMENT"
+        ],
+        "transparent": true
+      }
+    ],
+    "bashing": 1
+  },
+  {
+    "id": "lmag_pouch",
+    "type": "ARMOR",
+    "name": {
+      "str": "大型弹匣包",
+      "str_pl": "大型弹匣包"
+    },
+    "description": "一个体积偏大的大号帆布包，配有拉链，它让你想起来了一些机枪用的帆布弹袋，它专门用来容纳大型弹匣，比如弹鼓以及弹箱，另外，它不适合拿来装小型弹匣，因为其内部没有单独的隔间，小号弹匣会东倒西歪，不方便拿。",
+    "weight": "350 g",
+    "volume": "650 ml",
+    "price": "125 USD",
+    "price_postapoc": "20 USD",
+    "material": [
+      "canvas"
+    ],
+    "symbol": "[",
+    "looks_like": "ragpouch",
+    "color": "brown",
+    "material_thickness": 2,
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "3500 ml",
+        "max_contains_weight": "10 kg",
+        "moves": 80,
+        "flag_restriction": [
+          "MAG_BULKY"
+        ],
+        "volume_encumber_modifier": 0
+      }
+    ],
+    "use_action": {
+      "type": "holster",
+      "holster_prompt": "Stash ammo",
+      "holster_msg": "You stash your %s."
+    },
+    "flags": [
+      "WATER_FRIENDLY",
+      "OVERSIZE",
+      "BELTED",
+      "PALS_LARGE"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          0,
+          0
+        ],
+        "coverage": 35,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_upper"
+        ]
+      }
+    ],
+    "longest_side": "55 cm"
+  },
+  {
+    "id": "eniotv",
+    "type": "ARMOR",
+    "category": "armor",
+    "name": {
+      "str": "定制全防护型防弹背心"
+    },
+    "description": "一款定制的采用了复合材料的防弹背心，可以看到CPC，IOTV，6B43等多种防弹衣的影子，舒适性和防御性优秀，缺点就是比较重。",
+    "weight": "4500 g",
+    "longest_side": "60 cm",
+    "volume": "3000 ml",
+    "price": 750000,
+    "price_postapoc": 25000,
+    "repairs_like": "ballistic_vest_esapi",
+    "material": [
+      "kevlar_rigid",
+      "cotton"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "warmth": 25,
+    "use_action": [
+      {
+        "type": "attach_molle",
+        "size": 18
+      },
+      {
+        "type": "detach_molle"
+      }
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "ablative": true,
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "2000 ml",
+        "max_contains_weight": "5 kg",
+        "max_item_length": "33 cm",
+        "moves": 800,
+        "description": "Pocket for a large armor plate.",
+        "flag_restriction": [
+          "ABLATIVE_LARGE"
+        ]
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "ablative": true,
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "2000 ml",
+        "max_contains_weight": "5 kg",
+        "max_item_length": "33 cm",
+        "moves": 800,
+        "description": "Pocket for a large armor plate.",
+        "flag_restriction": [
+          "ABLATIVE_LARGE"
+        ]
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "ablative": true,
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "800 ml",
+        "max_contains_weight": "2 kg",
+        "max_item_length": "21 cm",
+        "moves": 800,
+        "description": "Pocket for a medium armor plate.",
+        "flag_restriction": [
+          "ABLATIVE_MEDIUM"
+        ]
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "ablative": true,
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "800 ml",
+        "max_contains_weight": "2 kg",
+        "max_item_length": "21 cm",
+        "moves": 800,
+        "description": "Pocket for a medium armor plate.",
+        "flag_restriction": [
+          "ABLATIVE_MEDIUM"
+        ]
+      }
+    ],
+    "armor": [
+      {
+        "material": [
+          {
+            "type": "cotton",
+            "covered_by_mat": 100,
+            "thickness": 1
+          },
+          {
+            "type": "kevlar",
+            "covered_by_mat": 100,
+            "thickness": 2
+          }
+        ],
+        "covers": [
+          "torso"
+        ],
+        "coverage": 100,
+        "cover_vitals": 100,
+        "encumbrance": 0,
+        "volume_encumber_modifier": 0,
+        "layers": [
+          "OUTER"
+        ]
+      },
+      {
+        "material": [
+          {
+            "type": "kevlar",
+            "covered_by_mat": 100,
+            "thickness": 1.0
+          },
+          {
+            "type": "hc_steel",
+            "covered_by_mat": 100,
+            "thickness": 8.5
+          }
+        ],
+        "covers": [
+          "arm_l",
+          "arm_r"
+        ],
+        "specifically_covers": [
+          "arm_shoulder_l",
+          "arm_shoulder_r",
+          "arm_upper_l",
+          "arm_upper_r"
+        ],
+        "coverage": 100,
+        "encumbrance": 2,
+        "volume_encumber_modifier": 0,
+        "layers": [
+          "OUTER"
+        ]
+      },
+      {
+        "material": [
+          {
+            "type": "cotton",
+            "covered_by_mat": 100,
+            "thickness": 1.0
+          },
+          {
+            "type": "kevlar_rigid",
+            "covered_by_mat": 100,
+            "thickness": 7
+          }
+        ],
+        "covers": [
+          "leg_l",
+          "leg_r"
+        ],
+        "specifically_covers": [
+          "leg_hip_l",
+          "leg_hip_r"
+        ],
+        "coverage": 100,
+        "encumbrance": 0,
+        "volume_encumber_modifier": 0,
+        "layers": [
+          "OUTER"
+        ]
+      },
+      {
+        "material": [
+          {
+            "type": "kevlar",
+            "covered_by_mat": 100,
+            "thickness": 2.0
+          }
+        ],
+        "covers": [
+          "head"
+        ],
+        "specifically_covers": [
+          "head_throat",
+          "head_nape"
+        ],
+        "coverage": 100,
+        "encumbrance": 2,
+        "volume_encumber_modifier": 0,
+        "layers": [
+          "OUTER"
+        ]
+      }
+    ],
+    "environmental_protection": 5,
+    "flags": [
+      "WATERPROOF",
+      "STURDY",
+      "PADDED",
+      "OUTER"
+    ],
+    "looks_like": "pzarmor_m"
+  }
+]

@@ -1,0 +1,224 @@
+[
+  {
+    "type": "mod_tileset",
+    "compatibility": [
+      "Chibi_Ultica",
+      "MshockRealXotto",
+      "UltimateCataclysm",
+      "MshockXottoplus",
+      "UNDEAD_PEOPLE",
+      "UNDEAD_PEOPLE_BASE",
+      "UNDEAD_PEOPLE_LEGACY",
+      "UlticaShell",
+      "MshockXottoplus12",
+      "MSX++DEAD_PEOPLE",
+      "MXplus12_for_cosmetics",
+      "MSXotto+"
+    ],
+    "tiles-new": [
+      {
+        "file": "I版新增护具贴图.png",
+        "sprite_width": 32,
+        "sprite_height": 32,
+        "sprite_offset_x": 0,
+        "sprite_offset_y": 0,
+        "tiles": [
+          {
+            "id": "helmet_pasgt",
+            "fg": 76
+          },
+          {
+            "id": "overlay_wielded_helmet_pasgt",
+            "fg": 76
+          },
+          {
+            "id": "overlay_worn_helmet_pasgt",
+            "fg": 77
+          },
+          {
+            "id": "emb_belt",
+            "fg": 59
+          },
+          {
+            "id": "overlay_wielded_emb_belt",
+            "fg": 59
+          },
+          {
+            "id": "overlay_worn_emb_belt",
+            "fg": 61
+          },
+          {
+            "id": "eniotv",
+            "fg": 78
+          },
+          {
+            "id": "overlay_wielded_eniotv",
+            "fg": 78
+          },
+          {
+            "id": "overlay_worn_eniotv",
+            "fg": 79
+          }
+        ]
+      },
+      {
+        "file": "I版新增重武器贴图.png",
+        "sprite_width": 64,
+        "sprite_height": 64,
+        "sprite_offset_x": -16,
+        "sprite_offset_y": -16,
+        "tiles": [
+          {
+            "id": "overlay_wielded_gew98",
+            "fg": 70
+          },
+          {
+            "id": "gew98",
+            "fg": 71
+          },
+          {
+            "id": "overlay_wielded_gew98s",
+            "fg": 72
+          },
+          {
+            "id": "gew98s",
+            "fg": 73
+          },
+          {
+            "id": "overlay_wielded_kar98ks",
+            "fg": 74
+          },
+          {
+            "id": "kar98ks",
+            "fg": 75
+          },
+          {
+            "id": "overlay_wielded_mg42",
+            "fg": 76
+          },
+          {
+            "id": "mg42",
+            "fg": 77
+          },
+          {
+            "id": "overlay_wielded_fg422",
+            "fg": 78
+          },
+          {
+            "id": "fg422",
+            "fg": 79
+          },
+          {
+            "id": "overlay_wielded_m110",
+            "fg": 80
+          },
+          {
+            "id": "m110",
+            "fg": 81
+          },
+          {
+            "id": "overlay_wielded_sr25",
+            "fg": 84
+          },
+          {
+            "id": "sr25",
+            "fg": 85
+          },
+          {
+            "id": "overlay_wielded_scar_h_mk20",
+            "fg": 86
+          },
+          {
+            "id": "scar_h_mk20",
+            "fg": 87
+          },
+          {
+            "id": "overlay_wielded_avt_40",
+            "fg": 94
+          },
+          {
+            "id": "avt_40",
+            "fg": 95
+          }
+        ]
+      },
+      {
+        "file": "I版新增弹药贴图.png",
+        "sprite_width": 32,
+        "sprite_height": 32,
+        "sprite_offset_x": 0,
+        "sprite_offset_y": 0,
+        "tiles": [
+          {
+            "id": [
+              "227_fury_ammo_box_20",
+              "227_fury_ammo_box_100"
+            ],
+            "fg": 17
+          },
+          {
+            "id": "68_51_fmj",
+            "fg": 18
+          }
+        ]
+      },
+      {
+        "file": "I版新增武器贴图.png",
+        "sprite_width": 32,
+        "sprite_height": 32,
+        "sprite_offset_x": 0,
+        "sprite_offset_y": 0,
+        "tiles": [
+          {
+            "id": [
+              "overlay_wielded_scar_17s"
+            ],
+            "fg": 112
+          },
+          {
+            "id": [
+              "scar_17s"
+            ],
+            "fg": 113
+          },
+          {
+            "id": "overlay_wielded_scar_16s",
+            "fg": 354
+          },
+          {
+            "id": "scar_16s",
+            "fg": 355
+          },
+          {
+            "id": [
+              "overlay_wielded_sig_xm7",
+              "overlay_wielded_sig_spear"
+            ],
+            "fg": 358
+          },
+          {
+            "id": [
+              "sig_xm7",
+              "sig_spear"
+            ],
+            "fg": 359
+          },
+          {
+            "id": [
+              "overlay_wielded_sig_assault_rifle",
+              "overlay_wielded_sig_550_swat"
+            ],
+            "fg": 366
+          },
+          {
+            "id": [
+              "sig_assault_rifle",
+              "sig_550_swat"
+            ],
+            "fg": 367
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,39 @@
+现实武器描述资料来源
+
+本文件中的现实枪械说明为简短中文综述，不逐字翻译来源。重点核对设计年代、制式采用、结构特点与战争应用；对仍属试验或少量装备的型号，避免写成已经广泛服役。
+
+主要资料：
+Imperial War Museums，Gewehr 98与Karabiner 98k藏品记录。
+https://www.iwm.org.uk/collections/item/object/30031799
+https://www.iwm.org.uk/collections/item/object/30029612
+
+美国陆军装备项目，M110半自动狙击系统。
+https://cpeground.army.mil/Equipment/Equipment-Portfolio/PM-MBCT-Lethality-Portfolio/M110-Semi-Automatic-Sniper-System/
+
+Knight's Armament，SR-25、Mk 11与M110产品沿革。
+https://www.knightarmco.com/our-products
+
+FN America，SCAR 16S、17S、20S官方资料。
+https://fnamerica.com/products/rifles/fn-scar-16s/
+https://fnamerica.com/products/rifles/fn-scar-17s/
+https://fnamerica.com/products/rifles/fn-scar-20s/
+
+SIG Sauer，M7/XM7与MCX-SPEAR官方资料。
+https://www.sigsauer.com/blog/us-army-selects-sig-sauer-next-generation-squad-weapons-system
+https://www.sigsauer.com/spear.html
+
+Heckler & Koch，MP5官方产品与结构说明。
+https://www.heckler-koch.com/en/Products/Military%20and%20Law%20Enforcement/Submachine%20guns/MP5
+
+Česká zbrojovka，企业历史与Scorpion EVO 3军警目录。
+https://www.czub.cz/en/about-us-history/
+https://katalogy.czub.cz/military-2019-en/
+
+SIG、HK、FN、Beretta、CZ、IWI、RemArms、Springfield Armory及Kalashnikov Group公开产品史和制造商资料，用于校对同系列型号。
+https://www.beretta.com/
+https://iwi.us/blog/the-storied-history-of-iwi/
+https://www.remarms.com/firearm-history/model-870-history
+https://www.springfield-armory.com/m1a-series-rifles/
+https://kalashnikovgroup.ru/
+
+部分苏联、俄罗斯和冷战型号的战争经历同时对照原版游戏资料、博物馆藏品说明与公开军械史资料。描述只保留多方一致的事实，不写无法可靠核实的个人传闻。

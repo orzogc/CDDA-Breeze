@@ -1,0 +1,62 @@
+[
+  {
+    "id": "hk_mp7",
+    "copy-from": "hk_mp7",
+    "looks_like": "hk_mp5",
+    "type": "GUN",
+    "name": {
+      "str": "黑克勒-科赫 MP7A2 冲锋枪"
+    },
+    "description": "MP7是黑克勒-科赫为个人防卫武器需求设计的紧凑枪械，发射高速4.6x30mm弹，意在让车辆乘员和支援人员对软质防弹装备拥有更强穿透力。它于2000年代进入德国军警和多国特种部队，在阿富汗等行动中使用；体积接近大型手枪，却采用旋转枪机与短行程活塞。",
+    "reload_noise_volume": 10,
+    "weight": "1960 g",
+    "volume": "2083 ml",
+    "longest_side": "42 cm",
+    "price": 175000,
+    "price_postapoc": 3000,
+    "to_hit": -2,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "46"
+    ],
+    "skill": "smg",
+    "dispersion": 260,
+    "durability": 8,
+    "min_cycle_recoil": 81,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        4
+      ]
+    ],
+    "built_in_mods": [
+      "wire_stock"
+    ],
+    "faults": [
+      "fault_gun_blackpowder",
+      "fault_gun_dirt",
+      "fault_gun_chamber_spent"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "hk46mag",
+          "hk46bigmag"
+        ]
+      }
+    ],
+    "bashing": 7
+  }
+]

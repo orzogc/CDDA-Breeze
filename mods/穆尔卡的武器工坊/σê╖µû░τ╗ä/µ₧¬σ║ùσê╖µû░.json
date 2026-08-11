@@ -1,0 +1,80 @@
+[
+  {
+    "id": "SUS_gunstore_safe",
+    "type": "item_group",
+    "copy-from": "SUS_gunstore_safe",
+    "extend": {
+      "entries": [
+        {
+          "group": "ammo_common_collection",
+          "count": [
+            1,
+            3
+          ],
+          "prob": 60
+        },
+        {
+          "group": "ammo_rare_collection",
+          "count": [
+            1,
+            3
+          ],
+          "prob": 60
+        },
+        {
+          "group": "ammo_obscure_collection",
+          "count": [
+            1,
+            3
+          ],
+          "prob": 50
+        },
+        {
+          "group": "guns_rare_display",
+          "prob": 10
+        }
+      ],
+      "items": [
+        {
+          "group": "MURKA_I_NEW_WEAPONS",
+          "prob": 25
+        },
+        {
+          "group": "MURKA_I_NEW_GUNMODS",
+          "prob": 25
+        },
+        {
+          "group": "MURKA_I_NEW_AMMO",
+          "prob": 30
+        }
+      ]
+    },
+    "subtype": "collection"
+  },
+  {
+    "id": "ammo_hunting",
+    "type": "item_group",
+    "copy-from": "ammo_hunting",
+    "extend": {
+      "entries": [
+        {
+          "group": "ammo_pistol_hunting",
+          "count": [
+            1,
+            3
+          ],
+          "prob": 60
+        },
+        {
+          "group": "ammo_rifle_hunting",
+          "count": [
+            1,
+            2
+          ],
+          "prob": 60
+        }
+      ]
+    },
+    "subtype": "distribution"
+  }
+]

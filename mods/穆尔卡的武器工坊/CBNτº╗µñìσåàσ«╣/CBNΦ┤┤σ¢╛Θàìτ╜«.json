@@ -1,0 +1,438 @@
+[
+  {
+    "type": "mod_tileset",
+    "compatibility": [
+      "UNDEAD_PEOPLE_BASE",
+      "UNDEAD_PEOPLE",
+      "MshockRealXotto",
+      "MSX++DEAD_PEOPLE"
+    ],
+    "tiles-new": [
+      {
+        "file": "CBN武器贴图.png",
+        "tiles": [
+          {
+            "id": "krbk308",
+            "fg": 11
+          },
+          {
+            "id": "ac556",
+            "fg": 41
+          },
+          {
+            "id": "sig_mpx",
+            "fg": 43
+          },
+          {
+            "id": "trk_ar",
+            "fg": 45
+          },
+          {
+            "id": "9a91",
+            "fg": 47
+          },
+          {
+            "id": "tnks_hr",
+            "fg": 63
+          },
+          {
+            "id": "mss_r22",
+            "fg": 67
+          },
+          {
+            "id": "bulldog_smg",
+            "fg": 347
+          },
+          {
+            "id": "bulldog_sar",
+            "fg": 349
+          },
+          {
+            "id": "cluster_grenade",
+            "fg": 355
+          },
+          {
+            "id": "cluster_grenade_act",
+            "fg": 355
+          },
+          {
+            "id": "carbon_rifle",
+            "fg": 357
+          },
+          {
+            "id": "hk_xm8",
+            "fg": 369
+          },
+          {
+            "id": "ga23sg",
+            "fg": 373
+          },
+          {
+            "id": "gaspgl",
+            "fg": 375
+          },
+          {
+            "id": "cews_28",
+            "fg": 377
+          },
+          {
+            "id": "cews_29",
+            "fg": 379
+          },
+          {
+            "id": "overlay_wielded_viking_shotgun",
+            "fg": 380
+          },
+          {
+            "id": "viking_shotgun",
+            "fg": 381
+          },
+          {
+            "id": "overlay_wielded_gavk_762",
+            "fg": 382
+          },
+          {
+            "id": "gavk_762",
+            "fg": 383
+          }
+        ],
+        "sprite_width": 32,
+        "sprite_height": 32,
+        "sprite_offset_x": 0,
+        "sprite_offset_y": 0
+      }
+    ]
+  },
+  {
+    "type": "mod_tileset",
+    "compatibility": [
+      "UNDEAD_PEOPLE_BASE",
+      "UNDEAD_PEOPLE",
+      "MshockRealXotto",
+      "MSX++DEAD_PEOPLE"
+    ],
+    "tiles-new": [
+      {
+        "file": "CBN弹药贴图.png",
+        "tiles": [
+          {
+            "id": "rpd_100",
+            "fg": 2
+          },
+          {
+            "id": "ptrk_mag",
+            "fg": 2
+          },
+          {
+            "id": "ptrk_drum",
+            "fg": 2
+          }
+        ],
+        "sprite_width": 32,
+        "sprite_height": 32,
+        "sprite_offset_x": 0,
+        "sprite_offset_y": 0
+      }
+    ]
+  },
+  {
+    "type": "mod_tileset",
+    "compatibility": [
+      "UNDEAD_PEOPLE_BASE",
+      "UNDEAD_PEOPLE",
+      "MshockRealXotto",
+      "MSX++DEAD_PEOPLE"
+    ],
+    "tiles-new": [
+      {
+        "file": "CBN护具贴图.png",
+        "tiles": [
+          {
+            "id": "cu2_suit",
+            "fg": 53
+          },
+          {
+            "id": "overlay_wielded_cu2_suit",
+            "fg": 53
+          },
+          {
+            "id": "da30l_vest",
+            "fg": 55
+          },
+          {
+            "id": "overlay_wielded_da30l_vest",
+            "fg": 55
+          },
+          {
+            "id": "ch1_helmet",
+            "fg": 57
+          },
+          {
+            "id": "overlay_wielded_ch1_helmet",
+            "fg": 57
+          },
+          {
+            "id": "da32_vest",
+            "fg": 59
+          },
+          {
+            "id": "overlay_wielded_da32_vest",
+            "fg": 59
+          },
+          {
+            "id": "ch2_helmet",
+            "fg": 61
+          },
+          {
+            "id": "overlay_wielded_ch2_helmet",
+            "fg": 61
+          },
+          {
+            "id": "ecu3_suit",
+            "fg": 63
+          },
+          {
+            "id": "overlay_wielded_ecu3_suit",
+            "fg": 63
+          },
+          {
+            "id": "cornerstone_helmet",
+            "fg": 65
+          },
+          {
+            "id": "overlay_wielded_cornerstone_helmet",
+            "fg": 65
+          },
+          {
+            "id": "cornerstone_helmet_on",
+            "fg": 67
+          },
+          {
+            "id": "overlay_wielded_cornerstone_helmet_on",
+            "fg": 67
+          },
+          {
+            "id": "cornerstone_armor",
+            "fg": 69
+          },
+          {
+            "id": "overlay_wielded_cornerstone_armor",
+            "fg": 69
+          },
+          {
+            "id": "cornerstone_armor_on",
+            "fg": 71
+          },
+          {
+            "id": "overlay_wielded_cornerstone_armor_on",
+            "fg": 71
+          }
+        ],
+        "sprite_width": 32,
+        "sprite_height": 32,
+        "sprite_offset_x": 0,
+        "sprite_offset_y": 0
+      }
+    ]
+  },
+  {
+    "type": "mod_tileset",
+    "compatibility": [
+      "UNDEAD_PEOPLE_BASE",
+      "UNDEAD_PEOPLE",
+      "MshockRealXotto",
+      "MSX++DEAD_PEOPLE"
+    ],
+    "tiles-new": [
+      {
+        "file": "CBN重武器贴图.png",
+        "tiles": [
+          {
+            "id": "gasc",
+            "fg": 71
+          },
+          {
+            "id": "dp_28",
+            "fg": 73
+          },
+          {
+            "id": "hout_mosin",
+            "fg": 75
+          },
+          {
+            "id": "rpd",
+            "fg": 77
+          },
+          {
+            "id": "phzg50",
+            "fg": 79
+          },
+          {
+            "id": "zagl40",
+            "fg": 81
+          },
+          {
+            "id": "ptrk",
+            "fg": 83
+          },
+          {
+            "id": "ptrkvk",
+            "fg": 85
+          },
+          {
+            "id": "m1919",
+            "fg": 89
+          },
+          {
+            "id": "overlay_wielded_scgs_chimera",
+            "fg": 90
+          },
+          {
+            "id": "scgs_chimera",
+            "fg": 91
+          }
+        ],
+        "sprite_width": 64,
+        "sprite_height": 64,
+        "sprite_offset_x": -16,
+        "sprite_offset_y": -16
+      }
+    ]
+  },
+  {
+    "type": "mod_tileset",
+    "compatibility": [
+      "UNDEAD_PEOPLE_BASE",
+      "UNDEAD_PEOPLE",
+      "MshockRealXotto",
+      "MSX++DEAD_PEOPLE"
+    ],
+    "tiles-new": [
+      {
+        "file": "CBN1.17武器贴图.png",
+        "tiles": [
+          {
+            "id": "overlay_wielded_arek_pdr",
+            "fg": 384
+          },
+          {
+            "id": "arek_pdr",
+            "fg": 385
+          },
+          {
+            "id": "overlay_wielded_sa58_osw",
+            "fg": 386
+          },
+          {
+            "id": "sa58_osw",
+            "fg": 387
+          },
+          {
+            "id": "overlay_wielded_g3ka4",
+            "fg": 388
+          },
+          {
+            "id": "g3ka4",
+            "fg": 389
+          },
+          {
+            "id": "overlay_wielded_vssa",
+            "fg": 390
+          },
+          {
+            "id": "vssa",
+            "fg": 391
+          },
+          {
+            "id": "overlay_wielded_csls7",
+            "fg": 392
+          },
+          {
+            "id": "csls7",
+            "fg": 393
+          }
+        ],
+        "sprite_width": 32,
+        "sprite_height": 32,
+        "sprite_offset_x": 0,
+        "sprite_offset_y": 0
+      }
+    ]
+  },
+  {
+    "type": "mod_tileset",
+    "compatibility": [
+      "UNDEAD_PEOPLE_BASE",
+      "UNDEAD_PEOPLE",
+      "MshockRealXotto",
+      "MSX++DEAD_PEOPLE"
+    ],
+    "tiles-new": [
+      {
+        "file": "CBN1.17护具贴图.png",
+        "tiles": [
+          {
+            "id": "da68sh_vest",
+            "fg": 71
+          },
+          {
+            "id": "overlay_wielded_da68sh_vest",
+            "fg": 71
+          },
+          {
+            "id": "overlay_worn_da68sh_vest",
+            "fg": 72
+          }
+        ],
+        "sprite_width": 32,
+        "sprite_height": 32,
+        "sprite_offset_x": 0,
+        "sprite_offset_y": 0
+      }
+    ]
+  },
+  {
+    "type": "mod_tileset",
+    "compatibility": [
+      "UNDEAD_PEOPLE_BASE",
+      "UNDEAD_PEOPLE",
+      "MshockRealXotto",
+      "MSX++DEAD_PEOPLE"
+    ],
+    "tiles-new": [
+      {
+        "file": "CBN1.17头盔贴图.png",
+        "tiles": [
+          {
+            "id": "chsh",
+            "fg": 20
+          },
+          {
+            "id": "overlay_wielded_chsh",
+            "fg": 20
+          },
+          {
+            "id": "overlay_worn_chsh",
+            "fg": 21
+          },
+          {
+            "id": "chsh_up",
+            "fg": 22
+          },
+          {
+            "id": "overlay_wielded_chsh_up",
+            "fg": 22
+          },
+          {
+            "id": "overlay_worn_chsh_up",
+            "fg": 23
+          }
+        ],
+        "sprite_width": 64,
+        "sprite_height": 64,
+        "sprite_offset_x": -16,
+        "sprite_offset_y": -16
+      }
+    ]
+  }
+]

@@ -1,0 +1,46 @@
+[
+  {
+    "id": "762_ps",
+    "copy-from": "762_m87",
+    "looks_like": "762_m87",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "7.62x39mm PS ghz 弹"
+    },
+    "description": "7.62x39mm PS gzh (57-N-231)弹装有7.9克弹头，弹头为热强化钢芯，尖端有铅包层，双金属外壳,装在双金属外壳中。PS弹于1949年投入使用，用于苏联7.62x39mm口径武器。",
+    "relative": {
+      "price": 1.2,
+      "damage": {
+        "damage_type": "bullet",
+        "amount": 3,
+        "armor_penetration": 6
+      }
+    },
+    "proportional": {
+      "recoil": 1.1
+    },
+    "longest_side": "8 cm"
+  },
+  {
+    "id": "762bp",
+    "looks_like": "762_m87",
+    "copy-from": "762_m87",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "7.62x39mm BP 弹"
+    },
+    "description": "7.62x39mm BP弹是苏联和俄罗斯为7.62x39mm口径武器研发的穿甲弹，GRAU编号为7N23。该弹自1980年代末至1990年代持续开发，采用硬化工具钢弹芯，以提高对轻型防护和障碍物的穿透能力，并于2002年前后正式列装。",
+    "relative": {
+      "price": 1.5
+    },
+    "proportional": {
+      "recoil": 1.2
+    },
+    "longest_side": "8 cm",
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 48,
+      "armor_penetration": 36
+    }
+  }
+]

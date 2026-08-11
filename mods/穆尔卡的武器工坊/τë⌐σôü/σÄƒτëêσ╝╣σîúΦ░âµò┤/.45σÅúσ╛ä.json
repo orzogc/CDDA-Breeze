@@ -1,0 +1,14 @@
+[
+  {
+    "id": "m1911bigmag",
+    "copy-from": "m1911bigmag",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "M1911 10发弹匣"
+    },
+    "description": "一个扩容的10发弹匣，可用于 M1911 手枪。",
+    "longest_side": "150 mm",
+    "weight": "100 g",
+    "volume": "80 ml"
+  }
+]

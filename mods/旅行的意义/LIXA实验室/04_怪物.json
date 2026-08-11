@@ -1,0 +1,935 @@
+[
+  {
+    "id": "LIXA_spit_light",
+    "type": "GUN",
+    "copy-from": "fake_item",
+    "name": {
+      "str": "光子枪",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "吐出一团凝结的光。",
+      "//~": "NO_I18N"
+    },
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "ammo_effects": [
+      "BLINDS_EYES",
+      "NEVER_MISFIRES",
+      "NO_DAMAGE_SCALING",
+      "NO_PENETRATE_OBSTACLES"
+    ],
+    "skill": "rifle",
+    "durability": 10,
+    "range": 100,
+    "dispersion": 1000,
+    "ranged_damage": {
+      "damage_type": "pure",
+      "amount": 4
+    }
+  },
+  {
+    "type": "SPELL",
+    "id": "LIXA_spread_light",
+    "name": {
+      "str": "扩散凝光",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "将凝结的光沿地面呈锥形泼洒出去。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "hostile",
+      "ground"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS",
+      "NO_EXPLOSION_SFX"
+    ],
+    "min_aoe": 45,
+    "max_aoe": 45,
+    "base_casting_time": 75,
+    "min_range": 4,
+    "max_range": 4,
+    "effect": "attack",
+    "shape": "cone",
+    "field_id": "fd_congealed_light",
+    "field_chance": 2,
+    "min_field_intensity": 2,
+    "max_field_intensity": 2
+  },
+  {
+    "id": "LIXA_photonic_death",
+    "type": "SPELL",
+    "name": {
+      "str": "光子湮灭",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "一滩光。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "ground",
+      "self",
+      "hostile"
+    ],
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "shape": "blast",
+    "effect": "attack",
+    "effect_str": "LIXA_illuminated",
+    "field_id": "fd_congealed_light",
+    "min_aoe": 1,
+    "max_aoe": 2,
+    "aoe_increment": 1,
+    "min_field_intensity": 3,
+    "max_field_intensity": 3,
+    "field_chance": 1
+  },
+  {
+    "type": "SPELL",
+    "id": "LIXA_spawn_copy",
+    "name": {
+      "str": "本征移位",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "让本征幽灵在局部空间中短暂错位。",
+      "//~": "NO_I18N"
+    },
+    "effect": "short_range_teleport",
+    "shape": "blast",
+    "valid_targets": [
+      "none"
+    ],
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS",
+      "NO_EXPLOSION_SFX"
+    ],
+    "min_range": 2,
+    "max_range": 6,
+    "min_aoe": 2,
+    "max_aoe": 6,
+    "base_casting_time": 100
+  },
+  {
+    "id": "LIXA_vector_volley",
+    "type": "GUN",
+    "copy-from": "fake_item",
+    "name": {
+      "str": "坐标旋转齐射",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "一把会发射……呃，坐标变换矩阵的假枪？",
+      "//~": "NO_I18N"
+    },
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "modes": [
+      [
+        "DEFAULT",
+        "auto",
+        3
+      ]
+    ],
+    "ammo_effects": [
+      "BLINDS_EYES",
+      "NO_PENETRATE_OBSTACLES",
+      "NEVER_MISFIRES",
+      "NO_DAMAGE_SCALING"
+    ],
+    "skill": "rifle",
+    "durability": 10,
+    "range": 100,
+    "dispersion": 5000,
+    "ranged_damage": [
+      {
+        "damage_type": "pure",
+        "amount": 8
+      }
+    ]
+  },
+  {
+    "type": "SPELL",
+    "id": "LIXA_reshuffle_cone",
+    "name": {
+      "str": "一道坐标重分配弧",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "生成LIXA重排效应。",
+      "//~": "NO_I18N"
+    },
+    "effect": "attack",
+    "shape": "cone",
+    "valid_targets": [
+      "hostile",
+      "ground"
+    ],
+    "max_level": 5,
+    "min_damage": 0,
+    "max_damage": 0,
+    "min_aoe": 10,
+    "max_aoe": 15,
+    "aoe_increment": 1,
+    "min_range": 8,
+    "max_range": 16,
+    "range_increment": 2,
+    "base_casting_time": 50,
+    "field_id": "fd_LIXA_decompression",
+    "min_field_intensity": 1,
+    "max_field_intensity": 3,
+    "field_intensity_increment": 1,
+    "field_intensity_variance": 1,
+    "field_chance": 4,
+    "sound_type": "combat",
+    "sound_id": "fire_gun",
+    "sound_variant": "bio_lightning",
+    "sound_description": "断裂的几何结构"
+  },
+  {
+    "type": "SPELL",
+    "id": "mon_LIXA_vector_death",
+    "name": {
+      "str": "展开坍缩",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "结束战斗。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "hostile"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS",
+      "NO_EXPLOSION_SFX",
+      "NO_PROJECTILE"
+    ],
+    "base_casting_time": 1,
+    "min_range": 60,
+    "max_range": 60,
+    "min_aoe": 60,
+    "max_aoe": 60,
+    "shape": "blast",
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_mark_final_boss_dead"
+  },
+  {
+    "id": "mon_eigenspectre_1",
+    "type": "MONSTER",
+    "name": {
+      "str": "本征幽灵"
+    },
+    "description": "这个生物与人体轮廓相反；身体每处细节的每个方面都被展示出来，但它的外形让人无法理解。你可以在一件白色背心上看到身份卡的两面。你可以清晰看到它眼中的每一块肌肉和神经被无尽的恐惧所绷紧。",
+    "default_faction": "nether_player_hate",
+    "species": [
+      "NETHER_EMANATION"
+    ],
+    "bodytype": "human",
+    "looks_like": "mon_memory",
+    "volume": "62500 ml",
+    "weight": "2 kg",
+    "hp": 120,
+    "speed": 130,
+    "material": [
+      "flesh"
+    ],
+    "symbol": "E",
+    "color": "light_gray",
+    "aggression": 100,
+    "morale": 100,
+    "melee_skill": 4,
+    "melee_dice": 2,
+    "melee_dice_sides": 8,
+    "melee_damage": [
+      {
+        "damage_type": "pure",
+        "amount": 0,
+        "armor_penetration": 1
+      }
+    ],
+    "dodge": 7,
+    "vision_day": 50,
+    "vision_night": 3,
+    "harvest": "exempt",
+    "death_function": {
+      "corpse_type": "NO_CORPSE",
+      "message": "%s化作无尽舱室的一部分。"
+    },
+    "flags": [
+      "SEES",
+      "HEARS",
+      "WARM",
+      "NO_BREATHE",
+      "PUSH_MON",
+      "HIT_AND_RUN",
+      "HARDTOSHOOT"
+    ],
+    "armor": {
+      "electric": 1
+    }
+  },
+  {
+    "id": "mon_eigenspectre_2",
+    "type": "MONSTER",
+    "name": {
+      "str": "光子本征幽灵"
+    },
+    "description": "幸运的是，这个人物无尽的细节被“穿过”它的粘稠光线所掩盖。它无法包裹住任何东西，但光线的痕迹遵循肠胃和内脏的形状，并洒满了它的嘴唇和下巴。",
+    "default_faction": "nether_player_hate",
+    "species": [
+      "NETHER_EMANATION"
+    ],
+    "bodytype": "human",
+    "looks_like": "mon_memory",
+    "volume": "62500 ml",
+    "weight": "2 kg",
+    "hp": 130,
+    "speed": 70,
+    "material": [
+      "flesh"
+    ],
+    "symbol": "E",
+    "color": "light_gray",
+    "aggression": 100,
+    "morale": 100,
+    "melee_skill": 4,
+    "melee_dice": 2,
+    "melee_dice_sides": 8,
+    "melee_damage": [
+      {
+        "damage_type": "pure",
+        "amount": 0,
+        "armor_penetration": 1
+      }
+    ],
+    "special_attacks": [
+      {
+        "type": "spell",
+        "spell_data": {
+          "id": "LIXA_spread_light",
+          "min_level": 1
+        },
+        "cooldown": 28,
+        "monster_message": "%s喷涌出一股凝固的光！"
+      },
+      {
+        "type": "gun",
+        "cooldown": 5,
+        "move_cost": 50,
+        "gun_type": "LIXA_spit_light",
+        "fake_skills": [
+          [
+            "gun",
+            8
+          ],
+          [
+            "rifle",
+            8
+          ]
+        ],
+        "fake_dex": 8,
+        "fake_per": 8,
+        "require_targeting_player": false,
+        "description": "%s投掷出一团凝结的光线！",
+        "ranges": [
+          [
+            2,
+            10,
+            "DEFAULT"
+          ]
+        ]
+      }
+    ],
+    "dodge": 4,
+    "vision_day": 50,
+    "vision_night": 3,
+    "harvest": "exempt",
+    "death_function": {
+      "corpse_type": "NO_CORPSE",
+      "message": "%s化作无尽舱室的一部分，凝固的光线从它原本占据的地方飞溅开。",
+      "effect": {
+        "id": "LIXA_photonic_death",
+        "hit_self": true
+      }
+    },
+    "flags": [
+      "SEES",
+      "HEARS",
+      "WARM",
+      "RANGED_ATTACKER",
+      "NO_BREATHE",
+      "PUSH_MON",
+      "HARDTOSHOOT"
+    ],
+    "armor": {
+      "electric": 1
+    }
+  },
+  {
+    "id": "mon_eigenspectre_3",
+    "type": "MONSTER",
+    "name": {
+      "str": "变幻本征幽灵"
+    },
+    "description": "这个扭曲的人形就如同是各种边界的万花筒。人体的每个部分都被压平，每秒都在疯狂地扭曲。你的脑海中想到的形容词是“旋转”，尽管你不确定为什么。",
+    "default_faction": "nether_player_hate",
+    "species": [
+      "NETHER_EMANATION"
+    ],
+    "bodytype": "human",
+    "looks_like": "mon_memory",
+    "volume": "62500 ml",
+    "weight": "2 kg",
+    "hp": 120,
+    "speed": 150,
+    "material": [
+      "flesh"
+    ],
+    "symbol": "E",
+    "color": "light_gray",
+    "aggression": 100,
+    "morale": 100,
+    "melee_skill": 5,
+    "melee_dice": 2,
+    "melee_dice_sides": 8,
+    "melee_damage": [
+      {
+        "damage_type": "pure",
+        "amount": 0,
+        "armor_penetration": 1
+      }
+    ],
+    "special_attacks": [
+      {
+        "type": "spell",
+        "spell_data": {
+          "id": "LIXA_spawn_copy",
+          "hit_self": true
+        },
+        "cooldown": 20,
+        "monster_message": "%s的轮廓骤然错位，出现在另一处。"
+      }
+    ],
+    "dodge": 7,
+    "vision_day": 50,
+    "vision_night": 3,
+    "harvest": "exempt",
+    "death_function": {
+      "corpse_type": "NO_CORPSE",
+      "message": "%s化作无尽舱室的一部分。"
+    },
+    "flags": [
+      "SEES",
+      "HEARS",
+      "WARM",
+      "NO_BREATHE",
+      "PUSH_MON",
+      "HIT_AND_RUN",
+      "HARDTOSHOOT"
+    ],
+    "armor": {
+      "electric": 1
+    }
+  },
+  {
+    "id": "mon_eigenspectre_3_echo",
+    "type": "MONSTER",
+    "name": {
+      "str": "变幻本征幽灵"
+    },
+    "description": "这个扭曲的人形就如同是各种边界的万花筒。人体的每个部分都被压平，每秒都在疯狂地扭曲。你的脑海中想到的形容词是“旋转”，尽管你不确定为什么。",
+    "default_faction": "nether_player_hate",
+    "species": [
+      "NETHER_EMANATION"
+    ],
+    "bodytype": "human",
+    "looks_like": "mon_memory",
+    "volume": "62500 ml",
+    "weight": "2 kg",
+    "hp": 40,
+    "speed": 150,
+    "material": [
+      "flesh"
+    ],
+    "symbol": "E",
+    "color": "light_gray",
+    "aggression": 100,
+    "morale": 100,
+    "melee_skill": 4,
+    "melee_dice": 2,
+    "melee_dice_sides": 3,
+    "melee_damage": [
+      {
+        "damage_type": "pure",
+        "amount": 0,
+        "armor_penetration": 1
+      }
+    ],
+    "special_attacks": [
+      [
+        "DISAPPEAR",
+        5
+      ]
+    ],
+    "dodge": 7,
+    "vision_day": 50,
+    "vision_night": 3,
+    "harvest": "exempt",
+    "death_function": {
+      "corpse_type": "NO_CORPSE",
+      "message": "%s化作无尽舱室的一部分。"
+    },
+    "flags": [
+      "SEES",
+      "HEARS",
+      "WARM",
+      "NO_BREATHE",
+      "PUSH_MON",
+      "HIT_AND_RUN",
+      "HARDTOSHOOT"
+    ],
+    "armor": {
+      "electric": 1
+    }
+  },
+  {
+    "id": "mon_eigenspectre_4",
+    "type": "MONSTER",
+    "name": {
+      "str": "巨大本征幽灵"
+    },
+    "description": "不知何故，这个人形比其他的要更多。无数表面的每一个面都被展现出来，但每一面都像是更大形状的薄边。这里存在着无穷无尽的时间，曾经有个科学家在这。",
+    "default_faction": "nether_player_hate",
+    "species": [
+      "NETHER_EMANATION"
+    ],
+    "bodytype": "human",
+    "looks_like": "mon_memory",
+    "volume": "72500 ml",
+    "weight": "2 kg",
+    "hp": 200,
+    "speed": 90,
+    "material": [
+      "flesh"
+    ],
+    "symbol": "E",
+    "color": "light_gray",
+    "aggression": 100,
+    "morale": 100,
+    "melee_skill": 4,
+    "melee_dice": 2,
+    "melee_dice_sides": 8,
+    "melee_damage": [
+      {
+        "damage_type": "pure",
+        "amount": 0,
+        "armor_penetration": 1
+      }
+    ],
+    "special_attacks": [
+      {
+        "id": "smash",
+        "move_cost": 100,
+        "cooldown": 8,
+        "min_mul": 0.8,
+        "throw_strength": 50
+      },
+      {
+        "id": "slam",
+        "cooldown": 10,
+        "damage_max_instance": [
+          {
+            "damage_type": "bash",
+            "amount": 12
+          }
+        ]
+      },
+      [
+        "LUNGE",
+        10
+      ]
+    ],
+    "dodge": 7,
+    "vision_day": 50,
+    "vision_night": 3,
+    "harvest": "exempt",
+    "death_function": {
+      "corpse_type": "NO_CORPSE",
+      "message": "%s化作无尽舱室的一部分。"
+    },
+    "flags": [
+      "SEES",
+      "HEARS",
+      "WARM",
+      "NO_BREATHE",
+      "PUSH_MON",
+      "HARDTOSHOOT"
+    ],
+    "armor": {
+      "electric": 1
+    }
+  },
+  {
+    "id": "mon_living_vector",
+    "type": "MONSTER",
+    "name": {
+      "str": "展开不可能性",
+      "str_pl": "展开不可能性"
+    },
+    "description": "这是你所处的无限空间的整体，它完美地包含了自己。如果你仔细观察，你可能会看到自己正往回看。你确信，在其他任何时刻，看到这一幕都会像打碎蛋壳一样打碎你的大脑。但你现在理解它却毫无困难。你可以看到它在呼吸。",
+    "default_faction": "nether_player_hate",
+    "species": [
+      "NETHER_EMANATION"
+    ],
+    "looks_like": "mon_impossible_shape",
+    "volume": "62500 ml",
+    "weight": "0 g",
+    "speed": 120,
+    "hp": 200,
+    "symbol": "X",
+    "color": "white",
+    "aggression": 100,
+    "morale": 100,
+    "dodge": 8,
+    "special_attacks": [
+      {
+        "type": "gun",
+        "cooldown": 7,
+        "move_cost": 50,
+        "gun_type": "LIXA_vector_volley",
+        "fake_skills": [
+          [
+            "gun",
+            8
+          ],
+          [
+            "rifle",
+            8
+          ]
+        ],
+        "fake_dex": 8,
+        "fake_per": 8,
+        "require_targeting_player": false,
+        "description": "%s快速重新排列了无限空间的坐标。",
+        "ranges": [
+          [
+            2,
+            20,
+            "DEFAULT"
+          ]
+        ]
+      },
+      {
+        "type": "spell",
+        "id": "LIXA_reshuffle_cone",
+        "spell_data": {
+          "id": "LIXA_reshuffle_cone",
+          "min_level": 1
+        },
+        "monster_message": "%s重新排列了与你重叠的身体部分，让它们在你周围膨胀。",
+        "cooldown": 20
+      }
+    ],
+    "death_function": {
+      "corpse_type": "NO_CORPSE",
+      "message": "%s的形体向内坍缩，消失在无限空间中。",
+      "effect": {
+        "id": "mon_LIXA_vector_death",
+        "hit_self": true
+      }
+    },
+    "flags": [
+      "FLIES",
+      "NO_BREATHE",
+      "SEES",
+      "RANGED_ATTACKER",
+      "HARDTOSHOOT",
+      "HIT_AND_RUN"
+    ],
+    "armor": {
+      "bash": 6,
+      "cut": 12,
+      "bullet": 10
+    }
+  },
+  {
+    "id": "mon_LIXA_rm13_phase_guard",
+    "type": "MONSTER",
+    "name": {
+      "str": "相位锁死的RM-13试验员"
+    },
+    "description": "一名参加RM-13环境作战服相位浸入测试的LIXA安保试验员。事故发生时，折叠场把人、护服、货架和几米仓库空间压进了同一个不稳定轮廓；它不是跨洋物流的佣兵，也不再属于任何能够被称作“人”的组织。装甲表面不断闪过仓库编号和生命体征。重创会使锁死空间撕下一段会自行行动的残影，而护服内部积蓄的放电则足以击穿多数机器人的绝缘薄弱处。",
+    "default_faction": "nether_player_hate",
+    "species": [
+      "NETHER_EMANATION"
+    ],
+    "bodytype": "human",
+    "volume": "90000 ml",
+    "weight": "180 kg",
+    "hp": 300,
+    "speed": 105,
+    "material": [
+      "flesh",
+      "steel"
+    ],
+    "symbol": "R",
+    "color": "light_cyan",
+    "aggression": 100,
+    "morale": 100,
+    "melee_skill": 6,
+    "melee_dice": 3,
+    "melee_dice_sides": 7,
+    "melee_damage": [
+      {
+        "damage_type": "bash",
+        "amount": 10
+      },
+      {
+        "damage_type": "cut",
+        "amount": 6,
+        "armor_penetration": 4
+      },
+      {
+        "damage_type": "electric",
+        "amount": 7,
+        "armor_penetration": 15
+      }
+    ],
+    "special_attacks": [
+      {
+        "type": "spell",
+        "id": "LIXA_RM13_PHASE_SPLIT_ATTACK",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_effect": "LIXA_rm13_phase_split"
+              }
+            },
+            {
+              "math": [
+                "u_hp('ALL') <= 150"
+              ]
+            }
+          ]
+        },
+        "spell_data": {
+          "id": "LIXA_RM13_PHASE_SPLIT",
+          "hit_self": true
+        },
+        "cooldown": 1,
+        "allow_no_target": true,
+        "monster_message": "%s胸前的锁定灯骤然熄灭，一层带着货架残影的轮廓从装甲中撕裂出来！"
+      },
+      {
+        "type": "spell",
+        "spell_data": {
+          "id": "LIXA_spawn_copy",
+          "hit_self": true
+        },
+        "cooldown": 12,
+        "monster_message": "%s的装甲轮廓骤然折叠，连同身后的货架一起错位！"
+      },
+      {
+        "id": "smash",
+        "move_cost": 120,
+        "cooldown": 10,
+        "min_mul": 0.7,
+        "throw_strength": 28
+      },
+      {
+        "id": "slam",
+        "cooldown": 12,
+        "damage_max_instance": [
+          {
+            "damage_type": "bash",
+            "amount": 10
+          }
+        ]
+      }
+    ],
+    "dodge": 3,
+    "vision_day": 50,
+    "vision_night": 8,
+    "harvest": "exempt",
+    "death_function": {
+      "corpse_type": "NO_CORPSE",
+      "message": "%s的空间锁终于解除；装甲、血肉和货架残影向同一点坍缩，随后安静消失。"
+    },
+    "flags": [
+      "SEES",
+      "HEARS",
+      "WARM",
+      "NO_BREATHE",
+      "PUSH_MON",
+      "HARDTOSHOOT"
+    ],
+    "armor": {
+      "bash": 14,
+      "cut": 20,
+      "bullet": 24,
+      "electric": 5,
+      "acid": 8,
+      "heat": 8
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_RM13_PHASE_ECHO",
+    "effect": [
+      {
+        "u_spawn_monster": "mon_LIXA_rm13_phase_echo",
+        "real_count": 1,
+        "min_radius": 1,
+        "max_radius": 2
+      }
+    ]
+  },
+  {
+    "type": "SPELL",
+    "id": "LIXA_RM13_PHASE_ECHO_SUMMON",
+    "name": {
+      "str": "RM-13相位残影生成",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "在RM-13试验员附近寻找可用空间并生成一个短暂的相位残影。",
+      "//~": "NO_I18N"
+    },
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_RM13_PHASE_ECHO",
+    "shape": "blast",
+    "valid_targets": [
+      "self"
+    ],
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX",
+      "NO_HANDS",
+      "NO_LEGS",
+      "NO_FAIL"
+    ],
+    "base_casting_time": 0
+  },
+  {
+    "type": "SPELL",
+    "id": "LIXA_RM13_PHASE_SPLIT",
+    "name": {
+      "str": "RM-13相位分裂",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "标记RM-13试验员已在半血时释放过相位残影。",
+      "//~": "NO_I18N"
+    },
+    "effect": "attack",
+    "effect_str": "LIXA_rm13_phase_split",
+    "shape": "blast",
+    "valid_targets": [
+      "self"
+    ],
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX",
+      "NO_HANDS",
+      "NO_LEGS",
+      "NO_FAIL"
+    ],
+    "min_duration": 8640000,
+    "max_duration": 8640000,
+    "base_casting_time": 0,
+    "extra_effects": [
+      {
+        "id": "LIXA_RM13_PHASE_ECHO_SUMMON",
+        "hit_self": true
+      }
+    ]
+  },
+  {
+    "id": "mon_LIXA_rm13_phase_echo",
+    "type": "MONSTER",
+    "name": {
+      "str": "RM-13相位残影"
+    },
+    "description": "从锁死试验员身上剥离出的一段错误空间记录。它保留了护服、人体与货架轮廓的一部分，动作比本体更快，却会在数秒后自行失稳消散。",
+    "default_faction": "nether_player_hate",
+    "species": [
+      "NETHER_EMANATION"
+    ],
+    "bodytype": "human",
+    "volume": "65000 ml",
+    "weight": "55 kg",
+    "hp": 45,
+    "speed": 125,
+    "material": [
+      "flesh",
+      "steel"
+    ],
+    "symbol": "R",
+    "color": "cyan",
+    "aggression": 100,
+    "morale": 100,
+    "melee_skill": 5,
+    "melee_dice": 2,
+    "melee_dice_sides": 4,
+    "melee_damage": [
+      {
+        "damage_type": "bash",
+        "amount": 3
+      },
+      {
+        "damage_type": "electric",
+        "amount": 4,
+        "armor_penetration": 12
+      }
+    ],
+    "special_attacks": [
+      [
+        "DISAPPEAR",
+        8
+      ]
+    ],
+    "dodge": 5,
+    "vision_day": 50,
+    "vision_night": 8,
+    "harvest": "exempt",
+    "death_function": {
+      "corpse_type": "NO_CORPSE",
+      "message": "%s像一段被删除的录像般闪烁数次，随即消失。"
+    },
+    "flags": [
+      "SEES",
+      "HEARS",
+      "WARM",
+      "NO_BREATHE",
+      "PUSH_MON",
+      "HIT_AND_RUN",
+      "HARDTOSHOOT"
+    ],
+    "armor": {
+      "bash": 5,
+      "cut": 8,
+      "bullet": 8,
+      "electric": 2
+    }
+  }
+]

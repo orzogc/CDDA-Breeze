@@ -1,0 +1,41 @@
+[
+  {
+    "id": "408_ct_ball",
+    "type": "AMMO",
+    "name": {
+      "str_sp": ".408 CheyTac 弹"
+    },
+    "description": ".408 CheyTac弹药是美国夏安战术有限公司为其远程步枪系统研发的专用高精度枪弹，旨在为CheyTac LRRS远程步枪系统提供一种能实现远程反人员精确射击的弹药，以满足对远距离目标高精度打击的需求。",
+    "weight": "80 g",
+    "volume": "400 ml",
+    "longest_side": "94 mm",
+    "price": 2500,
+    "price_postapoc": 3500,
+    "flags": [
+      "IRREPLACEABLE_CONSUMABLE"
+    ],
+    "material": [
+      "brass",
+      "lead",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "yellow",
+    "count": 20,
+    "stack_size": 20,
+    "ammo_type": "408_ct",
+    "casing": "408_ct_casing",
+    "range": 250,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 110,
+      "armor_penetration": 35
+    },
+    "dispersion": 0,
+    "recoil": 8500,
+    "effects": [
+      "COOKOFF",
+      "NEVER_MISFIRES"
+    ]
+  }
+]

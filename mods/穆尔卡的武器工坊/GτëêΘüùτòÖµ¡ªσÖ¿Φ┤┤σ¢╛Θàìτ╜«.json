@@ -1,0 +1,126 @@
+[
+  {
+    "type": "mod_tileset",
+    "compatibility": [
+      "Chibi_Ultica",
+      "MshockRealXotto",
+      "UltimateCataclysm",
+      "MshockXottoplus",
+      "UNDEAD_PEOPLE",
+      "UNDEAD_PEOPLE_BASE",
+      "UNDEAD_PEOPLE_LEGACY",
+      "UlticaShell",
+      "MshockXottoplus12",
+      "MSX++DEAD_PEOPLE",
+      "MXplus12_for_cosmetics",
+      "MSXotto+"
+    ],
+    "tiles-new": [
+      {
+        "file": "G版遗留武器贴图.png",
+        "sprite_width": 32,
+        "sprite_height": 32,
+        "sprite_offset_x": 0,
+        "sprite_offset_y": 0,
+        "tiles": [
+          {
+            "id": "fal_308",
+            "fg": 2
+          },
+          {
+            "id": "overlay_wielded_fal_308",
+            "fg": 3
+          },
+          {
+            "id": "ks23",
+            "fg": 13
+          },
+          {
+            "id": "overlay_wielded_ks23",
+            "fg": 12
+          },
+          {
+            "id": "rgd5",
+            "fg": 71
+          },
+          {
+            "id": "overlay_wielded_rgd5",
+            "fg": 70
+          },
+          {
+            "id": "rgd5_act",
+            "fg": 73
+          },
+          {
+            "id": "overlay_wielded_rgd5_act",
+            "fg": 72
+          },
+          {
+            "id": "overlay_wielded_m27_assault_rifle",
+            "fg": 78
+          },
+          {
+            "id": "m27_assault_rifle",
+            "fg": 79
+          },
+          {
+            "id": "m27iar",
+            "fg": 79
+          },
+          {
+            "id": "overlay_wielded_m27iar",
+            "fg": 78
+          },
+          {
+            "id": "h&k416a5",
+            "fg": 79
+          },
+          {
+            "id": "overlay_wielded_h&k416a5",
+            "fg": 78
+          },
+          {
+            "id": "overlay_wielded_fn_fal",
+            "fg": 104
+          },
+          {
+            "id": "fn_fal",
+            "fg": 105
+          },
+          {
+            "id": "overlay_wielded_ar15",
+            "fg": 106
+          },
+          {
+            "id": "ar15",
+            "fg": 107
+          },
+          {
+            "id": "overlay_wielded_m3_grease",
+            "fg": 202
+          },
+          {
+            "id": "m3_grease",
+            "fg": 203
+          },
+          {
+            "id": "overlay_wielded_MP153_M",
+            "fg": 210
+          },
+          {
+            "id": "MP153_M",
+            "fg": 211
+          },
+          {
+            "id": "overlay_wielded_ak109c",
+            "fg": 216
+          },
+          {
+            "id": "ak109c",
+            "fg": 217
+          }
+        ]
+      }
+    ]
+  }
+]

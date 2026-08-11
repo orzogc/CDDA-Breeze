@@ -1,0 +1,517 @@
+[
+  {
+    "type": "item_group",
+    "id": "book_martial_common",
+    "subtype": "distribution",
+    "entries": [
+      {
+        "item": "manual_boxing",
+        "prob": 100
+      },
+      {
+        "item": "manual_karate",
+        "prob": 90
+      },
+      {
+        "item": "manual_aikido",
+        "prob": 90
+      },
+      {
+        "item": "manual_taekwondo",
+        "prob": 90
+      },
+      {
+        "item": "manual_judo",
+        "prob": 75
+      },
+      {
+        "item": "manual_muay_thai",
+        "prob": 75
+      },
+      {
+        "item": "manual_kickboxing",
+        "prob": 75
+      },
+      {
+        "item": "manual_krav_maga",
+        "prob": 75
+      },
+      {
+        "item": "manual_capoeira",
+        "prob": 50
+      },
+      {
+        "item": "manual_pankration",
+        "prob": 50
+      },
+      {
+        "item": "manual_tai_chi",
+        "prob": 50
+      },
+      {
+        "item": "manual_wingchun",
+        "prob": 50
+      },
+      {
+        "item": "manual_tiger",
+        "prob": 10
+      },
+      {
+        "item": "manual_crane",
+        "prob": 10
+      },
+      {
+        "item": "manual_dragon",
+        "prob": 10
+      },
+      {
+        "item": "manual_leopard",
+        "prob": 10
+      },
+      {
+        "item": "manual_snake",
+        "prob": 10
+      },
+      {
+        "item": "manual_centipede",
+        "prob": 10
+      },
+      {
+        "item": "manual_lizard",
+        "prob": 10
+      },
+      {
+        "item": "manual_scorpion",
+        "prob": 10
+      },
+      {
+        "item": "manual_toad",
+        "prob": 10
+      },
+      {
+        "item": "manual_venom_snake",
+        "prob": 10
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "book_martial_rare",
+    "subtype": "distribution",
+    "entries": [
+      {
+        "item": "manual_fencing",
+        "prob": 100
+      },
+      {
+        "item": "manual_eskrima",
+        "prob": 75
+      },
+      {
+        "item": "manual_silat",
+        "prob": 75
+      },
+      {
+        "item": "manual_bojutsu",
+        "prob": 50
+      },
+      {
+        "item": "manual_ninjutsu",
+        "prob": 50
+      },
+      {
+        "item": "manual_niten",
+        "prob": 50
+      },
+      {
+        "item": "manual_zui_quan",
+        "prob": 50
+      },
+      {
+        "item": "manual_sojutsu",
+        "prob": 50
+      },
+      {
+        "item": "manual_barbaran",
+        "prob": 30
+      },
+      {
+        "item": "manual_medievalpole",
+        "prob": 30
+      },
+      {
+        "item": "manual_swordsmanship",
+        "prob": 30
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "book_martial",
+    "//": "0.I-style high-availability martial art book pool.",
+    "subtype": "distribution",
+    "entries": [
+      {
+        "group": "book_martial_common",
+        "prob": 5
+      },
+      {
+        "group": "book_martial_rare",
+        "prob": 1
+      }
+    ]
+  },
+  {
+    "id": "exotic_books",
+    "type": "item_group",
+    "//": "Breeze exotic book pool with 0.I martial-art book rates.",
+    "subtype": "distribution",
+    "entries": [
+      {
+        "group": "book_martial_rare",
+        "prob": 44
+      },
+      {
+        "group": "book_martial_common",
+        "prob": 7
+      },
+      {
+        "item": "textbook_weapwest",
+        "prob": 15
+      },
+      {
+        "item": "textbook_weapeast",
+        "prob": 15
+      },
+      {
+        "item": "textbook_armwest",
+        "prob": 15
+      },
+      {
+        "item": "textbook_armeast",
+        "prob": 15
+      },
+      {
+        "item": "textbook_armschina",
+        "prob": 15
+      },
+      {
+        "item": "textbook_gaswarfare",
+        "prob": 15
+      },
+      {
+        "item": "text_gunsmith",
+        "prob": 10
+      },
+      {
+        "item": "glassblowing_book",
+        "prob": 12
+      },
+      {
+        "item": "plastics_book",
+        "prob": 12
+      },
+      {
+        "item": "cookbook_human",
+        "prob": 10
+      },
+      {
+        "item": "collector_book",
+        "prob": 10
+      },
+      {
+        "item": "brewing_cookbook",
+        "prob": 24
+      },
+      {
+        "item": "cookbook_indian",
+        "prob": 10
+      },
+      {
+        "item": "sweets_book",
+        "prob": 10
+      },
+      {
+        "item": "textbook_robots",
+        "prob": 15
+      },
+      {
+        "item": "manual_dodge",
+        "prob": 15
+      },
+      {
+        "item": "novel_experimental",
+        "prob": 24
+      },
+      {
+        "item": "novel_swash",
+        "prob": 30
+      },
+      {
+        "item": "plays_book",
+        "prob": 30
+      },
+      {
+        "item": "poetry_book",
+        "prob": 30
+      },
+      {
+        "item": "carpentry_book",
+        "prob": 24
+      },
+      {
+        "item": "scots_cookbook",
+        "prob": 30
+      },
+      {
+        "item": "textbook_biodiesel",
+        "prob": 18
+      },
+      {
+        "item": "jewelry_book",
+        "prob": 15
+      },
+      {
+        "item": "textbook_arthropod",
+        "prob": 5
+      },
+      {
+        "item": "textbook_botany",
+        "prob": 5
+      },
+      {
+        "item": "book_lockpick",
+        "prob": 1
+      },
+      {
+        "item": "scots_tailor",
+        "prob": 30
+      },
+      {
+        "item": "necronomicon",
+        "prob": 1
+      }
+    ]
+  },
+  {
+    "id": "dojo_manuals",
+    "type": "item_group",
+    "subtype": "collection",
+    "//": "0.I-style martial book availability for Breeze; custom Wing Chun weapon drops intentionally excluded.",
+    "entries": [
+      {
+        "group": "book_martial_common",
+        "prob": 100
+      },
+      {
+        "group": "book_martial_rare",
+        "prob": 55
+      },
+      {
+        "item": "mag_melee",
+        "prob": 20
+      },
+      {
+        "item": "manual_melee",
+        "prob": 10
+      },
+      {
+        "item": "mag_unarmed",
+        "prob": 20
+      },
+      {
+        "item": "manual_brawl",
+        "prob": 10
+      },
+      {
+        "item": "mag_cutting",
+        "prob": 5
+      },
+      {
+        "item": "textbook_weapeast",
+        "prob": 5
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "manuals",
+    "copy-from": "manuals",
+    "subtype": "distribution",
+    "extend": {
+      "entries": [
+        {
+          "group": "book_martial_common",
+          "prob": 600
+        },
+        {
+          "group": "book_martial_rare",
+          "prob": 200
+        }
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "homebooks",
+    "copy-from": "homebooks",
+    "subtype": "distribution",
+    "extend": {
+      "entries": [
+        {
+          "group": "book_martial_common",
+          "prob": 25
+        },
+        {
+          "group": "book_martial_rare",
+          "prob": 5
+        }
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "mansion_books",
+    "copy-from": "mansion_books",
+    "subtype": "distribution",
+    "extend": {
+      "entries": [
+        {
+          "group": "book_martial_common",
+          "prob": 80
+        },
+        {
+          "group": "book_martial_rare",
+          "prob": 35
+        }
+      ]
+    }
+  },
+  {
+    "id": "book_manual_combat",
+    "type": "item_group",
+    "subtype": "distribution",
+    "entries": [
+      {
+        "item": "manual_brawl",
+        "prob": 10
+      },
+      {
+        "item": "manual_melee",
+        "prob": 10
+      },
+      {
+        "item": "manual_bashing",
+        "prob": 10
+      },
+      {
+        "item": "manual_stabbing",
+        "prob": 5
+      },
+      {
+        "item": "manual_knives",
+        "prob": 5
+      },
+      {
+        "item": "manual_cutting",
+        "prob": 5
+      },
+      {
+        "item": "manual_swords",
+        "prob": 5
+      },
+      {
+        "item": "manual_dodge",
+        "prob": 4
+      },
+      {
+        "item": "manual_dodge_kid",
+        "prob": 4
+      },
+      {
+        "item": "book_nonf_hard_dodge_tlwd",
+        "prob": 4
+      }
+    ]
+  },
+  {
+    "id": "SUS_martial_bookcase",
+    "type": "item_group",
+    "subtype": "collection",
+    "entries": [
+      {
+        "group": "book_martial_rare",
+        "prob": 65
+      },
+      {
+        "group": "book_martial_common",
+        "count": [
+          1,
+          2
+        ],
+        "prob": 100
+      },
+      {
+        "group": "book_mag_combat",
+        "count": [
+          1,
+          4
+        ],
+        "prob": 100
+      },
+      {
+        "group": "book_manual_combat",
+        "count": [
+          1,
+          2
+        ],
+        "prob": 50
+      }
+    ]
+  },
+  {
+    "id": "SUS_martial_bookcase_vandalized",
+    "type": "item_group",
+    "subtype": "collection",
+    "entries": [
+      {
+        "group": "SUS_martial_bookcase",
+        "prob": 100
+      },
+      {
+        "item": "book_ruined",
+        "count": [
+          0,
+          12
+        ],
+        "prob": 100
+      },
+      {
+        "item": "book_pieces",
+        "count": [
+          0,
+          26
+        ],
+        "prob": 100
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "textbooks",
+    "copy-from": "textbooks",
+    "subtype": "distribution",
+    "extend": {
+      "entries": [
+        {
+          "group": "book_martial_common",
+          "prob": 150
+        },
+        {
+          "group": "book_martial_rare",
+          "prob": 50
+        }
+      ]
+    }
+  }
+]

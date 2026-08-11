@@ -1,0 +1,167 @@
+[
+  {
+    "type": "item_group",
+    "id": "guns_shotgun_rare",
+    "copy-from": "guns_shotgun_rare",
+    "subtype": "distribution",
+    "extend": {
+      "items": [
+        [
+          "viking_shotgun",
+          6
+        ],
+        [
+          "scgs_chimera",
+          3
+        ]
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "guns_shotgun_rare_display",
+    "copy-from": "guns_shotgun_rare_display",
+    "subtype": "distribution",
+    "extend": {
+      "items": [
+        [
+          "viking_shotgun",
+          8
+        ],
+        [
+          "scgs_chimera",
+          4
+        ]
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "guns_rifle_obscure",
+    "copy-from": "guns_rifle_obscure",
+    "subtype": "distribution",
+    "extend": {
+      "items": [
+        [
+          "gavk_762",
+          5
+        ],
+        [
+          "kc14",
+          4
+        ],
+        [
+          "ksvk",
+          1
+        ],
+        [
+          "dhzr",
+          1
+        ]
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "guns_rifle_obscure_display",
+    "copy-from": "guns_rifle_obscure_display",
+    "subtype": "distribution",
+    "extend": {
+      "items": [
+        [
+          "gavk_762",
+          8
+        ],
+        [
+          "kc14",
+          5
+        ],
+        [
+          "ksvk",
+          2
+        ],
+        [
+          "dhzr",
+          1
+        ],
+        [
+          "ak74uf",
+          2
+        ],
+        [
+          "vss47",
+          1
+        ]
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "guns_smg_rare",
+    "copy-from": "guns_smg_rare",
+    "subtype": "distribution",
+    "extend": {
+      "items": [
+        [
+          "m3_grease",
+          20
+        ]
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "guns_smg_rare_display",
+    "copy-from": "guns_smg_rare_display",
+    "subtype": "distribution",
+    "extend": {
+      "items": [
+        [
+          "m3_grease",
+          25
+        ]
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "mansion_safe",
+    "copy-from": "mansion_safe",
+    "subtype": "collection",
+    "extend": {
+      "items": [
+        {
+          "item": "viking_shotgun",
+          "prob": 2
+        },
+        {
+          "item": "gavk_762",
+          "prob": 2
+        },
+        {
+          "item": "scgs_chimera",
+          "prob": 1
+        }
+      ]
+    },
+    "//": "少量作为昂贵收藏品进入豪宅保险柜；概率独立且极低。"
+  },
+  {
+    "type": "item_group",
+    "id": "nanofab_recipes",
+    "copy-from": "nanofab_recipes",
+    "subtype": "distribution",
+    "extend": {
+      "entries": [
+        {
+          "item": "scgs_chimera",
+          "prob": 5
+        },
+        {
+          "item": "dhzr",
+          "prob": 2
+        }
+      ]
+    }
+  }
+]

@@ -1,0 +1,215 @@
+[
+  {
+    "id": "fd_congealed_light",
+    "type": "field_type",
+    "mopsafe": false,
+    "intensity_levels": [
+      {
+        "name": "凝固的光斑",
+        "sym": "5",
+        "color": "magenta",
+        "dangerous": true,
+        "effects": [
+          {
+            "effect_id": "LIXA_illuminated",
+            "min_duration": "2 seconds",
+            "max_duration": "2 seconds",
+            "intensity": 1,
+            "immune_in_vehicle": true,
+            "is_environmental": false
+          }
+        ],
+        "light_emitted": 5
+      },
+      {
+        "name": "一缕凝固的光线",
+        "color": "pink",
+        "effects": [
+          {
+            "effect_id": "LIXA_illuminated",
+            "min_duration": "4 seconds",
+            "max_duration": "4 seconds",
+            "intensity": 2,
+            "immune_in_vehicle": true,
+            "is_environmental": false
+          }
+        ],
+        "light_emitted": 15
+      },
+      {
+        "name": "一汪凝固的光芒",
+        "color": "white",
+        "effects": [
+          {
+            "effect_id": "LIXA_illuminated",
+            "min_duration": "6 seconds",
+            "max_duration": "6 seconds",
+            "intensity": 3,
+            "immune_in_vehicle": true,
+            "is_environmental": false
+          }
+        ],
+        "light_emitted": 30
+      }
+    ],
+    "description_affix": "covered_in",
+    "is_splattering": true,
+    "priority": 2,
+    "half_life": "10 seconds",
+    "phase": "liquid",
+    "display_field": true,
+    "looks_like": "fd_bile"
+  },
+  {
+    "id": "emit_congealed_light",
+    "type": "emit",
+    "field": "fd_congealed_light",
+    "intensity": 1,
+    "qty": 30,
+    "chance": 85
+  },
+  {
+    "type": "effect_type",
+    "id": "LIXA_illuminated",
+    "name": [
+      "照亮"
+    ],
+    "desc": [
+      "你被凝固的光覆盖了"
+    ],
+    "apply_message": "一大块粘稠的光团覆盖了你，然后它开始燃烧了起来！",
+    "rating": "bad",
+    "max_duration": "6 seconds",
+    "max_intensity": 3,
+    "int_dur_factor": "2 seconds",
+    "base_mods": {
+      "hurt_min": [
+        1
+      ],
+      "hurt_chance": [
+        3
+      ]
+    },
+    "scaling_mods": {
+      "hurt_min": [
+        1
+      ]
+    },
+    "show_in_info": true
+  },
+  {
+    "type": "effect_type",
+    "id": "LIXA_decompressed",
+    "name": [
+      "身处解压空间"
+    ],
+    "desc": [
+      "刹那间，这无限空间内的每一寸时空本身都包含无限空间，让你的行动极度缓慢。"
+    ],
+    "apply_message": "你周围的空间不断解压延展！",
+    "rating": "bad",
+    "miss_messages": [
+      [
+        "在这片无边无际的空间里，你根本无法前进。",
+        4
+      ]
+    ],
+    "max_intensity": 3,
+    "int_dur_factor": "2 seconds",
+    "base_mods": {
+      "speed_mod": [
+        -33
+      ]
+    },
+    "scaling_mods": {
+      "speed_mod": [
+        -33
+      ],
+      "hit_mod": [
+        -1
+      ],
+      "dodge_mod": [
+        -1
+      ]
+    },
+    "show_in_info": true
+  },
+  {
+    "id": "fd_LIXA_decompression",
+    "type": "field_type",
+    "intensity_levels": [
+      {
+        "name": "解压空间",
+        "effects": [
+          {
+            "effect_id": "LIXA_decompressed",
+            "min_duration": "2 seconds",
+            "max_duration": "2 seconds",
+            "intensity": 1,
+            "immune_in_vehicle": true,
+            "is_environmental": false
+          }
+        ],
+        "light_emitted": 5
+      },
+      {
+        "name": "解压空间",
+        "effects": [
+          {
+            "effect_id": "LIXA_decompressed",
+            "min_duration": "4 seconds",
+            "max_duration": "4 seconds",
+            "intensity": 2,
+            "immune_in_vehicle": true,
+            "is_environmental": false
+          }
+        ],
+        "light_emitted": 15
+      },
+      {
+        "name": "解压空间",
+        "effects": [
+          {
+            "effect_id": "LIXA_decompressed",
+            "min_duration": "6 seconds",
+            "max_duration": "6 seconds",
+            "intensity": 3,
+            "immune_in_vehicle": true,
+            "is_environmental": false
+          }
+        ],
+        "light_emitted": 30
+      }
+    ],
+    "priority": 2,
+    "half_life": "5 seconds",
+    "phase": "plasma",
+    "display_field": true,
+    "looks_like": "fd_fog"
+  },
+  {
+    "type": "effect_type",
+    "id": "LIXA_unfolded_eff",
+    "name": [
+      "展开"
+    ],
+    "desc": [
+      "你不再有内外之分。现在只有一个平面；平坦、无限，是你曾经的一切。你不禁想你之所以现在能轻松地理解这一切，是不是因为你的小脑瓜得像这样铺开才转得动。"
+    ],
+    "max_intensity": 1,
+    "show_in_info": true
+  },
+  {
+    "type": "effect_type",
+    "id": "LIXA_rm13_phase_split",
+    "name": [
+      "相位分裂已触发"
+    ],
+    "desc": [
+      "RM-13试验员已释放过一次相位残影。"
+    ],
+    "rating": "neutral",
+    "max_duration": "365 days",
+    "show_in_info": false
+  }
+]

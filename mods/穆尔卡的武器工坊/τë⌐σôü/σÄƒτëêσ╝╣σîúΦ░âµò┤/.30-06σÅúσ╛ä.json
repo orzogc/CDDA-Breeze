@@ -1,0 +1,37 @@
+[
+  {
+    "id": "3006_clip",
+    "copy-from": "3006_clip",
+    "looks_like": "stanag30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": ".30-06 5发弹夹"
+    },
+    "description": "一块体积小巧中有凹槽的金属片，用来让射手为兼容枪械快速装填5发.30-06弹。",
+    "weight": "40 g",
+    "volume": "10 ml",
+    "longest_side": "9 cm",
+    "price": 500,
+    "price_postapoc": 50,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "3006"
+    ],
+    "flags": [
+      "SPEEDLOADER",
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "3006": 5
+        }
+      }
+    ]
+  }
+]

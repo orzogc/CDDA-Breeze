@@ -1,0 +1,192 @@
+[
+  {
+    "id": "dh_machete",
+    "type": "TOOL",
+    "category": "weapons",
+    "name": {
+      "str": "猎鹿人开山刀"
+    },
+    "description": "一把结实的大砍刀，产自猎鹿人户外用品，刀身非常结实，砍断骨头什么的再轻松不过了。",
+    "repairs_like": "machete",
+    "weight": "650 g",
+    "volume": "1500 ml",
+    "longest_side": "50 cm",
+    "price": 82000,
+    "price_postapoc": 7000,
+    "to_hit": {
+      "grip": "solid",
+      "length": "short",
+      "surface": "line",
+      "balance": "neutral"
+    },
+    "material": [
+      "qt_steel",
+      "plastic"
+    ],
+    "symbol": "/",
+    "color": "light_gray",
+    "qualities": [
+      [
+        "CUT",
+        2
+      ],
+      [
+        "GRASS_CUT",
+        1
+      ],
+      [
+        "BUTCHER",
+        3
+      ]
+    ],
+    "techniques": [
+      "WBLOCK_1",
+      "SWEEP",
+      "WIDE",
+      "BRUTAL"
+    ],
+    "flags": [
+      "SHEATH_SWORD"
+    ],
+    "weapon_category": [
+      "BLADED_FARMING"
+    ],
+    "bashing": 5,
+    "cutting": 28
+  },
+  {
+    "id": "knife_ck12",
+    "type": "TOOL",
+    "category": "weapons",
+    "name": {
+      "str": "CK-12 格斗匕首"
+    },
+    "description": "CVA公司的一款格斗匕首，非常适合近身格斗，比普通的战术匕首更为致命。",
+    "repairs_like": "knife_combat",
+    "weight": "200 g",
+    "volume": "500 ml",
+    "longest_side": "25 cm",
+    "price": 35000,
+    "price_postapoc": 3000,
+    "to_hit": {
+      "grip": "weapon",
+      "length": "hand",
+      "surface": "point",
+      "balance": "good"
+    },
+    "material": [
+      "plastic",
+      "qt_steel"
+    ],
+    "symbol": "/",
+    "color": "light_gray",
+    "techniques": [
+      "RAPID",
+      "WBLOCK_1"
+    ],
+    "qualities": [
+      [
+        "CUT",
+        2
+      ],
+      [
+        "CUT_FINE",
+        1
+      ],
+      [
+        "BUTCHER",
+        30
+      ]
+    ],
+    "thrown_damage": [
+      {
+        "damage_type": "stab",
+        "amount": 5
+      }
+    ],
+    "flags": [
+      "DURABLE_MELEE",
+      "SHEATH_KNIFE",
+      "STAB"
+    ],
+    "weapon_category": [
+      "KNIVES"
+    ],
+    "bashing": 2,
+    "cutting": 25
+  },
+  {
+    "id": "sps3",
+    "type": "TOOL",
+    "category": "weapons",
+    "name": {
+      "str": "SPS-3 战斗工兵铲"
+    },
+    "description": "格科斯勒工业生产的战术工兵铲，铲刃由超合金锻造，铲头边缘有极其锋利的刀刃，两端还有用来凿击的尖头，它没有太多的功能，不适合作为一把工具使用，但是用来劈砍或是戳刺却是相当优秀的，坚固又锋利的刀刃可以撕裂对方的护甲并留下可怕的创口。",
+    "repairs_like": "e_tool",
+    "weight": "500 g",
+    "volume": "800 ml",
+    "longest_side": "40 cm",
+    "price": 128000,
+    "price_postapoc": 15000,
+    "to_hit": {
+      "grip": "weapon",
+      "length": "short",
+      "surface": "point",
+      "balance": "good"
+    },
+    "material": [
+      "superalloy",
+      "carbide",
+      "plastic"
+    ],
+    "symbol": "/",
+    "color": "dark_gray",
+    "use_action": [
+      "CROWBAR"
+    ],
+    "techniques": [
+      "RAPID",
+      "SWEEP",
+      "BRUTAL",
+      "WBLOCK_2"
+    ],
+    "qualities": [
+      [
+        "DIG",
+        2
+      ],
+      [
+        "CUT",
+        2
+      ],
+      [
+        "PRY",
+        2
+      ],
+      [
+        "AXE",
+        2
+      ],
+      [
+        "CUT_FINE",
+        1
+      ],
+      [
+        "BUTCHER",
+        5
+      ]
+    ],
+    "flags": [
+      "BELT_CLIP",
+      "NONCONDUCTIVE",
+      "DURABLE_MELEE",
+      "UNBREAKABLE_MELEE"
+    ],
+    "weapon_category": [
+      "KNIVES"
+    ],
+    "bashing": 5,
+    "cutting": 35
+  }
+]

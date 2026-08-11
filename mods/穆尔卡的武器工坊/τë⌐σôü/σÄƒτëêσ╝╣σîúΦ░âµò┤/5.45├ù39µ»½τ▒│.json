@@ -1,0 +1,41 @@
+[
+  {
+    "id": "ak74mag",
+    "copy-from": "ak74mag",
+    "looks_like": "stanag30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "AK-74M 30发弹匣"
+    },
+    "description": "一个标准的30发弹匣，可用于AM-74M步枪，由经过钢铁强化的高分子聚合物制成。",
+    "weight": "230 g",
+    "volume": "300 ml",
+    "longest_side": "200 mm"
+  },
+  {
+    "id": "rpk74mag",
+    "copy-from": "rpk74mag",
+    "looks_like": "stanag30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "AK-74M 45发弹匣"
+    },
+    "description": "一个45发弹匣，可用于 AK-74M 步枪，虽然最初是为 RPK-74 轻机枪设计的。",
+    "weight": "300 g",
+    "volume": "350 ml",
+    "longest_side": "220 mm"
+  },
+  {
+    "id": "casket74mag",
+    "copy-from": "casket74mag",
+    "looks_like": "stanag30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "AK-74M 60发弹匣"
+    },
+    "description": "一个60发弹匣，可用于 AK-74M 步枪。",
+    "weight": "400 g",
+    "volume": "550 ml",
+    "longest_side": "250 mm"
+  }
+]

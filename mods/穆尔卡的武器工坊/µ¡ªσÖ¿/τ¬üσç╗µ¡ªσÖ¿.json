@@ -1,0 +1,4791 @@
+[
+  {
+    "id": "aks74u",
+    "type": "GUN",
+    "name": {
+      "str": "AKS-74U 短突击步枪"
+    },
+    "description": "AKS-74U在1970年代末定型，以极短枪管和折叠枪托为车辆乘员、炮兵、飞行员及特种单位提供紧凑火力。它在阿富汗战争中广泛露面，后来也常见于警察和各类冲突。短枪管让枪口焰、噪声和弹道损失明显，却换来接近冲锋枪的携行尺寸。",
+    "weight": "2800 g",
+    "volume": "1400 ml",
+    "longest_side": "45 cm",
+    "price": 23000,
+    "price_postapoc": 2500,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "symbol": "(",
+    "color": "brown",
+    "ammo": [
+      "545x39"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 230,
+    "durability": 8,
+    "skill": "rifle",
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -3
+    },
+    "default_mods": [
+      "wire_stock"
+    ],
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        2
+      ]
+    ],
+    "barrel_volume": "200 ml",
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "ak74mag",
+          "rpk74mag",
+          "casket74mag"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "ak74n",
+    "type": "GUN",
+    "name": {
+      "str": "AK-74 突击步枪"
+    },
+    "description": "AK-74N是在标准AK-74机匣左侧增加夜视或光学瞄具安装座的版本，发射5.45x39mm弹。AK-74家族自1970年代中期取代AKM后，随苏军参加阿富汗战争，并继续出现在车臣和众多后苏联冲突中。N型保留木质枪托，适合需要夜战瞄具的步兵。",
+    "weight": "3300 g",
+    "volume": "2500 ml",
+    "longest_side": "933 mm",
+    "price": 55000,
+    "price_postapoc": 4500,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "symbol": "(",
+    "color": "brown",
+    "ammo": [
+      "545x39"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 160,
+    "durability": 8,
+    "default_mods": [
+      "muzzle_brake"
+    ],
+    "skill": "rifle",
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        2
+      ]
+    ],
+    "barrel_volume": "400 ml",
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "bayonet lug",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "ak74mag",
+          "rpk74mag",
+          "casket74mag"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "ak74uf",
+    "type": "GUN",
+    "name": {
+      "str": "AK-74 UN 突击步枪"
+    },
+    "description": "俄罗斯联邦的突击步枪，是世界上生产和装备数量最多的小口径步枪之一，是苏联装备的第一种小口径自动步枪，这一把是有着联合国涂装的版本，枪托和护木被漆成了白色，常被东欧的联合国部队以及联合舰队装备。",
+    "weight": "3300 g",
+    "volume": "2500 ml",
+    "longest_side": "933 mm",
+    "price": 55000,
+    "price_postapoc": 4500,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "symbol": "(",
+    "color": "brown",
+    "ammo": [
+      "545x39"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 180,
+    "durability": 8,
+    "skill": "rifle",
+    "default_mods": [
+      "muzzle_brake"
+    ],
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        2
+      ]
+    ],
+    "barrel_volume": "400 ml",
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "bayonet lug",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "ak74mag",
+          "rpk74mag",
+          "casket74mag"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "akm",
+    "copy-from": "rifle_auto",
+    "type": "GUN",
+    "name": {
+      "str": "Arsenal SAM7SF 突击步枪"
+    },
+    "description": "保加利亚的Arsenal被认为是世界上顶级的AK步枪制造商之一，而SAM系列代表了他们的顶级产品。SAM系列使用铣削和锻造的机匣、锻造的枪机，以及冷锤锻造的镀铬内膛枪管，此外，一些型号在左侧安装了一个非常巧妙的安全和发射选择杆。这些枪械的装配和完成质量也非常出色，是目前可以购买的一些最好的量产AK步枪，然而，所有这些优点都伴随着相当高的价格，具体取决于具体的配置，价格大约在1800到2000美元之间。。",
+    "weight": "3860 g",
+    "volume": "2200 ml",
+    "longest_side": "970 mm",
+    "price": 160000,
+    "price_postapoc": 3500,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "color": "brown",
+    "ammo": [
+      "762"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 150,
+    "durability": 9,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "default_mods": [
+      "wire_stock",
+      "muzzle_brake"
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "bayonet lug",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "akmag30",
+          "akmag10",
+          "akmag20",
+          "akmag40",
+          "akdrum75"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "akms",
+    "copy-from": "rifle_auto",
+    "type": "GUN",
+    "name": {
+      "str": "AKMS 突击步枪"
+    },
+    "description": "AKMS是AKM的下折叠钢制枪托型，专为伞兵、车辆乘员和需要缩短携行长度的部队设计。它仍使用7.62x39mm弹和AKM的冲压机匣，折叠后紧凑，但抵肩舒适性较差。该枪随苏联及盟友参加阿富汗、非洲、中东和巴尔干等无数冲突。",
+    "weight": "3150 g",
+    "volume": "2100 ml",
+    "longest_side": "880 mm",
+    "price": 140000,
+    "price_postapoc": 5000,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "color": "brown",
+    "ammo": [
+      "762"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 180,
+    "durability": 8,
+    "default_mods": [
+      "wire_stock"
+    ],
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        2
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "bayonet lug",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "akmag30",
+          "akmag10",
+          "akmag20",
+          "akmag40",
+          "akdrum75"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "an94",
+    "type": "GUN",
+    "name": {
+      "str": "AN-94 突击步枪"
+    },
+    "description": "AN-94由根纳季·尼科诺夫设计，在1994年被俄军有限采用。其复杂的延迟后坐与滑轮供弹机构可在后坐完全传到射手前以极高射速发射两发，提升短点射命中率。它曾少量用于车臣等行动，但造价、训练和维护负担过高，始终未能大规模取代AK-74。",
+    "weight": "3850 g",
+    "volume": "2000 ml",
+    "longest_side": "943 mm",
+    "price": 83000,
+    "price_postapoc": 7500,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "545x39"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 30,
+    "durability": 8,
+    "skill": "rifle",
+    "default_mods": [
+      "recoil_a"
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 2
+    },
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        2
+      ]
+    ],
+    "barrel_volume": "480 ml",
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "ak74mag",
+          "rpk74mag",
+          "casket74mag"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "aek",
+    "type": "GUN",
+    "name": {
+      "str": "AEK-971 突击步枪"
+    },
+    "description": "AEK-971由科夫罗夫设计团队在苏联末期研制，采用平衡自动机构，以反向运动配重降低连发时的枪口跳动。它在多轮俄军竞标中与AK系列竞争，早期方案未能普及，但其后继A-545后来获得有限采用。性能优秀却结构更复杂，对制造和维护要求也更高。",
+    "weight": "3300 g",
+    "volume": "2300 ml",
+    "longest_side": "960 mm",
+    "price": 140000,
+    "price_postapoc": 11500,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "545x39"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 160,
+    "durability": 8,
+    "skill": "rifle",
+    "default_mods": [
+      "wire_stock",
+      "bars"
+    ],
+    "barrel_volume": "420 ml",
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "ak74mag",
+          "rpk74mag",
+          "casket74mag"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "pp1901",
+    "type": "GUN",
+    "name": {
+      "str": "PP-19-01 冲锋枪"
+    },
+    "description": "PP-19-01勇士是伊热夫斯克在PP-19野牛基础上发展的9x19mm冲锋枪，取消螺旋弹筒，改用更常规的盒式弹匣以简化后勤和提高可靠性。它大量沿用AK式操控，便于俄罗斯军警训练与维护，后来成为内务、警察和特种单位常见的近距离武器。",
+    "weight": "2726 g",
+    "volume": "1258 ml",
+    "longest_side": "705 mm",
+    "price": 14000,
+    "price_postapoc": 3500,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "9x18"
+    ],
+    "reload_noise_volume": 10,
+    "skill": "smg",
+    "default_mods": [
+      "wire_stock"
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 3
+    },
+    "dispersion": 320,
+    "durability": 8,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "1901_30"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "pp91",
+    "type": "GUN",
+    "name": {
+      "str": "PP-91 Kedr 冲锋枪"
+    },
+    "description": "PP-91 Kedr源自1970年代的设计，苏联解体前后重新投入生产，主要服务俄罗斯警察、内务和安保单位。它使用9x18mm马卡洛夫弹，自由枪机结构简单，折叠钢丝枪托让整枪十分紧凑。近距离射速和便携性不错，但弹药威力与有效射程明显低于现代卡宾枪。",
+    "weight": "1570 g",
+    "volume": "750 ml",
+    "longest_side": "530 mm",
+    "price": 7500,
+    "price_postapoc": 2500,
+    "material": [
+      "steel"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "9x18"
+    ],
+    "reload_noise_volume": 10,
+    "skill": "smg",
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 3
+    },
+    "dispersion": 400,
+    "durability": 6,
+    "default_mods": [
+      "wire_stock"
+    ],
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        4
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "pp91_30"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "ak12",
+    "type": "GUN",
+    "name": {
+      "str": "AK-12 突击步枪"
+    },
+    "description": "AK-12是卡拉什尼科夫集团为俄罗斯勇士单兵系统发展出的现代化5.45毫米步枪，经过多轮方案调整后于2018年前后开始列装。它保留AK长行程活塞与旋转枪机，同时加入导轨、伸缩枪托和更现代的人机设计。该枪已在俄乌战争中广泛出现，也暴露出早期批次需要改进的细节。",
+    "weight": "3500 g",
+    "volume": "1900 ml",
+    "longest_side": "940 mm",
+    "price": 85000,
+    "price_postapoc": 6500,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "545x39"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 110,
+    "durability": 8,
+    "skill": "rifle",
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "barrel_volume": "410 ml",
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "ak74mag",
+          "rpk74mag",
+          "casket74mag"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "am17",
+    "type": "GUN",
+    "name": {
+      "str": "AM-17 短突击步枪"
+    },
+    "description": "AM-17是卡拉什尼科夫集团在2017年前后公开的紧凑5.45毫米步枪方案，其设计思路可追溯到叶夫根尼·德拉贡诺夫的MA小型步枪。上机匣承力、聚合物下机匣和折叠伸缩枪托便于安装现代附件，目标用户包括车辆乘员与特种单位；它目前仍不像AKS-74U那样普遍。",
+    "weight": "2500 g",
+    "volume": "1300 ml",
+    "longest_side": "730 mm",
+    "price": 85000,
+    "price_postapoc": 8500,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "223"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 200,
+    "durability": 8,
+    "skill": "rifle",
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -2
+    },
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "barrel_volume": "410 ml",
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "stanag30",
+          "stanag5",
+          "stanag5ranger",
+          "stanag10",
+          "stanag10ranger",
+          "stanag20",
+          "stanag20ranger",
+          "stanag30ranger",
+          "stanag40",
+          "stanag40ranger",
+          "stanag50",
+          "stanag60",
+          "stanag60drum",
+          "stanag90",
+          "stanag100",
+          "stanag100drum",
+          "stanag150",
+          "survivor223mag"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "whitefang",
+    "type": "GUN",
+    "name": {
+      "str": "WHITE FANG 556突击步枪"
+    },
+    "description": "白子爱用的突击步枪，一直都在好好的进行整备，所以无论何时都是没有问题的状态。",
+    "weight": "3400 g",
+    "volume": "1750 ml",
+    "longest_side": "833 mm",
+    "price": 95000,
+    "price_postapoc": 7550,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "white",
+    "ammo": [
+      "223"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 100,
+    "durability": 10,
+    "skill": "rifle",
+    "default_mods": [
+      "grip",
+      "acog_scope",
+      "recoil_stock"
+    ],
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "barrel_volume": "363 ml",
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "stanag30",
+          "stanag5",
+          "stanag5ranger",
+          "stanag10",
+          "stanag10ranger",
+          "stanag20",
+          "stanag20ranger",
+          "stanag30ranger",
+          "stanag40",
+          "stanag40ranger",
+          "stanag50",
+          "stanag60",
+          "stanag60drum",
+          "stanag90",
+          "stanag100",
+          "stanag100drum",
+          "stanag150",
+          "survivor223mag"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "pkm",
+    "type": "GUN",
+    "name": {
+      "str": "PKM 通用机枪"
+    },
+    "description": "PKM由卡拉什尼科夫团队在1960年代初定型，是一支异常轻便的7.62x54mmR弹链通用机枪。它以长行程活塞、可快速更换枪管和坚固结构著称，几乎参加了此后所有重要地区冲突，从阿富汗、中东、非洲到俄乌战场都能见到。简单可靠使它至今仍难被彻底替代。",
+    "weight": "7500 g",
+    "volume": "5500 ml",
+    "longest_side": "1192 mm",
+    "price": 150000,
+    "price_postapoc": 11500,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "762R"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 330,
+    "durability": 10,
+    "skill": "rifle",
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "barrel_volume": "605 ml",
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "pk_200"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "pkp",
+    "type": "GUN",
+    "name": {
+      "str": "PKP 通用机枪"
+    },
+    "description": "PKP佩切涅格在PKM基础上重新设计枪管和冷却系统，以固定重枪管、导流护罩和更靠前的两脚架提高持续射击能力。它在1990年代末进入俄罗斯部队，随后参加车臣、叙利亚与俄乌等冲突。可靠性和火力延续PKM传统，但不能像PKM那样快速更换过热枪管。",
+    "weight": "6500 g",
+    "volume": "4800 ml",
+    "longest_side": "1185 mm",
+    "price": 170000,
+    "price_postapoc": 11750,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "762R"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 310,
+    "durability": 10,
+    "skill": "rifle",
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "barrel_volume": "605 ml",
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "pk_200"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "pp19",
+    "type": "GUN",
+    "name": {
+      "str": "PP-19 冲锋枪"
+    },
+    "description": "PP-19野牛在1990年代由伊热夫斯克团队研制，大量沿用AKS-74结构，最显眼的是枪管下方的大容量螺旋弹筒。它主要供俄罗斯内务、警察和特种单位近距离使用，常见口径为9x18mm。容量很高且轮廓紧凑，但弹筒装填麻烦，平衡会随弹量改变。",
+    "weight": "2926 g",
+    "volume": "1458 ml",
+    "longest_side": "705 mm",
+    "price": 18000,
+    "price_postapoc": 4500,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "9x18"
+    ],
+    "reload_noise_volume": 10,
+    "skill": "smg",
+    "default_mods": [
+      "wire_stock"
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 3
+    },
+    "dispersion": 340,
+    "durability": 7,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ]
+    ],
+    "flags": [
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "pp19_64"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "rpk74",
+    "type": "GUN",
+    "name": {
+      "str": "RPK-74 轻机枪"
+    },
+    "description": "RPK-74与AK-74同步发展，在1970年代中期成为苏军5.45毫米班用轻机枪。加长重枪管、两脚架和大容量弹匣让它为步兵班提供持续火力，同时仍能与AK-74共享部分弹匣和操作习惯。它参加阿富汗、车臣及后苏联冲突，机动性好，但持续射击能力不及弹链机枪。",
+    "weight": "3800 g",
+    "volume": "3100 ml",
+    "longest_side": "980 mm",
+    "price": 55000,
+    "price_postapoc": 8500,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "symbol": "(",
+    "color": "brown",
+    "ammo": [
+      "545x39"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 150,
+    "durability": 8,
+    "default_mods": [
+      "muzzle_brake"
+    ],
+    "skill": "rifle",
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "barrel_volume": "500 ml",
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "bayonet lug",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "ak74mag",
+          "rpk74mag",
+          "casket74mag"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "fnc",
+    "type": "GUN",
+    "name": {
+      "str_sp": "FN FNC 突击步枪"
+    },
+    "description": "FN FNC是比利时FN在1970年代吸取早期CAL经验后研制的5.56毫米步枪，采用长行程活塞和旋转枪机，结构更接近当时成熟的军用需求。比利时军队采用其为制式枪，瑞典Ak 5与印度尼西亚Pindad SS1也由它发展而来，并随这些国家参加海外行动。",
+    "weight": "3400 g",
+    "volume": "2500 ml",
+    "longest_side": "850 mm",
+    "price": 250000,
+    "price_postapoc": 3500,
+    "skill": "rifle",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "223"
+    ],
+    "reload_noise_volume": 10,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 1
+    },
+    "dispersion": 170,
+    "durability": 8,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "flags": [
+      "NO_TURRET"
+    ],
+    "default_mods": [
+      "wire_stock"
+    ],
+    "barrel_volume": "520 ml",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "stanag30",
+          "stanag5",
+          "stanag5ranger",
+          "stanag10",
+          "stanag10ranger",
+          "stanag20",
+          "stanag20ranger",
+          "stanag30ranger",
+          "stanag40",
+          "stanag40ranger",
+          "stanag50",
+          "stanag60",
+          "stanag60drum",
+          "stanag90",
+          "stanag100",
+          "stanag100drum",
+          "stanag150",
+          "survivor223mag"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "val",
+    "type": "GUN",
+    "name": {
+      "str_sp": "AS VAL 特种突击步枪"
+    },
+    "description": "AS VAL与VSS在1980年代由苏联中央精密机械研究所共同发展，使用9x39mm亚音速弹和一体式消音器。折叠钢制枪托与选择射击功能让它更适合特种部队近距离突击，而VSS偏重精确射击。VAL参加阿富汗、车臣、叙利亚及俄乌等冲突，隐蔽性好但有效射程有限。",
+    "weight": "2300 g",
+    "volume": "1325 ml",
+    "longest_side": "894 mm",
+    "price": 350000,
+    "price_postapoc": 10500,
+    "skill": "rifle",
+    "material": [
+      "steel"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "939"
+    ],
+    "reload_noise_volume": 10,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -1
+    },
+    "dispersion": 45,
+    "durability": 8,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "default_mods": [
+      "vss_sp"
+    ],
+    "barrel_volume": "300 ml",
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "939_magazine_10",
+          "939_magazine_20",
+          "939_magazine_30"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "nsv",
+    "type": "GUN",
+    "name": {
+      "str": "NSV 重机枪"
+    },
+    "description": "NSV是苏联在1960至1970年代为替代德什卡而研制的12.7毫米重机枪，较轻的枪身便于三脚架、坦克高射架与车辆使用。它参加阿富汗战争及大量后苏联冲突，可打击轻装甲、火力点和低空目标。苏联解体后生产体系分散，俄罗斯转而发展Kord作为后继。",
+    "weight": "25000 g",
+    "volume": "19000 ml",
+    "longest_side": "1585 mm",
+    "price": 430000,
+    "price_postapoc": 22730,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "127108"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 440,
+    "durability": 10,
+    "skill": "rifle",
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        2
+      ]
+    ],
+    "default_mods": [
+      "bipod",
+      "muzzle_brake"
+    ],
+    "barrel_volume": "605 ml",
+    "valid_mod_locations": [
+      [
+        "sights mount",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "nsv_100"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "vector_9mm",
+    "type": "GUN",
+    "name": {
+      "str": "维克托 9MM 冲锋枪"
+    },
+    "description": "KRISS Vector利用Super V机构让枪机组件向下运动，试图降低高射速时的枪口上跳。该系列在2000年代进入市场，提供9毫米、.45 ACP等多种口径，主要面向民用、执法和影视市场。外形与操控非常独特，但现实中并未像MP5或Uzi那样形成大规模军队装备。",
+    "weight": "2100 g",
+    "volume": "1250 ml",
+    "longest_side": "611 mm",
+    "price": 310000,
+    "price_postapoc": 3500,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "9mm"
+    ],
+    "skill": "smg",
+    "dispersion": 280,
+    "durability": 7,
+    "reload_noise_volume": 10,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "BURST",
+        "2 rd.",
+        2
+      ],
+      [
+        "AUTO",
+        "auto",
+        5
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "default_mods": [
+      "folding_stock"
+    ],
+    "flags": [
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "glockmag",
+          "glockbigmag",
+          "glock17_17",
+          "glock17_22",
+          "glock_drum_50rd",
+          "glock_drum_100rd"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "m3_grease",
+    "type": "GUN",
+    "name": {
+      "str": "M3 冲锋枪"
+    },
+    "description": "M3在1942年为美军设计，目标是用冲压焊接结构制造比汤普森更便宜的.45口径冲锋枪。其外形酷似修车用注油枪，因此得名。M3和改进型M3A1参加第二次世界大战、朝鲜战争和越南战争，并长期留在装甲车辆中，直到很晚才被更现代的卡宾枪替代。",
+    "weight": "3700 g",
+    "volume": "1256 ml",
+    "longest_side": "556 mm",
+    "price": 4580,
+    "price_postapoc": 900,
+    "material": [
+      "steel"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "ammo": [
+      "45"
+    ],
+    "reload_noise_volume": 10,
+    "skill": "smg",
+    "default_mods": [
+      "wire_stock"
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 2
+    },
+    "dispersion": 550,
+    "durability": 7,
+    "modes": [
+      [
+        "DEFAULT",
+        "auto",
+        2
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "m3_30"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "czevo3",
+    "type": "GUN",
+    "name": {
+      "str": "CZ EVO-3 冲锋枪"
+    },
+    "description": "CZ Scorpion EVO 3源于斯洛伐克Laugo团队设计，后由捷克兵工厂完善并量产。A1型为9x19mm选择射击冲锋枪，采用简单可靠的自由枪机、聚合物机匣和双手操作部件。它被捷克军警及多国用户采用，现代导轨和折叠枪托让其适合城市反恐与车辆行动。",
+    "weight": "2770 g",
+    "volume": "1258 ml",
+    "longest_side": "670 mm",
+    "price": 35000,
+    "price_postapoc": 4000,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "9mm"
+    ],
+    "reload_noise_volume": 10,
+    "skill": "smg",
+    "default_mods": [
+      "folding_stock"
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 1
+    },
+    "dispersion": 350,
+    "durability": 7,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        5
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "flags": [
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "evo_30"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "aks74n",
+    "type": "GUN",
+    "name": {
+      "str": "AKS-74 突击步枪"
+    },
+    "description": "AKS-74N兼具AKS-74侧折叠钢架枪托和机匣左侧夜视瞄具座，供伞兵、机械化部队及需要夜战器材的单位使用。5.45毫米AKS-74家族在苏联阿富汗战争中大量出现，后来继续用于车臣等冲突。折叠枪托便于携行，却不如AK-74M的聚合物枪托舒适。",
+    "weight": "2900 g",
+    "volume": "2400 ml",
+    "longest_side": "933 mm",
+    "price": 55000,
+    "price_postapoc": 4500,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "symbol": "(",
+    "color": "brown",
+    "ammo": [
+      "545x39"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 190,
+    "durability": 8,
+    "default_mods": [
+      "muzzle_brake",
+      "wire_stock"
+    ],
+    "skill": "rifle",
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        2
+      ]
+    ],
+    "barrel_volume": "500 ml",
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "bayonet lug",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "ak74mag",
+          "rpk74mag",
+          "casket74mag"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "m3_grease_c",
+    "type": "GUN",
+    "name": {
+      "str": "豺狼的 M3 冲锋枪"
+    },
+    "description": "经过豺狼改造过的一把老式M3冲锋枪，它用一些简陋的自制零部件把一些跟这把枪八竿子打不着关系的配件组合在了一起，让这把枪有了一种独特的美感，枪身上面刻着一些难以理解的图案，额外的弹簧增加了射速，而且它还有一个简陋的半自动装置，这把枪的主人肯定是个废土枪匠……毕竟那个用WD40的罐子做的消音器就足以说明这一点。",
+    "weight": "4000 g",
+    "volume": "1462 ml",
+    "longest_side": "615 mm",
+    "price": 6250,
+    "price_postapoc": 4500,
+    "material": [
+      "steel"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "ammo": [
+      "45"
+    ],
+    "reload_noise_volume": 10,
+    "skill": "smg",
+    "default_mods": [
+      "m3_scope",
+      "m3c_sp",
+      "m3c_stock"
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 5
+    },
+    "dispersion": 450,
+    "durability": 8,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "greasegun30mag"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "aks74um",
+    "type": "GUN",
+    "name": {
+      "str": "定制 AKS-74U 短突击步枪"
+    },
+    "description": "一把经过个人改装的AKS-74U短突击步枪，安装了更具有战术风格的枪托，握把，前握把，瞄准镜和一个酷似华夫饼的消音器，部分内部零件经过校准，额外的配件添加了一些重量，不过好在这把枪本身就不重，经过改装后的操控性得到了相当好的改良。",
+    "weight": "3000 g",
+    "volume": "1400 ml",
+    "longest_side": "55 cm",
+    "price": 78300,
+    "price_postapoc": 9000,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "545x39"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 200,
+    "durability": 9,
+    "skill": "rifle",
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -3
+    },
+    "default_mods": [
+      "tac_gun_sp",
+      "tac_reddot",
+      "znt2stock",
+      "shortgrip_tac"
+    ],
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        2
+      ]
+    ],
+    "barrel_volume": "100 ml",
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "ak74mag",
+          "rpk74mag",
+          "casket74mag"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "ak103c",
+    "copy-from": "rifle_auto",
+    "type": "GUN",
+    "name": {
+      "str": "“廷达罗斯”AK-103 突击步枪"
+    },
+    "description": "由俄罗斯联邦研发并制造的AK-103突击步枪，以AK-74M为基础，使用7.62x39mm弹，这一把是经过改装过的，在总体上大量使用了新式的轻量化材料，大幅度减轻了重量，配件方面使用了独特的轻量化折叠枪托，全息瞄准镜，更好的握把，枪口补偿器和导轨护木。",
+    "weight": "2500 g",
+    "volume": "1500 ml",
+    "longest_side": "940 mm",
+    "price": 65000,
+    "price_postapoc": 10000,
+    "material": [
+      "superalloy",
+      "carbide"
+    ],
+    "color": "brown",
+    "ammo": [
+      "762"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 130,
+    "durability": 10,
+    "default_mods": [
+      "race_rail",
+      "103_stock",
+      "tac_holo",
+      "tac_gun_muzzle"
+    ],
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        2
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "bayonet lug",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "akmag30",
+          "akmag10",
+          "akmag20",
+          "akmag40",
+          "akdrum75"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "vss47",
+    "type": "GUN",
+    "name": {
+      "str_sp": "VSS-47 突击步枪"
+    },
+    "description": "乍一看可能是把VSS，没什么特别的……不过凑近一看吧，它用的居然是AK系列的7.62弹匣，瞄准镜甚至是个双目望远镜，枪管下面还用蓝色的电工胶带粘上去一把马卡洛夫手枪——“Cardan loves it！”",
+    "weight": "2875 g",
+    "volume": "1705 ml",
+    "longest_side": "894 mm",
+    "price": 750000,
+    "price_postapoc": 7500,
+    "skill": "rifle",
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "762"
+    ],
+    "reload_noise_volume": 10,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 2
+    },
+    "dispersion": 230,
+    "durability": 8,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "default_mods": [
+      "vss_sp",
+      "7x50_binocular",
+      "ub_makarov"
+    ],
+    "barrel_volume": "300 ml",
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "akmag30",
+          "akmag10",
+          "akmag20",
+          "akmag40",
+          "akdrum75"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "vector_9mm_c",
+    "type": "GUN",
+    "name": {
+      "str": "“突袭者”维克托 9MM 冲锋枪"
+    },
+    "description": "一把由美国KRISS公司所生产的Vector冲锋枪，也可以被称之为短剑，有着高射速和高稳定的优点，并且非常符合人体工学，这一把是9MM的版本，还可以使用格洛克生产的弹匣——这一把是定制过的。",
+    "weight": "2100 g",
+    "volume": "1250 ml",
+    "longest_side": "611 mm",
+    "price": 310000,
+    "price_postapoc": 3500,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "9mm"
+    ],
+    "skill": "smg",
+    "dispersion": 280,
+    "durability": 7,
+    "reload_noise_volume": 10,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "BURST",
+        "2 rd.",
+        2
+      ],
+      [
+        "AUTO",
+        "auto",
+        5
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "default_mods": [
+      "folding_stock",
+      "tac_holo",
+      "shortgrip_tac",
+      "tac_gun_sp"
+    ],
+    "flags": [
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "glockmag",
+          "glockbigmag",
+          "glock17_17",
+          "glock17_22",
+          "glock_drum_50rd",
+          "glock_drum_100rd"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "honey_badger",
+    "type": "GUN",
+    "name": {
+      "str_sp": "蜜獾 AAC 短突击步枪"
+    },
+    "description": "AAC蜜獾围绕.300 AAC Blackout弹研制，目标是在接近MP5SD的尺寸和消声效果下提供更强的步枪弹性能。它采用AR式操控、短枪管和一体化消音方案，亚音速弹适合隐蔽射击，超音速弹则扩展有效距离。该项目与特种作战需求有关，但并未成为普遍制式武器。",
+    "weight": "3000 g",
+    "volume": "1800 ml",
+    "longest_side": "720 mm",
+    "price": 380000,
+    "price_postapoc": 6000,
+    "skill": "rifle",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "300blk"
+    ],
+    "reload_noise_volume": 10,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -3
+    },
+    "dispersion": 230,
+    "durability": 8,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "default_mods": [
+      "folding_stock",
+      "honey_badger_sp"
+    ],
+    "barrel_volume": "520 ml",
+    "flags": [
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "stanag30",
+          "stanag5",
+          "stanag5ranger",
+          "stanag10",
+          "stanag10ranger",
+          "stanag20",
+          "stanag20ranger",
+          "stanag30ranger",
+          "stanag40",
+          "stanag40ranger",
+          "stanag50",
+          "stanag60",
+          "stanag60drum",
+          "stanag90",
+          "stanag100",
+          "stanag100drum",
+          "stanag150",
+          "survivor223mag"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "amb17",
+    "type": "GUN",
+    "name": {
+      "str_sp": "AMB-17 突击步枪"
+    },
+    "description": "AMB-17是AM-17紧凑步枪的微声衍生方案，使用9x39mm亚音速弹和一体化消音器，目标是为特种单位提供比AS VAL更现代、附件接口更完善的替代品。它在2017年前后的俄罗斯军展上公开，仍带有明显试验性质，现实中远没有VAL和VSS那样普及。",
+    "weight": "2900 g",
+    "volume": "1900 ml",
+    "longest_side": "850 mm",
+    "price": 420000,
+    "price_postapoc": 7500,
+    "skill": "rifle",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "939"
+    ],
+    "reload_noise_volume": 10,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -1
+    },
+    "dispersion": 200,
+    "durability": 8,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "default_mods": [
+      "folding_stock",
+      "amb_sp"
+    ],
+    "barrel_volume": "520 ml",
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "939_magazine_10",
+          "939_magazine_20",
+          "939_magazine_30"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "ar57",
+    "type": "GUN",
+    "name": {
+      "str_sp": "AR-57 突击步枪"
+    },
+    "description": "AR-57是基于AR-15平台设计出来的武器，用于发射P90使用的5.7子弹，这把枪最特别的地方就是它并非使用常规的弹匣供弹，而是使用了P90的弹匣，虽然性能不错，不过过于昂贵的价格和尴尬的市场定位导致这把枪的数量并不多。",
+    "weight": "2930 g",
+    "volume": "2200 ml",
+    "longest_side": "760 mm",
+    "price": 670000,
+    "price_postapoc": 4650,
+    "skill": "rifle",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "57"
+    ],
+    "reload_noise_volume": 10,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 5
+    },
+    "dispersion": 250,
+    "durability": 8,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        4
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "flags": [
+      "NO_TURRET"
+    ],
+    "barrel_volume": "520 ml",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "fnp90mag"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "ak102",
+    "type": "GUN",
+    "name": {
+      "str": "AK-102 短突击步枪"
+    },
+    "description": "AK-102是AK-100出口系列中的5.56x45mm短枪管卡宾枪，可视为AK-101的紧凑型。它采用AK-74M式聚合物折叠枪托、短护木和长行程活塞，方便车辆、警卫和近距离行动。该枪主要面向海外客户，实际装备数量远不及使用俄制口径的AK-104与AK-105。",
+    "weight": "3000 g",
+    "volume": "1900 ml",
+    "longest_side": "824 mm",
+    "price": 75000,
+    "price_postapoc": 7500,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "223"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 250,
+    "durability": 8,
+    "default_mods": [
+      "muzzle_brake"
+    ],
+    "skill": "rifle",
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -2
+    },
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        2
+      ]
+    ],
+    "barrel_volume": "300 ml",
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "ak101_30"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "ak108",
+    "type": "GUN",
+    "name": {
+      "str": "AK-108 突击步枪"
+    },
+    "description": "AK-108是AK-100系列中的5.56x45mm平衡自动原理试验型，机匣内反向运动的配重试图抵消枪机组件扰动，从而改善连发散布。它展示了卡拉什尼科夫体系追求低后坐的另一条路线，却因机构复杂、成本较高和出口需求有限而没有形成大规模制式装备。",
+    "weight": "3800 g",
+    "volume": "2700 ml",
+    "longest_side": "940 mm",
+    "price": 225000,
+    "price_postapoc": 7000,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "223"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 130,
+    "durability": 8,
+    "default_mods": [
+      "muzzle_brake",
+      "bars"
+    ],
+    "skill": "rifle",
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "BURST",
+        "3 rd.",
+        3
+      ],
+      [
+        "AUTO",
+        "auto",
+        4
+      ]
+    ],
+    "barrel_volume": "500 ml",
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "bayonet lug",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "ak101_30"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "ak101",
+    "type": "GUN",
+    "name": {
+      "str": "AK-101 突击步枪"
+    },
+    "description": "AK-101是俄罗斯AK-100出口系列的标准枪管5.56x45mm型号，以AK-74M结构为基础，使用聚合物侧折叠枪托和现代瞄具座。它让习惯北约弹药的客户获得传统AK可靠性，但并非俄军主力。数量有限的国家与安全单位采用过它，实战能见度远低于AKM和AK-74。",
+    "weight": "3600 g",
+    "volume": "1900 ml",
+    "longest_side": "940 mm",
+    "price": 95000,
+    "price_postapoc": 7000,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "223"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 150,
+    "durability": 8,
+    "default_mods": [
+      "muzzle_brake"
+    ],
+    "skill": "rifle",
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        2
+      ]
+    ],
+    "barrel_volume": "500 ml",
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "bayonet lug",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "ak101_30"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "mp5_10",
+    "type": "GUN",
+    "name": {
+      "str": "黑克勒-科赫 MP5/10"
+    },
+    "description": "该枪是在1994年根据美国FBI提出的要求研制的。FBI所配备的手枪主要是使用10mm AUTO弹的，而且他们感到现有的发射9mm子弹的冲锋枪威力不足，出于后勤供应及作战效能的考虑，所以FBI提出要为其人质拯救队及其他特种部队配备10mm口径的冲锋枪。",
+    "weight": "2526 g",
+    "volume": "3332 ml",
+    "longest_side": "670 mm",
+    "reload_noise_volume": 10,
+    "price": 320000,
+    "price_postapoc": 5500,
+    "to_hit": -2,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "10mm"
+    ],
+    "skill": "smg",
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 1
+    },
+    "built_in_mods": [
+      "folding_stock"
+    ],
+    "dispersion": 240,
+    "durability": 8,
+    "blackpowder_tolerance": 32,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "BURST",
+        "3 rd.",
+        3
+      ],
+      [
+        "AUTO",
+        "auto",
+        4
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "faults": [
+      "fault_gun_blackpowder",
+      "fault_gun_dirt",
+      "fault_gun_chamber_spent"
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "mp5_10_mag"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "pringles_launcher",
+    "type": "GUN",
+    "name": {
+      "str": "品客薯片发射器"
+    },
+    "description": "圆头耄耋被击败后掉落的桶装薯片，原味包装，看起来跟你以前吃过的那种没区别，不过包装上的人物头像变成了耄耋，这东西实际上是个发射器，可以无限发射超级硬的薯片飞镖，薯片属于可降解物质，不用担心环境污染，不要想着吃里面的薯片，因为这薯片你绝对咬不动，这东西的硬度远超自然界目前存在的任何物质，它的边缘很锋利，绝对刮伤你的口腔，这把史诗级的武器应该是来自其他维度的，大概吧。",
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "ammo_effects": [
+      "NEVER_MISFIRES"
+    ],
+    "weight": "10 g",
+    "volume": "10 ml",
+    "longest_side": "7 cm",
+    "symbol": "I",
+    "color": "red",
+    "material": [
+      "paper"
+    ],
+    "price": 95000,
+    "price_postapoc": 95000,
+    "dispersion": 350,
+    "skill": "smg",
+    "durability": 10,
+    "range": 35,
+    "loudness": 30,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 25,
+      "armor_penetration": 50
+    },
+    "bashing": 20
+  },
+  {
+    "id": "zovk_762t",
+    "type": "GUN",
+    "name": {
+      "str": "ZOVK-762T 无托冲锋枪"
+    },
+    "description": "格科斯勒设计的紧凑型冲锋枪，长度很短，结构紧凑，可通过更换枪管并移除前导轨护木来使长度更短，主要面对民用市场，使用7.62x25mm托卡列夫弹，从外观来看它有点像Gorza和AUG的结合体，但内部构造却与P90相似，整枪几乎全部由冲压部件组成，性能不错，价格也低，无论是子弹还是这把枪本身来说，适合那些想使用PDW但预算不是很多的用户。",
+    "weight": "2500 g",
+    "volume": "1000 ml",
+    "longest_side": "45 cm",
+    "price": 15000,
+    "price_postapoc": 1500,
+    "material": [
+      "steel"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "762x25"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 100,
+    "durability": 8,
+    "skill": "smg",
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 3
+    },
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "barrel_volume": "400 ml",
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "zovk_30"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "zona_9pb",
+    "type": "GUN",
+    "name": {
+      "str": "ZONA-9PB 微型冲锋枪"
+    },
+    "description": "格科斯勒设计的微型冲锋枪，自带一个可折叠钢架枪托，折叠后可以让这把枪的长度和体积变得很小，比普通手枪大，比冲锋枪小，你可以把它装进手提包，挂在外套里，或者塞进一个大一点的枪套，整把枪使用了大量的工程塑料，便宜，轻便，耐用，兼容所有格洛克弹匣，对于佣兵以及私人保镖来说是很好的选择，不过问题也不是没有，紧凑的体积让它没太大的可改空间，顶多加个枪口，瞄准镜和前握把，而且它的精度也没比手枪好多少。",
+    "weight": "1000 g",
+    "volume": "500 ml",
+    "longest_side": "20 cm",
+    "price": 28000,
+    "price_postapoc": 2800,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "9mm"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 450,
+    "durability": 8,
+    "skill": "smg",
+    "default_mods": [
+      "wire_stock"
+    ],
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        4
+      ]
+    ],
+    "barrel_volume": "150 ml",
+    "valid_mod_locations": [
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "magazine_well": "250 ml",
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "glockmag",
+          "glockbigmag",
+          "glock17_17",
+          "glock17_22",
+          "glock_drum_50rd",
+          "glock_drum_100rd"
+        ]
+      }
+    ],
+    "bashing": 8
+  },
+  {
+    "id": "pps43",
+    "looks_like": "hk_mp5",
+    "type": "GUN",
+    "reload_noise_volume": 10,
+    "name": {
+      "str": "PPS-43 冲锋枪"
+    },
+    "description": "PPS-43冲锋枪是前苏联苏达列夫工程师设计的PPS-42冲锋枪的改进型，1943年正式列为苏军制式冲锋枪。该枪从1943年开始直到第二次世界大战后停产时为止，共约生产了100万支，曾广泛装备于捷克、匈牙利、保加利亚等国家，波兰、芬兰、德国等国家也进行了仿制生产。该枪已撤装，但一些国家的边防部队和警察仍在使用。",
+    "weight": "3000 g",
+    "volume": "2000 ml",
+    "longest_side": "820 mm",
+    "price": 15000,
+    "price_postapoc": 1050,
+    "to_hit": -2,
+    "material": [
+      "steel"
+    ],
+    "symbol": "(",
+    "color": "light_gray",
+    "ammo": [
+      "762x25"
+    ],
+    "skill": "smg",
+    "range": 2,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 2
+    },
+    "dispersion": 120,
+    "durability": 8,
+    "barrel_volume": "240 ml",
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        2
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "faults": [
+      "fault_gun_blackpowder",
+      "fault_gun_dirt",
+      "fault_gun_chamber_spent"
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "ppshmag"
+        ]
+      }
+    ],
+    "bashing": 10
+  },
+  {
+    "id": "type_81_1",
+    "copy-from": "rifle_auto",
+    "type": "GUN",
+    "name": {
+      "str": "81-1式 突击步枪"
+    },
+    "description": "81-1式自动步枪是中国在1970年代末至1980年代初研制的7.62x39mm武器，吸收AK与SKS经验并采用短行程活塞。折叠枪托型便于携行，曾在中越边境后续作战中接受检验，随后长期装备解放军并大量出口。它外形像AK，却拥有不同的导气和机匣结构。",
+    "weight": "3500 g",
+    "volume": "2300 ml",
+    "longest_side": "950 mm",
+    "price": 350000,
+    "price_postapoc": 5000,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "color": "brown",
+    "ammo": [
+      "762"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 170,
+    "durability": 8,
+    "default_mods": [
+      "wire_stock"
+    ],
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "bayonet lug",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "akmag30",
+          "akmag10",
+          "akmag20",
+          "akmag40",
+          "akdrum75"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "qbz97",
+    "copy-from": "rifle_auto",
+    "type": "GUN",
+    "name": {
+      "str": "QBZ-97式 突击步枪"
+    },
+    "description": "97式突击步枪是基于95式5.8毫米突击步枪发展而来的一款自动步枪，由中国北方工业总公司研制生产。出口型97式枪族使用的不是中国军队制式采用的DBP87式5.8mm小口径高速枪弹，而是北约制式的5.56mm枪弹。进一步细看，可以发现出口型97式枪族上省略了中国军队制式武器上原有的枪口制退器的减音功能，弹匣也采用了北约制式的M16突击步枪用的金属制30发弹匣，不同于中国军队制式采用的塑料制弹匣。",
+    "weight": "3320 g",
+    "volume": "2100 ml",
+    "longest_side": "750 mm",
+    "price": 550000,
+    "price_postapoc": 6000,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "color": "light_gray",
+    "ammo": [
+      "223"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 160,
+    "durability": 8,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "stanag30",
+          "stanag5",
+          "stanag5ranger",
+          "stanag10",
+          "stanag10ranger",
+          "stanag20",
+          "stanag20ranger",
+          "stanag30ranger",
+          "stanag40",
+          "stanag40ranger",
+          "stanag50",
+          "stanag60",
+          "stanag60drum",
+          "stanag90",
+          "stanag100",
+          "stanag100drum",
+          "stanag150",
+          "survivor223mag"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "znar223",
+    "type": "GUN",
+    "name": {
+      "str_sp": "ZNAR-223 突击步枪"
+    },
+    "description": "泽尔纳防务的旗舰款突击步枪，使用AR系通用的弹匣，在同口径武器中后座和重量都偏低，精度也要略高，不过射速偏慢，长度偏长，价格也比较高，该枪被一部分SWAT所采用，因为它在某些场合下要比同类型的武器表现更好。",
+    "weight": "3300 g",
+    "volume": "1500 ml",
+    "longest_side": "950 mm",
+    "price": 320000,
+    "price_postapoc": 8000,
+    "skill": "rifle",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "223"
+    ],
+    "reload_noise_volume": 10,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 2
+    },
+    "dispersion": 130,
+    "durability": 8,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        2
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "default_mods": [
+      "recoil_a"
+    ],
+    "barrel_volume": "520 ml",
+    "flags": [
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "stanag30",
+          "stanag5",
+          "stanag5ranger",
+          "stanag10",
+          "stanag10ranger",
+          "stanag20",
+          "stanag20ranger",
+          "stanag30ranger",
+          "stanag40",
+          "stanag40ranger",
+          "stanag50",
+          "stanag60",
+          "stanag60drum",
+          "stanag90",
+          "stanag100",
+          "stanag100drum",
+          "stanag150",
+          "survivor223mag"
+        ]
+      }
+    ],
+    "bashing": 15
+  },
+  {
+    "id": "zlar223",
+    "type": "GUN",
+    "name": {
+      "str_sp": "ZLAR-223 短突击步枪"
+    },
+    "description": "泽尔纳防务的短款突击步枪，口碑很好，使用AR系通用的弹匣，比起ZNAR要轻便和紧凑，价格也更便宜不少，代价则是精度，操控性和枪口初速差了很多，不过对比同类型武器还是很优秀的，低射速让它的后座完全可控，折叠枪托则可使该枪的长度变的更短。",
+    "weight": "2500 g",
+    "volume": "700 ml",
+    "longest_side": "650 mm",
+    "price": 180000,
+    "price_postapoc": 6000,
+    "skill": "rifle",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "223"
+    ],
+    "reload_noise_volume": 10,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -2
+    },
+    "dispersion": 200,
+    "durability": 8,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        2
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "default_mods": [
+      "folding_stock",
+      "recoil_a"
+    ],
+    "barrel_volume": "320 ml",
+    "flags": [
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "stanag30",
+          "stanag5",
+          "stanag5ranger",
+          "stanag10",
+          "stanag10ranger",
+          "stanag20",
+          "stanag20ranger",
+          "stanag30ranger",
+          "stanag40",
+          "stanag40ranger",
+          "stanag50",
+          "stanag60",
+          "stanag60drum",
+          "stanag90",
+          "stanag100",
+          "stanag100drum",
+          "stanag150",
+          "survivor223mag"
+        ]
+      }
+    ],
+    "bashing": 15
+  },
+  {
+    "id": "star15",
+    "type": "GUN",
+    "name": {
+      "str": "ST AR-15 步枪"
+    },
+    "copy-from": "rifle_auto",
+    "description": "这是一把为了纪念Spikes Tactical十年来从一个地区小厂成长为国家认可的火器制造商而生产的限量版步枪，仅100把。这把武器在设计上只采用了最好的部件，目的是生产一种轻量化，低后座力且操作便捷的竞赛用步枪。",
+    "weight": "902 g",
+    "volume": "1550 ml",
+    "longest_side": "520 mm",
+    "price": 255000,
+    "price_postapoc": 8000,
+    "to_hit": -1,
+    "material": [
+      "aluminum",
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "black",
+    "ammo": [
+      "223"
+    ],
+    "dispersion": 100,
+    "durability": 8,
+    "default_mods": [
+      "grip_tac"
+    ],
+    "weapon_category": [
+      "AUTOMATIC_RIFLES"
+    ],
+    "valid_mod_locations": [
+      [
+        "bore",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "stock",
+        1
+      ]
+    ],
+    "flags": [
+      "NO_TURRET"
+    ],
+    "//3": "当载具炮塔能够安装带配件的枪械后，应删除此项。当前安装这类武器会迫使玩家拆下转换套件，导致其无法使用。",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "stanag30",
+          "stanag5",
+          "stanag5ranger",
+          "stanag10",
+          "stanag10ranger",
+          "stanag20",
+          "stanag20ranger",
+          "stanag30ranger",
+          "stanag40",
+          "stanag40ranger",
+          "stanag50",
+          "stanag60",
+          "stanag60drum",
+          "stanag90",
+          "stanag100",
+          "stanag100drum",
+          "stanag150",
+          "survivor223mag"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "dhzr",
+    "type": "GUN",
+    "name": {
+      "str_sp": "DHZR 突击步枪"
+    },
+    "description": "一把使用.50 BMG反器材弹药的全自动步枪，泽尔纳防务出品，数量稀少，价格昂贵，被称为世界上威力最大的自动步枪以及法医不妙枪，具有全自动功能，兼容巴雷特的弹匣，还可以跟M249一样使用同口径武器的弹链，乍一听挺吓人，不过这把枪同时使用了平衡后座和恒定后座原理，枪口还有一个一体式的巨大制退器，可以让这头猛兽的后坐力处于可控范围之内，虽然这也导致它的射速相当之慢，外形臃肿，重量也是相当之重，不过你也不需要这东西能有多灵活是吧……？",
+    "weight": "16000 g",
+    "volume": "8000 ml",
+    "longest_side": "1100 mm",
+    "price": 950000,
+    "price_postapoc": 15000,
+    "skill": "rifle",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "50"
+    ],
+    "reload_noise_volume": 10,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -2
+    },
+    "dispersion": 180,
+    "durability": 8,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        2
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "default_mods": [
+      "bars",
+      "cr_part",
+      "dhzr_mz"
+    ],
+    "barrel_volume": "520 ml",
+    "flags": [
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "m107a1mag",
+          "belt50"
+        ]
+      }
+    ],
+    "bashing": 15
+  },
+  {
+    "id": "ultimax100",
+    "type": "GUN",
+    "name": {
+      "str_sp": "Ultimax100 轻机枪"
+    },
+    "description": "原产于新加坡的制式班组支援武器，采用短冲程气体活塞与恒定后坐系统，后坐力非常低。兼容STANAG弹匣，发射5.56x45mmNATO弹，空枪仅4.9公斤，轻量化，易操控，高精度等优点使它在多国军警部队内均有使用。",
+    "weight": "4900 g",
+    "volume": "3500 ml",
+    "longest_side": "950 mm",
+    "price": 350000,
+    "price_postapoc": 8000,
+    "skill": "rifle",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "223"
+    ],
+    "reload_noise_volume": 10,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 2
+    },
+    "dispersion": 100,
+    "durability": 8,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        2
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ]
+    ],
+    "default_mods": [
+      "folding_stock",
+      "cr_part",
+      "grip"
+    ],
+    "barrel_volume": "750 ml",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "stanag30",
+          "stanag5",
+          "stanag5ranger",
+          "stanag10",
+          "stanag10ranger",
+          "stanag20",
+          "stanag20ranger",
+          "stanag30ranger",
+          "stanag40",
+          "stanag40ranger",
+          "stanag50",
+          "stanag60",
+          "stanag60drum",
+          "stanag90",
+          "stanag100",
+          "stanag100drum",
+          "stanag150",
+          "survivor223mag"
+        ]
+      }
+    ],
+    "bashing": 15
+  },
+  {
+    "id": "gmtr1t",
+    "type": "GUN",
+    "color": "dark_gray",
+    "name": {
+      "str": "GMTR-1T 电磁冲锋枪"
+    },
+    "description": "GMTR-1T是格科斯勒首款使用电磁力的非实验性武器，哪怕如此它也是目前市面上最优秀的电磁枪械，主要被用于运动射击以及狩猎，不过这可不代表这东西是一把玩具，它有多个射速档位可调节，分别为半自动，全自动以及高速全自动，单次可在枪托内部的弹仓装填80发钢制弹丸，好消息是你能在市面上找到的BB弹丸基本上都是钢制的，所以它自然也可以用，这把枪通过消耗UPS中的电量可以将弹丸以大约三百米每秒的速度发射出去，足以跟.22lr弹扳扳手腕，而且射击时噪音极小，在某些情况下它比枪械更有效，不过这把枪也有个比较致命的缺点——几乎没有改装空间，虽然你也没必要给它装配件。",
+    "price": 40000,
+    "price_postapoc": 4800,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "USE_UPS",
+      "NO_TURRET"
+    ],
+    "skill": "smg",
+    "ammo": [
+      "BB"
+    ],
+    "weight": "2000 g",
+    "volume": "2000 ml",
+    "longest_side": "80 cm",
+    "symbol": "(",
+    "to_hit": -1,
+    "range": 15,
+    "reload_noise_volume": 10,
+    "loudness": 1,
+    "dispersion": 120,
+    "durability": 10,
+    "clip_size": 80,
+    "reload": 500,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 10,
+      "armor_penetration": 2
+    },
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        5
+      ],
+      [
+        "high auto",
+        "auto",
+        15
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "BB": 80
+        },
+        "rigid": true
+      }
+    ],
+    "ups_charges": 1,
+    "bashing": 10
+  },
+  {
+    "id": "jlz68",
+    "type": "GUN",
+    "name": {
+      "str": "JLZ-68 卡宾枪"
+    },
+    "description": "蛟龙军工的一款外贸型半自动卡宾枪，是一款民用产品，这把枪在蛟龙军工的所有外贸枪械中算是销量最好的一把了，配色以深蓝色为主，兼容格洛克弹匣，在同口径武器中性能优异，价格也很实惠，整枪大量使用工程塑料，重量轻，强度好，故障率低，不管是拿来狩猎还是家庭防卫都是个不错的选择",
+    "weight": "1400 g",
+    "volume": "800 ml",
+    "longest_side": "50 cm",
+    "price": 20000,
+    "price_postapoc": 2000,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "9mm"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 300,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 1
+    },
+    "durability": 8,
+    "skill": "smg",
+    "default_mods": [
+      "wire_stock"
+    ],
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "barrel_volume": "150 ml",
+    "valid_mod_locations": [
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ]
+    ],
+    "flags": [
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "magazine_well": "250 ml",
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "glockmag",
+          "glockbigmag",
+          "glock17_17",
+          "glock17_22",
+          "glock_drum_50rd",
+          "glock_drum_100rd"
+        ]
+      }
+    ],
+    "bashing": 8
+  },
+  {
+    "id": "jlz70",
+    "type": "GUN",
+    "name": {
+      "str": "JLZ-70 短突击步枪"
+    },
+    "description": "蛟龙军工的一款外贸型民用半自动短管步枪，配色依旧采用了该系列常用的蓝色，这款步枪具有非常短的长度，折叠自带的枪托后可以变得更短，前护木装有一体式前握把，价格算得上相当实惠了，可惜伤害被短枪管拖了后腿，还没有多少可以改装的地方，值得一提的是这把枪在大灾变后东亚沿海地区的大型定居点的守卫以及卫队手中很常见。",
+    "weight": "1800 g",
+    "volume": "1000 ml",
+    "longest_side": "55 cm",
+    "price": 24000,
+    "price_postapoc": 2400,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "223"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 280,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -5
+    },
+    "durability": 8,
+    "skill": "smg",
+    "default_mods": [
+      "wire_stock",
+      "grip"
+    ],
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "barrel_volume": "200 ml",
+    "valid_mod_locations": [
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ]
+    ],
+    "flags": [
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "stanag30",
+          "stanag5",
+          "stanag5ranger",
+          "stanag10",
+          "stanag10ranger",
+          "stanag20",
+          "stanag20ranger",
+          "stanag30ranger",
+          "stanag40",
+          "stanag40ranger",
+          "stanag50",
+          "stanag60",
+          "stanag60drum",
+          "stanag90",
+          "stanag100",
+          "stanag100drum",
+          "stanag150",
+          "survivor223mag"
+        ]
+      }
+    ],
+    "bashing": 8
+  },
+  {
+    "id": "kc14",
+    "type": "GUN",
+    "name": {
+      "str_sp": "KC-14 突击步枪"
+    },
+    "description": "莫尔洛枪械制造的一种比较廉价的9x39mm枪械，自带一个折叠枪托，这把枪算不上有多优秀，乍一看还以为是小作坊手搓的，没有明显的优点，但是确实为你提供了一种廉价的9x39mm发射器。",
+    "weight": "4000 g",
+    "volume": "2300 ml",
+    "longest_side": "930 mm",
+    "price": 10000,
+    "price_postapoc": 2500,
+    "skill": "rifle",
+    "material": [
+      "steel"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "939"
+    ],
+    "reload_noise_volume": 10,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -3
+    },
+    "dispersion": 160,
+    "durability": 6,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ]
+    ],
+    "default_mods": [
+      "wire_stock"
+    ],
+    "barrel_volume": "300 ml",
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "kc14_20"
+        ]
+      }
+    ],
+    "bashing": 12
+  }
+]

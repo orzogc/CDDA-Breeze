@@ -1,0 +1,241 @@
+[
+  {
+    "type": "GENERIC",
+    "id": "LIXA_lab_file",
+    "symbol": ",",
+    "color": "white",
+    "name": {
+      "str": "LIXA现场员工须知"
+    },
+    "snippet_category": "LIXA_lab_files",
+    "copy-from": "file",
+    "description": "一份使用LIXA作为正式抬头字样的简报，分发给现场员工。",
+    "looks_like": "file"
+  },
+  {
+    "type": "GENERIC",
+    "id": "LIXA_generic_file",
+    "symbol": ",",
+    "color": "white",
+    "name": {
+      "str": "LIXA数据记录"
+    },
+    "copy-from": "file",
+    "description": "一捆使用LIXA抬头的记录纸，里面记录了各种各样令人眼花缭乱的图表和方程式。",
+    "looks_like": "file"
+  },
+  {
+    "type": "GENERIC",
+    "id": "LIXA_mil_file",
+    "symbol": ",",
+    "color": "white",
+    "name": {
+      "str": "LIXA驻军须知"
+    },
+    "snippet_category": "LIXA_mil_files",
+    "copy-from": "file",
+    "description": "一份署名且编号的通知，分发给LIXA现场宪兵。",
+    "looks_like": "file"
+  },
+  {
+    "type": "GENERIC",
+    "id": "LIXA_lab_postit",
+    "symbol": ",",
+    "color": "white",
+    "name": {
+      "str": "便利贴"
+    },
+    "snippet_category": "LIXA_lab_notes",
+    "description": "一张青色的便利贴。",
+    "price": "0 cent",
+    "price_postapoc": "0 cent",
+    "material": [
+      "paper"
+    ],
+    "flags": [
+      "TRADER_AVOID"
+    ],
+    "copy-from": "lab_postit_bio",
+    "looks_like": "paper"
+  },
+  {
+    "type": "TOOL",
+    "id": "lixa_data",
+    "copy-from": "usb_drive_nano",
+    "name": {
+      "str_sp": "LIXA 研究档案备份"
+    },
+    "description": "一个加密USB，里面存储了LIXA的研究档案。",
+    "price": "100 USD",
+    "price_postapoc": "0 cent",
+    "looks_like": "usb_drive"
+  },
+  {
+    "type": "GENERIC",
+    "id": "id_LIXA",
+    "symbol": ",",
+    "looks_like": "id_science",
+    "name": {
+      "str": "LIXA 身份钥匙卡"
+    },
+    "description": "一张LIXA设施身份卡，正面是某位科学家略显尴尬的微笑照片。背面的说明写明，持卡者可以进入LIXA实验楼层。",
+    "flags": [
+      "LIXA_SCIENCE_CARD"
+    ],
+    "price_postapoc": "2 USD 50 cent",
+    "material": [
+      "plastic"
+    ],
+    "weight": "3 g",
+    "volume": "5 ml",
+    "category": "keys"
+  },
+  {
+    "type": "GENERIC",
+    "id": "id_LIXA_2",
+    "symbol": ",",
+    "looks_like": "id_science",
+    "name": {
+      "str": "磨损的 LIXA 身份钥匙卡"
+    },
+    "description": "一张LIXA设施身份卡，正面是某位科学家略显尴尬的微笑照片。卡面被严重刮花，背面还被黑色记号笔划了一道线。",
+    "flags": [
+      "LIXA_SCIENCE_CARD",
+      "LIXA_SCIENCE_CARD_2"
+    ],
+    "price_postapoc": "2 USD 50 cent",
+    "material": [
+      "plastic"
+    ],
+    "weight": "3 g",
+    "volume": "5 ml",
+    "category": "keys"
+  },
+  {
+    "type": "GENERIC",
+    "id": "id_LIXA_najma",
+    "symbol": ",",
+    "looks_like": "id_science",
+    "name": {
+      "str": "LIXA 身份卡：纳吉马 萨艾德",
+      "str_pl": "LIXA 身份卡：纳吉马 萨艾德"
+    },
+    "description": "一张 LIXA 设施的身份钥匙卡。照片中是一个微笑的女性，戴着伊斯兰头巾。",
+    "flags": [
+      "LIXA_SCIENCE_CARD",
+      "LIXA_SCIENCE_CARD_2",
+      "LIXA_SCIENCE_CARD_3"
+    ],
+    "price_postapoc": "2 USD 50 cent",
+    "material": [
+      "plastic"
+    ],
+    "weight": "3 g",
+    "volume": "5 ml",
+    "category": "keys"
+  },
+  {
+    "type": "GENERIC",
+    "id": "id_LIXA_jason",
+    "symbol": ",",
+    "looks_like": "id_science",
+    "name": {
+      "str": "LIXA 身份卡：杰森 米歇尔",
+      "str_pl": "LIXA 身份卡：杰森 米歇尔"
+    },
+    "description": "一张 LIXA 设施的身份钥匙卡。照片中是一个自信笑着的年轻男子。",
+    "flags": [
+      "LIXA_SCIENCE_CARD",
+      "LIXA_SCIENCE_CARD_2",
+      "LIXA_SCIENCE_CARD_3"
+    ],
+    "price_postapoc": "2 USD 50 cent",
+    "material": [
+      "plastic"
+    ],
+    "weight": "3 g",
+    "volume": "5 ml",
+    "category": "keys"
+  },
+  {
+    "type": "GENERIC",
+    "id": "id_LIXA_kai_mei",
+    "symbol": ",",
+    "looks_like": "id_science",
+    "name": {
+      "str": "LIXA 身份卡：罗凯梅",
+      "str_pl": "LIXA 身份卡：罗凯梅"
+    },
+    "description": "一张 LIXA 设施的身份钥匙卡。照片中是一个尴尬笑着的女子，拍照时正好在眨眼睛。",
+    "flags": [
+      "LIXA_SCIENCE_CARD",
+      "LIXA_SCIENCE_CARD_2",
+      "LIXA_SCIENCE_CARD_3"
+    ],
+    "price_postapoc": "2 USD 50 cent",
+    "material": [
+      "plastic"
+    ],
+    "weight": "3 g",
+    "volume": "5 ml",
+    "category": "keys"
+  },
+  {
+    "type": "GENERIC",
+    "id": "id_LIXA_rich",
+    "symbol": ",",
+    "looks_like": "id_science",
+    "name": {
+      "str": "LIXA 身份卡：理查德 瑞姆斯",
+      "str_pl": "LIXA 身份卡：理查德 瑞姆斯"
+    },
+    "description": "一张 LIXA 设施的身份钥匙卡。照片中是一个神情祥和的老人，正对着镜头绅士地笑着。",
+    "flags": [
+      "LIXA_SCIENCE_CARD",
+      "LIXA_SCIENCE_CARD_2",
+      "LIXA_SCIENCE_CARD_3"
+    ],
+    "price_postapoc": "2 USD 50 cent",
+    "material": [
+      "plastic"
+    ],
+    "weight": "3 g",
+    "volume": "5 ml",
+    "category": "keys"
+  },
+  {
+    "type": "GENERIC",
+    "id": "id_LIXA_mil",
+    "symbol": ",",
+    "looks_like": "id_military",
+    "name": {
+      "str": "LIXA 宪兵身份卡"
+    },
+    "description": "一张 LIXA 设施的身份钥匙卡，记录有驻守LIXA士兵的名字、军衔和编号。",
+    "flags": [
+      "LIXA_MILITARY_CARD",
+      "LIXA_SCIENCE_CARD"
+    ],
+    "price_postapoc": "2 USD 50 cent",
+    "material": [
+      "plastic"
+    ],
+    "weight": "3 g",
+    "volume": "5 ml",
+    "category": "keys"
+  },
+  {
+    "id": "LIXA_chair_folding_black",
+    "type": "TOOL",
+    "copy-from": "chair_folding",
+    "name": {
+      "str": "黑色折叠塑料椅"
+    },
+    "description": "一把装在钢制框架上的黑色折叠塑料椅，折叠后便于搬运；展开后可以坐下。",
+    "looks_like": "chair_folding",
+    "use_action": {
+      "type": "deploy_furn",
+      "furn_type": "f_LIXA_chair_folding_black"
+    }
+  }
+]

@@ -1,0 +1,14 @@
+FEMA联邦应急管理署营地（Breeze 11.7固定布局稳定版）
+
+本模块以0.I/CCB新版FEMA的住宿区、军方哨所、物资仓库、入口检查站与公交停靠区为内容来源，但不移植其mutable动态营地系统。
+
+为兼容Breeze 11.7，营地被重组为固定朝向、单层地表的大地图特殊点：
+- 不使用nested mapgen；
+- 不使用mapgensize；
+- 不使用place_nested跨Z层放置；
+- 不使用mutable overmap special及阶段生成；
+- 所有FEMA地块均采用travel_fema_前缀的独立NO_ROTATE地形ID。
+
+旧版FEMA Camp由同ID的新固定营地覆盖，FEMA_Camp2被禁用。原版医生护送任务改为寻找travel_fema_entrance。
+- Breeze 11.7没有GROUP_VANILLA_DORMANT及其伪休眠怪物机制，仓库与公交区改用GROUP_ZOMBIE，消除一致性警告。
+- 室外碎石地面保留0.I/CCB原版t_railroad_rubble设计，并非固定版误植。

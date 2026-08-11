@@ -1,0 +1,1307 @@
+[
+  {
+    "type": "mutation",
+    "id": "TRAVEL_LIANG_WINGCHUN",
+    "name": {
+      "str": "梁知遥的叶系咏春训练"
+    },
+    "description": "梁知遥自幼练习叶系咏春，熟悉守中用中，短桥窄马，黐手，八斩刀和六点半棍。赴美以后，她也接触过护具对练，体能训练和李小龙留下的部分武学观点，但她始终以咏春为主体，并把这些经历当作检验距离，节奏和临场反应的方法。",
+    "points": 0,
+    "valid": false,
+    "player_display": false,
+    "purifiable": false,
+    "initial_ma_styles": [
+      "style_wc_rework_ipman"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "TRAVEL_LIANG_OPEN_IDEALIST",
+    "name": {
+      "str": "开朗而内省"
+    },
+    "description": "梁知遥在安全和熟悉的人面前显得明快友善，面对陌生人时则会先观察，确认边界和退路。她很重视诚实，选择和个人价值，也容易把金钱，自律和计划变成获得安全感的方法。她习惯先想清楚再开口，通过独处，阅读和书写整理感受，有时会因此犹豫太久，或者熬夜把一个问题想得过分完整。玛雅曾半开玩笑地把她归进INFP，梁知遥没有认真承认，却也没有提出更合适的答案。",
+    "points": 0,
+    "valid": false,
+    "player_display": true,
+    "purifiable": false
+  },
+  {
+    "type": "mutation",
+    "id": "TRAVEL_LIANG_SILENT_SPAWN_GEAR",
+    "name": {
+      "str": "梁知遥的静默生成装备"
+    },
+    "description": "隐藏梁知遥生成时穿戴初始装备的成功日志，避免姓名尚未固定时显示随机姓名。",
+    "points": 0,
+    "valid": false,
+    "player_display": false,
+    "purifiable": false,
+    "enchantments": [
+      {
+        "condition": "ALWAYS",
+        "ench_effects": [
+          {
+            "effect": "npc_wear_item_success_no_message",
+            "intensity": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "TRAVEL_LIANG_TALISMAN_WARD",
+    "name": {
+      "str": "平安扣的护佑"
+    },
+    "description": "梁知遥家传旧平安扣带来的微弱护佑。危险临身时，它仿佛让攻击者对距离和时机产生一瞬错判，使针对梁知遥的常规攻击更难命中，它不增加她每回合可闪避的次数，也不会减轻已经命中的伤害。",
+    "points": 0,
+    "valid": false,
+    "player_display": false,
+    "purifiable": false,
+    "flags": [
+      "HARDTOHIT"
+    ]
+  },
+  {
+    "type": "ARMOR",
+    "id": "travel_liang_family_talisman",
+    "copy-from": "silver_locket",
+    "name": {
+      "str": "旧玉平安扣"
+    },
+    "description": "一枚被细银链穿起的旧玉平安扣，边缘已经被多年摩挲得温润发亮。梁知遥的外婆把它交给她母亲，母亲又在她赴美前亲手替她戴上。对旁人而言，它只是一件普通旧饰物，梁知遥却一直把它当作家人的护佑，那份安心早已化成她在危险中保持冷静的本能。",
+    "weight": "28 g",
+    "volume": "15 ml",
+    "price": 0,
+    "price_postapoc": 0,
+    "material": [
+      {
+        "type": "silver",
+        "portion": 1
+      },
+      {
+        "type": "gemstone",
+        "portion": 4
+      }
+    ],
+    "looks_like": "silver_locket",
+    "color": "light_green",
+    "extend": {
+      "flags": [
+        "TRADER_KEEP",
+        "NO_SALVAGE"
+      ]
+    }
+  },
+  {
+    "type": "GENERIC",
+    "id": "travel_brown_student_card",
+    "name": {
+      "str": "耶鲁大学学生证"
+    },
+    "description": "一张属于梁知遥的耶鲁大学学生证。耶鲁位于康涅狄格州纽黑文，是一所历史悠久、以研究和专业教育闻名的大学，校园建筑、医院与实验设施散布在城市街区之间。照片中的梁知遥神情略显拘谨，专业栏写着生物医学工程。卡片背面贴着磨损的校园急救队值班标签，卡套里还夹着图书馆借阅回执和一张周末徒步路线的小纸条。",
+    "weight": "6 g",
+    "volume": "10 ml",
+    "price": 0,
+    "price_postapoc": 0,
+    "material": [
+      "plastic"
+    ],
+    "symbol": "[",
+    "color": "brown",
+    "flags": [
+      "NO_SALVAGE",
+      "TRADER_KEEP"
+    ]
+  },
+  {
+    "type": "TOOL",
+    "id": "travel_liang_smartphone",
+    "copy-from": "smart_phone",
+    "name": {
+      "str": "iPhone 17"
+    },
+    "description": "一部套着黑色保护壳的iPhone 17。苹果的iPhone系列以软硬件深度整合，长期系统支持和设备生态著称，对许多人而言，它既是通讯工具，也是相机，钱包，地图和私人档案。这台机器的边角已经有几处磕白，梁知遥长期把它调在低亮度和省电模式。离线地图，家人照片，5月19日没有发出的微信草稿，以及玛雅·斯卡利特在5月15日19时12分留下的最后一条消息都保存在里面。她担心电量耗尽以后再也无法打开缓存，于是把两人的几条旧动态，日语学习计划，小说书评，理财笔记和消费记录抄进了随身日记。网络已经断了，这台手机仍保存着梁知遥与灾变前生活之间最完整的一条线。",
+    "extend": {
+      "flags": [
+        "TRADER_KEEP"
+      ]
+    }
+  },
+  {
+    "type": "TOOL",
+    "id": "travel_liang_handheld_game",
+    "copy-from": "portable_game",
+    "name": {
+      "str": "Nintendo Switch OLED"
+    },
+    "description": "一台装着透明保护壳的Nintendo Switch OLED。任天堂把Switch设计成可以在电视、桌面和掌机形态之间切换的混合游戏机，适合在宿舍、火车或露营帐篷里随时拿出来玩。OLED版本的屏幕更鲜艳，梁知遥这台机器的摇杆边缘则已经被长期使用磨得发亮。除了一次次重开的海拉鲁旅程，她最常打开的是《朋友收集，梦想生活》。她把玛雅·斯卡利特、几位舍友、影心、林克和塞尔达安排在同一条街，看他们吵架、散步、互相送礼物。灾变以后，它不再只是消遣，也是少数能让她暂时放松呼吸的东西。",
+    "extend": {
+      "flags": [
+        "TRADER_KEEP"
+      ]
+    }
+  },
+  {
+    "type": "TOOL",
+    "id": "travel_liang_gaming_laptop",
+    "copy-from": "laptop",
+    "name": {
+      "str": "ROG Zephyrus G14"
+    },
+    "description": "一台ROG Zephyrus G14。ROG是华硕面向游戏玩家和高性能用户的品牌，Zephyrus系列则试图把强劲硬件塞进更便于携带的轻薄机身，因此常被同时用作游戏本、创作工具和移动工作站。梁知遥的这台机器贴着耶鲁图书馆、徒步社团和一只褪色的二十面骰贴纸。硬盘里存着实验数据、论文草稿、记账表、投资学习笔记，还有《博德之门3》和几款大型游戏。她把课程资料和私人文件分得很清楚，桌面却经常同时开着十几个标签页。断网以后，这台电脑更多被用来整理地图、读取存储设备，以及保存暂时无法送出去的记录。",
+    "extend": {
+      "flags": [
+        "TRADER_KEEP"
+      ]
+    }
+  },
+  {
+    "type": "TOOL",
+    "id": "travel_liang_journal",
+    "category": "tools",
+    "name": {
+      "str": "Shinola 皮面日记"
+    },
+    "looks_like": "book_nonf_soft_psych_cggamers",
+    "description": "一本装在Shinola棕色皮革封套里的中号横线日记。Shinola是一个带有底特律工坊形象的美国生活方式品牌，以腕表、皮具和强调耐用质感的日常用品闻名。这个封套并不华丽，边缘却已经被梁知遥的手指和背包内衬磨得发亮。她用它记录读书、实验、金钱、家人和选择。现存内容包括一张从手机缓存抄下的旧动态夹页，以及5月13日至5月19日的七篇日记。前几页仍有校园生活的从容，越往后，字迹与叙述便越接近正在崩塌的世界。翻开封皮，可以逐页阅读。",
+    "volume": "300 ml",
+    "weight": "150 g",
+    "material": [
+      "leather"
+    ],
+    "symbol": "*",
+    "color": "brown",
+    "flags": [
+      "TRADER_KEEP"
+    ],
+    "pocket_data": [
+      {
+        "//": "日记内页",
+        "pocket_type": "CONTAINER",
+        "rigid": false,
+        "max_contains_weight": "2 kg",
+        "max_contains_volume": "2500 ml",
+        "max_item_length": "300 mm",
+        "moves": 150
+      }
+    ]
+  },
+  {
+    "type": "GENERIC",
+    "id": "travel_liang_journal_social_archive",
+    "copy-from": "survnote",
+    "name": {
+      "str": "日记夹页·旧动态摘录"
+    },
+    "description": "皮面日记中夹着的一张无日期手写内页。页角写着“从手机缓存抄下，留一份不用电的备份”。",
+    "snippet_category": "travel_liang_journal_text_social_archive",
+    "weight": "8 g",
+    "volume": "5 ml",
+    "price": 0,
+    "price_postapoc": 0,
+    "flags": [
+      "TRADER_AVOID",
+      "NO_SALVAGE"
+    ]
+  },
+  {
+    "type": "GENERIC",
+    "id": "travel_liang_journal_apr23",
+    "copy-from": "survnote",
+    "name": {
+      "str": "日记·5月13日"
+    },
+    "description": "皮面日记中标有5月13日的一张手写内页。字迹舒展，页角记着一笔餐费和一幅很小的树叶。",
+    "snippet_category": "travel_liang_journal_text_apr23",
+    "weight": "8 g",
+    "volume": "5 ml",
+    "price": 0,
+    "price_postapoc": 0,
+    "flags": [
+      "TRADER_AVOID",
+      "NO_SALVAGE"
+    ]
+  },
+  {
+    "type": "GENERIC",
+    "id": "travel_liang_journal_apr24",
+    "copy-from": "survnote",
+    "name": {
+      "str": "日记·5月14日"
+    },
+    "description": "皮面日记中标有5月14日的一张手写内页。几处段落被临时插入的物资清单打断。",
+    "snippet_category": "travel_liang_journal_text_apr24",
+    "weight": "8 g",
+    "volume": "5 ml",
+    "price": 0,
+    "price_postapoc": 0,
+    "flags": [
+      "TRADER_AVOID",
+      "NO_SALVAGE"
+    ]
+  },
+  {
+    "type": "GENERIC",
+    "id": "travel_liang_journal_apr25",
+    "copy-from": "survnote",
+    "name": {
+      "str": "日记·5月15日"
+    },
+    "description": "皮面日记中标有5月15日的一张手写内页。后半页的字迹明显更重，时间被反复圈起。",
+    "snippet_category": "travel_liang_journal_text_apr25",
+    "weight": "8 g",
+    "volume": "5 ml",
+    "price": 0,
+    "price_postapoc": 0,
+    "flags": [
+      "TRADER_AVOID",
+      "NO_SALVAGE"
+    ]
+  },
+  {
+    "type": "GENERIC",
+    "id": "travel_liang_journal_apr26",
+    "copy-from": "survnote",
+    "name": {
+      "str": "日记·5月16日"
+    },
+    "description": "皮面日记中标有5月16日的一张手写内页。纸边沾着雨水、灰尘和很淡的血迹。",
+    "snippet_category": "travel_liang_journal_text_apr26",
+    "weight": "8 g",
+    "volume": "5 ml",
+    "price": 0,
+    "price_postapoc": 0,
+    "flags": [
+      "TRADER_AVOID",
+      "NO_SALVAGE"
+    ]
+  },
+  {
+    "type": "GENERIC",
+    "id": "travel_liang_journal_apr27",
+    "copy-from": "survnote",
+    "name": {
+      "str": "日记·5月17日"
+    },
+    "description": "皮面日记中标有5月17日的一张手写内页。开头保留了几行原始行路速记，后来才补成完整文字。",
+    "snippet_category": "travel_liang_journal_text_apr27",
+    "weight": "8 g",
+    "volume": "5 ml",
+    "price": 0,
+    "price_postapoc": 0,
+    "flags": [
+      "TRADER_AVOID",
+      "NO_SALVAGE"
+    ]
+  },
+  {
+    "type": "GENERIC",
+    "id": "travel_liang_journal_apr28",
+    "copy-from": "survnote",
+    "name": {
+      "str": "日记·5月18日"
+    },
+    "description": "皮面日记中标有5月18日的一张手写内页。字迹时而工整，时而因疲惫向下倾斜。",
+    "snippet_category": "travel_liang_journal_text_apr28",
+    "weight": "8 g",
+    "volume": "5 ml",
+    "price": 0,
+    "price_postapoc": 0,
+    "flags": [
+      "TRADER_AVOID",
+      "NO_SALVAGE"
+    ]
+  },
+  {
+    "type": "GENERIC",
+    "id": "travel_liang_journal_apr29",
+    "copy-from": "survnote",
+    "name": {
+      "str": "日记·5月19日"
+    },
+    "description": "皮面日记中标有5月19日的一张手写内页。正文在数处突然中断，最后一行写得很慢。",
+    "snippet_category": "travel_liang_journal_text_apr29",
+    "weight": "8 g",
+    "volume": "5 ml",
+    "price": 0,
+    "price_postapoc": 0,
+    "flags": [
+      "TRADER_AVOID",
+      "NO_SALVAGE"
+    ]
+  },
+  {
+    "type": "ARMOR",
+    "id": "travel_liang_kangtao_field_cap",
+    "copy-from": "hat_ball",
+    "name": {
+      "str": "康陶®“远行者”野外显示帽"
+    },
+    "description": "康陶®“远行者”民用应急套装中的轻型野外帽。黑灰色尼龙帽身压着一道低调的橙色识别边，帽檐内侧嵌有一条柔性显示片，原本可以在连接配套终端后显示方位、路线和低电量警告。灾变后专用服务早已失效，它现在主要用于遮阳、压住头发和减少雨水进入眼睛。帽体没有防弹衬层，也没有硬质护板，对撞击和抓咬几乎不能提供保护。",
+    "looks_like": "hat_ball",
+    "color": "dark_gray",
+    "price": 18000,
+    "price_postapoc": 250,
+    "extend": {
+      "flags": [
+        "TRADER_KEEP"
+      ]
+    },
+    "environmental_protection": 1,
+    "material_thickness": 0.1,
+    "armor": [
+      {
+        "encumbrance_modifiers": [
+          "NONE"
+        ],
+        "coverage": 50,
+        "covers": [
+          "head"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "ARMOR",
+    "id": "travel_liang_kangtao_runner_pack",
+    "copy-from": "survivor_runner_pack",
+    "name": {
+      "str": "康陶®“远行者”模块背包"
+    },
+    "description": "一只为长距离步行和城市撤离设计的康陶®模块背包。包体以黑灰色耐磨织物为主，橙色压缩带和快速释放扣能让使用者在不卸包的情况下重新分配重量。背板没有重型装甲，只加入了薄塑料支撑和少量耐切割织层，主要价值仍然是贴身、安静和容易整理。梁知遥把证件、日记和电子设备放在内层，把水和急救用品放在不用翻空整只背包就能取到的位置。",
+    "looks_like": "survivor_runner_pack",
+    "color": "dark_gray",
+    "price": 36000,
+    "price_postapoc": 2800,
+    "material": [
+      "nylon",
+      "plastic",
+      "kevlar"
+    ],
+    "extend": {
+      "flags": [
+        "TRADER_KEEP"
+      ]
+    }
+  },
+  {
+    "type": "ARMOR",
+    "id": "travel_liang_medical_pouch",
+    "copy-from": "fanny",
+    "name": {
+      "str": "康陶®“远行者”医疗腰包"
+    },
+    "description": "康陶®“远行者”套装配套的可拆卸医疗腰包。黑灰色包体正面有一块橙色拉片，拉开后能把整只内袋平摊在地面，药品、纱布和手套按颜色标签分隔。它没有自动诊断、注射器或任何未来医疗奇迹，只是一件认真解决取用顺序和污染隔离的民用装备。梁知遥在原有标签旁补上了中英文缩写，并把真正需要随手拿到的包扎用品放在最外层。",
+    "looks_like": "fanny",
+    "color": "dark_gray",
+    "price": 14000,
+    "price_postapoc": 900,
+    "extend": {
+      "flags": [
+        "TRADER_KEEP"
+      ]
+    }
+  },
+  {
+    "type": "ARMOR",
+    "id": "travel_liang_kangtao_hiking_boots",
+    "copy-from": "boots_hiking",
+    "name": {
+      "str": "康陶®“远行者”防滑野外靴"
+    },
+    "description": "一双黑灰色康陶®民用野外靴，鞋跟稳定片和鞋带固定环使用橙色识别件。鞋底为多方向防滑纹，踝部支撑适合长距离步行、楼梯和潮湿路面。鞋面只有普通轻型防护层，没有钢头和重型陶瓷，能抵挡碎石、轻微割伤和雨水，却不能把脚变成可以硬踢怪物的武器。梁知遥在出发前已经把它们磨合到合脚，左脚鞋带末端还打着一个很小的双结。",
+    "looks_like": "boots_hiking",
+    "color": "dark_gray",
+    "price": 22000,
+    "price_postapoc": 900,
+    "extend": {
+      "flags": [
+        "TRADER_KEEP"
+      ]
+    }
+  },
+  {
+    "type": "ARMOR",
+    "id": "travel_liang_light_leather_armor",
+    "name": {
+      "str": "康陶®“远行者”应急护服"
+    },
+    "description": "康陶®公司在中国制造的高端民用应急护服。灾变前数月，骚乱、封锁和异常袭击的报道越来越频繁，梁知遥的父母购入整套“远行者”应急装备，并按她的尺寸调整后寄到耶鲁大学。护服以深灰与黑色织物为基底，胸腹、肩侧、前臂和大腿外侧覆有橙色防护模块，整体接近康陶企业安保装备的民用化版本。主体外壳使用高强度尼龙基布，躯干为连续层压芳纶，并嵌入少量柔性陶瓷与塑料缓冲片。手臂和腿部约九成面积采用同等级防护层，关节内侧、腋下与膝后等区域为了活动性而明显更薄。它不提供头部与足部防护，需要配套野外帽和靴子。整体防护高于普通民用护具，但仍低于真正的实验型战术装甲。",
+    "category": "armor",
+    "repairs_like": "survivor_jumpsuit",
+    "weight": "3600 g",
+    "volume": "5200 ml",
+    "price": 155000,
+    "price_postapoc": 9000,
+    "material": [
+      "nylon",
+      "kevlar_layered",
+      "ceramic",
+      "plastic"
+    ],
+    "symbol": "[",
+    "looks_like": "survivor_jumpsuit",
+    "color": "dark_gray",
+    "warmth": 12,
+    "environmental_protection": 5,
+    "flags": [
+      "STURDY",
+      "VARSIZE",
+      "OUTER",
+      "WATERPROOF",
+      "RAINPROOF",
+      "TRADER_KEEP"
+    ],
+    "armor": [
+      {
+        "material": [
+          {
+            "type": "nylon",
+            "covered_by_mat": 100,
+            "thickness": 0.8
+          },
+          {
+            "type": "kevlar_layered",
+            "covered_by_mat": 100,
+            "thickness": 4.4
+          },
+          {
+            "type": "ceramic",
+            "covered_by_mat": 15,
+            "thickness": 1.0
+          },
+          {
+            "type": "plastic",
+            "covered_by_mat": 40,
+            "thickness": 0.8
+          }
+        ],
+        "covers": [
+          "torso"
+        ],
+        "coverage": 100,
+        "cover_melee": 98,
+        "cover_ranged": 100,
+        "cover_vitals": 90,
+        "encumbrance": [
+          7,
+          7
+        ],
+        "layers": [
+          "OUTER"
+        ]
+      },
+      {
+        "material": [
+          {
+            "type": "nylon",
+            "covered_by_mat": 100,
+            "thickness": 0.8
+          },
+          {
+            "type": "kevlar_layered",
+            "covered_by_mat": 90,
+            "thickness": 4.4
+          },
+          {
+            "type": "ceramic",
+            "covered_by_mat": 15,
+            "thickness": 1.0
+          },
+          {
+            "type": "plastic",
+            "covered_by_mat": 40,
+            "thickness": 0.8
+          }
+        ],
+        "covers": [
+          "arm_l",
+          "arm_r"
+        ],
+        "coverage": 95,
+        "cover_melee": 93,
+        "cover_ranged": 95,
+        "cover_vitals": 65,
+        "encumbrance": [
+          5,
+          5
+        ],
+        "layers": [
+          "OUTER"
+        ]
+      },
+      {
+        "material": [
+          {
+            "type": "nylon",
+            "covered_by_mat": 100,
+            "thickness": 0.8
+          },
+          {
+            "type": "kevlar_layered",
+            "covered_by_mat": 90,
+            "thickness": 4.4
+          },
+          {
+            "type": "ceramic",
+            "covered_by_mat": 15,
+            "thickness": 1.0
+          },
+          {
+            "type": "plastic",
+            "covered_by_mat": 40,
+            "thickness": 0.8
+          }
+        ],
+        "covers": [
+          "leg_l",
+          "leg_r"
+        ],
+        "coverage": 95,
+        "cover_melee": 93,
+        "cover_ranged": 95,
+        "cover_vitals": 70,
+        "encumbrance": [
+          6,
+          6
+        ],
+        "layers": [
+          "OUTER"
+        ]
+      }
+    ],
+    "pocket_data": [],
+    "valid_mods": []
+  },
+  {
+    "type": "GENERIC",
+    "id": "travel_liang_luk_dim_boon_gwan",
+    "copy-from": "wc_luk_dim_boon_gwan",
+    "name": {
+      "str": "黑缠布六点半棍"
+    },
+    "description": "一根持握端缠着两层旧黑布的六点半棍。梁知遥从佛山把它带到美国，又在耶鲁华人学生社团训练室长期使用。她反复削薄棍梢，校直棍身，并按自己的手型调整握位和配重，木料上留下了汗渍，碰痕和常年上油形成的暗色光泽。它是她最熟悉的长兵器，也是一件可以正常放下，存放和交给别人的普通武器。",
+    "price": 0,
+    "price_postapoc": 0,
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "tec_travel_liang_staff_snap_thrust"
+    ],
+    "weapon_category": [
+      "POLEARMS"
+    ],
+    "extend": {
+      "flags": [
+        "TRADER_KEEP"
+      ]
+    }
+  },
+  {
+    "type": "npc_class",
+    "id": "NC_TRAVEL_LIANG_ZHIYAO",
+    "name": {
+      "str": "留学生"
+    },
+    "job_description": "我是来自中国的耶鲁生物医学工程学生。面对陌生人时，我会先确认伤口和退路，不过我更愿意先把对方当作可以沟通的幸存者，熟悉以后，我也愿意聊阅读、户外运动、电子游戏，以及我对自由、金钱和时间的一些想法。",
+    "common": false,
+    "sells_belongings": false,
+    "traits": [
+      {
+        "trait": "TRAVEL_LIANG_OPEN_IDEALIST"
+      },
+      {
+        "trait": "TRAVEL_LIANG_SILENT_SPAWN_GEAR"
+      },
+      {
+        "trait": "TRAVEL_LIANG_TALISMAN_WARD"
+      },
+      {
+        "trait": "OPTIMISTIC"
+      },
+      {
+        "trait": "FASTREADER"
+      },
+      {
+        "trait": "OUTDOORSMAN"
+      },
+      {
+        "trait": "GOODMEMORY"
+      },
+      {
+        "trait": "BEAUTIFUL"
+      },
+      {
+        "trait": "SQUEAMISH"
+      },
+      {
+        "trait": "hair_black_long"
+      },
+      {
+        "trait": "eye_color",
+        "variant": "brown"
+      },
+      {
+        "trait": "SKIN_LIGHT"
+      },
+      {
+        "trait": "FLEET"
+      },
+      {
+        "trait": "QUICK"
+      },
+      {
+        "trait": "FAST_REFLEXES"
+      },
+      {
+        "trait": "GOODCARDIO"
+      },
+      {
+        "trait": "HEAVYSLEEPER"
+      }
+    ],
+    "bonus_str": {
+      "rng": [
+        1,
+        1
+      ]
+    },
+    "bonus_dex": {
+      "rng": [
+        2,
+        2
+      ]
+    },
+    "bonus_int": {
+      "rng": [
+        2,
+        2
+      ]
+    },
+    "bonus_per": {
+      "rng": [
+        1,
+        1
+      ]
+    },
+    "worn_override": "TRAVEL_LIANG_WORN",
+    "weapon_override": "TRAVEL_LIANG_WIELD",
+    "skills": [
+      {
+        "skill": "melee",
+        "level": {
+          "rng": [
+            4,
+            4
+          ]
+        }
+      },
+      {
+        "skill": "bashing",
+        "level": {
+          "rng": [
+            4,
+            4
+          ]
+        }
+      },
+      {
+        "skill": "unarmed",
+        "level": {
+          "rng": [
+            3,
+            3
+          ]
+        }
+      },
+      {
+        "skill": "dodge",
+        "level": {
+          "rng": [
+            3,
+            3
+          ]
+        }
+      },
+      {
+        "skill": "firstaid",
+        "level": {
+          "rng": [
+            3,
+            3
+          ]
+        }
+      },
+      {
+        "skill": "computer",
+        "level": {
+          "rng": [
+            3,
+            3
+          ]
+        }
+      },
+      {
+        "skill": "speech",
+        "level": {
+          "rng": [
+            2,
+            2
+          ]
+        }
+      },
+      {
+        "skill": "survival",
+        "level": {
+          "rng": [
+            1,
+            1
+          ]
+        }
+      },
+      {
+        "skill": "tailor",
+        "level": {
+          "rng": [
+            1,
+            1
+          ]
+        }
+      },
+      {
+        "skill": "cooking",
+        "level": {
+          "rng": [
+            2,
+            2
+          ]
+        }
+      },
+      {
+        "skill": "fabrication",
+        "level": {
+          "rng": [
+            2,
+            2
+          ]
+        }
+      },
+      {
+        "skill": "electronics",
+        "level": {
+          "rng": [
+            2,
+            2
+          ]
+        }
+      },
+      {
+        "skill": "swimming",
+        "level": {
+          "rng": [
+            2,
+            2
+          ]
+        }
+      },
+      {
+        "skill": "archery",
+        "level": {
+          "rng": [
+            3,
+            3
+          ]
+        }
+      }
+    ],
+    "carry_override": "TRAVEL_LIANG_CARRIED",
+    "proficiencies": [
+      "prof_intro_biology",
+      "prof_physiology",
+      "prof_intro_chemistry",
+      "prof_wound_care"
+    ]
+  },
+  {
+    "type": "npc_class",
+    "id": "NC_TRAVEL_LIANG_ZHIYAO_CENTER",
+    "name": {
+      "str": "留学生"
+    },
+    "job_description": "我是来自中国的耶鲁生物医学工程学生。灾变后我先到了难民中心，用整理伤情记录和物资批号换取临时床位。我还在找室友玛雅·斯卡利特，也想设法让国内的家人知道我还活着。",
+    "common": false,
+    "sells_belongings": false,
+    "traits": [
+      {
+        "trait": "TRAVEL_LIANG_OPEN_IDEALIST"
+      },
+      {
+        "trait": "TRAVEL_LIANG_SILENT_SPAWN_GEAR"
+      },
+      {
+        "trait": "TRAVEL_LIANG_TALISMAN_WARD"
+      },
+      {
+        "trait": "OPTIMISTIC"
+      },
+      {
+        "trait": "FASTREADER"
+      },
+      {
+        "trait": "OUTDOORSMAN"
+      },
+      {
+        "trait": "GOODMEMORY"
+      },
+      {
+        "trait": "BEAUTIFUL"
+      },
+      {
+        "trait": "SQUEAMISH"
+      },
+      {
+        "trait": "hair_black_long"
+      },
+      {
+        "trait": "eye_color",
+        "variant": "brown"
+      },
+      {
+        "trait": "SKIN_LIGHT"
+      },
+      {
+        "trait": "FLEET"
+      },
+      {
+        "trait": "QUICK"
+      },
+      {
+        "trait": "FAST_REFLEXES"
+      },
+      {
+        "trait": "GOODCARDIO"
+      },
+      {
+        "trait": "HEAVYSLEEPER"
+      }
+    ],
+    "bonus_str": {
+      "rng": [
+        1,
+        1
+      ]
+    },
+    "bonus_dex": {
+      "rng": [
+        2,
+        2
+      ]
+    },
+    "bonus_int": {
+      "rng": [
+        2,
+        2
+      ]
+    },
+    "bonus_per": {
+      "rng": [
+        1,
+        1
+      ]
+    },
+    "worn_override": "TRAVEL_LIANG_WORN",
+    "weapon_override": "TRAVEL_LIANG_WIELD",
+    "skills": [
+      {
+        "skill": "melee",
+        "level": {
+          "rng": [
+            4,
+            4
+          ]
+        }
+      },
+      {
+        "skill": "bashing",
+        "level": {
+          "rng": [
+            4,
+            4
+          ]
+        }
+      },
+      {
+        "skill": "unarmed",
+        "level": {
+          "rng": [
+            3,
+            3
+          ]
+        }
+      },
+      {
+        "skill": "dodge",
+        "level": {
+          "rng": [
+            3,
+            3
+          ]
+        }
+      },
+      {
+        "skill": "firstaid",
+        "level": {
+          "rng": [
+            3,
+            3
+          ]
+        }
+      },
+      {
+        "skill": "computer",
+        "level": {
+          "rng": [
+            3,
+            3
+          ]
+        }
+      },
+      {
+        "skill": "speech",
+        "level": {
+          "rng": [
+            2,
+            2
+          ]
+        }
+      },
+      {
+        "skill": "survival",
+        "level": {
+          "rng": [
+            1,
+            1
+          ]
+        }
+      },
+      {
+        "skill": "tailor",
+        "level": {
+          "rng": [
+            1,
+            1
+          ]
+        }
+      },
+      {
+        "skill": "cooking",
+        "level": {
+          "rng": [
+            2,
+            2
+          ]
+        }
+      },
+      {
+        "skill": "fabrication",
+        "level": {
+          "rng": [
+            2,
+            2
+          ]
+        }
+      },
+      {
+        "skill": "electronics",
+        "level": {
+          "rng": [
+            2,
+            2
+          ]
+        }
+      },
+      {
+        "skill": "swimming",
+        "level": {
+          "rng": [
+            2,
+            2
+          ]
+        }
+      },
+      {
+        "skill": "archery",
+        "level": {
+          "rng": [
+            3,
+            3
+          ]
+        }
+      }
+    ],
+    "carry_override": "TRAVEL_LIANG_CARRIED",
+    "//": "旧存档兼容与未来可选剧情分支预留。新世界没有生成入口，不会主动使用此职业。",
+    "proficiencies": [
+      "prof_intro_biology",
+      "prof_physiology",
+      "prof_intro_chemistry",
+      "prof_wound_care"
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "TRAVEL_LIANG_WORN",
+    "subtype": "collection",
+    "entries": [
+      {
+        "item": "bra"
+      },
+      {
+        "item": "panties"
+      },
+      {
+        "item": "travel_liang_family_talisman"
+      },
+      {
+        "item": "travel_liang_kangtao_field_cap"
+      },
+      {
+        "item": "travel_liang_kangtao_hiking_boots",
+        "custom-flags": [
+          "FIT"
+        ]
+      },
+      {
+        "item": "travel_liang_light_leather_armor",
+        "custom-flags": [
+          "FIT"
+        ]
+      },
+      {
+        "item": "travel_liang_kangtao_runner_pack",
+        "contents-group": "TRAVEL_LIANG_BACKPACK_CONTENTS"
+      },
+      {
+        "item": "travel_liang_medical_pouch",
+        "contents-group": "TRAVEL_LIANG_MEDICAL_POUCH_CONTENTS"
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "TRAVEL_LIANG_MEDICAL_POUCH_CONTENTS",
+    "subtype": "collection",
+    "entries": [
+      {
+        "item": "bandages",
+        "charges": 3
+      },
+      {
+        "item": "adhesive_bandages",
+        "count": 6
+      },
+      {
+        "item": "medical_gauze",
+        "count": 2
+      },
+      {
+        "item": "gloves_rubber"
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "TRAVEL_LIANG_BACKPACK_CONTENTS",
+    "subtype": "collection",
+    "entries": [
+      {
+        "item": "travel_liang_wc_notes"
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "TRAVEL_LIANG_JOURNAL_DAILY_PAGES",
+    "subtype": "collection",
+    "entries": [
+      {
+        "item": "travel_liang_journal_social_archive"
+      },
+      {
+        "item": "travel_liang_journal_apr23"
+      },
+      {
+        "item": "travel_liang_journal_apr24"
+      },
+      {
+        "item": "travel_liang_journal_apr25"
+      },
+      {
+        "item": "travel_liang_journal_apr26"
+      },
+      {
+        "item": "travel_liang_journal_apr27"
+      },
+      {
+        "item": "travel_liang_journal_apr28"
+      },
+      {
+        "item": "travel_liang_journal_apr29"
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "TRAVEL_LIANG_CARRIED",
+    "subtype": "collection",
+    "entries": [
+      {
+        "item": "travel_liang_smartphone",
+        "charges": 120
+      },
+      {
+        "item": "travel_liang_handheld_game",
+        "charges": 80
+      },
+      {
+        "item": "travel_liang_gaming_laptop",
+        "charges": 200
+      },
+      {
+        "item": "travel_brown_student_card"
+      },
+      {
+        "item": "textbook_firstaid"
+      },
+      {
+        "item": "textbook_chemistry"
+      },
+      {
+        "item": "travel_liang_journal",
+        "contents-group": "TRAVEL_LIANG_JOURNAL_DAILY_PAGES"
+      },
+      {
+        "item": "pen"
+      },
+      {
+        "item": "water_clean",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "TRAVEL_LIANG_WIELD",
+    "subtype": "collection",
+    "entries": [
+      {
+        "item": "travel_liang_luk_dim_boon_gwan"
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "TRAVEL_LIANG_BARTER_BANDAGE",
+    "subtype": "collection",
+    "entries": [
+      {
+        "item": "bandages",
+        "charges": 2
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "TRAVEL_LIANG_BARTER_ASPIRIN",
+    "subtype": "collection",
+    "entries": [
+      {
+        "item": "aspirin",
+        "charges": 6
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "TRAVEL_LIANG_BARTER_DISINFECTANT",
+    "subtype": "collection",
+    "entries": [
+      {
+        "item": "disinfectant",
+        "charges": 2
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "TRAVEL_LIANG_BARTER_ANTIFUNGAL",
+    "subtype": "collection",
+    "entries": [
+      {
+        "item": "antifungal",
+        "charges": 2
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "TRAVEL_LIANG_BARTER_ANTIPARASITIC",
+    "subtype": "collection",
+    "entries": [
+      {
+        "item": "antiparasitic",
+        "charges": 2
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "TRAVEL_LIANG_BARTER_NOVEL",
+    "subtype": "collection",
+    "entries": [
+      {
+        "item": "novel_road"
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "TRAVEL_LIANG_STORE_WEAK_ANTIBIOTIC",
+    "subtype": "collection",
+    "entries": [
+      {
+        "item": "weak_antibiotic",
+        "charges": 5
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "TRAVEL_LIANG_STORE_ANTIBIOTICS",
+    "subtype": "collection",
+    "entries": [
+      {
+        "item": "antibiotics",
+        "charges": 3
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "TRAVEL_LIANG_STORE_FIRSTAID",
+    "subtype": "collection",
+    "entries": [
+      {
+        "item": "medical_gauze",
+        "charges": 4
+      },
+      {
+        "item": "disinfectant",
+        "charges": 2
+      }
+    ]
+  }
+]

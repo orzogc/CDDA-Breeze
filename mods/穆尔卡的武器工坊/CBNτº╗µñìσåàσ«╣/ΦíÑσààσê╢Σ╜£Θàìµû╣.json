@@ -1,0 +1,1427 @@
+[
+  {
+    "id": "145114_casehead",
+    "type": "requirement",
+    "tools": [
+      [
+        [
+          "145114",
+          -1
+        ],
+        [
+          "145114_casing",
+          -1
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "79257_jhp",
+    "type": "recipe",
+    "category": "CC_AMMO",
+    "subcategory": "CSC_AMMO_RIFLE",
+    "skill_used": "fabrication",
+    "difficulty": 3,
+    "skills_required": [
+      "gun",
+      1
+    ],
+    "time": "2 m",
+    "batch_time_factors": [
+      60,
+      5
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        2
+      ],
+      [
+        "mag_rifle",
+        4
+      ]
+    ],
+    "charges": 1,
+    "reversible": true,
+    "using": [
+      [
+        "bullet_forming",
+        10
+      ],
+      [
+        "ammo_bullet",
+        8
+      ]
+    ],
+    "components": [
+      [
+        [
+          "79257_casing",
+          1
+        ]
+      ],
+      [
+        [
+          "lgrifle_primer",
+          1
+        ]
+      ],
+      [
+        [
+          "gunpowder",
+          10
+        ]
+      ],
+      [
+        [
+          "copper",
+          4
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "79257_fmj",
+    "type": "recipe",
+    "category": "CC_AMMO",
+    "subcategory": "CSC_AMMO_RIFLE",
+    "skill_used": "fabrication",
+    "difficulty": 3,
+    "skills_required": [
+      "gun",
+      1
+    ],
+    "time": "2 m",
+    "batch_time_factors": [
+      60,
+      5
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        2
+      ],
+      [
+        "mag_rifle",
+        4
+      ]
+    ],
+    "charges": 1,
+    "reversible": true,
+    "using": [
+      [
+        "bullet_forming",
+        10
+      ],
+      [
+        "ammo_bullet",
+        8
+      ]
+    ],
+    "components": [
+      [
+        [
+          "79257_casing",
+          1
+        ]
+      ],
+      [
+        [
+          "lgrifle_primer",
+          1
+        ]
+      ],
+      [
+        [
+          "gunpowder",
+          10
+        ]
+      ],
+      [
+        [
+          "copper",
+          4
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "79257_ss",
+    "type": "recipe",
+    "category": "CC_AMMO",
+    "subcategory": "CSC_AMMO_RIFLE",
+    "skill_used": "fabrication",
+    "difficulty": 7,
+    "skills_required": [
+      "gun",
+      1
+    ],
+    "time": "2 m",
+    "batch_time_factors": [
+      60,
+      5
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        4
+      ],
+      [
+        "mag_rifle",
+        4
+      ]
+    ],
+    "charges": 1,
+    "reversible": true,
+    "using": [
+      [
+        "bullet_forming",
+        10
+      ],
+      [
+        "ammo_bullet",
+        8
+      ]
+    ],
+    "components": [
+      [
+        [
+          "79257_casing",
+          1
+        ]
+      ],
+      [
+        [
+          "lgrifle_primer",
+          1
+        ]
+      ],
+      [
+        [
+          "gunpowder",
+          10
+        ]
+      ],
+      [
+        [
+          "copper",
+          4
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "408_ct_casing",
+    "type": "recipe",
+    "category": "CC_AMMO",
+    "subcategory": "CSC_AMMO_COMPONENTS",
+    "skill_used": "fabrication",
+    "difficulty": 5,
+    "time": "5 m",
+    "book_learn": [
+      [
+        "recipe_bullets",
+        2
+      ],
+      [
+        "mag_rifle",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "hydraulic_press",
+          15
+        ]
+      ],
+      [
+        [
+          "forging_standard",
+          1,
+          "LIST"
+        ]
+      ]
+    ],
+    "charges": 1,
+    "components": [
+      [
+        [
+          "copper",
+          3
+        ]
+      ],
+      [
+        [
+          "scrap",
+          1
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "79257_casing",
+    "type": "recipe",
+    "category": "CC_AMMO",
+    "subcategory": "CSC_AMMO_COMPONENTS",
+    "skill_used": "fabrication",
+    "difficulty": 5,
+    "time": "5 m",
+    "book_learn": [
+      [
+        "recipe_bullets",
+        2
+      ],
+      [
+        "mag_rifle",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "hydraulic_press",
+          10
+        ]
+      ],
+      [
+        [
+          "forging_standard",
+          1,
+          "LIST"
+        ]
+      ]
+    ],
+    "charges": 1,
+    "components": [
+      [
+        [
+          "copper",
+          2
+        ]
+      ],
+      [
+        [
+          "scrap",
+          1
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "23mm_casing",
+    "type": "recipe",
+    "category": "CC_AMMO",
+    "subcategory": "CSC_AMMO_COMPONENTS",
+    "skill_used": "fabrication",
+    "difficulty": 3,
+    "time": "5 m",
+    "book_learn": [
+      [
+        "recipe_bullets",
+        2
+      ],
+      [
+        "mag_shotgun",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "hydraulic_press",
+          20
+        ]
+      ],
+      [
+        [
+          "forging_standard",
+          1,
+          "LIST"
+        ]
+      ],
+      [
+        [
+          "mold_plastic",
+          -1
+        ]
+      ]
+    ],
+    "charges": 1,
+    "components": [
+      [
+        [
+          "copper",
+          3
+        ]
+      ],
+      [
+        [
+          "plastic_chunk",
+          1
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "939_magazine_10",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "autolearn": false,
+    "skill_used": "fabrication",
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "difficulty": 3,
+    "time": "120 m",
+    "reversible": true,
+    "decomp_learn": 3,
+    "components": [
+      [
+        [
+          "scrap",
+          4
+        ]
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "small_repairkit",
+          10
+        ],
+        [
+          "large_repairkit",
+          5
+        ]
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 1
+      }
+    ]
+  },
+  {
+    "result": "939_magazine_20",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "autolearn": false,
+    "skill_used": "fabrication",
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "difficulty": 3,
+    "time": "120 m",
+    "reversible": true,
+    "decomp_learn": 3,
+    "components": [
+      [
+        [
+          "scrap",
+          5
+        ]
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "small_repairkit",
+          10
+        ],
+        [
+          "large_repairkit",
+          5
+        ]
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 1
+      }
+    ]
+  },
+  {
+    "result": "svd_10",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "autolearn": false,
+    "skill_used": "fabrication",
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "difficulty": 3,
+    "time": "120 m",
+    "reversible": true,
+    "decomp_learn": 3,
+    "components": [
+      [
+        [
+          "scrap",
+          3
+        ]
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "small_repairkit",
+          10
+        ],
+        [
+          "large_repairkit",
+          5
+        ]
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 1
+      }
+    ]
+  },
+  {
+    "result": "1901_30",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "autolearn": false,
+    "skill_used": "fabrication",
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "difficulty": 3,
+    "time": "120 m",
+    "reversible": true,
+    "decomp_learn": 3,
+    "components": [
+      [
+        [
+          "scrap",
+          2
+        ]
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "small_repairkit",
+          10
+        ],
+        [
+          "large_repairkit",
+          5
+        ]
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 1
+      }
+    ]
+  },
+  {
+    "result": "pp91_30",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "autolearn": false,
+    "skill_used": "fabrication",
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "difficulty": 3,
+    "time": "120 m",
+    "reversible": true,
+    "decomp_learn": 3,
+    "components": [
+      [
+        [
+          "scrap",
+          2
+        ]
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "small_repairkit",
+          10
+        ],
+        [
+          "large_repairkit",
+          5
+        ]
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 1
+      }
+    ]
+  },
+  {
+    "result": "svch_20",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "autolearn": false,
+    "skill_used": "fabrication",
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "difficulty": 3,
+    "time": "120 m",
+    "reversible": true,
+    "decomp_learn": 3,
+    "components": [
+      [
+        [
+          "scrap",
+          6
+        ]
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "small_repairkit",
+          10
+        ],
+        [
+          "large_repairkit",
+          5
+        ]
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 1
+      }
+    ]
+  },
+  {
+    "result": "vper_8",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "autolearn": false,
+    "skill_used": "fabrication",
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "difficulty": 3,
+    "time": "120 m",
+    "reversible": true,
+    "decomp_learn": 3,
+    "components": [
+      [
+        [
+          "scrap",
+          3
+        ]
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "small_repairkit",
+          10
+        ],
+        [
+          "large_repairkit",
+          5
+        ]
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 1
+      }
+    ]
+  },
+  {
+    "result": "toz_5",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "autolearn": false,
+    "skill_used": "fabrication",
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "difficulty": 3,
+    "time": "120 m",
+    "reversible": true,
+    "decomp_learn": 3,
+    "components": [
+      [
+        [
+          "scrap",
+          1
+        ]
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "small_repairkit",
+          10
+        ],
+        [
+          "large_repairkit",
+          5
+        ]
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 1
+      }
+    ]
+  },
+  {
+    "result": "svt_10",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "autolearn": false,
+    "skill_used": "fabrication",
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "difficulty": 3,
+    "time": "120 m",
+    "reversible": true,
+    "decomp_learn": 3,
+    "components": [
+      [
+        [
+          "scrap",
+          3
+        ]
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "small_repairkit",
+          10
+        ],
+        [
+          "large_repairkit",
+          5
+        ]
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 1
+      }
+    ]
+  },
+  {
+    "result": "737_cta_20",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "autolearn": false,
+    "skill_used": "fabrication",
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "difficulty": 5,
+    "time": "120 m",
+    "reversible": true,
+    "decomp_learn": 3,
+    "components": [
+      [
+        [
+          "scrap",
+          5
+        ]
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "small_repairkit",
+          10
+        ],
+        [
+          "large_repairkit",
+          5
+        ]
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 1
+      }
+    ]
+  },
+  {
+    "result": "737_cta_30",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "autolearn": false,
+    "skill_used": "fabrication",
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "difficulty": 5,
+    "time": "120 m",
+    "reversible": true,
+    "decomp_learn": 3,
+    "components": [
+      [
+        [
+          "scrap",
+          8
+        ]
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "small_repairkit",
+          10
+        ],
+        [
+          "large_repairkit",
+          5
+        ]
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 1
+      }
+    ]
+  },
+  {
+    "result": "g43_10",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "autolearn": false,
+    "skill_used": "fabrication",
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "difficulty": 3,
+    "time": "120 m",
+    "reversible": true,
+    "decomp_learn": 3,
+    "components": [
+      [
+        [
+          "scrap",
+          3
+        ]
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "small_repairkit",
+          10
+        ],
+        [
+          "large_repairkit",
+          5
+        ]
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 1
+      }
+    ]
+  },
+  {
+    "result": "zovk_30",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "autolearn": false,
+    "skill_used": "fabrication",
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "difficulty": 3,
+    "time": "120 m",
+    "reversible": true,
+    "decomp_learn": 3,
+    "components": [
+      [
+        [
+          "scrap",
+          3
+        ]
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "small_repairkit",
+          10
+        ],
+        [
+          "large_repairkit",
+          5
+        ]
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 1
+      }
+    ]
+  },
+  {
+    "result": "m200_7",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "autolearn": false,
+    "skill_used": "fabrication",
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "difficulty": 3,
+    "time": "120 m",
+    "reversible": true,
+    "decomp_learn": 3,
+    "components": [
+      [
+        [
+          "scrap",
+          6
+        ]
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "small_repairkit",
+          10
+        ],
+        [
+          "large_repairkit",
+          5
+        ]
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 1
+      }
+    ]
+  },
+  {
+    "result": "aa12_8",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "autolearn": false,
+    "skill_used": "fabrication",
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "difficulty": 3,
+    "time": "120 m",
+    "reversible": true,
+    "decomp_learn": 3,
+    "components": [
+      [
+        [
+          "scrap",
+          6
+        ]
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "small_repairkit",
+          10
+        ],
+        [
+          "large_repairkit",
+          5
+        ]
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 1
+      }
+    ]
+  },
+  {
+    "result": "kc14_20",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "autolearn": false,
+    "skill_used": "fabrication",
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "difficulty": 3,
+    "time": "120 m",
+    "reversible": true,
+    "decomp_learn": 3,
+    "components": [
+      [
+        [
+          "scrap",
+          4
+        ]
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "small_repairkit",
+          10
+        ],
+        [
+          "large_repairkit",
+          5
+        ]
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 1
+      }
+    ]
+  },
+  {
+    "result": "ptrs_5",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "skill_used": "fabrication",
+    "difficulty": 3,
+    "skills_required": [
+      "gun",
+      2
+    ],
+    "time": "20 m",
+    "book_learn": [
+      [
+        "recipe_bullets",
+        2
+      ],
+      [
+        "mag_rifle",
+        3
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "small_repairkit",
+          10
+        ],
+        [
+          "large_repairkit",
+          5
+        ]
+      ]
+    ],
+    "using": [
+      [
+        "145114_casehead",
+        1
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 1
+      }
+    ],
+    "components": [
+      [
+        [
+          "sheet_metal_small",
+          1
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "ak101_30",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "autolearn": false,
+    "skill_used": "fabrication",
+    "book_learn": [
+      [
+        "mag_guns",
+        5
+      ]
+    ],
+    "difficulty": 5,
+    "time": "120 m",
+    "reversible": true,
+    "decomp_learn": 3,
+    "components": [
+      [
+        [
+          "scrap",
+          3
+        ]
+      ],
+      [
+        [
+          "plastic_chunk",
+          2
+        ]
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "small_repairkit",
+          10
+        ],
+        [
+          "large_repairkit",
+          5
+        ]
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 1
+      }
+    ]
+  },
+  {
+    "result": "mp5_10_30",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "autolearn": false,
+    "skill_used": "fabrication",
+    "book_learn": [
+      [
+        "mag_guns",
+        5
+      ]
+    ],
+    "difficulty": 3,
+    "time": "120 m",
+    "reversible": true,
+    "decomp_learn": 3,
+    "components": [
+      [
+        [
+          "scrap",
+          3
+        ]
+      ],
+      [
+        [
+          "plastic_chunk",
+          1
+        ]
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "small_repairkit",
+          10
+        ],
+        [
+          "large_repairkit",
+          5
+        ]
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 1
+      }
+    ]
+  },
+  {
+    "result": "pk_200",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "autolearn": false,
+    "skill_used": "fabrication",
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "difficulty": 8,
+    "time": "600 m",
+    "reversible": true,
+    "decomp_learn": 3,
+    "components": [
+      [
+        [
+          "scrap",
+          60
+        ]
+      ],
+      [
+        [
+          "sheet_metal_small",
+          4
+        ]
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "small_repairkit",
+          10
+        ],
+        [
+          "large_repairkit",
+          5
+        ]
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 1
+      }
+    ]
+  },
+  {
+    "result": "nsv_100",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "autolearn": false,
+    "skill_used": "fabrication",
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "difficulty": 8,
+    "time": "800 m",
+    "reversible": true,
+    "decomp_learn": 3,
+    "components": [
+      [
+        [
+          "scrap",
+          100
+        ]
+      ],
+      [
+        [
+          "sheet_metal_small",
+          10
+        ]
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "small_repairkit",
+          10
+        ],
+        [
+          "large_repairkit",
+          5
+        ]
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 1
+      }
+    ]
+  }
+]

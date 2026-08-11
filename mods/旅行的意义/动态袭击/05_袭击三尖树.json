@@ -1,0 +1,51 @@
+[
+  {
+    "type": "MONSTER",
+    "id": "mon_travel_raid_triffid",
+    "copy-from": "mon_triffid",
+    "aggression": 100,
+    "morale": 100,
+    "extend": {
+      "flags": [
+        "ALWAYS_SEES_YOU"
+      ]
+    },
+    "//": "仅供旅行的意义袭击使用。始终能够感知玩家，不修改本体三尖树。"
+  },
+  {
+    "type": "MONSTER",
+    "id": "mon_travel_raid_triffid_young",
+    "copy-from": "mon_triffid_young",
+    "aggression": 100,
+    "morale": 100,
+    "extend": {
+      "flags": [
+        "ALWAYS_SEES_YOU"
+      ]
+    }
+  },
+  {
+    "type": "MONSTER",
+    "id": "mon_travel_raid_vinebeast",
+    "copy-from": "mon_vinebeast",
+    "aggression": 100,
+    "morale": 100,
+    "extend": {
+      "flags": [
+        "ALWAYS_SEES_YOU"
+      ]
+    }
+  },
+  {
+    "type": "MONSTER",
+    "id": "mon_travel_raid_fungal_fighter",
+    "copy-from": "mon_fungal_fighter",
+    "aggression": 100,
+    "morale": 100,
+    "extend": {
+      "flags": [
+        "ALWAYS_SEES_YOU"
+      ]
+    }
+  }
+]

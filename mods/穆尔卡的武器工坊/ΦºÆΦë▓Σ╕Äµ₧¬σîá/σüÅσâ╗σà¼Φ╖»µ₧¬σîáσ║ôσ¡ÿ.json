@@ -1,0 +1,391 @@
+[
+  {
+    "type": "item_group",
+    "id": "MURKA_JAY_COMMON_AMMO_COMPAT",
+    "subtype": "distribution",
+    "entries": [
+      {
+        "group": "ammo_pistol_common",
+        "prob": 55
+      },
+      {
+        "group": "ammo_rifle_common",
+        "prob": 55
+      },
+      {
+        "group": "ammo_shotgun_common",
+        "prob": 30
+      },
+      {
+        "group": "MURKA_CBN_NEW_AMMO",
+        "prob": 12
+      },
+      {
+        "group": "MURKA_0G_LEGACY_AMMO",
+        "prob": 12
+      },
+      {
+        "group": "MURKA_I_NEW_AMMO",
+        "prob": 12
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "MURKA_JAY_COLLECTIBLE_GUNS_COMPAT",
+    "subtype": "distribution",
+    "entries": [
+      {
+        "group": "SUS_gunstore_safe_obscure",
+        "prob": 60
+      },
+      {
+        "group": "guns_rifle_obscure_display",
+        "prob": 55
+      },
+      {
+        "group": "guns_smg_rare_display",
+        "prob": 25
+      },
+      {
+        "group": "MURKA_CBN_NEW_WEAPONS",
+        "prob": 30
+      },
+      {
+        "group": "MURKA_0G_LEGACY_WEAPONS",
+        "prob": 30
+      },
+      {
+        "group": "MURKA_I_NEW_WEAPONS",
+        "prob": 30
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "MURKA_JAY_COLLECTOR_MAGAZINES_COMPAT",
+    "subtype": "distribution",
+    "entries": [
+      {
+        "group": "mags_obscure",
+        "prob": 100
+      },
+      {
+        "group": "MURKA_CBN_NEW_MAGAZINES",
+        "prob": 45
+      },
+      {
+        "group": "MURKA_0G_LEGACY_MAGAZINES",
+        "prob": 45
+      },
+      {
+        "group": "MURKA_I_NEW_MAGAZINES",
+        "prob": 45
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "MURKA_JAY_RESTRICTED_MAGAZINES_COMPAT",
+    "subtype": "distribution",
+    "entries": [
+      {
+        "group": "mags_rifle_common_gunstore",
+        "prob": 100
+      },
+      {
+        "group": "mags_pistol_common",
+        "prob": 80
+      },
+      {
+        "group": "mags_smg_common",
+        "prob": 60
+      },
+      {
+        "group": "mags_shotgun_rare",
+        "prob": 30
+      },
+      {
+        "group": "mags_military",
+        "prob": 20
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "MURKA_JAY_GUNSTORE_STORAGE_COMPAT",
+    "subtype": "distribution",
+    "//": "替代I版SUS_gunstore_looted_storage，删除会递归刷出头盔、服装和食物的SUS_gunstore_gear，仅保留枪械相关库存。",
+    "entries": [
+      {
+        "group": "guns_common_display",
+        "prob": 35
+      },
+      {
+        "group": "mags_common",
+        "prob": 50
+      },
+      {
+        "group": "gunmod_common",
+        "prob": 50
+      },
+      {
+        "group": "gunmod_rare",
+        "prob": 25
+      },
+      {
+        "group": "gunmod_milspec",
+        "prob": 10
+      },
+      {
+        "group": "MURKA_CBN_NEW_GUNMODS",
+        "prob": 15
+      },
+      {
+        "group": "MURKA_I_NEW_GUNMODS",
+        "prob": 15
+      },
+      {
+        "group": "ammo_parts",
+        "prob": 25
+      },
+      {
+        "group": "tools_gunsmith",
+        "prob": 10
+      },
+      {
+        "group": "book_gunmags",
+        "prob": 10
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "MURKA_JAY_RUCKERS_trade",
+    "subtype": "collection",
+    "entries": [
+      {
+        "group": "ammo_pistol_hunting",
+        "count": [
+          3,
+          5
+        ],
+        "prob": 85
+      },
+      {
+        "group": "ammo_rifle_hunting",
+        "count": [
+          3,
+          5
+        ],
+        "prob": 85
+      },
+      {
+        "group": "ammo_common_collection",
+        "count": [
+          3,
+          7
+        ],
+        "prob": 95
+      },
+      {
+        "group": "ammo_rare_collection",
+        "count": [
+          3,
+          5
+        ],
+        "prob": 85
+      },
+      {
+        "group": "ammo_obscure_collection",
+        "count": [
+          3,
+          5
+        ],
+        "prob": 85
+      },
+      {
+        "group": "MURKA_JAY_COMMON_AMMO_COMPAT",
+        "count": [
+          2,
+          4
+        ],
+        "prob": 85
+      },
+      {
+        "group": "guns_pistol_common",
+        "count": [
+          1,
+          2
+        ],
+        "prob": 100
+      },
+      {
+        "group": "guns_pistol_rare",
+        "count": 1,
+        "prob": 70
+      },
+      {
+        "group": "guns_rifle_common",
+        "count": [
+          2,
+          3
+        ],
+        "prob": 100
+      },
+      {
+        "group": "guns_rifle_milspec",
+        "count": 1,
+        "prob": 100
+      },
+      {
+        "group": "guns_rifle_obscure_display",
+        "count": 1,
+        "prob": 85
+      },
+      {
+        "group": "guns_smg_rare",
+        "count": 1,
+        "prob": 85
+      },
+      {
+        "group": "guns_shotgun_common",
+        "count": 1,
+        "prob": 100
+      },
+      {
+        "group": "guns_shotgun_rare",
+        "count": 1,
+        "prob": 75
+      },
+      {
+        "group": "MURKA_JAY_COLLECTIBLE_GUNS_COMPAT",
+        "count": [
+          1,
+          2
+        ],
+        "prob": 90
+      },
+      {
+        "group": "MURKA_I_NEW_WEAPONS",
+        "count": 1,
+        "prob": 75
+      },
+      {
+        "group": "mags_obscure",
+        "count": [
+          8,
+          16
+        ],
+        "prob": 80
+      },
+      {
+        "group": "mags_shotgun_rare",
+        "count": [
+          4,
+          8
+        ],
+        "prob": 85
+      },
+      {
+        "group": "mags_rifle_rare",
+        "count": [
+          8,
+          14
+        ],
+        "prob": 85
+      },
+      {
+        "group": "mags_rifle_common_gunstore",
+        "count": [
+          12,
+          20
+        ],
+        "prob": 90
+      },
+      {
+        "group": "mags_smg_rare",
+        "count": [
+          6,
+          10
+        ],
+        "prob": 80
+      },
+      {
+        "group": "mags_pistol_rare",
+        "count": [
+          6,
+          10
+        ],
+        "prob": 80
+      },
+      {
+        "group": "mags_milspec",
+        "count": [
+          8,
+          12
+        ],
+        "prob": 75
+      },
+      {
+        "group": "mags_military",
+        "count": [
+          8,
+          14
+        ],
+        "prob": 70
+      },
+      {
+        "group": "MURKA_JAY_COLLECTOR_MAGAZINES_COMPAT",
+        "count": [
+          4,
+          8
+        ],
+        "prob": 85
+      },
+      {
+        "group": "MURKA_JAY_RESTRICTED_MAGAZINES_COMPAT",
+        "count": [
+          4,
+          8
+        ],
+        "prob": 70
+      },
+      {
+        "group": "MURKA_JAY_GUNSTORE_STORAGE_COMPAT",
+        "count": [
+          2,
+          5
+        ],
+        "prob": 80
+      },
+      {
+        "group": "gunsmith_basic_ammo",
+        "count": [
+          50,
+          100
+        ],
+        "prob": 65
+      },
+      {
+        "group": "gunsmith_repack_ammo",
+        "count": [
+          2,
+          10
+        ],
+        "prob": 90
+      }
+    ]
+  },
+  {
+    "type": "npc_class",
+    "id": "JAY_RUCKERS",
+    "copy-from": "JAY_RUCKERS",
+    "shopkeeper_item_group": [
+      {
+        "group": "MURKA_JAY_RUCKERS_trade",
+        "rigid": true
+      }
+    ]
+  }
+]

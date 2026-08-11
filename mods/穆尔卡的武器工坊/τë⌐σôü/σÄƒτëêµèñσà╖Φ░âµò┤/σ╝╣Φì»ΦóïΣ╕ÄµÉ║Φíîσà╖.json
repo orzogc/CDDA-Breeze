@@ -1,0 +1,2387 @@
+[
+  {
+    "id": "ammo_pouch",
+    "copy-from": "ammo_pouch",
+    "type": "ARMOR",
+    "name": {
+      "str": "子弹袋",
+      "str_pl": "子弹袋"
+    },
+    "description": "一个小袋子，可以用来存储大多数的小型弹药，但是装不下火箭弹。使用它来存储弹药。",
+    "weight": "490 g",
+    "volume": "500 ml",
+    "price": 1000,
+    "price_postapoc": 1000,
+    "material": [
+      "leather"
+    ],
+    "symbol": "[",
+    "looks_like": "leather_pouch",
+    "color": "brown",
+    "material_thickness": 1,
+    "pocket_data": [
+      {
+        "ammo_restriction": {
+          "pebble": 60,
+          "50": 60,
+          "4570": 60,
+          "BB": 60,
+          "410shot": 60,
+          "22": 60,
+          "shot": 60,
+          "9mm": 60,
+          "357sig": 60,
+          "9x18": 60,
+          "380": 60,
+          "38": 60,
+          "40": 60,
+          "10mm": 60,
+          "44": 60,
+          "45": 60,
+          "460": 60,
+          "454": 60,
+          "45colt": 60,
+          "500": 60,
+          "57": 60,
+          "46": 60,
+          "762": 60,
+          "545x39": 60,
+          "223": 60,
+          "3006": 60,
+          "270win": 60,
+          "308": 60,
+          "12mm": 60,
+          "8x40mm": 60,
+          "20x66mm": 60,
+          "5x50": 60,
+          "stimpack_ammo": 60,
+          "ampoule": 60,
+          "300": 60,
+          "32": 60,
+          "762x25": 60,
+          "flintlock": 60,
+          "36paper": 60,
+          "44paper": 60,
+          "762R": 60,
+          "paintball": 60
+        },
+        "moves": 5
+      }
+    ],
+    "flags": [
+      "BELTED",
+      "OVERSIZE",
+      "WATER_FRIENDLY",
+      "PALS_LARGE"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          0,
+          0
+        ],
+        "coverage": 100,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_waist"
+        ]
+      }
+    ],
+    "longest_side": "38 cm"
+  },
+  {
+    "id": "ammo_satchel",
+    "copy-from": "ammo_satchel",
+    "type": "ARMOR",
+    "name": {
+      "str": "弹匣包（腰）"
+    },
+    "description": "一个绑在腰上的弹匣包。可装一个大型弹匣，保证能随手取用。",
+    "weight": "180 g",
+    "volume": "500 ml",
+    "price": 2000,
+    "price_postapoc": 2000,
+    "material": [
+      "canvas"
+    ],
+    "symbol": "[",
+    "looks_like": "ragpouch",
+    "color": "dark_gray",
+    "material_thickness": 2,
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "300 mm",
+        "max_contains_volume": "1500 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT",
+          "MAG_BULKY"
+        ],
+        "volume_encumber_modifier": 0
+      }
+    ],
+    "use_action": {
+      "type": "holster",
+      "holster_prompt": "存储弹药",
+      "holster_msg": "你收好了%s。"
+    },
+    "flags": [
+      "WATER_FRIENDLY",
+      "BELTED",
+      "PALS_LARGE"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          0,
+          0
+        ],
+        "coverage": 100,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_waist"
+        ]
+      }
+    ],
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "chestpouch",
+    "copy-from": "chestpouch",
+    "type": "ARMOR",
+    "name": {
+      "str": "弹匣包（胸）",
+      "str_pl": "弹匣包（胸）"
+    },
+    "description": "一个绑在胸口上的弹匣包。可装一个弹匣，保证能随手取用。",
+    "weight": "140 g",
+    "volume": "250 ml",
+    "price": 1250,
+    "price_postapoc": 2000,
+    "material": [
+      "canvas"
+    ],
+    "symbol": "[",
+    "looks_like": "ragpouch",
+    "color": "dark_gray",
+    "material_thickness": 2,
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      }
+    ],
+    "use_action": {
+      "type": "holster",
+      "holster_prompt": "存储弹药",
+      "holster_msg": "你收好了%s。"
+    },
+    "flags": [
+      "WATER_FRIENDLY",
+      "BELTED",
+      "PALS_SMALL"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          0,
+          0
+        ],
+        "coverage": 25,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_upper"
+        ]
+      }
+    ],
+    "longest_side": "38 cm"
+  },
+  {
+    "id": "chestrig",
+    "copy-from": "chestrig",
+    "type": "ARMOR",
+    "name": {
+      "str_sp": "携行具"
+    },
+    "description": "这是一种在越南战争期间开始流行的携行具。这种携行具都很朴素，通常是由三个或以上的袋子组成的简单装备，用带子固定在你的胸前。这个携行具能容纳四个弹匣。",
+    "weight": "425 g",
+    "volume": "500 ml",
+    "price": 3900,
+    "price_postapoc": 3000,
+    "material": [
+      "canvas"
+    ],
+    "symbol": "[",
+    "looks_like": "tool_belt",
+    "color": "dark_gray",
+    "material_thickness": 2,
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      }
+    ],
+    "use_action": {
+      "type": "holster",
+      "holster_prompt": "存储弹药",
+      "holster_msg": "你收好了%s。"
+    },
+    "flags": [
+      "WATER_FRIENDLY",
+      "BELTED"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          3,
+          3
+        ],
+        "coverage": 25,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_upper"
+        ]
+      }
+    ],
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "xl_chestrig",
+    "type": "ARMOR",
+    "name": {
+      "str": "军用携行具（XL）"
+    },
+    "description": "这是一种在越南战争期间开始流行的携行具。这种携行具都很朴素，通常是由三个或以上的袋子组成的简单装备，用带子固定在你的胸前。这个携行具能容纳四个弹匣。比人类尺寸稍大。",
+    "copy-from": "xl_chestrig",
+    "proportional": {
+      "weight": 1.25,
+      "volume": 1.13,
+      "price": 1.25
+    },
+    "extend": {
+      "flags": [
+        "OVERSIZE"
+      ]
+    },
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "xs_chestrig",
+    "type": "ARMOR",
+    "name": {
+      "str": "军用携行具（XS）"
+    },
+    "description": "这是一种在越南战争期间开始流行的携行具。这种携行具都很朴素，通常是由三个或以上的袋子组成的简单装备，用带子固定在你的胸前。这个携行具能容纳四个弹匣。比人类尺寸稍小。",
+    "copy-from": "xs_chestrig",
+    "looks_like": "chestrig",
+    "proportional": {
+      "weight": 0.75,
+      "volume": 0.75,
+      "price": 0.5
+    },
+    "extend": {
+      "flags": [
+        "UNDERSIZE"
+      ]
+    },
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "javelin_bag",
+    "copy-from": "javelin_bag",
+    "type": "ARMOR",
+    "name": {
+      "str": "标枪包"
+    },
+    "description": "一个开口的中世纪款式标枪包，易于存取标枪。",
+    "weight": "900 g",
+    "volume": "1250 ml",
+    "price": 6000,
+    "price_postapoc": 1000,
+    "material": [
+      "leather"
+    ],
+    "symbol": "[",
+    "looks_like": "quiver",
+    "color": "brown",
+    "material_thickness": 2,
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "min_item_volume": "250 ml",
+        "max_contains_volume": "1250 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 60,
+        "flag_restriction": [
+          "JAVELIN"
+        ],
+        "max_item_length": "150 cm"
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "min_item_volume": "250 ml",
+        "max_contains_volume": "1250 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 60,
+        "flag_restriction": [
+          "JAVELIN"
+        ],
+        "max_item_length": "150 cm"
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "min_item_volume": "250 ml",
+        "max_contains_volume": "1250 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 60,
+        "flag_restriction": [
+          "JAVELIN"
+        ],
+        "max_item_length": "150 cm"
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "min_item_volume": "250 ml",
+        "max_contains_volume": "1250 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 60,
+        "flag_restriction": [
+          "JAVELIN"
+        ],
+        "max_item_length": "150 cm"
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "min_item_volume": "250 ml",
+        "max_contains_volume": "1250 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 60,
+        "flag_restriction": [
+          "JAVELIN"
+        ],
+        "max_item_length": "150 cm"
+      }
+    ],
+    "use_action": {
+      "type": "holster",
+      "holster_prompt": "存储标枪",
+      "holster_msg": "你收好了%s。"
+    },
+    "flags": [
+      "WATER_FRIENDLY",
+      "OVERSIZE",
+      "BELTED"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          3,
+          3
+        ],
+        "coverage": 60,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_hanging_back"
+        ]
+      }
+    ],
+    "longest_side": "38 cm"
+  },
+  {
+    "id": "legpouch",
+    "copy-from": "legpouch",
+    "type": "ARMOR",
+    "name": {
+      "str": "弹匣包（脚）",
+      "str_pl": "弹匣包（脚）"
+    },
+    "description": "一个绑在脚踝上的弹匣包。可装一个小型弹匣，保证能随手取用。",
+    "volume": "250 ml",
+    "weight": "60 g",
+    "price": 2000,
+    "price_postapoc": 750,
+    "material": [
+      "nylon"
+    ],
+    "symbol": "[",
+    "looks_like": "ragpouch",
+    "color": "dark_gray",
+    "sided": true,
+    "material_thickness": 2,
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "250 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ]
+      }
+    ],
+    "use_action": {
+      "type": "holster",
+      "holster_prompt": "存储弹药",
+      "holster_msg": "你收好了%s。"
+    },
+    "flags": [
+      "WATER_FRIENDLY",
+      "BELTED",
+      "OVERSIZE",
+      "ALLOWS_NATURAL_ATTACKS",
+      "PALS_SMALL"
+    ],
+    "armor": [
+      {
+        "material": [
+          {
+            "type": "nylon",
+            "covered_by_mat": 100,
+            "thickness": 2
+          }
+        ],
+        "covers": [
+          "foot_l",
+          "foot_r"
+        ],
+        "specifically_covers": [
+          "foot_ankle_l",
+          "foot_ankle_r"
+        ],
+        "coverage": 25,
+        "encumbrance": [
+          0,
+          0
+        ],
+        "layers": [
+          "OUTER"
+        ]
+      }
+    ],
+    "longest_side": "38 cm"
+  },
+  {
+    "type": "ARMOR",
+    "copy-from": "legpouch_large",
+    "id": "legpouch_large",
+    "name": {
+      "str": "弹匣包（腿）",
+      "str_pl": "弹匣包（腿）"
+    },
+    "description": "一个绑在腿上的弹匣包，能够装下两个弹匣，保证弹药随手取用。",
+    "weight": "120 g",
+    "volume": "250 ml",
+    "price": 2000,
+    "price_postapoc": 1000,
+    "material": [
+      "nylon"
+    ],
+    "symbol": "[",
+    "looks_like": "ammo_satchel",
+    "color": "dark_gray",
+    "sided": true,
+    "material_thickness": 2,
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "500 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "500 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      }
+    ],
+    "use_action": {
+      "type": "holster",
+      "holster_prompt": "存储弹药",
+      "holster_msg": "你收好了%s。"
+    },
+    "flags": [
+      "WATER_FRIENDLY",
+      "BELTED",
+      "OVERSIZE",
+      "PALS_MEDIUM"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          0,
+          0
+        ],
+        "coverage": 38,
+        "covers": [
+          "leg_l",
+          "leg_r"
+        ],
+        "specifically_covers": [
+          "leg_upper_l",
+          "leg_upper_r"
+        ]
+      }
+    ],
+    "longest_side": "38 cm"
+  },
+  {
+    "id": "quiver",
+    "copy-from": "quiver",
+    "type": "ARMOR",
+    "name": {
+      "str": "箭筒"
+    },
+    "description": "一个可佩戴在腰部、可容纳20支箭的皮革箭筒。使用它以存储箭支或弩矢。",
+    "weight": "260 g",
+    "volume": "500 ml",
+    "price": 6500,
+    "price_postapoc": 1000,
+    "material": [
+      "leather"
+    ],
+    "symbol": "[",
+    "looks_like": "bscabbard",
+    "color": "brown",
+    "sided": true,
+    "material_thickness": 1,
+    "pocket_data": [
+      {
+        "ammo_restriction": {
+          "arrow": 20,
+          "bolt": 20
+        },
+        "moves": 20
+      }
+    ],
+    "flags": [
+      "BELTED",
+      "OVERSIZE",
+      "WATER_FRIENDLY"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          2,
+          2
+        ],
+        "coverage": 25,
+        "covers": [
+          "leg_l",
+          "leg_r"
+        ],
+        "specifically_covers": [
+          "leg_upper_l",
+          "leg_upper_r"
+        ]
+      }
+    ],
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "quiver_birchbark",
+    "copy-from": "quiver_birchbark",
+    "type": "ARMOR",
+    "name": {
+      "str": "桦皮箭筒"
+    },
+    "description": "一个可佩戴在腰部、可容纳20支箭的桦树皮箭筒。使用它以存储箭支或弩矢。",
+    "weight": "490 g",
+    "volume": "500 ml",
+    "price": 6500,
+    "price_postapoc": 750,
+    "material": [
+      "wood"
+    ],
+    "symbol": "[",
+    "looks_like": "quiver",
+    "color": "light_gray",
+    "sided": true,
+    "material_thickness": 1,
+    "pocket_data": [
+      {
+        "ammo_restriction": {
+          "arrow": 20,
+          "bolt": 20
+        },
+        "moves": 20
+      }
+    ],
+    "flags": [
+      "BELTED",
+      "VARSIZE",
+      "OVERSIZE",
+      "WATER_FRIENDLY"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          2,
+          2
+        ],
+        "coverage": 25,
+        "covers": [
+          "leg_l",
+          "leg_r"
+        ],
+        "specifically_covers": [
+          "leg_upper_l",
+          "leg_upper_r"
+        ]
+      }
+    ],
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "quiver_large",
+    "copy-from": "quiver_large",
+    "type": "ARMOR",
+    "name": {
+      "str": "大箭筒"
+    },
+    "description": "一个佩戴在后背、可容纳60支箭的皮革大箭筒，有着金属镶边。使用它以存储箭矢或弩矢。",
+    "weight": "920 g",
+    "volume": "1500 ml",
+    "price": 8800,
+    "price_postapoc": 1500,
+    "material": [
+      "leather",
+      "steel"
+    ],
+    "symbol": "[",
+    "looks_like": "quiver",
+    "color": "brown",
+    "material_thickness": 1,
+    "pocket_data": [
+      {
+        "ammo_restriction": {
+          "arrow": 60,
+          "bolt": 60
+        },
+        "moves": 20
+      }
+    ],
+    "flags": [
+      "BELTED",
+      "OVERSIZE",
+      "WATER_FRIENDLY"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          3,
+          3
+        ],
+        "coverage": 30,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_hanging_back"
+        ]
+      }
+    ],
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "quiver_large_birchbark",
+    "copy-from": "quiver_large_birchbark",
+    "type": "ARMOR",
+    "name": {
+      "str": "桦皮大箭筒"
+    },
+    "description": "一个佩带在后背、可容纳60支箭的桦树皮大箭筒。使用它以存储箭支或弩矢。",
+    "weight": "1380 g",
+    "volume": "1500 ml",
+    "price": 8800,
+    "price_postapoc": 1250,
+    "material": [
+      "wood"
+    ],
+    "symbol": "[",
+    "looks_like": "quiver_birchbark",
+    "color": "light_gray",
+    "material_thickness": 1,
+    "pocket_data": [
+      {
+        "ammo_restriction": {
+          "arrow": 60,
+          "bolt": 60
+        },
+        "moves": 20
+      }
+    ],
+    "flags": [
+      "BELTED",
+      "VARSIZE",
+      "OVERSIZE",
+      "WATER_FRIENDLY"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          5,
+          5
+        ],
+        "coverage": 30,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_hanging_back"
+        ]
+      }
+    ],
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "quiver_takedown_bow",
+    "copy-from": "quiver_takedown_bow",
+    "type": "ARMOR",
+    "name": {
+      "str": "多功能箭筒"
+    },
+    "description": "一个可以轻易存放16支箭的大号棉制箭筒。它有个口袋和绑带，可以装下一把可拆卸的弓，还有个用来装弓箭配件的小口袋。使用它来存储弓箭或弩矢，激活它来收拔弓。",
+    "//": "参考来源：https://www.amazon.com/XTACER-Multi-Function-4-Tubes-Training-Takedown/dp/B072K4537K",
+    "weight": "720 g",
+    "volume": "1500 ml",
+    "price": 8800,
+    "price_postapoc": 1500,
+    "material": [
+      "cotton"
+    ],
+    "symbol": "[",
+    "looks_like": "quiver",
+    "color": "dark_gray",
+    "material_thickness": 1,
+    "pocket_data": [
+      {
+        "ammo_restriction": {
+          "arrow": 16,
+          "bolt": 16
+        },
+        "moves": 20
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "holster": true,
+        "min_item_volume": "500 ml",
+        "max_contains_volume": "4 L",
+        "max_contains_weight": "5 kg",
+        "max_item_length": "75 cm",
+        "moves": 80,
+        "item_restriction": [
+          "takedown_recurbow_folded"
+        ]
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "2500 ml",
+        "max_contains_weight": "2 kg",
+        "max_item_length": "35 cm",
+        "moves": 250
+      }
+    ],
+    "flags": [
+      "BELTED",
+      "OVERSIZE",
+      "WATER_FRIENDLY"
+    ],
+    "use_action": {
+      "type": "holster"
+    },
+    "armor": [
+      {
+        "encumbrance": [
+          3,
+          3
+        ],
+        "volume_encumber_modifier": 0,
+        "coverage": 30,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_hanging_back"
+        ]
+      }
+    ],
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "tacvest",
+    "copy-from": "tacvest",
+    "type": "ARMOR",
+    "name": {
+      "str": "战术背心"
+    },
+    "description": "这款轻便的背心可以让你携带弹匣，霰弹及手枪。它们很受执法部门的欢迎，但不如加入了凯夫拉纤维的战术背心。",
+    "weight": "1750 g",
+    "volume": "1250 ml",
+    "looks_like": "vest",
+    "price": 7400,
+    "price_postapoc": 2000,
+    "material": [
+      "nylon"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "material_thickness": 2,
+    "use_action": {
+      "type": "holster",
+      "holster_prompt": "存入物品",
+      "holster_msg": "你收好了%s。"
+    },
+    "pocket_data": [
+      {
+        "magazine_well": "350 ml",
+        "pocket_type": "CONTAINER",
+        "holster": true,
+        "max_contains_volume": "1000 ml",
+        "max_contains_weight": "2 kg",
+        "max_item_length": "30 cm",
+        "moves": 50
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "300 mm",
+        "max_contains_volume": "1 L",
+        "max_contains_weight": "2 kg",
+        "flag_restriction": [
+          "MAG_COMPACT",
+          "MAG_BULKY"
+        ],
+        "moves": 60
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "300 mm",
+        "max_contains_volume": "1 L",
+        "max_contains_weight": "2 kg",
+        "flag_restriction": [
+          "MAG_COMPACT",
+          "MAG_BULKY"
+        ],
+        "moves": 60
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "250 mm",
+        "max_contains_volume": "800 ml",
+        "max_contains_weight": "1600 g",
+        "flag_restriction": [
+          "MAG_COMPACT",
+          "MAG_BULKY"
+        ],
+        "moves": 60
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "250 mm",
+        "max_contains_volume": "800 ml",
+        "max_contains_weight": "1600 g",
+        "flag_restriction": [
+          "MAG_COMPACT",
+          "MAG_BULKY"
+        ],
+        "moves": 60
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "250 mm",
+        "max_contains_volume": "800 ml",
+        "max_contains_weight": "1600 g",
+        "flag_restriction": [
+          "MAG_COMPACT",
+          "MAG_BULKY"
+        ],
+        "moves": 60
+      },
+      {
+        "ammo_restriction": {
+          "410shot": 20,
+          "shot": 20,
+          "20x66mm": 20,
+          "signal_flare": 20
+        },
+        "moves": 5
+      }
+    ],
+    "flags": [
+      "WATER_FRIENDLY",
+      "BELTED"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          2,
+          2
+        ],
+        "coverage": 85,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_upper"
+        ]
+      }
+    ],
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "xl_tacvest",
+    "type": "ARMOR",
+    "name": {
+      "str": "战术背心（XL）"
+    },
+    "description": "这款轻便的背心可以让你携带的弹药均匀舒适地分布在你的躯干上。它们很受执法部门的欢迎，但不如加入了凯夫拉纤维的战术背心。这种背心尺寸较大、易于携带，拥有许多口袋并且可以存放四个弹匣。",
+    "copy-from": "xl_tacvest",
+    "proportional": {
+      "weight": 1.25,
+      "volume": 1.13,
+      "price": 1.25
+    },
+    "extend": {
+      "flags": [
+        "OVERSIZE"
+      ]
+    },
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "xs_tacvest",
+    "type": "ARMOR",
+    "name": {
+      "str": "战术背心（XS）"
+    },
+    "description": "这款轻便的背心可以让你携带弹匣，霰弹及手枪。它们很受执法部门的欢迎，但不如加入了凯夫拉纤维的战术背心。",
+    "copy-from": "xs_tacvest",
+    "looks_like": "tacvest",
+    "proportional": {
+      "weight": 0.75,
+      "volume": 0.75,
+      "price": 0.5
+    },
+    "extend": {
+      "flags": [
+        "UNDERSIZE"
+      ]
+    },
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "light_load_bearing_vest",
+    "copy-from": "light_load_bearing_vest",
+    "repairs_like": "tacvest",
+    "type": "ARMOR",
+    "name": {
+      "str": "轻型承重背心"
+    },
+    "description": "一个表面覆盖了MOLLE连接织带的轻型背带，设计用来安装些小口袋、枪套和其他兼容PALS的附件。一些士兵更喜欢将附件直接安装在防弹背心上，因为它们很容易分离。",
+    "weight": "500 g",
+    "volume": "500 ml",
+    "looks_like": "vest",
+    "price": 4700,
+    "price_postapoc": 2000,
+    "material": [
+      "nylon"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "material_thickness": 1.5,
+    "use_action": [
+      {
+        "type": "attach_molle",
+        "size": 4
+      },
+      {
+        "type": "detach_molle"
+      }
+    ],
+    "flags": [
+      "WATER_FRIENDLY",
+      "BELTED",
+      "STURDY"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          1,
+          1
+        ],
+        "coverage": 55,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_upper"
+        ],
+        "volume_encumber_modifier": 0
+      }
+    ],
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "load_bearing_vest",
+    "repairs_like": "tacvest",
+    "type": "ARMOR",
+    "name": {
+      "str": "承重背心"
+    },
+    "description": "一个表面覆盖了MOLLE连接织带的背带，设计用来安装些口袋、枪套和其他兼容PALS的附件。一些士兵更喜欢将附件直接安装在防弹背心上，因为它们很容易分离。",
+    "copy-from": "load_bearing_vest",
+    "weight": "1250 g",
+    "volume": "1000 ml",
+    "looks_like": "vest",
+    "price": 7400,
+    "price_postapoc": 3000,
+    "material": [
+      "nylon"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "material_thickness": 1.5,
+    "use_action": [
+      {
+        "type": "attach_molle",
+        "size": 8
+      },
+      {
+        "type": "detach_molle"
+      }
+    ],
+    "flags": [
+      "WATER_FRIENDLY",
+      "BELTED",
+      "STURDY"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          2,
+          2
+        ],
+        "coverage": 85,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_upper"
+        ],
+        "volume_encumber_modifier": 0
+      }
+    ],
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "load_bearing_vest_sling",
+    "copy-from": "load_bearing_vest_sling",
+    "repairs_like": "tacvest",
+    "type": "ARMOR",
+    "name": {
+      "str": "背带承重背心",
+      "str_pl": "背带承重背心"
+    },
+    "description": "一个表面覆盖了MOLLE连接织带的背带，设计用来安装些口袋、枪套和其他兼容PALS的附件。一些士兵更喜欢将附件直接安装在防弹背心上，因为它们很容易分离。这个型号有个穿在肩上的单点背带，附带系统能够保证挂在上面的武器更加稳固。",
+    "weight": "1500 g",
+    "use_action": [
+      {
+        "type": "holster"
+      },
+      {
+        "type": "attach_molle",
+        "size": 8
+      },
+      {
+        "type": "detach_molle"
+      }
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          2,
+          2
+        ],
+        "coverage": 85,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_upper",
+          "torso_hanging_front"
+        ],
+        "volume_encumber_modifier": 0
+      }
+    ],
+    "pocket_data": [
+      {
+        "description": "步枪背带",
+        "pocket_type": "CONTAINER",
+        "holster": true,
+        "min_item_volume": "1000 ml",
+        "max_contains_volume": "8 L",
+        "max_contains_weight": "8200 g",
+        "max_item_length": "120 cm",
+        "//": "整件背心已经按比例调整，因此体积负担设得较高；整体等效值为0.4。",
+        "volume_encumber_modifier": 0,
+        "moves": 30
+      }
+    ],
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "heavy_load_bearing_vest",
+    "copy-from": "heavy_load_bearing_vest",
+    "repairs_like": "tacvest",
+    "type": "ARMOR",
+    "name": {
+      "str": "重型承重背心"
+    },
+    "description": "一个表面覆盖了MOLLE连接织带的重型背带，设计用来安装大量口袋、枪套和其他兼容PALS的附件。一些士兵更喜欢将附件直接安装在防弹背心上，因为它们很容易分离。",
+    "weight": "2000 g",
+    "volume": "1750 ml",
+    "looks_like": "vest",
+    "price": 13000,
+    "price_postapoc": 4000,
+    "material": [
+      "nylon"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "material_thickness": 1.5,
+    "use_action": [
+      {
+        "type": "attach_molle",
+        "size": 14
+      },
+      {
+        "type": "detach_molle"
+      }
+    ],
+    "flags": [
+      "WATER_FRIENDLY",
+      "BELTED",
+      "STURDY"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          3,
+          3
+        ],
+        "coverage": 85,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_upper",
+          "torso_lower",
+          "torso_waist"
+        ],
+        "volume_encumber_modifier": 0
+      }
+    ],
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "heavy_load_bearing_vest_sling",
+    "copy-from": "heavy_load_bearing_vest_sling",
+    "repairs_like": "tacvest",
+    "type": "ARMOR",
+    "name": {
+      "str": "重型背带承重背心",
+      "str_pl": "重型背带承重背心"
+    },
+    "description": "一个表面覆盖了MOLLE连接织带的重型背带，设计用来安装大量口袋、枪套和其他兼容PALS的附件。一些士兵更喜欢将附件直接安装在防弹背心上，因为它们很容易分离。这个型号有个穿在肩上的单点背带，附带系统能够保证挂在上面的武器更加稳固。",
+    "use_action": [
+      {
+        "type": "holster"
+      },
+      {
+        "type": "attach_molle",
+        "size": 14
+      },
+      {
+        "type": "detach_molle"
+      }
+    ],
+    "weight": "2300 g",
+    "armor": [
+      {
+        "encumbrance": [
+          3,
+          3
+        ],
+        "coverage": 85,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_upper",
+          "torso_lower",
+          "torso_hanging_front",
+          "torso_waist"
+        ],
+        "volume_encumber_modifier": 0
+      }
+    ],
+    "pocket_data": [
+      {
+        "description": "步枪背带",
+        "pocket_type": "CONTAINER",
+        "holster": true,
+        "min_item_volume": "1000 ml",
+        "max_contains_volume": "8 L",
+        "max_contains_weight": "8200 g",
+        "max_item_length": "120 cm",
+        "//": "整件背心已经按比例调整，因此体积负担设得较高；整体等效值为0.4。",
+        "volume_encumber_modifier": 0,
+        "moves": 30
+      }
+    ],
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "heavy_load_bearing_vest_breacher",
+    "copy-from": "heavy_load_bearing_vest_breacher",
+    "repairs_like": "tacvest",
+    "type": "ARMOR",
+    "name": {
+      "str": "破门手承重背心"
+    },
+    "description": "一个表面覆盖了MOLLE连接织带的重型背带，设计用来安装大量口袋、枪套和其他兼容PALS的附件。这个型号有个穿在肩上的单点背带，附带系统能够保证挂在上面的武器更加稳固，以及一套安装在躯干和腰部的强力磁铁，可以吸住一把破门霰弹枪。",
+    "use_action": [
+      {
+        "type": "holster"
+      },
+      {
+        "type": "attach_molle",
+        "size": 8
+      },
+      {
+        "type": "detach_molle"
+      }
+    ],
+    "weight": "2900 g",
+    "armor": [
+      {
+        "encumbrance": [
+          3,
+          3
+        ],
+        "coverage": 85,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_upper",
+          "torso_lower",
+          "torso_hanging_front",
+          "torso_waist"
+        ],
+        "volume_encumber_modifier": 0
+      }
+    ],
+    "pocket_data": [
+      {
+        "description": "步枪背带",
+        "pocket_type": "CONTAINER",
+        "holster": true,
+        "min_item_volume": "1000 ml",
+        "max_contains_volume": "8 L",
+        "max_contains_weight": "8200 g",
+        "max_item_length": "120 cm",
+        "//": "整件背心已经按比例调整，因此体积负担设得较高；整体等效值为0.4。",
+        "volume_encumber_modifier": 0,
+        "moves": 30
+      },
+      {
+        "description": "破门霰弹枪磁铁",
+        "pocket_type": "CONTAINER",
+        "holster": true,
+        "min_item_volume": "1 L",
+        "max_contains_volume": "4 L",
+        "max_contains_weight": "8200 g",
+        "min_item_length": "45 cm",
+        "max_item_length": "60 cm",
+        "//": "整件背心已经按比例调整，因此体积负担设得较高；整体等效值为0.4。",
+        "volume_encumber_modifier": 0,
+        "moves": 60
+      }
+    ],
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "radio_pouch",
+    "copy-from": "radio_pouch",
+    "repairs_like": "legrig",
+    "type": "ARMOR",
+    "//": "数据来源：https://www.patriotoutfitters.com/5-11-tactical-molle-radio-pouch?PMSRCH=MOLLE%20GEAR",
+    "name": {
+      "str": "战术无线电袋",
+      "str_pl": "战术无线电袋"
+    },
+    "description": "一个专为无线电的可及性和安全性而设计的口袋。有可以用来安在背带或背心上的MOLLE连接织带。",
+    "weight": "200 g",
+    "volume": "250 ml",
+    "price": 2000,
+    "price_postapoc": 250,
+    "material": [
+      "nylon"
+    ],
+    "symbol": "[",
+    "looks_like": "holster",
+    "color": "dark_gray",
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "500 ml",
+        "max_contains_weight": "500 g",
+        "max_item_length": "13 cm",
+        "moves": 40,
+        "volume_encumber_modifier": 0
+      }
+    ],
+    "material_thickness": 0.5,
+    "flags": [
+      "BELTED",
+      "WATER_FRIENDLY",
+      "OVERSIZE",
+      "PALS_SMALL"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          0,
+          0
+        ],
+        "coverage": 100,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_waist"
+        ]
+      }
+    ],
+    "longest_side": "38 cm"
+  },
+  {
+    "id": "gadget_pouch",
+    "copy-from": "gadget_pouch",
+    "repairs_like": "legrig",
+    "type": "ARMOR",
+    "//": "数据来源：https://www.patriotoutfitters.com/condor-gadget-pouch-tan498-?PMSRCH=MOLLE%20GEAR",
+    "name": {
+      "str": "杂物袋",
+      "str_pl": "杂物袋"
+    },
+    "description": "一个专为小型物品的可及性和安全性而设计的口袋。有可以用来安在背带或背心上的MOLLE连接织带。",
+    "weight": "250 g",
+    "volume": "250 ml",
+    "price": 2000,
+    "price_postapoc": 250,
+    "material": [
+      "nylon"
+    ],
+    "symbol": "[",
+    "looks_like": "holster",
+    "color": "dark_gray",
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "1000 ml",
+        "max_contains_weight": "2 kg",
+        "max_item_length": "15 cm",
+        "moves": 80,
+        "volume_encumber_modifier": 0
+      }
+    ],
+    "material_thickness": 0.5,
+    "flags": [
+      "BELTED",
+      "OVERSIZE",
+      "WATER_FRIENDLY",
+      "PALS_SMALL"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          0,
+          0
+        ],
+        "coverage": 100,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_waist"
+        ]
+      }
+    ],
+    "longest_side": "38 cm"
+  },
+  {
+    "id": "h2o_pouch",
+    "copy-from": "h2o_pouch",
+    "repairs_like": "legrig",
+    "type": "ARMOR",
+    "//": "数据来源：https://www.patriotoutfitters.com/condor-h2o-pouch?PMSRCH=MOLLE%20GEAR",
+    "name": {
+      "str": "战术水袋",
+      "str_pl": "战术水袋"
+    },
+    "description": "一个设计用来装水瓶的口袋，前面还有个战术口袋。有可以用来安在背带或背心上的MOLLE连接织带。",
+    "weight": "250 g",
+    "volume": "400 ml",
+    "price": 2000,
+    "price_postapoc": 250,
+    "material": [
+      "nylon"
+    ],
+    "symbol": "[",
+    "looks_like": "holster",
+    "color": "dark_gray",
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "2048 ml",
+        "max_contains_weight": "5 kg",
+        "max_item_length": "254 mm",
+        "moves": 80,
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "426 ml",
+        "max_contains_weight": "3 kg",
+        "max_item_length": "165 mm",
+        "moves": 80,
+        "volume_encumber_modifier": 0
+      }
+    ],
+    "material_thickness": 0.5,
+    "flags": [
+      "BELTED",
+      "OVERSIZE",
+      "WATER_FRIENDLY",
+      "PALS_MEDIUM"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          0,
+          0
+        ],
+        "coverage": 100,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_waist"
+        ]
+      }
+    ],
+    "longest_side": "38 cm"
+  },
+  {
+    "id": "canteen_pouch",
+    "copy-from": "canteen_pouch",
+    "repairs_like": "legrig",
+    "type": "ARMOR",
+    "name": {
+      "str": "水壶袋",
+      "str_pl": "水壶袋"
+    },
+    "description": "一个专为水壶的可及性和安全性而设计的口袋。有可以用来安在背带或背心上的MOLLE连接织带。",
+    "weight": "190 g",
+    "volume": "500 ml",
+    "price": 2000,
+    "price_postapoc": 250,
+    "material": [
+      "nylon"
+    ],
+    "symbol": "[",
+    "looks_like": "holster",
+    "color": "dark_gray",
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "holster": true,
+        "max_contains_volume": "1751 ml",
+        "max_contains_weight": "1800 g",
+        "max_item_length": "13 cm",
+        "moves": 40,
+        "volume_encumber_modifier": 0
+      }
+    ],
+    "material_thickness": 0.5,
+    "flags": [
+      "BELTED",
+      "OVERSIZE",
+      "WATER_FRIENDLY",
+      "PALS_MEDIUM"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          0,
+          0
+        ],
+        "coverage": 100,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_waist"
+        ]
+      }
+    ],
+    "longest_side": "38 cm"
+  },
+  {
+    "id": "tool_pouch",
+    "copy-from": "tool_pouch",
+    "repairs_like": "legrig",
+    "type": "ARMOR",
+    "//": "数据来源：https://www.patriotoutfitters.com/condor-t-and-t-pouch?PMSRCH=MOLLE%20GEAR",
+    "name": {
+      "str": "战术工具袋",
+      "str_pl": "战术工具袋"
+    },
+    "description": "一个专为工具而设计的小口袋，保证其可及性和安全性。有可以用来安在背带或背心上的MOLLE连接织带。",
+    "weight": "250 g",
+    "volume": "250 ml",
+    "price": 3000,
+    "price_postapoc": 400,
+    "material": [
+      "nylon"
+    ],
+    "symbol": "[",
+    "looks_like": "holster",
+    "color": "dark_gray",
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "2753 ml",
+        "max_contains_weight": "8 kg",
+        "max_item_length": "305 mm",
+        "moves": 80,
+        "volume_encumber_modifier": 0
+      }
+    ],
+    "material_thickness": 0.5,
+    "flags": [
+      "BELTED",
+      "OVERSIZE",
+      "WATER_FRIENDLY",
+      "PALS_LARGE"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          0,
+          0
+        ],
+        "coverage": 10,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_upper"
+        ]
+      }
+    ],
+    "longest_side": "38 cm"
+  },
+  {
+    "id": "flashlight_pouch",
+    "copy-from": "flashlight_pouch",
+    "repairs_like": "legrig",
+    "type": "ARMOR",
+    "//": "数据来源：https://www.patriotoutfitters.com/condor-flashlight-pouch?PMSRCH=MOLLE%20GEAR；为兼容两类手电筒，对尺寸作了适当调整",
+    "name": {
+      "str": "手电筒袋",
+      "str_pl": "手电筒袋"
+    },
+    "description": "一个专为手电筒而设计的小口袋，保证其可及性和安全性。有可以用来安在背带或背心上的MOLLE连接织带。",
+    "weight": "100 g",
+    "volume": "100 ml",
+    "price": 1000,
+    "price_postapoc": 100,
+    "material": [
+      "nylon"
+    ],
+    "symbol": "[",
+    "looks_like": "holster",
+    "color": "dark_gray",
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "holster": true,
+        "max_contains_volume": "500 ml",
+        "max_contains_weight": "500 g",
+        "max_item_length": "37 cm",
+        "moves": 40,
+        "volume_encumber_modifier": 0
+      }
+    ],
+    "material_thickness": 0.5,
+    "flags": [
+      "BELTED",
+      "OVERSIZE",
+      "WATER_FRIENDLY",
+      "PALS_SMALL"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          0,
+          0
+        ],
+        "coverage": 100,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_waist"
+        ]
+      }
+    ],
+    "longest_side": "38 cm"
+  },
+  {
+    "id": "tactical_holster",
+    "copy-from": "tactical_holster",
+    "repairs_like": "legrig",
+    "type": "ARMOR",
+    "name": {
+      "str": "战术枪套"
+    },
+    "description": "一个结实的枪套，设计成垂直佩戴以便在战术背心上占据较小空间。这使得它比普通枪套更难拔出。",
+    "//": "数据来源：https://www.patriotoutfitters.com/condor-vertical-molle-holster?PMSRCH=MOLLE%20GEAR",
+    "weight": "220 g",
+    "volume": "500 ml",
+    "price": 9000,
+    "price_postapoc": 500,
+    "material": [
+      "nylon"
+    ],
+    "symbol": "[",
+    "looks_like": "sheath",
+    "color": "light_gray",
+    "sided": true,
+    "material_thickness": 1,
+    "pocket_data": [
+      {
+        "magazine_well": "350 ml",
+        "pocket_type": "CONTAINER",
+        "holster": true,
+        "min_item_volume": "300 ml",
+        "max_contains_volume": "1000 ml",
+        "max_contains_weight": "2 kg",
+        "max_item_length": "30 cm",
+        "moves": 70
+      }
+    ],
+    "use_action": {
+      "type": "holster"
+    },
+    "flags": [
+      "BELTED",
+      "OVERSIZE",
+      "PALS_SMALL"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          0,
+          0
+        ],
+        "coverage": 5,
+        "covers": [
+          "leg_l",
+          "leg_r"
+        ],
+        "specifically_covers": [
+          "leg_hip_r",
+          "leg_hip_l"
+        ]
+      }
+    ],
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "gas_mask_pouch",
+    "copy-from": "gas_mask_pouch",
+    "repairs_like": "legrig",
+    "type": "ARMOR",
+    "//": "数据来源：https://condoroutdoor.com/ma11.html；this one is much larger than an in game gas mask so I've take some liberties on size",
+    "name": {
+      "str": "防毒面具袋",
+      "str_pl": "防毒面具袋"
+    },
+    "description": "一个专为防毒面具和额外的过滤器而设计的大口袋，保证其可及性和安全性。有可以用来安在背带或背心上的MOLLE连接织带。",
+    "weight": "300 g",
+    "volume": "250 ml",
+    "price": 2000,
+    "price_postapoc": 200,
+    "material": [
+      "nylon"
+    ],
+    "symbol": "[",
+    "looks_like": "holster",
+    "color": "dark_gray",
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "holster": true,
+        "max_contains_volume": "1250 ml",
+        "max_contains_weight": "2 kg",
+        "//": "当前防毒面具似乎没有长度数据。",
+        "max_item_length": "30 cm",
+        "moves": 80,
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "holster": true,
+        "max_contains_volume": "250 ml",
+        "max_contains_weight": "500 g",
+        "max_item_length": "8 cm",
+        "moves": 80,
+        "volume_encumber_modifier": 0
+      }
+    ],
+    "material_thickness": 0.5,
+    "flags": [
+      "BELTED",
+      "OVERSIZE",
+      "WATER_FRIENDLY",
+      "PALS_MEDIUM"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          0,
+          0
+        ],
+        "coverage": 100,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_waist"
+        ]
+      }
+    ],
+    "longest_side": "38 cm"
+  },
+  {
+    "id": "tactical_grenade_pouch",
+    "copy-from": "tactical_grenade_pouch",
+    "repairs_like": "legrig",
+    "type": "ARMOR",
+    "//": "数据来源：https://www.tacticalassaultgearstore.com/molle-frag-grenade-pouch.html",
+    "name": {
+      "str": "战术榴弹袋",
+      "str_pl": "战术榴弹袋"
+    },
+    "description": "一个专为军用手榴弹而设计的口袋，保证其可及性和安全性。有可以用来安在背带或背心上的MOLLE连接织带。",
+    "weight": "200 g",
+    "volume": "100 ml",
+    "price": 2000,
+    "price_postapoc": 200,
+    "material": [
+      "nylon"
+    ],
+    "symbol": "[",
+    "looks_like": "holster",
+    "color": "dark_gray",
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 30,
+        "flag_restriction": [
+          "GRENADE"
+        ],
+        "volume_encumber_modifier": 0
+      }
+    ],
+    "material_thickness": 0.5,
+    "flags": [
+      "BELTED",
+      "OVERSIZE",
+      "WATER_FRIENDLY",
+      "PALS_SMALL"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          0,
+          0
+        ],
+        "coverage": 100,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_waist"
+        ]
+      }
+    ],
+    "longest_side": "38 cm"
+  },
+  {
+    "id": "triple_stacker_pouch",
+    "copy-from": "triple_stacker_pouch",
+    "repairs_like": "legrig",
+    "type": "ARMOR",
+    "//": "数据来源：https://www.patriotoutfitters.com/condor-triple-stacker-open-top-m4-mag-pouch?PMSRCH=MOLLE%20GEAR",
+    "name": {
+      "str": "三联弹药袋",
+      "str_pl": "三联弹药袋"
+    },
+    "description": "一个六联弹药袋，宽三列深两排，用来保证步枪弹匣的可及性和安全性。有可以用来安在背带或背心上的MOLLE连接织带。",
+    "weight": "500 g",
+    "volume": "500 ml",
+    "price": 2000,
+    "price_postapoc": 200,
+    "material": [
+      "nylon"
+    ],
+    "symbol": "[",
+    "looks_like": "holster",
+    "color": "dark_gray",
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "200 mm",
+        "max_contains_volume": "300 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "200 mm",
+        "max_contains_volume": "300 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "200 mm",
+        "max_contains_volume": "300 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "400 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "400 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "400 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      }
+    ],
+    "material_thickness": 0.5,
+    "flags": [
+      "BELTED",
+      "OVERSIZE",
+      "WATER_FRIENDLY",
+      "PALS_LARGE"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          0,
+          0
+        ],
+        "coverage": 10,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_upper"
+        ]
+      }
+    ],
+    "longest_side": "38 cm"
+  },
+  {
+    "id": "tactical_shotshell_pouch",
+    "copy-from": "tactical_shotshell_pouch",
+    "repairs_like": "legrig",
+    "type": "ARMOR",
+    "//": "数据来源：https://condoroutdoor.com/ma12-shotgun-ammo-pouch.html",
+    "name": {
+      "str": "战术霰弹袋",
+      "str_pl": "战术霰弹袋"
+    },
+    "description": "一个专为霰弹和.308弹而设计的口袋，保证其可及性和安全性。有可以用来安在背带或背心上的MOLLE连接织带。",
+    "weight": "300 g",
+    "volume": "250 ml",
+    "price": 2000,
+    "price_postapoc": 200,
+    "material": [
+      "nylon"
+    ],
+    "symbol": "[",
+    "looks_like": "holster",
+    "color": "dark_gray",
+    "pocket_data": [
+      {
+        "ammo_restriction": {
+          "410shot": 30,
+          "shot": 30,
+          "20x66mm": 30,
+          "signal_flare": 30
+        },
+        "moves": 5
+      }
+    ],
+    "material_thickness": 0.5,
+    "flags": [
+      "BELTED",
+      "OVERSIZE",
+      "WATER_FRIENDLY",
+      "PALS_MEDIUM"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          0,
+          0
+        ],
+        "coverage": 100,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_waist"
+        ]
+      }
+    ],
+    "longest_side": "38 cm"
+  },
+  {
+    "id": "xlkevlar",
+    "copy-from": "xlkevlar",
+    "repairs_like": "survivor_suit",
+    "type": "ARMOR",
+    "name": {
+      "str": "凯夫拉背心（XL）"
+    },
+    "description": "一件巨大的自制凯夫拉防弹背心，根据正品仿制，供体型异常大的人使用。又大又重，但仍然适合放在异常大的外套下面。",
+    "category": "armor",
+    "weight": "4210 g",
+    "volume": "8 L",
+    "price_postapoc": 2500,
+    "to_hit": -3,
+    "material": [
+      "kevlar_layered",
+      "nylon"
+    ],
+    "symbol": "[",
+    "looks_like": "kevlar",
+    "color": "light_gray",
+    "warmth": 20,
+    "material_thickness": 5,
+    "flags": [
+      "STURDY",
+      "OVERSIZE"
+    ],
+    "armor": [
+      {
+        "material": [
+          {
+            "type": "nylon",
+            "covered_by_mat": 100,
+            "thickness": 1.0
+          },
+          {
+            "type": "kevlar_layered",
+            "covered_by_mat": 95,
+            "thickness": 4.4
+          }
+        ],
+        "encumbrance": [
+          6,
+          6
+        ],
+        "coverage": 98,
+        "cover_vitals": 70,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_upper"
+        ]
+      },
+      {
+        "material": [
+          {
+            "type": "nylon",
+            "covered_by_mat": 100,
+            "thickness": 1.0
+          },
+          {
+            "type": "kevlar_layered",
+            "covered_by_mat": 95,
+            "thickness": 4.4
+          }
+        ],
+        "//": "负担值已在上方处理。",
+        "encumbrance": [
+          0,
+          0
+        ],
+        "coverage": 92,
+        "cover_vitals": 60,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_lower"
+        ]
+      }
+    ],
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "ammo_satchel_leather",
+    "copy-from": "ammo_satchel_leather",
+    "type": "ARMOR",
+    "name": {
+      "str": "皮弹匣包（腰）"
+    },
+    "description": "一个绑在腰上的皮革弹匣包。可装一个大型弹匣，保证能随手取用。",
+    "weight": "590 g",
+    "volume": "500 ml",
+    "price": 2000,
+    "price_postapoc": 2000,
+    "material": [
+      "leather"
+    ],
+    "symbol": "[",
+    "looks_like": "ragpouch",
+    "color": "brown",
+    "material_thickness": 2,
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "300 mm",
+        "max_contains_volume": "1500 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT",
+          "MAG_BULKY"
+        ],
+        "volume_encumber_modifier": 0
+      }
+    ],
+    "use_action": {
+      "type": "holster",
+      "holster_prompt": "存储弹药",
+      "holster_msg": "你收好了%s。"
+    },
+    "flags": [
+      "WATER_FRIENDLY",
+      "OVERSIZE",
+      "BELTED",
+      "PALS_LARGE"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          0,
+          0
+        ],
+        "coverage": 20,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_waist"
+        ]
+      }
+    ],
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "chestpouch_leather",
+    "copy-from": "chestpouch_leather",
+    "type": "ARMOR",
+    "name": {
+      "str": "皮弹匣包（胸）",
+      "str_pl": "皮弹匣包（胸）"
+    },
+    "description": "一个绑在胸口上的皮革弹匣包。可装一个弹匣，保证能随手取用。",
+    "weight": "1140 g",
+    "volume": "250 ml",
+    "price": 1250,
+    "price_postapoc": 2000,
+    "material": [
+      "leather"
+    ],
+    "symbol": "[",
+    "looks_like": "ragpouch",
+    "color": "brown",
+    "material_thickness": 2,
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "2 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      }
+    ],
+    "use_action": {
+      "type": "holster",
+      "holster_prompt": "存储弹药",
+      "holster_msg": "你收好了%s。"
+    },
+    "flags": [
+      "WATER_FRIENDLY",
+      "OVERSIZE",
+      "BELTED",
+      "PALS_SMALL"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          0,
+          0
+        ],
+        "coverage": 25,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_upper"
+        ]
+      }
+    ],
+    "longest_side": "38 cm"
+  },
+  {
+    "id": "bandolier_shotgun",
+    "copy-from": "bandolier_shotgun",
+    "type": "ARMOR",
+    "name": {
+      "str": "霰弹枪子弹带（腰）"
+    },
+    "description": "一条缠在腰间的皮革子弹带，保证霰弹枪子弹随手可得。",
+    "weight": "140 g",
+    "volume": "500 ml",
+    "price": 1900,
+    "price_postapoc": 1500,
+    "material": [
+      "leather"
+    ],
+    "symbol": "[",
+    "looks_like": "leather_belt",
+    "color": "dark_gray",
+    "material_thickness": 1,
+    "pocket_data": [
+      {
+        "ammo_restriction": {
+          "410shot": 50,
+          "shot": 50,
+          "20x66mm": 50,
+          "signal_flare": 50
+        },
+        "moves": 5
+      }
+    ],
+    "flags": [
+      "WATER_FRIENDLY",
+      "BELTED",
+      "OVERSIZE"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          2,
+          2
+        ],
+        "coverage": 100,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_waist"
+        ]
+      }
+    ],
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "nylon_quiver",
+    "type": "ARMOR",
+    "name": {
+      "str": "尼龙箭袋"
+    },
+    "description": "一个以尼龙制成的轻便耐用箭袋，带有可固定在MOLLE织带系统上的挂带。",
+    "weight": "230 g",
+    "volume": "500 ml",
+    "price": 6500,
+    "price_postapoc": 1200,
+    "material": [
+      "nylon"
+    ],
+    "symbol": "[",
+    "looks_like": "bscabbard",
+    "color": "light_gray",
+    "sided": true,
+    "material_thickness": 0.5,
+    "pocket_data": [
+      {
+        "ammo_restriction": {
+          "arrow": 20,
+          "bolt": 20
+        },
+        "moves": 20
+      }
+    ],
+    "flags": [
+      "BELTED",
+      "OVERSIZE",
+      "WATER_FRIENDLY",
+      "PALS_LARGE"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          2,
+          2
+        ],
+        "coverage": 25,
+        "covers": [
+          "leg_l",
+          "leg_r"
+        ],
+        "specifically_covers": [
+          "leg_upper_l",
+          "leg_upper_r"
+        ]
+      }
+    ],
+    "longest_side": "70 cm"
+  }
+]

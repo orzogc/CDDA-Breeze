@@ -1,0 +1,32 @@
+[
+  {
+    "id": "762_m43",
+    "copy-from": "762_m43",
+    "type": "AMMO",
+    "name": {
+      "str": "7.62x39mm FMJ 弹"
+    },
+    "description": "一发标准的7.62x39mm全金属被甲弹，采用铅芯与被甲结构，价格低廉、产量巨大，常见于民用射击、训练和大量旧式军用库存。它的终点效应与穿透能力较为均衡，但面对硬质防护时不如带钢芯或专用穿甲弹。",
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 45,
+      "armor_penetration": 20
+    }
+  },
+  {
+    "id": "762_m87",
+    "copy-from": "762_m87",
+    "type": "AMMO",
+    "name": {
+      "str": "7.62x39mm PS 弹"
+    },
+    "description": "7.62x39mmPS弹是苏联与俄罗斯该口径武器最经典、产量最大的标准军用弹药之一，1949年前后随新式步兵武器体系服役。凭借庞大库存，它至今仍见于许多国家的军队、执法机构和民用市场，钢芯结构也使其比普通铅芯全被甲弹更擅长穿透轻型障碍。",
+    "price": "150 cent",
+    "price_postapoc": "10 USD",
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 49,
+      "armor_penetration": 27
+    }
+  }
+]

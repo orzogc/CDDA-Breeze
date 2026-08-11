@@ -1,0 +1,598 @@
+[
+  {
+    "type": "ascii_art",
+    "id": "kt_yinglong_ascii",
+    "picture": [
+      "",
+      "       <color_cyan>╔══ SMART-LINK ══╗</color>",
+      "  <color_dark_gray>╔════</color><color_light_cyan>KANG TAO G-58 DIAN</color><color_cyan>═╗</color>",
+      "<color_dark_gray>╔═╝████████████████████</color><color_cyan>╦═╡</color>",
+      "<color_dark_gray>╚═══╗██████████████╔═══╝</color>",
+      "    <color_dark_gray>╚══════╦══════╝</color>",
+      "           <color_dark_gray>║</color><color_cyan>╔══╗</color>",
+      "         <color_dark_gray>╔═╝</color><color_cyan>║45║</color>",
+      "         <color_dark_gray>║██</color><color_cyan>║R ║</color>",
+      "         <color_dark_gray>╚══</color><color_cyan>╚══╝</color>",
+      "",
+      "     <color_light_cyan>LOCK // CORRECT // FIRE</color>",
+      ""
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "effect_kt_yinglong_pulse_arc_damage",
+    "name": [
+      "应龙过载电击"
+    ],
+    "desc": [
+      "高压脉冲沿着导电表面和潮湿组织迅速扩散。"
+    ],
+    "rating": "bad",
+    "max_duration": "1 s",
+    "base_mods": {
+      "hurt_amount": [
+        21
+      ]
+    }
+  },
+  {
+    "id": "fd_kt_yinglong_stun",
+    "type": "field_type",
+    "intensity_levels": [
+      {
+        "name": "过载电弧",
+        "sym": "*",
+        "color": "light_cyan",
+        "dangerous": true,
+        "effects": [
+          {
+            "effect_id": "effect_kt_yinglong_pulse_arc_damage",
+            "intensity": 1,
+            "min_duration": "1 s",
+            "max_duration": "1 s",
+            "is_environmental": false,
+            "message": "过载电弧贯穿你的身体。",
+            "message_npc": "过载电弧贯穿<npcname>的身体。",
+            "message_type": "bad"
+          },
+          {
+            "effect_id": "stunned",
+            "intensity": 1,
+            "min_duration": "2 s",
+            "max_duration": "2 s",
+            "is_environmental": false
+          }
+        ]
+      }
+    ],
+    "description_affix": "in",
+    "priority": 4,
+    "half_life": "1 turns",
+    "phase": "plasma",
+    "display_items": false,
+    "display_field": true,
+    "decrease_intensity_on_contact": true,
+    "accelerated_decay": true,
+    "looks_like": "fd_electricity"
+  },
+  {
+    "id": "KT_YINGLONG_PULSE_ARC",
+    "type": "ammo_effect",
+    "aoe": {
+      "field_type": "fd_kt_yinglong_stun",
+      "intensity_min": 1,
+      "intensity_max": 1,
+      "radius": 1,
+      "chance": 100,
+      "check_passable": true,
+      "check_sees": true,
+      "check_sees_radius": 1
+    }
+  },
+  {
+    "type": "ammunition_type",
+    "id": "kt_smart_9mm",
+    "name": "9×19mm 智能弹",
+    "default": "kt_smart_round"
+  },
+  {
+    "id": "kt_smart_round",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "9×19mm 智能弹"
+    },
+    "description": "一组为康陶龙系列武器设计的微型制导弹。HUB复原型无法让弹丸绕过墙壁，但弹底微推力器会根据武器写入的独立修正量，在离膛后的极短时间内调整姿态。强化弹芯能够对付常见护甲，应龙机匣还会在发射瞬间向弹底导电结构注入短促高压。实体弹丸负责穿透，随之而来的电击则会扰乱目标的动作与反应。",
+    "weight": "8 g",
+    "volume": "120 ml",
+    "price": 1200,
+    "price_postapoc": 2500,
+    "flags": [
+      "IRREPLACEABLE_CONSUMABLE"
+    ],
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "=",
+    "color": "light_cyan",
+    "count": 60,
+    "stack_size": 60,
+    "ammo_type": "kt_smart_9mm",
+    "range": 24,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 30,
+      "armor_penetration": 10
+    },
+    "dispersion": 8,
+    "recoil": 180,
+    "effects": [
+      "COOKOFF"
+    ]
+  },
+  {
+    "id": "kt_yinglong_mag",
+    "looks_like": "mp5mag",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "康陶®G-58“应龙”45发弹匣"
+    },
+    "description": "康陶G-58“典式”应龙型使用的45发封闭式智能弹匣，由HUB依据异世界制造模板复原。弹匣靠近供弹口时会被磁性导向结构吸附到位，再由机械锁扣完成固定，换匣时不必反复确认卡榫。内置数据触点会在供弹时确认弹位，并把校准参数写入每发智能弹，普通9mm弹无法直接装入其中。",
+    "weight": "260 g",
+    "volume": "500 ml",
+    "longest_side": "24 cm",
+    "price": 18000,
+    "price_postapoc": 1000,
+    "material": [
+      "plastic",
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_cyan",
+    "ammo_type": [
+      "kt_smart_9mm"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "kt_smart_9mm": 45
+        }
+      }
+    ]
+  },
+  {
+    "id": "kt_yinglong_drum_100",
+    "looks_like": "robofac100",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "康陶®G-58“应龙”100发智能弹鼓"
+    },
+    "description": "HUB在复原应龙之后，参考HWP百发双鼓的供弹结构制作的大容量智能弹鼓。它不是2077年模板中的原装配件，而是本地研究组为持续火力设计的后续产品。双鼓外壳容纳一百发智能弹，并保留逐发识别，数据写入触点和G-58的磁性导向接口。代价是体积和重量明显增加，换匣虽然仍有磁力辅助，却远不如原装弹匣轻便。",
+    "weight": "980 g",
+    "volume": "1200 ml",
+    "longest_side": "30 cm",
+    "price": 42000,
+    "price_postapoc": 3000,
+    "material": [
+      "plastic",
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_cyan",
+    "ammo_type": [
+      "kt_smart_9mm"
+    ],
+    "reload_time": 180,
+    "flags": [
+      "MAG_BULKY"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "kt_smart_9mm": 100
+        }
+      }
+    ]
+  },
+  {
+    "id": "kt_yinglong_smart_sight",
+    "type": "GUNMOD",
+    "name": {
+      "str": "康陶®G-58“应龙”智能锁定组件"
+    },
+    "description": "HUB依据非本地制造模板复原的封闭式目标识别与弹道修正组件。它把光学、测距、目标运动预测和三轴姿态数据合并为一套锁定流程。瞄准越充分，智能弹得到的离膛修正越可靠。三发连射时，系统会为每发弹丸分别计算，而不是重复写入同一条弹道。组件与机匣永久配对，无法安全拆除。",
+    "weight": "120 g",
+    "volume": "90 ml",
+    "integral_volume": "0 ml",
+    "price": 0,
+    "price_postapoc": 0,
+    "install_time": "0 s",
+    "material": [
+      "plastic",
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "cyan",
+    "location": "sights",
+    "sight_dispersion": 8,
+    "field_of_view": 720,
+    "aim_speed_modifier": 10,
+    "mod_targets": [
+      "smg"
+    ],
+    "flags": [
+      "IRREMOVABLE"
+    ]
+  },
+  {
+    "id": "kt_yinglong_pulse",
+    "type": "GUNMOD",
+    "name": {
+      "str": "康陶®G-58“应龙”过载脉冲发射器"
+    },
+    "description": "应龙电容组的主动过载组件，也是HUB为复原型追加的内置电磁发射器。它不会发射实体弹丸，而是从连接的UPS抽取大量电力，将高压脉冲投向锁定位置。脉冲会在命中点骤然崩解，沿着邻近目标之间的导电路径跳跃。被直接命中的目标会承受完整冲击，周围生物也会被分流电弧重创并短暂失去行动能力，机器人和电子设备尤其容易失灵。电弧不分敌我。",
+    "weight": "180 g",
+    "volume": "120 ml",
+    "integral_volume": "0 ml",
+    "price": 0,
+    "price_postapoc": 0,
+    "install_time": "0 s",
+    "material": [
+      "plastic",
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "light_cyan",
+    "location": "underbarrel",
+    "mod_targets": [
+      "smg"
+    ],
+    "gun_data": {
+      "skill": "smg",
+      "range": 18,
+      "ranged_damage": {
+        "damage_type": "electric",
+        "amount": 40,
+        "armor_penetration": 8
+      },
+      "dispersion": 18,
+      "durability": 10,
+      "ups_charges": 50,
+      "reload": 0,
+      "loudness": 18,
+      "ammo_effects": [
+        "EMP",
+        "KT_YINGLONG_PULSE_ARC"
+      ]
+    },
+    "flags": [
+      "IRREMOVABLE",
+      "NEVER_JAMS",
+      "NO_UNLOAD",
+      "NON_FOULING",
+      "NEEDS_NO_LUBE"
+    ]
+  },
+  {
+    "id": "kt_yinglong_folding_stock",
+    "type": "GUNMOD",
+    "name": {
+      "str": "康陶®G-58“应龙”一体式收纳枪托"
+    },
+    "description": "G-58“典式”机匣的一体式收纳枪托，尾托与数个外部结构长期收拢在枪身两侧，让整枪保持便于隐蔽携行的短小轮廓。贴腮面与后部支撑结构仍能提供少许稳定，整套机构与机匣永久配对，无法安全拆除。",
+    "weight": "200 g",
+    "volume": "500 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": 0,
+    "price_postapoc": 0,
+    "install_time": "0 s",
+    "material": [
+      "plastic",
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "stock",
+    "mod_targets": [
+      "smg"
+    ],
+    "flags": [
+      "IRREMOVABLE"
+    ],
+    "dispersion_modifier": -1
+  },
+  {
+    "id": "kt_yinglong_hub",
+    "copy-from": "smg_base",
+    "looks_like": "fn_p90",
+    "type": "GUN",
+    "name": {
+      "str": "康陶®G-58“应龙”智能冲锋枪"
+    },
+    "description": "黑色机匣与白色复合护壳构成了这把线条紧凑的智能冲锋枪。它的原型是康陶G-58“典式”，应龙则是这一产品线中极少见的标志性版本。HUB 01利用LIXA截获的异世界制造数据完成了复原，枪身上的康陶®标识也来自那份模板。枪托和多处外部结构长期收拢在机匣两侧，使整枪保持适合隐蔽携行的短小轮廓，后部支撑面仍能提供有限的贴腮与稳定作用。弹匣靠近供弹口时会被磁力导入并自行锁定，省去了传统弹匣反复确认卡榫的动作。主动稳定机构压住枪口跳动，光学组件预测目标运动，弹匣和机匣则在供弹瞬间为每发弹丸写入独立修正。专用智能弹兼具坚硬弹芯与导电结构，既能对付常见护甲，也会用短促电击扰乱目标。内置过载系统可以释放强电与电磁脉冲，并在附近留下危险电弧。受本世界材料与控制器限制，弹丸仍然无法绕过墙壁或封闭掩体。",
+    "weight": "2420 g",
+    "volume": "2500 ml",
+    "longest_side": "29 cm",
+    "price": 2800000,
+    "price_postapoc": 25000,
+    "to_hit": -2,
+    "bashing": 10,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "cyan",
+    "ammo": [
+      "kt_smart_9mm"
+    ],
+    "skill": "smg",
+    "ranged_damage": {
+      "damage_type": "electric",
+      "amount": 10,
+      "armor_penetration": 4
+    },
+    "dispersion": 45,
+    "durability": 9,
+    "min_cycle_recoil": 100,
+    "modes": [
+      [
+        "DEFAULT",
+        "智能单发",
+        1
+      ],
+      [
+        "BURST",
+        "智能三连射",
+        3
+      ]
+    ],
+    "built_in_mods": [
+      "kt_yinglong_smart_sight",
+      "kt_yinglong_pulse",
+      "kt_yinglong_folding_stock"
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        2
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "mechanism",
+        2
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "stock accessory",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "faults": [
+      "fault_gun_dirt",
+      "fault_gun_chamber_spent"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "kt_yinglong_mag",
+          "kt_yinglong_drum_100"
+        ]
+      }
+    ],
+    "ascii_picture": "kt_yinglong_ascii",
+    "handling": 30,
+    "reload": 60
+  },
+  {
+    "id": "kt_yinglong_template",
+    "type": "GENERIC",
+    "looks_like": "usb_drive_nano",
+    "name": {
+      "str": "康陶®G-58“应龙”制造模板"
+    },
+    "description": "一枚封装在抗静电壳中的高密度存储片，表面印有康陶®标识，G-58“典式”产品线编号与一串无法对应本地产品的序列号。LIXA阵列事故似乎把某个相邻世界的制造状态截获成了数据快照，机匣尺寸，折叠机构，磁吸式弹匣接口，智能弹校准表，控制固件与验收记录彼此完整，却带着2077年的一致时间戳。它不是普通设计图，只有具备先进制造与逆向工程能力的机构才可能读懂。",
+    "weight": "18 g",
+    "volume": "20 ml",
+    "longest_side": "8 cm",
+    "price": 0,
+    "price_postapoc": 0,
+    "material": [
+      "plastic",
+      "copper"
+    ],
+    "symbol": ";",
+    "color": "cyan"
+  },
+  {
+    "id": "kt_yinglong_ammo_conversion_kit",
+    "type": "TOOL",
+    "name": {
+      "str": "康陶®G-58“应龙”弹药改装套件"
+    },
+    "description": "HUB为应龙复原型制作的桌面式弹药改装设备，包含微型夹具、弹底蚀刻头、固件写入器和感应封装单元。它不会重新压装弹壳，也不需要手动压弹机；设备会固定完整的9x19mm弹药，成批安装一次性弹底修正器，并写入与应龙固件匹配的校准数据。套件本身可重复使用，一次标准流程处理120发，但仍需消耗导线、焊料和电子元件。",
+    "weight": "950 g",
+    "volume": "750 ml",
+    "longest_side": "32 cm",
+    "price": 85000,
+    "price_postapoc": 3000,
+    "material": [
+      "steel",
+      "plastic",
+      "copper"
+    ],
+    "symbol": ";",
+    "color": "light_cyan",
+    "flags": [
+      "NO_SALVAGE"
+    ]
+  },
+  {
+    "type": "recipe",
+    "result": "kt_smart_round",
+    "charges": 120,
+    "activity_level": "LIGHT_EXERCISE",
+    "category": "CC_AMMO",
+    "subcategory": "CSC_AMMO_PISTOL",
+    "skill_used": "electronics",
+    "difficulty": 4,
+    "skills_required": [
+      [
+        "fabrication",
+        2
+      ]
+    ],
+    "time": "30 m",
+    "batch_time_factors": [
+      50,
+      4
+    ],
+    "autolearn": false,
+    "tools": [
+      [
+        [
+          "kt_yinglong_ammo_conversion_kit",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "9mm",
+          120
+        ],
+        [
+          "9mmfmj",
+          120
+        ],
+        [
+          "reloaded_9mm",
+          120
+        ],
+        [
+          "reloaded_9mmfmj",
+          120
+        ]
+      ],
+      [
+        [
+          "e_scrap",
+          12
+        ],
+        [
+          "circuit",
+          4
+        ]
+      ],
+      [
+        [
+          "cable",
+          12
+        ],
+        [
+          "copper_wire",
+          12
+        ]
+      ],
+      [
+        [
+          "solder_wire",
+          12
+        ]
+      ]
+    ],
+    "//": "使用康陶®G-58“应龙”智能弹改装记录与自动改装套件，将120发标准压力9x19mm弹药配合普通铜线或裸铜线成批改装为智能弹。Breeze按result与id_suffix直接拼接配方ID，因此此处必须保留下划线，真实ID为kt_smart_round_conversion。",
+    "id_suffix": "_conversion",
+    "book_learn": [
+      [
+        "kt_yinglong_ammo_record",
+        3
+      ]
+    ]
+  },
+  {
+    "id": "kt_yinglong_ammo_record",
+    "type": "BOOK",
+    "category": "manuals",
+    "name": {
+      "str": "《康陶®G-58“应龙”智能弹改装记录》"
+    },
+    "description": "一沓由HUB装订的低分辨率打印记录，封面标注康陶G-58“典式”应龙型，本地复原批次。内容包括弹底修正器的安装位置，固件写入顺序，绝缘检查和整批校准步骤。关键参数以离线校验码标注，读懂后，可使用专用改装套件把标准压力9x19mm弹药改装成应龙智能弹。",
+    "weight": "86 g",
+    "volume": "100 ml",
+    "longest_side": "28 cm",
+    "price": 0,
+    "price_postapoc": 300,
+    "material": [
+      "paper"
+    ],
+    "symbol": "?",
+    "looks_like": "manual_electronics",
+    "color": "light_cyan",
+    "skill": "electronics",
+    "required_level": 2,
+    "max_level": 4,
+    "intelligence": 6,
+    "time": "25 m",
+    "chapters": 1
+  },
+  {
+    "type": "item_group",
+    "id": "kt_yinglong_delivery_package",
+    "subtype": "collection",
+    "entries": [
+      {
+        "item": "kt_yinglong_hub"
+      },
+      {
+        "item": "kt_yinglong_mag",
+        "ammo-item": "kt_smart_round",
+        "charges": 45
+      },
+      {
+        "item": "kt_yinglong_mag",
+        "ammo-item": "kt_smart_round",
+        "charges": 45
+      },
+      {
+        "item": "kt_smart_round",
+        "charges": 180
+      },
+      {
+        "item": "kt_yinglong_ammo_record"
+      }
+    ]
+  }
+]

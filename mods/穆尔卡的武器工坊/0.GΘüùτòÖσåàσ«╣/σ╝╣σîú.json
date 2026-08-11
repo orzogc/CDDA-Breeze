@@ -1,0 +1,167 @@
+[
+  {
+    "id": "rpk16_75",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "RPK-16 75发弹鼓"
+    },
+    "description": "一个RPK16的专属弹鼓,可以容纳75发子弹.",
+    "weight": "1000 g",
+    "volume": "750 ml",
+    "price": 8500,
+    "price_postapoc": 1250,
+    "material": [
+      "plastic"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "545x39"
+    ],
+    "flags": [
+      "MAG_BULKY"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "545x39": 75
+        }
+      }
+    ],
+    "looks_like": "akdrum75"
+  },
+  {
+    "id": "9a91_20",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "9A91 20发弹匣"
+    },
+    "description": "一个9A91的二十发弹匣。",
+    "weight": "280 g",
+    "volume": "270 ml",
+    "price": 1300,
+    "price_postapoc": 770,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "939"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "939": 20
+        }
+      }
+    ],
+    "looks_like": "kc14_20"
+  },
+  {
+    "id": "ash_20",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "ASH-12 20发弹匣"
+    },
+    "description": "一个ASH-12的二十发弹匣.",
+    "weight": "450 g",
+    "volume": "270 ml",
+    "price": 1500,
+    "price_postapoc": 1000,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "12755"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "12755": 20
+        }
+      }
+    ],
+    "looks_like": "akmag20"
+  },
+  {
+    "id": "95_30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "QBZ-95 30发弹匣"
+    },
+    "description": "一个QBZ-95的三十发弹匣.",
+    "weight": "250 g",
+    "volume": "300 ml",
+    "price": 350,
+    "price_postapoc": 350,
+    "material": [
+      "plastic"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "5842"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "5842": 30
+        }
+      }
+    ],
+    "looks_like": "ak74mag"
+  },
+  {
+    "id": "191_30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "QBZ-191 30发弹匣"
+    },
+    "description": "一个QBZ-191的三十发弹匣。",
+    "weight": "250 g",
+    "volume": "300 ml",
+    "price": 460,
+    "price_postapoc": 460,
+    "material": [
+      "plastic"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "5842"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "5842": 30
+        }
+      }
+    ],
+    "looks_like": "stanag30"
+  }
+]

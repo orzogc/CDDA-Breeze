@@ -130,13 +130,15 @@ static item_location inv_internal( Character &u, const inventory_selector_preset
                                    const std::string &none_message,
                                    const std::string &hint = std::string(),
                                    item_location container = item_location(),
-                                   bool add_ebooks = false )
+                                   bool add_ebooks = false,
+                                   bool show_view_category_mode = true )
 {
     inventory_pick_selector inv_s( u, preset );
 
     inv_s.set_title( title );
     inv_s.set_hint( hint );
     inv_s.set_display_stats( false );
+    inv_s.set_show_view_category_mode( show_view_category_mode );
 
     const std::vector<activity_id> consuming {
         ACT_EAT_MENU,
@@ -1427,7 +1429,7 @@ item_location game_menus::inv::read( Character &you )
     const std::string msg = you.is_avatar() ? _( "You have nothing to read." ) :
                             string_format( _( "%s has nothing to read." ), you.disp_name() );
     return inv_internal( you, read_inventory_preset( you ), _( "Read" ), 1, msg, "", item_location(),
-                         true );
+                         true, false );
 }
 
 item_location game_menus::inv::ebookread( Character &you, item_location &ereader )
@@ -1442,6 +1444,7 @@ item_location game_menus::inv::ebookread( Character &you, item_location &ereader
 
     inv_s.set_title( _( "Read" ) );
     inv_s.set_display_stats( false );
+    inv_s.set_show_view_category_mode( false );
 
     inv_s.clear_items();
     inv_s.add_contained_ebooks( ereader );

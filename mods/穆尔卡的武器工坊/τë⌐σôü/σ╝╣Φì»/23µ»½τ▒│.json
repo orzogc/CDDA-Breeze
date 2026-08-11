@@ -1,0 +1,78 @@
+[
+  {
+    "id": "23mm_shot",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "23x75mmR 4号 猎鹿弹"
+    },
+    "description": "一发23x75mmR的4号猎鹿弹，基于苏联时期的23mm霰弹仿制而来，这是一种威力巨大的弹药，常用于狩猎。",
+    "material": [
+      "plastic",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "red",
+    "price_postapoc": 8500,
+    "weight": "30 g",
+    "volume": "250 ml",
+    "range": 25,
+    "count": 10,
+    "stack_size": 10,
+    "ammo_type": "23mm",
+    "casing": "23mm_casing",
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 150,
+      "armor_penetration": 15
+    },
+    "shot_damage": {
+      "damage_type": "bullet",
+      "amount": 50,
+      "armor_penetration": 15
+    },
+    "projectile_count": 3,
+    "shot_spread": 0,
+    "recoil": 6800,
+    "loudness": 200,
+    "effects": [
+      "COOKOFF",
+      "SHOT"
+    ],
+    "longest_side": "8 cm"
+  },
+  {
+    "id": "23mm_slug",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "23x75mmR 4号 独头弹"
+    },
+    "description": "一发23x75mmR的4号独头弹，基于苏联时期的23mm霰弹仿制而来，这是一种威力巨大的弹药，常用于狩猎。",
+    "material": [
+      "plastic",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "red",
+    "price_postapoc": 8500,
+    "weight": "30 g",
+    "volume": "250 ml",
+    "range": 30,
+    "count": 10,
+    "stack_size": 10,
+    "ammo_type": "23mm",
+    "casing": "23mm_casing",
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 130,
+      "armor_penetration": 25
+    },
+    "dispersion": 50,
+    "recoil": 6800,
+    "loudness": 200,
+    "effects": [
+      "COOKOFF",
+      "SHOT"
+    ],
+    "longest_side": "8 cm"
+  }
+]

@@ -1,0 +1,427 @@
+[
+  {
+    "id": "hk_g3",
+    "copy-from": "hk_g3",
+    "looks_like": "ar15",
+    "type": "GUN",
+    "name": {
+      "str_sp": "黑克勒-科赫 G3 步枪"
+    },
+    "description": "G3由西班牙CETME技术路线发展而来，1959年成为西德制式步枪。它采用滚柱延迟反冲和冲压机匣，发射7.62x51mm弹，结构坚固、制造相对经济，曾被数十个国家采用并参加冷战时期的大量地区冲突。全自动后坐力强，但半自动精度足以衍生出多种射手型。",
+    "weight": "4380 g",
+    "volume": "3724 ml",
+    "longest_side": "1025 mm",
+    "price": 205000,
+    "price_postapoc": 6000,
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "308"
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -2
+    },
+    "dispersion": 150,
+    "min_cycle_recoil": 2700,
+    "durability": 8,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "BURST",
+        "3 rd.",
+        3
+      ],
+      [
+        "AUTO",
+        "auto",
+        4
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "g3mag",
+          "g3bigmag",
+          "g3_makeshiftmag"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "m134",
+    "copy-from": "m134",
+    "looks_like": "ar15",
+    "type": "GUN",
+    "name": {
+      "str": "M134D-H 转轮机枪"
+    },
+    "description": "M134由通用电气在1960年代将加特林原理与电力驱动结合，使用六根旋转枪管发射7.62x51mm弹。越南战争中它广泛安装在直升机和固定翼炮艇上，以极高射速压制地面目标。它需要外部电源、弹箱和稳固载台，几乎不可能作为普通单兵武器使用。",
+    "reload_noise_volume": 10,
+    "weight": "19770 g",
+    "volume": "8300 ml",
+    "longest_side": "800 mm",
+    "price": 5500000,
+    "price_postapoc": 10000,
+    "to_hit": -4,
+    "material": [
+      "qt_steel"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "308"
+    ],
+    "skill": "rifle",
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -1
+    },
+    "dispersion": 200,
+    "durability": 9,
+    "blackpowder_tolerance": 96,
+    "reload": 400,
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ]
+    ],
+    "modes": [
+      [
+        "DEFAULT",
+        "low auto",
+        10
+      ],
+      [
+        "AUTO",
+        "high auto",
+        50
+      ]
+    ],
+    "faults": [
+      "fault_gun_blackpowder",
+      "fault_gun_dirt"
+    ],
+    "flags": [
+      "USE_UPS",
+      "NEVER_JAMS"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "belt308"
+        ]
+      }
+    ],
+    "ups_charges": 1,
+    "bashing": 12
+  },
+  {
+    "id": "m14ebr",
+    "copy-from": "m14ebr",
+    "type": "GUN",
+    "name": {
+      "str_sp": "M14 EBR-RI 战斗步枪"
+    },
+    "description": "M14 EBR把老式M14装入带导轨、伸缩枪托和可调托腮板的现代化铝合金底盘，使7.62毫米步枪重新适应光学瞄具和附件。美国陆军与海军在伊拉克、阿富汗将其用于指定射手和中距离支援。它射程与威力充足，但重量、长度和前部负担都相当明显。",
+    "weight": "5070 g",
+    "volume": "3672 ml",
+    "longest_side": "889 mm",
+    "price": 195000,
+    "price_postapoc": 6500,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ]
+  },
+  {
+    "id": "m1a",
+    "copy-from": "m1a",
+    "looks_like": "ar15",
+    "type": "GUN",
+    "name": {
+      "str_sp": "M1A 步枪"
+    },
+    "description": "M1A是美国春田兵工厂公司自1970年代生产的M14式半自动步枪，主要面向民用、比赛和执法市场。它保留7.62x51mm弹、导气旋转枪机和经典觇孔瞄具，却取消军用全自动功能。传统型适合历史收藏，现代底盘型则常被改造成精确射击或狩猎步枪。",
+    "weight": "4230 g",
+    "volume": "3970 ml",
+    "longest_side": "1126 mm",
+    "price": 130000,
+    "price_postapoc": 3500,
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "symbol": "(",
+    "color": "brown",
+    "ammo": [
+      "308"
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -1
+    },
+    "dispersion": 110,
+    "durability": 8,
+    "min_cycle_recoil": 2700,
+    "barrel_volume": "500 ml",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "m14mag",
+          "m14smallmag",
+          "m14_makeshiftmag"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "m240",
+    "copy-from": "m240",
+    "looks_like": "ar15",
+    "type": "GUN",
+    "name": {
+      "str": "M240 机枪"
+    },
+    "description": "M240是比利时FN MAG的美国制式化型号。美国陆军先在1970年代将其用于装甲车辆，后来以M240B等型号替换步兵单位中的部分M60。它在海湾战争、阿富汗和伊拉克以可靠、精确和耐用著称，代价是整枪和备用枪管较重，通常由两人以上机枪组携行。",
+    "ascii_picture": "m240",
+    "weight": "12500 g",
+    "volume": "11780 ml",
+    "longest_side": "1260 mm",
+    "price": 1000000,
+    "price_postapoc": 7500,
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "308"
+    ],
+    "dispersion": 200,
+    "durability": 9,
+    "min_cycle_recoil": 2700,
+    "reload": 400,
+    "modes": [
+      [
+        "DEFAULT",
+        "短点射",
+        2
+      ],
+      [
+        "AUTO",
+        "auto",
+        4
+      ]
+    ],
+    "built_in_mods": [
+      "bipod"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "belt308"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "m60",
+    "copy-from": "m60",
+    "looks_like": "ar15",
+    "type": "GUN",
+    "name": {
+      "str": "M60 机枪"
+    },
+    "description": "M60在1950年代成为美军7.62毫米通用机枪，设计吸收MG42供弹机构与FG42导气思路。它在越南战争中成为标志性班组火力，但早期型存在零件磨损、枪管更换不便等问题。后续E3、E4等型号不断减重改进，美国陆军多数岗位最终由更可靠的M240替代。",
+    "weight": "10500 g",
+    "volume": "10900 ml",
+    "longest_side": "1105 mm",
+    "price": 1000000,
+    "price_postapoc": 7500,
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "308"
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -1
+    },
+    "dispersion": 180,
+    "durability": 7,
+    "min_cycle_recoil": 2700,
+    "reload": 400,
+    "modes": [
+      [
+        "DEFAULT",
+        "auto",
+        2
+      ]
+    ],
+    "built_in_mods": [
+      "bipod"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "belt308"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "scar_h",
+    "copy-from": "scar_h",
+    "looks_like": "ar15",
+    "type": "GUN",
+    "name": {
+      "str_sp": "FN SCAR-H 步枪"
+    },
+    "description": "SCAR-H是FN为美国特种作战司令部计划研制的重型模块化步枪，军用编号常见Mk 17。它使用7.62x51mm弹、短行程活塞和可更换枪管组件，曾在阿富汗等行动中由特种部队使用。比5.56毫米SCAR-L射程和威力更强，却也增加后坐、重量与弹药负担。",
+    "ascii_picture": "scar-H",
+    "weight": "3630 g",
+    "volume": "5427 ml",
+    "longest_side": "906 mm",
+    "ammo": [
+      "308"
+    ],
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        2
+      ]
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -3
+    },
+    "min_cycle_recoil": 2700,
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "scarhmag",
+          "scarhbigmag",
+          "scarhmag_30rd",
+          "scarh_makeshiftmag"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "hk417_13",
+    "copy-from": "hk417_13",
+    "looks_like": "ar15",
+    "type": "GUN",
+    "name": {
+      "str": "黑克勒-科赫 417A2 步枪"
+    },
+    "description": "HK417是黑克勒-科赫在2000年代以HK416技术扩大到7.62x51mm的战斗步枪，采用短行程活塞和旋转枪机。13英寸型强调紧凑，适合特种行动和中近距离精确射击；该系列被多个欧洲国家用于狙击支援或指定射手任务，法国也采用其衍生型替换部分旧枪。",
+    "weight": "4220 g",
+    "volume": "4000 ml",
+    "longest_side": "914 mm",
+    "price": 320000,
+    "price_postapoc": 6000,
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "308"
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -4
+    },
+    "dispersion": 180,
+    "durability": 8,
+    "min_cycle_recoil": 2700,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "default_mods": [
+      "adjustable_stock"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "hk417mag_20rd",
+          "hk417mag_10rd",
+          "hk417_makeshiftmag"
+        ]
+      }
+    ],
+    "bashing": 12
+  }
+]

@@ -1,0 +1,56 @@
+[
+  {
+    "id": "545_sp",
+    "copy-from": "545",
+    "looks_like": "545",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "5.45x39mm SP 弹"
+    },
+    "description": "一种 5.45x39mm的弹药，包含一枚3.6克的软尖铅芯子弹，其带有双金属半被甲，装在钢制弹壳中，适用于狩猎、家庭防卫和靶场练习。由于弹头尖端的铅芯外露，该子弹在撞击时具有良好的初始膨胀效果，从而具备相当大的制动力，但牺牲了穿透能力，即使面对基本的防弹衣也是如此。",
+    "flags": [
+      "IRREPLACEABLE_CONSUMABLE"
+    ],
+    "symbol": "=",
+    "color": "yellow",
+    "relative": {
+      "damage": {
+        "damage_type": "bullet",
+        "amount": 4,
+        "armor_penetration": -4
+      }
+    },
+    "proportional": {
+      "recoil": 0.8
+    },
+    "longest_side": "8 cm"
+  },
+  {
+    "id": "545_ppgs",
+    "copy-from": "545",
+    "looks_like": "545_ap",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "5.45x39mm 7N10 弹"
+    },
+    "description": "5.45x39mm PP gs 弹药，其弹头重3.5克，采用热强化钢芯，尖端包覆铅，弹壳为双金属材质，装在钢制弹壳中。PP 弹于20世纪90年代设计，是 5.45x39mm PS gs 弹药所用弹头的升级版，由于采用了更长更窄的热处理钢芯，能够穿透基本的防弹衣以及部分中级防弹衣。",
+    "price": 650,
+    "price_postapoc": 1500,
+    "flags": [
+      "IRREPLACEABLE_CONSUMABLE"
+    ],
+    "symbol": "=",
+    "color": "yellow",
+    "relative": {
+      "damage": {
+        "damage_type": "bullet",
+        "amount": 1,
+        "armor_penetration": 10
+      }
+    },
+    "proportional": {
+      "recoil": 1.1
+    },
+    "longest_side": "8 cm"
+  }
+]

@@ -1,0 +1,21 @@
+[
+  {
+    "id": "25mm_casing",
+    "copy-from": "casing",
+    "type": "GENERIC",
+    "name": {
+      "str": "25x137mm弹壳"
+    },
+    "description": "一只25x137mm机炮弹射击后留下的大型黄铜弹壳。",
+    "weight": "310 g",
+    "volume": "180 ml",
+    "longest_side": "21 cm",
+    "price": "18 USD",
+    "price_postapoc": "1 USD",
+    "material": [
+      "brass"
+    ],
+    "symbol": "=",
+    "color": "yellow"
+  }
+]

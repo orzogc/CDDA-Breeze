@@ -1,0 +1,63 @@
+[
+  {
+    "id": "454_speedloader5",
+    "copy-from": "454_speedloader5",
+    "looks_like": "38_speedloader",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "5发快速装弹器（.454口径）"
+    },
+    "description": "这个快速装弹器可以容纳 5 发 .454 弹，.45 柯尔特弹或 .410 霰弹，为兼容的左轮手枪快速装弹。",
+    "weight": "108 g",
+    "volume": "250 ml",
+    "price": 2200,
+    "price_postapoc": 100,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "454",
+      "45colt",
+      "410shot"
+    ],
+    "flags": [
+      "SPEEDLOADER",
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "454": 5,
+          "45colt": 5,
+          "410shot": 5
+        }
+      }
+    ],
+    "longest_side": "11 cm"
+  },
+  {
+    "id": "454_speedloader6",
+    "copy-from": "454_speedloader5",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "．454口径6发快速装弹器"
+    },
+    "description": "一只可容纳6发．454卡苏尔、．45柯尔特或．410霰弹的快速装弹器，可一次把整组弹药推入兼容左轮手枪的弹巢。",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "454": 6,
+          "45colt": 6,
+          "410shot": 6
+        }
+      }
+    ],
+    "longest_side": "11 cm"
+  }
+]

@@ -1,0 +1,269 @@
+[
+  {
+    "type": "TOOL",
+    "id": "travel_hub_public_signal_archive_usb",
+    "copy-from": "usb_drive_nano",
+    "name": {
+      "str": "HUB公共信号归档U盘"
+    },
+    "description": "一枚带有HUB 01校验标签的加密U盘。标签注明，这份副本依据外来人员主动提交的条件生成，查询对象为玛雅·斯卡利特，并附带对中国方向公开信号和跨区转发能力的答复。它不包含私人即时通讯、私人邮件或任何被破解的账户内容。连接笔记本电脑或平板电脑后可以自行查看，但梁知遥的委托要求把原U盘交给她，由她亲自核对只有熟人才知道的附言。",
+    "price": 0,
+    "price_postapoc": 0,
+    "use_action": {
+      "type": "effect_on_conditions",
+      "description": "用电脑查看归档查询副本",
+      "effect_on_conditions": [
+        "EOC_TRAVEL_READ_HUB_SIGNAL_ARCHIVE"
+      ]
+    },
+    "extend": {
+      "flags": [
+        "TRADER_KEEP",
+        "TRADER_AVOID"
+      ]
+    }
+  },
+  {
+    "type": "snippet",
+    "category": "travel_hub_public_signal_archive_text",
+    "text": [
+      {
+        "id": "travel_hub_public_signal_archive_full",
+        "text": "【HUB 01公共信号归档，外部查询副本】\n\n以下查询条件由外来人员主动提交。\n\n主要查询对象，玛雅·斯卡利特。\n关联信息，耶鲁大学机械工程专业学生，5月15日以后失联，可能与哥哥阿琼·斯卡利特同行，最后已知情况与纽黑文公路堵塞有关。\n附加问题，委托人梁知遥来自中国广东佛山。查询本地阵列是否收到过中国方向，尤其是佛山方向并明确提及梁知遥姓名的公开报平安消息；同时说明HUB 01能否恢复私人即时通讯，或替她发送一条新的跨区存活消息。未提供梁知遥家属姓名，因此系统不会把无姓名记录认定为其家属。\n\n检索范围为5月15日00时至5月20日06时。数据源包括区域天线实际接收的公共安全频道、业余无线电中继、APRS数据包、公开报平安消息与灾变前开放网页缓存。归档不包含端到端加密即时通讯，不包含私人邮件服务器内部数据，也不包含未曾进入公共中继的手机草稿。以下条目经过自动去重，身份判断仍可能出错。\n\n【匹配记录一】\n5月18日02时45分，APRS短数据。呼号N1MUT建立报平安消息转发规则，只接受本人同意公开的姓名、所在区域、同行人数与下一目的地，不转发私人账号密码，不替任何人发布精确住宅地址。\n\n【匹配记录二】\n5月18日22时14分，报平安消息转发。来源为手持电台，经N1MUT中继。\n\n姓名，玛雅·斯卡利特。\n同行者，哥哥阿琼·斯卡利特及另外八名成年人。\n原计划，向纽约方向行驶。\n现状，因I-95堵塞和车辆受损，在纽黑文东北方向弃车。小组正在沿辅路向北移动；玛雅右膝扭伤，无开放性伤口。\n公开许可，本消息由本人同意转发。\n\n附言，转告梁知遥，我还活着。不要为了追车队进入高速公路。谷仓里有一把传统复合弓和两把现代复合猎弓，我看见时就想到你。日语计划先停，先活着见面。到时候从你学到哪一页继续，不准为了打卡熬夜。还有，我欠你一顿真正好吃的鸡胸肉。\n\n【匹配记录三】\n5月18日22时36分，中继员备注。玛雅·斯卡利特能够准确说明耶鲁校园建筑、室友中文姓名和共同约定用语。身份可信度中等偏高。同行者中包括数名耶鲁机械工程专业学生和射箭社成员。小组正跟随熟悉乡道的互助车队向北移动，目的地未在公开频道播报。\n\n【匹配记录四】\n5月19日00时41分，紧急呼叫。来源为同一手持电台，语音严重受干扰。呼叫者报告辅路排水沟附近出现大量感染者、数只感染犬和持械狂暴人员。小组被挤压在护栏与沟壁之间，至少三名原同行者未能继续移动。坐标未写入外部副本。\n\n5月19日00时49分，农场互助频率。伊舍伍德家庭网络确认收到求救，要求所有中继停止在广域频道重复位置，并派出一辆农用皮卡和三名持枪人员接应。\n\n5月19日01时27分，农场车辆短报。车辆已穿过辅路障碍，七名幸存者登车。接应过程中消耗大量步枪弹药，车辆右侧受损。玛雅右膝伤势加重，但意识清醒；未发现咬伤。\n\n5月19日03时47分，报平安中继。N1MUT报告七名幸存者已经由农场车辆接走，其中包括玛雅·斯卡利特和阿琼·斯卡利特。小组将在伊舍伍德家庭经营的农场营地接受检查。几名从校园出发的同伴未能抵达接应车辆。\n\n5月19日17时31分，伊舍伍德家庭网络。营地新增人员完成伤口检查。玛雅·斯卡利特和阿琼·斯卡利特在册，无危及生命的伤势。玛雅协助整理药品标签与登记表，并主动要求中继员再次确认此前的公开附言已经写入报平安消息。\n\n5月20日03时42分，伊舍伍德家庭网络最后确认。营地外围平静，水井可用。玛雅·斯卡利特仍在营地，右膝已经固定。发送者要求不要在广域频道继续重复农场位置。\n\n【身份与去向判断】\n以上记录具有连续时间戳、两个独立中继来源与目的地接收确认。身份误配概率较低。伊舍伍德农场的精确坐标未写入外部副本，可通过已知商路、难民中心车队或其他幸存者网络继续询问。\n\n【对附加通信问题的答复】\nHUB 01的监听系统只能保存本地天线实际接收到的公开或未加密信号。在本次检索时段内，没有发现来自中国广东佛山并明确提及梁知遥姓名的公开报平安消息。由于查询者没有提供家属姓名，系统无法判断其他中国方向记录是否与她的家人有关。这只表示本地归档没有收到可验证的匹配消息，不代表任何人的状态。\n\nHUB 01无法恢复微信等私人即时通讯，无法访问已经失效的手机应用服务器，也不会解密第三方账户。当前跨洋骨干网和稳定中继链路均不可用，因此不能承诺把消息送达中国。若未来建立新的跨区中继，HUB可以把一条由本人同意公开的存活消息加入待转发队列，但这不等于找回过去没有进入公共网络的私人消息。\n\n【查询副本结束】"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_READ_HUB_SIGNAL_ARCHIVE",
+    "condition": {
+      "or": [
+        {
+          "u_has_items": {
+            "item": "laptop",
+            "count": 1
+          }
+        },
+        {
+          "u_has_items": {
+            "item": "laptop_screen_lit",
+            "count": 1
+          }
+        },
+        {
+          "u_has_items": {
+            "item": "eink_tablet_pc",
+            "count": 1
+          }
+        },
+        {
+          "u_has_items": {
+            "item": "eink_tablet_pc_on",
+            "count": 1
+          }
+        },
+        {
+          "u_has_items": {
+            "item": "travel_liang_gaming_laptop",
+            "count": 1
+          }
+        }
+      ]
+    },
+    "effect": [
+      {
+        "u_message": "travel_hub_public_signal_archive_text",
+        "snippet": true,
+        "same_snippet": true,
+        "popup": true
+      },
+      {
+        "u_add_var": "travel_hub_signal_archive_personally_read",
+        "type": "dialogue",
+        "context": "travel_liang",
+        "value": "yes"
+      },
+      {
+        "u_message": "你已经浏览归档副本。要完成梁知遥的委托，仍需把原U盘交给她亲自核对。",
+        "type": "info"
+      }
+    ],
+    "false_effect": {
+      "u_message": "需要一台笔记本电脑或平板电脑，才能读取这枚U盘。",
+      "type": "bad"
+    }
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_ROBOFAC_INTERCOM_SERVICES",
+    "responses": [
+      {
+        "text": "我受人委托查询一名失联者，也需要询问中国方向的公开通信能力。",
+        "topic": "TALK_TRAVEL_HUB_SIGNAL_ARCHIVE_REQUEST",
+        "condition": {
+          "and": [
+            {
+              "u_has_mission": "MISSION_TRAVEL_LIANG_FIND_COMMS"
+            },
+            {
+              "u_has_var": "completed_robofac_intercom_1",
+              "type": "dialogue",
+              "context": "intercom",
+              "value": "yes"
+            },
+            {
+              "not": {
+                "u_has_items": {
+                  "item": "travel_hub_public_signal_archive_usb",
+                  "count": 1
+                }
+              }
+            },
+            {
+              "not": {
+                "u_has_var": "travel_hub_signal_archive_purchased",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "text": "我需要补领那份公共信号归档。",
+        "topic": "TALK_TRAVEL_HUB_SIGNAL_ARCHIVE_REPLACEMENT",
+        "condition": {
+          "and": [
+            {
+              "u_has_mission": "MISSION_TRAVEL_LIANG_FIND_COMMS"
+            },
+            {
+              "u_has_var": "completed_robofac_intercom_1",
+              "type": "dialogue",
+              "context": "intercom",
+              "value": "yes"
+            },
+            {
+              "u_has_var": "travel_hub_signal_archive_purchased",
+              "type": "dialogue",
+              "context": "travel_liang",
+              "value": "yes"
+            },
+            {
+              "not": {
+                "u_has_items": {
+                  "item": "travel_hub_public_signal_archive_usb",
+                  "count": 1
+                }
+              }
+            },
+            {
+              "not": {
+                "u_has_var": "travel_hub_signal_archive_delivered",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_HUB_SIGNAL_ARCHIVE_REQUEST",
+    "dynamic_line": "对讲机沉默了几秒，随后传来短促的键盘声。\n\n“公共归档查询只接受明确条件。请说明姓名、关联机构、失联时间、可能同行者，以及附加通信问题。”\n\n“检索范围仅限区域天线实际接收的公开或未加密记录。私人即时通讯与第三方账户不在服务范围内。”",
+    "responses": [
+      {
+        "text": "玛雅·斯卡利特，耶鲁学生，5月15日以后失联，可能与哥哥阿琼同行。委托人梁知遥来自广东佛山，请查询公开信号是否提及她，并说明能否向中国方向发送新的存活消息。",
+        "topic": "TALK_TRAVEL_HUB_SIGNAL_ARCHIVE_QUOTE"
+      },
+      {
+        "text": "我先重新确认查询条件。",
+        "topic": "TALK_ROBOFAC_INTERCOM_SERVICES"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_HUB_SIGNAL_ARCHIVE_QUOTE",
+    "dynamic_line": "“条件已记录。系统将导出与姓名、学校、时间和同行者相符的公开条目，并保留判断身份所需的上下文。精确位置与内部来源标识将被删除。”\n\n“关于中国方向，只检索明确提及梁知遥姓名的公开信号，并单独说明本设施的收发能力。没有家属姓名时，系统不会自行判断其他记录属于其家人。”\n\n“生成费用为1枚HUB金币。”",
+    "responses": [
+      {
+        "text": "[1枚HUB金币] 生成这份查询副本。",
+        "condition": {
+          "u_has_items": {
+            "item": "RobofacCoin",
+            "count": 1
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "RobofacCoin",
+            "count": 1
+          },
+          {
+            "u_spawn_item": "travel_hub_public_signal_archive_usb",
+            "count": 1
+          },
+          {
+            "u_add_var": "travel_hub_signal_archive_purchased",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        ],
+        "topic": "TALK_ROBOFAC_INTERCOM_SERVICES"
+      },
+      {
+        "text": "我现在没有HUB金币。",
+        "condition": {
+          "not": {
+            "u_has_items": {
+              "item": "RobofacCoin",
+              "count": 1
+            }
+          }
+        },
+        "topic": "TALK_ROBOFAC_INTERCOM_SERVICES"
+      },
+      {
+        "text": "暂不生成。",
+        "topic": "TALK_ROBOFAC_INTERCOM_SERVICES"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_HUB_SIGNAL_ARCHIVE_REPLACEMENT",
+    "dynamic_line": "“原查询条件仍在临时记录中。重新生成同一份外部副本并写入新载体，费用为1枚HUB金币。”",
+    "responses": [
+      {
+        "text": "[1枚HUB金币] 重新生成归档U盘。",
+        "condition": {
+          "u_has_items": {
+            "item": "RobofacCoin",
+            "count": 1
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "RobofacCoin",
+            "count": 1
+          },
+          {
+            "u_spawn_item": "travel_hub_public_signal_archive_usb",
+            "count": 1
+          }
+        ],
+        "topic": "TALK_ROBOFAC_INTERCOM_SERVICES"
+      },
+      {
+        "text": "先不补领。",
+        "topic": "TALK_ROBOFAC_INTERCOM_SERVICES"
+      }
+    ]
+  }
+]

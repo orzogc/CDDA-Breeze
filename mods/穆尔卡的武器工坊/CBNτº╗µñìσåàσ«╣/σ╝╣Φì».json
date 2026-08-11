@@ -1,0 +1,271 @@
+[
+  {
+    "type": "AMMO",
+    "id": "25mm_apds",
+    "price": "49 USD",
+    "price_postapoc": "10 USD",
+    "name": {
+      "str_sp": "25x137mm M791 脱壳穿甲曳光弹"
+    },
+    "symbol": "=",
+    "color": "dark_gray",
+    "description": "一发25x137mmM791脱壳穿甲曳光弹，使用钨合金侵彻体攻击轻型装甲目标。它属于M242“巨蝮”链炮使用的25毫米弹族，装备过M2/M3“布雷德利”、LAV-25等平台；同一弹族曾在“沙漠风暴”行动中投入实战。",
+    "material": [
+      "steel",
+      "powder"
+    ],
+    "volume": "220 ml",
+    "weight": "450 g",
+    "bashing": 1,
+    "ammo_type": "25mm",
+    "casing": "25mm_casing",
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 355,
+      "armor_penetration": 150
+    },
+    "range": 60,
+    "dispersion": 125,
+    "recoil": 43750,
+    "count": 15,
+    "effects": [
+      "COOKOFF"
+    ],
+    "longest_side": "23 cm"
+  },
+  {
+    "type": "AMMO",
+    "id": "25mm_hei",
+    "price": "98 USD",
+    "price_postapoc": "15 USD",
+    "name": {
+      "str_sp": "25x137mm M792 高爆燃烧曳光弹"
+    },
+    "symbol": "=",
+    "color": "dark_gray",
+    "description": "一发25x137mmM792高爆燃烧曳光弹，采用M758引信，主要用于打击无装甲车辆、人员和其他软目标。它与M791同属M242“巨蝮”链炮的制式弹族，装备过“布雷德利”、LAV-25和Mk 38舰炮等系统。",
+    "material": [
+      "steel",
+      "powder"
+    ],
+    "volume": "220 ml",
+    "weight": "450 g",
+    "bashing": 1,
+    "ammo_type": "25mm",
+    "casing": "25mm_casing",
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 280,
+      "armor_penetration": 75
+    },
+    "range": 60,
+    "dispersion": 150,
+    "recoil": 49500,
+    "count": 15,
+    "effects": [
+      "AMMO_25MM_HEI",
+      "INCENDIARY",
+      "NO_PENETRATE_OBSTACLES"
+    ],
+    "explode_in_fire": true,
+    "longest_side": "23 cm"
+  },
+  {
+    "type": "AMMO",
+    "id": "25mm_slug",
+    "price_postapoc": "10 USD",
+    "name": {
+      "str_sp": "复装25x137mm弹"
+    },
+    "symbol": "=",
+    "color": "dark_gray",
+    "description": "一枚更换底火并装入普通铅质弹丸的25x137mm复装弹。它远不如制式穿甲弹或高爆燃烧弹可靠，却仍保留了机炮弹药惊人的动能。",
+    "material": [
+      "steel",
+      "powder"
+    ],
+    "volume": "1250 ml",
+    "weight": "380 g",
+    "bashing": 1,
+    "ammo_type": "25mm",
+    "casing": "25mm_casing",
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 280,
+      "armor_penetration": 70
+    },
+    "range": 50,
+    "dispersion": 200,
+    "recoil": 52000,
+    "count": 10,
+    "effects": [
+      "COOKOFF",
+      "RECYCLED"
+    ],
+    "longest_side": "23 cm"
+  },
+  {
+    "id": "408_ct_ap",
+    "copy-from": "408_ct_ball",
+    "type": "AMMO",
+    "name": {
+      "str_sp": ".408 AP 弹"
+    },
+    "description": "一款基于.408 CheyTac弹设计的穿甲弹，通常被特警单位用于在极远距离反制穿戴防弹衣的敌对人员以及车辆，弹芯使用硬质碳化钨，射程，穿透性与精准度极佳。",
+    "price": "60 USD",
+    "price_postapoc": "45 USD",
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 100,
+      "armor_penetration": 70
+    },
+    "recoil": 9500,
+    "effects": [
+      "COOKOFF",
+      "NEVER_MISFIRES"
+    ],
+    "longest_side": "11 cm"
+  },
+  {
+    "id": "545_7n6",
+    "copy-from": "545",
+    "type": "AMMO",
+    "name": {
+      "str": "5.45x39mm 7N6 弹"
+    },
+    "description": "7N6是5.45x39mm弹药体系中最基础、产量最大的型号，1974年由苏联定型列装，随AK-74步枪一同服役。冷战结束后，大量廉价的俄罗斯剩余7N6弹药涌入美国民用市场因其价格极低而深受美国射击爱好者欢迎，一度成为美国市场上5.45口径的标配弹药，虽然原品已禁止进口，但其商业替代品仍广泛流通。",
+    "price": "150 cent",
+    "price_postapoc": "8 USD",
+    "symbol": "=",
+    "color": "yellow",
+    "relative": {
+      "damage": {
+        "damage_type": "bullet",
+        "amount": 5,
+        "armor_penetration": -6
+      }
+    },
+    "longest_side": "6 cm"
+  },
+  {
+    "id": "556_m193",
+    "copy-from": "223",
+    "type": "AMMO",
+    "name": {
+      "str": "5.56x45mm M193 弹"
+    },
+    "description": "5.56x45mm M193是世界上第一种正式列装的小口径步枪弹，由美国雷明顿公司于1957年研制，1964年被美国陆军正式采用，配用于M16/M16A1步枪，在越南战争中首次大规模实战使用，至今仍在全球广泛流通。",
+    "price": "230 cent",
+    "price_postapoc": "7 USD",
+    "loudness": 160,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 40,
+      "armor_penetration": 25
+    },
+    "dispersion": 25,
+    "extend": {
+      "effects": [
+        "NEVER_MISFIRES"
+      ]
+    },
+    "longest_side": "6 cm"
+  },
+  {
+    "id": "76254_lps",
+    "type": "AMMO",
+    "copy-from": "762_54R",
+    "name": {
+      "str_sp": "7.62x54mmR LPS 弹"
+    },
+    "description": "7.62x54mmR LPS轻尖钢芯弹是苏联以及俄罗斯军队长期使用的标准步枪弹，该弹于1950年代开始大规模生产，是苏军步兵步枪和通用机枪的制式标准弹药，生产周期极长，直到1988年才被更新的钢芯弹种逐步取代。",
+    "price": "4 USD",
+    "price_postapoc": "12 USD",
+    "relative": {
+      "damage": {
+        "damage_type": "bullet",
+        "amount": 4,
+        "armor_penetration": 25
+      }
+    },
+    "proportional": {
+      "recoil": 1.1
+    },
+    "longest_side": "8 cm",
+    "speed": 865
+  },
+  {
+    "id": "762_51_m61",
+    "copy-from": "308",
+    "type": "AMMO",
+    "name": {
+      "str": "7.62x51mm NATO M61 弹"
+    },
+    "casing": "762_51_casing",
+    "price": "10 USD",
+    "price_postapoc": "16 USD",
+    "loudness": 165,
+    "description": "M61是美军第一代7.62x51mm NATO口径穿甲弹，于1950年代基于.30-06 Springfield AP M2穿甲弹设计而成，主要用于7.62x51mm武器平台，用于对付轻型装甲目标和有防护的掩体。",
+    "relative": {
+      "damage": {
+        "damage_type": "bullet",
+        "amount": -4,
+        "armor_penetration": 28
+      },
+      "dispersion": -10
+    },
+    "proportional": {
+      "recoil": 1.2
+    },
+    "extend": {
+      "effects": [
+        "NEVER_MISFIRES"
+      ]
+    },
+    "longest_side": "7 cm"
+  },
+  {
+    "id": "9mm_m39b",
+    "copy-from": "9mm",
+    "type": "AMMO",
+    "name": {
+      "str": "9x19mm m/39B 弹"
+    },
+    "loudness": 159,
+    "price": "250 cent",
+    "price_postapoc": "15 USD",
+    "description": "9mm帕拉贝鲁姆弹最初以 m/39的编号随奥地利产Kpist m/39冲锋枪引入瑞典军队，弹头重7.5g，为普通铅芯软被甲弹。1960年代初，瑞典驻刚果联合国维和部队反馈m/39弹药在实战中停止力不足，瑞典陆军于1962年启动改进项目，最终为卡尔古斯塔夫 m/45冲锋枪开发了 m/39B弹药，服役至2003年左右退役。退役后大量剩余弹药以军剩品形式流入国际市场。",
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 28,
+      "armor_penetration": 20
+    },
+    "longest_side": "3 cm"
+  },
+  {
+    "id": "shot_85mag",
+    "copy-from": "shot_00",
+    "type": "AMMO",
+    "name": {
+      "str": "12/70 8.5mm 马格南霰弹"
+    },
+    "description": "一种12/70口径的大威力马格南霰弹，内部装有8.5mm弹丸，它拥有比常规霰弹更好的初速与杀伤性，哪怕无法穿透护甲也可以造成相当大的钝伤，但这也导致它的后坐力比常规霰弹更大。",
+    "range": 30,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 110,
+      "armor_penetration": 18
+    },
+    "proportional": {
+      "recoil": 1.3
+    },
+    "longest_side": "7 cm",
+    "shot_damage": {
+      "damage_type": "bullet",
+      "amount": 24,
+      "armor_penetration": 18
+    },
+    "projectile_count": 5,
+    "shot_spread": 10
+  }
+]

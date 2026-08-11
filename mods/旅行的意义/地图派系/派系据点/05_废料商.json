@@ -1,0 +1,53 @@
+[
+  {
+    "type": "overmap_special",
+    "id": "Occupied Scrap Yard",
+    "overmaps": [
+      {
+        "point": [
+          0,
+          0,
+          0
+        ],
+        "overmap": "smallscrapyard_ocu_north"
+      }
+    ],
+    "connections": [
+      {
+        "point": [
+          0,
+          -1,
+          0
+        ],
+        "terrain": "road",
+        "connection": "local_road",
+        "from": [
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "locations": [
+      "field"
+    ],
+    "city_distance": [
+      3,
+      20
+    ],
+    "city_sizes": [
+      3,
+      -1
+    ],
+    "occurrences": [
+      100,
+      100
+    ],
+    "flags": [
+      "CLASSIC",
+      "GLOBALLY_UNIQUE"
+    ],
+    "priority": 1,
+    "// travel_r11": "r11区域化：世界唯一、100%参与抽签并以priority 1优先放置，同时限制在规模3以上城市周边。保留原版locations与逐格约束，河流不属于可覆盖位置；若受河流、道路或大型占地阻挡，引擎会换位尝试而非删除水系。"
+  }
+]

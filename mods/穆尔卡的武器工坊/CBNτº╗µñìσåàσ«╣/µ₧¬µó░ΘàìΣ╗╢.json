@@ -1,0 +1,237 @@
+[
+  {
+    "id": "bcrf_sp",
+    "type": "GUNMOD",
+    "name": {
+      "str": "步枪一体式消音器"
+    },
+    "description": "步枪的一体式消音器，不可被拆卸。",
+    "weight": "5 g",
+    "volume": "10 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": "1 USD",
+    "price_postapoc": "1 USD",
+    "install_time": "15 s",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "muzzle",
+    "loudness_modifier": -50,
+    "flags": [
+      "IRREMOVABLE",
+      "ZERO_WEIGHT"
+    ],
+    "longest_side": "46 cm",
+    "mod_targets": [
+      "rifle"
+    ]
+  },
+  {
+    "id": "cmr_scope",
+    "type": "GUNMOD",
+    "name": {
+      "str": "“奇美拉”组合式瞄准镜"
+    },
+    "description": "格科斯勒生产的组合式瞄准镜，适用于中近距离战斗。",
+    "weight": "500 g",
+    "volume": "750 ml",
+    "price": "550 USD",
+    "price_postapoc": "55 USD",
+    "install_time": "1 m",
+    "material": [
+      "superalloy",
+      "glass"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "sights",
+    "sight_dispersion": 8,
+    "flags": [
+      "ZOOM"
+    ],
+    "longest_side": "32 cm",
+    "aim_speed_modifier": 15,
+    "mod_targets": [
+      "smg",
+      "rifle",
+      "shotgun"
+    ],
+    "field_of_view": 360
+  },
+  {
+    "id": "grv24_stock",
+    "type": "GUNMOD",
+    "name": {
+      "str": "GRV-2L4 折叠枪托"
+    },
+    "description": "格科斯勒生产的一款折叠枪托，相当轻便的同时性能也不错。",
+    "weight": "200 g",
+    "volume": "350 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": "100 USD",
+    "price_postapoc": "18 USD",
+    "install_time": "1 m",
+    "material": [
+      "plastic",
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "min_skills": [
+      [
+        "weapon",
+        3
+      ]
+    ],
+    "handling_modifier": 8,
+    "location": "stock",
+    "flags": [
+      "COLLAPSIBLE_STOCK",
+      "NEEDS_UNFOLD"
+    ],
+    "longest_side": "28 cm",
+    "mod_targets": [
+      "rifle"
+    ]
+  },
+  {
+    "id": "mpx_357_bore",
+    "type": "GUNMOD",
+    "looks_like": "tac_gun_sp",
+    "name": {
+      "str": "SIG MPX .357 SIG口径改件"
+    },
+    "description": "一套用于SIG MPX的改装套件，可以使其兼容.357 SIG口径弹药以及配套弹匣。",
+    "weight": "300 g",
+    "volume": "300 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": "100 USD",
+    "price_postapoc": "10 USD",
+    "material": "steel",
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "bore",
+    "mod_targets": [
+      "sig_mpx"
+    ],
+    "install_time": "1 m",
+    "ammo_modifier": [
+      "357sig"
+    ],
+    "magazine_adaptor": [
+      [
+        "357sig",
+        [
+          "mpx_357_mag",
+          "mpx_357_drum"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        1
+      ]
+    ],
+    "longest_side": "18 cm"
+  },
+  {
+    "id": "mpx_40_bore",
+    "type": "GUNMOD",
+    "looks_like": "tac_gun_sp",
+    "name": {
+      "str": "SIG MPX .40 S&W口径改件"
+    },
+    "description": "一套用于SIG MPX的改装套件，可以使其兼容.40 S&W口径弹药以及配套弹匣。",
+    "weight": "300 g",
+    "volume": "300 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": "100 USD",
+    "price_postapoc": "10 USD",
+    "material": "steel",
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "bore",
+    "mod_targets": [
+      "sig_mpx"
+    ],
+    "install_time": "1 m",
+    "ammo_modifier": [
+      "40"
+    ],
+    "magazine_adaptor": [
+      [
+        "40",
+        [
+          "mpx_40_mag",
+          "mpx_40_drum"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        1
+      ]
+    ],
+    "longest_side": "18 cm"
+  },
+  {
+    "id": "scgs_blade",
+    "type": "GENERIC",
+    "category": "weapons",
+    "weapon_category": [
+      "SPEARS"
+    ],
+    "name": {
+      "str": "SCGS 合金刀刃"
+    },
+    "description": "SCGS枪矛上不可拆卸的大型合金矛刃，以高韧性超合金锻造并固定在霰弹机构前方。锋利刃口能够刺穿软目标，宽厚刃背也可承受格挡和反复冲击；它本质上是整枪结构的一部分，而不是能随意安装到其他枪械上的普通刺刀。",
+    "weight": "0 g",
+    "volume": "0 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": "50 cent",
+    "price_postapoc": "50 cent",
+    "to_hit": 2,
+    "bashing": 10,
+    "cutting": 45,
+    "material": [
+      "superalloy"
+    ],
+    "symbol": ";",
+    "color": "dark_gray",
+    "gunmod_data": {
+      "location": "underbarrel",
+      "mod_targets": [
+        "scgs_chimera"
+      ],
+      "mode_modifier": [
+        [
+          "REACH",
+          "穿刺",
+          2,
+          [
+            "MELEE",
+            "REACH_ATTACK"
+          ]
+        ]
+      ],
+      "install_time": "0 s"
+    },
+    "flags": [
+      "STAB",
+      "DURABLE_MELEE",
+      "IRREMOVABLE",
+      "ZERO_WEIGHT"
+    ],
+    "longest_side": "55 cm",
+    "integral_longest_side": "55 cm"
+  }
+]

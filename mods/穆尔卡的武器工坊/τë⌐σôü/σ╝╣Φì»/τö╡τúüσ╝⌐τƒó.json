@@ -1,0 +1,100 @@
+[
+  {
+    "id": "em_bolt_1",
+    "type": "AMMO",
+    "name": {
+      "str": "改造电磁钢针"
+    },
+    "description": "一发由钢筋改造而来的简单钢针，基本上可以适配大口径电磁武器，虽然效果比起原厂弹药相差甚远。",
+    "weight": "350 g",
+    "volume": "100 ml",
+    "price": 1,
+    "price_postapoc": 1,
+    "material": [
+      "steel"
+    ],
+    "symbol": "=",
+    "color": "dark_gray",
+    "count": 5,
+    "stack_size": 5,
+    "ammo_type": "em_bolt",
+    "loudness": 0,
+    "range": 20,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 30,
+      "armor_penetration": 10
+    },
+    "dispersion": 80,
+    "effects": [
+      "NON_FOULING"
+    ],
+    "longest_side": "8 cm"
+  },
+  {
+    "id": "em_bolt_2",
+    "type": "AMMO",
+    "name": {
+      "str": "自制电磁钢针"
+    },
+    "description": "一发自制的电磁钢针，效果要比直接从钢筋改造而来的版本更好，虽然比起原厂弹药稍有不足，但也完全够用。",
+    "weight": "350 g",
+    "volume": "100 ml",
+    "price": 20,
+    "price_postapoc": 20,
+    "material": [
+      "steel"
+    ],
+    "symbol": "=",
+    "color": "dark_gray",
+    "count": 5,
+    "stack_size": 5,
+    "ammo_type": "em_bolt",
+    "loudness": 0,
+    "range": 20,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 50,
+      "armor_penetration": 50
+    },
+    "dispersion": 20,
+    "effects": [
+      "NON_FOULING"
+    ],
+    "longest_side": "8 cm"
+  },
+  {
+    "id": "em_bolt",
+    "type": "AMMO",
+    "name": {
+      "str": "原厂电磁钢针"
+    },
+    "description": "一发格科斯勒生产的正规电磁钢针，专为GELX-3L设计，带有钨合金单芯，穿透力和精度相当惊人，并且也很少见，可以击穿你遇到的任何生物，或者不是生物的东西。",
+    "weight": "450 g",
+    "volume": "100 ml",
+    "price": 50000,
+    "price_postapoc": 500,
+    "material": [
+      "steel",
+      "brass",
+      "superalloy"
+    ],
+    "symbol": "=",
+    "color": "dark_gray",
+    "count": 5,
+    "stack_size": 5,
+    "ammo_type": "em_bolt",
+    "loudness": 0,
+    "range": 40,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 100,
+      "armor_penetration": 150
+    },
+    "dispersion": 0,
+    "effects": [
+      "NON_FOULING"
+    ],
+    "longest_side": "8 cm"
+  }
+]

@@ -1,0 +1,157 @@
+[
+  {
+    "id": "109_stock",
+    "type": "GUNMOD",
+    "name": {
+      "str": "AK-109 定制枪托"
+    },
+    "description": "AK-109的特殊定制枪托。",
+    "weight": "200 g",
+    "volume": "350 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": 4200,
+    "price_postapoc": 750,
+    "install_time": "1 m",
+    "material": [
+      "plastic",
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "min_skills": [
+      [
+        "weapon",
+        3
+      ]
+    ],
+    "aim_speed_modifier": 5,
+    "location": "stock",
+    "mod_targets": [
+      "ak109c"
+    ],
+    "use_action": {
+      "type": "transform",
+      "msg": "你折叠枪托，以便携带。",
+      "menu_text": "折叠",
+      "target": "109stock_folded",
+      "moves": 120
+    },
+    "handling_modifier": 3
+  },
+  {
+    "id": "109stock_folded",
+    "type": "GUNMOD",
+    "name": {
+      "str": "AK-109 定制枪托 (折叠)"
+    },
+    "description": "AK-109的定制枪托，目前已被折叠。",
+    "copy-from": "109_stock",
+    "aim_speed_modifier": 0,
+    "use_action": {
+      "type": "transform",
+      "msg": "你展开枪托，准备战斗。",
+      "menu_text": "展开",
+      "target": "109_stock",
+      "moves": 120
+    },
+    "flags": [
+      "FOLDED_STOCK"
+    ],
+    "handling_modifier": -2
+  },
+  {
+    "id": "153m_scope",
+    "type": "GUNMOD",
+    "name": {
+      "str": "MP153-M 全息瞄准镜"
+    },
+    "description": "一款私人订制的单倍全息瞄准镜，轻便耐用，在任何环境下都相当可靠。",
+    "volume": "0 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": 1,
+    "price_postapoc": 1,
+    "install_time": "1 m",
+    "material": [
+      "steel",
+      "carbide",
+      "glass"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "sights",
+    "mod_targets": [
+      "MP153_M"
+    ],
+    "field_of_view": 1200,
+    "dispersion_modifier": -180,
+    "sight_dispersion": 15,
+    "aim_speed_modifier": 60,
+    "flags": [
+      "IRREMOVABLE",
+      "ZERO_WEIGHT"
+    ]
+  },
+  {
+    "id": "153m_sp",
+    "type": "GUNMOD",
+    "name": {
+      "str": "MP-153M 碳纤维消音器"
+    },
+    "description": "MP-153M专属消音，延续了之前用消音器弥补短枪管长度的设计，消音器的体积更小了，不过消音效果略有不足。",
+    "volume": "1 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": 1,
+    "price_postapoc": 1,
+    "install_time": "1 s",
+    "material": [
+      "carbide"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "muzzle",
+    "mod_targets": [
+      "MP153_M"
+    ],
+    "shot_spread_multiplier_modifier": -0.2,
+    "loudness_modifier": -120,
+    "handling_modifier": 4,
+    "flags": [
+      "IRREMOVABLE",
+      "ZERO_WEIGHT"
+    ]
+  },
+  {
+    "id": "153m_stock",
+    "type": "GUNMOD",
+    "name": {
+      "str": "MP153-M 枪托护木套件"
+    },
+    "description": "沿用了之前使用的帆布托腮垫和缓冲垫，但是使用了重量更轻的碳纤维枪托和护木，在大幅度减少重量的同时保证了结构强度和人机功效。",
+    "volume": "0 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": 1,
+    "price_postapoc": 1,
+    "install_time": "1 m",
+    "material": [
+      "canvas",
+      "carbide"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "stock",
+    "mod_targets": [
+      "MP153_M"
+    ],
+    "dispersion_modifier": -180,
+    "aim_speed_modifier": 5,
+    "handling_modifier": 8,
+    "flags": [
+      "IRREMOVABLE",
+      "ZERO_WEIGHT"
+    ]
+  }
+]

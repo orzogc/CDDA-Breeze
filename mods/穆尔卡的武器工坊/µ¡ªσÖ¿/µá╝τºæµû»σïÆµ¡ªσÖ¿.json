@@ -1,0 +1,711 @@
+[
+  {
+    "id": "ga290",
+    "type": "GUN",
+    "name": {
+      "str": "GA-290 突击步枪"
+    },
+    "description": "格科斯勒的制式突击步枪，使用短行程活塞设计使得后坐力的控制性很优秀，使用独特的7.37x40mm埋头弹，枪管经过CVD镀膜，整枪寿命极高且耐非常修理，高度模块化的设计提供了很大的改装空间，可以在短时间内快速更换口径，除此以外还有耐用性好，精准度高，重量轻，不易故障等优点，在各种环境下都很可靠，当然……它不便宜，不过在高端枪械爱好者和特种部队里面还是很受欢迎的。",
+    "weight": "3400 g",
+    "volume": "1500 ml",
+    "longest_side": "850 mm",
+    "price": 95000,
+    "price_postapoc": 8500,
+    "material": [
+      "superalloy",
+      "carbide"
+    ],
+    "symbol": "(",
+    "color": "green",
+    "ammo": [
+      "737_cta"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 120,
+    "durability": 10,
+    "default_mods": [
+      "ga_stock",
+      "tac_holo",
+      "tac_gun_muzzle"
+    ],
+    "skill": "rifle",
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "BURST",
+        "2 rd.",
+        2
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "barrel_volume": "500 ml",
+    "valid_mod_locations": [
+      [
+        "barrel",
+        1
+      ],
+      [
+        "bore",
+        1
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "737_cta_20",
+          "737_cta_30",
+          "737_cta_50",
+          "737_cta_100"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "ga290c",
+    "type": "GUN",
+    "name": {
+      "str": "GA-290C 短突击步枪"
+    },
+    "description": "格科斯勒生产的一种基于GA-290突击步枪设计出的短突击步枪，命名为GA-290C短突击步枪亦或是突击卡宾枪，最初的目的是为了给载具乘员提供个人防卫武器，之后也被不少使用者发现了这把武器非常适合近距离作战的优点，至少比GA-290要好很多，当然精度和威力比起它就要逊色一些了。",
+    "weight": "2900 g",
+    "volume": "1000 ml",
+    "longest_side": "650 mm",
+    "price": 75000,
+    "price_postapoc": 8000,
+    "material": [
+      "superalloy",
+      "carbide"
+    ],
+    "symbol": "(",
+    "color": "green",
+    "ammo": [
+      "737_cta"
+    ],
+    "reload_noise_volume": 5,
+    "dispersion": 230,
+    "durability": 10,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -5
+    },
+    "default_mods": [
+      "ga_stock2",
+      "tac_gun_muzzle"
+    ],
+    "skill": "rifle",
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "BURST",
+        "2 rd.",
+        2
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "barrel_volume": "300 ml",
+    "valid_mod_locations": [
+      [
+        "barrel",
+        1
+      ],
+      [
+        "bore",
+        1
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "737_cta_20",
+          "737_cta_30",
+          "737_cta_50",
+          "737_cta_100"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "ga290dmr",
+    "type": "GUN",
+    "name": {
+      "str": "GA-290DMR 精准射手步枪"
+    },
+    "description": "格科斯勒生产的一种基于GA-290突击步枪设计出的精准射手步枪，GA-290DMR只能半自动射击，但是考虑到这把枪是为了应对远距离作战所以该问题可以忽略不计，该枪默认使用了重型枪托和更长的枪管，让GA-290系列最引以为傲的精度优点变得更为优秀。",
+    "weight": "4000 g",
+    "volume": "2500 ml",
+    "longest_side": "1250 mm",
+    "price": 125000,
+    "price_postapoc": 9000,
+    "material": [
+      "superalloy",
+      "carbide"
+    ],
+    "symbol": "(",
+    "color": "green",
+    "ammo": [
+      "737_cta"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 50,
+    "durability": 10,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 5
+    },
+    "default_mods": [
+      "ga_stock_h",
+      "tac_gun_muzzle",
+      "tac_h_scope",
+      "barrel_lh",
+      "bipod"
+    ],
+    "skill": "rifle",
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "barrel_volume": "750 ml",
+    "valid_mod_locations": [
+      [
+        "barrel",
+        1
+      ],
+      [
+        "bore",
+        1
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "737_cta_20",
+          "737_cta_30",
+          "737_cta_50",
+          "737_cta_100"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "ga290lmg",
+    "type": "GUN",
+    "name": {
+      "str": "GA-290LMG 轻机枪"
+    },
+    "description": "格科斯勒生产的一种基于GA-290突击步枪设计出的轻机枪，GA-290更换了加长型号的护木，重型枪管和重型枪托，稳定性和精准度得到了进一步提升，但这也导致它的体积和重量更大了，它使用弹鼓或者弹匣供弹，所以持续输出能力比起部分轻机枪可能要逊色一些。",
+    "weight": "4400 g",
+    "volume": "3000 ml",
+    "longest_side": "1050 mm",
+    "price": 105000,
+    "price_postapoc": 15000,
+    "material": [
+      "superalloy",
+      "carbide"
+    ],
+    "symbol": "(",
+    "color": "green",
+    "ammo": [
+      "737_cta"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 100,
+    "durability": 10,
+    "default_mods": [
+      "ga_stock_h",
+      "tac_m_scope",
+      "barrel_lh",
+      "tac_gun_muzzle"
+    ],
+    "skill": "rifle",
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "BURST",
+        "2 rd.",
+        2
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "barrel_volume": "500 ml",
+    "valid_mod_locations": [
+      [
+        "barrel",
+        1
+      ],
+      [
+        "bore",
+        1
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "737_cta_20",
+          "737_cta_30",
+          "737_cta_50",
+          "737_cta_100"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "ga290k",
+    "type": "GUN",
+    "name": {
+      "str": "GA-290K 卡宾枪"
+    },
+    "description": "格科斯勒生产的一种半自动步枪，是一种面向民用市场的武器，该枪使用了导气式自动原理而不是GA系列步枪的短行程活塞，枪械的制造材料也替换成了常规枪械的制造材料来使价格降低到完全可以接受的范围内，虽然在操控性和耐用性方面逊色一些，但是综合性能还是非常优秀的。",
+    "weight": "3800 g",
+    "volume": "2300 ml",
+    "longest_side": "1000 mm",
+    "price": 45000,
+    "price_postapoc": 6000,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "green",
+    "ammo": [
+      "737_cta"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 150,
+    "durability": 10,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 5
+    },
+    "default_mods": [
+      "ga_stock_h"
+    ],
+    "skill": "rifle",
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "barrel_volume": "600 ml",
+    "valid_mod_locations": [
+      [
+        "barrel",
+        1
+      ],
+      [
+        "bore",
+        1
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "737_cta_20",
+          "737_cta_30",
+          "737_cta_50",
+          "737_cta_100"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "gelx_2n",
+    "type": "GUN",
+    "color": "dark_gray",
+    "name": {
+      "str": "GELX-2N  电磁突击步枪"
+    },
+    "description": "GELX-2N是格科斯勒首款在部队中使用的武器，当然它也有外贸过一部分，虽然它与GELX-3L一同被誉为世界上最先进的单兵电磁武器之但却很少有人想过大批量购买这种武器，毕竟性价比着实不高，GELX-2N发射的是一种类似钉子大小的钢针，它也完全可以发射稍微改造后的普通钉子，其枪口初速大约每秒1000米，与部分高速弹相当，使用弹仓供弹，不过好消息是你只需要把弹药倒进弹仓就行，虽然正常来说它有一种专门的小包往里面倒弹药，但你用手抓一把也行，方向没错就好……",
+    "price": 600000,
+    "price_postapoc": 15000,
+    "material": [
+      "superalloy",
+      "carbide"
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "USE_UPS",
+      "NO_TURRET"
+    ],
+    "default_mods": [
+      "tac_holo"
+    ],
+    "skill": "rifle",
+    "ammo": [
+      "nail"
+    ],
+    "weight": "3200 g",
+    "volume": "2000 ml",
+    "longest_side": "900 mm",
+    "symbol": "(",
+    "to_hit": -1,
+    "range": 35,
+    "reload_noise_volume": 10,
+    "loudness": 5,
+    "dispersion": 120,
+    "durability": 10,
+    "clip_size": 45,
+    "reload": 500,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 22,
+      "armor_penetration": 10
+    },
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "sling",
+        1
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "nail": 45
+        },
+        "rigid": true
+      }
+    ],
+    "ups_charges": 10,
+    "bashing": 10
+  },
+  {
+    "id": "gelx_3l",
+    "type": "GUN",
+    "color": "dark_gray",
+    "name": {
+      "str": "GELX-3L  电磁反器材狙击步枪"
+    },
+    "description": "GELX-3L算得上是现如今威力最大的单兵电磁武器了，其枪口初速最高大约2000米每秒，安静，精准，致命，在价格方面也很致命，常用于特种作战，是为数不多经历过实战检验的电磁武器，它在发射原厂钨合金钢针穿甲弹时可以轻而易举的击穿装甲车然后把里面的乘员钉在车里，但不幸的是你几乎是找不到这种弹药……不过好消息是这种弹药的直径跟你见到的一些钢筋差不多，只要尺寸合适那么它还是可以照常发射的……大概？",
+    "price": 1600000,
+    "price_postapoc": 55000,
+    "material": [
+      "superalloy",
+      "carbide"
+    ],
+    "flags": [
+      "RELOAD_ONE",
+      "NEVER_JAMS",
+      "USE_UPS",
+      "NO_TURRET"
+    ],
+    "default_mods": [
+      "tac_h_scope"
+    ],
+    "skill": "rifle",
+    "ammo": [
+      "em_bolt"
+    ],
+    "weight": "12000 g",
+    "volume": "8000 ml",
+    "longest_side": "1300 mm",
+    "symbol": "(",
+    "to_hit": -1,
+    "range": 180,
+    "reload_noise_volume": 10,
+    "loudness": 30,
+    "dispersion": 0,
+    "durability": 10,
+    "clip_size": 10,
+    "reload": 300,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 150,
+      "armor_penetration": 80
+    },
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "sling",
+        1
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "em_bolt": 10
+        },
+        "rigid": true
+      }
+    ],
+    "ups_charges": 100,
+    "bashing": 30
+  }
+]

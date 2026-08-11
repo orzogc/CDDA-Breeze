@@ -1,0 +1,25 @@
+[
+  {
+    "type": "overlay_order",
+    "overlay_ordering": [
+      {
+        "id": [
+          "murka_hair"
+        ],
+        "order": 1601
+      },
+      {
+        "id": [
+          "murka_eye"
+        ],
+        "order": 1102
+      },
+      {
+        "id": [
+          "murka_skin"
+        ],
+        "order": 1101
+      }
+    ]
+  }
+]

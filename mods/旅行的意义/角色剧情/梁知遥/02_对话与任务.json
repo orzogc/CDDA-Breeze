@@ -1,0 +1,6116 @@
+[
+  {
+    "type": "effect_type",
+    "id": "travel_liang_weak_antibiotic_cooldown",
+    "name": [
+      "窄谱抗生素补货中"
+    ],
+    "desc": [
+      "梁知遥正在等待难民中心重新核对并放出下一小批窄谱抗生素。"
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "travel_liang_antibiotic_cooldown",
+    "name": [
+      "抗生素补货中"
+    ],
+    "desc": [
+      "梁知遥正在等待难民中心重新核对并放出下一小批常规抗生素。"
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "travel_liang_firstaid_cooldown",
+    "name": [
+      "基础医疗用品补货中"
+    ],
+    "desc": [
+      "梁知遥正在重新整理可供交换的医用纱布与消毒剂。"
+    ]
+  },
+  {
+    "type": "npc",
+    "id": "TRAVEL_LIANG_ZHIYAO",
+    "name_unique": "梁知遥",
+    "gender": "female",
+    "mission_offered": "MISSION_TRAVEL_WITH_LIANG_TO_REFUGEE",
+    "class": "NC_TRAVEL_LIANG_ZHIYAO",
+    "martial_arts": [
+      "style_wc_rework_ipman"
+    ],
+    "martial_art": "style_wc_rework_ipman",
+    "attitude": 1,
+    "mission": 2,
+    "chat": "TALK_TRAVEL_LIANG_INTRO_1",
+    "faction": "no_faction",
+    "name_suffix": "留学生",
+    "personality": {
+      "aggression": -3,
+      "bravery": 6,
+      "collector": -6,
+      "altruism": 6
+    },
+    "follower_rules": {
+      "apply_to_all": true,
+      "engagement": "ENGAGE_CLOSE",
+      "aim": "AIM_WHEN_CONVENIENT",
+      "use_guns": true,
+      "use_grenades": true,
+      "use_silent": false,
+      "avoid_friendly_fire": true,
+      "allow_pick_up": false,
+      "allow_bash": false,
+      "allow_sleep": false,
+      "allow_complain": true,
+      "allow_pulp": true,
+      "close_doors": false,
+      "avoid_doors": false,
+      "ignore_noise": false,
+      "forbid_engage": false,
+      "allow_improvised_throwing": false,
+      "never_flee": false,
+      "prefer_guns": false
+    },
+    "npc_speech": {
+      "camp_food_thanks": "我从营地取了一些食物，谢谢。",
+      "camp_larder_empty": "营地的食物储备已经空了，我们需要补充。",
+      "camp_water_thanks": "我从营地补过水了，谢谢。",
+      "cant_flee": "没有安全的退路，我会守住这里。",
+      "close_distance": "<travel_liang_close_distance>",
+      "combat_noise_warning": "<travel_liang_combat_noise_warning>",
+      "danger_close_distance": "<travel_liang_danger_close_distance>",
+      "done_mugging": "东西已经拿到了，我走了。",
+      "far_distance": "<travel_liang_far_distance>",
+      "fire_bad": "这里的火势很危险，先离开。",
+      "fire_in_the_hole_h": "有爆炸物，注意掩护。",
+      "fire_in_the_hole": "有爆炸物，注意掩护。",
+      "general_danger_h": "<travel_liang_general_danger>",
+      "general_danger": "<travel_liang_general_danger>",
+      "heal_self": "我需要先处理自己的伤。",
+      "hungry": "我有些饿了，需要找点吃的。",
+      "im_leaving_you": "我跟不上了，会先停在这里。",
+      "its_safe_h": "<travel_liang_its_safe>",
+      "its_safe": "<travel_liang_its_safe>",
+      "keep_up": "请稍微慢一点，我还在后面。",
+      "kill_npc_h": "目标倒下了。",
+      "kill_npc": "目标倒下了。",
+      "kill_player_h": "结束了。",
+      "let_me_pass": "借过一下，我需要从这里通过。",
+      "lets_talk": "等一下，我想和你谈谈。",
+      "medium_distance": "<travel_liang_medium_distance>",
+      "monster_warning_h": "<travel_liang_monster_warning>",
+      "monster_warning": "<travel_liang_monster_warning>",
+      "movement_noise_warning": "<travel_liang_movement_noise_warning>",
+      "need_batteries": "我的仿生系统需要电池。",
+      "need_booze": "我的身体出现了酒精依赖反应，需要处理。",
+      "need_fuel": "我的仿生系统需要补充燃料。",
+      "no_to_thorazine": "我不需要服用这个。",
+      "run_away": "撤退，先拉开距离。",
+      "speech_warning": "<travel_liang_speech_warning>",
+      "thirsty": "我有些渴了，需要补水。",
+      "wait": "请等一下，我正在找你。",
+      "warn_sleep": "我太累了，需要休息。",
+      "yawn": "我有些困了。",
+      "yes_to_lsd": "这个看起来很特别。",
+      "mug_dontmove": "不要动，把东西交出来。",
+      "lost_blood": "我失血很多，需要尽快处理。",
+      "pulp_zombie": "等一下，我要处理那具%s。",
+      "heal_player": "别动，%s，我来处理伤口。",
+      "wound_infected": "我的%s伤口感染了。",
+      "wound_bite": "我的%s咬伤情况不太好。",
+      "bleeding": "我的%s在流血。",
+      "bleeding_badly": "我的%s出血很严重。",
+      "radiation_sickness": "我出现了辐射病症状。",
+      "acknowledged": "明白。",
+      "bye": "回头见。",
+      "consume_cant_accept": "抱歉，我还不能接受这个。",
+      "consume_cant_consume": "这个不适合现在使用。",
+      "consume_rotten": "这个已经腐坏了，我不能吃。",
+      "consume_eat": "谢谢，正好需要。",
+      "consume_need_item": "我需要%s才能使用这个。",
+      "consume_med": "谢谢，感觉好多了。",
+      "consume_nocharge": "这个已经没有可用剂量了。",
+      "consume_use_med": "谢谢，我已经用过了。",
+      "give_nope": "抱歉，我拿不了这个。",
+      "give_to_hallucination": "谢谢，不过我不需要。",
+      "give_cancel": "没关系，你先收着。",
+      "give_dangerous": "这个现在很危险，先别递给我。",
+      "give_wield": "谢谢，我会把它拿在手里。",
+      "give_weapon_weak": "我现在的武器更合适。",
+      "give_carry": "谢谢，我会收好。",
+      "give_carry_cant": "我的容器没有足够空间。",
+      "give_carry_cant_few_space": "我最多还能装下%s%s。",
+      "give_carry_cant_no_space": "其他东西也放不下了。",
+      "give_carry_too_heavy": "这个太重了，我现在带不动。",
+      "wear": "谢谢，我会穿上它。",
+      "mutiny": "我不能再继续跟着你了，我们到此为止。",
+      "pickup_item": "等一下，我想捡起那个%s。",
+      "no_dropoff": "我没有可以放下的东西。",
+      "socialize": "能这样安静地说一会儿话，感觉很好。"
+    }
+  },
+  {
+    "type": "npc",
+    "id": "TRAVEL_LIANG_ZHIYAO_REFUGEE",
+    "name_unique": "梁知遥",
+    "gender": "female",
+    "class": "NC_TRAVEL_LIANG_ZHIYAO_CENTER",
+    "martial_arts": [
+      "style_wc_rework_ipman"
+    ],
+    "martial_art": "style_wc_rework_ipman",
+    "attitude": 0,
+    "mission": 3,
+    "chat": "TALK_TRAVEL_LIANG_CENTER_INTRO_1",
+    "faction": "no_faction",
+    "name_suffix": "留学生",
+    "personality": {
+      "aggression": -3,
+      "bravery": 6,
+      "collector": -6,
+      "altruism": 6
+    },
+    "//": "旧存档兼容与未来可选剧情分支预留。新世界没有地图生成或全局EOC引用此模板。",
+    "follower_rules": {
+      "apply_to_all": true,
+      "engagement": "ENGAGE_CLOSE",
+      "aim": "AIM_WHEN_CONVENIENT",
+      "use_guns": true,
+      "use_grenades": true,
+      "use_silent": false,
+      "avoid_friendly_fire": true,
+      "allow_pick_up": false,
+      "allow_bash": false,
+      "allow_sleep": false,
+      "allow_complain": true,
+      "allow_pulp": true,
+      "close_doors": false,
+      "avoid_doors": false,
+      "ignore_noise": false,
+      "forbid_engage": false,
+      "allow_improvised_throwing": false,
+      "never_flee": false,
+      "prefer_guns": false
+    },
+    "npc_speech": {
+      "camp_food_thanks": "我从营地取了一些食物，谢谢。",
+      "camp_larder_empty": "营地的食物储备已经空了，我们需要补充。",
+      "camp_water_thanks": "我从营地补过水了，谢谢。",
+      "cant_flee": "没有安全的退路，我会守住这里。",
+      "close_distance": "<travel_liang_close_distance>",
+      "combat_noise_warning": "<travel_liang_combat_noise_warning>",
+      "danger_close_distance": "<travel_liang_danger_close_distance>",
+      "done_mugging": "东西已经拿到了，我走了。",
+      "far_distance": "<travel_liang_far_distance>",
+      "fire_bad": "这里的火势很危险，先离开。",
+      "fire_in_the_hole_h": "有爆炸物，注意掩护。",
+      "fire_in_the_hole": "有爆炸物，注意掩护。",
+      "general_danger_h": "<travel_liang_general_danger>",
+      "general_danger": "<travel_liang_general_danger>",
+      "heal_self": "我需要先处理自己的伤。",
+      "hungry": "我有些饿了，需要找点吃的。",
+      "im_leaving_you": "我跟不上了，会先停在这里。",
+      "its_safe_h": "<travel_liang_its_safe>",
+      "its_safe": "<travel_liang_its_safe>",
+      "keep_up": "请稍微慢一点，我还在后面。",
+      "kill_npc_h": "目标倒下了。",
+      "kill_npc": "目标倒下了。",
+      "kill_player_h": "结束了。",
+      "let_me_pass": "借过一下，我需要从这里通过。",
+      "lets_talk": "等一下，我想和你谈谈。",
+      "medium_distance": "<travel_liang_medium_distance>",
+      "monster_warning_h": "<travel_liang_monster_warning>",
+      "monster_warning": "<travel_liang_monster_warning>",
+      "movement_noise_warning": "<travel_liang_movement_noise_warning>",
+      "need_batteries": "我的仿生系统需要电池。",
+      "need_booze": "我的身体出现了酒精依赖反应，需要处理。",
+      "need_fuel": "我的仿生系统需要补充燃料。",
+      "no_to_thorazine": "我不需要服用这个。",
+      "run_away": "撤退，先拉开距离。",
+      "speech_warning": "<travel_liang_speech_warning>",
+      "thirsty": "我有些渴了，需要补水。",
+      "wait": "请等一下，我正在找你。",
+      "warn_sleep": "我太累了，需要休息。",
+      "yawn": "我有些困了。",
+      "yes_to_lsd": "这个看起来很特别。",
+      "mug_dontmove": "不要动，把东西交出来。",
+      "lost_blood": "我失血很多，需要尽快处理。",
+      "pulp_zombie": "等一下，我要处理那具%s。",
+      "heal_player": "别动，%s，我来处理伤口。",
+      "wound_infected": "我的%s伤口感染了。",
+      "wound_bite": "我的%s咬伤情况不太好。",
+      "bleeding": "我的%s在流血。",
+      "bleeding_badly": "我的%s出血很严重。",
+      "radiation_sickness": "我出现了辐射病症状。",
+      "acknowledged": "明白。",
+      "bye": "回头见。",
+      "consume_cant_accept": "抱歉，我还不能接受这个。",
+      "consume_cant_consume": "这个不适合现在使用。",
+      "consume_rotten": "这个已经腐坏了，我不能吃。",
+      "consume_eat": "谢谢，正好需要。",
+      "consume_need_item": "我需要%s才能使用这个。",
+      "consume_med": "谢谢，感觉好多了。",
+      "consume_nocharge": "这个已经没有可用剂量了。",
+      "consume_use_med": "谢谢，我已经用过了。",
+      "give_nope": "抱歉，我拿不了这个。",
+      "give_to_hallucination": "谢谢，不过我不需要。",
+      "give_cancel": "没关系，你先收着。",
+      "give_dangerous": "这个现在很危险，先别递给我。",
+      "give_wield": "谢谢，我会把它拿在手里。",
+      "give_weapon_weak": "我现在的武器更合适。",
+      "give_carry": "谢谢，我会收好。",
+      "give_carry_cant": "我的容器没有足够空间。",
+      "give_carry_cant_few_space": "我最多还能装下%s%s。",
+      "give_carry_cant_no_space": "其他东西也放不下了。",
+      "give_carry_too_heavy": "这个太重了，我现在带不动。",
+      "wear": "谢谢，我会穿上它。",
+      "mutiny": "我不能再继续跟着你了，我们到此为止。",
+      "pickup_item": "等一下，我想捡起那个%s。",
+      "no_dropoff": "我没有可以放下的东西。",
+      "socialize": "能这样安静地说一会儿话，感觉很好。"
+    }
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_CENTER_INTRO_1",
+    "dynamic_line": "难民中心的顶灯亮得有些过分，长桌上的纸却还是乱成一片。一个戴黑色棒球帽的年轻女人正把药品标签和伤情记录分开，遇到看不清的字就停下来，皱着眉猜一会儿。手机压在纸角，屏幕上还留着几条发送失败的消息。\n\n两米多长的木棍贴墙放着。她发现你在看，先把一叠纸抱稳，又朝你笑了一下。\n\n“你也是刚到吗？我不是这里的工作人员，只是被抓来帮忙认字。要找医生的话，她刚才还在里面。”",
+    "responses": [
+      {
+        "text": "你在帮他们整理什么？",
+        "topic": "TALK_TRAVEL_LIANG_CENTER_INTRO_2"
+      },
+      {
+        "text": "我在找人，也想听听这里的消息。",
+        "topic": "TALK_TRAVEL_LIANG_CENTER_INTRO_2"
+      },
+      {
+        "text": "那根棍子很难不让人注意。",
+        "topic": "TALK_TRAVEL_LIANG_CENTER_INTRO_2_STAFF"
+      },
+      {
+        "text": "我先不打扰你。",
+        "topic": "TALK_DONE"
+      }
+    ],
+    "speaker_effect": [
+      {
+        "effect": [
+          {
+            "npc_lose_trait": "TRAVEL_LIANG_SILENT_SPAWN_GEAR"
+          },
+          {
+            "npc_lose_effect": "npc_wear_item_success_no_message"
+          }
+        ]
+      },
+      {
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "npc_has_var": "travel_liang_center_position_fixed",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            },
+            {
+              "u_near_om_location": "evac_center_13",
+              "range": 5
+            }
+          ]
+        },
+        "effect": [
+          {
+            "npc_add_var": "travel_liang_center_position_fixed",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_CENTER_INTRO_2",
+    "dynamic_line": "“一些药名、过敏史，还有谁需要再看一次伤口。我学的是生物医学工程，不是医生，能做的也就是别把名字抄错。”\n\n她把一张写反日期的表抽出来，自己先笑了。\n\n“其实我昨晚才到，比你多知道不了多少。梁知遥，广东佛山人，在耶鲁读书。你怎么称呼？”",
+    "responses": [
+      {
+        "text": "报上自己的名字。",
+        "topic": "TALK_TRAVEL_LIANG_CENTER_INTRO_3",
+        "opinion": {
+          "trust": 1
+        }
+      },
+      {
+        "text": "先叫我幸存者就行。",
+        "topic": "TALK_TRAVEL_LIANG_CENTER_INTRO_3"
+      },
+      {
+        "text": "我暂时不想介绍自己。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_CENTER_INTRO_2_STAFF",
+    "dynamic_line": "她顺着你的目光看向墙边。\n\n“六点半棍。我从小练过，路上靠它才走到这里。守卫让我贴墙放好，别绊到人。”\n\n她把棍尾又往里推了一点。\n\n“梁知遥，在耶鲁读生物医学工程。现在暂时算一个会抄表的难民。你呢？”",
+    "responses": [
+      {
+        "text": "报上自己的名字。",
+        "topic": "TALK_TRAVEL_LIANG_CENTER_INTRO_3",
+        "opinion": {
+          "trust": 1,
+          "value": 1
+        }
+      },
+      {
+        "text": "先叫我幸存者就行。",
+        "topic": "TALK_TRAVEL_LIANG_CENTER_INTRO_3"
+      },
+      {
+        "text": "先不打扰你。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_CENTER_INTRO_3",
+    "dynamic_line": "梁知遥把你的称呼记在废纸背面，字写得很快，最后一笔却停了片刻。\n\n“我在找室友玛雅。她和哥哥开车离开学校以后，就没有再回消息。家里也联系不上，我手机里那条报平安的微信一直停在发送失败。”\n\n她把手机翻过去，像是觉得盯着红色感叹号也没有用。\n\n“我今天还得把这些纸交完，也真的很想睡一觉。明天你还在的话，我们可以再聊。也许你会听到我没听过的消息，也许我们能一起找个还收得到信号的地方。”",
+    "responses": [
+      {
+        "text": "等你休息好，我愿意和你一起找。",
+        "topic": "TALK_DONE",
+        "opinion": {
+          "trust": 1,
+          "value": 1
+        },
+        "effect": [
+          {
+            "npc_add_var": "travel_liang_met",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_intro_complete",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_arrived",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_arrival_time",
+            "type": "timer",
+            "context": "travel_liang",
+            "time": true
+          },
+          "stranger_neutral",
+          {
+            "npc_add_var": "travel_liang_origin_center",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_center_role_started",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_center_position_fixed",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_first_topic": "TALK_TRAVEL_LIANG_START"
+          },
+          {
+            "npc_add_var": "travel_liang_center_search_agreed",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        ]
+      },
+      {
+        "text": "我不能先保证结果，但明天可以再谈。",
+        "topic": "TALK_DONE",
+        "effect": [
+          {
+            "npc_add_var": "travel_liang_met",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_intro_complete",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_arrived",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_arrival_time",
+            "type": "timer",
+            "context": "travel_liang",
+            "time": true
+          },
+          "stranger_neutral",
+          {
+            "npc_add_var": "travel_liang_origin_center",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_center_role_started",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_center_position_fixed",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_first_topic": "TALK_TRAVEL_LIANG_START"
+          }
+        ]
+      },
+      {
+        "text": "我现在没有余力承诺，先把自己的事情处理好。",
+        "topic": "TALK_DONE",
+        "effect": [
+          {
+            "npc_add_var": "travel_liang_met",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_intro_complete",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_arrived",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_arrival_time",
+            "type": "timer",
+            "context": "travel_liang",
+            "time": true
+          },
+          "stranger_neutral",
+          {
+            "npc_add_var": "travel_liang_origin_center",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_center_role_started",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_center_position_fixed",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_first_topic": "TALK_TRAVEL_LIANG_START"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_INTRO_1",
+    "dynamic_line": "你走下没有照明的地下安置层。长凳边那部调到最低亮度的手机被迅速扣在纸张上，冷白光随之消失。等眼睛适应楼梯口漏下的微光，你才看清一个年轻女人从长凳旁站起，她膝边放着维护记录、区域交通图和几张纸质撤离说明，手里则握着一根很长的木棍。\n\n“你好。先停一下，可以吗？”\n\n她的声音有些紧，却并不凶。\n\n“我想确认你没有受伤，也没有东西跟着下来。确认完，我们就不用隔着一根棍子说话了。”",
+    "responses": [
+      {
+        "text": "好，我停下。没人跟着。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_2_CALM",
+        "opinion": {
+          "trust": 2
+        }
+      },
+      {
+        "text": "你也还好吗？我没有敌意。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_2_CONCERN",
+        "opinion": {
+          "trust": 2,
+          "value": 1
+        }
+      },
+      {
+        "text": "我就站在这里，你别靠近。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_2_DISTANCE",
+        "opinion": {
+          "trust": 1
+        }
+      },
+      {
+        "text": "这是避难所的欢迎仪式吗？",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_2_JOKE",
+        "opinion": {
+          "trust": 1,
+          "value": 1
+        }
+      },
+      {
+        "text": "我先离远一点。",
+        "topic": "TALK_DONE"
+      }
+    ],
+    "speaker_effect": [
+      {
+        "effect": [
+          {
+            "npc_lose_trait": "TRAVEL_LIANG_SILENT_SPAWN_GEAR"
+          },
+          {
+            "npc_lose_effect": "npc_wear_item_success_no_message"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_INTRO_2_CALM",
+    "dynamic_line": "她先看了一眼楼梯口，确认没有第二串脚步声，才轻轻点头。\n\n“好，我听见了。谢谢你先停下来。”\n\n她仍保持着两三步距离。\n\n“再确认三件事：有没有开放性伤口，尤其是抓伤或咬伤，身后有没有东西跟着，你是不是一个人？我不是在审问，只是不想让我们彼此猜。”",
+    "responses": [
+      {
+        "text": "没有开放性伤口，没人跟着，我一个人。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_3_CLEAR",
+        "opinion": {
+          "trust": 2
+        }
+      },
+      {
+        "text": "我有伤，但已经处理过。没人跟着，我一个人。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_3_WOUNDED",
+        "opinion": {
+          "trust": 1,
+          "value": 1
+        }
+      },
+      {
+        "text": "为什么特别问抓伤和咬伤？",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_WOUND_REASON"
+      },
+      {
+        "text": "我可以慢慢卷起袖子给你看。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_3_SHOW",
+        "opinion": {
+          "trust": 3,
+          "value": 1
+        }
+      },
+      {
+        "text": "伤口的事我暂时不想说。没人跟着，我一个人。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_3_PRIVATE"
+      },
+      {
+        "text": "我不想继续谈。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_INTRO_2_CONCERN",
+    "dynamic_line": "她像是没想到你会先问她，神情短暂地松了一下。\n\n“我还好。膝盖和手掌有擦伤，已经处理过了。谢谢。”\n\n她没有借机靠近。\n\n“也让我确认一下你：有没有开放性伤口，尤其是抓伤或咬伤，身后有没有东西跟着，你是不是一个人？”",
+    "responses": [
+      {
+        "text": "没有开放性伤口，没人跟着，我一个人。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_3_CLEAR",
+        "opinion": {
+          "trust": 2
+        }
+      },
+      {
+        "text": "我有伤，但已经处理过。没人跟着，我一个人。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_3_WOUNDED",
+        "opinion": {
+          "trust": 1,
+          "value": 1
+        }
+      },
+      {
+        "text": "为什么特别问抓伤和咬伤？",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_WOUND_REASON"
+      },
+      {
+        "text": "我可以慢慢卷起袖子给你看。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_3_SHOW",
+        "opinion": {
+          "trust": 3,
+          "value": 1
+        }
+      },
+      {
+        "text": "伤口的事我暂时不想说。没人跟着，我一个人。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_3_PRIVATE"
+      },
+      {
+        "text": "我不想继续谈。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_INTRO_2_DISTANCE",
+    "dynamic_line": "她立刻停住，连棍尖也没有再往前移动。\n\n“可以。我不过去，我们就隔着这几张长凳说。”\n\n她朝楼梯口偏了偏视线。\n\n“请回答三件事：有没有开放性伤口，身后有没有东西跟着，你是不是一个人。你不愿意说伤口细节也行，但至少告诉我有没有立即危险。”",
+    "responses": [
+      {
+        "text": "没有开放性伤口，没人跟着，我一个人。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_3_CLEAR",
+        "opinion": {
+          "trust": 2
+        }
+      },
+      {
+        "text": "我有伤，但已经处理过。没人跟着，我一个人。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_3_WOUNDED",
+        "opinion": {
+          "trust": 1,
+          "value": 1
+        }
+      },
+      {
+        "text": "为什么特别问抓伤和咬伤？",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_WOUND_REASON"
+      },
+      {
+        "text": "我可以慢慢卷起袖子给你看。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_3_SHOW",
+        "opinion": {
+          "trust": 3,
+          "value": 1
+        }
+      },
+      {
+        "text": "伤口的事我暂时不想说。没人跟着，我一个人。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_3_PRIVATE"
+      },
+      {
+        "text": "我不想继续谈。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_INTRO_2",
+    "dynamic_line": "她点点头，棍尖又往地面压低了一些。\n\n“谢谢。再确认三件事：有没有开放性伤口，尤其是抓伤或咬伤，身后有没有东西跟着，你是不是一个人？”\n\n“我不是在审问你。外面已经够糟了，我只是想让我们都少猜一点。”",
+    "responses": [
+      {
+        "text": "没有开放性伤口，没人跟着，我一个人。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_3_CLEAR",
+        "opinion": {
+          "trust": 2
+        }
+      },
+      {
+        "text": "我有伤，但已经处理过。没人跟着，我一个人。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_3_WOUNDED",
+        "opinion": {
+          "trust": 1,
+          "value": 1
+        }
+      },
+      {
+        "text": "为什么特别问抓伤和咬伤？",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_WOUND_REASON"
+      },
+      {
+        "text": "我可以慢慢卷起袖子给你看。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_3_SHOW",
+        "opinion": {
+          "trust": 3,
+          "value": 1
+        }
+      },
+      {
+        "text": "伤口的事我暂时不想说。没人跟着，我一个人。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_3_PRIVATE"
+      },
+      {
+        "text": "我不想继续谈。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_INTRO_2_JOKE",
+    "dynamic_line": "她愣了一下，嘴角很轻地动了动。\n\n“如果这里还有工作人员，我会请他们给你发欢迎手册。”\n\n她把长棍往身侧让开一点。\n\n“现在只问三件事：有没有开放性伤口，尤其是抓伤或咬伤，身后有没有东西跟着，你是不是一个人？”",
+    "responses": [
+      {
+        "text": "没有开放性伤口，没人跟着，我一个人。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_3_CLEAR",
+        "opinion": {
+          "trust": 2,
+          "value": 1
+        }
+      },
+      {
+        "text": "我有伤，但处理过了。没人跟着。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_3_WOUNDED",
+        "opinion": {
+          "trust": 1
+        }
+      },
+      {
+        "text": "为什么特别问抓伤和咬伤？",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_WOUND_REASON"
+      },
+      {
+        "text": "我可以慢慢卷起袖子给你看。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_3_SHOW",
+        "opinion": {
+          "trust": 3
+        }
+      },
+      {
+        "text": "先到这里吧。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_INTRO_WOUND_REASON",
+    "dynamic_line": "“我不知道电影里那种‘被咬就一定会变成怪物’是不是真的。网上的时间线根本对不上：有人没有受伤也会突然失控，也有人带着伤活了很久。”\n\n她看了一眼自己重新贴过标签的急救包。\n\n“但那些东西嘴里全是腐肉、血和脏水。深抓伤和咬伤很容易变成普通却致命的伤口感染，这一点不需要猜。”\n\n她语气放软了一点。\n\n“我问伤口，是想知道要不要帮忙，不是想给你判什么罪。身后没人跟着，对吗？”",
+    "responses": [
+      {
+        "text": "没有开放性伤口，没人跟着，我一个人。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_3_CLEAR",
+        "opinion": {
+          "trust": 1,
+          "value": 1
+        }
+      },
+      {
+        "text": "我有伤，但已经处理过。没人跟着，我一个人。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_3_WOUNDED",
+        "opinion": {
+          "trust": 1
+        }
+      },
+      {
+        "text": "伤口的事等我看清你再说。没人跟着，我一个人。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_3_PRIVATE",
+        "opinion": {
+          "value": 1
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_INTRO_3_CLEAR",
+    "dynamic_line": "她看了看你的手臂和站姿，没有要求你再证明什么。\n\n“好，没有明显出血，也没有第二个人跟下来。先按你说的算。”\n\n她从长凳和储物柜之间走出半步，让你看清双手。木棍仍在她手里，却没有正对着你。\n\n“你不用把包交给我，也不用靠过来。别突然伸手，我们可以正常说话。”",
+    "responses": [
+      {
+        "text": "我把手摊开。你也别乱动。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_4_OPEN",
+        "opinion": {
+          "trust": 1
+        }
+      },
+      {
+        "text": "[感知 10] 观察她的站姿、装备与手上的痕迹。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_PERCEPTION",
+        "condition": {
+          "u_has_perception": 10
+        }
+      },
+      {
+        "text": "刚才是你在核对这些撤离资料？",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_4_PAPERS"
+      },
+      {
+        "text": "把棍尖放低一点，我们再谈。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_4_LOWER",
+        "opinion": {
+          "trust": -1,
+          "fear": 1
+        }
+      },
+      {
+        "text": "慢慢后退，结束对话。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_INTRO_3_WOUNDED",
+    "dynamic_line": "她的目光在你可能受伤的位置停了一瞬，却没有追问着逼你解开衣服。\n\n“处理过不代表一定没事，但现在先不碰你。等我们把话说清楚，你愿意的话再让我看。”\n\n她从长凳旁让开半步，把自己的双手留在你看得见的位置。\n\n“别突然伸手，我们可以正常说话。”",
+    "responses": [
+      {
+        "text": "我把手摊开。你也别乱动。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_4_OPEN",
+        "opinion": {
+          "trust": 1
+        }
+      },
+      {
+        "text": "[感知 10] 观察她的站姿、装备与手上的痕迹。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_PERCEPTION",
+        "condition": {
+          "u_has_perception": 10
+        }
+      },
+      {
+        "text": "刚才是你在核对这些撤离资料？",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_4_PAPERS"
+      },
+      {
+        "text": "把棍尖放低一点，我们再谈。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_4_LOWER",
+        "opinion": {
+          "trust": -1,
+          "fear": 1
+        }
+      },
+      {
+        "text": "慢慢后退，结束对话。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_INTRO_3_SHOW",
+    "dynamic_line": "她没有靠近，只借着楼梯口漏下的微光，又短暂点亮手机屏幕，看了看你慢慢卷起的袖口和露出的皮肤。\n\n“够了，谢谢。至少我没看见正在流血的咬伤，其他地方不用现在给陌生人看。”\n\n她立刻关掉屏幕，把木棍略微侧开。\n\n“你不用交包，也不用靠过来。我们可以正常说话。”",
+    "responses": [
+      {
+        "text": "我把手摊开。你也别乱动。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_4_OPEN",
+        "opinion": {
+          "trust": 1
+        }
+      },
+      {
+        "text": "[感知 10] 观察她的站姿、装备与手上的痕迹。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_PERCEPTION",
+        "condition": {
+          "u_has_perception": 10
+        }
+      },
+      {
+        "text": "刚才是你在核对这些撤离资料？",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_4_PAPERS"
+      },
+      {
+        "text": "把棍尖放低一点，我们再谈。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_4_LOWER",
+        "opinion": {
+          "trust": -1,
+          "fear": 1
+        }
+      },
+      {
+        "text": "慢慢后退，结束对话。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_INTRO_3_PRIVATE",
+    "dynamic_line": "她没有因为你的拒绝继续追问。\n\n“可以。伤口是你的隐私，只要它没有让你失血、发热或者失去意识，我们先保持距离。”\n\n她从一排长凳旁让开半步，让你看见空着的左手。\n\n“别突然伸手，我们可以正常说话。”",
+    "responses": [
+      {
+        "text": "我把手摊开。你也别乱动。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_4_OPEN",
+        "opinion": {
+          "trust": 1
+        }
+      },
+      {
+        "text": "[感知 10] 观察她的站姿、装备与手上的痕迹。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_PERCEPTION",
+        "condition": {
+          "u_has_perception": 10
+        }
+      },
+      {
+        "text": "刚才是你在核对这些撤离资料？",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_4_PAPERS"
+      },
+      {
+        "text": "把棍尖放低一点，我们再谈。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_4_LOWER",
+        "opinion": {
+          "trust": -1,
+          "fear": 1
+        }
+      },
+      {
+        "text": "慢慢后退，结束对话。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_INTRO_3",
+    "dynamic_line": "她从长凳和储物柜之间走出半步，让你看清双手和那根足有两米多长的木棍。木棍仍在她手里，却没有正对着你。\n\n“好。你不用把包交给我，也不用靠过来。”\n\n“只要别突然伸手，我们可以正常说话。”",
+    "responses": [
+      {
+        "text": "我把手摊开。你也别乱动。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_4_OPEN",
+        "opinion": {
+          "trust": 1
+        }
+      },
+      {
+        "text": "[感知 10] 观察她的站姿、装备与手上的痕迹。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_PERCEPTION",
+        "condition": {
+          "u_has_perception": 10
+        }
+      },
+      {
+        "text": "刚才是你在核对这些撤离资料？",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_4_PAPERS"
+      },
+      {
+        "text": "把棍尖放低一点，我们再谈。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_4_LOWER",
+        "opinion": {
+          "trust": -1,
+          "fear": 1
+        }
+      },
+      {
+        "text": "慢慢后退，结束对话。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_INTRO_PERCEPTION",
+    "dynamic_line": "你没有只盯着那根长棍。她虎口和指根有长期磨出的薄茧，握位稳定，重心偏后，脚尖与肩线始终为棍身转动留着空间，这不是临时捡来壮胆的姿势，而是反复训练留下的习惯。\n\n护服是定制民用装备，不像军用品。背包口露出的药品按中英文重新贴过标签，旁边的长凳上还摆着按用途分过的药品、维护记录、区域交通图和纸质撤离说明。她动作整洁，观察楼梯与通道时也会下意识确认退路，像是接受过实验室规范、急救训练和户外安全课程。\n\n综合来看，她大概是医学或理工相关的大学生，参加过急救工作，系统练过长兵器，也已经在外面经历过几次近身冲突。她不是军警或职业战斗人员，但如果现在动手，那根长棍足以在你靠近前先占住距离。",
+    "responses": [
+      {
+        "text": "保持双手摊开，不点破你的判断。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_4_PERCEPTION_SILENT",
+        "opinion": {
+          "trust": 1
+        }
+      },
+      {
+        "text": "“你受过急救训练，但不是军警。我们没必要把事情弄糟。”",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_4_PERCEPTION_MEDIC",
+        "opinion": {
+          "trust": 1,
+          "value": 1
+        }
+      },
+      {
+        "text": "“那根长棍不是临时捡来的——你真正擅长的是它。”",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_4_PERCEPTION_STAFF",
+        "opinion": {
+          "trust": -1,
+          "value": 1,
+          "fear": 1
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_INTRO_4_OPEN",
+    "dynamic_line": "她看见你摊开的双手，也把空着的左手完全移到身前。\n\n“公平。我不会突然靠近，你也别突然伸手。”\n\n她的肩膀终于松下来一点，长棍靠到长凳边。\n\n“我叫梁知遥。你呢？”",
+    "responses": [
+      {
+        "text": "报上自己的名字。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_5_NAME",
+        "opinion": {
+          "trust": 1
+        }
+      },
+      {
+        "text": "“先叫我幸存者就行。”",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_5_SURVIVOR"
+      },
+      {
+        "text": "“你先说清楚这里的情况。”",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_5_SITUATION_FIRST",
+        "opinion": {
+          "value": 1
+        }
+      },
+      {
+        "text": "“名字不重要。”",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_5_NO_NAME",
+        "opinion": {
+          "trust": -1
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_INTRO_4_PAPERS",
+    "dynamic_line": "她顺着你的视线看向长凳上的维护记录、交通图和疏散说明。\n\n“是。我把手机亮度压到最低，核对一小段就关掉。纸上的路线可能已经过时，离线地图也不完整，只能把这些旧信息和一路看到的情况拼在一起。”\n\n她把长棍靠到手边。\n\n“我叫梁知遥。你呢？”",
+    "responses": [
+      {
+        "text": "报上自己的名字。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_5_NAME",
+        "opinion": {
+          "trust": 1
+        }
+      },
+      {
+        "text": "“先叫我幸存者就行。”",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_5_SURVIVOR"
+      },
+      {
+        "text": "“你先说清楚这里的情况。”",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_5_SITUATION_FIRST",
+        "opinion": {
+          "value": 1
+        }
+      },
+      {
+        "text": "“名字不重要。”",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_5_NO_NAME",
+        "opinion": {
+          "trust": -1
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_INTRO_4_LOWER",
+    "dynamic_line": "她没有争辩，握着棍尾把棍尖缓缓落到地面，动作始终让你看得清楚。\n\n“这样可以。你要求保持距离，我也会照做。”\n\n她没有把棍子丢远，只靠在长凳边。\n\n“我叫梁知遥。你呢？”",
+    "responses": [
+      {
+        "text": "报上自己的名字。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_5_NAME",
+        "opinion": {
+          "trust": 1
+        }
+      },
+      {
+        "text": "“先叫我幸存者就行。”",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_5_SURVIVOR"
+      },
+      {
+        "text": "“你先说清楚这里的情况。”",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_5_SITUATION_FIRST",
+        "opinion": {
+          "value": 1
+        }
+      },
+      {
+        "text": "“名字不重要。”",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_5_NO_NAME",
+        "opinion": {
+          "trust": -1
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_INTRO_4_PERCEPTION_SILENT",
+    "dynamic_line": "你没有把观察变成挑衅。她似乎注意到你看过自己的手、护具和退路，却也注意到你没有趁机向前。\n\n“谢谢你没有把每个判断都说成威胁。”\n\n她把长棍靠到长凳边。\n\n“我叫梁知遥。你呢？”",
+    "responses": [
+      {
+        "text": "报上自己的名字。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_5_NAME",
+        "opinion": {
+          "trust": 1
+        }
+      },
+      {
+        "text": "“先叫我幸存者就行。”",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_5_SURVIVOR"
+      },
+      {
+        "text": "“你先说清楚这里的情况。”",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_5_SITUATION_FIRST",
+        "opinion": {
+          "value": 1
+        }
+      },
+      {
+        "text": "“名字不重要。”",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_5_NO_NAME",
+        "opinion": {
+          "trust": -1
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_INTRO_4_PERCEPTION_MEDIC",
+    "dynamic_line": "她先是一怔，随后很轻地呼出一口气。\n\n“判断得差不多。学过急救，也做过实验室安全训练，不是军警，更不想和活人打一场没有意义的架。”\n\n她把长棍靠到手边。\n\n“我叫梁知遥。你呢？”",
+    "responses": [
+      {
+        "text": "报上自己的名字。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_5_NAME",
+        "opinion": {
+          "trust": 1
+        }
+      },
+      {
+        "text": "“先叫我幸存者就行。”",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_5_SURVIVOR"
+      },
+      {
+        "text": "“你先说清楚这里的情况。”",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_5_SITUATION_FIRST",
+        "opinion": {
+          "value": 1
+        }
+      },
+      {
+        "text": "“名字不重要。”",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_5_NO_NAME",
+        "opinion": {
+          "trust": -1
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_INTRO_4_PERCEPTION_STAFF",
+    "dynamic_line": "她握棍的手没有收紧，目光却重新认真起来。\n\n“我确实练过很多年。说出来是提醒我们都别误判距离，不是邀请你验证。”\n\n停了两秒，她还是把棍尖压低，靠到长凳边。\n\n“我叫梁知遥。你呢？”",
+    "responses": [
+      {
+        "text": "报上自己的名字。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_5_NAME",
+        "opinion": {
+          "trust": 1
+        }
+      },
+      {
+        "text": "“先叫我幸存者就行。”",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_5_SURVIVOR"
+      },
+      {
+        "text": "“你先说清楚这里的情况。”",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_5_SITUATION_FIRST",
+        "opinion": {
+          "value": 1
+        }
+      },
+      {
+        "text": "“名字不重要。”",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_5_NO_NAME",
+        "opinion": {
+          "trust": -1
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_INTRO_4",
+    "dynamic_line": "她观察了你两秒，肩膀终于松下来一点，长棍也靠到长凳边。\n\n“我叫梁知遥。你呢？”",
+    "responses": [
+      {
+        "text": "报上自己的名字。",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_5_NAME",
+        "opinion": {
+          "trust": 1
+        }
+      },
+      {
+        "text": "“先叫我幸存者就行。”",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_5_SURVIVOR"
+      },
+      {
+        "text": "“你先说清楚这里的情况。”",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_5_SITUATION_FIRST",
+        "opinion": {
+          "value": 1
+        }
+      },
+      {
+        "text": "“名字不重要。”",
+        "topic": "TALK_TRAVEL_LIANG_INTRO_5_NO_NAME",
+        "opinion": {
+          "trust": -1
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_INTRO_5_NAME",
+    "dynamic_line": "梁知遥认真听完你的名字，像是把它和你的脸一起记住，然后点点头。\n\n“谢谢。现在还能遇见愿意停下来、把话说清楚的人，已经算一件好事。”\n\n她把长棍放在伸手可及的位置，却不再横在你们中间。\n\n“先谈眼前的事吧。”",
+    "responses": [
+      {
+        "text": "这里现在安全吗？",
+        "topic": "TALK_TRAVEL_LIANG_SITUATION",
+        "effect": [
+          {
+            "npc_add_var": "travel_liang_met",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_intro_complete",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_origin_shelter",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          "stranger_neutral",
+          {
+            "npc_first_topic": "TALK_TRAVEL_LIANG_START"
+          }
+        ]
+      },
+      {
+        "text": "你受伤了吗？",
+        "topic": "TALK_TRAVEL_LIANG_INJURY",
+        "effect": [
+          {
+            "npc_add_var": "travel_liang_met",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_intro_complete",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_origin_shelter",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          "stranger_neutral",
+          {
+            "npc_first_topic": "TALK_TRAVEL_LIANG_START"
+          }
+        ]
+      },
+      {
+        "text": "外面发生了什么？",
+        "topic": "TALK_TRAVEL_LIANG_ESCAPE",
+        "effect": [
+          {
+            "npc_add_var": "travel_liang_met",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_intro_complete",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_origin_shelter",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          "stranger_neutral",
+          {
+            "npc_first_topic": "TALK_TRAVEL_LIANG_START"
+          }
+        ]
+      },
+      {
+        "text": "先各自冷静一下。",
+        "topic": "TALK_DONE",
+        "effect": [
+          {
+            "npc_add_var": "travel_liang_met",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_intro_complete",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_origin_shelter",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          "stranger_neutral",
+          {
+            "npc_first_topic": "TALK_TRAVEL_LIANG_START"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_INTRO_5_SURVIVOR",
+    "dynamic_line": "她没有追问。\n\n“好，那我暂时就叫你‘幸存者’。等你觉得名字可以说的时候再说。”\n\n她把长棍放在伸手可及的位置，却不再横在你们中间。\n\n“先谈眼前的事吧。”",
+    "responses": [
+      {
+        "text": "这里现在安全吗？",
+        "topic": "TALK_TRAVEL_LIANG_SITUATION",
+        "effect": [
+          {
+            "npc_add_var": "travel_liang_met",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_intro_complete",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_origin_shelter",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          "stranger_neutral",
+          {
+            "npc_first_topic": "TALK_TRAVEL_LIANG_START"
+          }
+        ]
+      },
+      {
+        "text": "你受伤了吗？",
+        "topic": "TALK_TRAVEL_LIANG_INJURY",
+        "effect": [
+          {
+            "npc_add_var": "travel_liang_met",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_intro_complete",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_origin_shelter",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          "stranger_neutral",
+          {
+            "npc_first_topic": "TALK_TRAVEL_LIANG_START"
+          }
+        ]
+      },
+      {
+        "text": "外面发生了什么？",
+        "topic": "TALK_TRAVEL_LIANG_ESCAPE",
+        "effect": [
+          {
+            "npc_add_var": "travel_liang_met",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_intro_complete",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_origin_shelter",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          "stranger_neutral",
+          {
+            "npc_first_topic": "TALK_TRAVEL_LIANG_START"
+          }
+        ]
+      },
+      {
+        "text": "先各自冷静一下。",
+        "topic": "TALK_DONE",
+        "effect": [
+          {
+            "npc_add_var": "travel_liang_met",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_intro_complete",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_origin_shelter",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          "stranger_neutral",
+          {
+            "npc_first_topic": "TALK_TRAVEL_LIANG_START"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_INTRO_5_SITUATION_FIRST",
+    "dynamic_line": "她看出你还没有准备交换名字，没有把这件事当成冒犯。\n\n“可以，先说情况。名字不会让门更结实，也不会让路线自动变安全。”\n\n她把长棍放在伸手可及的位置。\n\n“你想先问这里，还是问外面？”",
+    "responses": [
+      {
+        "text": "这里现在安全吗？",
+        "topic": "TALK_TRAVEL_LIANG_SITUATION",
+        "effect": [
+          {
+            "npc_add_var": "travel_liang_met",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_intro_complete",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_origin_shelter",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          "stranger_neutral",
+          {
+            "npc_first_topic": "TALK_TRAVEL_LIANG_START"
+          }
+        ]
+      },
+      {
+        "text": "你受伤了吗？",
+        "topic": "TALK_TRAVEL_LIANG_INJURY",
+        "effect": [
+          {
+            "npc_add_var": "travel_liang_met",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_intro_complete",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_origin_shelter",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          "stranger_neutral",
+          {
+            "npc_first_topic": "TALK_TRAVEL_LIANG_START"
+          }
+        ]
+      },
+      {
+        "text": "外面发生了什么？",
+        "topic": "TALK_TRAVEL_LIANG_ESCAPE",
+        "effect": [
+          {
+            "npc_add_var": "travel_liang_met",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_intro_complete",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_origin_shelter",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          "stranger_neutral",
+          {
+            "npc_first_topic": "TALK_TRAVEL_LIANG_START"
+          }
+        ]
+      },
+      {
+        "text": "先各自冷静一下。",
+        "topic": "TALK_DONE",
+        "effect": [
+          {
+            "npc_add_var": "travel_liang_met",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_intro_complete",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_origin_shelter",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          "stranger_neutral",
+          {
+            "npc_first_topic": "TALK_TRAVEL_LIANG_START"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_INTRO_5_NO_NAME",
+    "dynamic_line": "她点了一下头。\n\n“对刚认识的人来说，名字确实不是最重要的。行为更重要。”\n\n她把长棍放在伸手可及的位置，却不再横在你们中间。\n\n“先谈眼前的事吧。”",
+    "responses": [
+      {
+        "text": "这里现在安全吗？",
+        "topic": "TALK_TRAVEL_LIANG_SITUATION",
+        "effect": [
+          {
+            "npc_add_var": "travel_liang_met",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_intro_complete",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_origin_shelter",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          "stranger_neutral",
+          {
+            "npc_first_topic": "TALK_TRAVEL_LIANG_START"
+          }
+        ]
+      },
+      {
+        "text": "你受伤了吗？",
+        "topic": "TALK_TRAVEL_LIANG_INJURY",
+        "effect": [
+          {
+            "npc_add_var": "travel_liang_met",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_intro_complete",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_origin_shelter",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          "stranger_neutral",
+          {
+            "npc_first_topic": "TALK_TRAVEL_LIANG_START"
+          }
+        ]
+      },
+      {
+        "text": "外面发生了什么？",
+        "topic": "TALK_TRAVEL_LIANG_ESCAPE",
+        "effect": [
+          {
+            "npc_add_var": "travel_liang_met",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_intro_complete",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_origin_shelter",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          "stranger_neutral",
+          {
+            "npc_first_topic": "TALK_TRAVEL_LIANG_START"
+          }
+        ]
+      },
+      {
+        "text": "先各自冷静一下。",
+        "topic": "TALK_DONE",
+        "effect": [
+          {
+            "npc_add_var": "travel_liang_met",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_intro_complete",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_origin_shelter",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          "stranger_neutral",
+          {
+            "npc_first_topic": "TALK_TRAVEL_LIANG_START"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_INTRO_5",
+    "dynamic_line": "梁知遥认真听完你的名字，像是把它和你的脸一起记住，然后点点头。\n\n“谢谢。现在还能遇见愿意停下来、把话说清楚的人，已经算一件好事。”\n\n她把长棍放在伸手可及的位置，却不再横在你们中间。\n\n“先谈眼前的事吧。”",
+    "responses": [
+      {
+        "text": "这里现在安全吗？",
+        "topic": "TALK_TRAVEL_LIANG_SITUATION",
+        "effect": [
+          {
+            "npc_add_var": "travel_liang_met",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_intro_complete",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_origin_shelter",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          "stranger_neutral",
+          {
+            "npc_first_topic": "TALK_TRAVEL_LIANG_START"
+          }
+        ]
+      },
+      {
+        "text": "你受伤了吗？",
+        "topic": "TALK_TRAVEL_LIANG_INJURY",
+        "effect": [
+          {
+            "npc_add_var": "travel_liang_met",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_intro_complete",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_origin_shelter",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          "stranger_neutral",
+          {
+            "npc_first_topic": "TALK_TRAVEL_LIANG_START"
+          }
+        ]
+      },
+      {
+        "text": "外面发生了什么？",
+        "topic": "TALK_TRAVEL_LIANG_ESCAPE",
+        "effect": [
+          {
+            "npc_add_var": "travel_liang_met",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_intro_complete",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_origin_shelter",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          "stranger_neutral",
+          {
+            "npc_first_topic": "TALK_TRAVEL_LIANG_START"
+          }
+        ]
+      },
+      {
+        "text": "先各自冷静一下。",
+        "topic": "TALK_DONE",
+        "effect": [
+          {
+            "npc_add_var": "travel_liang_met",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_intro_complete",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_origin_shelter",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          "stranger_neutral",
+          {
+            "npc_first_topic": "TALK_TRAVEL_LIANG_START"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_EARLY_EQUIPMENT",
+    "dynamic_line": {
+      "npc_has_var": "travel_liang_arrived",
+      "type": "dialogue",
+      "context": "travel_liang",
+      "value": "yes",
+      "yes": "梁知遥把难民中心登记余货的清单压在一边，只指向自己实际穿戴和携带的东西。\n\n“可以问。先分清楚：这些是我的随身装备，不在接待区的兑换清单里。”",
+      "no": {
+        "npc_has_var": "travel_liang_temporary_follower",
+        "type": "dialogue",
+        "context": "travel_liang",
+        "value": "yes",
+        "yes": "梁知遥没有在路中间卸下背包，只调整了一下长棍和肩带。\n\n“可以问，但先别为了看装备停在没有掩护的地方。”",
+        "no": "梁知遥没有把背包转向你，只让你看见放在手边的东西。\n\n“可以问。别伸手。”"
+      }
+    },
+    "responses": [
+      {
+        "text": "那根很长的木棍是什么？",
+        "topic": "TALK_TRAVEL_LIANG_WINGCHUN"
+      },
+      {
+        "text": "你这身护具不像临时拼出来的。",
+        "topic": "TALK_TRAVEL_LIANG_ARMOR"
+      },
+      {
+        "text": "先说别的。",
+        "topic": "TALK_TRAVEL_LIANG_START"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_START",
+    "dynamic_line": {
+      "npc_has_var": "travel_liang_joined",
+      "type": "dialogue",
+      "context": "travel_liang",
+      "value": "yes",
+      "yes": [
+        "“你来了。”梁知遥把手机扣在膝上，“今天先往哪边走？”",
+        "梁知遥检查了一下背包，朝你笑了笑。\n\n“我准备好了。至少看起来准备好了。”",
+        "“暂时没有新的坏消息。”她停了一下，“我决定把这句话算作好消息。”"
+      ],
+      "no": {
+        "npc_has_var": "travel_liang_arrived",
+        "type": "dialogue",
+        "context": "travel_liang",
+        "value": "yes",
+        "yes": {
+          "npc_compare_time_since_var": "travel_liang_arrival_time",
+          "type": "timer",
+          "context": "travel_liang",
+          "op": "<",
+          "time": "1 day",
+          "yes": {
+            "npc_has_var": "travel_liang_origin_center",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes",
+            "yes": "梁知遥坐在接待内厅靠墙的临时床位旁，黑灰色野外帽放在膝上，六点半棍沿墙平放。她刚把一批伤情复查表和敷料批号交还给医生。\n\n“我答应把这批记录分完，现在该睡一觉。明天再谈路线，判断会可靠一点。”",
+            "no": "梁知遥已经完成入门检查，坐在接待内厅靠墙的位置重新整理绷带、床位标签和一路保存下来的地图。\n\n“登记做完了，伤口也重新处理过。我现在最需要的是睡一觉。明天再谈接下来的路。”"
+          },
+          "no": {
+            "npc_has_var": "travel_liang_origin_center",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes",
+            "yes": "梁知遥已经把临时工作交接完，护具和背包放在脚边。\n\n“睡过一觉以后，世界没有变好，不过我终于不像昨天那样，一闭眼就觉得门会被撞开。”\n\n“你想聊这里，还是聊我们接下来去哪？”",
+            "no": "梁知遥已经重新穿好护具，背包也按出发顺序整理完毕。\n\n“休息够了。谢谢你把我带进来。现在可以认真谈下一步。”"
+          }
+        },
+        "no": {
+          "npc_has_var": "travel_liang_temporary_follower",
+          "type": "dialogue",
+          "context": "travel_liang",
+          "value": "yes",
+          "yes": {
+            "npc_has_var": "travel_liang_waiting_en_route",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes",
+            "yes": "梁知遥留在先前选好的掩护旁，背包仍然收拢在脚边。\n\n“你回来了。周围暂时没有新的动静，要继续走就说一声。”",
+            "no": [
+              "梁知遥没有离开队形，只在前方视线受阻时短暂停步观察。\n\n“前面看不清。要改路线、休息或者停下来搜寻，我们先说清楚。”",
+              "梁知遥用离线地图核对了一次方向，又把注意力移回周围。\n\n“目前路线还能走。你想停下来搜哪里，或者重新整理物资，就直接说。”"
+            ]
+          },
+          "no": [
+            "“你回来了。”梁知遥把刚检查过的药品放回长凳，“楼上暂时没有新的动静。”",
+            "“我把地下安置层能用的东西大致分过一遍了。”她朝你点点头，“你想一起看看路线，还是先休息？”",
+            "“外面很安静，安静得不太正常。”她把声音放轻，“不过至少现在，我们可以好好说话。”"
+          ]
+        }
+      }
+    },
+    "responses": [
+      {
+        "text": "这里现在安全吗？",
+        "topic": "TALK_TRAVEL_LIANG_SITUATION",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "npc_has_var": "travel_liang_temporary_follower",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_arrived",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_joined",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "text": "你有没有受伤？",
+        "topic": "TALK_TRAVEL_LIANG_INJURY",
+        "condition": {
+          "not": {
+            "npc_has_var": "travel_liang_joined",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        }
+      },
+      {
+        "text": "路上还撑得住吗？",
+        "topic": "TALK_TRAVEL_LIANG_ROUTE_STATUS",
+        "condition": {
+          "npc_has_var": "travel_liang_temporary_follower",
+          "type": "dialogue",
+          "context": "travel_liang",
+          "value": "yes"
+        }
+      },
+      {
+        "text": "外面到底发生了什么？",
+        "topic": "TALK_TRAVEL_LIANG_ESCAPE",
+        "condition": {
+          "not": {
+            "npc_has_var": "travel_liang_joined",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        }
+      },
+      {
+        "text": "聊聊你带的装备。",
+        "topic": "TALK_TRAVEL_LIANG_EARLY_EQUIPMENT",
+        "condition": {
+          "not": {
+            "npc_has_var": "travel_liang_joined",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        }
+      },
+      {
+        "text": "聊聊难民中心，以及你在这里的生活。",
+        "topic": "TALK_TRAVEL_LIANG_CENTER_MENU",
+        "condition": {
+          "and": [
+            {
+              "npc_has_var": "travel_liang_arrived",
+              "type": "dialogue",
+              "context": "travel_liang",
+              "value": "yes"
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_joined",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "text": "你戴着的那枚平安扣有什么来历？",
+        "topic": "TALK_TRAVEL_LIANG_TALISMAN",
+        "condition": {
+          "or": [
+            {
+              "npc_has_var": "travel_liang_arrived",
+              "type": "dialogue",
+              "context": "travel_liang",
+              "value": "yes"
+            },
+            {
+              "npc_has_var": "travel_liang_joined",
+              "type": "dialogue",
+              "context": "travel_liang",
+              "value": "yes"
+            }
+          ]
+        }
+      },
+      {
+        "text": "谈谈交换物资。",
+        "topic": "TALK_TRAVEL_LIANG_TRADE_MENU",
+        "condition": {
+          "not": {
+            "npc_has_var": "travel_liang_joined",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        }
+      },
+      {
+        "text": "我准备去难民中心。你要同行吗？",
+        "topic": "TALK_MISSION_LIST",
+        "condition": {
+          "and": [
+            {
+              "not": "has_assigned_mission"
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_arrived",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_joined",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "text": "你先在这里等我，我办完事回来。",
+        "topic": "TALK_TRAVEL_LIANG_WAIT_EN_ROUTE",
+        "condition": {
+          "and": [
+            {
+              "npc_has_var": "travel_liang_temporary_follower",
+              "type": "dialogue",
+              "context": "travel_liang",
+              "value": "yes"
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_waiting_en_route",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "text": "我回来了。我们继续去难民中心。",
+        "topic": "TALK_TRAVEL_LIANG_RESUME_EN_ROUTE",
+        "condition": {
+          "and": [
+            {
+              "npc_has_var": "travel_liang_temporary_follower",
+              "type": "dialogue",
+              "context": "travel_liang",
+              "value": "yes"
+            },
+            {
+              "npc_has_var": "travel_liang_waiting_en_route",
+              "type": "dialogue",
+              "context": "travel_liang",
+              "value": "yes"
+            }
+          ]
+        }
+      },
+      {
+        "text": "你准备什么时候再出发？",
+        "topic": "TALK_TRAVEL_LIANG_RESTING",
+        "condition": {
+          "and": [
+            {
+              "npc_has_var": "travel_liang_arrived",
+              "type": "dialogue",
+              "context": "travel_liang",
+              "value": "yes"
+            },
+            {
+              "npc_compare_time_since_var": "travel_liang_arrival_time",
+              "type": "timer",
+              "context": "travel_liang",
+              "op": "<",
+              "time": "1 day"
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_joined",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "text": "愿意和我一起继续走吗？",
+        "topic": "TALK_TRAVEL_LIANG_JOIN",
+        "condition": {
+          "and": [
+            {
+              "npc_has_var": "travel_liang_arrived",
+              "type": "dialogue",
+              "context": "travel_liang",
+              "value": "yes"
+            },
+            {
+              "npc_compare_time_since_var": "travel_liang_arrival_time",
+              "type": "timer",
+              "context": "travel_liang",
+              "op": ">=",
+              "time": "1 day"
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_joined",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "text": "作为队友，你对接下来的路有什么想法？",
+        "topic": "TALK_TRAVEL_LIANG_COMPANION",
+        "condition": {
+          "npc_has_var": "travel_liang_joined",
+          "type": "dialogue",
+          "context": "travel_liang",
+          "value": "yes"
+        }
+      },
+      {
+        "text": "我们调整一下作战方式。",
+        "topic": "TALK_COMBAT_COMMANDS",
+        "condition": {
+          "npc_has_var": "travel_liang_joined",
+          "type": "dialogue",
+          "context": "travel_liang",
+          "value": "yes"
+        }
+      },
+      {
+        "text": "先这样。",
+        "topic": "TALK_DONE"
+      }
+    ],
+    "speaker_effect": [
+      {
+        "condition": {
+          "and": [
+            {
+              "npc_has_var": "travel_liang_temporary_follower",
+              "type": "dialogue",
+              "context": "travel_liang",
+              "value": "yes"
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_ai_profile_initialized",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "effect": [
+          {
+            "clear_npc_rule": "allow_pick_up"
+          },
+          {
+            "set_npc_rule": "follow_close"
+          },
+          {
+            "set_npc_rule": "hold_the_line"
+          },
+          {
+            "set_npc_rule": "ignore_noise"
+          },
+          {
+            "set_npc_engagement_rule": "ENGAGE_CLOSE"
+          },
+          {
+            "npc_add_var": "travel_liang_ai_profile_initialized",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        ]
+      },
+      {
+        "condition": {
+          "and": [
+            {
+              "npc_has_var": "travel_liang_arrived",
+              "type": "dialogue",
+              "context": "travel_liang",
+              "value": "yes"
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_joined",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_center_guard_stable",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            },
+            {
+              "u_near_om_location": "evac_center_13",
+              "range": 5
+            }
+          ]
+        },
+        "effect": [
+          "stop_guard",
+          {
+            "npc_lose_trait": "RETURN_TO_START_POS"
+          },
+          {
+            "npc_lose_trait": "IGNORE_SOUND"
+          },
+          {
+            "npc_lose_trait": "NO_BASH"
+          },
+          "follow_only",
+          {
+            "clear_npc_rule": "allow_pick_up"
+          },
+          "assign_guard",
+          {
+            "npc_add_var": "travel_liang_center_position_fixed",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_center_guard_stable",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        ]
+      },
+      {
+        "condition": {
+          "and": [
+            {
+              "npc_has_var": "travel_liang_arrived",
+              "type": "dialogue",
+              "context": "travel_liang",
+              "value": "yes"
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_origin_center",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_origin_shelter",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_temporary_follower",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            },
+            {
+              "u_near_om_location": "evac_center_13",
+              "range": 5
+            }
+          ]
+        },
+        "effect": [
+          {
+            "npc_add_var": "travel_liang_origin_center",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_center_role_started",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_WAIT_EN_ROUTE",
+    "dynamic_line": "梁知遥看了看周围，又在离线地图上标下当前位置。\n\n“好。我留在这里等你，不会擅自追上去。”\n\n她把背包放到脚边，六点半棍仍留在手边。\n\n“我会找掩护，也会照顾好自己。你回来时先叫我一声，我们再继续走。”",
+    "responses": [
+      {
+        "text": "好，等我回来。",
+        "topic": "TALK_DONE",
+        "effect": [
+          "stop_following",
+          {
+            "npc_add_var": "travel_liang_waiting_en_route",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_trait": "RETURN_TO_START_POS"
+          },
+          {
+            "npc_add_trait": "IGNORE_SOUND"
+          },
+          {
+            "npc_add_trait": "NO_BASH"
+          },
+          "assign_guard",
+          {
+            "npc_first_topic": "TALK_TRAVEL_LIANG_START"
+          }
+        ]
+      },
+      {
+        "text": "算了，还是一起行动。",
+        "topic": "TALK_TRAVEL_LIANG_START"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_RESUME_EN_ROUTE",
+    "dynamic_line": "梁知遥站起身，重新收紧背包肩带。\n\n“好。你回来得正是时候。”\n\n她拿起六点半棍，确认了一遍前后通道。\n\n“继续按原来的约定走：你看前路，我留意侧后，谁先发现危险，谁先喊停。”",
+    "responses": [
+      {
+        "text": "继续出发。",
+        "topic": "TALK_DONE",
+        "effect": [
+          "stop_guard",
+          {
+            "npc_lose_trait": "RETURN_TO_START_POS"
+          },
+          {
+            "npc_lose_trait": "IGNORE_SOUND"
+          },
+          {
+            "npc_lose_trait": "NO_BASH"
+          },
+          "follow_only",
+          {
+            "clear_npc_rule": "allow_pick_up"
+          },
+          {
+            "npc_lose_var": "travel_liang_waiting_en_route",
+            "type": "dialogue",
+            "context": "travel_liang"
+          },
+          {
+            "npc_first_topic": "TALK_TRAVEL_LIANG_START"
+          }
+        ]
+      },
+      {
+        "text": "你再等一会儿。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_ROUTE_STATUS",
+    "dynamic_line": "梁知遥停下来揉了揉肩，回头看了一眼来路。\n\n“我还撑得住。只是别为了省几分钟钻进看不清的地方。”\n\n她轻轻拍了拍空着的背包侧袋。\n\n“路边的东西我不会乱捡。你想停下来搜，就叫我一声。”",
+    "responses": [
+      {
+        "text": "好，赶路和搜刮分开。",
+        "topic": "TALK_TRAVEL_LIANG_START",
+        "opinion": {
+          "trust": 1
+        }
+      },
+      {
+        "text": "路线不对时直接提醒我。",
+        "topic": "TALK_TRAVEL_LIANG_START",
+        "opinion": {
+          "value": 1
+        }
+      },
+      {
+        "text": "先继续走。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_SITUATION",
+    "dynamic_line": "梁知遥把长棍斜靠在一排长凳旁，给你让出一点位置。\n\n“地面层的门暂时挡得住。地下层主要是长凳、储物柜、洗手台和空掉的货架，没有控制台，也没有仍能工作的网络终端。洗手台里的水未必还能直接喝，我自己的药和工具还剩一点，也把能确认用途的公共物资检查过一遍。”\n\n“这里适合喘口气，不适合一直守下去。”\n\n她看向你。\n\n“我叫梁知遥，广东佛山人，二十二岁，在耶鲁读生物医学工程。先说明，我不是医生，不过急救能帮上一点忙。”",
+    "responses": [
+      {
+        "text": "耶鲁大学的生物医学工程？",
+        "topic": "TALK_TRAVEL_LIANG_STUDY"
+      },
+      {
+        "text": "你是怎么到这里的？",
+        "topic": "TALK_TRAVEL_LIANG_ESCAPE"
+      },
+      {
+        "text": "先说别的。",
+        "topic": "TALK_TRAVEL_LIANG_START"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_INJURY",
+    "dynamic_line": {
+      "npc_has_var": "travel_liang_arrived",
+      "type": "dialogue",
+      "context": "travel_liang",
+      "value": "yes",
+      "yes": "“登记时他们又检查了一遍。左膝和手掌的擦伤已经重新清洗包扎，没有深抓伤，也没有开放性咬伤。”\n\n梁知遥活动了一下膝盖。\n\n“走路没问题，只是今天该休息。这里至少有干净水、灯和能换药的地方，这比路上可靠。”",
+      "no": {
+        "npc_has_var": "travel_liang_temporary_follower",
+        "type": "dialogue",
+        "context": "travel_liang",
+        "value": "yes",
+        "yes": "梁知遥没有逞强，停下来活动了一下左膝。\n\n“擦伤没有裂开，手掌也能握棍。体力还够，但如果路线开始逼着我们连续冲刺，就该换路，不该拿伤势赌。”\n\n“你也检查一下自己。赶路时最容易把小伤拖成大问题。”",
+        "no": "“没有深抓伤，也没有开放性咬伤。左膝和手掌有点擦伤，都已经清洗、消毒和包扎了。”\n\n她没有擅自靠近，只把急救包往你能看见的位置挪了挪。\n\n“咬伤本身不是什么神秘判决，但脏伤口拖久了照样会要命。你愿意的话，我可以隔着一点距离帮你看看，不愿意也没关系，至少自己再检查一次。”"
+      }
+    },
+    "responses": [
+      {
+        "text": "我会检查一下。你学过急救？",
+        "topic": "TALK_TRAVEL_LIANG_STUDY"
+      },
+      {
+        "text": "你还带着多少处理伤口的东西？",
+        "topic": "TALK_TRAVEL_LIANG_FIRST_AID_SUPPLIES"
+      },
+      {
+        "text": "先说别的。",
+        "topic": "TALK_TRAVEL_LIANG_START"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_FIRST_AID_SUPPLIES",
+    "dynamic_line": "梁知遥打开背包内侧，让你看见分装好的用品。\n\n“还有一卷无菌绷带、几片独立包装的创可贴和两片医用纱布。数量不多，但都能真正止血和覆盖伤口。”\n\n她把包重新合上。\n\n“谁真的在流血就先给谁用。只是擦破一点皮，清洗干净就够了。你需要时直接说，不必先和我谈价格。”",
+    "responses": [
+      {
+        "text": "明白。真有人受伤时再用。",
+        "topic": "TALK_TRAVEL_LIANG_START",
+        "opinion": {
+          "trust": 1
+        }
+      },
+      {
+        "text": "你对这些东西倒是准备得很细。",
+        "topic": "TALK_TRAVEL_LIANG_STUDY"
+      },
+      {
+        "text": "先说别的。",
+        "topic": "TALK_TRAVEL_LIANG_START"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_STUDY",
+    "dynamic_line": "“生物医学工程夹在工程、生命科学和医学之间。我参加过校园急救队训练，也做过几次活动保障。”\n\n她把几盒药的标签朝同一方向摆好，笑了一下。\n\n“所以我能处理常见外伤、读懂剂量和禁忌，也知道什么时候应该承认自己不懂。离医生还差得很远，但总比只会说‘坚持住’强一点。”",
+    "responses": [
+      {
+        "text": "至少这些知识现在用得上。",
+        "topic": "TALK_TRAVEL_LIANG_START"
+      },
+      {
+        "text": "[说服] 你不像只是觉得这些知识有用。为什么会选这个专业？",
+        "condition": {
+          "and": [
+            {
+              "or": [
+                {
+                  "npc_has_var": "travel_liang_arrived",
+                  "type": "dialogue",
+                  "context": "travel_liang",
+                  "value": "yes"
+                },
+                {
+                  "npc_has_var": "travel_liang_joined",
+                  "type": "dialogue",
+                  "context": "travel_liang",
+                  "value": "yes"
+                }
+              ]
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_study_check_attempted",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 25,
+          "mod": [
+            [
+              "TRUST",
+              5
+            ],
+            [
+              "VALUE",
+              4
+            ],
+            [
+              "ANGER",
+              -4
+            ]
+          ]
+        },
+        "success": {
+          "topic": "TALK_TRAVEL_LIANG_STUDY_DEEP",
+          "effect": [
+            {
+              "npc_add_var": "travel_liang_study_check_attempted",
+              "type": "dialogue",
+              "context": "travel_liang",
+              "value": "yes"
+            },
+            {
+              "npc_add_var": "travel_liang_study_opened",
+              "type": "dialogue",
+              "context": "travel_liang",
+              "value": "yes"
+            }
+          ],
+          "opinion": {
+            "trust": 1,
+            "value": 1
+          }
+        },
+        "failure": {
+          "topic": "TALK_TRAVEL_LIANG_STUDY_FAIL",
+          "effect": {
+            "npc_add_var": "travel_liang_study_check_attempted",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          "opinion": {
+            "trust": 0,
+            "value": 0,
+            "anger": 0
+          }
+        }
+      },
+      {
+        "text": "你后来愿意说说为什么选这个专业吗？",
+        "topic": "TALK_TRAVEL_LIANG_STUDY_DEEP",
+        "condition": {
+          "npc_has_var": "travel_liang_study_opened",
+          "type": "dialogue",
+          "context": "travel_liang",
+          "value": "yes"
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_ESCAPE",
+    "dynamic_line": {
+      "npc_has_var": "travel_liang_arrived",
+      "type": "dialogue",
+      "context": "travel_liang",
+      "value": "yes",
+      "yes": {
+        "npc_has_var": "travel_liang_origin_center",
+        "type": "dialogue",
+        "context": "travel_liang",
+        "value": "yes",
+        "yes": "“学校停课以后，临时避难点很快失守。教学楼里出现了会重新站起来的尸体，外面还有别的东西。”\n\n她的手指在棍身上停了一下，又松开。\n\n“我沿住宅区和绿道往外绕，和几个人交换过水和路线。最后一段跟着一辆挤满人的厢式车走到这里，车坏在外围，他们把还能走的人带到门口。守卫检查武器和伤口，医生重新包扎，地下床位却早就满了。”\n\n“所以你见到我时，我已经在地面层帮着整理登记纸。没人把我一路送到这里，我只是跟着还能确认的路线走，最后到了一个可以暂时停下来的地方。”",
+        "no": "“学校停课以后，临时避难点很快失守。教学楼里出现了会重新站起来的尸体，外面还有别的东西。”\n\n她的手指在棍身上停了一下，又松开。\n\n“我沿住宅区和绿道往外绕，靠离线地图、路牌和疏散图找到那座官方避难所。后来遇见你，我们才真正把纸上的方向走成了一条路，一起穿过围栏和内院，进到这里的接待内厅。”\n\n“我记得是我们一起走到这里的，不会说成是我一个人做到的。”"
+      },
+      "no": "“学校停课以后，临时避难点很快失守。教学楼里出现了会重新站起来的尸体，外面还有别的东西。”\n\n她的手指在棍身上停了一下，又松开。\n\n“我沿住宅区和绿道往外绕。路上有人和我交换过水，也有人提醒我别走某个路口，两个研究生还陪我走了一段。不是每个活人都可靠，但至少大多数人还能说话、还能商量。”\n\n“我靠离线地图、路牌和疏散图找到这里。接下来想去难民接收中心——那里不一定安全，但总比一个人猜路强。”"
+    },
+    "responses": [
+      {
+        "text": "[说服] 如果你愿意，我想知道路上还有哪些事没有说。",
+        "condition": {
+          "and": [
+            {
+              "or": [
+                {
+                  "npc_has_var": "travel_liang_arrived",
+                  "type": "dialogue",
+                  "context": "travel_liang",
+                  "value": "yes"
+                },
+                {
+                  "npc_has_var": "travel_liang_joined",
+                  "type": "dialogue",
+                  "context": "travel_liang",
+                  "value": "yes"
+                }
+              ]
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_escape_check_attempted",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 18,
+          "mod": [
+            [
+              "TRUST",
+              6
+            ],
+            [
+              "VALUE",
+              4
+            ],
+            [
+              "ANGER",
+              -5
+            ]
+          ]
+        },
+        "success": {
+          "topic": "TALK_TRAVEL_LIANG_SURVIVOR",
+          "effect": [
+            {
+              "npc_add_var": "travel_liang_escape_check_attempted",
+              "type": "dialogue",
+              "context": "travel_liang",
+              "value": "yes"
+            },
+            {
+              "npc_add_var": "travel_liang_escape_opened",
+              "type": "dialogue",
+              "context": "travel_liang",
+              "value": "yes"
+            }
+          ],
+          "opinion": {
+            "trust": 1,
+            "value": 1
+          }
+        },
+        "failure": {
+          "topic": "TALK_TRAVEL_LIANG_ESCAPE_FAIL",
+          "effect": {
+            "npc_add_var": "travel_liang_escape_check_attempted",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          "opinion": {
+            "trust": 0,
+            "value": 0,
+            "anger": 0
+          }
+        }
+      },
+      {
+        "text": "你愿意继续说说路上的人吗？",
+        "topic": "TALK_TRAVEL_LIANG_SURVIVOR",
+        "condition": {
+          "npc_has_var": "travel_liang_escape_opened",
+          "type": "dialogue",
+          "context": "travel_liang",
+          "value": "yes"
+        }
+      },
+      {
+        "text": "是棍法救了你？",
+        "topic": "TALK_TRAVEL_LIANG_WINGCHUN"
+      },
+      {
+        "text": "我们先谈眼前的事。",
+        "topic": "TALK_TRAVEL_LIANG_START"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_SURVIVOR",
+    "dynamic_line": {
+      "npc_has_var": "travel_liang_arrived",
+      "type": "dialogue",
+      "context": "travel_liang",
+      "value": "yes",
+      "yes": "她想了一会儿，语气没有先前那样紧。\n\n“路上遇到的人，大多只是害怕。有人保持距离，有人交换消息，也有人在自己都缺水的时候分给我一瓶。”\n\n“真正让我不敢靠近的，多半已经不像正常人了，或者已经死过一次。”\n\n她垂下眼。\n\n“我也听见过门后有人求救，却没有回头。我知道冲进去可能只是多死一个人，可到现在还是会想，如果当时回头，会不会有什么不同。现在至少到了一个有人、有灯、能把名字写进记录的地方。剩下的，我想慢慢说。”",
+      "no": "她想了一会儿，语气没有先前那样紧。\n\n“路上遇到的人，大多只是害怕。有人保持距离，有人交换消息，也有人在自己都缺水的时候分给我一瓶。”\n\n“真正让我不敢靠近的，多半已经不像正常人了，或者已经死过一次。”\n\n她垂下眼。\n\n“我也听见过门后有人求救，却没有回头。我知道冲进去可能只是多死一个人，可到现在还是会想，如果当时回头，会不会有什么不同。先到有人、有灯的地方吧，剩下的以后再说。”"
+    },
+    "responses": [
+      {
+        "text": "不用现在就逼自己得出结论。",
+        "topic": "TALK_TRAVEL_LIANG_START",
+        "condition": {
+          "npc_has_var": "travel_liang_arrived",
+          "type": "dialogue",
+          "context": "travel_liang",
+          "value": "yes"
+        },
+        "opinion": {
+          "trust": 1
+        }
+      },
+      {
+        "text": "明白。我们先把眼前的路走完。",
+        "topic": "TALK_TRAVEL_LIANG_START",
+        "condition": {
+          "not": {
+            "npc_has_var": "travel_liang_arrived",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_WINGCHUN",
+    "dynamic_line": "你看向那根几乎和房间一样显眼的长棍。\n\n梁知遥也看了一眼，神情反而放松了些。\n\n“咏春里的长器械，叫六点半棍。我爸年轻时练叶问一系，我小时候跟着师父学，来美国以后，偶尔也在华人学生社团带基础动作。”\n\n她握住棍尾，把另一端轻轻抬离地面。\n\n“名字听起来很玄，练的其实是距离、直线和别让危险贴上来。它救过我，但没神奇到能替人判断什么时候该跑。”",
+    "responses": [
+      {
+        "text": "你能应付多少敌人？",
+        "topic": "TALK_TRAVEL_LIANG_WINGCHUN_2"
+      },
+      {
+        "text": "[说服] 你谈起咏春时，不太像只是在谈防身。",
+        "condition": {
+          "and": [
+            {
+              "or": [
+                {
+                  "npc_has_var": "travel_liang_arrived",
+                  "type": "dialogue",
+                  "context": "travel_liang",
+                  "value": "yes"
+                },
+                {
+                  "npc_has_var": "travel_liang_joined",
+                  "type": "dialogue",
+                  "context": "travel_liang",
+                  "value": "yes"
+                }
+              ]
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_wingchun_check_attempted",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 28,
+          "mod": [
+            [
+              "TRUST",
+              5
+            ],
+            [
+              "VALUE",
+              3
+            ],
+            [
+              "ANGER",
+              -4
+            ]
+          ]
+        },
+        "success": {
+          "topic": "TALK_TRAVEL_LIANG_WINGCHUN_DEEP",
+          "effect": [
+            {
+              "npc_add_var": "travel_liang_wingchun_check_attempted",
+              "type": "dialogue",
+              "context": "travel_liang",
+              "value": "yes"
+            },
+            {
+              "npc_add_var": "travel_liang_wingchun_opened",
+              "type": "dialogue",
+              "context": "travel_liang",
+              "value": "yes"
+            }
+          ],
+          "opinion": {
+            "trust": 1
+          }
+        },
+        "failure": {
+          "topic": "TALK_TRAVEL_LIANG_WINGCHUN_FAIL",
+          "effect": {
+            "npc_add_var": "travel_liang_wingchun_check_attempted",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          "opinion": {
+            "trust": 0,
+            "value": 0,
+            "anger": 0
+          }
+        }
+      },
+      {
+        "text": "你后来愿意说说为什么一直练吗？",
+        "topic": "TALK_TRAVEL_LIANG_WINGCHUN_DEEP",
+        "condition": {
+          "npc_has_var": "travel_liang_wingchun_opened",
+          "type": "dialogue",
+          "context": "travel_liang",
+          "value": "yes"
+        }
+      },
+      {
+        "text": "先说别的。",
+        "topic": "TALK_TRAVEL_LIANG_START"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_WINGCHUN_2",
+    "dynamic_line": "“一两个目标还好，多了我也会慌。”\n\n她把长棍在地上轻轻点了一下。\n\n“棍子能把最先靠近的东西推开，但不能替我们看见身后。你听见我喊跑，就别站在那里研究招式。我也一样。”",
+    "responses": [
+      {
+        "text": "这安排合理。",
+        "topic": "TALK_TRAVEL_LIANG_START"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_BOUNDS",
+    "dynamic_line": "梁知遥略带歉意地笑了一下。\n\n“不是不信你，只是这里太暗，也太安静了。有些话一说出口，人会分心。”\n\n“等我们到更安全的地方，你再问一次，我会认真回答。”",
+    "responses": [
+      {
+        "text": "明白。",
+        "topic": "TALK_TRAVEL_LIANG_START"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_STUDY_FAIL",
+    "dynamic_line": "梁知遥看了你一眼，像是突然听见了一道招生面试题。\n\n“简单说吧，我不喜欢明明有办法，却因为设备太贵、操作太复杂，最后还是轮不到真正需要的人。”\n\n她把药盒按标签重新排好。\n\n“更具体的，等我们不用听着外门动静聊天时再说。”",
+    "responses": [
+      {
+        "text": "好，我不追问。",
+        "topic": "TALK_TRAVEL_LIANG_START"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_ESCAPE_FAIL",
+    "dynamic_line": "她的手指在棍身上停了一下。\n\n“有些细节不是不能说，是说出来以后，就得重新走一遍。”\n\n她仍然给了你一个不完整的答案。\n\n“我在一扇锁着的门外听见过求救，没有进去。现在我还不知道该怎样讲那件事，又不把它讲成替自己辩护。”\n\n“先把眼前这段路走完，好吗？”",
+    "responses": [
+      {
+        "text": "好。先离开这里。",
+        "topic": "TALK_TRAVEL_LIANG_START"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_WINGCHUN_FAIL",
+    "dynamic_line": "梁知遥轻轻转了半圈棍身。\n\n“练得久，不代表每个动作后面都有适合现在讲的故事。”\n\n她笑了笑，语气并不拒人。\n\n“先把它当成一根能替我们留出退路的长棍吧。等环境安静一点，我可以慢慢解释。”",
+    "responses": [
+      {
+        "text": "够用了。",
+        "topic": "TALK_TRAVEL_LIANG_START"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_ARMOR_FAIL",
+    "dynamic_line": "她低头检查了一下肩带。\n\n“是我父母寄来的。箱子里还有检查清单、陈皮糖和一句‘夸张总比后悔轻’。”\n\n她笑得有些无奈。\n\n“这已经足够解释它为什么在我身上。剩下的不是秘密，只是我还不想在刚认识时把家里的事一次说完。”",
+    "responses": [
+      {
+        "text": "好。它至少确实救过你。",
+        "topic": "TALK_TRAVEL_LIANG_START"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_STUDY_DEEP",
+    "dynamic_line": "她把药盒放回袋里，想了一会儿。\n\n“我在急救训练和实验室里见过一些很现实的问题。有些检测和器械不是做不出来，而是太贵、太难用，或者根本到不了真正需要它的人手里。”\n\n“所以我想做的东西也很具体。检测快一点，康复器械好用一点，成本低一点。哪怕只让一个人少等几天、少花一点钱，也算有用。”\n\n她拉好袋口。\n\n“这就是我选它的原因。比起说要改变世界，我更想先把一个具体的问题做对。”",
+    "responses": [
+      {
+        "text": "这理由很实在。",
+        "topic": "TALK_TRAVEL_LIANG_START"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_WINGCHUN_DEEP",
+    "dynamic_line": "她低头看了一眼手里的长棍。\n\n“我喜欢它一直在问很实际的问题。距离够不够，重心稳不稳，害怕的时候动作会不会变形。练习时，招式名字再好听，也不会让错误的动作突然有用。”\n\n“我喜欢这一点。做得对不对，身体马上就会告诉你，不需要再说服谁。”",
+    "responses": [
+      {
+        "text": "我明白你的意思。",
+        "topic": "TALK_TRAVEL_LIANG_START"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_ARMOR_FAMILY",
+    "dynamic_line": "她沉默了一会儿，才重新碰了碰护服的肩带。\n\n“收到箱子时，我第一反应是他们又在过度担心。我平时衣服很少，也不喜欢为‘也许会用到’囤一大堆东西。”\n\n“现在这件护服救过我不止一次。我只是希望以后还能亲口告诉他们，这次他们是对的。”\n\n她停了一下。\n\n“就这些。至少现在先说这些。”",
+    "responses": [
+      {
+        "text": "希望你有机会告诉他们。",
+        "topic": "TALK_TRAVEL_LIANG_START"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_TRADE_MENU",
+    "dynamic_line": {
+      "npc_has_var": "travel_liang_arrived",
+      "type": "dialogue",
+      "context": "travel_liang",
+      "value": "yes",
+      "yes": "梁知遥取出难民中心登记余货的清单。\n\n“这些东西不在我的私人背包里，是接待区按批次交给我核对的余货。只要我还没有正式加入队伍，就可以继续按商会币结清，一旦加入，它们就会交回接待区。”",
+      "no": {
+        "npc_has_var": "travel_liang_temporary_follower",
+        "type": "dialogue",
+        "context": "travel_liang",
+        "value": "yes",
+        "yes": "梁知遥从背包侧袋取出那张分栏清单，确认过周围才递到你面前。\n\n“出发前单独封好的东西我仍然带着。只要还没正式加入你的队伍，这些一次性物资就可以照原来的条件交换，已经换走的不会补回。”",
+        "no": "梁知遥取出一张分栏写好的清单。\n\n“我不会把要用来保命的随身物品混进交换。能拿出来的东西都单独封好、逐项记数，只做当场结清的实物交换，不赊欠，也不把谁欠谁留到以后。”"
+      }
+    },
+    "responses": [
+      {
+        "text": "看看她单独封好的少量一次性物资。",
+        "topic": "TALK_TRAVEL_LIANG_BARTER",
+        "condition": {
+          "not": {
+            "npc_has_var": "travel_liang_arrived",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        }
+      },
+      {
+        "text": "看看用商会币兑换的物资和特殊物件。",
+        "topic": "TALK_TRAVEL_LIANG_EQUIPMENT",
+        "condition": {
+          "and": [
+            {
+              "npc_has_var": "travel_liang_arrived",
+              "type": "dialogue",
+              "context": "travel_liang",
+              "value": "yes"
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_joined",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "text": "先不换。",
+        "topic": "TALK_TRAVEL_LIANG_START"
+      }
+    ],
+    "speaker_effect": {
+      "effect": {
+        "arithmetic": [
+          {
+            "u_val": "owed"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_BARTER",
+    "dynamic_line": {
+      "npc_has_var": "travel_liang_temporary_follower",
+      "type": "dialogue",
+      "context": "travel_liang",
+      "value": "yes",
+      "yes": "“武器、证件、手机和日记我会自己留着。出发前单独封好的少量药品和那本已经看完的小说仍在包里，已经换走的不会补回。”\n\n她把清单压在背包上，没有在路中央摊开所有东西。\n\n“条件不变：小说或六片阿司匹林各一根密封应急口粮，两卷绷带两根，两份抗菌剂三根，两片抗真菌药五根，两片抗寄生虫药六根。数量不够就先不换，真有人重伤时，我们仍然先救人。”",
+      "no": "“武器、证件、手机和日记我会自己留着。学校撤离前，我按登记领过少量基础药品，一路上只用了其中一部分，剩下的和那本已经看完的小说都单独封好了。”\n\n她把清单放到长凳中间。\n\n“这里不记账，也不赊欠。你拿密封应急口粮来，我按清单当场交换：小说或六片阿司匹林各一根，两卷绷带两根，两份抗菌剂三根，两片抗真菌药五根，两片抗寄生虫药六根。数量不够就先不换，真有人重伤时，我们仍然先救人。”"
+    },
+    "responses": [
+      {
+        "text": "用两根密封应急口粮换两卷绷带。",
+        "topic": "TALK_TRAVEL_LIANG_BARTER",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "npc_has_var": "travel_liang_barter_bandage_sold",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            },
+            {
+              "u_has_items": {
+                "item": "protein_bar_evac",
+                "count": 2
+              }
+            }
+          ]
+        },
+        "effect": [
+          {
+            "u_consume_item": "protein_bar_evac",
+            "count": 2,
+            "popup": true
+          },
+          {
+            "u_spawn_item": "TRAVEL_LIANG_BARTER_BANDAGE",
+            "use_item_group": true
+          },
+          {
+            "npc_add_var": "travel_liang_barter_bandage_sold",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        ]
+      },
+      {
+        "text": "用一根密封应急口粮换六片阿司匹林。",
+        "topic": "TALK_TRAVEL_LIANG_BARTER",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "npc_has_var": "travel_liang_barter_aspirin_sold",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            },
+            {
+              "u_has_items": {
+                "item": "protein_bar_evac",
+                "count": 1
+              }
+            }
+          ]
+        },
+        "effect": [
+          {
+            "u_consume_item": "protein_bar_evac",
+            "count": 1,
+            "popup": true
+          },
+          {
+            "u_spawn_item": "TRAVEL_LIANG_BARTER_ASPIRIN",
+            "use_item_group": true
+          },
+          {
+            "npc_add_var": "travel_liang_barter_aspirin_sold",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        ]
+      },
+      {
+        "text": "用一根密封应急口粮换那本已经看完的小说。",
+        "topic": "TALK_TRAVEL_LIANG_BARTER",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "npc_has_var": "travel_liang_barter_novel_sold",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            },
+            {
+              "u_has_items": {
+                "item": "protein_bar_evac",
+                "count": 1
+              }
+            }
+          ]
+        },
+        "effect": [
+          {
+            "u_consume_item": "protein_bar_evac",
+            "count": 1,
+            "popup": true
+          },
+          {
+            "u_spawn_item": "TRAVEL_LIANG_BARTER_NOVEL",
+            "use_item_group": true
+          },
+          {
+            "npc_add_var": "travel_liang_barter_novel_sold",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        ]
+      },
+      {
+        "text": "用三根密封应急口粮换两份抗菌剂。",
+        "topic": "TALK_TRAVEL_LIANG_BARTER",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "npc_has_var": "travel_liang_barter_disinfectant_sold",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            },
+            {
+              "u_has_items": {
+                "item": "protein_bar_evac",
+                "count": 3
+              }
+            }
+          ]
+        },
+        "effect": [
+          {
+            "u_consume_item": "protein_bar_evac",
+            "count": 3,
+            "popup": true
+          },
+          {
+            "u_spawn_item": "TRAVEL_LIANG_BARTER_DISINFECTANT",
+            "use_item_group": true
+          },
+          {
+            "npc_add_var": "travel_liang_barter_disinfectant_sold",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        ]
+      },
+      {
+        "text": "用五根密封应急口粮换两片抗真菌药。",
+        "topic": "TALK_TRAVEL_LIANG_BARTER",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "npc_has_var": "travel_liang_barter_antifungal_sold",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            },
+            {
+              "u_has_items": {
+                "item": "protein_bar_evac",
+                "count": 5
+              }
+            }
+          ]
+        },
+        "effect": [
+          {
+            "u_consume_item": "protein_bar_evac",
+            "count": 5,
+            "popup": true
+          },
+          {
+            "u_spawn_item": "TRAVEL_LIANG_BARTER_ANTIFUNGAL",
+            "use_item_group": true
+          },
+          {
+            "npc_add_var": "travel_liang_barter_antifungal_sold",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        ]
+      },
+      {
+        "text": "用六根密封应急口粮换两片抗寄生虫药。",
+        "topic": "TALK_TRAVEL_LIANG_BARTER",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "npc_has_var": "travel_liang_barter_antiparasitic_sold",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            },
+            {
+              "u_has_items": {
+                "item": "protein_bar_evac",
+                "count": 6
+              }
+            }
+          ]
+        },
+        "effect": [
+          {
+            "u_consume_item": "protein_bar_evac",
+            "count": 6,
+            "popup": true
+          },
+          {
+            "u_spawn_item": "TRAVEL_LIANG_BARTER_ANTIPARASITIC",
+            "use_item_group": true
+          },
+          {
+            "npc_add_var": "travel_liang_barter_antiparasitic_sold",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        ]
+      },
+      {
+        "text": "先不换了。",
+        "topic": "TALK_TRAVEL_LIANG_TRADE_MENU"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_CENTER_MENU",
+    "dynamic_line": {
+      "npc_has_var": "travel_liang_origin_center",
+      "type": "dialogue",
+      "context": "travel_liang",
+      "value": "yes",
+      "yes": "梁知遥把床位标签夹进日记，给你让出长凳的一小块位置。\n\n“我也只比你早来一点。你想问我在这里做什么，还是问我见到的人？”",
+      "no": "梁知遥把新领到的床位标签翻来覆去看了两遍。\n\n“我还在适应这里。你想问伤口、睡觉的地方，还是我这一路看到的事？”"
+    },
+    "responses": [
+      {
+        "text": "你休息得怎么样？",
+        "topic": "TALK_TRAVEL_LIANG_CENTER_STATUS"
+      },
+      {
+        "text": "你为什么留下来帮忙？",
+        "topic": "TALK_TRAVEL_LIANG_CENTER_ROLE"
+      },
+      {
+        "text": "你去过难民中心哪些地方？",
+        "topic": "TALK_TRAVEL_LIANG_CENTER_STRUCTURE"
+      },
+      {
+        "text": "你和这里的人相处得怎么样？",
+        "topic": "TALK_TRAVEL_LIANG_CENTER_PEOPLE"
+      },
+      {
+        "text": "你愿意暂时留在这里吗？",
+        "topic": "TALK_TRAVEL_LIANG_CENTER_IMPRESSION"
+      },
+      {
+        "text": "先谈别的。",
+        "topic": "TALK_TRAVEL_LIANG_START"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_CENTER_STATUS",
+    "dynamic_line": {
+      "npc_compare_time_since_var": "travel_liang_arrival_time",
+      "type": "timer",
+      "context": "travel_liang",
+      "op": "<",
+      "time": "1 day",
+      "yes": {
+        "npc_has_var": "travel_liang_origin_center",
+        "type": "dialogue",
+        "context": "travel_liang",
+        "value": "yes",
+        "yes": "“登记做完了，膝盖也重新包过。地下没有空床，我就在地面找了个位置。”\n\n她揉了揉眼睛。\n\n“我现在最大的计划是睡觉。别的事等醒来再说。”",
+        "no": "“守卫看过武器，医生看过伤口，我也拿到一张临时床位标签。”\n\n她把标签举给你看。\n\n“它很薄，不过今晚看起来比任何证书都值钱。”"
+      },
+      "no": {
+        "npc_has_var": "travel_liang_origin_center",
+        "type": "dialogue",
+        "context": "travel_liang",
+        "value": "yes",
+        "yes": "“睡过一觉以后好多了。”\n\n她活动了一下受伤的膝盖。\n\n“这里没有让我突然安心，但至少我现在能完整地想完一件事，不会想一半就开始找出口。”",
+        "no": "“睡过一觉以后好多了。”\n\n她把登记纸塞回背包。\n\n“我还是会担心下一步，不过已经不是那种只想缩进角落里的担心。”"
+      }
+    },
+    "responses": [
+      {
+        "text": "先把身体恢复好。",
+        "topic": "TALK_TRAVEL_LIANG_CENTER_MENU",
+        "opinion": {
+          "trust": 1
+        }
+      },
+      {
+        "text": "至少流程比外面可靠。",
+        "topic": "TALK_TRAVEL_LIANG_CENTER_MENU"
+      },
+      {
+        "text": "回到其他话题。",
+        "topic": "TALK_TRAVEL_LIANG_START"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_CENTER_ROLE",
+    "dynamic_line": {
+      "npc_has_var": "travel_liang_origin_center",
+      "type": "dialogue",
+      "context": "travel_liang",
+      "value": "yes",
+      "yes": "“最开始只是有人问我能不能看懂药品标签。”\n\n梁知遥把两张写得很乱的表摊平。\n\n“我不是医生，不敢替人判断伤得重不重。不过名字、剂量、过敏史这些东西，抄错了也会害人。我就坐下来帮一会儿。”\n\n她笑了笑。\n\n“后来发现，手里有点事做，比一直盯着手机等消息好受。”",
+      "no": "“最开始只是有人问我能不能看懂药品标签。”\n\n梁知遥把两张写得很乱的表摊平。\n\n“我不是医生，不敢替人判断伤得重不重。不过名字、剂量、过敏史这些东西，抄错了也会害人。我就坐下来帮一会儿。”\n\n她笑了笑。\n\n“后来发现，手里有点事做，比一直盯着手机等消息好受。”"
+    },
+    "responses": [
+      {
+        "text": "知道边界比逞强重要。",
+        "topic": "TALK_TRAVEL_LIANG_CENTER_MENU",
+        "opinion": {
+          "trust": 1,
+          "value": 1
+        }
+      },
+      {
+        "text": "你很快就给自己找到了位置。",
+        "topic": "TALK_TRAVEL_LIANG_CENTER_MENU"
+      },
+      {
+        "text": "回到其他话题。",
+        "topic": "TALK_TRAVEL_LIANG_START"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_CENTER_STRUCTURE",
+    "dynamic_line": "“其实没多少。”\n\n梁知遥用笔尖点了点门口、接待厅和自己睡过的地面位置。\n\n“守卫不让我往地下走，只说已经满了。我去过医生那边，帮忙搬过两箱敷料，也听商人和跑商说过外面的路线。再里面是什么样，我不知道。”\n\n她把笔放下。\n\n“这里很容易让人产生一种错觉，好像有灯、有表格，就有人掌握全局。可我问同一个问题，三个人常常会给三个答案。”",
+    "responses": [
+      {
+        "text": "至少你知道哪些话不能当成确定消息。",
+        "topic": "TALK_TRAVEL_LIANG_CENTER_MENU"
+      },
+      {
+        "text": "以后我们自己去看看外面的路线。",
+        "topic": "TALK_TRAVEL_LIANG_CENTER_MENU"
+      },
+      {
+        "text": "回到其他话题。",
+        "topic": "TALK_TRAVEL_LIANG_START"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_CENTER_PEOPLE",
+    "dynamic_line": "“医生说话很快，守卫说话很短，商人说话的时候总在看你带了什么。”\n\n她想了想，又补上一句。\n\n“但也有人会把长凳往旁边挪一点，有人把最后半杯热水留给伤员。大家都累得不好相处，可偶尔还是会做一些很温柔的事。”\n\n“我还不够了解他们，不想替谁解释，也不想太快讨厌谁。”",
+    "responses": [
+      {
+        "text": "慢慢认识就好。",
+        "topic": "TALK_TRAVEL_LIANG_CENTER_MENU",
+        "opinion": {
+          "trust": 1
+        }
+      },
+      {
+        "text": "疲惫会把人最好和最坏的一面都挤出来。",
+        "topic": "TALK_TRAVEL_LIANG_CENTER_MENU"
+      },
+      {
+        "text": "回到其他话题。",
+        "topic": "TALK_TRAVEL_LIANG_START"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_CENTER_IMPRESSION",
+    "dynamic_line": "“今晚我愿意留。”\n\n梁知遥抬头看了一眼仍亮着的灯。\n\n“这里有门，有人值夜，还有一张勉强能睡的地方。放在一周以前，我大概会嫌弃空气和噪声，现在觉得这些已经很好。”\n\n她轻轻碰了碰手机。\n\n“但我不会一直等下去。玛雅不在这里，家人的消息也不会自己从屏幕里出现。”",
+    "responses": [
+      {
+        "text": "休息好以后，我们继续找。",
+        "topic": "TALK_TRAVEL_LIANG_CENTER_MENU",
+        "opinion": {
+          "value": 1
+        }
+      },
+      {
+        "text": "先把今天过完。",
+        "topic": "TALK_TRAVEL_LIANG_CENTER_MENU"
+      },
+      {
+        "text": "回到其他话题。",
+        "topic": "TALK_TRAVEL_LIANG_START"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_RESTING",
+    "dynamic_line": {
+      "npc_has_var": "travel_liang_origin_center",
+      "type": "dialogue",
+      "context": "travel_liang",
+      "value": "yes",
+      "yes": "“明天吧。”\n\n她把最后几张表塞进文件夹，动作已经慢得有些笨拙。\n\n“我答应把这一叠做完，而且现在脑子里像塞了棉花。让我先睡一觉。明天你还愿意来，我就不躲在这些纸后面了。”",
+      "no": "“明天吧。”\n\n她重新缠好绷带，靠着桌沿打了个很轻的哈欠。\n\n“谢谢你把我带到这里。我现在只想确认门能关上，然后好好睡一觉。明天再来，我会认真和你谈。”"
+    },
+    "responses": [
+      {
+        "text": "好，先休息。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_JOIN",
+    "dynamic_line": {
+      "npc_has_var": "travel_liang_origin_center",
+      "type": "dialogue",
+      "context": "travel_liang",
+      "value": "yes",
+      "yes": {
+        "npc_has_var": "travel_liang_center_search_agreed",
+        "type": "dialogue",
+        "context": "travel_liang",
+        "value": "yes",
+        "yes": "梁知遥把最后一份表交回去，摘下临时床位标签，拿起墙边的六点半棍。\n\n“你真的来了。”她笑了一下，又像怕自己显得太高兴，低头检查背包扣带。\n\n“我想去找玛雅，也想找一种能把消息送得更远的办法。一个人做这件事，我大概会一边害怕一边假装不怕。”\n\n她向你伸出手。\n\n“所以，一起走吧。遇到拿不准的事，我们就停下来商量。”",
+        "no": "梁知遥把最后一份表交回去，摘下临时床位标签，拿起墙边的六点半棍。\n\n“我昨晚想了很久。其实没有想出什么漂亮的答案，只是觉得继续一个人等消息，会把我逼疯。”\n\n她向你伸出手，神情认真，又带着一点不好意思。\n\n“我想和你一起走。先找玛雅，也找找有没有办法给家里发出一条新的消息。你不用保证结果，愿意一起试就够了。”"
+      },
+      "no": "梁知遥夹好书签，拿起靠墙的六点半棍。\n\n“从避难所走到这里以后，我发现自己已经习惯回头确认你还在。”\n\n她向你伸出手，笑得比昨天轻松一些。\n\n“那就继续同行吧。还有很多事没弄明白，不过两个人至少能轮流犯傻。”"
+    },
+    "responses": [
+      {
+        "text": "我已经处理好了。那就一起走。",
+        "topic": "TALK_DONE",
+        "effect": [
+          {
+            "npc_lose_trait": "RETURN_TO_START_POS"
+          },
+          {
+            "npc_lose_trait": "IGNORE_SOUND"
+          },
+          {
+            "npc_lose_trait": "NO_BASH"
+          },
+          "stop_guard",
+          {
+            "npc_lose_var": "travel_liang_center_guard_stable",
+            "type": "dialogue",
+            "context": "travel_liang"
+          },
+          {
+            "npc_add_var": "travel_liang_joined",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          "follow",
+          {
+            "clear_npc_rule": "allow_pick_up"
+          },
+          {
+            "set_npc_rule": "follow_close"
+          },
+          {
+            "set_npc_rule": "hold_the_line"
+          },
+          {
+            "set_npc_rule": "ignore_noise"
+          },
+          {
+            "set_npc_engagement_rule": "ENGAGE_CLOSE"
+          },
+          {
+            "npc_add_var": "travel_liang_ai_profile_initialized",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_first_topic": "TALK_FRIEND"
+          }
+        ]
+      },
+      {
+        "text": "等等，我先把要换的物资处理完。",
+        "topic": "TALK_TRAVEL_LIANG_TRADE_MENU"
+      },
+      {
+        "text": "先留在这里，我以后再来找你。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_COMPANION",
+    "dynamic_line": {
+      "npc_has_var": "travel_liang_archive_complete",
+      "type": "dialogue",
+      "context": "travel_liang",
+      "value": "yes",
+      "yes": [
+        "梁知遥把地图摊在背包上。伊舍伍德农场的名字被圈了两遍，旁边仍然只有一个问号。\n\n“知道要找哪里，和知道该往哪走，原来是两回事。”",
+        "梁知遥把HUB归档U盘重新收好。\n\n“玛雅至少在那份记录的最后还活着。接下来不能只靠着急。”"
+      ],
+      "no": [
+        "梁知遥靠着背包坐下，把手机里仍未发送的消息又看了一遍。\n\n“我知道盯着它不会让信号回来，但有时候还是忍不住。”",
+        "梁知遥在地图空白处画了一个很小的问号。\n\n“我以前觉得迷路就是走错路。现在好像只要还有人愿意一起找，空白也没有那么吓人。”"
+      ]
+    },
+    "responses": [
+      {
+        "text": "玛雅是谁？她最后去了哪里？",
+        "topic": "TALK_TRAVEL_LIANG_MAYA",
+        "condition": {
+          "not": {
+            "npc_has_var": "travel_liang_archive_complete",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        }
+      },
+      {
+        "text": "你准备给家里发什么消息？",
+        "topic": "TALK_TRAVEL_LIANG_FAMILY_MESSAGE",
+        "condition": {
+          "not": {
+            "npc_has_var": "travel_liang_archive_complete",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        }
+      },
+      {
+        "text": "你建议我们接下来做什么？",
+        "topic": "TALK_TRAVEL_LIANG_EXPLORE",
+        "condition": {
+          "not": {
+            "npc_has_var": "travel_liang_archive_complete",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        }
+      },
+      {
+        "text": "难民中心商人的未知收件人委托，你怎么看？",
+        "topic": "TALK_TRAVEL_LIANG_UNKNOWN_RECIPIENT",
+        "condition": {
+          "not": {
+            "npc_has_var": "travel_liang_archive_complete",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        }
+      },
+      {
+        "text": "你觉得我们现在配合得怎么样？",
+        "topic": "TALK_TRAVEL_LIANG_TEAMWORK",
+        "condition": {
+          "not": {
+            "npc_has_var": "travel_liang_archive_complete",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        }
+      },
+      {
+        "text": "先谈别的。",
+        "topic": "TALK_FRIEND",
+        "condition": {
+          "not": {
+            "npc_has_var": "travel_liang_archive_complete",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        }
+      },
+      {
+        "text": "[下一步] 返回梁知遥现在最在意的事情。",
+        "topic": "TALK_TRAVEL_LIANG_PERSONAL_MENU",
+        "condition": {
+          "npc_has_var": "travel_liang_archive_complete",
+          "type": "dialogue",
+          "context": "travel_liang",
+          "value": "yes"
+        }
+      },
+      {
+        "text": "HUB归档里关于玛雅的记录，再和我说一次。",
+        "topic": "TALK_TRAVEL_LIANG_MAYA_ARCHIVE_MEMORY",
+        "condition": {
+          "npc_has_var": "travel_liang_archive_complete",
+          "type": "dialogue",
+          "context": "travel_liang",
+          "value": "yes"
+        }
+      },
+      {
+        "text": "先谈别的。",
+        "topic": "TALK_FRIEND",
+        "condition": {
+          "npc_has_var": "travel_liang_archive_complete",
+          "type": "dialogue",
+          "context": "travel_liang",
+          "value": "yes"
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_TASK_MENU",
+    "dynamic_line": "梁知遥把手机和地图摊在膝上。屏幕里仍停着玛雅最后一条消息，地图边缘则多了几处她用铅笔标出的天线、广播塔和未知设施。\n\n“这件事可以慢慢谈，但每一步都要说清楚。你想先确认哪一段？”",
+    "responses": [
+      {
+        "text": "和梁知遥查看围墙外的对讲机与天线。",
+        "topic": "TALK_TRAVEL_LIANG_COMMS_SITE_HUB",
+        "condition": {
+          "and": [
+            {
+              "u_has_mission": "MISSION_TRAVEL_LIANG_FIND_COMMS"
+            },
+            {
+              "u_at_om_location": "robofachq_surface_entrance"
+            },
+            {
+              "npc_at_om_location": "robofachq_surface_entrance"
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_hub_found",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "text": "接受寻找玛雅与通信线索的任务。",
+        "topic": "TALK_TRAVEL_LIANG_COMMS_PRIORITY",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_mission": "MISSION_TRAVEL_LIANG_FIND_COMMS"
+              }
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_archive_complete",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "text": "接下来该做什么？",
+        "topic": "TALK_TRAVEL_LIANG_COMMS_STATUS",
+        "condition": {
+          "u_has_mission": "MISSION_TRAVEL_LIANG_FIND_COMMS"
+        }
+      },
+      {
+        "text": "说说刚刚发现的收件设施。",
+        "topic": "TALK_TRAVEL_LIANG_COMMS_AFTER_HUB",
+        "condition": {
+          "and": [
+            {
+              "u_has_mission": "MISSION_TRAVEL_LIANG_FIND_COMMS"
+            },
+            {
+              "npc_has_var": "travel_liang_hub_found",
+              "type": "dialogue",
+              "context": "travel_liang",
+              "value": "yes"
+            }
+          ]
+        }
+      },
+      {
+        "text": "把找到的归档U盘交给梁知遥核对。",
+        "topic": "TALK_TRAVEL_LIANG_READ_ARCHIVE_TOGETHER",
+        "condition": {
+          "and": [
+            {
+              "u_has_mission": "MISSION_TRAVEL_LIANG_FIND_COMMS"
+            },
+            {
+              "u_has_items": {
+                "item": "travel_hub_public_signal_archive_usb",
+                "count": 1
+              }
+            },
+            {
+              "not": {
+                "u_has_var": "travel_hub_signal_archive_delivered",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "effect": [
+          {
+            "u_consume_item": "travel_hub_public_signal_archive_usb",
+            "count": 1,
+            "popup": true
+          },
+          {
+            "u_add_var": "travel_hub_signal_archive_delivered",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "u_add_var": "travel_hub_signal_archive_read",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_archive_usb_received",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "u_message": "已将HUB公共信号归档U盘交给梁知遥。",
+            "type": "good"
+          }
+        ]
+      },
+      {
+        "text": "HUB归档里关于玛雅的记录，再和我说一次。",
+        "topic": "TALK_TRAVEL_LIANG_MAYA_ARCHIVE_MEMORY",
+        "condition": {
+          "npc_has_var": "travel_liang_maya_signal_found",
+          "type": "dialogue",
+          "context": "travel_liang",
+          "value": "yes"
+        }
+      },
+      {
+        "text": "返回。",
+        "topic": "TALK_TRAVEL_LIANG_PERSONAL_MENU"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_EXPLORE",
+    "dynamic_line": "梁知遥看着地图，先圈出饮水点，又在几条陌生道路旁画了问号。\n\n“我想看看那些还有灯、还有广播、还有人愿意回答问题的地方。”\n\n她把地图推给你。\n\n“当然，也想找一个能洗热水澡的地方。理想可以很大，要求可以先小一点。”",
+    "responses": [
+      {
+        "text": "好，我们先收尾，再去看看别处。",
+        "topic": "TALK_TRAVEL_LIANG_COMPANION"
+      },
+      {
+        "text": "我更想先把附近摸清楚。",
+        "topic": "TALK_TRAVEL_LIANG_COMPANION"
+      },
+      {
+        "text": "路线由我决定，但我会听你的提醒。",
+        "topic": "TALK_TRAVEL_LIANG_COMPANION"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_UNKNOWN_RECIPIENT",
+    "dynamic_line": "“商人只说，手里的FEMA数据硬盘要交给一个不公开身份的收件人。只有真正接下递送，他才会给出路线。”\n\n梁知遥用笔尖敲了敲地图。\n\n“这不等于终点一定是救援站，更不等于对方愿意帮我们。不过灾变以后还能接收政府数据的人，多半还有电力、设备和某种组织。对我们来说，这条线值得调查，但不能靠猜。”",
+    "responses": [
+      {
+        "text": "先去问清商人，接下递送后再按他给的路线走。",
+        "topic": "TALK_TRAVEL_LIANG_UNKNOWN_CLUES"
+      },
+      {
+        "text": "沿途先找天线、围墙、对讲机和持续供电的迹象。",
+        "topic": "TALK_TRAVEL_LIANG_UNKNOWN_FOUND"
+      },
+      {
+        "text": "即使收件方没有电台，能接收FEMA数据也说明那里值得调查。",
+        "topic": "TALK_TRAVEL_LIANG_UNKNOWN_REASONING"
+      },
+      {
+        "text": "先把补给和难民中心的事处理好，再出发。",
+        "topic": "TALK_TRAVEL_LIANG_UNKNOWN_LATER"
+      },
+      {
+        "text": "线索太模糊了，我暂时不想拿命去赌。",
+        "topic": "TALK_TRAVEL_LIANG_UNKNOWN_REFUSE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_UNKNOWN_FOUND",
+    "dynamic_line": "“对。先把它当成一次未知地点侦察。”\n\n梁知遥在地图空白处写下几项。\n\n“远处能看见的天线，围墙和射界，入口有没有对讲机，附近是否还有稳定照明。发现这些以后先停下来观察，不要因为地图上有标记，就默认门后的人是朋友。”",
+    "responses": [
+      {
+        "text": "到地方先观察，再接触。",
+        "topic": "TALK_TRAVEL_LIANG_COMPANION"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_UNKNOWN_REASONING",
+    "dynamic_line": "梁知遥想了一会儿，轻轻点头。\n\n“灾变以后，硬盘本身没有多少交换价值。对方特意要的是FEMA数据，说明他们仍在收集灾情、设施或人员记录，也可能保留着灾变前的本地缓存。”\n\n“这不能证明他们有我们要找的消息，但比随便寻找一座广播塔更像一条能继续追问的线。”",
+    "responses": [
+      {
+        "text": "那就把它当成调查入口。",
+        "topic": "TALK_TRAVEL_LIANG_COMPANION"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_UNKNOWN_CLUES",
+    "dynamic_line": "“这是最可靠的起点。”\n\n梁知遥把商人的名字写在路线最前面。\n\n“先问他那块FEMA硬盘从哪里来，收件路线怎样确认，交付时要找人、终端还是对讲设备。商人未必会解释收件方是谁，但至少会给出能真正走下去的坐标，而不是让我们在荒野里追一个传闻。”",
+    "responses": [
+      {
+        "text": "先把委托问清楚。",
+        "topic": "TALK_TRAVEL_LIANG_COMPANION"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_UNKNOWN_LATER",
+    "dynamic_line": "“好。”\n\n她把硬盘委托那一行折进地图里面。\n\n“我也不想因为终于有了一条线索，就假装自己不累。先把伤口、食物和今天该做的事处理好。”",
+    "responses": [
+      {
+        "text": "那就按这个顺序。",
+        "topic": "TALK_TRAVEL_LIANG_COMPANION"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_UNKNOWN_REFUSE",
+    "dynamic_line": "梁知遥安静了一会儿。\n\n“我明白。为一块来历不明的硬盘冒险，听起来确实很蠢。”\n\n她看向手机上那条没有发出去的消息。\n\n“只是这也是我目前唯一听到的线索。先别把它彻底丢掉，好吗？以后准备好了，我们还可以再问一次。”",
+    "responses": [
+      {
+        "text": "我会先想清楚。",
+        "topic": "TALK_TRAVEL_LIANG_COMPANION"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_TEAMWORK",
+    "dynamic_line": "“比刚见面时好多了。”她笑着说。\n\n“我现在至少知道，你突然停下来不一定是后悔带上我，也可能只是又在捡地上的东西。”\n\n她认真了一点。\n\n“有事就说。你觉得我太冒险，或者我觉得你在逞强，都别等到有人倒下以后才提。”",
+    "responses": [
+      {
+        "text": "有问题就直说。",
+        "topic": "TALK_TRAVEL_LIANG_COMPANION"
+      },
+      {
+        "text": "我会记得给彼此留退路。",
+        "topic": "TALK_TRAVEL_LIANG_COMPANION"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_EQUIPMENT",
+    "dynamic_line": "梁知遥把登记后的余货清单摊开。\n\n“耳塞、雨衣、医用纱布和消毒剂是接待区能分出的普通余货，两种抗生素要核对批号和剂量，所以每次只能拿到一点，补货也不会同步。”\n\n她点了点清单边缘单独标出的一行。\n\n“还有一把手术刀。它不是武术社团的东西，是从大学生物医学教学实验室回收的教学器械，只有这一把。我检查过包装和刀柄，但它仍然只是工具，不是万能武器。”",
+    "responses": [
+      {
+        "text": "看看可以交换的医疗与日用物资。",
+        "topic": "TALK_TRAVEL_LIANG_MEDICINE"
+      },
+      {
+        "text": "你能替我弄到一对八斩刀吗？",
+        "topic": "TALK_TRAVEL_LIANG_KNIFE_TRADE",
+        "condition": {
+          "not": {
+            "npc_has_var": "travel_liang_knives_traded",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        }
+      },
+      {
+        "text": "先不管这些。",
+        "topic": "TALK_TRAVEL_LIANG_TRADE_MENU"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_MEDICINE",
+    "dynamic_line": "“清单上的价格按这一小批实物算，不是无限供应。”\n\n“五剂窄谱抗生素六张商会币，三剂常规抗生素十张，四片医用纱布加两份消毒剂四张。抗生素和基础医疗包会分别补货。”\n\n“一次性余货里，耳塞一张、雨衣三张、手术刀三张。卖掉以后就没有第二件。”",
+    "responses": [
+      {
+        "text": "用6张商会币兑换五剂窄谱抗生素。",
+        "topic": "TALK_TRAVEL_LIANG_MEDICINE",
+        "condition": {
+          "and": [
+            {
+              "u_has_items": {
+                "item": "FMCNote",
+                "count": 6
+              }
+            },
+            {
+              "not": {
+                "npc_has_effect": "travel_liang_weak_antibiotic_cooldown"
+              }
+            }
+          ]
+        },
+        "effect": [
+          {
+            "u_consume_item": "FMCNote",
+            "count": 6,
+            "popup": true
+          },
+          {
+            "u_spawn_item": "TRAVEL_LIANG_STORE_WEAK_ANTIBIOTIC",
+            "use_item_group": true
+          },
+          {
+            "npc_add_effect": "travel_liang_weak_antibiotic_cooldown",
+            "duration": "3 days"
+          }
+        ]
+      },
+      {
+        "text": "用10张商会币兑换三剂常规抗生素。",
+        "topic": "TALK_TRAVEL_LIANG_MEDICINE",
+        "condition": {
+          "and": [
+            {
+              "u_has_items": {
+                "item": "FMCNote",
+                "count": 10
+              }
+            },
+            {
+              "not": {
+                "npc_has_effect": "travel_liang_antibiotic_cooldown"
+              }
+            }
+          ]
+        },
+        "effect": [
+          {
+            "u_consume_item": "FMCNote",
+            "count": 10,
+            "popup": true
+          },
+          {
+            "u_spawn_item": "TRAVEL_LIANG_STORE_ANTIBIOTICS",
+            "use_item_group": true
+          },
+          {
+            "npc_add_effect": "travel_liang_antibiotic_cooldown",
+            "duration": "5 days"
+          }
+        ]
+      },
+      {
+        "text": "用4张商会币兑换基础伤口处理包。",
+        "topic": "TALK_TRAVEL_LIANG_MEDICINE",
+        "condition": {
+          "and": [
+            {
+              "u_has_items": {
+                "item": "FMCNote",
+                "count": 4
+              }
+            },
+            {
+              "not": {
+                "npc_has_effect": "travel_liang_firstaid_cooldown"
+              }
+            }
+          ]
+        },
+        "effect": [
+          {
+            "u_consume_item": "FMCNote",
+            "count": 4,
+            "popup": true
+          },
+          {
+            "u_spawn_item": "TRAVEL_LIANG_STORE_FIRSTAID",
+            "use_item_group": true
+          },
+          {
+            "npc_add_effect": "travel_liang_firstaid_cooldown",
+            "duration": "3 days"
+          }
+        ]
+      },
+      {
+        "text": "用1张商会币兑换一副耳塞。",
+        "topic": "TALK_TRAVEL_LIANG_MEDICINE",
+        "condition": {
+          "and": [
+            {
+              "u_has_items": {
+                "item": "FMCNote",
+                "count": 1
+              }
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_earplugs_sold",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "effect": [
+          {
+            "u_consume_item": "FMCNote",
+            "count": 1,
+            "popup": true
+          },
+          {
+            "u_spawn_item": "ear_plugs"
+          },
+          {
+            "npc_add_var": "travel_liang_earplugs_sold",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        ]
+      },
+      {
+        "text": "用3张商会币兑换一件雨衣。",
+        "topic": "TALK_TRAVEL_LIANG_MEDICINE",
+        "condition": {
+          "and": [
+            {
+              "u_has_items": {
+                "item": "FMCNote",
+                "count": 3
+              }
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_raincoat_sold",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "effect": [
+          {
+            "u_consume_item": "FMCNote",
+            "count": 3,
+            "popup": true
+          },
+          {
+            "u_spawn_item": "coat_rain"
+          },
+          {
+            "npc_add_var": "travel_liang_raincoat_sold",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        ]
+      },
+      {
+        "text": "用3张商会币兑换那把教学用手术刀。",
+        "topic": "TALK_TRAVEL_LIANG_MEDICINE",
+        "condition": {
+          "and": [
+            {
+              "u_has_items": {
+                "item": "FMCNote",
+                "count": 3
+              }
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_scalpel_sold",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "effect": [
+          {
+            "u_consume_item": "FMCNote",
+            "count": 3,
+            "popup": true
+          },
+          {
+            "u_spawn_item": "scalpel"
+          },
+          {
+            "npc_add_var": "travel_liang_scalpel_sold",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        ]
+      },
+      {
+        "text": "返回上一页。",
+        "topic": "TALK_TRAVEL_LIANG_EQUIPMENT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_KNIFE_TRADE",
+    "dynamic_line": "“我逃离学校时只来得及带走六点半棍，八斩刀还留在社团器材柜里。”\n\n她把难民中心旧货渠道的清单推过来。\n\n“这里有一对尺寸和重心都合适的短刀。我检查过，不是装饰品。它们很危险，也不便宜，所以我不会用‘收藏’来劝你买。”\n\n“你真的需要，我可以用商会币替你换下来，只是拿到以后，别让拥有它变成必须使用它的理由。”",
+    "responses": [
+      {
+        "text": "用18张商会币兑换一对八斩刀。",
+        "topic": "TALK_TRAVEL_LIANG_EQUIPMENT",
+        "condition": {
+          "and": [
+            {
+              "u_has_items": {
+                "item": "FMCNote",
+                "count": 18
+              }
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_knives_traded",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "effect": [
+          {
+            "u_consume_item": "FMCNote",
+            "count": 18,
+            "popup": true
+          },
+          {
+            "u_spawn_item": "wc_baat_jaam_dou_pair"
+          },
+          {
+            "npc_add_var": "travel_liang_knives_traded",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        ]
+      },
+      {
+        "text": "我现在没有18张商会币。",
+        "topic": "TALK_TRAVEL_LIANG_EQUIPMENT",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_items": {
+                  "item": "FMCNote",
+                  "count": 18
+                }
+              }
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_knives_traded",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "text": "先不用。",
+        "topic": "TALK_TRAVEL_LIANG_EQUIPMENT"
+      }
+    ]
+  },
+  {
+    "id": "MISSION_TRAVEL_WITH_LIANG_TO_REFUGEE",
+    "type": "mission_definition",
+    "name": {
+      "str": "序章：同路人"
+    },
+    "description": "与梁知遥一起前往世界中已经生成的唯一难民中心。任务标记现在直接指向正门后的接待大厅。你和梁知遥都进入这间大厅并靠近后，守卫便会接手检查和登记，不必继续前往住宿区。",
+    "goal": "MGOAL_CONDITION",
+    "goal_condition": {
+      "and": [
+        {
+          "u_at_om_location": "evac_center_13"
+        },
+        {
+          "npc_at_om_location": "evac_center_13"
+        },
+        {
+          "not": "u_is_outside"
+        },
+        {
+          "compare_int": [
+            {
+              "distance": [
+                "u",
+                "npc"
+              ]
+            },
+            "<=",
+            {
+              "const": 8
+            }
+          ]
+        }
+      ]
+    },
+    "difficulty": 1,
+    "value": 0,
+    "start": {
+      "effect": [
+        {
+          "npc_lose_trait": "RETURN_TO_START_POS"
+        },
+        {
+          "npc_lose_trait": "IGNORE_SOUND"
+        },
+        {
+          "npc_lose_trait": "NO_BASH"
+        },
+        "stop_guard",
+        {
+          "npc_lose_var": "travel_liang_waiting_en_route",
+          "type": "dialogue",
+          "context": "travel_liang"
+        },
+        "follow_only",
+        {
+          "clear_npc_rule": "allow_pick_up"
+        },
+        {
+          "set_npc_rule": "follow_close"
+        },
+        {
+          "set_npc_rule": "hold_the_line"
+        },
+        {
+          "set_npc_rule": "ignore_noise"
+        },
+        {
+          "set_npc_engagement_rule": "ENGAGE_CLOSE"
+        },
+        {
+          "npc_add_var": "travel_liang_ai_profile_initialized",
+          "type": "dialogue",
+          "context": "travel_liang",
+          "value": "yes"
+        },
+        {
+          "npc_add_var": "travel_liang_temporary_follower",
+          "type": "dialogue",
+          "context": "travel_liang",
+          "value": "yes"
+        },
+        {
+          "npc_first_topic": "TALK_TRAVEL_LIANG_START"
+        },
+        {
+          "npc_add_var": "travel_liang_origin_shelter",
+          "type": "dialogue",
+          "context": "travel_liang",
+          "value": "yes"
+        }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "evac_center_13",
+        "reveal_radius": 1,
+        "z": 0,
+        "om_terrain_match_type": "TYPE",
+        "random": false,
+        "search_range": 1000
+      }
+    },
+    "end": {
+      "effect": [
+        {
+          "npc_lose_trait": "RETURN_TO_START_POS"
+        },
+        {
+          "npc_lose_trait": "IGNORE_SOUND"
+        },
+        {
+          "npc_lose_trait": "NO_BASH"
+        },
+        "assign_guard",
+        {
+          "npc_add_var": "travel_liang_center_position_fixed",
+          "type": "dialogue",
+          "context": "travel_liang",
+          "value": "yes"
+        },
+        {
+          "npc_add_var": "travel_liang_center_guard_stable",
+          "type": "dialogue",
+          "context": "travel_liang",
+          "value": "yes"
+        },
+        {
+          "npc_add_var": "travel_liang_origin_shelter",
+          "type": "dialogue",
+          "context": "travel_liang",
+          "value": "yes"
+        },
+        {
+          "npc_lose_var": "travel_liang_temporary_follower",
+          "type": "dialogue",
+          "context": "travel_liang"
+        },
+        {
+          "npc_lose_var": "travel_liang_waiting_en_route",
+          "type": "dialogue",
+          "context": "travel_liang"
+        },
+        {
+          "npc_add_var": "travel_liang_arrived",
+          "type": "dialogue",
+          "context": "travel_liang",
+          "value": "yes"
+        },
+        {
+          "npc_add_var": "travel_liang_arrival_time",
+          "type": "timer",
+          "context": "travel_liang",
+          "time": true
+        },
+        {
+          "arithmetic": [
+            {
+              "npc_val": "npc_trust"
+            },
+            "+=",
+            {
+              "const": 2
+            }
+          ]
+        },
+        {
+          "arithmetic": [
+            {
+              "npc_val": "npc_value"
+            },
+            "+=",
+            {
+              "const": 2
+            }
+          ]
+        },
+        {
+          "npc_first_topic": "TALK_TRAVEL_LIANG_START"
+        }
+      ],
+      "success": "你和梁知遥一起进入正门后的接待大厅，守卫确认了她的来意，也示意她留在门边等待登记。梁知遥就在你们停下的位置放下背包，贴墙站好，没有再往大厅深处走。\n\n“到这里就可以了，谢谢你。”\n\n“我先完成登记，处理伤口，再把答应的工作做完。明天你还愿意谈，就来这里找我。”"
+    },
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "has_generic_rewards": false,
+    "dialogue": {
+      "describe": "和梁知遥一起前往难民中心。",
+      "offer": "“墙上的疏散图和维护记录都指向一座难民接收中心。你也准备去，对吧？”\n\n她把长棍靠回肩侧。\n\n“可以同路。到了以后，我们一起走进正门后的接待大厅，找到守卫就算结束。住宿区和里面的长廊没有必要再去。”",
+      "accepted": "“好。你看前路，我留意侧后。看见围栏不等于抵达，我们要一起走进正门后的接待大厅，靠近守卫才算到地方。”",
+      "rejected": "“没关系。”她点点头，“刚认识就把命交给对方，本来也不该只靠一句客气话。希望我们都能到地方。”",
+      "advice": "“纸质图只给大方向。抵达以后穿过外围和院子，找到正门。我们一起进入门后的接待大厅，靠近守卫就可以交接。”",
+      "inquire": "“先去正门后的接待大厅。我们都走进门内，靠近守卫以后，他们就会接手。”",
+      "success": "你和梁知遥一起走进有照明的门口接待大厅。守卫接过后续检查与登记，她便在当前的位置靠墙站好，把一路攥着的地图折回口袋，肩膀终于松下来。\n\n“到这里就可以了，谢谢你。”\n\n“我先处理伤口，完成登记，再睡一觉。明天你还愿意谈，就来这里找我。”",
+      "success_lie": "她看了看周围。\n\n“这里还不是正门后的接待大厅，守卫也没有接手登记。”",
+      "failure": "“先停下。”她重新展开地图，“路线走错了就修正，不必为了证明判断没错继续往前。”"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_LIANG_BARTER_BANDAGE_SOLD",
+    "effect": {
+      "npc_add_var": "travel_liang_barter_bandage_sold",
+      "type": "dialogue",
+      "context": "travel_liang",
+      "value": "yes"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_LIANG_BARTER_ASPIRIN_SOLD",
+    "effect": {
+      "npc_add_var": "travel_liang_barter_aspirin_sold",
+      "type": "dialogue",
+      "context": "travel_liang",
+      "value": "yes"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_LIANG_BARTER_NOVEL_SOLD",
+    "effect": {
+      "npc_add_var": "travel_liang_barter_novel_sold",
+      "type": "dialogue",
+      "context": "travel_liang",
+      "value": "yes"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_LIANG_BARTER_DISINFECTANT_SOLD",
+    "effect": {
+      "npc_add_var": "travel_liang_barter_disinfectant_sold",
+      "type": "dialogue",
+      "context": "travel_liang",
+      "value": "yes"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_LIANG_BARTER_ANTIFUNGAL_SOLD",
+    "effect": {
+      "npc_add_var": "travel_liang_barter_antifungal_sold",
+      "type": "dialogue",
+      "context": "travel_liang",
+      "value": "yes"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_LIANG_BARTER_ANTIPARASITIC_SOLD",
+    "effect": {
+      "npc_add_var": "travel_liang_barter_antiparasitic_sold",
+      "type": "dialogue",
+      "context": "travel_liang",
+      "value": "yes"
+    }
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_TALISMAN",
+    "dynamic_line": "梁知遥从衣领内侧勾出一枚旧玉平安扣，放在掌心让你看清。\n\n“外婆留给我妈的。我来美国以前，妈妈又交给我。”\n\n她用拇指摩挲了一下温润的边缘。\n\n“我不觉得它会替人作决定。不过有几次危险靠得很近时，我确实觉得它先凉了一下——也可能只是我太紧张。”\n\n她把平安扣放回衣领里。\n\n“无论怎样，戴着它会提醒我：我不是从灾难那一天才开始存在的。”",
+    "responses": [
+      {
+        "text": "好。",
+        "topic": "TALK_TRAVEL_LIANG_TALISMAN_RETURN"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_TALISMAN_RETURN",
+    "dynamic_line": "梁知遥把平安扣重新放回衣领内侧。",
+    "responses": [
+      {
+        "text": "继续聊。",
+        "topic": "TALK_FRIEND",
+        "condition": {
+          "npc_has_var": "travel_liang_joined",
+          "type": "dialogue",
+          "context": "travel_liang",
+          "value": "yes"
+        }
+      },
+      {
+        "text": "先说别的。",
+        "topic": "TALK_TRAVEL_LIANG_START",
+        "condition": {
+          "not": {
+            "npc_has_var": "travel_liang_joined",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        }
+      },
+      {
+        "text": "先这样。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_ARMOR",
+    "dynamic_line": "“不是临时拼的。灾变前几个月，异常事件越来越多，我父母在国内买了整套康陶®‘远行者’应急装备，按我的尺寸改好，赶在跨境物流中断前寄到学校。”\n\n她扯了扯肩侧的橙色护片，又用鞋尖碰了碰放在脚边的模块背包。\n\n“黑灰底子，外面加橙色模块，算是康陶企业安保风格的民用版本。护服负责躯干和四肢，帽子只是遮阳和显示路线，几乎没有防护。背包、医疗腰包和野外靴更偏向撤离与整理物资，也不是军用装甲。这个型号没有在美国民用市场正式销售。”",
+    "responses": [
+      {
+        "text": "它能挡住什么？",
+        "topic": "TALK_TRAVEL_LIANG_ARMOR_2"
+      },
+      {
+        "text": "[说服] 这件护服对你来说不只是装备，对吗？",
+        "condition": {
+          "and": [
+            {
+              "or": [
+                {
+                  "npc_has_var": "travel_liang_arrived",
+                  "type": "dialogue",
+                  "context": "travel_liang",
+                  "value": "yes"
+                },
+                {
+                  "npc_has_var": "travel_liang_joined",
+                  "type": "dialogue",
+                  "context": "travel_liang",
+                  "value": "yes"
+                }
+              ]
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_family_check_attempted",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 15,
+          "mod": [
+            [
+              "TRUST",
+              7
+            ],
+            [
+              "VALUE",
+              5
+            ],
+            [
+              "ANGER",
+              -5
+            ]
+          ]
+        },
+        "success": {
+          "topic": "TALK_TRAVEL_LIANG_ARMOR_FAMILY",
+          "effect": [
+            {
+              "npc_add_var": "travel_liang_family_check_attempted",
+              "type": "dialogue",
+              "context": "travel_liang",
+              "value": "yes"
+            },
+            {
+              "npc_add_var": "travel_liang_family_opened",
+              "type": "dialogue",
+              "context": "travel_liang",
+              "value": "yes"
+            }
+          ],
+          "opinion": {
+            "trust": 1,
+            "value": 1
+          }
+        },
+        "failure": {
+          "topic": "TALK_TRAVEL_LIANG_ARMOR_FAIL",
+          "effect": {
+            "npc_add_var": "travel_liang_family_check_attempted",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          "opinion": {
+            "trust": 0,
+            "value": 0,
+            "anger": 0
+          }
+        }
+      },
+      {
+        "text": "你愿意继续说说这件护服和家里吗？",
+        "topic": "TALK_TRAVEL_LIANG_ARMOR_FAMILY",
+        "condition": {
+          "npc_has_var": "travel_liang_family_opened",
+          "type": "dialogue",
+          "context": "travel_liang",
+          "value": "yes"
+        }
+      },
+      {
+        "text": "先说别的。",
+        "topic": "TALK_TRAVEL_LIANG_START"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_ARMOR_2",
+    "dynamic_line": "“它是给骚乱、撤离和危险环境准备的民用护具。抓咬、刀口、碎片和多数钝击不容易直接穿透，近距离小口径弹也许能被芳纶和局部陶瓷分散一部分冲击。”\n\n她敲了敲胸前，又弯了弯手肘。\n\n“关节内侧仍有薄弱处，头和脚也没有防护。步枪、火焰和大型怪物都不在它值得硬扛的范围内。”",
+    "responses": [
+      {
+        "text": "明白了。",
+        "topic": "TALK_TRAVEL_LIANG_START"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_PERSONAL_MENU",
+    "dynamic_line": {
+      "npc_has_var": "travel_liang_maya_reunited",
+      "type": "dialogue",
+      "context": "travel_liang",
+      "value": "yes",
+      "yes": "梁知遥把地图折回原来的大小。玛雅已经找到了，两人都还需要一点时间把这几天发生的事慢慢说完。\n\n“怎么了，朋友？我们可以聊玛雅，也可以把归档里的旧记录再核对一次。”",
+      "no": {
+        "npc_has_var": "travel_liang_archive_complete",
+        "type": "dialogue",
+        "context": "travel_liang",
+        "value": "yes",
+        "yes": "梁知遥把HUB归档U盘收进防水袋，又把地图摊平。伊舍伍德农场已经有了名字，却仍没有坐标。\n\n“怎么了，朋友？我们可以谈农场，也可以再核对一次玛雅留下的记录。”",
+        "no": "梁知遥把手机扣在膝上，又把折过几次的地图往旁边让了让。\n\n“怎么了，朋友？”"
+      }
+    },
+    "responses": [
+      {
+        "text": "[任务之一] 寻找玛雅与可用信号站点。",
+        "topic": "TALK_TRAVEL_LIANG_TASK_MENU",
+        "condition": {
+          "not": {
+            "npc_has_var": "travel_liang_archive_complete",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        }
+      },
+      {
+        "text": "聊聊你对这趟旅程的想法。",
+        "topic": "TALK_TRAVEL_LIANG_COMPANION",
+        "condition": {
+          "not": {
+            "npc_has_var": "travel_liang_archive_complete",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        }
+      },
+      {
+        "text": "我想再问问你的平安扣。",
+        "topic": "TALK_TRAVEL_LIANG_TALISMAN",
+        "condition": {
+          "not": {
+            "npc_has_var": "travel_liang_archive_complete",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        }
+      },
+      {
+        "text": "[任务之二] 在伊舍伍德农场寻找玛雅。",
+        "topic": "TALK_TRAVEL_LIANG_ISHERWOOD_OFFER",
+        "condition": {
+          "and": [
+            {
+              "npc_has_var": "travel_liang_archive_complete",
+              "type": "dialogue",
+              "context": "travel_liang",
+              "value": "yes"
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_maya_reunited",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_isherwood_found",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "u_has_mission": "MISSION_TRAVEL_LIANG_TRACE_ISHERWOOD"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "text": "继续寻找农场里的玛雅。",
+        "topic": "TALK_TRAVEL_LIANG_ISHERWOOD_STATUS",
+        "condition": {
+          "and": [
+            {
+              "npc_has_var": "travel_liang_archive_complete",
+              "type": "dialogue",
+              "context": "travel_liang",
+              "value": "yes"
+            },
+            {
+              "u_has_mission": "MISSION_TRAVEL_LIANG_TRACE_ISHERWOOD"
+            }
+          ]
+        }
+      },
+      {
+        "text": "HUB归档里关于玛雅的记录，再说一次。",
+        "topic": "TALK_TRAVEL_LIANG_MAYA_ARCHIVE_MEMORY",
+        "condition": {
+          "npc_has_var": "travel_liang_archive_complete",
+          "type": "dialogue",
+          "context": "travel_liang",
+          "value": "yes"
+        }
+      },
+      {
+        "text": "玛雅为什么用旧弓、日语计划和鸡胸肉证明身份？",
+        "topic": "TALK_TRAVEL_LIANG_SHARED_DETAILS",
+        "condition": {
+          "npc_has_var": "travel_liang_archive_complete",
+          "type": "dialogue",
+          "context": "travel_liang",
+          "value": "yes"
+        }
+      },
+      {
+        "text": "玛雅现在怎么样？",
+        "topic": "TALK_TRAVEL_LIANG_MAYA_REUNION_AFTER",
+        "condition": {
+          "npc_has_var": "travel_liang_maya_reunited",
+          "type": "dialogue",
+          "context": "travel_liang",
+          "value": "yes"
+        }
+      },
+      {
+        "text": "先这样。",
+        "topic": "TALK_FRIEND"
+      }
+    ],
+    "speaker_effect": [
+      {
+        "condition": {
+          "or": [
+            {
+              "u_has_mission": "MISSION_TRAVEL_LIANG_TRACE_ISHERWOOD"
+            },
+            {
+              "u_has_var": "travel_liang_isherwood_found",
+              "type": "dialogue",
+              "context": "travel_liang",
+              "value": "yes"
+            }
+          ]
+        },
+        "effect": [
+          {
+            "run_eocs": [
+              "EOC_TRAVEL_ENSURE_MAYA_ISHERWOOD"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND",
+    "responses": [
+      {
+        "text": "和梁知遥聊聊她在意的事。",
+        "topic": "TALK_TRAVEL_LIANG_PERSONAL_MENU",
+        "condition": {
+          "npc_has_var": "travel_liang_joined",
+          "type": "dialogue",
+          "context": "travel_liang",
+          "value": "yes"
+        }
+      }
+    ],
+    "speaker_effect": [
+      {
+        "effect": [
+          {
+            "npc_lose_trait": "TRAVEL_LIANG_SILENT_SPAWN_GEAR"
+          },
+          {
+            "npc_lose_effect": "npc_wear_item_success_no_message"
+          }
+        ]
+      },
+      {
+        "condition": {
+          "and": [
+            {
+              "npc_has_var": "travel_liang_joined",
+              "type": "dialogue",
+              "context": "travel_liang",
+              "value": "yes"
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_ai_profile_initialized",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "effect": [
+          {
+            "clear_npc_rule": "allow_pick_up"
+          },
+          {
+            "set_npc_rule": "follow_close"
+          },
+          {
+            "set_npc_rule": "hold_the_line"
+          },
+          {
+            "set_npc_rule": "ignore_noise"
+          },
+          {
+            "set_npc_engagement_rule": "ENGAGE_CLOSE"
+          },
+          {
+            "npc_add_var": "travel_liang_ai_profile_initialized",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": [
+      "TALK_FRIEND",
+      "TALK_GIVE_ITEM",
+      "TALK_USE_ITEM",
+      "TALK_RADIO"
+    ],
+    "type": "talk_topic",
+    "responses": [
+      {
+        "text": "[切换角色] 接管这名队友的行动。",
+        "effect": "take_control",
+        "topic": "TALK_DONE",
+        "condition": "npc_following"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_COMMS_PRIORITY",
+    "dynamic_line": {
+      "npc_has_var": "travel_liang_origin_center",
+      "type": "dialogue",
+      "context": "travel_liang",
+      "value": "yes",
+      "yes": "梁知遥把手机放在两人之间。玛雅最后一条消息停在堵死的公路，家人的聊天框里则只有一条没有发出去的报平安。\n\n“难民中心的商人手里有一块FEMA数据硬盘，要送给一个身份和地址都不公开的收件人。真正接下递送以后，他才会给出路线。”\n\n她抿了抿嘴。\n\n“那条路未必通向电台，也未必安全。但能在这种时候接收政府数据的人，可能还有电力、设备和区域记录。我想沿这条线寻找收件地点，再问那里有没有保存公开广播或报平安中继。”\n\n“这会是一件正式的委托。你愿意陪我寻找玛雅，也一起调查可用的信号站点吗？”",
+      "no": "梁知遥把手机放在两人之间。玛雅最后一条消息停在堵死的公路，家人的聊天框里则只有一条没有发出去的报平安。\n\n“我听说难民中心商人有一块FEMA数据硬盘，要送给一个身份和地址都不公开的收件人。接下递送以后，才会得到路线。”\n\n“它可能和通信毫无关系。不过能在这种时候接收政府数据的人，至少比一座随机找到的广播塔更有可能保存记录。我想从这条线开始，寻找玛雅，也寻找能把消息送得更远的站点。”\n\n“这会是一件正式的委托。你愿意帮我吗？”"
+    },
+    "responses": [
+      {
+        "text": "我会陪你寻找玛雅，并调查这条通信线索。",
+        "topic": "TALK_TRAVEL_LIANG_COMMS_ACCEPTED",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_mission": "MISSION_TRAVEL_LIANG_FIND_COMMS"
+              }
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_archive_complete",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "effect": [
+          {
+            "assign_mission": "MISSION_TRAVEL_LIANG_FIND_COMMS"
+          },
+          {
+            "u_message": "任务已经加入任务列表。"
+          }
+        ]
+      },
+      {
+        "text": "在答应之前，先把调查顺序说清楚。",
+        "topic": "TALK_TRAVEL_LIANG_COMMS_PLAN_PREVIEW",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_mission": "MISSION_TRAVEL_LIANG_FIND_COMMS"
+              }
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_archive_complete",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "text": "玛雅最后到底去了哪里？",
+        "topic": "TALK_TRAVEL_LIANG_MAYA"
+      },
+      {
+        "text": "你想给家里发怎样的消息？",
+        "topic": "TALK_TRAVEL_LIANG_FAMILY_MESSAGE"
+      },
+      {
+        "text": "现在还不能答应。",
+        "topic": "TALK_TRAVEL_LIANG_PERSONAL_MENU"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_COMMS_PLAN_PREVIEW",
+    "dynamic_line": "梁知遥把计划分成三行。\n\n“第一步，回难民中心找商人，正式接下未知收件人的递送，拿到FEMA硬盘和路线。第二步，沿标记寻找收件地点，接近前先看围墙、天线、对讲机、照明和警戒设施，不假定对方友善。第三步，完成交付，确认对方是否保存灾变初期的公开广播、业余无线电或报平安中继。”\n\n她在最后补了一句。\n\n“如果真的拿到记录，我们再一起核对玛雅的姓名、学校、时间和只有我们知道的细节。家人的消息可能更远，也可能根本不在本地区域记录里。”\n\n“你答应的话，我现在就把它写进我们的正式计划。”",
+    "responses": [
+      {
+        "text": "好，就按这个顺序调查。",
+        "topic": "TALK_TRAVEL_LIANG_COMMS_ACCEPTED",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_mission": "MISSION_TRAVEL_LIANG_FIND_COMMS"
+              }
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_archive_complete",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "effect": [
+          {
+            "assign_mission": "MISSION_TRAVEL_LIANG_FIND_COMMS"
+          },
+          {
+            "u_message": "任务已经加入任务列表。"
+          }
+        ]
+      },
+      {
+        "text": "我还需要准备。",
+        "topic": "TALK_TRAVEL_LIANG_PERSONAL_MENU"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_COMMS_ACCEPTED",
+    "dynamic_line": "梁知遥把手机和地图摊在膝上，将玛雅最后一条消息和商人提到的递送分别记下。\n\n“谢谢。先去问清那份FEMA数据要送到哪里，拿到路线再出发。”\n\n她把笔帽扣好。\n\n“到地方以前别急着下判断。我们先看看那里究竟是什么，再决定怎么问。”",
+    "responses": [
+      {
+        "text": "任务清楚了。",
+        "topic": "TALK_TRAVEL_LIANG_PERSONAL_MENU"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_COMMS_STATUS",
+    "dynamic_line": "梁知遥把任务按顺序写在地图背面。\n\n“先回难民中心找商人，接受那份送往未知收件人的FEMA数据递送。商人会在你接下委托后给出路线，我们不用凭空寻找。”\n\n“沿标记接近收件地点时，先看天线、围墙、对讲设备、照明和警戒设施。完成数据交付并取得对方信任后，明确提交玛雅的姓名、学校、失联时间和同行者信息，再说明我来自广东佛山，询问公开信号和跨区转发能力。”\n\n“拿到归档U盘以后，你可以先用电脑看。但任务不会因为你看过就结束，原U盘必须交给我，我要亲自核对附言。”",
+    "responses": [
+      {
+        "text": "玛雅的线索再说一遍。",
+        "topic": "TALK_TRAVEL_LIANG_MAYA"
+      },
+      {
+        "text": "家里的消息呢？",
+        "topic": "TALK_TRAVEL_LIANG_FAMILY_MESSAGE"
+      },
+      {
+        "text": "难民中心商人的递送要怎么开始？",
+        "topic": "TALK_TRAVEL_LIANG_UNKNOWN_RECIPIENT"
+      },
+      {
+        "text": "明白，继续调查。",
+        "topic": "TALK_TRAVEL_LIANG_PERSONAL_MENU"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_MAYA",
+    "dynamic_line": "梁知遥翻到5月15日，指尖停在十九点十二分。\n\n“玛雅·斯卡利特，我的室友。她是那种走进一间陌生教室，十分钟以后就能组织出学习小组的人。她喜欢小说，理财书和射箭，日语过了N2。偶尔熬夜到一点，她第二天就会抱怨自己不该碰最后一章。我通常还醒着，所以没有资格笑她。”\n\n“她哥哥阿琼来学校接她。他们原本想先去纽约找父母，再往北走。她最后一句话是，前面堵死了，有人在敲车窗。”\n\n梁知遥没有立刻合上日记。\n\n“我有时候会想，她是不是在等我回消息。然后又想，她肯定已经拉着所有人换了路线。再然后会想到更坏的事。”\n\n“所以我需要一条真正的消息。哪怕只是一句她曾经到过哪里。”",
+    "responses": [
+      {
+        "text": "你们为什么会成为朋友？",
+        "topic": "TALK_TRAVEL_LIANG_MAYA_FRIENDSHIP"
+      },
+      {
+        "text": "她有可能仍在北上的某条路上。",
+        "topic": "TALK_TRAVEL_LIANG_MAYA_NORTH"
+      },
+      {
+        "text": "我们先把通信节点找到。",
+        "topic": "TALK_TRAVEL_LIANG_COMMS_PRIORITY"
+      },
+      {
+        "text": "先说别的。",
+        "topic": "TALK_TRAVEL_LIANG_COMPANION"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_MAYA_FRIENDSHIP",
+    "dynamic_line": "“是她先跟我说话的。”\n\n梁知遥想了一会儿。\n\n“迎新活动那天，我站在一张海报后面看路线，她问我是不是把社交也当成需要查文献的项目。后来她拉我去语言交换，读书会，周末徒步和射箭社。她喜欢约人一起练习，替新手找护臂，帮大家记轮次。我更喜欢安静地校准动作，记下每一组箭落在哪里。”\n\n“我们在很多事情上想得相近，做法却完全相反。她先开口，先尝试，先把人叫到一起。我会先想风险，想边界，想这件事到底值不值得。”\n\n她轻轻笑了一下。\n\n“玛雅说她是ENFP，又擅自把我归成INFP。我没有认真研究这些字母，不过每次敲门的人确实都是她。”",
+    "responses": [
+      {
+        "text": "听起来你们很合得来。",
+        "topic": "TALK_TRAVEL_LIANG_MAYA"
+      },
+      {
+        "text": "先说她最后的路线。",
+        "topic": "TALK_TRAVEL_LIANG_MAYA_NORTH"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_MAYA_NORTH",
+    "dynamic_line": "“也许吧。”\n\n梁知遥望着地图上大片没有标记的公路。\n\n“可她不会为了遵守原计划，带着一车人在堵死的路上等。我认识的玛雅会先骂一句，再把所有人叫到一起，问谁有地图，谁会修车，谁需要药，然后换路。”\n\n她笑了一下，笑意很快又淡下去。\n\n“我只是不知道，她最后选了哪一条。”",
+    "responses": [
+      {
+        "text": "那就不替她预设结局。",
+        "topic": "TALK_TRAVEL_LIANG_COMPANION"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_FAMILY_MESSAGE",
+    "dynamic_line": "“我还活着，护服收到了，平安扣也一直戴着。别来找我。”\n\n梁知遥停了一下。\n\n“大概先发这些。然后告诉他们，我很想他们。”\n\n她把手机收回口袋。\n\n“我知道这里的电台多半到不了中国，也不可能把微信服务器凭空修好。可只要有人还能把消息一站一站往远处送，我就想留下一条。也许不是今天，也许很久以后，至少它曾经出发。”",
+    "responses": [
+      {
+        "text": "先把能收发数据的节点找到。",
+        "topic": "TALK_TRAVEL_LIANG_COMMS_PRIORITY"
+      },
+      {
+        "text": "我明白了。",
+        "topic": "TALK_TRAVEL_LIANG_COMPANION"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_COMMS_SITE_HUB",
+    "dynamic_line": "对讲机里的声音第一次说出这个地方的名字，HUB 01。\n\n梁知遥抬头看了很久。围墙后露出一截天线，风吹过时，金属拉索发出很轻的嗡鸣。\n\n“这里真的还有人在听。”\n\n她像是想笑，又不敢太早高兴。\n\n“我不知道他们愿不愿意帮忙，也不知道那些天线现在能听见多远。先把硬盘的事办完吧。至少让对讲机另一边的人愿意继续和我们说话。”",
+    "responses": [
+      {
+        "text": "先完成交付，看看他们是否愿意继续接触。",
+        "topic": "TALK_TRAVEL_LIANG_COMMS_SITE_DONE",
+        "effect": [
+          {
+            "npc_add_var": "travel_liang_hub_found",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "u_add_var": "travel_liang_hub_found",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        ]
+      },
+      {
+        "text": "先让我看看周围。",
+        "topic": "TALK_FRIEND"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_COMMS_SITE_DONE",
+    "dynamic_line": "梁知遥在日记上写下HUB 01，随后把笔停在纸上。\n\n“我本来以为找到一个能工作的对讲机，就会立刻离答案近很多。”\n\n她望向围墙。\n\n“现在看来只是找到了一扇门。我们先做他们愿意交给外来者的事。等他们不再只把我们当成门外的陌生人，再问有没有保存过求救或报平安的广播。”",
+    "responses": [
+      {
+        "text": "我们会把这条线接下去。",
+        "topic": "TALK_TRAVEL_LIANG_COMPANION"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_COMMS_AFTER_HUB",
+    "dynamic_line": {
+      "u_has_var": "completed_robofac_intercom_1",
+      "type": "dialogue",
+      "context": "intercom",
+      "value": "yes",
+      "yes": "梁知遥听完你复述HUB的答复，把玛雅的姓名、学校、失联时间和哥哥的名字写在一张纸上。\n\n“他们愿意继续交易了。现在可以正式提交查询条件，问他们有没有保存灾变开始时的公开广播、业余无线电或报平安中继。”\n\n“再说明我来自广东佛山。只查公开信号有没有直接提到梁知遥，也问清他们能不能向中国方向转发一条新的存活消息。私人微信和账户不用问，那不是他们该碰的东西。”",
+      "no": "梁知遥看了一眼沉默的对讲机。\n\n“他们还不信任我们，这很正常。先把他们交代的第一件事做完。”\n\n“等对讲机愿意多回答一句，我们再问信号记录。现在站在门口猜，只会把自己越猜越紧张。”"
+    },
+    "responses": [
+      {
+        "text": "我会提交玛雅的查询条件，也会明确询问中国方向的公开通信能力。",
+        "topic": "TALK_TRAVEL_LIANG_HUB_ARCHIVE_ACCEPTED",
+        "condition": {
+          "and": [
+            {
+              "u_has_var": "completed_robofac_intercom_1",
+              "type": "dialogue",
+              "context": "intercom",
+              "value": "yes"
+            },
+            {
+              "u_has_mission": "MISSION_TRAVEL_LIANG_FIND_COMMS"
+            },
+            {
+              "not": {
+                "u_has_var": "travel_hub_signal_archive_purchased",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_maya_signal_found",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "text": "先完成HUB交给我们的第一份工作。",
+        "topic": "TALK_TRAVEL_LIANG_COMPANION",
+        "condition": {
+          "not": {
+            "u_has_var": "completed_robofac_intercom_1",
+            "type": "dialogue",
+            "context": "intercom",
+            "value": "yes"
+          }
+        }
+      },
+      {
+        "text": "归档U盘已经拿到了，我会把原件带回来交给你。",
+        "topic": "TALK_TRAVEL_LIANG_COMPANION",
+        "condition": {
+          "u_has_var": "travel_hub_signal_archive_purchased",
+          "type": "dialogue",
+          "context": "travel_liang",
+          "value": "yes"
+        }
+      },
+      {
+        "text": "先谈别的。",
+        "topic": "TALK_TRAVEL_LIANG_COMPANION"
+      }
+    ]
+  },
+  {
+    "id": "MISSION_TRAVEL_LIANG_FIND_COMMS",
+    "type": "mission_definition",
+    "name": {
+      "str": "梁知遥的任务之一：寻找玛雅与信号站点"
+    },
+    "description": "梁知遥正在寻找失联的室友玛雅，也想知道灾变后是否还有能够传递远程消息的设施。难民中心商人手里有一份送往未知收件人的FEMA数据，或许能带来线索。接下递送，沿商人提供的路线调查。",
+    "goal": "MGOAL_NULL",
+    "difficulty": 2,
+    "value": 0,
+    "has_generic_rewards": false,
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "dialogue": {
+      "describe": "帮助梁知遥追查玛雅的下落。",
+      "offer": "梁知遥把手机和地图放在桌面上。玛雅最后一条消息停在堵死的公路，家人的聊天框里则留着一条发送失败的报平安。\n\n“难民中心商人手里有一份送往未知收件人的FEMA数据。接下递送以后，我们才能知道它要送去哪里。”\n\n“这条线未必能找到玛雅，但总比什么都不做强。你愿意陪我查下去吗？”",
+      "accepted": "“谢谢。先从商人的递送开始。”",
+      "rejected": "“没关系。等我们有余力时再谈。”",
+      "advice": "“去问难民中心商人那份FEMA数据递送。拿到路线以后，我们再看下一步。”",
+      "inquire": "“先把眼前的线索查清楚。要是有新发现，就回来和我核对。”",
+      "success": "你和梁知遥一起核对了HUB保存的公共信号。玛雅在灾变初期留下过公开的平安消息，最后一次记录指向伊舍伍德农场。梁知遥的家人仍然没有可验证的消息。",
+      "success_lie": "梁知遥摇了摇头。\n\n“先让我看看原始记录。玛雅的名字、时间和那句只有我们知道的话，缺一个都不能算。”",
+      "failure": "“这条线断了，不代表所有线索都断了。等我们活下来，再从别处继续找。”"
+    }
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_HUB_ARCHIVE_ACCEPTED",
+    "dynamic_line": "梁知遥把那张纸递给你，纸角因为被她捏得太久，已经有些发软。\n\n“查询条件写清楚了。玛雅·斯卡利特，耶鲁学生，5月15日以后失联，可能和哥哥阿琼同行，最后一条消息提到公路堵塞。”\n\n她又在下面补了一行。\n\n“告诉他们我叫梁知遥，来自广东佛山。只问公开信号里有没有提到我的名字，也问他们能不能把一条新的存活消息送进跨区中继。不要让他们替我猜哪条消息属于家人，更不要碰私人账户。”\n\n“如果拿到U盘，你可以先用电脑浏览，但请把原件带回来。名字相同不够，我需要亲自核对附言。”",
+    "responses": [
+      {
+        "text": "我去问。",
+        "topic": "TALK_TRAVEL_LIANG_COMPANION"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_MAYA_ARCHIVE_RESULT",
+    "dynamic_line": "记录里写着，玛雅和哥哥在I-95弃车后跟随无线电互助队北上。小组在辅路遭到丧尸、丧尸犬和野性疯人围攻，伊舍伍德家冒险开车把七名幸存者接回农场。\n\n梁知遥读到附言时，突然用手背挡住了嘴。\n\n转告梁知遥，我还活着。不要为了追车队进入高速公路。谷仓里有一把传统复合弓和两把现代复合猎弓，我看见时就想到你。日语计划先停，先活着见面。到时候从你学到哪一页继续，不准为了打卡熬夜。还有，我欠你一顿真正好吃的鸡胸肉。\n\n她盯着那几行字看了很久。\n\n“弓、日语计划、熬夜，还有鸡胸肉。是她，这些话只有她会这样写。”",
+    "responses": [
+      {
+        "text": "继续看，后面还有记录。",
+        "topic": "TALK_TRAVEL_LIANG_MAYA_ARCHIVE_RESULT_2"
+      },
+      {
+        "text": "先缓一缓。",
+        "topic": "TALK_TRAVEL_LIANG_COMPANION"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_READ_ARCHIVE_TOGETHER",
+    "dynamic_line": {
+      "u_has_var": "travel_hub_signal_archive_personally_read",
+      "type": "dialogue",
+      "context": "travel_liang",
+      "value": "yes",
+      "yes": "你把已经浏览过的U盘交给梁知遥。她没有先问你看到了什么，只把U盘插进自己的笔记本，按姓名、时间和中继呼号重新检索。\n\n“你先看过没有关系。不过同名记录只能算线索，附言是不是她写的，得让我自己确认。”\n\n屏幕滚过几条匹配结果。她忽然停住，把电脑转向你。\n\n“这里。玛雅·斯卡利特。你陪我一起看，好吗？”",
+      "no": "梁知遥接过U盘，把它插进自己的笔记本。屏幕上滚过查询条件、时间戳和中继呼号，她先逐项核对姓名、学校与同行者，忽然停住。\n\n她把电脑转向你。\n\n“这里。玛雅·斯卡利特。名字相同还不够，我们一起看附言。”"
+    },
+    "responses": [
+      {
+        "text": "一起看。",
+        "topic": "TALK_TRAVEL_LIANG_MAYA_ARCHIVE_RESULT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_MAYA_ARCHIVE_RESULT_2",
+    "dynamic_line": "后续记录把七名步行者送到了伊舍伍德一家经营的农场营地。最后一次确认时，玛雅仍然活着，膝盖受了轻伤，没有生命危险。\n\n梁知遥吸了一口气，像是直到这时才允许自己相信。\n\n“她活过了那段公路。至少在这份记录的最后，她还活着。”\n\n她继续往下翻，找到你另外向HUB提出的通信问题。答复写得很冷静，本地天线没有收到来自广东佛山并明确提及梁知遥姓名的公开消息。因为没有提供家属姓名，系统也不会擅自把其他中国方向记录认成她的家人。HUB不能恢复微信，也不能越过已经失效的跨洋网络，未来若建立新的中继，最多只能把一条新写的公开存活消息加入待转发队列。\n\n“所以不是他们查过我家，也不是知道了什么坏消息，只是这里没有收到能和我对应上的公开消息。”她把电脑合上一半，“家里仍然未知，但今天不是两手空空。伊舍伍德农场是下一条线索，可归档没有留下坐标。我们得先找到它在哪里。”",
+    "responses": [
+      {
+        "text": "先把记录和时间记下来。接着再谈怎么寻找农场。",
+        "topic": "TALK_TRAVEL_LIANG_ISHERWOOD_TRANSITION",
+        "condition": {
+          "u_has_mission": "MISSION_TRAVEL_LIANG_FIND_COMMS"
+        },
+        "effect": [
+          {
+            "npc_add_var": "travel_liang_maya_signal_found",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "travel_liang_archive_complete",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "arithmetic": [
+              {
+                "npc_val": "npc_trust"
+              },
+              "+=",
+              {
+                "const": 2
+              }
+            ]
+          },
+          {
+            "arithmetic": [
+              {
+                "npc_val": "npc_value"
+              },
+              "+=",
+              {
+                "const": 2
+              }
+            ]
+          },
+          {
+            "finish_mission": "MISSION_TRAVEL_LIANG_FIND_COMMS",
+            "success": true
+          }
+        ]
+      },
+      {
+        "text": "先把这份记录收好。",
+        "topic": "TALK_TRAVEL_LIANG_COMPANION"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_MAYA_ARCHIVE_MEMORY",
+    "dynamic_line": "“玛雅和哥哥在公路弃车后，跟着无线电互助队北上。后来他们在辅路被尸群、丧尸犬和疯人包围，是伊舍伍德家开车把剩下的人救回去的。”\n\n梁知遥轻轻笑了一下。\n\n“谷仓里的复合弓、活着见面后再继续的日语计划、不要熬夜，还有那顿鸡胸肉。看到这些，我才敢确定不是同名的人。”\n\n“HUB对中国方向的答复也只是没有收到明确提及我的公开消息，不代表家里发生了什么。农场是现在要追的线索，可精确位置仍然得靠我们自己问出来。”",
+    "responses": [
+      {
+        "text": "记住了。",
+        "topic": "TALK_TRAVEL_LIANG_PERSONAL_MENU",
+        "condition": {
+          "npc_has_var": "travel_liang_archive_complete",
+          "type": "dialogue",
+          "context": "travel_liang",
+          "value": "yes"
+        }
+      },
+      {
+        "text": "记住了。",
+        "topic": "TALK_TRAVEL_LIANG_COMPANION",
+        "condition": {
+          "not": {
+            "npc_has_var": "travel_liang_archive_complete",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_ISHERWOOD_TRANSITION",
+    "dynamic_line": "梁知遥把已经核对完的记录划掉，在下面重新写了一行：伊舍伍德农场，位置未知。\n\n“至少我们现在知道玛雅最后可能去了哪里。”\n\n她看向你。\n\n“等你愿意继续帮忙时，我们再去找这座农场。”",
+    "responses": [
+      {
+        "text": "现在就谈伊舍伍德农场的事。",
+        "topic": "TALK_TRAVEL_LIANG_ISHERWOOD_OFFER"
+      },
+      {
+        "text": "先休息，之后再谈。",
+        "topic": "TALK_TRAVEL_LIANG_PERSONAL_MENU"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_ISHERWOOD_MENU",
+    "dynamic_line": {
+      "npc_has_var": "travel_liang_maya_reunited",
+      "type": "dialogue",
+      "context": "travel_liang",
+      "value": "yes",
+      "yes": "梁知遥把地图和归档放回防水袋。\n\n“玛雅已经找到了。剩下的事不用再靠地图猜，我们可以直接问她。”",
+      "no": {
+        "u_has_mission": "MISSION_TRAVEL_LIANG_TRACE_ISHERWOOD",
+        "yes": "梁知遥摊开地图。伊舍伍德农场仍没有任务标记，只有她根据归档抄下的名字和时间。\n\n“先找到农场，再在里面找玛雅。真正见到她以前，地点只能算线索。”",
+        "no": "梁知遥把HUB归档U盘和地图放在一起。\n\n“玛雅的记录指向伊舍伍德农场，可地点没有公开。我们得先决定要不要继续追这条线。”"
+      }
+    },
+    "responses": [
+      {
+        "text": "在伊舍伍德农场寻找玛雅。",
+        "topic": "TALK_TRAVEL_LIANG_ISHERWOOD_OFFER",
+        "condition": {
+          "and": [
+            {
+              "npc_has_var": "travel_liang_archive_complete",
+              "type": "dialogue",
+              "context": "travel_liang",
+              "value": "yes"
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_maya_reunited",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_liang_isherwood_found",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "u_has_mission": "MISSION_TRAVEL_LIANG_TRACE_ISHERWOOD"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "text": "怎样找到农场里的玛雅？",
+        "topic": "TALK_TRAVEL_LIANG_ISHERWOOD_STATUS",
+        "condition": {
+          "and": [
+            {
+              "npc_has_var": "travel_liang_archive_complete",
+              "type": "dialogue",
+              "context": "travel_liang",
+              "value": "yes"
+            },
+            {
+              "u_has_mission": "MISSION_TRAVEL_LIANG_TRACE_ISHERWOOD"
+            }
+          ]
+        }
+      },
+      {
+        "text": "HUB归档里关于玛雅的记录，再说一次。",
+        "topic": "TALK_TRAVEL_LIANG_MAYA_ARCHIVE_MEMORY",
+        "condition": {
+          "npc_has_var": "travel_liang_archive_complete",
+          "type": "dialogue",
+          "context": "travel_liang",
+          "value": "yes"
+        }
+      },
+      {
+        "text": "玛雅为什么用旧弓、日语计划和鸡胸肉证明身份？",
+        "topic": "TALK_TRAVEL_LIANG_SHARED_DETAILS",
+        "condition": {
+          "npc_has_var": "travel_liang_archive_complete",
+          "type": "dialogue",
+          "context": "travel_liang",
+          "value": "yes"
+        }
+      },
+      {
+        "text": "我们已经找到农场了，先观察外围。",
+        "topic": "TALK_FRIEND",
+        "condition": {
+          "npc_has_var": "travel_liang_isherwood_found",
+          "type": "dialogue",
+          "context": "travel_liang",
+          "value": "yes"
+        }
+      },
+      {
+        "text": "返回。",
+        "topic": "TALK_TRAVEL_LIANG_PERSONAL_MENU"
+      }
+    ],
+    "speaker_effect": [
+      {
+        "condition": {
+          "or": [
+            {
+              "u_has_mission": "MISSION_TRAVEL_LIANG_TRACE_ISHERWOOD"
+            },
+            {
+              "u_has_var": "travel_liang_isherwood_found",
+              "type": "dialogue",
+              "context": "travel_liang",
+              "value": "yes"
+            }
+          ]
+        },
+        "effect": [
+          {
+            "run_eocs": [
+              "EOC_TRAVEL_ENSURE_MAYA_ISHERWOOD"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_ISHERWOOD_OFFER",
+    "dynamic_line": "梁知遥把归档里关于农场的几条记录重新排在一起。\n\n“我们知道玛雅最后被送进伊舍伍德家的营地，也知道他们不愿在广域频道公开位置。除此以外，没有坐标，没有路线，甚至不能确定她现在还在那里。”\n\n她按住地图边缘。\n\n“我很着急，但越着急越不能把一座普通农场认成答案。你愿意继续帮我，先找到真正的伊舍伍德农场吗？”",
+    "responses": [
+      {
+        "text": "我会继续帮你找到农场和玛雅。",
+        "topic": "TALK_TRAVEL_LIANG_ISHERWOOD_ACCEPTED",
+        "condition": {
+          "and": [
+            {
+              "npc_has_var": "travel_liang_archive_complete",
+              "type": "dialogue",
+              "context": "travel_liang",
+              "value": "yes"
+            },
+            {
+              "not": {
+                "u_has_mission": "MISSION_TRAVEL_LIANG_TRACE_ISHERWOOD"
+              }
+            }
+          ]
+        },
+        "effect": [
+          {
+            "assign_mission": "MISSION_TRAVEL_LIANG_TRACE_ISHERWOOD"
+          },
+          {
+            "run_eocs": [
+              "EOC_TRAVEL_ENSURE_MAYA_ISHERWOOD"
+            ]
+          },
+          {
+            "npc_add_var": "travel_liang_isherwood_search_started",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "u_message": "任务已经加入任务列表。",
+            "type": "good"
+          }
+        ]
+      },
+      {
+        "text": "先把找路的办法说清楚。",
+        "topic": "TALK_TRAVEL_LIANG_ISHERWOOD_PLAN_PREVIEW"
+      },
+      {
+        "text": "你是不是很想马上出发？",
+        "topic": "TALK_TRAVEL_LIANG_AFTER_ARCHIVE_URGENCY"
+      },
+      {
+        "text": "我现在还不能答应。",
+        "topic": "TALK_TRAVEL_LIANG_PERSONAL_MENU"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_ISHERWOOD_PLAN_PREVIEW",
+    "dynamic_line": "梁知遥用铅笔写下两条路。\n\n“第一条，回难民中心问跑长途的司机。司机和商队比普通人更清楚哪些乡道还通，哪些农场仍在交换物资。可以问伊舍伍德这个姓，也可以描述有水井、谷仓和外围检查的家庭营地。”\n\n“第二条，不等别人给答案。沿维护得比较好的乡道找车辙、路障和仍在耕作的痕迹，再向路上遇到的幸存者打听。归档明确说他们不愿公开坐标，我们也别在所有频道里大声广播。”\n\n“这项任务不会替我们在地图上标出农场。找到以后还要进营地找玛雅。只有她亲口确认身份，才算真的找到人。”",
+    "responses": [
+      {
+        "text": "好，我们去找农场里的玛雅。",
+        "topic": "TALK_TRAVEL_LIANG_ISHERWOOD_ACCEPTED",
+        "condition": {
+          "and": [
+            {
+              "npc_has_var": "travel_liang_archive_complete",
+              "type": "dialogue",
+              "context": "travel_liang",
+              "value": "yes"
+            },
+            {
+              "not": {
+                "u_has_mission": "MISSION_TRAVEL_LIANG_TRACE_ISHERWOOD"
+              }
+            }
+          ]
+        },
+        "effect": [
+          {
+            "assign_mission": "MISSION_TRAVEL_LIANG_TRACE_ISHERWOOD"
+          },
+          {
+            "run_eocs": [
+              "EOC_TRAVEL_ENSURE_MAYA_ISHERWOOD"
+            ]
+          },
+          {
+            "npc_add_var": "travel_liang_isherwood_search_started",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "u_message": "任务已经加入任务列表。",
+            "type": "good"
+          }
+        ]
+      },
+      {
+        "text": "我还需要准备。",
+        "topic": "TALK_TRAVEL_LIANG_PERSONAL_MENU"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_ISHERWOOD_ACCEPTED",
+    "dynamic_line": "梁知遥在地图背面写下“伊舍伍德农场”，又在旁边标注：位置未知。\n\n“谢谢。可以先问问难民中心的司机，也可以沿乡道自己找。”\n\n她停了一下。\n\n“找到农场以后，我们先确认玛雅本人是否在那里。”",
+    "responses": [
+      {
+        "text": "为什么优先问难民中心司机？",
+        "topic": "TALK_TRAVEL_LIANG_ISHERWOOD_DRIVER"
+      },
+      {
+        "text": "你现在怎么看这个世界？",
+        "topic": "TALK_TRAVEL_LIANG_AFTER_ARCHIVE_FEELINGS"
+      },
+      {
+        "text": "找到玛雅以后，你对未来有什么打算？",
+        "topic": "TALK_TRAVEL_LIANG_AFTER_ARCHIVE_FUTURE"
+      },
+      {
+        "text": "说说旧弓、日语计划和鸡胸肉。",
+        "topic": "TALK_TRAVEL_LIANG_SHARED_DETAILS"
+      },
+      {
+        "text": "任务清楚了，出发吧。",
+        "topic": "TALK_TRAVEL_LIANG_PERSONAL_MENU"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_ISHERWOOD_STATUS",
+    "dynamic_line": "梁知遥指了指地图上仍然空白的乡间区域。\n\n“任务没有坐标。最稳妥的办法仍是问难民中心司机和跑商的人，他们常走乡道，可能听过伊舍伍德家庭网络。也可以自己寻找，留意仍有人维护的路、车辙、围栏、水井和成片农地。”\n\n“找到农场只是第一步。进营地以后寻找玛雅，和她对话时让我留在附近。只有她亲口确认，我们才算真的找到人。”",
+    "responses": [
+      {
+        "text": "我去问难民中心司机。",
+        "topic": "TALK_TRAVEL_LIANG_ISHERWOOD_DRIVER"
+      },
+      {
+        "text": "我准备自己沿乡道寻找。",
+        "topic": "TALK_TRAVEL_LIANG_ISHERWOOD_SELF_SEARCH"
+      },
+      {
+        "text": "你现在怎么看这个世界？",
+        "topic": "TALK_TRAVEL_LIANG_AFTER_ARCHIVE_FEELINGS"
+      },
+      {
+        "text": "找到玛雅以后呢？",
+        "topic": "TALK_TRAVEL_LIANG_AFTER_ARCHIVE_FUTURE"
+      },
+      {
+        "text": "旧弓、日语和鸡胸肉的事，再说说。",
+        "topic": "TALK_TRAVEL_LIANG_SHARED_DETAILS"
+      },
+      {
+        "text": "明白，继续找。",
+        "topic": "TALK_TRAVEL_LIANG_PERSONAL_MENU"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_ISHERWOOD_DRIVER",
+    "dynamic_line": "“难民中心的司机未必认识玛雅，也未必愿意随便泄露一座营地的位置。”\n\n梁知遥在地图上点了点几条商路。\n\n“可他们运人、送货、避开断桥，知道哪些乡间据点还在交换东西。问伊舍伍德这个姓，或者问有旧谷仓、水井和外围检查的家庭农场，比拿着一张空地图乱猜可靠。”\n\n“他若愿意告诉我们路线，那是线索，不是保证。到了附近仍要自己确认。”",
+    "responses": [
+      {
+        "text": "我会把它当成线索，不当成安全证明。",
+        "topic": "TALK_TRAVEL_LIANG_ISHERWOOD_STATUS"
+      },
+      {
+        "text": "先聊点别的。",
+        "topic": "TALK_TRAVEL_LIANG_ISHERWOOD_ACCEPTED"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_ISHERWOOD_SELF_SEARCH",
+    "dynamic_line": "“自己找会慢一些，不过不是完全没有方向。”\n\n梁知遥把归档中的描述抄到地图边缘。\n\n“农场能接走七名步行者，有水井、谷仓和车辆，也能维持外围检查。说明附近道路至少还能通车，土地有人维护，出入口不会像废弃农舍那样完全被草吞掉。”\n\n“我们可以沿乡道观察车辙、修补过的围栏和交换物资留下的痕迹，也可以问遇见的农户和商人。别为了快，钻进每一座看起来像农场的院子。”",
+    "responses": [
+      {
+        "text": "我会先观察，再接近。",
+        "topic": "TALK_TRAVEL_LIANG_ISHERWOOD_STATUS"
+      },
+      {
+        "text": "先聊点别的。",
+        "topic": "TALK_TRAVEL_LIANG_ISHERWOOD_ACCEPTED"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_AFTER_ARCHIVE_URGENCY",
+    "dynamic_line": "梁知遥沉默了几秒。\n\n“想。知道她曾经活着，比完全不知道更让人想马上动身。”\n\n她把地图重新折好。\n\n“可归档最后一次确认已经过去一段时间。她可能还在农场，也可能已经离开。现在冲向一个没有坐标的名字，只会把希望变成另一种鲁莽。”",
+    "responses": [
+      {
+        "text": "那就先找位置，不替结果下结论。",
+        "topic": "TALK_TRAVEL_LIANG_ISHERWOOD_OFFER"
+      },
+      {
+        "text": "你能这样停下来判断，已经很不容易。",
+        "topic": "TALK_TRAVEL_LIANG_ISHERWOOD_OFFER",
+        "opinion": {
+          "trust": 1
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_AFTER_ARCHIVE_FEELINGS",
+    "dynamic_line": "梁知遥望着地图上被道路切开的空白。\n\n“灾变以前，我总觉得未来是一张能慢慢填满的日历。课程、存款、旅行、工作，只要安排得够仔细，事情就会按顺序来。”\n\n“现在日历没有用了。我只能决定今天不把陌生人立刻当成敌人，也不因为想相信谁，就放弃边界和退路。”\n\n她抬头看你。\n\n“你呢？你觉得这个世界已经结束了吗？”",
+    "responses": [
+      {
+        "text": "旧世界结束了，我们现在只能活下去。",
+        "topic": "TALK_TRAVEL_LIANG_AFTER_ARCHIVE_FEELINGS_SURVIVE"
+      },
+      {
+        "text": "世界没有结束，只是缩小到我们还能照顾的人。",
+        "topic": "TALK_TRAVEL_LIANG_AFTER_ARCHIVE_FEELINGS_CARE"
+      },
+      {
+        "text": "我不知道。每天的答案都不一样。",
+        "topic": "TALK_TRAVEL_LIANG_AFTER_ARCHIVE_FEELINGS_UNCERTAIN"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_AFTER_ARCHIVE_FEELINGS_SURVIVE",
+    "dynamic_line": "“先活下去没有错。”梁知遥点点头，“只是我不想让活着变成唯一的答案。要是最后只剩吃饭、睡觉和判断谁会先伤害谁，那些我们想救的人回来以后，也认不出我们了。”",
+    "responses": [
+      {
+        "text": "所以先活着，也给自己留一点别的。",
+        "topic": "TALK_TRAVEL_LIANG_ISHERWOOD_STATUS"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_AFTER_ARCHIVE_FEELINGS_CARE",
+    "dynamic_line": "梁知遥很轻地笑了一下。\n\n“我喜欢这个说法。范围可能只剩一间屋、两个人、一条还能走的路，可只要有人愿意把药名抄对，愿意等同伴跟上，世界就还没有完全停。”",
+    "responses": [
+      {
+        "text": "那就先照顾好眼前的人。",
+        "topic": "TALK_TRAVEL_LIANG_ISHERWOOD_STATUS",
+        "opinion": {
+          "value": 1
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_AFTER_ARCHIVE_FEELINGS_UNCERTAIN",
+    "dynamic_line": "“我也是。”梁知遥说，“有些早晨我觉得只要计划清楚就能继续，有些晚上会觉得所有计划都只是让自己别发抖。”\n\n“答案不稳定没关系。至少我们还能在做决定前，把不知道的部分说出来。”",
+    "responses": [
+      {
+        "text": "先把今天能做的事做完。",
+        "topic": "TALK_TRAVEL_LIANG_ISHERWOOD_STATUS"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_AFTER_ARCHIVE_FUTURE",
+    "dynamic_line": "“先确认玛雅还在不在农场。”\n\n梁知遥停了一会儿，才继续。\n\n“如果找到她，我想先让她把膝盖给真正懂的人看，再一起想办法给家里留消息。以后也许帮一个能长期运作的诊所整理记录，学会维护更实用的设备。学校回不去，不代表我学过的东西全部作废。”\n\n“更远一点，我还是想去很多地方。不是为了完成一张灾前清单，只是想证明未来没有被压缩成下一顿饭。”",
+    "responses": [
+      {
+        "text": "你还想继续学习吗？",
+        "topic": "TALK_TRAVEL_LIANG_AFTER_ARCHIVE_FUTURE_STUDY"
+      },
+      {
+        "text": "先找到玛雅，再决定下一步。",
+        "topic": "TALK_TRAVEL_LIANG_ISHERWOOD_STATUS"
+      },
+      {
+        "text": "我也想给未来留一点位置。",
+        "topic": "TALK_TRAVEL_LIANG_ISHERWOOD_STATUS",
+        "opinion": {
+          "trust": 1,
+          "value": 1
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_AFTER_ARCHIVE_FUTURE_STUDY",
+    "dynamic_line": "“想。”梁知遥回答得很快，随后自己笑了一下。\n\n“可能没有学分、实验楼和毕业证了，但人体怎么受伤，设备怎么失效，怎样把昂贵又复杂的东西改得更容易用，这些问题还在。只要问题还在，学习就不算过时。”",
+    "responses": [
+      {
+        "text": "那就别把那些知识丢下。",
+        "topic": "TALK_TRAVEL_LIANG_ISHERWOOD_STATUS"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_SHARED_DETAILS",
+    "dynamic_line": "梁知遥看着归档中的那段附言，神情终于没有先前那么紧。\n\n“那不是玛雅在世界末日里给我布置作业。她是在用我们共同经历过的小事证明身份，也在告诉我，计划可以暂停，人先活下来。”",
+    "responses": [
+      {
+        "text": "你也喜欢射箭？",
+        "topic": "TALK_TRAVEL_LIANG_SHARED_ARCHERY"
+      },
+      {
+        "text": "你为什么学日语？",
+        "topic": "TALK_TRAVEL_LIANG_SHARED_JAPANESE"
+      },
+      {
+        "text": "鸡胸肉怎么成了你们的暗号？",
+        "topic": "TALK_TRAVEL_LIANG_SHARED_CHICKEN"
+      },
+      {
+        "text": "这些细节确实只有熟人才知道。",
+        "topic": "TALK_TRAVEL_LIANG_PERSONAL_MENU"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_SHARED_ARCHERY",
+    "dynamic_line": "“玛雅拉我去的射箭社。”\n\n梁知遥抬起手，像是在空气里找一条看不见的弓弦。\n\n“她喜欢叫人一起练，替新手找护臂，记谁下一轮上场。我喜欢调整站姿、锚点和呼吸，看箭着是不是比上一组更集中。那种反馈很直接，动作对不对，不需要先说服自己。”\n\n“我原本有一把入门反曲弓，灾变时留在社团器材柜里，根本来不及取。玛雅看到谷仓里的旧弓会想到我，很正常。”",
+    "responses": [
+      {
+        "text": "所以那不是凭空出现的新爱好。",
+        "topic": "TALK_TRAVEL_LIANG_SHARED_DETAILS"
+      },
+      {
+        "text": "以后找到合适的弓，可以再练。",
+        "topic": "TALK_TRAVEL_LIANG_SHARED_DETAILS",
+        "opinion": {
+          "value": 1
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_SHARED_JAPANESE",
+    "dynamic_line": "“一开始是想毕业以后去日本旅行，也很羡慕能自然切换语言的人。”\n\n梁知遥有些不好意思地拨了拨地图边角。\n\n“我给自己做过一个很幼稚的奖励表。每学一小时日语，或者认真运动一小时，就往兴趣账户里记十元，准备用来买资料、旅行和弓具。玛雅日语过了N2，经常帮我改发音，也会监督我别把计划拖到凌晨。”\n\n“她在附言里说先暂停，是怕我把打卡看得比睡觉和安全重要。等见面再继续，才是她真正想说的话。”",
+    "responses": [
+      {
+        "text": "流利地理解另一种语言，确实很有吸引力。",
+        "topic": "TALK_TRAVEL_LIANG_SHARED_DETAILS"
+      },
+      {
+        "text": "计划可以暂停，不等于永远放弃。",
+        "topic": "TALK_TRAVEL_LIANG_SHARED_DETAILS",
+        "opinion": {
+          "trust": 1
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_SHARED_CHICKEN",
+    "dynamic_line": "梁知遥先笑了，随后用手背挡了一下。\n\n“我以前为了省钱和补蛋白质，周末会一次做很多鸡胸肉。第一批几乎没有调味，干得像实验室吸水纸。玛雅吃了一口，说这不是健康餐，是对咀嚼肌的报复。”\n\n“她后来抢着腌了一批，结果聊天时忘了时间，又把一面煎糊。我们约好，谁先学会把鸡胸肉做得真正好吃，谁请另一顿。”\n\n“所以那句话听起来很傻，却不可能是陌生人随便编出来的。”",
+    "responses": [
+      {
+        "text": "这确实比姓名更像身份证明。",
+        "topic": "TALK_TRAVEL_LIANG_SHARED_DETAILS"
+      },
+      {
+        "text": "等找到她，这顿饭不能赖掉。",
+        "topic": "TALK_TRAVEL_LIANG_SHARED_DETAILS",
+        "opinion": {
+          "trust": 1,
+          "value": 1
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_ISHERWOOD_FOUND",
+    "dynamic_line": "梁知遥对照道路、围栏和谷仓看了一遍，仍没有放松。\n\n“地点可能对上了，但农场不是玛雅本人。先进去找她。和她说话时让我留在附近，我们要当面确认。”",
+    "responses": [
+      {
+        "text": "明白，先找玛雅。",
+        "topic": "TALK_TRAVEL_LIANG_PERSONAL_MENU"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_MAYA_REUNION_AFTER",
+    "dynamic_line": "梁知遥朝楼上的方向看了一眼。她的眼睛仍有些红，嘴角却一直压不住那点笑意。\n\n“她还活着。这句话听起来很简单，可我抱住她的时候，才真的相信。”\n\n她低头看了看自己的手，像还记得玛雅掌心的温度。\n\n“我们不会假装灾难没有发生。先确认伤势，吃饭，睡觉，再把彼此错过的路慢慢讲完。未来可以晚一点决定——今晚只需要让她知道，我没有再走丢。”",
+    "responses": [
+      {
+        "text": "你们先休息。",
+        "topic": "TALK_TRAVEL_LIANG_PERSONAL_MENU"
+      },
+      {
+        "text": "以后还会继续找能联系中国的办法吗？",
+        "topic": "TALK_TRAVEL_LIANG_AFTER_ARCHIVE_FUTURE"
+      },
+      {
+        "text": "玛雅留下的那些身份暗号，现在听起来怎么样？",
+        "topic": "TALK_TRAVEL_LIANG_SHARED_DETAILS"
+      }
+    ]
+  },
+  {
+    "id": "MISSION_TRAVEL_LIANG_TRACE_ISHERWOOD",
+    "type": "mission_definition",
+    "name": {
+      "str": "梁知遥的任务之二：在伊舍伍德农场寻找玛雅"
+    },
+    "description": "HUB保存的公共信号显示，玛雅最后可能停留在伊舍伍德农场。找到这座农场，并让梁知遥与玛雅当面确认。",
+    "goal": "MGOAL_NULL",
+    "difficulty": 3,
+    "value": 0,
+    "has_generic_rewards": false,
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "dialogue": {
+      "describe": "帮助梁知遥找到伊舍伍德农场里的玛雅。",
+      "offer": "归档中的最后一条线索指向伊舍伍德农场。你愿意继续陪梁知遥寻找玛雅吗？",
+      "accepted": "“谢谢。我们先找到农场，再确认玛雅是否还在那里。”",
+      "rejected": "“没关系。至少现在我们知道该找什么。”",
+      "advice": "“问问熟悉乡间商路的人，或者沿着有人维护的乡道寻找农场。”",
+      "inquire": "“找到农场以后，先确认玛雅本人是否在那里。”",
+      "success": "你在伊舍伍德农场找到了玛雅，并让她与梁知遥当面确认。",
+      "success_lie": "梁知遥摇了摇头。\n\n“我需要听见她亲口回答。只看到农场或听见同名传闻，都不能算找到玛雅。”",
+      "failure": "“找不到不等于不存在。等有新的商路或消息，我们再继续问。”"
+    }
+  }
+]

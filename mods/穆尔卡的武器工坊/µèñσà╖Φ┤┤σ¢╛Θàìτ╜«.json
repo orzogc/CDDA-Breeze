@@ -1,0 +1,526 @@
+[
+  {
+    "type": "mod_tileset",
+    "compatibility": [
+      "Chibi_Ultica",
+      "MshockRealXotto",
+      "UltimateCataclysm",
+      "MshockXottoplus",
+      "UNDEAD_PEOPLE",
+      "UNDEAD_PEOPLE_BASE",
+      "UNDEAD_PEOPLE_LEGACY",
+      "UlticaShell",
+      "MshockXottoplus12",
+      "MSX++DEAD_PEOPLE",
+      "MXplus12_for_cosmetics",
+      "MSXotto+"
+    ],
+    "tiles-new": [
+      {
+        "file": "护具贴图.png",
+        "tiles": [
+          {
+            "id": "k1_plate",
+            "fg": 0
+          },
+          {
+            "id": "overlay_wielded_k1_plate",
+            "fg": 0
+          },
+          {
+            "id": "k1l_plate",
+            "fg": 1
+          },
+          {
+            "id": "overlay_wielded_k1l_plate",
+            "fg": 1
+          },
+          {
+            "id": "tln_plate",
+            "fg": 2
+          },
+          {
+            "id": "overlay_wielded_tln_plate",
+            "fg": 2
+          },
+          {
+            "id": "tln2_plate",
+            "fg": 3
+          },
+          {
+            "id": "overlay_wielded_tln2_plate",
+            "fg": 3
+          },
+          {
+            "id": "cva_plate",
+            "fg": 4
+          },
+          {
+            "id": "overlay_wielded_cva_plate",
+            "fg": 4
+          },
+          {
+            "id": "cva2_plate",
+            "fg": 5
+          },
+          {
+            "id": "overlay_wielded_cva2_plate",
+            "fg": 5
+          },
+          {
+            "id": "ssh40",
+            "fg": 6
+          },
+          {
+            "id": "overlay_wielded_ssh40",
+            "fg": 6
+          },
+          {
+            "id": "overlay_worn_ssh40",
+            "fg": 7
+          },
+          {
+            "id": "6b2",
+            "fg": 8
+          },
+          {
+            "id": "overlay_wielded_6b2",
+            "fg": 8
+          },
+          {
+            "id": "overlay_worn_6b2",
+            "fg": 9
+          },
+          {
+            "id": "6b3",
+            "fg": 10
+          },
+          {
+            "id": "overlay_wielded_6b3",
+            "fg": 10
+          },
+          {
+            "id": "overlay_worn_6b3",
+            "fg": 11
+          },
+          {
+            "id": "stsh",
+            "fg": 12
+          },
+          {
+            "id": "overlay_wielded_stsh",
+            "fg": 12
+          },
+          {
+            "id": "overlay_worn_stsh",
+            "fg": 13
+          },
+          {
+            "id": "pilot_helmet",
+            "fg": 14
+          },
+          {
+            "id": "overlay_wielded_pilot_helmet",
+            "fg": 14
+          },
+          {
+            "id": "overlay_worn_pilot_helmet",
+            "fg": 15
+          },
+          {
+            "id": "alytin",
+            "fg": 16
+          },
+          {
+            "id": "overlay_wielded_alytin",
+            "fg": 16
+          },
+          {
+            "id": "overlay_worn_alytin",
+            "fg": 17
+          },
+          {
+            "id": "alytin_up",
+            "fg": 18
+          },
+          {
+            "id": "overlay_wielded_alytin_up",
+            "fg": 18
+          },
+          {
+            "id": "overlay_worn_alytin_up",
+            "fg": 19
+          },
+          {
+            "id": "maska",
+            "fg": 20
+          },
+          {
+            "id": "overlay_wielded_maska",
+            "fg": 20
+          },
+          {
+            "id": "overlay_worn_maska",
+            "fg": 21
+          },
+          {
+            "id": "maska_up",
+            "fg": 22
+          },
+          {
+            "id": "overlay_wielded_maska_up",
+            "fg": 22
+          },
+          {
+            "id": "overlay_worn_maska_up",
+            "fg": 23
+          },
+          {
+            "id": "6b13",
+            "fg": 24
+          },
+          {
+            "id": "overlay_wielded_6b13",
+            "fg": 24
+          },
+          {
+            "id": "overlay_worn_6b13",
+            "fg": 25
+          },
+          {
+            "id": "mlc1",
+            "fg": 26
+          },
+          {
+            "id": "overlay_wielded_mlc1",
+            "fg": 26
+          },
+          {
+            "id": "overlay_worn_mlc1",
+            "fg": 27
+          },
+          {
+            "id": "mlc2",
+            "fg": 28
+          },
+          {
+            "id": "overlay_wielded_mlc2",
+            "fg": 28
+          },
+          {
+            "id": "overlay_worn_mlc2",
+            "fg": 29
+          },
+          {
+            "id": "mlv",
+            "fg": 30
+          },
+          {
+            "id": "overlay_wielded_mlv",
+            "fg": 30
+          },
+          {
+            "id": "overlay_worn_mlv",
+            "fg": 31
+          },
+          {
+            "id": "6b43",
+            "fg": 32
+          },
+          {
+            "id": "overlay_wielded_6b43",
+            "fg": 32
+          },
+          {
+            "id": "overlay_worn_6b43",
+            "fg": 33
+          },
+          {
+            "id": "6sh117",
+            "fg": 34
+          },
+          {
+            "id": "overlay_wielded_6sh117",
+            "fg": 34
+          },
+          {
+            "id": "overlay_worn_6sh117",
+            "fg": 35
+          },
+          {
+            "id": "pzarmor_l",
+            "fg": 36
+          },
+          {
+            "id": "overlay_wielded_pzarmor_l",
+            "fg": 36
+          },
+          {
+            "id": "overlay_worn_pzarmor_l",
+            "fg": 37
+          },
+          {
+            "id": "pzarmor_m",
+            "fg": 38
+          },
+          {
+            "id": "overlay_wielded_pzarmor_m",
+            "fg": 38
+          },
+          {
+            "id": "overlay_worn_pzarmor_m",
+            "fg": 39
+          },
+          {
+            "id": "pzarmor_h",
+            "fg": 40
+          },
+          {
+            "id": "overlay_wielded_pzarmor_h",
+            "fg": 40
+          },
+          {
+            "id": "overlay_worn_pzarmor_h",
+            "fg": 41
+          },
+          {
+            "id": "fast_1",
+            "fg": 42
+          },
+          {
+            "id": "overlay_wielded_fast_1",
+            "fg": 42
+          },
+          {
+            "id": "overlay_worn_fast_1",
+            "fg": 43
+          },
+          {
+            "id": "fast_2",
+            "fg": 44
+          },
+          {
+            "id": "overlay_wielded_fast_2",
+            "fg": 44
+          },
+          {
+            "id": "overlay_worn_fast_2",
+            "fg": 45
+          },
+          {
+            "id": "avs",
+            "fg": 46
+          },
+          {
+            "id": "overlay_wielded_avs",
+            "fg": 46
+          },
+          {
+            "id": "overlay_worn_avs",
+            "fg": 47
+          },
+          {
+            "id": "shotbag",
+            "fg": 50
+          },
+          {
+            "id": "overlay_wielded_shotbag",
+            "fg": 50
+          },
+          {
+            "id": "overlay_worn_shotbag",
+            "fg": 51
+          },
+          {
+            "id": "tenacious_shot",
+            "fg": 52
+          },
+          {
+            "id": "overlay_wielded_tenacious_shot",
+            "fg": 52
+          },
+          {
+            "id": "overlay_worn_Wolftegaon",
+            "fg": 53
+          },
+          {
+            "id": "overlay_worn_Wolftegaon_on",
+            "fg": 53
+          },
+          {
+            "id": "Wolftegaon",
+            "fg": 54
+          },
+          {
+            "id": "overlay_wielded_Wolftegaon",
+            "fg": 54
+          },
+          {
+            "id": "Wolftegaon_on",
+            "fg": 54
+          },
+          {
+            "id": "overlay_wielded_Wolftegaon_on",
+            "fg": 54
+          },
+          {
+            "id": "Wolftegaon_helmet",
+            "fg": 72
+          },
+          {
+            "id": "overlay_wielded_Wolftegaon_helmet",
+            "fg": 72
+          },
+          {
+            "id": "overlay_worn_Wolftegaon_helmet",
+            "fg": 73
+          },
+          {
+            "id": "ecb1",
+            "fg": 58
+          },
+          {
+            "id": "overlay_wielded_ecb1",
+            "fg": 58
+          },
+          {
+            "id": "shotbox_belt",
+            "fg": 59
+          },
+          {
+            "id": "overlay_wielded_shotbox_belt",
+            "fg": 59
+          },
+          {
+            "id": "overlay_worn_shotbox_belt",
+            "fg": 60
+          },
+          {
+            "id": "ammo_storage_pack",
+            "fg": 59
+          },
+          {
+            "id": "overlay_wielded_ammo_storage_pack",
+            "fg": 59
+          },
+          {
+            "id": "overlay_worn_ammo_storage_pack",
+            "fg": 60
+          },
+          {
+            "id": "shotbox2_belt",
+            "fg": 59
+          },
+          {
+            "id": "overlay_wielded_shotbox2_belt",
+            "fg": 59
+          },
+          {
+            "id": "overlay_worn_shotbox2_belt",
+            "fg": 61
+          },
+          {
+            "id": "ch_1",
+            "fg": 62
+          },
+          {
+            "id": "overlay_wielded_ch_1",
+            "fg": 62
+          },
+          {
+            "id": "overlay_worn_ch_1",
+            "fg": 63
+          },
+          {
+            "id": "pd_1",
+            "fg": 64
+          },
+          {
+            "id": "overlay_wielded_pd_1",
+            "fg": 64
+          },
+          {
+            "id": "overlay_worn_pd_1",
+            "fg": 65
+          },
+          {
+            "id": "ch_2",
+            "fg": 66
+          },
+          {
+            "id": "overlay_wielded_ch_2",
+            "fg": 66
+          },
+          {
+            "id": "overlay_worn_ch_2",
+            "fg": 67
+          },
+          {
+            "id": "pdh_2",
+            "fg": 68
+          },
+          {
+            "id": "overlay_wielded_pdh_2",
+            "fg": 68
+          },
+          {
+            "id": "overlay_worn_pdh_2",
+            "fg": 69
+          },
+          {
+            "id": "potato_suit",
+            "fg": 70
+          },
+          {
+            "id": "overlay_wielded_potato_suit",
+            "fg": 70
+          },
+          {
+            "id": "overlay_worn_potato_suit",
+            "fg": 71
+          },
+          {
+            "id": "Wolftegaon_helmet_on",
+            "fg": 55
+          },
+          {
+            "id": "overlay_wielded_Wolftegaon_helmet_on",
+            "fg": 55
+          },
+          {
+            "id": "overlay_worn_Wolftegaon_helmet_on",
+            "fg": 56
+          },
+          {
+            "id": "edcu1v",
+            "fg": 74
+          },
+          {
+            "id": "overlay_wielded_edcu1v",
+            "fg": 74
+          },
+          {
+            "id": "overlay_worn_edcu1v",
+            "fg": 75
+          },
+          {
+            "id": "edcu1v_on",
+            "fg": 74
+          },
+          {
+            "id": "overlay_wielded_edcu1v_on",
+            "fg": 74
+          },
+          {
+            "id": "overlay_worn_edcu1v_on",
+            "fg": 75
+          }
+        ],
+        "sprite_width": 32,
+        "sprite_height": 32,
+        "sprite_offset_x": 0,
+        "sprite_offset_y": 0
+      }
+    ]
+  }
+]

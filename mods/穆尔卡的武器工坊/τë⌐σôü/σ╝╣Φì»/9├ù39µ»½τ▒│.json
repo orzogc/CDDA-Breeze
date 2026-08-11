@@ -1,0 +1,141 @@
+[
+  {
+    "id": "939",
+    "type": "AMMO",
+    "name": "9x39mm弹",
+    "description": "俄制大口径亚音速步枪弹，是一种传统的铅芯全金属被甲弹。",
+    "weight": "17 g",
+    "volume": "150 ml",
+    "price": 1100,
+    "price_postapoc": 1500,
+    "flags": [
+      "IRREPLACEABLE_CONSUMABLE"
+    ],
+    "material": [
+      "brass",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "yellow",
+    "count": 50,
+    "stack_size": 50,
+    "ammo_type": "939",
+    "casing": "939_casing",
+    "range": 28,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 45,
+      "armor_penetration": 15
+    },
+    "dispersion": 10,
+    "recoil": 1500,
+    "effects": [
+      "COOKOFF"
+    ],
+    "longest_side": "8 cm"
+  },
+  {
+    "id": "939_sp6",
+    "type": "AMMO",
+    "copy-from": "939",
+    "name": {
+      "str_sp": "9x39mm SP6 弹"
+    },
+    "description": "9x39mm的SP6穿甲弹。",
+    "price_postapoc": 1750,
+    "relative": {
+      "damage": {
+        "damage_type": "bullet",
+        "amount": 2,
+        "armor_penetration": 6
+      }
+    },
+    "proportional": {
+      "recoil": 1.1
+    },
+    "longest_side": "8 cm"
+  },
+  {
+    "id": "939_bp",
+    "looks_like": "939_sp6",
+    "type": "AMMO",
+    "copy-from": "939",
+    "name": {
+      "str_sp": "9x39mm BP gs 弹"
+    },
+    "description": "9x39mm BP gs(7N12)特殊子弹，穿甲弹，由铅套钢芯组成，置于带截锥的双金属半壳中，子弹有一个钢套，子弹比SP5子弹要长得多，它能填满双金属外壳的整个空腔。",
+    "price_postapoc": 3500,
+    "relative": {
+      "damage": {
+        "damage_type": "bullet",
+        "amount": 4,
+        "armor_penetration": 13
+      }
+    },
+    "proportional": {
+      "recoil": 1.3
+    },
+    "longest_side": "8 cm"
+  },
+  {
+    "id": "reloaded_939",
+    "copy-from": "939",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "9x39mm SP5 弹（复装）"
+    },
+    "description": "一发手工复装的9x39mm SP5亚音速弹，性能相对而言差一点。",
+    "proportional": {
+      "price": 0.9,
+      "damage": {
+        "damage_type": "bullet",
+        "amount": 0.9
+      }
+    },
+    "extend": {
+      "effects": [
+        "RECYCLED"
+      ]
+    },
+    "delete": {
+      "effects": [
+        "NEVER_MISFIRES"
+      ],
+      "flags": [
+        "IRREPLACEABLE_CONSUMABLE"
+      ]
+    },
+    "longest_side": "8 cm"
+  },
+  {
+    "id": "reloaded_939_sp6",
+    "copy-from": "939_sp6",
+    "looks_like": "939_sp6",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "9x39mm SP6 弹（复装）"
+    },
+    "description": "一发手工复装的9x39mm SP6亚音速弹，性能相对而言差一点。",
+    "proportional": {
+      "price": 0.9,
+      "damage": {
+        "damage_type": "bullet",
+        "amount": 0.9
+      }
+    },
+    "extend": {
+      "effects": [
+        "RECYCLED"
+      ]
+    },
+    "delete": {
+      "effects": [
+        "NEVER_MISFIRES"
+      ],
+      "flags": [
+        "IRREPLACEABLE_CONSUMABLE"
+      ]
+    },
+    "longest_side": "8 cm"
+  }
+]

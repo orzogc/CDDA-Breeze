@@ -1,0 +1,172 @@
+[
+  {
+    "id": "chsh",
+    "category": "clothing",
+    "repairs_like": "helmet_barbute",
+    "type": "TOOL_ARMOR",
+    "name": {
+      "str": "CHSH 头盔"
+    },
+    "description": "格科斯勒在单兵防护方面能做到的程度远比你想的要极端，CHSH就是为了绝对的防护而诞生的产物，通常搭配DA-68SH使用，厚重的多重复合材料外壳与缓冲层再搭配碳钢玻璃制成的防弹面罩可以抵挡全威力步枪穿甲弹的直接射击，算得上世界上防护效果最好的头盔之一，但也是最重的那一批，戴着它感觉就像是脑袋上顶着个西瓜，反正你的脖子肯定会恨死你的。",
+    "use_action": {
+      "type": "transform",
+      "target": "chsh_up",
+      "menu_text": "升起面罩",
+      "msg": "你升起你的面罩。"
+    },
+    "weight": "6000 g",
+    "volume": "4000 ml",
+    "price": "6000 USD",
+    "price_postapoc": "60 USD",
+    "material": [
+      "kevlar_rigid",
+      "ceramic",
+      "glass"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "warmth": 40,
+    "environmental_protection": 5,
+    "material_thickness": 15,
+    "techniques": [
+      "WBLOCK_1"
+    ],
+    "flags": [
+      "WATERPROOF",
+      "STURDY"
+    ],
+    "longest_side": "40 cm",
+    "armor": [
+      {
+        "covers": [
+          "head"
+        ],
+        "coverage": 100,
+        "encumbrance": 35
+      },
+      {
+        "covers": [
+          "eyes",
+          "mouth"
+        ],
+        "coverage": 100,
+        "encumbrance": 10,
+        "rigid_layer_only": true,
+        "layers": [
+          "OUTER"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "chsh_up",
+    "category": "clothing",
+    "type": "TOOL_ARMOR",
+    "repairs_like": "helmet_barbute",
+    "name": {
+      "str": "CHSH 头盔 (面罩升起)"
+    },
+    "description": "格科斯勒在单兵防护方面能做到的程度远比你想的要极端，CHSH就是为了绝对的防护而诞生的产物，通常搭配DA-68SH使用，厚重的多重复合材料外壳与缓冲层再搭配碳钢玻璃制成的防弹面罩可以抵挡全威力步枪穿甲弹的直接射击，算得上世界上防护效果最好的头盔之一，但也是最重的那一批，戴着它感觉就像是脑袋上顶着个西瓜，反正你的脖子肯定会恨死你的。",
+    "use_action": {
+      "type": "transform",
+      "target": "chsh",
+      "menu_text": "放下面罩",
+      "msg": "你放下你的面罩。"
+    },
+    "weight": "6000 g",
+    "volume": "4000 ml",
+    "price": "6000 USD",
+    "price_postapoc": "60 USD",
+    "material": [
+      "kevlar_rigid",
+      "ceramic",
+      "glass"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "warmth": 40,
+    "environmental_protection": 5,
+    "material_thickness": 15,
+    "techniques": [
+      "WBLOCK_1"
+    ],
+    "flags": [
+      "WATERPROOF",
+      "STURDY"
+    ],
+    "longest_side": "40 cm",
+    "armor": [
+      {
+        "covers": [
+          "head"
+        ],
+        "coverage": 100,
+        "encumbrance": 35
+      }
+    ]
+  },
+  {
+    "id": "da68sh_vest",
+    "repairs_like": "survivor_suit",
+    "type": "ARMOR",
+    "name": {
+      "str": "DA-68SH“金刚石”重型防弹套装"
+    },
+    "description": "格科斯勒的DA-68SH重型防弹套装被称为重型防弹衣中的极端主义，就像它的名字，除头部外几乎覆盖全身的重型插板与缓冲织物可以让穿戴者扛得住枪林弹雨，哪怕是反器材弹药的直射也可以挡住，一大堆的口袋可以让你携带更多弹匣与工具，但为了极致防护所付出的代价也是相当惨痛的，高昂的价格让不少人望而却步，极高的重量严重影响了灵活性，在战场上跑的像乌龟一样慢是极为致命的，虽然覆盖率很高但子弹依然有可能会从某些比较刁钻的角度打伤你，尽管缺点很多但它绝对可以从高强度交火中救下你的命。\n\n有意思的是不少特警单位曾经很瞧不起这件装备，直到有个穿着这东西的警员在近距离被一把通用机枪扫射但是却毫发无损之后。",
+    "weight": "30 kg",
+    "volume": "30 L",
+    "price": "30000 USD",
+    "price_postapoc": "300 USD",
+    "to_hit": -5,
+    "bashing": 20,
+    "material": [
+      "kevlar",
+      "ceramic"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "warmth": 40,
+    "material_thickness": 20,
+    "flags": [
+      "STURDY",
+      "OUTER"
+    ],
+    "longest_side": "95 cm",
+    "armor": [
+      {
+        "covers": [
+          "torso"
+        ],
+        "coverage": 95,
+        "encumbrance": 40
+      },
+      {
+        "covers": [
+          "arm_l",
+          "arm_r"
+        ],
+        "coverage": 80,
+        "encumbrance": 20
+      },
+      {
+        "covers": [
+          "leg_l",
+          "leg_r"
+        ],
+        "coverage": 80,
+        "encumbrance": 25
+      }
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "31 L",
+        "max_contains_weight": "35 kg",
+        "max_item_length": "32 cm",
+        "max_item_volume": "4 L",
+        "moves": 60,
+        "volume_encumber_modifier": 0
+      }
+    ]
+  }
+]

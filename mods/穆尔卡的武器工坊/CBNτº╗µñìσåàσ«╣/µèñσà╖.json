@@ -1,0 +1,367 @@
+[
+  {
+    "id": "ammo_satchel_leg",
+    "type": "ARMOR",
+    "name": {
+      "str": "腿挂弹药袋"
+    },
+    "description": "一只绑在大腿外侧的尼龙弹药袋，内部隔层可收纳约三十发松散枪弹并便于快速取用。它只接受固体弹药，不能被当作水袋或燃料容器。",
+    "weight": "260 g",
+    "volume": "500 ml",
+    "longest_side": "32 cm",
+    "price": "30 USD",
+    "price_postapoc": "10 USD",
+    "material": [
+      "nylon"
+    ],
+    "symbol": "[",
+    "looks_like": "legpouch_large",
+    "color": "dark_gray",
+    "sided": true,
+    "material_thickness": 2,
+    "pocket_data": [
+      {
+        "ammo_restriction": {
+          "pebble": 30,
+          "nail": 30,
+          "700nx": 30,
+          "50": 30,
+          "4570": 30,
+          "BB": 30,
+          "410shot": 30,
+          "22": 30,
+          "shot": 30,
+          "9mm": 30,
+          "357sig": 30,
+          "357mag": 30,
+          "9x18": 30,
+          "380": 30,
+          "38": 30,
+          "38super": 30,
+          "40": 30,
+          "10mm": 30,
+          "44": 30,
+          "45": 30,
+          "460": 30,
+          "454": 30,
+          "45colt": 30,
+          "500": 30,
+          "57": 30,
+          "46": 30,
+          "762": 30,
+          "545x39": 30,
+          "223": 30,
+          "3006": 30,
+          "270win": 30,
+          "308": 30,
+          "12mm": 30,
+          "8x40mm": 30,
+          "20x66mm": 30,
+          "5x50": 30,
+          "metal_rail": 30,
+          "stimpack_ammo": 30,
+          "ampoule": 30,
+          "300": 30,
+          "32": 30,
+          "762x25": 30,
+          "flintlock": 30,
+          "36paper": 30,
+          "44paper": 30,
+          "762R": 30,
+          "23mm": 30,
+          "408_ct": 30,
+          "737_cta": 30,
+          "79257": 30,
+          "939": 30,
+          "145114": 30,
+          "127108": 30,
+          "em_bolt": 30,
+          "paintball": 30,
+          "123ln": 30,
+          "300blk": 30,
+          "30carbine": 30
+        },
+        "moves": 35
+      }
+    ],
+    "flags": [
+      "WATER_FRIENDLY",
+      "BELTED",
+      "OVERSIZE",
+      "PALS_MEDIUM"
+    ],
+    "armor": [
+      {
+        "encumbrance": 2,
+        "coverage": 38,
+        "covers": [
+          "leg_l",
+          "leg_r"
+        ],
+        "specifically_covers": [
+          "leg_upper_l",
+          "leg_upper_r"
+        ],
+        "layers": [
+          "OUTER"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ch1_helmet",
+    "repairs_like": "xlkevlar",
+    "type": "ARMOR",
+    "name": {
+      "str": "CH-1 战斗头盔"
+    },
+    "description": "格科斯勒的标准头盔，凯夫拉材质，防护性能和舒适度优秀，防护面积也更大，但它没有像一些高切头盔那样流行——原因是为了确保整体强度而导致它的改装程度相当有限。",
+    "weight": "1200 g",
+    "volume": "1500 ml",
+    "price": "100 USD",
+    "price_postapoc": "25 USD",
+    "material": [
+      "kevlar_rigid",
+      "plastic"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "warmth": 10,
+    "environmental_protection": 5,
+    "material_thickness": 8,
+    "techniques": [
+      "WBLOCK_1"
+    ],
+    "flags": [
+      "WATERPROOF",
+      "STURDY"
+    ],
+    "longest_side": "38 cm",
+    "armor": [
+      {
+        "covers": [
+          "head"
+        ],
+        "coverage": 95,
+        "encumbrance": 8
+      }
+    ]
+  },
+  {
+    "id": "ch2_helmet",
+    "repairs_like": "xlkevlar",
+    "type": "ARMOR",
+    "name": {
+      "str": "CH-2 战斗头盔"
+    },
+    "description": "格科斯勒步兵部队的重型头盔，是由CH1改进后的版本，前额处增加了一块额外的防弹板，整体厚度更厚，加装了可拆卸的防弹护颚与护目镜，这个头盔不轻，舒适性也不算好，还没有其他功能，以至于有人认为戴着它是个蠢主意，但是它确确实实可以帮你抗住不少伤害，除了护目镜部位它有些时候甚至可以帮你挡住一发全威力弹直射，如果你运气好的话。",
+    "weight": "2500 g",
+    "volume": "2000 ml",
+    "price": "300 USD",
+    "price_postapoc": "45 USD",
+    "material": [
+      "kevlar_rigid",
+      "plastic"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "warmth": 15,
+    "environmental_protection": 5,
+    "material_thickness": 12,
+    "techniques": [
+      "WBLOCK_1"
+    ],
+    "flags": [
+      "WATERPROOF",
+      "STURDY"
+    ],
+    "longest_side": "43 cm",
+    "armor": [
+      {
+        "covers": [
+          "head"
+        ],
+        "coverage": 100,
+        "encumbrance": 20
+      },
+      {
+        "covers": [
+          "eyes",
+          "mouth"
+        ],
+        "coverage": 100,
+        "encumbrance": 5,
+        "rigid_layer_only": true,
+        "layers": [
+          "OUTER"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cu2_suit",
+    "type": "ARMOR",
+    "name": {
+      "str": "CU-2 作战服"
+    },
+    "description": "格科斯勒的标准作战服，绝大多数单位穿的都是这套衣服，该套装包含外套，裤子，靴子和手套，有两个小口袋，用料扎实，结实耐磨，是一些户外探险者和特种部队会选择的服装之一。",
+    "weight": "1000 g",
+    "volume": "5500 ml",
+    "price": "200 USD",
+    "price_postapoc": "20 USD",
+    "to_hit": -3,
+    "material": [
+      "cotton"
+    ],
+    "symbol": "[",
+    "color": "brown",
+    "warmth": 20,
+    "material_thickness": 3,
+    "flags": [
+      "VARSIZE",
+      "POCKETS"
+    ],
+    "repairs_like": "jumpsuit",
+    "copy-from": "jumpsuit",
+    "longest_side": "75 cm",
+    "armor": [
+      {
+        "covers": [
+          "torso",
+          "arm_l",
+          "arm_r",
+          "hand_l",
+          "hand_r",
+          "leg_l",
+          "leg_r",
+          "foot_l",
+          "foot_r"
+        ],
+        "coverage": 95,
+        "encumbrance": 3
+      }
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "2 L",
+        "max_contains_weight": "4 kg",
+        "max_item_length": "25 cm",
+        "moves": 100,
+        "volume_encumber_modifier": 0.5
+      }
+    ]
+  },
+  {
+    "id": "da30l_vest",
+    "repairs_like": "survivor_suit",
+    "type": "ARMOR",
+    "name": {
+      "str": "DA-30L 防弹背心"
+    },
+    "description": "一件格科斯勒步兵常用的基础防弹衣之一，使用陶瓷防弹板，有六个弹匣包，重量较轻，它在舒适度方面获得的评价非常高，缺点是价格稍贵并且防护面积略低。",
+    "weight": "4 kg",
+    "volume": "6 L",
+    "price": "600 USD",
+    "price_postapoc": "40 USD",
+    "to_hit": -3,
+    "bashing": 8,
+    "material": [
+      "kevlar",
+      "ceramic"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "warmth": 10,
+    "material_thickness": 10,
+    "flags": [
+      "STURDY",
+      "OUTER"
+    ],
+    "longest_side": "62 cm",
+    "armor": [
+      {
+        "covers": [
+          "torso"
+        ],
+        "coverage": 70,
+        "encumbrance": 5
+      }
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "7 L",
+        "max_contains_weight": "10 kg",
+        "max_item_length": "30 cm",
+        "max_item_volume": "1500 ml",
+        "moves": 60,
+        "volume_encumber_modifier": 0
+      }
+    ]
+  },
+  {
+    "id": "da32_vest",
+    "repairs_like": "survivor_suit",
+    "type": "ARMOR",
+    "name": {
+      "str": "DA-32 防弹背心"
+    },
+    "description": "一件格科斯勒步兵常用的重型防弹衣之一，通常由突击或重装单位装备，除躯干外还覆盖了部分手臂与躯干，使用陶瓷防弹板，有八个弹匣包，它在重量，性能以及价格上取得了良好的平衡。",
+    "weight": "8 kg",
+    "volume": "12 L",
+    "price": "800 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": -3,
+    "bashing": 8,
+    "material": [
+      "kevlar",
+      "ceramic"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "warmth": 20,
+    "material_thickness": 13,
+    "flags": [
+      "STURDY",
+      "OUTER"
+    ],
+    "longest_side": "72 cm",
+    "armor": [
+      {
+        "covers": [
+          "torso"
+        ],
+        "coverage": 95,
+        "encumbrance": 10
+      },
+      {
+        "covers": [
+          "arm_l",
+          "arm_r"
+        ],
+        "coverage": 30,
+        "encumbrance": 5
+      },
+      {
+        "covers": [
+          "leg_l",
+          "leg_r"
+        ],
+        "coverage": 30,
+        "encumbrance": 5
+      }
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "14 L",
+        "max_contains_weight": "18 kg",
+        "max_item_length": "32 cm",
+        "max_item_volume": "2500 ml",
+        "moves": 60,
+        "volume_encumber_modifier": 0
+      }
+    ]
+  }
+]

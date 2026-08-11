@@ -1,0 +1,1635 @@
+[
+  {
+    "type": "npc_class",
+    "id": "NC_TRAVEL_MAYA_SCARLETT",
+    "name": {
+      "str": "耶鲁学生"
+    },
+    "job_description": "我是耶鲁大学机械工程专业的学生，也曾负责射箭社的器材维护，并在纽黑文一家弓箭店兼职。我会选箭杆、配箭头、修羽片、校直和调弓。右膝受伤后暂时留在伊舍伍德农场休养，白天替他们整理无线电记录，也用谷仓和工坊里的材料制作箭矢、修复弓具。",
+    "common": false,
+    "sells_belongings": false,
+    "traits": [
+      {
+        "trait": "OPTIMISTIC"
+      },
+      {
+        "trait": "FASTREADER"
+      },
+      {
+        "trait": "GOODMEMORY"
+      },
+      {
+        "trait": "GOODCARDIO"
+      },
+      {
+        "trait": "SKIN_LIGHT"
+      },
+      {
+        "trait": "eye_color",
+        "variant": "blue"
+      },
+      {
+        "trait": "ponytail",
+        "variant": "red"
+      },
+      {
+        "trait": "RETURN_TO_START_POS"
+      },
+      {
+        "trait": "NPC_HOLD_POSITION"
+      }
+    ],
+    "worn_override": "TRAVEL_MAYA_WORN",
+    "weapon_override": "TRAVEL_MAYA_EMPTY_WEAPON",
+    "skills": [
+      {
+        "skill": "archery",
+        "level": {
+          "rng": [
+            6,
+            6
+          ]
+        }
+      },
+      {
+        "skill": "fabrication",
+        "level": {
+          "rng": [
+            5,
+            5
+          ]
+        }
+      },
+      {
+        "skill": "mechanics",
+        "level": {
+          "rng": [
+            4,
+            4
+          ]
+        }
+      },
+      {
+        "skill": "tailor",
+        "level": {
+          "rng": [
+            3,
+            3
+          ]
+        }
+      },
+      {
+        "skill": "survival",
+        "level": {
+          "rng": [
+            3,
+            3
+          ]
+        }
+      },
+      {
+        "skill": "gun",
+        "level": {
+          "rng": [
+            2,
+            2
+          ]
+        }
+      },
+      {
+        "skill": "dodge",
+        "level": {
+          "rng": [
+            2,
+            2
+          ]
+        }
+      },
+      {
+        "skill": "melee",
+        "level": {
+          "rng": [
+            1,
+            1
+          ]
+        }
+      },
+      {
+        "skill": "throw",
+        "level": {
+          "rng": [
+            2,
+            2
+          ]
+        }
+      },
+      {
+        "skill": "firstaid",
+        "level": {
+          "rng": [
+            2,
+            2
+          ]
+        }
+      },
+      {
+        "skill": "cooking",
+        "level": {
+          "rng": [
+            2,
+            2
+          ]
+        }
+      },
+      {
+        "skill": "computer",
+        "level": {
+          "rng": [
+            2,
+            2
+          ]
+        }
+      },
+      {
+        "skill": "driving",
+        "level": {
+          "rng": [
+            2,
+            2
+          ]
+        }
+      },
+      {
+        "skill": "speech",
+        "level": {
+          "rng": [
+            4,
+            4
+          ]
+        }
+      }
+    ],
+    "proficiencies": [
+      "prof_bowyery",
+      "prof_fletching",
+      "prof_bow_basic",
+      "prof_bow_expert",
+      "prof_metalworking",
+      "prof_welding_basic",
+      "prof_elec_soldering",
+      "prof_basic_engines"
+    ],
+    "restock_interval": "7 days",
+    "shopkeeper_item_group": [
+      {
+        "group": "TRAVEL_MAYA_SHOP_ARROWS",
+        "rigid": true,
+        "condition": {
+          "npc_has_var": "travel_maya_reunion_complete",
+          "type": "dialogue",
+          "context": "travel_maya",
+          "value": "yes"
+        },
+        "refusal": "玛雅还没有把自己的弓箭库存向你开放。"
+      },
+      {
+        "group": "TRAVEL_MAYA_SHOP_BOWS",
+        "rigid": true,
+        "condition": {
+          "npc_has_var": "travel_maya_reunion_complete",
+          "type": "dialogue",
+          "context": "travel_maya",
+          "value": "yes"
+        },
+        "refusal": "玛雅还没有把自己的弓箭库存向你开放。"
+      },
+      {
+        "group": "TRAVEL_MAYA_SHOP_ACCESSORIES",
+        "rigid": true,
+        "condition": {
+          "npc_has_var": "travel_maya_reunion_complete",
+          "type": "dialogue",
+          "context": "travel_maya",
+          "value": "yes"
+        },
+        "refusal": "玛雅还没有把自己的弓箭库存向你开放。"
+      },
+      {
+        "group": "TRAVEL_MAYA_SHOP_BOOKS",
+        "rigid": true,
+        "condition": {
+          "npc_has_var": "travel_maya_reunion_complete",
+          "type": "dialogue",
+          "context": "travel_maya",
+          "value": "yes"
+        },
+        "refusal": "玛雅还没有把自己的弓箭库存向你开放。"
+      }
+    ],
+    "shopkeeper_consumption_rates": "basic_shop_rates",
+    "shopkeeper_price_rules": [
+      {
+        "group": "TRAVEL_MAYA_SHOP_ARROWS",
+        "markup": 5.0
+      }
+    ],
+    "carry_override": "TRAVEL_MAYA_CARRIED"
+  },
+  {
+    "type": "npc",
+    "id": "TRAVEL_MAYA_SCARLETT",
+    "name_unique": "玛雅·斯卡利特",
+    "gender": "female",
+    "class": "NC_TRAVEL_MAYA_SCARLETT",
+    "attitude": 0,
+    "mission": 3,
+    "chat": "TALK_TRAVEL_MAYA_ISHERWOOD",
+    "faction": "isherwood_family",
+    "name_suffix": "耶鲁学生",
+    "personality": {
+      "aggression": 0,
+      "bravery": 6,
+      "collector": -5,
+      "altruism": 7
+    },
+    "age": 22,
+    "height": 168,
+    "str": 9,
+    "dex": 9,
+    "int": 10,
+    "per": 10,
+    "follower_rules": {
+      "apply_to_all": true,
+      "engagement": "ENGAGE_CLOSE",
+      "aim": "AIM_PRECISE",
+      "use_guns": true,
+      "use_grenades": false,
+      "use_silent": true,
+      "avoid_friendly_fire": true,
+      "allow_pick_up": false,
+      "allow_bash": false,
+      "allow_sleep": false,
+      "allow_complain": true,
+      "allow_pulp": true,
+      "close_doors": false,
+      "avoid_doors": false,
+      "ignore_noise": false,
+      "forbid_engage": false,
+      "allow_improvised_throwing": false,
+      "never_flee": false,
+      "prefer_guns": false
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_ENSURE_MAYA_ISHERWOOD",
+    "eoc_type": "ACTIVATION",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_maya_isherwood_spawned"
+        },
+        "!=",
+        {
+          "const": 1
+        }
+      ]
+    },
+    "effect": [
+      {
+        "u_location_variable": {
+          "global_val": "travel_maya_isherwood_spawn_location"
+        },
+        "target_params": {
+          "om_terrain": "horse_farm_isherwood_13_2ndfloor",
+          "om_terrain_match_type": "TYPE",
+          "om_special": "Isherwood Farms",
+          "z": 1,
+          "random": false
+        }
+      },
+      {
+        "mapgen_update": "travel_spawn_maya_isherwood_second_floor",
+        "target_var": {
+          "global_val": "travel_maya_isherwood_spawn_location"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_maya_isherwood_spawned"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_ENSURE_MAYA_STOCK_ZONE_V2"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "mapgen",
+    "method": "json",
+    "update_mapgen_id": "travel_spawn_maya_isherwood_second_floor",
+    "object": {
+      "place_npcs": [
+        {
+          "class": "TRAVEL_MAYA_SCARLETT",
+          "unique_id": "TRAVEL_MAYA_SCARLETT",
+          "x": 8,
+          "y": 3
+        }
+      ]
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_ENSURE_MAYA_STOCK_ZONE_V2",
+    "eoc_type": "ACTIVATION",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_maya_stock_zone_v2"
+        },
+        "!=",
+        {
+          "const": 1
+        }
+      ]
+    },
+    "effect": [
+      {
+        "u_location_variable": {
+          "global_val": "travel_maya_stock_zone_location_v2"
+        },
+        "target_params": {
+          "om_terrain": "horse_farm_isherwood_13_2ndfloor",
+          "om_terrain_match_type": "TYPE",
+          "om_special": "Isherwood Farms",
+          "z": 1,
+          "random": false
+        }
+      },
+      {
+        "mapgen_update": "travel_place_maya_stock_zone_v2",
+        "target_var": {
+          "global_val": "travel_maya_stock_zone_location_v2"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_maya_stock_zone_v2"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "mapgen",
+    "method": "json",
+    "update_mapgen_id": "travel_place_maya_stock_zone_v2",
+    "object": {
+      "place_zones": [
+        {
+          "type": "LOOT_UNSORTED",
+          "faction": "isherwood_family",
+          "x": 9,
+          "y": 3
+        },
+        {
+          "type": "LOOT_UNSORTED",
+          "faction": "isherwood_family",
+          "x": 9,
+          "y": 4
+        }
+      ]
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_MAYA_SCAN_LIANG_NEARBY",
+    "eoc_type": "ACTIVATION",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_maya_liang_nearby"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "npc_run_npc_eocs": [
+          "EOC_TRAVEL_MAYA_MARK_LIANG_NEARBY"
+        ],
+        "unique_ids": [
+          "TRAVEL_LIANG_ZHIYAO"
+        ],
+        "npc_range": 30,
+        "z_min": 0,
+        "z_max": 1
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_MAYA_MARK_LIANG_NEARBY",
+    "eoc_type": "ACTIVATION",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_maya_liang_nearby"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_LIANG_RECORD_MAYA_REUNION",
+    "eoc_type": "ACTIVATION",
+    "effect": [
+      {
+        "u_add_var": "travel_liang_isherwood_found",
+        "type": "dialogue",
+        "context": "travel_liang",
+        "value": "yes"
+      },
+      {
+        "u_add_var": "travel_liang_maya_reunited",
+        "type": "dialogue",
+        "context": "travel_liang",
+        "value": "yes"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_MAYA_COMPLETE_ACTIVE_REUNION",
+    "eoc_type": "ACTIVATION",
+    "effect": [
+      {
+        "npc_add_var": "travel_maya_met",
+        "type": "dialogue",
+        "context": "travel_maya",
+        "value": "yes"
+      },
+      {
+        "npc_add_var": "travel_maya_reunion_complete",
+        "type": "dialogue",
+        "context": "travel_maya",
+        "value": "yes"
+      },
+      {
+        "u_add_var": "travel_liang_isherwood_found",
+        "type": "dialogue",
+        "context": "travel_liang",
+        "value": "yes"
+      },
+      {
+        "u_add_var": "travel_liang_maya_reunited",
+        "type": "dialogue",
+        "context": "travel_liang",
+        "value": "yes"
+      },
+      {
+        "npc_run_npc_eocs": [
+          "EOC_TRAVEL_LIANG_RECORD_MAYA_REUNION"
+        ],
+        "unique_ids": [
+          "TRAVEL_LIANG_ZHIYAO"
+        ],
+        "npc_range": 30,
+        "z_min": 0,
+        "z_max": 1
+      },
+      {
+        "finish_mission": "MISSION_TRAVEL_LIANG_TRACE_ISHERWOOD",
+        "success": true
+      },
+      {
+        "u_message": "任务完成：在伊舍伍德农场寻找玛雅。",
+        "type": "good"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_MAYA_COMPLETE_MIGRATION_REUNION",
+    "eoc_type": "ACTIVATION",
+    "effect": [
+      {
+        "npc_add_var": "travel_maya_met",
+        "type": "dialogue",
+        "context": "travel_maya",
+        "value": "yes"
+      },
+      {
+        "npc_add_var": "travel_maya_reunion_complete",
+        "type": "dialogue",
+        "context": "travel_maya",
+        "value": "yes"
+      },
+      {
+        "u_add_var": "travel_liang_maya_reunited",
+        "type": "dialogue",
+        "context": "travel_liang",
+        "value": "yes"
+      },
+      {
+        "npc_run_npc_eocs": [
+          "EOC_TRAVEL_LIANG_RECORD_MAYA_REUNION"
+        ],
+        "unique_ids": [
+          "TRAVEL_LIANG_ZHIYAO"
+        ],
+        "npc_range": 30,
+        "z_min": 0,
+        "z_max": 1
+      },
+      {
+        "u_message": "梁知遥和玛雅终于当面确认了彼此。",
+        "type": "good"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_ISHERWOOD",
+    "dynamic_line": {
+      "npc_has_var": "travel_maya_reunion_complete",
+      "type": "dialogue",
+      "context": "travel_maya",
+      "value": "yes",
+      "yes": "玛雅仍住在二楼靠南的小房间。窗边摊着短波记录，墙边则多了几捆按颜色分开的箭杆；两把拆下弓弦的复合弓平放在毯子上，旁边摆着量尺、羽片夹和一只小锉刀。\n“梁知遥把我每天能走几步都记得比我自己清楚。”玛雅抬了抬受伤的腿，“她坚持等我能正常负重以后，再谈离开农场。这一次，我决定听她的。”",
+      "no": {
+        "compare_int": [
+          {
+            "global_val": "var",
+            "var_name": "travel_maya_liang_nearby"
+          },
+          "==",
+          {
+            "const": 1
+          }
+        ],
+        "yes": "二楼靠南的小房间里，一个红褐色长发束成低马尾的年轻女人正坐在窗边。她穿着宽松的连帽衫，右膝缠着固定带。桌上除了写满呼号和日期的纸，还放着几根刚校直的箭杆和一只羽片夹。\n听见脚步声，她先把手从工具上移开，又扶住椅背站起一点。她的目光越过你，停在门外那道熟悉的身影上，浅蓝色眼睛里的警惕忽然被不敢确信的神情取代。\n“这里是伊舍伍德家的住处。”她仍先看向你，“你是谁？梁知遥为什么会和你一起来？”",
+        "no": "玛雅坐在二楼靠南的小房间里，右膝缠着固定带。听见陌生脚步，她把桌边的小锉刀移到手边，却没有起身。\n“我不认识你，也不会向陌生人解释无线电记录、撤离路线或农场里的事。”她的目光始终没有离开门口，“你若真是替梁知遥来的，就把她本人带到这里。她不到场，我们没有别的话可谈。”"
+      }
+    },
+    "speaker_effect": [
+      {
+        "effect": [
+          {
+            "run_eocs": [
+              "EOC_TRAVEL_MAYA_SCAN_LIANG_NEARBY"
+            ]
+          }
+        ]
+      },
+      {
+        "effect": [
+          {
+            "run_eocs": [
+              "EOC_TRAVEL_ENSURE_MAYA_STOCK_ZONE_V2"
+            ]
+          }
+        ]
+      }
+    ],
+    "responses": [
+      {
+        "text": "[报出名字] 我在替梁知遥找你。她就在门外。",
+        "topic": "TALK_TRAVEL_MAYA_IDENTITY",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "npc_has_var": "travel_maya_reunion_complete",
+                "type": "dialogue",
+                "context": "travel_maya",
+                "value": "yes"
+              }
+            },
+            {
+              "compare_int": [
+                {
+                  "global_val": "var",
+                  "var_name": "travel_maya_liang_nearby"
+                },
+                "==",
+                {
+                  "const": 1
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "text": "[保持两步距离] 你是玛雅·斯卡利特？梁知遥和我一起来了。",
+        "topic": "TALK_TRAVEL_MAYA_IDENTITY",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "npc_has_var": "travel_maya_reunion_complete",
+                "type": "dialogue",
+                "context": "travel_maya",
+                "value": "yes"
+              }
+            },
+            {
+              "compare_int": [
+                {
+                  "global_val": "var",
+                  "var_name": "travel_maya_liang_nearby"
+                },
+                "==",
+                {
+                  "const": 1
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "text": "[看向桌上的短波记录] 我们循着一条署有你名字的报平安消息找到这里。梁知遥就在门外。",
+        "topic": "TALK_TRAVEL_MAYA_HUB_REACTION",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "npc_has_var": "travel_maya_reunion_complete",
+                "type": "dialogue",
+                "context": "travel_maya",
+                "value": "yes"
+              }
+            },
+            {
+              "compare_int": [
+                {
+                  "global_val": "var",
+                  "var_name": "travel_maya_liang_nearby"
+                },
+                "==",
+                {
+                  "const": 1
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "text": "[说明来意] 我在替梁知遥找你，但她现在没有和我一起来。",
+        "topic": "TALK_TRAVEL_MAYA_REQUIRE_LIANG",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "npc_has_var": "travel_maya_reunion_complete",
+                "type": "dialogue",
+                "context": "travel_maya",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "compare_int": [
+                  {
+                    "global_val": "var",
+                    "var_name": "travel_maya_liang_nearby"
+                  },
+                  "==",
+                  {
+                    "const": 1
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "text": "[退出门口] 我会先把梁知遥带来。",
+        "topic": "TALK_DONE",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "npc_has_var": "travel_maya_reunion_complete",
+                "type": "dialogue",
+                "context": "travel_maya",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "compare_int": [
+                  {
+                    "global_val": "var",
+                    "var_name": "travel_maya_liang_nearby"
+                  },
+                  "==",
+                  {
+                    "const": 1
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "text": "[交易] 我想看看你这周整理出的弓箭装备。",
+        "topic": "TALK_TRAVEL_MAYA_AFTER_TRADE",
+        "effect": "start_trade",
+        "condition": {
+          "npc_has_var": "travel_maya_reunion_complete",
+          "type": "dialogue",
+          "context": "travel_maya",
+          "value": "yes"
+        }
+      },
+      {
+        "text": "[过去经历] 我想把你们离开纽黑文后的事理清。",
+        "topic": "TALK_TRAVEL_MAYA_ROUTE",
+        "condition": {
+          "npc_has_var": "travel_maya_reunion_complete",
+          "type": "dialogue",
+          "context": "travel_maya",
+          "value": "yes"
+        }
+      },
+      {
+        "text": "[梁知遥与玛雅] 我想问问你和梁知遥之间的事。",
+        "topic": "TALK_TRAVEL_MAYA_MENU_LIANG",
+        "condition": {
+          "npc_has_var": "travel_maya_reunion_complete",
+          "type": "dialogue",
+          "context": "travel_maya",
+          "value": "yes"
+        }
+      },
+      {
+        "text": "[农场与巴里] 说说伊舍伍德农场，以及我能帮什么。",
+        "topic": "TALK_TRAVEL_MAYA_MENU_FARM",
+        "condition": {
+          "npc_has_var": "travel_maya_reunion_complete",
+          "type": "dialogue",
+          "context": "travel_maya",
+          "value": "yes"
+        }
+      },
+      {
+        "text": "[弓箭与器材] 我想看看你整理的弓箭、器材和课程。",
+        "topic": "TALK_TRAVEL_MAYA_MENU_ARCHERY",
+        "condition": {
+          "npc_has_var": "travel_maya_reunion_complete",
+          "type": "dialogue",
+          "context": "travel_maya",
+          "value": "yes"
+        }
+      },
+      {
+        "text": "[结束交谈] 先休息吧。",
+        "topic": "TALK_DONE",
+        "condition": {
+          "npc_has_var": "travel_maya_reunion_complete",
+          "type": "dialogue",
+          "context": "travel_maya",
+          "value": "yes"
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_MENU_LIANG",
+    "dynamic_line": "提到梁知遥时，玛雅的目光下意识落到门口，又很快回到你身上。\n“你想问哪一件事？”",
+    "responses": [
+      {
+        "text": "梁知遥提过旧弓、日语，还有一顿鸡胸肉。",
+        "topic": "TALK_TRAVEL_MAYA_SHARED_DETAILS"
+      },
+      {
+        "text": "你和梁知遥已经谈过接下来的打算了吗？",
+        "topic": "TALK_TRAVEL_MAYA_LIANG_SHARED_SCENE",
+        "condition": {
+          "and": [
+            {
+              "npc_has_var": "travel_maya_reunion_complete",
+              "type": "dialogue",
+              "context": "travel_maya",
+              "value": "yes"
+            },
+            {
+              "compare_int": [
+                {
+                  "global_val": "var",
+                  "var_name": "travel_maya_liang_nearby"
+                },
+                "==",
+                {
+                  "const": 1
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "text": "[返回主菜单] 先谈别的。",
+        "topic": "TALK_TRAVEL_MAYA_ISHERWOOD"
+      },
+      {
+        "text": "[结束交谈] 我不打扰你休息。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_MENU_FARM",
+    "dynamic_line": "楼下传来木桶和台阶相碰的闷响。玛雅听了一会儿，确认不是求救声，才重新看向你。\n“农场的事很多。你想先问哪一件？”",
+    "responses": [
+      {
+        "text": "丽莎把这间小房间让给了你？",
+        "topic": "TALK_TRAVEL_MAYA_LISA_ROOM"
+      },
+      {
+        "text": "你为什么一直想报答伊舍伍德家？",
+        "topic": "TALK_TRAVEL_MAYA_DEBT"
+      },
+      {
+        "text": "伊舍伍德家救过你们。现在还有什么是我能帮忙的？",
+        "topic": "TALK_TRAVEL_MAYA_BARRY_OFFER",
+        "condition": {
+          "and": [
+            {
+              "npc_has_var": "travel_maya_reunion_complete",
+              "type": "dialogue",
+              "context": "travel_maya",
+              "value": "yes"
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_maya_barry_rewarded",
+                "type": "dialogue",
+                "context": "travel_maya",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "u_has_mission": "MISSION_TRAVEL_MAYA_RESCUE_BARRY"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "text": "关于巴里，我现在应该去找谁？",
+        "topic": "TALK_TRAVEL_MAYA_BARRY_PROGRESS",
+        "condition": {
+          "and": [
+            {
+              "npc_has_var": "travel_maya_reunion_complete",
+              "type": "dialogue",
+              "context": "travel_maya",
+              "value": "yes"
+            },
+            {
+              "and": [
+                {
+                  "u_has_mission": "MISSION_TRAVEL_MAYA_RESCUE_BARRY"
+                },
+                {
+                  "not": {
+                    "u_has_var": "u_saved_barry",
+                    "type": "general",
+                    "context": "meeting",
+                    "value": "yes"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "text": "巴里已经回到家人身边。我来告诉你。",
+        "topic": "TALK_TRAVEL_MAYA_BARRY_REWARD",
+        "condition": {
+          "and": [
+            {
+              "npc_has_var": "travel_maya_reunion_complete",
+              "type": "dialogue",
+              "context": "travel_maya",
+              "value": "yes"
+            },
+            {
+              "and": [
+                {
+                  "u_has_mission": "MISSION_TRAVEL_MAYA_RESCUE_BARRY"
+                },
+                {
+                  "u_has_var": "u_saved_barry",
+                  "type": "general",
+                  "context": "meeting",
+                  "value": "yes"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "text": "[取回遗漏的物品] 上次你只把泰坦弦弓交给了我。",
+        "topic": "TALK_TRAVEL_MAYA_BARRY_REWARD_MISSING",
+        "condition": {
+          "and": [
+            {
+              "npc_has_var": "travel_maya_barry_rewarded",
+              "type": "dialogue",
+              "context": "travel_maya",
+              "value": "yes"
+            },
+            {
+              "not": {
+                "npc_has_var": "travel_maya_barry_reward_fix_v2",
+                "type": "dialogue",
+                "context": "travel_maya",
+                "value": "yes"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "text": "[返回主菜单] 先谈别的。",
+        "topic": "TALK_TRAVEL_MAYA_ISHERWOOD"
+      },
+      {
+        "text": "[结束交谈] 今天先到这里。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_MENU_ARCHERY",
+    "dynamic_line": "玛雅看向墙边按颜色和用途分开的箭束，又把器材清单翻到最新一页。\n“想听器材的事，看看这一周的存货，还是练点实际的？”",
+    "responses": [
+      {
+        "text": "这些箭、弓具和修理经验是怎么学来的？",
+        "topic": "TALK_TRAVEL_MAYA_ARCHERY_BACKGROUND"
+      },
+      {
+        "text": "你愿意教我一些射箭技巧吗？",
+        "topic": "TALK_TRAIN",
+        "condition": {
+          "and": [
+            {
+              "npc_has_var": "travel_maya_reunion_complete",
+              "type": "dialogue",
+              "context": "travel_maya",
+              "value": "yes"
+            },
+            {
+              "npc_has_var": "travel_maya_barry_rewarded",
+              "type": "dialogue",
+              "context": "travel_maya",
+              "value": "yes"
+            }
+          ]
+        }
+      },
+      {
+        "text": "[返回主菜单] 先谈别的。",
+        "topic": "TALK_TRAVEL_MAYA_ISHERWOOD"
+      },
+      {
+        "text": "[结束交谈] 今天先到这里。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_AFTER_TRADE",
+    "dynamic_line": [
+      "玛雅把刚换出的东西记在短波记录背面的空白处。\n\n“我每周会重新清点一次。简易箭做得快，好箭和状态完整的复合弓就要看材料与补给队带回了什么。”",
+      "玛雅合上器材清单，把铅笔夹回纸页之间。\n\n“箭束都按颜色和用途分开了。还有别的事，我们接着聊。”",
+      "玛雅扫了一眼墙边剩下的箭束。\n\n“长弓和成捆的箭都放在附近，不会全塞在我身上。需要什么，下次再来看看。”"
+    ],
+    "responses": [
+      {
+        "text": "[返回主菜单] 我还想问些别的。",
+        "topic": "TALK_TRAVEL_MAYA_ISHERWOOD"
+      },
+      {
+        "text": "[结束交谈] 先休息吧。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_IDENTITY",
+    "dynamic_line": "她没有立刻放开椅背，身体的重心仍谨慎地落在左腿。\n“是我。”她顿了一下，“但你还没有回答——你为什么知道这个名字？”",
+    "responses": [
+      {
+        "text": "[先说最重要的] 梁知遥还活着。她就在门外。",
+        "topic": "TALK_TRAVEL_MAYA_LIANG_AT_DOOR",
+        "condition": {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_maya_liang_nearby"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        }
+      },
+      {
+        "text": "我和梁知遥在HUB 01的公共信号归档里读到一条署着你名字的报平安消息。",
+        "topic": "TALK_TRAVEL_MAYA_HUB_REACTION",
+        "condition": {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_maya_liang_nearby"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        }
+      },
+      {
+        "text": "[暂时不再靠近] 我没有敌意。你先看门外的人。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_REQUIRE_LIANG",
+    "dynamic_line": "玛雅没有因为梁知遥的名字放松警惕，反而把目光更牢地钉在你身后的空门口。\n“她若还活着，就让她亲自来见我。”玛雅说，“在那以前，我不会向一个无法证明来意的陌生人谈自己的经历，也不会替农场招来风险。”\n“把梁知遥带来。剩下的话，我们当着她的面说。”",
+    "responses": [
+      {
+        "text": "[结束交谈] 我会把梁知遥带来。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_HUB_REACTION",
+    "dynamic_line": "“HUB 01？”玛雅微微皱眉，“我没听过这个名字。”她重新坐下，指尖在膝盖固定带的边缘停了一会儿。\n\n“我们离开公路以后，遇到过一个带短波电台的互助队。无线电员的呼号是N1MUT。他替愿意公开姓名的人转发报平安消息，只写大致状况和下一段去向，不写住址，也不替任何人碰私人账户。我报了自己的名字、伤势，还有几句给梁知遥的话；农场坐标从来没有发出去。”她抬眼看向你，“所以，那条消息真的被别的地方收到了？”",
+    "responses": [
+      {
+        "text": "[朝门外示意] 梁知遥亲自核对过那段附言。她现在就在这里。",
+        "topic": "TALK_TRAVEL_MAYA_LIANG_AT_DOOR",
+        "condition": {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_maya_liang_nearby"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        }
+      },
+      {
+        "text": "[退回门口] 你先亲自确认她。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_HUB_REACTION_CONTINUE",
+    "dynamic_line": "“我报了自己的名字、伤势，还有几句给梁知遥的话。农场坐标从来没有发出去。”\n她抬眼看向你。\n“所以，那条消息真的被别的地方收到了？”",
+    "responses": [
+      {
+        "text": "[朝门外示意] 梁知遥亲自核对过那段附言。她现在就在这里。",
+        "topic": "TALK_TRAVEL_MAYA_LIANG_AT_DOOR",
+        "condition": {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_maya_liang_nearby"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        }
+      },
+      {
+        "text": "[退回门口] 你先亲自确认她。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_LIANG_AT_DOOR",
+    "dynamic_line": "玛雅的手停在椅背上，指节一下失去血色。\n“她在……门外？”\n她试着站起，右膝的固定带立刻绷紧。疼痛让她吸了一口冷气，却没能让她把目光从门口移开。\n“别再用名字证明了。”她的声音发颤，像怕任何多余的确认都会把希望吓走，“让她进来。现在。”",
+    "responses": [
+      {
+        "text": "[没有催她站起来] 她就在门口。你坐着也没关系。",
+        "topic": "TALK_TRAVEL_MAYA_REUNION_DOOR_CARE",
+        "condition": {
+          "u_has_mission": "MISSION_TRAVEL_LIANG_TRACE_ISHERWOOD"
+        },
+        "effect": [
+          {
+            "run_eocs": [
+              "EOC_TRAVEL_MAYA_COMPLETE_ACTIVE_REUNION"
+            ]
+          }
+        ]
+      },
+      {
+        "text": "[侧身让开] 你可以亲自确认。",
+        "topic": "TALK_TRAVEL_MAYA_REUNION_DOOR",
+        "condition": {
+          "u_has_mission": "MISSION_TRAVEL_LIANG_TRACE_ISHERWOOD"
+        },
+        "effect": [
+          {
+            "run_eocs": [
+              "EOC_TRAVEL_MAYA_COMPLETE_ACTIVE_REUNION"
+            ]
+          }
+        ]
+      },
+      {
+        "text": "[没有催她站起来] 她就在门口。你坐着也没关系。",
+        "topic": "TALK_TRAVEL_MAYA_REUNION_DOOR_CARE",
+        "condition": {
+          "not": {
+            "u_has_mission": "MISSION_TRAVEL_LIANG_TRACE_ISHERWOOD"
+          }
+        },
+        "effect": [
+          {
+            "run_eocs": [
+              "EOC_TRAVEL_MAYA_COMPLETE_MIGRATION_REUNION"
+            ]
+          }
+        ]
+      },
+      {
+        "text": "[侧身让开] 你可以亲自确认。",
+        "topic": "TALK_TRAVEL_MAYA_REUNION_DOOR",
+        "condition": {
+          "not": {
+            "u_has_mission": "MISSION_TRAVEL_LIANG_TRACE_ISHERWOOD"
+          }
+        },
+        "effect": [
+          {
+            "run_eocs": [
+              "EOC_TRAVEL_MAYA_COMPLETE_MIGRATION_REUNION"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_REUNION_DOOR",
+    "dynamic_line": "你往旁边退了一步。\n梁知遥站在门口。她一路上准备过路线、问题和最坏的答案，真正看见玛雅时，却像被人从胸口抽走了所有词。\n玛雅先看见她磨破的袖口，又看见那枚仍垂在胸前的平安扣。她的嘴唇动了两次，才叫出那个名字。\n“知遥？”\n梁知遥想回答，声音却卡在喉咙里。眼泪先一步落下来。\n玛雅也红了眼睛，偏偏又笑了一声。\n“你怎么还是让我先开口？”",
+    "responses": [
+      {
+        "text": "[退到墙边，把门口完整地让出来。]",
+        "topic": "TALK_TRAVEL_MAYA_REUNION_APPROACH"
+      },
+      {
+        "text": "[轻声提醒梁知遥] 她的右膝不能受力。",
+        "topic": "TALK_TRAVEL_MAYA_REUNION_APPROACH_CARE"
+      },
+      {
+        "text": "[什么也不说，只看着她们。]",
+        "topic": "TALK_TRAVEL_MAYA_REUNION_APPROACH"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_REUNION_DOOR_CARE",
+    "dynamic_line": "你没有催玛雅站起来，只把门口完整地让开。\n梁知遥出现在门边时，玛雅仍坐在椅子上。她们隔着几步看了彼此很久，像是在把失联后的每一天，一寸一寸从对方身上确认回来。\n“玛雅。”梁知遥终于叫出她的名字。\n玛雅抬起手，眼泪沿着笑意滑下来。\n“嗯，是我。”她吸了吸鼻子，“你迟到太久了。”\n梁知遥在她面前蹲下，声音轻得几乎听不见。\n“对不起。”\n“那就过来，笨蛋。”",
+    "responses": [
+      {
+        "text": "[向后退开，让梁知遥自己走完最后几步。]",
+        "topic": "TALK_TRAVEL_MAYA_REUNION_APPROACH_CARE"
+      },
+      {
+        "text": "[轻轻把椅子向门口转了半边。]",
+        "topic": "TALK_TRAVEL_MAYA_REUNION_APPROACH_CARE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_REUNION_APPROACH",
+    "dynamic_line": "梁知遥越过门槛。玛雅扶着椅背站起，右膝才刚受力，身体便向前一晃。\n“别动——”\n梁知遥几乎扑到她面前，一只手揽住腰侧，另一只手托稳她的手臂。玛雅借着这个动作抱住了她，像是早已决定，哪怕腿不能走，最后这一步也要由自己完成。\n“我就知道你会把自己走丢。”玛雅把脸埋进她肩上，笑声已经全是哭腔。\n“我没有……”梁知遥只说出三个字，便再也说不下去。",
+    "responses": [
+      {
+        "text": "[留在门边，不打断她们。]",
+        "topic": "TALK_TRAVEL_MAYA_REUNION"
+      },
+      {
+        "text": "慢一点，她的膝盖还没有恢复。",
+        "topic": "TALK_TRAVEL_MAYA_REUNION"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_REUNION_APPROACH_CARE",
+    "dynamic_line": "梁知遥放慢脚步，在玛雅面前蹲下。\n玛雅先抓住她的手腕，像要确认脉搏，又抬手碰了碰她的脸和胸前的平安扣。她的手指一直在抖。\n“是真的。”玛雅低声说，“你真的在这里。”\n梁知遥还没来得及回答，玛雅已经俯身抱住她。梁知遥一只手托住她的手臂，另一只手稳稳护着腰侧，没有让受伤的右腿承担重量。\n玛雅的眼泪落在她肩上。梁知遥闭上眼，肩膀终于控制不住地颤起来。她一路上没有哭出的那些东西，全在这一刻失去了继续忍耐的理由。",
+    "responses": [
+      {
+        "text": "[安静地退到门边。]",
+        "topic": "TALK_TRAVEL_MAYA_REUNION"
+      },
+      {
+        "text": "[把水杯和药放到她们伸手可及的地方。]",
+        "topic": "TALK_TRAVEL_MAYA_REUNION"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_REUNION_CLOSING",
+    "dynamic_line": "玛雅用手背擦去脸上的泪水，梁知遥则在她身旁坐下，十指仍然扣在一起。\n“今天只确认一件事。”玛雅说，“我们都活着。”\n梁知遥看着她，终于露出一个没有勉强自己的笑。\n“剩下的明天再讲。”\n“这次不熬夜？”\n“这次不熬夜。”\n玛雅轻轻捏了捏她的手。\n“你说的。我会监督。”",
+    "responses": [
+      {
+        "text": "[结束交谈] 留给她们一点时间。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_REUNION",
+    "dynamic_line": "梁知遥抱着玛雅，直到两个人都确定这不是梦，也不是一段被噪声剪碎的无线电记录。玛雅先笑了一下，随后把额头抵在她肩上。\n\n“我以为你死了。”这句话没有修饰，也没有玩笑。梁知遥的手臂骤然收紧。“我也以为……”她没能说完。玛雅吸了一口发颤的气，抬手拍了拍她的背：“那我们都猜错了。这次错得很好。”她仍没有松开梁知遥，“日语暂停，鸡胸肉还欠着，所有计划都可以重来。人先回来。”梁知遥点头：“好。人先回来。”“还有——先让我抱一会儿。”“嗯。”梁知遥闭着眼回答，“多久都可以。”",
+    "responses": [
+      {
+        "text": "[安静地守在门边，没有打断她们。]",
+        "topic": "TALK_TRAVEL_MAYA_AFTER_REUNION"
+      },
+      {
+        "text": "[把目光移向窗外，给她们一点时间。]",
+        "topic": "TALK_TRAVEL_MAYA_AFTER_REUNION"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_REUNION_CONTINUE",
+    "dynamic_line": "玛雅没有松开她。\n“日语暂停，鸡胸肉还欠着，所有计划都可以重来。”她的声音闷在梁知遥肩上，“人先回来。”\n梁知遥点头。\n“好。人先回来。”\n玛雅又抱紧了一点。\n“还有——先让我抱一会儿。”\n“嗯。”梁知遥闭着眼回答，“多久都可以。”",
+    "responses": [
+      {
+        "text": "[安静地守在门边，没有打断她们。]",
+        "topic": "TALK_TRAVEL_MAYA_AFTER_REUNION"
+      },
+      {
+        "text": "[把目光移向窗外，给她们一点时间。]",
+        "topic": "TALK_TRAVEL_MAYA_AFTER_REUNION"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_AFTER_REUNION",
+    "dynamic_line": "过了很久，梁知遥才稍微松开手，却仍扶着玛雅，没有让她独自把重量压回受伤的膝盖。两个人的眼睛都红着，谁也没有假装只是风吹的。玛雅抬手碰了碰梁知遥胸前的平安扣，随后看向你。\n\n“谢谢。不是谢谢你找到一份记录，是谢谢你在她害怕的时候陪她继续走，也谢谢你把她带到了这扇门前。”梁知遥把椅子拉近，让玛雅重新坐下，又把水和药放到她伸手就能拿到的地方，始终没有松开她的手。玛雅用手背擦去眼泪：“今天只确认一件事——我们都活着。”梁知遥终于露出一个没有勉强自己的笑：“剩下的明天再讲。”“这次不熬夜？”“这次不熬夜。”玛雅轻轻捏了捏她的手：“你说的。我会监督。”",
+    "responses": [
+      {
+        "text": "[结束交谈] 这一路没有白走。你们先休息吧。",
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "[把水杯推近一点] 先照顾好膝盖，其余的明天再说。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_ROUTE",
+    "dynamic_line": "玛雅靠回椅背，目光越过窗户。\n“我们离开纽黑文时，I-95已经堵成一堵墙。后来发生的事，不是一句‘弃车北上’就能说完。”\n她的手指在右膝固定带边缘停了一下。\n“你想先问哪一段？”",
+    "responses": [
+      {
+        "text": "高速公路上的包围是怎么发生的？",
+        "topic": "TALK_TRAVEL_MAYA_HIGHWAY_AMBUSH"
+      },
+      {
+        "text": "伊舍伍德家当时怎样救下你们？",
+        "topic": "TALK_TRAVEL_MAYA_RESCUE"
+      },
+      {
+        "text": "和你一起从校园离开的同学后来怎样了？",
+        "topic": "TALK_TRAVEL_MAYA_LOST_CLASSMATES"
+      },
+      {
+        "text": "阿琼后来为什么继续北上？",
+        "topic": "TALK_TRAVEL_MAYA_CONVOY"
+      },
+      {
+        "text": "[返回主菜单] 先谈别的。",
+        "topic": "TALK_TRAVEL_MAYA_ISHERWOOD"
+      },
+      {
+        "text": "[结束交谈] 今天先说到这里。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_LISA_ROOM",
+    "dynamic_line": "玛雅环视了一眼这间临时收拾出来的小房间。窗台上放着半杯凉水，床脚叠着丽莎送来的干净布。\n\n“这间原本空着。北边的大房间是家里人住的，丽莎没打算让一个伤员去占。第一晚我说自己可以睡谷仓，她只回了一句：‘楼上有床，别逞强。’然后把固定带和热水一起塞给我。”玛雅指了指墙边的箭束，“我现在走不远，但手还能做事。白天清点药品、抄电台记录，也替他们做箭、换羽片、修弓。枪当然更快，可箭能反复回收，打猎时也不会把半条路的东西都招来。”",
+    "responses": [
+      {
+        "text": "[继续问农场的事] 我明白了。",
+        "topic": "TALK_TRAVEL_MAYA_MENU_FARM"
+      },
+      {
+        "text": "[返回主菜单] 先谈别的。",
+        "topic": "TALK_TRAVEL_MAYA_ISHERWOOD"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_LISA_ROOM_CONTINUE",
+    "dynamic_line": "玛雅指了指墙边的箭束。\n“我现在走不远，但手还能做事。白天清点药品、抄电台记录，也替他们做箭、换羽片、修弓。”\n“枪当然更快，可箭能反复回收，打猎时也不会把半条路的东西都招来。”",
+    "responses": [
+      {
+        "text": "[继续问农场的事] 我明白了。",
+        "topic": "TALK_TRAVEL_MAYA_MENU_FARM"
+      },
+      {
+        "text": "[返回主菜单] 先谈别的。",
+        "topic": "TALK_TRAVEL_MAYA_ISHERWOOD"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_SHARED_DETAILS",
+    "dynamic_line": "玛雅顺着你的目光看向墙边那把传统复合弓。\n\n“那不是暗号，只是我赌梁知遥会认出来。旧弓、日语计划、一顿鸡胸肉，外人听起来像三件毫不相干的东西；梁知遥会知道，它们都发生在我们真正一起生活过的日子里。”她碰了碰弓弦，“她练射箭时会把每一组落点记得整整齐齐，学日语时却会为了连续打卡熬到凌晨。至于鸡胸肉——那是一场我们谁也不愿承认失败的烹饪事故。我只是想让她看见那几句话时，敢相信我真的还活着。”",
+    "responses": [
+      {
+        "text": "这些细节的确只有共同生活过的人才会知道。",
+        "topic": "TALK_TRAVEL_MAYA_MENU_LIANG"
+      },
+      {
+        "text": "[返回主菜单] 先谈别的。",
+        "topic": "TALK_TRAVEL_MAYA_ISHERWOOD"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_SHARED_DETAILS_CONTINUE",
+    "dynamic_line": "她碰了碰弓弦。\n“她练射箭时会把每一组落点记得整整齐齐，学日语时却会为了连续打卡熬到凌晨。至于鸡胸肉——那是一场我们谁也不愿承认失败的烹饪事故。”\n“我只是想让她看见那几句话时，敢相信我真的还活着。”",
+    "responses": [
+      {
+        "text": "这些细节的确只有共同生活过的人才会知道。",
+        "topic": "TALK_TRAVEL_MAYA_MENU_LIANG"
+      },
+      {
+        "text": "[返回主菜单] 先谈别的。",
+        "topic": "TALK_TRAVEL_MAYA_ISHERWOOD"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_CONVOY",
+    "dynamic_line": "玛雅从书页间抽出一张折了两次的纸。上面只有几个呼号、日期，以及阿琼离开前的潦草承诺。\n\n“他跟着一支有护卫、急救员和修车工的补给队继续往北。他们会经过农场、营地和难民据点，阿琼想沿旧路继续找我们的父母。我当然想让他留下，可他每天坐在楼下等我的腿好，也不会让父母离我们更近。车队经过仍有电台的地方，会留下很短的报平安消息。下一张纸条到来以前，我只能相信他也记得我们说过的话——人先活下来。”",
+    "responses": [
+      {
+        "text": "[继续问过去的经历] 我还有一段想确认。",
+        "topic": "TALK_TRAVEL_MAYA_ROUTE"
+      },
+      {
+        "text": "[返回主菜单] 先谈别的。",
+        "topic": "TALK_TRAVEL_MAYA_ISHERWOOD"
+      },
+      {
+        "text": "[结束交谈] 先休息吧。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_CONVOY_CONTINUE",
+    "dynamic_line": "“我当然想让他留下。可他每天坐在楼下等我的腿好，也不会让父母离我们更近。”\n“车队经过仍有电台的地方，会留下很短的报平安消息。下一张纸条到来以前，我只能相信他也记得我们说过的话——人先活下来。”",
+    "responses": [
+      {
+        "text": "[继续问过去的经历] 我还有一段想确认。",
+        "topic": "TALK_TRAVEL_MAYA_ROUTE"
+      },
+      {
+        "text": "[返回主菜单] 先谈别的。",
+        "topic": "TALK_TRAVEL_MAYA_ISHERWOOD"
+      },
+      {
+        "text": "[结束交谈] 先休息吧。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_HIGHWAY_AMBUSH",
+    "dynamic_line": "“车流停死以后，我们从护栏缺口下到辅路。最开始只有几只丧尸跟着，后来废车之间的声音把更多东西引了过来。”\n“丧尸犬从中央隔离带钻出来，速度比人快得多。另一边还有一群野性疯人，他们不只是追杀丧尸，也抢背包、砸车窗，把所有逃跑的人往同一条排水沟里赶。”\n“我们被堵在护栏和沟壁之间。阿琼拖着我往坡上爬，我回身射最后几支箭时踩空，膝盖就是那一下扭伤的。”",
+    "responses": [
+      {
+        "text": "[继续问过去的经历] 我还有一段想确认。",
+        "topic": "TALK_TRAVEL_MAYA_ROUTE"
+      },
+      {
+        "text": "[返回主菜单] 先谈别的。",
+        "topic": "TALK_TRAVEL_MAYA_ISHERWOOD"
+      },
+      {
+        "text": "[结束交谈] 先休息吧。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_RESCUE",
+    "dynamic_line": "玛雅安静了几秒，才继续说。\n\n“我们的求救断断续续传到农场频率。伊舍伍德家原本只答应在外围接应，可杰克听见枪声和狗叫后，还是带着卡洛斯、丽莎开车出来了。他们用皮卡撞开一段包围，步枪火力压住废车之间的丧尸；丽莎站在车斗边给我们指出空隙，卡洛斯把最后两个伤员从沟里拖上来。为了七个陌生人，他们花了油、药和不少子弹，还把农场的位置暴露给了附近所有听见枪声的东西。他们本来完全可以关掉电台，让我们自生自灭。”",
+    "responses": [
+      {
+        "text": "[继续问过去的经历] 我还有一段想确认。",
+        "topic": "TALK_TRAVEL_MAYA_ROUTE"
+      },
+      {
+        "text": "[返回主菜单] 先谈别的。",
+        "topic": "TALK_TRAVEL_MAYA_ISHERWOOD"
+      },
+      {
+        "text": "[结束交谈] 先休息吧。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_RESCUE_CONTINUE",
+    "dynamic_line": "“他们用皮卡撞开一段包围，步枪火力压住废车之间的丧尸。丽莎站在车斗边给我们指出空隙，卡洛斯把最后两个伤员从沟里拖上来。”\n“为了七个陌生人，他们花了油、药和不少子弹，还把农场的位置暴露给了附近所有听见枪声的东西。”\n“他们本来完全可以关掉电台，让我们自生自灭。”",
+    "responses": [
+      {
+        "text": "[继续问过去的经历] 我还有一段想确认。",
+        "topic": "TALK_TRAVEL_MAYA_ROUTE"
+      },
+      {
+        "text": "[返回主菜单] 先谈别的。",
+        "topic": "TALK_TRAVEL_MAYA_ISHERWOOD"
+      },
+      {
+        "text": "[结束交谈] 先休息吧。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_DEBT",
+    "dynamic_line": "“是。”玛雅说。\n“卡洛斯总说他们没有买下我，丽莎也不许我把每杯热水都记成债。可我醒来的第一晚，楼下有人轮流守窗，克莱尔在给陌生人换药，杰克还在清点为了救我们打掉的弹药。”\n“我不能把这种事缩成一句‘谢谢收留’。我也不想拿一条伤腿逞英雄。所以我做箭、修弓、整理消息；遇到我做不到的事，就找真正能做到的人。”",
+    "responses": [
+      {
+        "text": "[继续问农场的事] 这种报答比带伤逞强更有用。",
+        "topic": "TALK_TRAVEL_MAYA_MENU_FARM"
+      },
+      {
+        "text": "[返回主菜单] 先谈别的。",
+        "topic": "TALK_TRAVEL_MAYA_ISHERWOOD"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_LOST_CLASSMATES",
+    "dynamic_line": "玛雅低头看着自己的手。\n\n“离开校园时，跟我和阿琼一起走的还有几名机械工程专业同学。诺拉会修发动机，伊森在射箭社帮我管器材，普里娅随身带着急救包。我们以为只要各自有一项用得上的本事，就能把所有人带出去。”她停了很久，“诺拉留在车旁替我们争取启动时间。伊森为了挡住丧尸犬，没有赶上最后一次越过护栏。普里娅一直给伤员止血，直到那群疯人从侧面冲下来。伊舍伍德家救下了七个人，但不是所有从校园出发的人。”",
+    "responses": [
+      {
+        "text": "[继续问过去的经历] 我还有一段想确认。",
+        "topic": "TALK_TRAVEL_MAYA_ROUTE"
+      },
+      {
+        "text": "[返回主菜单] 先谈别的。",
+        "topic": "TALK_TRAVEL_MAYA_ISHERWOOD"
+      },
+      {
+        "text": "[结束交谈] 先休息吧。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_LOST_CLASSMATES_CONTINUE",
+    "dynamic_line": "“诺拉留在车旁替我们争取启动时间。伊森为了挡住丧尸犬，没有赶上最后一次越过护栏。普里娅一直给伤员止血，直到那群疯人从侧面冲下来。”\n她停了很久。\n“伊舍伍德家救下了七个人，但不是所有从校园出发的人。”",
+    "responses": [
+      {
+        "text": "[继续问过去的经历] 我还有一段想确认。",
+        "topic": "TALK_TRAVEL_MAYA_ROUTE"
+      },
+      {
+        "text": "[返回主菜单] 先谈别的。",
+        "topic": "TALK_TRAVEL_MAYA_ISHERWOOD"
+      },
+      {
+        "text": "[结束交谈] 先休息吧。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_ARCHERY_BACKGROUND",
+    "dynamic_line": "玛雅拿起一根箭杆，在桌沿轻轻滚过。箭杆没有明显跳动。\n\n“我学的是机械工程。射箭社里，我负责器材登记、拉力和弦距记录，也常替新手处理松动的箭台和歪掉的羽片。周末我还在一家弓箭店兼职，学过测挠度、配箭头重量、校直箭杆和调整复合弓。灾变后没有成箱的新箭可用，我只能把这些步骤拆开重做：木箭最快，金属箭更费工具，碳纤维箭主要靠回收完好的箭杆。弓大多不是我从头制造的，而是农场旧库存、补给队交换来的，或者我把坏件拼成能用的。”她指向墙边分层码好的箭束，“每过一周，我会把做完和修好的东西重新清点。简单箭最多，真正好的箭不会凭空变多。”",
+    "responses": [
+      {
+        "text": "[继续问弓箭与器材] 我再看看别的。",
+        "topic": "TALK_TRAVEL_MAYA_MENU_ARCHERY"
+      },
+      {
+        "text": "[返回主菜单] 先谈别的。",
+        "topic": "TALK_TRAVEL_MAYA_ISHERWOOD"
+      },
+      {
+        "text": "[结束交谈] 今天先到这里。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_ARCHERY_BACKGROUND_CONTINUE",
+    "dynamic_line": "“灾变后没有成箱的新箭可用，我只能把这些步骤拆开重做。木箭最快，金属箭更费工具，碳纤维箭主要靠回收完好的箭杆。”\n“弓大多不是我从头制造的，是农场旧库存、补给队交换来的，或者我把坏件拼成能用的。”\n她指向墙边分层码好的箭束。\n“每过一周，我会把做完和修好的东西重新清点。简单箭最多，真正好的箭不会凭空变多。”",
+    "responses": [
+      {
+        "text": "[继续问弓箭与器材] 我再看看别的。",
+        "topic": "TALK_TRAVEL_MAYA_MENU_ARCHERY"
+      },
+      {
+        "text": "[返回主菜单] 先谈别的。",
+        "topic": "TALK_TRAVEL_MAYA_ISHERWOOD"
+      },
+      {
+        "text": "[结束交谈] 今天先到这里。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  }
+]

@@ -1,0 +1,177 @@
+[
+  {
+    "abstract": "shotshell_abstract",
+    "copy-from": "shotshell_abstract",
+    "type": "AMMO",
+    "name": "base shotshell",
+    "weight": "15 g",
+    "volume": "150 ml",
+    "flags": [
+      "IRREPLACEABLE_CONSUMABLE"
+    ],
+    "material": [
+      "plastic",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "red",
+    "count": 20,
+    "stack_size": 20,
+    "shot_spread": 0,
+    "ammo_type": "shot",
+    "casing": "shot_hull",
+    "longest_side": "8 cm"
+  },
+  {
+    "id": "shot_00",
+    "copy-from": "shot_00",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "12/70 00号 猎鹿弹"
+    },
+    "description": "一种填满了金属圆珠的弹药，威力极强，同时由于这种弹药的散射特性，使其在近距离射击时的命中率很高，因此深受SWAT部队的喜爱。",
+    "price_postapoc": 1600,
+    "weight": "15 g",
+    "volume": "150 ml",
+    "range": 20,
+    "count": 20,
+    "stack_size": 20,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 90,
+      "armor_penetration": 10
+    },
+    "shot_damage": {
+      "damage_type": "bullet",
+      "amount": 30,
+      "armor_penetration": 10
+    },
+    "projectile_count": 3,
+    "shot_spread": 0,
+    "recoil": 2500,
+    "loudness": 160,
+    "effects": [
+      "COOKOFF",
+      "SHOT"
+    ],
+    "longest_side": "8 cm"
+  },
+  {
+    "id": "shot_bird",
+    "copy-from": "shot_bird",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "12/70 8号 猎鸟弹"
+    },
+    "description": "一种威力有限的霰弹枪弹药。用来狩猎鸟类和其他小玩意还行，在战斗中的实用性极为有限。",
+    "price": 100,
+    "price_postapoc": 400,
+    "range": 18,
+    "shot_damage": {
+      "damage_type": "bullet",
+      "amount": 30
+    },
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 10
+    },
+    "recoil": 1500,
+    "projectile_count": 3,
+    "shot_spread": 0,
+    "loudness": 100,
+    "effects": [
+      "COOKOFF",
+      "SHOT",
+      "NOGIB"
+    ],
+    "longest_side": "8 cm"
+  },
+  {
+    "id": "shot_flechette",
+    "copy-from": "shot_flechette",
+    "type": "AMMO",
+    "name": {
+      "str": "12/70 Flechette 霰弹"
+    },
+    "description": "一种填充微型镖头的霰弹。威力极大，并且近距离命中率极高，并且还附带破甲效果。",
+    "price_postapoc": 2300,
+    "weight": "15 g",
+    "volume": "150 ml",
+    "range": 22,
+    "count": 20,
+    "stack_size": 20,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 75,
+      "armor_penetration": 15
+    },
+    "shot_damage": {
+      "damage_type": "bullet",
+      "amount": 25,
+      "armor_penetration": 15
+    },
+    "projectile_count": 3,
+    "shot_spread": 0,
+    "recoil": 2500,
+    "loudness": 160,
+    "effects": [
+      "COOKOFF",
+      "SHOT"
+    ],
+    "longest_side": "8 cm"
+  },
+  {
+    "id": "shot_slug",
+    "copy-from": "shot_slug",
+    "type": "AMMO",
+    "name": {
+      "str": "12/70 铅头独头弹"
+    },
+    "description": "一种沉重的金属独头霰弹，装填在霰弹枪里使其拥有步枪般的射程，威力极大但精准度不高。",
+    "price_postapoc": 1900,
+    "weight": "15 g",
+    "volume": "150 ml",
+    "range": 24,
+    "count": 20,
+    "stack_size": 20,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 70,
+      "armor_penetration": 10
+    },
+    "recoil": 2500,
+    "dispersion": 50,
+    "loudness": 160,
+    "effects": [
+      "COOKOFF"
+    ],
+    "longest_side": "8 cm"
+  },
+  {
+    "id": "fsds12",
+    "copy-from": "shot_slug",
+    "type": "AMMO",
+    "name": {
+      "str": "12/70 FSDS-12 独头弹"
+    },
+    "description": "一种由猎鹿人户外用品制造的加压独头弹，由一个铅芯铜被甲空尖弹和尾翼组成，弹体较长，尾翼为铝制，命中后分离，弹头安装了金属风帽，它相对于普通独头弹来说初速，精度，穿透性都要高非常多，不过由于口径要比普通独头弹小一圈所以威力方面没有什么提升。",
+    "price_postapoc": 4000,
+    "weight": "15 g",
+    "volume": "150 ml",
+    "range": 30,
+    "count": 20,
+    "stack_size": 20,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 60,
+      "armor_penetration": 25
+    },
+    "recoil": 3500,
+    "dispersion": 10,
+    "loudness": 200,
+    "effects": [
+      "COOKOFF"
+    ],
+    "longest_side": "8 cm"
+  }
+]

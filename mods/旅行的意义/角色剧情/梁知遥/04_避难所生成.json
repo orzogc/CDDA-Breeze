@@ -1,0 +1,334 @@
+[
+  {
+    "type": "scenario",
+    "id": "evacuee",
+    "name": "Evacuee",
+    "points": 0,
+    "description": "你在大灾变的初次冲击中幸存了下来。现在你滞留在一个貌似相对安全的官方疏散点。先去找点东西吃吧。\n\n地下室传来一声轻响。楼下还有人。",
+    "allowed_locs": [
+      "sloc_shelter_a",
+      "sloc_shelter_b",
+      "sloc_shelter_c"
+    ],
+    "start_name": "Evac Shelter",
+    "eoc": [
+      "EOC_TRAVEL_EVACUEE_SPAWN_LIANG"
+    ],
+    "flags": [
+      "CITY_START",
+      "LONE_START"
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_EVACUEE_SPAWN_LIANG",
+    "eoc_type": "SCENARIO_SPECIFIC",
+    "effect": [
+      {
+        "u_location_variable": {
+          "global_val": "travel_liang_evacuee_basement_location"
+        },
+        "min_radius": 0,
+        "max_radius": 0,
+        "z_adjust": -1
+      },
+      {
+        "mapgen_update": "travel_evacuee_spawn_liang_basement",
+        "target_var": {
+          "global_val": "travel_liang_evacuee_basement_location"
+        }
+      }
+    ]
+  },
+  {
+    "type": "mapgen",
+    "method": "json",
+    "update_mapgen_id": "travel_evacuee_spawn_liang_basement",
+    "object": {
+      "place_npcs": [
+        {
+          "class": "TRAVEL_LIANG_ZHIYAO",
+          "unique_id": "TRAVEL_LIANG_ZHIYAO",
+          "x": 15,
+          "y": 13
+        }
+      ]
+    }
+  },
+  {
+    "type": "overmap_special",
+    "id": "Evac Shelter",
+    "overmaps": [
+      {
+        "point": [
+          0,
+          0,
+          0
+        ],
+        "overmap": "shelter_north"
+      },
+      {
+        "point": [
+          0,
+          0,
+          -1
+        ],
+        "overmap": "shelter_under_north"
+      },
+      {
+        "point": [
+          0,
+          0,
+          1
+        ],
+        "overmap": "shelter_roof_north"
+      }
+    ],
+    "connections": [
+      {
+        "point": [
+          0,
+          -1,
+          0
+        ],
+        "terrain": "road",
+        "connection": "local_road",
+        "from": [
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "locations": [
+      "wilderness"
+    ],
+    "city_distance": [
+      4,
+      6
+    ],
+    "city_sizes": [
+      4,
+      -1
+    ],
+    "occurrences": [
+      100,
+      100
+    ],
+    "flags": [
+      "CLASSIC",
+      "URBAN",
+      "GLOBALLY_UNIQUE",
+      "MAN_MADE"
+    ],
+    "priority": 1,
+    "// travel_r12": "1.6分散生成：四种世界唯一避难所使用不同的城市距离带，仍围绕同一类大型城市随机选取扇区，减少同一路口和同一方向扎堆。方向不写死，海岸、河流和道路会继续影响最终位置。"
+  },
+  {
+    "type": "overmap_special",
+    "id": "Evac Shelter 1",
+    "overmaps": [
+      {
+        "point": [
+          0,
+          0,
+          0
+        ],
+        "overmap": "shelter_1_north"
+      },
+      {
+        "point": [
+          0,
+          0,
+          -1
+        ],
+        "overmap": "shelter_under_1_north"
+      },
+      {
+        "point": [
+          0,
+          0,
+          1
+        ],
+        "overmap": "shelter_roof_1_north"
+      }
+    ],
+    "connections": [
+      {
+        "point": [
+          0,
+          -1,
+          0
+        ],
+        "terrain": "road",
+        "connection": "local_road",
+        "from": [
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "locations": [
+      "wilderness"
+    ],
+    "city_distance": [
+      7,
+      9
+    ],
+    "city_sizes": [
+      4,
+      -1
+    ],
+    "occurrences": [
+      100,
+      100
+    ],
+    "flags": [
+      "CLASSIC",
+      "URBAN",
+      "GLOBALLY_UNIQUE",
+      "MAN_MADE"
+    ],
+    "priority": 1,
+    "// travel_r12": "1.6分散生成：四种世界唯一避难所使用不同的城市距离带，仍围绕同一类大型城市随机选取扇区，减少同一路口和同一方向扎堆。方向不写死，海岸、河流和道路会继续影响最终位置。"
+  },
+  {
+    "type": "overmap_special",
+    "id": "Evac Shelter 1b",
+    "overmaps": [
+      {
+        "point": [
+          0,
+          0,
+          0
+        ],
+        "overmap": "shelter_1b_north"
+      },
+      {
+        "point": [
+          0,
+          0,
+          -1
+        ],
+        "overmap": "shelter_under_1b_north"
+      },
+      {
+        "point": [
+          0,
+          0,
+          1
+        ],
+        "overmap": "shelter_roof_1b_north"
+      }
+    ],
+    "connections": [
+      {
+        "point": [
+          0,
+          -1,
+          0
+        ],
+        "terrain": "road",
+        "connection": "local_road",
+        "from": [
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "locations": [
+      "wilderness"
+    ],
+    "city_distance": [
+      10,
+      12
+    ],
+    "city_sizes": [
+      4,
+      -1
+    ],
+    "occurrences": [
+      100,
+      100
+    ],
+    "flags": [
+      "CLASSIC",
+      "URBAN",
+      "GLOBALLY_UNIQUE",
+      "MAN_MADE"
+    ],
+    "priority": 1,
+    "// travel_r12": "1.6分散生成：四种世界唯一避难所使用不同的城市距离带，仍围绕同一类大型城市随机选取扇区，减少同一路口和同一方向扎堆。方向不写死，海岸、河流和道路会继续影响最终位置。"
+  },
+  {
+    "type": "overmap_special",
+    "id": "Evac Shelter 2",
+    "overmaps": [
+      {
+        "point": [
+          0,
+          0,
+          0
+        ],
+        "overmap": "shelter_2_north"
+      },
+      {
+        "point": [
+          0,
+          0,
+          -1
+        ],
+        "overmap": "shelter_under_2_north"
+      },
+      {
+        "point": [
+          0,
+          0,
+          1
+        ],
+        "overmap": "shelter_roof_2_north"
+      }
+    ],
+    "connections": [
+      {
+        "point": [
+          0,
+          -1,
+          0
+        ],
+        "terrain": "road",
+        "connection": "local_road",
+        "from": [
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "locations": [
+      "wilderness"
+    ],
+    "city_distance": [
+      13,
+      15
+    ],
+    "city_sizes": [
+      4,
+      -1
+    ],
+    "occurrences": [
+      100,
+      100
+    ],
+    "flags": [
+      "CLASSIC",
+      "URBAN",
+      "GLOBALLY_UNIQUE",
+      "MAN_MADE"
+    ],
+    "priority": 1,
+    "// travel_r12": "1.6分散生成：四种世界唯一避难所使用不同的城市距离带，仍围绕同一类大型城市随机选取扇区，减少同一路口和同一方向扎堆。方向不写死，海岸、河流和道路会继续影响最终位置。"
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "id": "MISSION_REACH_FEMA_CAMP",
+    "type": "mission_definition",
+    "name": {
+      "str": "Reach FEMA Camp"
+    },
+    "goal": "MGOAL_GO_TO_TYPE",
+    "difficulty": 2,
+    "value": 60000,
+    "start": {
+      "effect": "follow_only"
+    },
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "followup": "MISSION_REACH_FARM_HOUSE",
+    "destination": "travel_fema_entrance",
+    "dialogue": {
+      "describe": "Maybe they escaped to one of the camps…",
+      "offer": "I can't thank you enough for bringing me the patient records but I do have another request.  You seem to know your way around… could you take me to one of the FEMA camps?  I know some were overrun but I don't want to believe all of them could have fallen.",
+      "accepted": "Thank you, just bring me to the camp… I just want to see.",
+      "rejected": "Please, I don't know what else to do.",
+      "advice": "We should go at night, if it is overrun then we can quickly make our escape.",
+      "inquire": "Any leads on where a camp might be?",
+      "success": "I guess this wasn't as bright an idea as I thought.",
+      "success_lie": "Thanks for trying… I guess.",
+      "failure": "I bet some of them are still out there…"
+    },
+    "//": "固定FEMA营地兼容：护送任务目标为模组独立入口地形。"
+  }
+]

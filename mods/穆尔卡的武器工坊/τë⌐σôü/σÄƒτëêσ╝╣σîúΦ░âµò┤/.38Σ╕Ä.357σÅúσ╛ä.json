@@ -1,0 +1,116 @@
+[
+  {
+    "id": "38_speedloader",
+    "copy-from": "38_speedloader",
+    "//": "快速装弹器贴图白名单。",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "7发快速装弹器（.38/.357）"
+    },
+    "description": "这个快速装弹器可以容纳 7 发 .357 马格南弹或 .38 特制弹，为兼容的左轮手枪快速装弹。",
+    "weight": "80 g",
+    "volume": "250 ml",
+    "price": 1000,
+    "price_postapoc": 100,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "357mag",
+      "38"
+    ],
+    "flags": [
+      "SPEEDLOADER",
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "357mag": 7,
+          "38": 7
+        }
+      }
+    ],
+    "longest_side": "11 cm"
+  },
+  {
+    "id": "38_speedloader5",
+    "copy-from": "38_speedloader5",
+    "looks_like": "38_speedloader",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "5发快速装弹器（.38/.357）"
+    },
+    "description": "这个快速装弹器可以容纳 5 发 .357 马格南弹或 .38 特制弹，为兼容的左轮手枪快速装弹。",
+    "weight": "60 g",
+    "volume": "250 ml",
+    "price": 800,
+    "price_postapoc": 100,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "357mag",
+      "38"
+    ],
+    "flags": [
+      "SPEEDLOADER",
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "357mag": 5,
+          "38": 5
+        }
+      }
+    ],
+    "longest_side": "11 cm"
+  },
+  {
+    "id": "38_speedloader6",
+    "copy-from": "38_speedloader6",
+    "looks_like": "38_speedloader",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "6发快速装弹器（.38/.357）"
+    },
+    "description": "这个快速装弹器可以容纳 6 发 .357 马格南弹或 .38 特制装弹，为兼容的左轮手枪快速装弹。",
+    "weight": "70 g",
+    "volume": "250 ml",
+    "price": 900,
+    "price_postapoc": 100,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "357mag",
+      "38"
+    ],
+    "flags": [
+      "SPEEDLOADER",
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "357mag": 6,
+          "38": 6
+        }
+      }
+    ],
+    "longest_side": "11 cm"
+  }
+]

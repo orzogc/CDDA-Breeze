@@ -1,0 +1,72 @@
+[
+  {
+    "type": "BASECAMP_ACTION",
+    "id": "TRAVEL_ACTION_CAMP_RAID_STATUS",
+    "name": "查看袭击威胁状态",
+    "description": "查看这个营地的发展度，幸存者，袭击时钟，待处理波次，难度与阵营状态。",
+    "priority": 10,
+    "allow_radio": true,
+    "required_world_option": "TRAVEL_RAID_SYSTEM_MODE",
+    "required_world_value": "1",
+    "required_camp_value": "travel_raid_enabled",
+    "required_camp_value_default": "1",
+    "required_camp_value_value": "1",
+    "eoc": "EOC_TRAVEL_CAMP_ACTION_STATUS"
+  },
+  {
+    "type": "BASECAMP_ACTION",
+    "id": "TRAVEL_ACTION_CAMP_RAID_ENABLE",
+    "name": "重新开启这个营地的袭击",
+    "description": "恢复这个营地的袭击，并从当前时间重新计算下一场袭击。",
+    "eoc": "EOC_TRAVEL_CAMP_ACTION_ENABLE",
+    "priority": 12,
+    "allow_radio": false,
+    "required_world_option": "TRAVEL_RAID_SYSTEM_MODE",
+    "required_world_value": "1",
+    "required_camp_value": "travel_raid_enabled",
+    "required_camp_value_default": "1",
+    "required_camp_value_value": "0"
+  },
+  {
+    "type": "BASECAMP_ACTION",
+    "id": "TRAVEL_ACTION_CAMP_RAID_DISABLE",
+    "name": "关闭这个营地的袭击",
+    "description": "只关闭这个营地的袭击，并清除尚未生成的待处理袭击。",
+    "eoc": "EOC_TRAVEL_CAMP_ACTION_DISABLE",
+    "priority": 13,
+    "allow_radio": false,
+    "required_world_option": "TRAVEL_RAID_SYSTEM_MODE",
+    "required_world_value": "1",
+    "required_camp_value": "travel_raid_enabled",
+    "required_camp_value_default": "1",
+    "required_camp_value_value": "1"
+  },
+  {
+    "type": "BASECAMP_ACTION",
+    "id": "TRAVEL_ACTION_CAMP_RAID_RESET",
+    "name": "重置袭击时钟",
+    "description": "清除这个营地的待处理袭击，并从当前时间重新计算下一场袭击。",
+    "eoc": "EOC_TRAVEL_CAMP_ACTION_RESET",
+    "priority": 20,
+    "allow_radio": false,
+    "required_world_option": "TRAVEL_RAID_SYSTEM_MODE",
+    "required_world_value": "1",
+    "required_camp_value": "travel_raid_enabled",
+    "required_camp_value_default": "1",
+    "required_camp_value_value": "1"
+  },
+  {
+    "type": "BASECAMP_ACTION",
+    "id": "TRAVEL_ACTION_CAMP_RAID_TEST",
+    "name": "安排一次测试袭击",
+    "description": "立即为这个营地安排一场袭击，只有世界设置启用测试时才会生效。",
+    "eoc": "EOC_TRAVEL_CAMP_ACTION_TEST",
+    "priority": 90,
+    "allow_radio": false,
+    "required_world_option": "TRAVEL_RAID_SYSTEM_MODE",
+    "required_world_value": "1",
+    "required_camp_value": "travel_raid_enabled",
+    "required_camp_value_default": "1",
+    "required_camp_value_value": "1"
+  }
+]

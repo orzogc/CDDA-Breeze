@@ -1,0 +1,44 @@
+[
+  {
+    "id": "54r_snb",
+    "copy-from": "762_54R",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "7.62x54mmR LPS gzh 弹"
+    },
+    "description": "7.62x54mmRLPS gzh （57-N-323S）弹，9.6克钢芯子弹，铅包层和双金属护套，双金属外壳。LPS弹于1953年被引入苏联的7.62x54mmR口径武器装备中，多年来在其结构中使用的材料经历了许多变化。由于其钢芯，除了提供相当大的阻滞力外，它还能够穿透低级和中级弹道护甲。",
+    "relative": {
+      "price": 2,
+      "damage": {
+        "damage_type": "bullet",
+        "amount": 3,
+        "armor_penetration": 8
+      }
+    },
+    "proportional": {
+      "recoil": 1.3
+    },
+    "longest_side": "8 cm"
+  },
+  {
+    "id": "54r_7n37",
+    "copy-from": "762_54R",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "7.62x54mmR BS gs 弹"
+    },
+    "description": "7.62x54mmR BS gs（7N37）弹，12.2克穿甲弹，铅基上有碳化钨尖芯，双金属护套，钢制外壳。这种BS弹是由TsNIITochMash在2010年代开发的，以大大提高指定射手步枪的穿透能力，如SVD及其变种，能够穿透最现代的专业弹道护甲，还能够穿透轻型装甲车，尽管与其他弹药相比具有相对较低的初速。",
+    "relative": {
+      "price": 5,
+      "damage": {
+        "damage_type": "bullet",
+        "amount": -1,
+        "armor_penetration": 15
+      }
+    },
+    "proportional": {
+      "recoil": 1.6
+    },
+    "longest_side": "8 cm"
+  }
+]

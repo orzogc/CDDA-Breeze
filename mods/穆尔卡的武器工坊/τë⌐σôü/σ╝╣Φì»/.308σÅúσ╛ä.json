@@ -1,0 +1,23 @@
+[
+  {
+    "id": "308_m118",
+    "looks_like": "762_51",
+    "copy-from": "762_51",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "7.62x51mm M118 BTHP 弹"
+    },
+    "description": "Winchester 7.62x51mm M118 175 BTHP是温彻斯特公司生产的一款弹药，主要用于长距离精确射击，该弹药采用了塞拉公司（Sierra）的MatchKing子弹，子弹 jacket 同心度极高，重量公差控制在极小范围内，能够提供出色的精度和可靠的弹道性能。",
+    "price": 250,
+    "price_postapoc": 1200,
+    "dispersion": 0,
+    "relative": {
+      "damage": {
+        "damage_type": "bullet",
+        "amount": 6,
+        "armor_penetration": -1
+      }
+    },
+    "longest_side": "8 cm"
+  }
+]

@@ -1,0 +1,1514 @@
+[
+  {
+    "id": "vss",
+    "type": "GUN",
+    "name": {
+      "str_sp": "VSS Vintorez 特种狙击步枪"
+    },
+    "description": "VSS Vintorez由苏联中央精密机械研究所在1980年代研制，使用9x39mm重型亚音速弹与一体式消音器，为特种侦察和隐蔽狙击服务。它在阿富汗战争末期投入使用，后来参加车臣、格鲁吉亚、叙利亚和俄乌等冲突。声音和枪口焰低，但射程与弹道弧度受亚音速弹限制。",
+    "weight": "2500 g",
+    "volume": "1525 ml",
+    "longest_side": "894 mm",
+    "price": 85000,
+    "price_postapoc": 12500,
+    "skill": "rifle",
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "939"
+    ],
+    "reload_noise_volume": 10,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -3
+    },
+    "dispersion": 30,
+    "durability": 8,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "default_mods": [
+      "vss_sp"
+    ],
+    "barrel_volume": "300 ml",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "939_magazine_10",
+          "939_magazine_20",
+          "939_magazine_30"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "svd",
+    "type": "GUN",
+    "name": {
+      "str_sp": "SVD 狙击步枪"
+    },
+    "description": "SVD于1963年被苏军采用，它并非追求极端精度的传统狙击枪，而是为步兵班排提供更远射程的半自动精确火力。7.62x54mmR弹、10发弹匣和PSO-1瞄准镜使其便于伴随步兵行动。它参加过阿富汗、车臣、中东及俄乌等大量冲突，并被多国仿制。",
+    "weight": "4300 g",
+    "volume": "3800 ml",
+    "longest_side": "1225 mm",
+    "price": 250000,
+    "price_postapoc": 9000,
+    "skill": "rifle",
+    "to_hit": -10,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "symbol": "(",
+    "color": "brown",
+    "ammo": [
+      "762R"
+    ],
+    "reload_noise_volume": 10,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 5
+    },
+    "dispersion": 15,
+    "durability": 8,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "default_mods": [
+      "pso"
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "barrel_volume": "620 ml",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "svd_10"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "hellbreath",
+    "type": "GUN",
+    "symbol": "(",
+    "color": "dark_gray",
+    "name": {
+      "str": "地狱之息 磁轨步枪"
+    },
+    "description": "这是一把来自莫斯科地下铁路中的武器工匠做出来的自制武器,可以说,这把武器相当有技术含量,它可以把轴承滚珠以极高的速度发射出去并且几乎无声,别看它外形简陋,这种弹药几乎随处可见并且威力强悍的武器在那里几乎算得上是独一无二的无价之宝,可是它是怎么来到这里的.",
+    "price": 7500000,
+    "price_postapoc": 7500000,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "skill": "rifle",
+    "weight": "3300 g",
+    "volume": "2450 ml",
+    "ammo": [
+      "BB"
+    ],
+    "loudness": 5,
+    "reload_noise_volume": 10,
+    "to_hit": -5,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 64
+    },
+    "range": 30,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "dispersion": 20,
+    "barrel_volume": "200 ml",
+    "durability": 10,
+    "reload": 450,
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "hb_15"
+        ]
+      }
+    ],
+    "longest_side": "140 cm",
+    "bashing": 12
+  },
+  {
+    "id": "svch",
+    "type": "GUN",
+    "name": {
+      "str_sp": "SVCH 狙击步枪"
+    },
+    "description": "楚卡文SVCh是卡拉什尼科夫集团在2010年代公开的新一代半自动精确步枪，采用更现代的机匣、附件接口和多口径方案，意在逐步补充或替代SVD。其结构强调紧凑与模块化，可服务于指定射手和狙击任务；它已开始进入俄罗斯部队，但装备规模仍远小于服役数十年的SVD。",
+    "weight": "4300 g",
+    "volume": "2250 ml",
+    "longest_side": "894 mm",
+    "price": 279000,
+    "price_postapoc": 8000,
+    "skill": "rifle",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "308"
+    ],
+    "reload_noise_volume": 10,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 2
+    },
+    "dispersion": 10,
+    "durability": 8,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "default_mods": [
+      "bipod",
+      "rifle_scope"
+    ],
+    "barrel_volume": "460 ml",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "svch_20"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "svt",
+    "type": "GUN",
+    "name": {
+      "str_sp": "SVT-40 半自动步枪"
+    },
+    "description": "SVT-40是托卡列夫设计的苏联半自动步枪，1940年定型，目标是提高步兵相对于栓动莫辛步枪的射速。它在冬季战争末期和第二次世界大战中大量使用，海军陆战队尤其偏爱；德军也积极使用缴获枪。结构较轻而对维护敏感，战时条件下难以完全取代莫辛步枪。",
+    "weight": "3850 g",
+    "volume": "2800 ml",
+    "longest_side": "1266 mm",
+    "price": 35000,
+    "price_postapoc": 2600,
+    "skill": "rifle",
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "symbol": "(",
+    "color": "brown",
+    "ammo": [
+      "762R"
+    ],
+    "reload_noise_volume": 10,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 2
+    },
+    "dispersion": 28,
+    "durability": 8,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "barrel_volume": "620 ml",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "svt_10",
+          "svt_15"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "ptrd",
+    "type": "GUN",
+    "name": {
+      "str": "PTRD 反坦克狙击步枪"
+    },
+    "description": "PTRD-41是德格佳廖夫在1941年紧急设计的单发14.5毫米反坦克步枪，结构极为简单，便于苏联在战争初期快速大批生产。它在东线用于攻击轻型坦克、装甲车、机枪阵地和观察孔；随着坦克装甲增厚，其任务逐渐转向车辆、工事与其他器材目标。",
+    "weight": "17300 g",
+    "volume": "8000 ml",
+    "longest_side": "2020 mm",
+    "price": 172500,
+    "price_postapoc": 18500,
+    "symbol": "(",
+    "color": "dark_gray",
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "ammo": [
+      "145114"
+    ],
+    "range": 45,
+    "skill": "rifle",
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 3
+    },
+    "dispersion": 110,
+    "durability": 8,
+    "reload_noise_volume": 10,
+    "barrel_volume": "1250 ml",
+    "valid_mod_locations": [
+      [
+        "sling",
+        1
+      ]
+    ],
+    "default_mods": [
+      "bipod",
+      "muzzle_brake"
+    ],
+    "clip_size": 1,
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "145114": 1
+        }
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "ksvk",
+    "type": "GUN",
+    "name": {
+      "str": "KSVK 反器材狙击步枪"
+    },
+    "description": "KSVK是科夫罗夫设计局在1990年代末发展的12.7x108mm无托反器材步枪，紧凑布局在保留长枪管的同时缩短全长。它用于攻击轻型车辆、设备、工事和远距离人员目标，后续型号进入俄罗斯部队，并在车臣、叙利亚及俄乌等冲突的影像中出现。",
+    "weight": "14000 g",
+    "volume": "7500 ml",
+    "longest_side": "1400 mm",
+    "price": 725500,
+    "price_postapoc": 15000,
+    "symbol": "(",
+    "color": "dark_gray",
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "ammo": [
+      "127108"
+    ],
+    "range": 60,
+    "skill": "rifle",
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 5
+    },
+    "dispersion": 90,
+    "durability": 8,
+    "reload_noise_volume": 10,
+    "barrel_volume": "1250 ml",
+    "valid_mod_locations": [
+      [
+        "sling",
+        1
+      ]
+    ],
+    "default_mods": [
+      "bipod",
+      "rifle_scope",
+      "muzzle_brake"
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "ksvk_5"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "ptrs",
+    "type": "GUN",
+    "name": {
+      "str": "PTRS 反坦克狙击步枪"
+    },
+    "description": "PTRS-41是西蒙诺夫设计的五发半自动14.5毫米反坦克步枪，与更简单的PTRD同时在1941年投入苏军。半自动火力让射手能更快修正射击，但枪械更重、更长，也更容易受污物和严寒影响。它在东线对付轻装甲、车辆、掩体，战后仍在朝鲜等地出现。",
+    "weight": "22000 g",
+    "volume": "15000 ml",
+    "longest_side": "1800 mm",
+    "price": 195500,
+    "price_postapoc": 25000,
+    "symbol": "(",
+    "color": "dark_gray",
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "ammo": [
+      "145114"
+    ],
+    "range": 45,
+    "skill": "rifle",
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 5
+    },
+    "dispersion": 130,
+    "durability": 8,
+    "reload_noise_volume": 10,
+    "barrel_volume": "1250 ml",
+    "valid_mod_locations": [
+      [
+        "sling",
+        1
+      ]
+    ],
+    "default_mods": [
+      "bipod",
+      "muzzle_brake"
+    ],
+    "flags": [
+      "NEVER_JAMS"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "ptrs_5"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "de_inf",
+    "type": "GUN",
+    "looks_like": "deagle_44",
+    "name": {
+      "str": "无限沙鹰"
+    },
+    "description": "一把比较奇怪的沙漠之鹰,虽然它外形跟普通的沙漠之鹰毫无区别,不过它的子弹貌似永远都打不完,并且这东西的弹匣拆不下来.",
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "ammo_effects": [
+      "NEVER_MISFIRES"
+    ],
+    "skill": "pistol",
+    "weight": "1700 g",
+    "volume": "617 ml",
+    "longest_side": "29 cm",
+    "symbol": "(",
+    "color": "dark_gray",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "price": 87500,
+    "price_postapoc": 2750,
+    "dispersion": 450,
+    "durability": 10,
+    "range": 25,
+    "loudness": 150,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 33,
+      "armor_penetration": 4
+    },
+    "weapon_category": [
+      "AUTOMATIC_PISTOLS"
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "vssc",
+    "type": "GUN",
+    "name": {
+      "str_sp": "“妒忌”VSS Vintorez 特种狙击步枪"
+    },
+    "description": "一把经过改装过的VSS特种狙击步枪，枪托安装了一个托腮板，瞄具使用了一个很特别的燕尾槽组合式瞄准镜，消音器枪管下面安装了一个三角握把，整把枪已经过精校。",
+    "weight": "2500 g",
+    "volume": "500 ml",
+    "longest_side": "894 mm",
+    "price": 350000,
+    "price_postapoc": 12500,
+    "skill": "rifle",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "939"
+    ],
+    "reload_noise_volume": 10,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -3
+    },
+    "dispersion": 10,
+    "durability": 10,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "default_mods": [
+      "vss_sp",
+      "tac_s_scope",
+      "vssc_stock",
+      "grip_tac"
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "barrel_volume": "300 ml",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "939_magazine_10",
+          "939_magazine_20",
+          "939_magazine_30"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "cews_27",
+    "type": "GUN",
+    "reload_noise_volume": 10,
+    "name": {
+      "str": "CEWS-27 激光步枪"
+    },
+    "description": "CVA与Rivtech合作设计的单兵激光武器，处于实验阶段，该武器可以在一瞬间将高能激光束射向目标，比起同类型武器有着更高的伤害，精准度和射程，但是该武器的改装程度很低，并且只有单发射击模式，不然可能会引发一些非常危险的故障。",
+    "weight": "3800 g",
+    "volume": "2500 ml",
+    "longest_side": "900 mm",
+    "price": 2750000,
+    "price_postapoc": 25000,
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "skill": "rifle",
+    "range": 60,
+    "ranged_damage": {
+      "damage_type": "heat",
+      "amount": 80,
+      "armor_penetration": 30
+    },
+    "dispersion": 0,
+    "durability": 10,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "loudness": 20,
+    "reload": 0,
+    "ammo_effects": [
+      "DRAW_LASER_BEAM",
+      "EMP"
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_UNLOAD",
+      "NON_FOULING",
+      "NEEDS_NO_LUBE"
+    ],
+    "ups_charges": 60,
+    "bashing": 12
+  },
+  {
+    "id": "kar98k",
+    "type": "GUN",
+    "name": {
+      "str_sp": "毛瑟 Kar98k 步枪"
+    },
+    "description": "Kar98k于1935年成为德军标准步枪，是Gewehr 98体系缩短并现代化后的产物。它使用7.92x57mm弹和五发内置弹仓，随德军出现在第二次世界大战几乎所有战线。战后大量剩余枪又被法国、以色列、南斯拉夫等国使用，如今则是常见的历史收藏与狩猎改装基础。",
+    "weight": "3800 g",
+    "volume": "3000 ml",
+    "longest_side": "1100 mm",
+    "price": 185000,
+    "price_postapoc": 7000,
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "color": "brown",
+    "symbol": "(",
+    "skill": "rifle",
+    "ammo": [
+      "79257"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 150,
+    "durability": 8,
+    "blackpowder_tolerance": 40,
+    "flags": [
+      "RELOAD_ONE",
+      "NEVER_JAMS"
+    ],
+    "valid_mod_locations": [
+      [
+        "barrel",
+        1
+      ],
+      [
+        "bayonet lug",
+        1
+      ],
+      [
+        "bore",
+        1
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "79257": 5
+        }
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "gewehr_43",
+    "type": "GUN",
+    "name": {
+      "str_sp": "毛瑟 Gewehr 43 步枪"
+    },
+    "description": "G43步枪采用的导气系统是短行程活塞式导气系统，该系统久经实战检验。闭锁系统地可靠性也很高。可拆卸的10发弹匣可用5发弹夹填装。可以说在设计上G43步枪完全不输给美国的M1式步枪，由于当时德国战时生产能力低下和原料稀缺导致G43产量较低，且至后期德国本土作战时，面对材料紧张，生产商不断地削减枪身配件材质，在一定程度上削弱了G43的作战能力。",
+    "weight": "4700 g",
+    "volume": "3800 ml",
+    "longest_side": "1110 mm",
+    "price": 285000,
+    "price_postapoc": 12000,
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "color": "brown",
+    "symbol": "(",
+    "skill": "rifle",
+    "ammo": [
+      "79257"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 170,
+    "durability": 8,
+    "blackpowder_tolerance": 40,
+    "valid_mod_locations": [
+      [
+        "barrel",
+        1
+      ],
+      [
+        "bayonet lug",
+        1
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "g43_10"
+        ]
+      }
+    ],
+    "bashing": 15
+  },
+  {
+    "id": "m200",
+    "type": "GUN",
+    "name": {
+      "str": "M200 狙击步枪"
+    },
+    "description": "CheyTacM200狙击步枪，绰号干预，是由美国夏伊战术公司生产的一款狙击步枪，CheyTacM200狙击步枪是一型手动枪机操作式狙击步枪，使用了手动枪机操作并装上了可自由伸缩设计的枪托，枪托配有折叠后脚架和托腮架。CheyTacM200狙击步枪的主要用途是阻截远距离的软目标，使用了7发容量的可拆式单排弹匣供弹，发射.408 CheyTac或.375 CheyTac子弹。据CheyTac文件指出，整个系统能够在高达2286米的距离打出比4毫米硬币还要小的精度，是所有现代狙击步枪之中射程最长的一支。M200狙击步枪具有强大的动能，其发射的子弹在2000米外还能以超音速飞行。",
+    "weight": "14000 g",
+    "volume": "7500 ml",
+    "longest_side": "1300 mm",
+    "price": 350000,
+    "price_postapoc": 20000,
+    "symbol": "(",
+    "color": "dark_gray",
+    "material": [
+      "steel"
+    ],
+    "ammo": [
+      "408_ct"
+    ],
+    "range": 100,
+    "skill": "rifle",
+    "dispersion": 0,
+    "durability": 8,
+    "reload_noise_volume": 10,
+    "barrel_volume": "740 ml",
+    "default_mods": [
+      "bipod",
+      "rifle_scope",
+      "muzzle_brake"
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "m200_7"
+        ]
+      }
+    ],
+    "bashing": 20
+  },
+  {
+    "id": "dtbk223",
+    "type": "GUN",
+    "name": {
+      "str_sp": "D-TBK-223 步枪"
+    },
+    "description": "一种使用.223弹的栓动步枪，由德尔梅维森枪械制造，廉价枪械的代表，靠着低价和还算可以的性能获得了非常高的销量，自带一个20发的不可拆卸弹仓和折叠枪托，结构非常简单，易于维护，虽然用起来不是很舒服，还没有多少位置给你装配件，但你靠买一把手枪的钱就能搞到这么一把使用.223的长枪，顺手还能省下弹匣钱，所以也别挑它的毛病了。",
+    "weight": "3000 g",
+    "volume": "2500 ml",
+    "longest_side": "850 mm",
+    "price": 20000,
+    "price_postapoc": 1000,
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "color": "brown",
+    "symbol": "(",
+    "skill": "rifle",
+    "ammo": [
+      "223"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 130,
+    "durability": 8,
+    "blackpowder_tolerance": 40,
+    "default_mods": [
+      "wire_stock"
+    ],
+    "flags": [
+      "RELOAD_ONE"
+    ],
+    "valid_mod_locations": [
+      [
+        "bayonet lug",
+        1
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "223": 20
+        },
+        "allowed_speedloaders": [
+          "clip223_10rd"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "ruger_1022m",
+    "looks_like": "ar15",
+    "type": "GUN",
+    "reload_noise_volume": 10,
+    "name": {
+      "str": "鲁格 10/22-M 步枪"
+    },
+    "description": "鲁格10/22是美国斯图姆·鲁格公司于1964年推出的一款边缘发火式半自动步枪，由威廉·B·鲁格设计，总产量超500万支，是极为经典的小口径民用枪械，这一款是进行过现代化改进的版本，枪身主体为白色，枪托护木则为黑色聚合物，综合性能更好。\n“曾是森宫中学枪击案中凶手的主要作案工具”",
+    "weight": "2000 g",
+    "volume": "2000 ml",
+    "longest_side": "942 mm",
+    "price": 47000,
+    "price_postapoc": 2550,
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "range": 7,
+    "//range": "它采用自由枪机原理，与多数同口径非竞赛运动步枪相同。",
+    "ammo": [
+      "22"
+    ],
+    "skill": "rifle",
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 5
+    },
+    "dispersion": 90,
+    "durability": 8,
+    "barrel_volume": "500 ml",
+    "default_mods": [
+      "red_dot_sight"
+    ],
+    "valid_mod_locations": [
+      [
+        "barrel",
+        1
+      ],
+      [
+        "bore",
+        1
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "faults": [
+      "fault_gun_blackpowder",
+      "fault_gun_dirt",
+      "fault_gun_chamber_spent"
+    ],
+    "pocket_data": [
+      {
+        "magazine_well": "250 ml",
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "ruger1022mag",
+          "ruger1022bigmag"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "dtbc9",
+    "type": "GUN",
+    "name": {
+      "str_sp": "D-TPC-9 步枪"
+    },
+    "description": "一种使用9mm弹的半自动步枪，由德尔梅维森枪械制造，与TBK步枪一样，廉价，自带一个可折叠的铁丝枪托和不可拆卸的弹仓，使用弹夹装弹，在同类型武器中它出奇的便宜……也不知道为什么他们这么乐忠于这种结构的枪械，但不管怎么说它都比手枪强一点。",
+    "weight": "2800 g",
+    "volume": "2000 ml",
+    "longest_side": "800 mm",
+    "price": 23000,
+    "price_postapoc": 1900,
+    "to_hit": -1,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 2
+    },
+    "range": 4,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "color": "brown",
+    "symbol": "(",
+    "skill": "rifle",
+    "ammo": [
+      "9mm"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 200,
+    "durability": 8,
+    "default_mods": [
+      "wire_stock"
+    ],
+    "flags": [
+      "RELOAD_ONE"
+    ],
+    "valid_mod_locations": [
+      [
+        "bayonet lug",
+        1
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "9mm": 30
+        },
+        "allowed_speedloaders": [
+          "clip9mm_10rd"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "jsls_50",
+    "type": "GUN",
+    "name": {
+      "str_sp": "杰希林斯 单发装填手枪"
+    },
+    "description": "一种单发手枪，使用.50bmg反器材弹，莫尔洛枪械的产品，这东西的外形让你想起来了一些宇航员用的手枪或者一些竞赛手枪，这把枪的枪口有一个不可拆卸的巨大制退器，以防这东西在开枪时飞出去，不过这东西的后坐力依旧不小，短枪管也导致初速严重降低，不过你依旧可以在主武器弹药打光时掏出这东西给对面来个惊喜。",
+    "weight": "1500 g",
+    "volume": "500 ml",
+    "longest_side": "600 mm",
+    "price": 65000,
+    "price_postapoc": 8500,
+    "to_hit": -1,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -12
+    },
+    "range": -2,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "color": "brown",
+    "symbol": "(",
+    "skill": "pistol",
+    "ammo": [
+      "50"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 450,
+    "durability": 8,
+    "default_mods": [
+      "jsls_mz"
+    ],
+    "flags": [
+      "RELOAD_ONE"
+    ],
+    "valid_mod_locations": [
+      [
+        "sights mount",
+        1
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "50": 1
+        }
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "morl_3",
+    "type": "GUN",
+    "name": {
+      "str_sp": "棕榈木 Morl-3 左轮步枪"
+    },
+    "description": "莫尔洛枪械设计并生产的一种左轮式步枪，其设计充满复古风格，使用.357弹药，威力尚可，一体式木质枪托很大程度上优化了操作体验，枪身和护木上都有雕花，不少枪械收藏家都愿意搞来这么一把拿来当装饰。",
+    "weight": "2600 g",
+    "volume": "2000 ml",
+    "longest_side": "800 mm",
+    "price": 125000,
+    "price_postapoc": 12500,
+    "to_hit": -1,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 3
+    },
+    "range": 3,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "color": "brown",
+    "symbol": "(",
+    "skill": "pistol",
+    "ammo": [
+      "357mag",
+      "38"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 250,
+    "durability": 8,
+    "flags": [
+      "RELOAD_ONE"
+    ],
+    "valid_mod_locations": [
+      [
+        "sights mount",
+        1
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "357mag": 6,
+          "38": 6
+        },
+        "allowed_speedloaders": [
+          "38_speedloader6"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "cmt_rv",
+    "type": "GUN",
+    "name": {
+      "str_sp": "科玛特 弹链式左轮手枪"
+    },
+    "description": "这种看上去就很复古的枪械不用想都知道莫尔洛枪械的杰作，乍一听它就是那种老掉牙的单动式左轮，但是这把枪的弹巢被替换成了一个二十发的不可散的圆形弹链，且无法拆卸，火力持续性几乎比所有左轮手枪都要好，但是换弹的话就不知道得换到猴年马月了。",
+    "weight": "1500 g",
+    "volume": "800 ml",
+    "longest_side": "300 mm",
+    "price": 35000,
+    "price_postapoc": 1500,
+    "to_hit": -1,
+    "range": 3,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "color": "brown",
+    "symbol": "(",
+    "skill": "pistol",
+    "ammo": [
+      "357mag",
+      "38"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 400,
+    "durability": 8,
+    "flags": [
+      "RELOAD_ONE"
+    ],
+    "valid_mod_locations": [
+      [
+        "sights mount",
+        1
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "357mag": 20,
+          "38": 20
+        }
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "dtsk223",
+    "type": "GUN",
+    "name": {
+      "str_sp": "D-TSK-223 步枪"
+    },
+    "description": "德尔梅维森枪械生产的一款半自动步枪，结构类似于M14，枪管和护木比起TBK略有加长，弹容量从20发增加到了30发，折叠式钢架枪托被更换成了木质枪托，很大程度上改善了TSK的使用体验，可靠性也不错，物美价廉，无论是民间还是在战乱地区你几乎都能见到它的身影，毕竟比它好用的没它便宜，比它便宜的没它好用。",
+    "weight": "4000 g",
+    "volume": "3200 ml",
+    "longest_side": "950 mm",
+    "price": 45000,
+    "price_postapoc": 2500,
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "color": "brown",
+    "symbol": "(",
+    "skill": "rifle",
+    "ammo": [
+      "223"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 100,
+    "durability": 8,
+    "blackpowder_tolerance": 40,
+    "flags": [
+      "RELOAD_ONE"
+    ],
+    "valid_mod_locations": [
+      [
+        "bayonet lug",
+        1
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "223": 30
+        },
+        "allowed_speedloaders": [
+          "clip223_10rd"
+        ]
+      }
+    ],
+    "bashing": 12
+  }
+]

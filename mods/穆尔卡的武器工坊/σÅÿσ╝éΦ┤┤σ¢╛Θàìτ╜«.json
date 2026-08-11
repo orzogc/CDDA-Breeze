@@ -1,0 +1,45 @@
+[
+  {
+    "type": "mod_tileset",
+    "compatibility": [
+      "Chibi_Ultica",
+      "MshockRealXotto",
+      "UltimateCataclysm",
+      "MshockXottoplus",
+      "UNDEAD_PEOPLE",
+      "UNDEAD_PEOPLE_BASE",
+      "UNDEAD_PEOPLE_LEGACY",
+      "UlticaShell",
+      "MshockXottoplus12",
+      "MSX++DEAD_PEOPLE",
+      "MXplus12_for_cosmetics",
+      "MSXotto+"
+    ],
+    "tiles-new": [
+      {
+        "file": "变异贴图.png",
+        "tiles": [
+          {
+            "id": "overlay_mutation_murka_eye",
+            "fg": 0,
+            "rotates": false
+          },
+          {
+            "id": "overlay_mutation_murka_hair",
+            "fg": 1,
+            "rotates": false
+          },
+          {
+            "id": "overlay_mutation_murka_skin",
+            "fg": 2,
+            "rotates": false
+          }
+        ],
+        "sprite_width": 32,
+        "sprite_height": 32,
+        "sprite_offset_x": 0,
+        "sprite_offset_y": 0
+      }
+    ]
+  }
+]

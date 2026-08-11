@@ -1,0 +1,366 @@
+[
+  {
+    "type": "mod_tileset",
+    "compatibility": [
+      "Chibi_Ultica",
+      "MshockRealXotto",
+      "UltimateCataclysm",
+      "MshockXottoplus",
+      "UNDEAD_PEOPLE",
+      "UNDEAD_PEOPLE_BASE",
+      "UNDEAD_PEOPLE_LEGACY",
+      "UlticaShell",
+      "MshockXottoplus12",
+      "MSX++DEAD_PEOPLE",
+      "MXplus12_for_cosmetics",
+      "MSXotto+"
+    ],
+    "tiles-new": [
+      {
+        "file": "重武器贴图.png",
+        "tiles": [
+          {
+            "id": "ptrd",
+            "fg": 1
+          },
+          {
+            "id": "overlay_wielded_ptrd",
+            "fg": 0
+          },
+          {
+            "id": "ptrs",
+            "fg": 3
+          },
+          {
+            "id": "overlay_wielded_ptrs",
+            "fg": 2
+          },
+          {
+            "id": "ksvk",
+            "fg": 5
+          },
+          {
+            "id": "overlay_wielded_ksvk",
+            "fg": 4
+          },
+          {
+            "id": "nsv",
+            "fg": 7
+          },
+          {
+            "id": "overlay_wielded_nsv",
+            "fg": 6
+          },
+          {
+            "id": "m107a1",
+            "fg": 9
+          },
+          {
+            "id": "overlay_wielded_m107a1",
+            "fg": 8
+          },
+          {
+            "id": "overlay_wielded_win70",
+            "fg": 10
+          },
+          {
+            "id": "win70",
+            "fg": 11
+          },
+          {
+            "id": "overlay_wielded_remington_700",
+            "fg": 12
+          },
+          {
+            "id": "remington_700",
+            "fg": 13
+          },
+          {
+            "id": "mosin44",
+            "fg": 15
+          },
+          {
+            "id": "overlay_wielded_mosin44",
+            "fg": 14
+          },
+          {
+            "id": "mosin44_ebr",
+            "fg": 15
+          },
+          {
+            "id": "overlay_wielded_mosin44_ebr",
+            "fg": 14
+          },
+          {
+            "id": "mosin91_30",
+            "fg": 15
+          },
+          {
+            "id": "overlay_wielded_mosin91_30",
+            "fg": 14
+          },
+          {
+            "id": "mosin91_30_ebr",
+            "fg": 15
+          },
+          {
+            "id": "overlay_wielded_mosin91_30_ebr",
+            "fg": 14
+          },
+          {
+            "id": "overlay_wielded_M24",
+            "fg": 16
+          },
+          {
+            "id": "M24",
+            "fg": 17
+          },
+          {
+            "id": "overlay_wielded_remington700_270",
+            "fg": 18
+          },
+          {
+            "id": "remington700_270",
+            "fg": 19
+          },
+          {
+            "id": "overlay_wielded_m2010",
+            "fg": 20
+          },
+          {
+            "id": "m2010",
+            "fg": 21
+          },
+          {
+            "id": "overlay_wielded_pkm",
+            "fg": 22
+          },
+          {
+            "id": "pkm",
+            "fg": 23
+          },
+          {
+            "id": "overlay_wielded_pkp",
+            "fg": 24
+          },
+          {
+            "id": "pkp",
+            "fg": 25
+          },
+          {
+            "id": "overlay_wielded_m240",
+            "fg": 26
+          },
+          {
+            "id": "m240",
+            "fg": 27
+          },
+          {
+            "id": "overlay_wielded_svd",
+            "fg": 28
+          },
+          {
+            "id": "svd",
+            "fg": 29
+          },
+          {
+            "id": "overlay_wielded_kar98k",
+            "fg": 30
+          },
+          {
+            "id": "kar98k",
+            "fg": 31
+          },
+          {
+            "id": "overlay_wielded_steyr_aug",
+            "fg": 32
+          },
+          {
+            "id": "steyr_aug",
+            "fg": 33
+          },
+          {
+            "id": "overlay_wielded_rdb_223",
+            "fg": 34
+          },
+          {
+            "id": "rdb_223",
+            "fg": 35
+          },
+          {
+            "id": "overlay_wielded_type99_sniper",
+            "fg": 36
+          },
+          {
+            "id": "type99_sniper",
+            "fg": 37
+          },
+          {
+            "id": "overlay_wielded_type99ld",
+            "fg": 36
+          },
+          {
+            "id": "type99ld",
+            "fg": 37
+          },
+          {
+            "id": "overlay_wielded_type99",
+            "fg": 36
+          },
+          {
+            "id": "type99",
+            "fg": 37
+          },
+          {
+            "id": "overlay_wielded_tac338",
+            "fg": 38
+          },
+          {
+            "id": "tac338",
+            "fg": 39
+          },
+          {
+            "id": "overlay_wielded_tac50",
+            "fg": 38
+          },
+          {
+            "id": "tac50",
+            "fg": 39
+          },
+          {
+            "id": "overlay_wielded_rfb_308",
+            "fg": 40
+          },
+          {
+            "id": "rfb_308",
+            "fg": 41
+          },
+          {
+            "id": "overlay_wielded_ruger_m77",
+            "fg": 42
+          },
+          {
+            "id": "ruger_m77",
+            "fg": 43
+          },
+          {
+            "id": "overlay_wielded_bfg50",
+            "fg": 44
+          },
+          {
+            "id": "bfg50",
+            "fg": 45
+          },
+          {
+            "id": "overlay_wielded_weatherby_5",
+            "fg": 46
+          },
+          {
+            "id": "weatherby_5",
+            "fg": 47
+          },
+          {
+            "id": "overlay_wielded_axmc",
+            "fg": 48
+          },
+          {
+            "id": "axmc",
+            "fg": 49
+          },
+          {
+            "id": "overlay_wielded_mdrx",
+            "fg": 50
+          },
+          {
+            "id": "mdrx",
+            "fg": 51
+          },
+          {
+            "id": "overlay_wielded_number4_mki",
+            "fg": 52
+          },
+          {
+            "id": "number4_mki",
+            "fg": 53
+          },
+          {
+            "id": "overlay_wielded_smle_mk3",
+            "fg": 52
+          },
+          {
+            "id": "smle_mk3",
+            "fg": 53
+          },
+          {
+            "id": "overlay_wielded_steyr_scout",
+            "fg": 54
+          },
+          {
+            "id": "steyr_scout",
+            "fg": 55
+          },
+          {
+            "id": "overlay_wielded_mrad_smr",
+            "fg": 56
+          },
+          {
+            "id": "mrad_smr",
+            "fg": 57
+          },
+          {
+            "id": "overlay_wielded_gewehr_43",
+            "fg": 58
+          },
+          {
+            "id": "gewehr_43",
+            "fg": 59
+          },
+          {
+            "id": "overlay_wielded_m200",
+            "fg": 60
+          },
+          {
+            "id": "m200",
+            "fg": 61
+          },
+          {
+            "id": "overlay_wielded_qbz97",
+            "fg": 62
+          },
+          {
+            "id": "qbz97",
+            "fg": 63
+          },
+          {
+            "id": "overlay_wielded_robofac_gun",
+            "fg": 64
+          },
+          {
+            "id": "robofac_gun",
+            "fg": 65
+          },
+          {
+            "id": "overlay_wielded_ultimax100",
+            "fg": 66
+          },
+          {
+            "id": "ultimax100",
+            "fg": 67
+          },
+          {
+            "id": "overlay_wielded_gelx_3l",
+            "fg": 68
+          },
+          {
+            "id": "gelx_3l",
+            "fg": 69
+          }
+        ],
+        "sprite_width": 64,
+        "sprite_height": 64,
+        "sprite_offset_x": -16,
+        "sprite_offset_y": -16
+      }
+    ]
+  }
+]

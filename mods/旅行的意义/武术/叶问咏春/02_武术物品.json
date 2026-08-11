@@ -1,0 +1,117 @@
+[
+  {
+    "type": "GENERIC",
+    "id": "wc_baat_jaam_dou_pair",
+    "category": "weapons",
+    "name": {
+      "str": "一对八斩刀"
+    },
+    "description": "一对护手宽大，刀身短厚的咏春蝴蝶双刀。两柄刀的尺寸与重心彼此相合，短刃适合贴身进退，宽大的护手也便于格挡和改变攻击路线。",
+    "weight": "1050 g",
+    "volume": "1500 ml",
+    "longest_side": "52 cm",
+    "price": 30000,
+    "price_postapoc": 3000,
+    "bashing": 6,
+    "cutting": 27,
+    "to_hit": {
+      "grip": "weapon",
+      "length": "short",
+      "surface": "line",
+      "balance": "good"
+    },
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "symbol": "/",
+    "color": "light_gray",
+    "techniques": [
+      "WBLOCK_2",
+      "RAPID",
+      "PRECISE"
+    ],
+    "qualities": [
+      [
+        "CUT",
+        2
+      ],
+      [
+        "BUTCHER",
+        10
+      ]
+    ],
+    "flags": [
+      "DURABLE_MELEE",
+      "SHEATH_SWORD"
+    ],
+    "weapon_category": [
+      "KNIVES",
+      "SHORT_SWORDS"
+    ],
+    "looks_like": "wakizashi"
+  },
+  {
+    "type": "GENERIC",
+    "id": "wc_luk_dim_boon_gwan",
+    "category": "weapons",
+    "name": {
+      "str": "六点半棍"
+    },
+    "description": "一根远长于普通齐眉棍的咏春长棍。棍身前细后粗，持握处厚实，棍梢则被削得轻而灵活。它适合沿中线直进，也能借长棍的重量压住来势，在狭窄处使用仍需要熟练的步法和收棍动作。",
+    "weight": "2250 g",
+    "volume": "3000 ml",
+    "longest_side": "260 cm",
+    "price": 8000,
+    "price_postapoc": 1800,
+    "bashing": 28,
+    "to_hit": {
+      "grip": "weapon",
+      "length": "long",
+      "surface": "point",
+      "balance": "good"
+    },
+    "material": [
+      "wood"
+    ],
+    "symbol": "/",
+    "color": "brown",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP"
+    ],
+    "flags": [
+      "DURABLE_MELEE",
+      "REACH_ATTACK",
+      "NONCONDUCTIVE",
+      "SHEATH_SPEAR",
+      "ALWAYS_TWOHAND"
+    ],
+    "weapon_category": [
+      "POLEARMS"
+    ],
+    "looks_like": "long_pole"
+  },
+  {
+    "id": "travel_liang_wc_notes",
+    "copy-from": "book_martial",
+    "type": "BOOK",
+    "name": {
+      "str": "知遥的叶系咏春训练札记",
+      "str_pl": "知遥的叶系咏春训练札记"
+    },
+    "price": 20000,
+    "price_postapoc": 4500,
+    "description": "梁知遥整理的私人训练札记。正文先简要介绍咏春的流传脉络。常见传说会提到五枚师太，严咏春和红船戏班，这些故事在师门文化中意义很大，但难以逐条考证。较清晰的历史，是咏春在广东民间长期流传，后来由叶问在香港公开授拳，推动这一支系广泛传播。札记又专门记下李小龙早年学习咏春，赴美后继续研究拳击，击剑，摔跤和体能训练，并据此提出强调截击，简洁，直接和个人验证的截拳道。后半部分按训练内容分章，先写小念头，寻桥，标指三套拳法，再写黐手，木人桩，八斩刀和六点半棍等训练。书中把小念头解释为校正身形，肘线和中线，把寻桥解释为进入，贴靠和改变距离，把标指解释为在结构被打乱时迅速夺回主动。黐手用于训练触觉和听劲，木人桩用于检查角度和步法，八斩刀用于训练双手协同和贴身器械感，六点半棍用于训练中线，步法和整劲。页边还有很多关于喂招，对抗和护具训练的笔记，反复提醒读者，咏春不能只停留在套路和口号上，必须放回真实压力中检验。这本札记不能代替正式师承，但足以让已有近战基础的人循序学习，并掌握这套经过整理的叶系咏春。",
+    "martial_art": "style_wc_rework_ipman",
+    "intelligence": 12,
+    "time": "45 m",
+    "skill": "melee",
+    "required_level": 3,
+    "extend": {
+      "flags": [
+        "TRADER_KEEP"
+      ]
+    }
+  }
+]

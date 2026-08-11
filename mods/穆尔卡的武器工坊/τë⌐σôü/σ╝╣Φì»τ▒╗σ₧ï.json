@@ -1,0 +1,50 @@
+[
+  {
+    "type": "ammunition_type",
+    "id": "939",
+    "name": "9x39mm弹",
+    "default": "939"
+  },
+  {
+    "type": "ammunition_type",
+    "id": "145114",
+    "name": "14.5x114mm弹",
+    "default": "145114"
+  },
+  {
+    "type": "ammunition_type",
+    "id": "127108",
+    "name": "12.7x108mm弹",
+    "default": "127108"
+  },
+  {
+    "type": "ammunition_type",
+    "id": "737_cta",
+    "name": "7.37x40mm 埋头弹",
+    "default": "5C3"
+  },
+  {
+    "type": "ammunition_type",
+    "id": "79257",
+    "name": "7.92x57mm 毛瑟弹",
+    "default": "79257_fmj"
+  },
+  {
+    "type": "ammunition_type",
+    "id": "408_ct",
+    "name": ".408 CheyTac弹",
+    "default": "408_ct_ball"
+  },
+  {
+    "type": "ammunition_type",
+    "id": "23mm",
+    "name": "23x75mmR弹",
+    "default": "23mm_shot"
+  },
+  {
+    "type": "ammunition_type",
+    "id": "em_bolt",
+    "name": "电磁钢针",
+    "default": "em_bolt"
+  }
+]

@@ -1,0 +1,603 @@
+[
+  {
+    "type": "item_group",
+    "id": "MURKA_CBN_NEW_WEAPONS",
+    "subtype": "distribution",
+    "entries": [
+      {
+        "item": "9a91",
+        "prob": 20
+      },
+      {
+        "item": "ac556",
+        "prob": 20
+      },
+      {
+        "item": "bulldog_sar",
+        "prob": 20
+      },
+      {
+        "item": "bulldog_smg",
+        "prob": 20
+      },
+      {
+        "item": "carbon_rifle",
+        "prob": 20
+      },
+      {
+        "item": "cews_28",
+        "prob": 20
+      },
+      {
+        "item": "cews_29",
+        "prob": 20
+      },
+      {
+        "item": "dp_28",
+        "prob": 20
+      },
+      {
+        "item": "ga23sg",
+        "prob": 20
+      },
+      {
+        "item": "gasc",
+        "prob": 20
+      },
+      {
+        "item": "gaspgl",
+        "prob": 20
+      },
+      {
+        "item": "hk_xm8",
+        "prob": 20
+      },
+      {
+        "item": "hout_mosin",
+        "prob": 20
+      },
+      {
+        "item": "krbk308",
+        "prob": 20
+      },
+      {
+        "item": "m1919",
+        "prob": 20
+      },
+      {
+        "item": "mss_r22",
+        "prob": 20
+      },
+      {
+        "item": "phzg50",
+        "prob": 20
+      },
+      {
+        "item": "ptrk",
+        "prob": 20
+      },
+      {
+        "item": "ptrkvk",
+        "prob": 20
+      },
+      {
+        "item": "rpd",
+        "prob": 20
+      },
+      {
+        "item": "sig_mpx",
+        "prob": 20
+      },
+      {
+        "item": "tnks_hr",
+        "prob": 20
+      },
+      {
+        "item": "trk_ar",
+        "prob": 20
+      },
+      {
+        "item": "zagl40",
+        "prob": 20
+      },
+      {
+        "item": "viking_shotgun",
+        "prob": 18
+      },
+      {
+        "item": "scgs_chimera",
+        "prob": 8
+      },
+      {
+        "item": "gavk_762",
+        "prob": 12
+      },
+      {
+        "item": "arek_pdr",
+        "prob": 12
+      },
+      {
+        "item": "sa58_osw",
+        "prob": 10
+      },
+      {
+        "item": "g3ka4",
+        "prob": 10
+      },
+      {
+        "item": "vssa",
+        "prob": 8
+      },
+      {
+        "item": "csls7",
+        "prob": 15
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "MURKA_CBN_NEW_MAGAZINES",
+    "subtype": "distribution",
+    "entries": [
+      {
+        "item": "3006_belt",
+        "prob": 30
+      },
+      {
+        "item": "308_akmag",
+        "prob": 30
+      },
+      {
+        "item": "dp28_47",
+        "prob": 30
+      },
+      {
+        "item": "mpx_357_drum",
+        "prob": 30
+      },
+      {
+        "item": "mpx_357_mag",
+        "prob": 30
+      },
+      {
+        "item": "mpx_40_drum",
+        "prob": 30
+      },
+      {
+        "item": "mpx_40_mag",
+        "prob": 30
+      },
+      {
+        "item": "mpx_9_drum",
+        "prob": 30
+      },
+      {
+        "item": "mpx_9_mag",
+        "prob": 30
+      },
+      {
+        "item": "mss_big_drum",
+        "prob": 30
+      },
+      {
+        "item": "mss_drum",
+        "prob": 30
+      },
+      {
+        "item": "mss_mag",
+        "prob": 30
+      },
+      {
+        "item": "ptrk_drum",
+        "prob": 30
+      },
+      {
+        "item": "ptrk_mag",
+        "prob": 30
+      },
+      {
+        "item": "rpd_100",
+        "prob": 30
+      },
+      {
+        "item": "csls7_30",
+        "prob": 30
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "MURKA_CBN_NEW_AMMO",
+    "subtype": "distribution",
+    "entries": [
+      {
+        "item": "25mm_apds",
+        "prob": 35
+      },
+      {
+        "item": "25mm_hei",
+        "prob": 35
+      },
+      {
+        "item": "25mm_slug",
+        "prob": 35
+      },
+      {
+        "item": "408_ct_ap",
+        "prob": 35
+      },
+      {
+        "item": "545_7n6",
+        "prob": 35
+      },
+      {
+        "item": "556_m193",
+        "prob": 35
+      },
+      {
+        "item": "76254_lps",
+        "prob": 35
+      },
+      {
+        "item": "762_51_m61",
+        "prob": 35
+      },
+      {
+        "item": "9mm_m39b",
+        "prob": 35
+      },
+      {
+        "item": "shot_85mag",
+        "prob": 35
+      },
+      {
+        "item": "762bp",
+        "prob": 35
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "MURKA_CBN_NEW_GEAR",
+    "subtype": "distribution",
+    "//": "仅含未启动的防护与携行装备；不再混入枪械配件、手榴弹或启动态装备。",
+    "entries": [
+      {
+        "item": "ammo_satchel_leg",
+        "prob": 15
+      },
+      {
+        "item": "ch1_helmet",
+        "prob": 15
+      },
+      {
+        "item": "ch2_helmet",
+        "prob": 15
+      },
+      {
+        "item": "cu2_suit",
+        "prob": 15
+      },
+      {
+        "item": "da30l_vest",
+        "prob": 15
+      },
+      {
+        "item": "da32_vest",
+        "prob": 15
+      },
+      {
+        "item": "cornerstone_armor",
+        "prob": 15
+      },
+      {
+        "item": "cornerstone_helmet",
+        "prob": 15
+      },
+      {
+        "item": "ecu3_suit",
+        "prob": 15
+      },
+      {
+        "item": "chsh",
+        "prob": 5
+      },
+      {
+        "item": "da68sh_vest",
+        "prob": 3
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "MURKA_CBN_NEW_GUNMODS",
+    "subtype": "distribution",
+    "//": "供枪匠与枪械配件刷新使用。",
+    "entries": [
+      {
+        "item": "bcrf_sp",
+        "prob": 15
+      },
+      {
+        "item": "cmr_scope",
+        "prob": 15
+      },
+      {
+        "item": "grv24_stock",
+        "prob": 15
+      },
+      {
+        "item": "mpx_357_bore",
+        "prob": 15
+      },
+      {
+        "item": "mpx_40_bore",
+        "prob": 15
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "MURKA_CBN_NEW_THROWABLES",
+    "subtype": "distribution",
+    "//": "仅生成未激活的投掷物。",
+    "entries": [
+      {
+        "item": "cluster_grenade",
+        "prob": 15
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "guns_rifle_obscure",
+    "copy-from": "guns_rifle_obscure",
+    "extend": {
+      "items": [
+        [
+          "9a91",
+          3
+        ],
+        [
+          "ac556",
+          3
+        ],
+        [
+          "bulldog_sar",
+          3
+        ],
+        [
+          "carbon_rifle",
+          3
+        ],
+        [
+          "cews_28",
+          3
+        ],
+        [
+          "cews_29",
+          3
+        ],
+        [
+          "dp_28",
+          3
+        ],
+        [
+          "gasc",
+          3
+        ],
+        [
+          "gaspgl",
+          3
+        ],
+        [
+          "hk_xm8",
+          3
+        ],
+        [
+          "hout_mosin",
+          3
+        ],
+        [
+          "krbk308",
+          3
+        ],
+        [
+          "m1919",
+          3
+        ],
+        [
+          "mss_r22",
+          3
+        ],
+        [
+          "phzg50",
+          3
+        ],
+        [
+          "ptrk",
+          3
+        ],
+        [
+          "ptrkvk",
+          3
+        ],
+        [
+          "rpd",
+          3
+        ],
+        [
+          "sig_mpx",
+          3
+        ],
+        [
+          "tnks_hr",
+          3
+        ],
+        [
+          "trk_ar",
+          3
+        ],
+        [
+          "zagl40",
+          3
+        ]
+      ],
+      "entries": [
+        {
+          "item": "ak109c",
+          "prob": 10
+        },
+        {
+          "item": "ash12",
+          "prob": 10
+        },
+        {
+          "item": "fal_308",
+          "prob": 10
+        },
+        {
+          "item": "qbz",
+          "prob": 10
+        },
+        {
+          "item": "qbz191",
+          "prob": 10
+        },
+        {
+          "item": "rpk16",
+          "prob": 10
+        }
+      ]
+    },
+    "subtype": "distribution"
+  },
+  {
+    "type": "item_group",
+    "id": "guns_smg_obscure",
+    "copy-from": "guns_smg_obscure",
+    "extend": {
+      "items": [
+        [
+          "bulldog_smg",
+          3
+        ]
+      ]
+    },
+    "subtype": "distribution"
+  },
+  {
+    "type": "item_group",
+    "id": "guns_shotgun_obscure",
+    "copy-from": "guns_shotgun_obscure",
+    "extend": {
+      "items": [
+        [
+          "ga23sg",
+          3
+        ]
+      ],
+      "entries": [
+        {
+          "item": "MP153_M",
+          "prob": 10
+        },
+        {
+          "item": "ks23",
+          "prob": 10
+        }
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "mags_obscure",
+    "copy-from": "mags_obscure",
+    "extend": {
+      "items": [
+        [
+          "3006_belt",
+          5
+        ],
+        [
+          "308_akmag",
+          5
+        ],
+        [
+          "dp28_47",
+          5
+        ],
+        [
+          "mpx_357_drum",
+          5
+        ],
+        [
+          "mpx_357_mag",
+          5
+        ],
+        [
+          "mpx_40_drum",
+          5
+        ],
+        [
+          "mpx_40_mag",
+          5
+        ],
+        [
+          "mpx_9_drum",
+          5
+        ],
+        [
+          "mpx_9_mag",
+          5
+        ],
+        [
+          "mss_big_drum",
+          5
+        ],
+        [
+          "mss_drum",
+          5
+        ],
+        [
+          "mss_mag",
+          5
+        ],
+        [
+          "ptrk_drum",
+          5
+        ],
+        [
+          "ptrk_mag",
+          5
+        ],
+        [
+          "rpd_100",
+          5
+        ]
+      ],
+      "entries": [
+        {
+          "item": "rpk16_75",
+          "prob": 10
+        },
+        {
+          "item": "9a91_20",
+          "prob": 10
+        },
+        {
+          "item": "ash_20",
+          "prob": 10
+        },
+        {
+          "item": "95_30",
+          "prob": 10
+        },
+        {
+          "item": "191_30",
+          "prob": 10
+        }
+      ]
+    }
+  }
+]

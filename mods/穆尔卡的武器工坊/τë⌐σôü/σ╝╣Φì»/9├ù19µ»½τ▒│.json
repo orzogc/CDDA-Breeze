@@ -1,0 +1,70 @@
+[
+  {
+    "id": "9mmap6.3",
+    "copy-from": "9mm",
+    "looks_like": "9mmP",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "9x19mm AP6.3 弹"
+    },
+    "description": "一种穿甲的9x19mm子弹，有着比普通9mm更高的穿透性。",
+    "price_postapoc": 1300,
+    "flags": [
+      "IRREPLACEABLE_CONSUMABLE"
+    ],
+    "material": [
+      "brass",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "yellow",
+    "count": 50,
+    "stack_size": 50,
+    "ammo_type": "9mm",
+    "casing": "9mm_casing",
+    "range": 16,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 28,
+      "armor_penetration": 10
+    },
+    "dispersion": 50,
+    "recoil": 600,
+    "effects": [
+      "COOKOFF"
+    ],
+    "longest_side": "8 cm"
+  },
+  {
+    "id": "reloaded_9mmap6.3",
+    "copy-from": "9mmap6.3",
+    "looks_like": "9mmP",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "9x19mm AP6.3 弹（复装）"
+    },
+    "description": "复装后的9mm AP6.3子弹，性能稍差。",
+    "proportional": {
+      "price": 0.7,
+      "damage": {
+        "damage_type": "bullet",
+        "amount": 0.9
+      },
+      "dispersion": 1.1
+    },
+    "extend": {
+      "effects": [
+        "RECYCLED"
+      ]
+    },
+    "delete": {
+      "effects": [
+        "NEVER_MISFIRES"
+      ],
+      "flags": [
+        "IRREPLACEABLE_CONSUMABLE"
+      ]
+    },
+    "longest_side": "8 cm"
+  }
+]

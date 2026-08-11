@@ -1,0 +1,215 @@
+[
+  {
+    "type": "martial_art",
+    "id": "style_brawling",
+    "copy-from": "style_brawling",
+    "static_buffs": [
+      {
+        "id": "buff_brawling_rework_block",
+        "name": "强化格挡",
+        "description": "长期的近身斗殴经验，使你能够在混乱中多挡住一次攻击。\n\n每回合额外获得1次格挡。",
+        "unarmed_allowed": true,
+        "melee_allowed": true,
+        "skill_requirements": [
+          {
+            "name": "melee",
+            "level": 5
+          }
+        ],
+        "bonus_blocks": 1
+      }
+    ],
+    "onpause_buffs": [
+      {
+        "id": "buff_brawling_rework_onpause",
+        "name": "准备击打",
+        "description": "你稍作停顿，站稳脚步并观察对手，下一轮攻击会更加准确。\n\n每层命中+1，持续2回合，最多叠加2层。",
+        "unarmed_allowed": true,
+        "melee_allowed": true,
+        "skill_requirements": [
+          {
+            "name": "melee",
+            "level": 1
+          }
+        ],
+        "max_stacks": 2,
+        "buff_duration": 2,
+        "flat_bonuses": [
+          {
+            "stat": "hit",
+            "scale": 1.0
+          }
+        ]
+      }
+    ],
+    "techniques": [
+      "tec_brawling_rework_feint_unarmed",
+      "tec_brawling_rework_feint_melee",
+      "tec_brawling_rework_power",
+      "tec_brawling_rework_trip",
+      "tec_brawling_rework_break_unarmed",
+      "tec_brawling_rework_break_melee",
+      "tec_brawling_rework_disarm_unarmed",
+      "tec_brawling_rework_disarm_melee"
+    ]
+  },
+  {
+    "type": "technique",
+    "id": "tec_brawling_rework_feint_unarmed",
+    "name": "佯攻",
+    "messages": [
+      "你朝%s虚晃一击",
+      "<npcname>朝%s虚晃一击"
+    ],
+    "skill_requirements": [
+      {
+        "name": "unarmed",
+        "level": 3
+      }
+    ],
+    "unarmed_allowed": true,
+    "defensive": true,
+    "miss_recovery": true
+  },
+  {
+    "type": "technique",
+    "id": "tec_brawling_rework_feint_melee",
+    "name": "佯攻",
+    "messages": [
+      "你用手中武器朝%s虚晃一击",
+      "<npcname>用手中武器朝%s虚晃一击"
+    ],
+    "skill_requirements": [
+      {
+        "name": "melee",
+        "level": 3
+      }
+    ],
+    "melee_allowed": true,
+    "defensive": true,
+    "miss_recovery": true
+  },
+  {
+    "type": "technique",
+    "id": "tec_brawling_rework_power",
+    "name": "全力一击",
+    "messages": [
+      "你全力猛击%s，将其打得踉跄后退",
+      "<npcname>全力猛击%s，将其打得踉跄后退"
+    ],
+    "skill_requirements": [
+      {
+        "name": "unarmed",
+        "level": 4
+      }
+    ],
+    "unarmed_allowed": true,
+    "crit_tec": true,
+    "knockback_dist": 1,
+    "stun_dur": 1,
+    "mult_bonuses": [
+      {
+        "stat": "damage",
+        "type": "bash",
+        "scale": 1.2
+      },
+      {
+        "stat": "damage",
+        "type": "cut",
+        "scale": 1.2
+      },
+      {
+        "stat": "damage",
+        "type": "stab",
+        "scale": 1.2
+      }
+    ]
+  },
+  {
+    "type": "technique",
+    "id": "tec_brawling_rework_trip",
+    "name": "绊倒",
+    "messages": [
+      "你抓住机会绊倒了%s",
+      "<npcname>抓住机会绊倒了%s"
+    ],
+    "skill_requirements": [
+      {
+        "name": "unarmed",
+        "level": 5
+      }
+    ],
+    "unarmed_allowed": true,
+    "down_dur": 1
+  },
+  {
+    "type": "technique",
+    "id": "tec_brawling_rework_break_unarmed",
+    "name": "挣脱",
+    "messages": [
+      "%s试图抓住你，但你猛力挣脱！",
+      "%s试图抓住<npcname>，但被其挣脱！"
+    ],
+    "skill_requirements": [
+      {
+        "name": "unarmed",
+        "level": 6
+      }
+    ],
+    "unarmed_allowed": true,
+    "defensive": true,
+    "grab_break": true
+  },
+  {
+    "type": "technique",
+    "id": "tec_brawling_rework_break_melee",
+    "name": "挣脱",
+    "messages": [
+      "%s试图抓住你，但你借助手中武器猛力挣脱！",
+      "%s试图抓住<npcname>，但被其借助武器挣脱！"
+    ],
+    "skill_requirements": [
+      {
+        "name": "melee",
+        "level": 6
+      }
+    ],
+    "melee_allowed": true,
+    "defensive": true,
+    "grab_break": true
+  },
+  {
+    "type": "technique",
+    "id": "tec_brawling_rework_disarm_unarmed",
+    "name": "缴械",
+    "messages": [
+      "你击打%s的手腕，将其武器打落",
+      "<npcname>击打%s的手腕，将其武器打落"
+    ],
+    "skill_requirements": [
+      {
+        "name": "unarmed",
+        "level": 6
+      }
+    ],
+    "unarmed_allowed": true,
+    "disarms": true
+  },
+  {
+    "type": "technique",
+    "id": "tec_brawling_rework_disarm_melee",
+    "name": "缴械",
+    "messages": [
+      "你用武器撞开%s的握持，将其武器打落",
+      "<npcname>用武器撞开%s的握持，将其武器打落"
+    ],
+    "skill_requirements": [
+      {
+        "name": "melee",
+        "level": 6
+      }
+    ],
+    "melee_allowed": true,
+    "disarms": true
+  }
+]

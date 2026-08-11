@@ -1,0 +1,425 @@
+[
+  {
+    "id": "12755",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "12.7x55mm PS12 S 弹"
+    },
+    "description": "ASH-12使用的大口径弹药,后坐力并没有想象的那么吓人,可以对无甲以及轻甲单位造成毁灭性的伤害.",
+    "weight": "20 g",
+    "volume": "140 ml",
+    "price": 1500,
+    "price_postapoc": 4120,
+    "flags": [
+      "IRREPLACEABLE_CONSUMABLE"
+    ],
+    "material": [
+      "brass",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "yellow",
+    "count": 50,
+    "stack_size": 50,
+    "ammo_type": "12755",
+    "casing": "12755_casing",
+    "range": 30,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 75,
+      "armor_penetration": 4
+    },
+    "dispersion": 70,
+    "recoil": 4550,
+    "effects": [
+      "COOKOFF",
+      "NEVER_MISFIRES"
+    ]
+  },
+  {
+    "id": "5842",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "5.8x42mm DBP87 弹"
+    },
+    "description": "5.8x42mm步枪弹,适用于共和国生产的新式突击步枪.",
+    "weight": "13 g",
+    "volume": "110 ml",
+    "price": 650,
+    "price_postapoc": 320,
+    "flags": [
+      "IRREPLACEABLE_CONSUMABLE"
+    ],
+    "material": [
+      "brass",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "yellow",
+    "count": 50,
+    "stack_size": 50,
+    "ammo_type": "5842",
+    "casing": "5842_casing",
+    "range": 37,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 42,
+      "armor_penetration": 5
+    },
+    "dispersion": 30,
+    "recoil": 1550,
+    "effects": [
+      "COOKOFF"
+    ]
+  },
+  {
+    "id": "939_fmj",
+    "looks_like": "939",
+    "type": "AMMO",
+    "copy-from": "939",
+    "name": {
+      "str_sp": "9x39mm FMJ 弹"
+    },
+    "description": "9x39mm FMJ 弹是一种标准的全金属被甲弹，内置铅弹芯，常用于民用射击。",
+    "price": "400 cent",
+    "price_postapoc": "9 USD",
+    "proportional": {
+      "recoil": 0.9
+    },
+    "speed": 305,
+    "loudness": 150,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 50,
+      "armor_penetration": 17
+    },
+    "longest_side": "6 cm"
+  },
+  {
+    "id": "762_fmj",
+    "looks_like": "762_m43",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "7.62x39mm HP 弹"
+    },
+    "description": "一种用于民用和狩猎用途的7.62x39mm空尖弹，由猎鹿人户外用品生产。",
+    "weight": "7 g",
+    "volume": "60 ml",
+    "price_postapoc": 1200,
+    "flags": [
+      "IRREPLACEABLE_CONSUMABLE"
+    ],
+    "material": [
+      "steel",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "dark_gray",
+    "count": 50,
+    "stack_size": 50,
+    "ammo_type": "762",
+    "casing": "762_casing",
+    "range": 32,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 60,
+      "armor_penetration": 3
+    },
+    "dispersion": 40,
+    "recoil": 1800,
+    "effects": [
+      "COOKOFF"
+    ]
+  },
+  {
+    "id": "762_sp",
+    "looks_like": "762_m43",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "7.62x39mm SP 弹"
+    },
+    "description": "一种用于民用和狩猎用途的7.62x39mm铅芯软尖弹，由猎鹿人户外用品生产。",
+    "weight": "7 g",
+    "volume": "60 ml",
+    "price_postapoc": 1480,
+    "flags": [
+      "IRREPLACEABLE_CONSUMABLE"
+    ],
+    "material": [
+      "steel",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "dark_gray",
+    "count": 50,
+    "stack_size": 50,
+    "ammo_type": "762",
+    "casing": "762_casing",
+    "range": 36,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 56,
+      "armor_penetration": 5
+    },
+    "dispersion": 35,
+    "recoil": 1800,
+    "effects": [
+      "COOKOFF"
+    ]
+  },
+  {
+    "id": "545_fmj",
+    "type": "AMMO",
+    "looks_like": "545",
+    "name": {
+      "str_sp": "5.45x39mm HP 弹"
+    },
+    "description": "一种用于民用和狩猎用途的5.45x39mm空尖弹，由猎鹿人户外用品生产。",
+    "weight": "5 g",
+    "volume": "50 ml",
+    "price_postapoc": 1000,
+    "flags": [
+      "IRREPLACEABLE_CONSUMABLE"
+    ],
+    "material": [
+      "steel",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "yellow",
+    "count": 50,
+    "stack_size": 50,
+    "ammo_type": "545x39",
+    "casing": "545_casing",
+    "range": 33,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 48,
+      "armor_penetration": 1
+    },
+    "dispersion": 25,
+    "recoil": 1300,
+    "effects": [
+      "COOKOFF"
+    ]
+  },
+  {
+    "id": "762_mai_ap",
+    "looks_like": "762_m43",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "7.62x39mm MAI AP 弹"
+    },
+    "description": "是一种7.62x39mm MAI AP弹，带有两部分式穿甲弹，子弹由一个弹托和一个碳化钨穿甲弹体组成,装在一个钢壳中。该弹头由MAI设计，以提高7.62x39mm口径的穿透能力，由于其初速和独特的设计，它能够穿透基本和中间弹道体保护，提供出色的结果。",
+    "weight": "7 g",
+    "volume": "60 ml",
+    "price_postapoc": 3100,
+    "flags": [
+      "IRREPLACEABLE_CONSUMABLE"
+    ],
+    "material": [
+      "steel",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "dark_gray",
+    "count": 50,
+    "stack_size": 50,
+    "ammo_type": "762",
+    "casing": "762_casing",
+    "range": 36,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 53,
+      "armor_penetration": 12
+    },
+    "dispersion": 35,
+    "recoil": 2200,
+    "effects": [
+      "COOKOFF"
+    ]
+  },
+  {
+    "id": "300blkap",
+    "looks_like": "300blk",
+    "type": "AMMO",
+    "name": {
+      "str": ".300 BLK AP 弹"
+    },
+    "description": ".300黑弹(7.62x35mm)，装有一枚8.4克穿甲弹，子弹来自7.62x51mm北约M80A1弹药筒，由一枚钢穿透器尖端套在铜合金芯上，黄铜壳内有一枚铜半夹套。尽管子弹在全威力弹壳中使用时具有自身的特性，但当转移到中间弹壳时，这些特性会受到影响,然而，除了能够在撞击后对目标造成重大不利影响之外，子弹仍具有穿透基本和中间防弹体的能力，其设计还允许其在STANAG 5.56x45mm北约弹匣中使用而不会出现任何问题。",
+    "weight": "6 g",
+    "volume": "50 ml",
+    "price": 1650,
+    "price_postapoc": 4500,
+    "flags": [
+      "IRREPLACEABLE_CONSUMABLE"
+    ],
+    "material": [
+      "brass",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "yellow",
+    "count": 50,
+    "stack_size": 50,
+    "ammo_type": "300blk",
+    "casing": "300blk_casing",
+    "range": 45,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 51,
+      "armor_penetration": 10
+    },
+    "dispersion": 25,
+    "recoil": 2000,
+    "effects": [
+      "COOKOFF"
+    ]
+  },
+  {
+    "id": "545_bs",
+    "type": "AMMO",
+    "looks_like": "545",
+    "name": {
+      "str_sp": "5.45x39mm BS gs 弹"
+    },
+    "//": "内容源自Icecoon武器包并已并入主线。",
+    "description": "5.45x39mm BS gs(7N24)弹药，4.1克穿甲弹，尖端碳化钨芯，铅基，双金属护套，装在钢壳内。这种BS子弹(Broneboynyy Serdechnik--“穿甲芯”)由TsNIIITochMash公司于1998年开发，通过能够穿入基本和中间弹道体防护装置，大大提高了俄罗斯5.45x39mm口径武器的穿透能力，此外，尽管与其他弹药相比，其初速相对较低，但它还能在某些特殊防护型号下提供出色的效果。",
+    "weight": "5 g",
+    "volume": "50 ml",
+    "price": 1550,
+    "price_postapoc": 2900,
+    "flags": [
+      "IRREPLACEABLE_CONSUMABLE"
+    ],
+    "material": [
+      "steel",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "yellow",
+    "count": 50,
+    "stack_size": 50,
+    "ammo_type": "545x39",
+    "casing": "545_casing",
+    "range": 37,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 45,
+      "armor_penetration": 9
+    },
+    "dispersion": 20,
+    "recoil": 1600,
+    "effects": [
+      "COOKOFF"
+    ]
+  },
+  {
+    "id": "9mmpbp",
+    "looks_like": "9mmP",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "9x19mm PBP gzh 弹"
+    },
+    "description": "9x19mm Parabellum PBP gzh(7N31)弹，4.1克穿甲弹，淬硬碳钢芯，圆柱形铝包壳，双金属半护套，装在双金属外壳中。这种子弹的设计是基于1990年代末各种穿甲手枪子弹的经验，目的是压制装备有基本和中级弹道身体保护的敌方人员,此外还能够穿破轻型掩体，并具有突出的初速。",
+    "weight": "3 g",
+    "volume": "30 ml",
+    "price_postapoc": 2200,
+    "flags": [
+      "IRREPLACEABLE_CONSUMABLE"
+    ],
+    "material": [
+      "brass",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "yellow",
+    "count": 50,
+    "stack_size": 50,
+    "ammo_type": "9mm",
+    "casing": "9mm_casing",
+    "range": 24,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 33,
+      "armor_penetration": 9
+    },
+    "dispersion": 50,
+    "recoil": 500,
+    "effects": [
+      "COOKOFF"
+    ]
+  },
+  {
+    "id": "556_995",
+    "type": "AMMO",
+    "looks_like": "556",
+    "name": {
+      "str_sp": "5.56 NATO M995 弹"
+    },
+    "description": "5.56x45mm北约M995弹，3.4克穿甲弹，碳化钨穿甲弹，铝底，铜套，黄铜外壳。这种弹药筒是在20世纪90年代设计的，为美国陆军人员提供了穿透轻型掩体和轻型车辆的能力,以及基本和中级弹道体防护，此外还提供了针对某些专门防护型号的出色效果。",
+    "weight": "6 g",
+    "volume": "50 ml",
+    "price_postapoc": 3100,
+    "flags": [
+      "IRREPLACEABLE_CONSUMABLE"
+    ],
+    "material": [
+      "brass",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "yellow",
+    "count": 50,
+    "stack_size": 50,
+    "ammo_type": "223",
+    "casing": "223_casing",
+    "range": 36,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 43,
+      "armor_penetration": 10
+    },
+    "dispersion": 30,
+    "recoil": 1700,
+    "effects": [
+      "COOKOFF"
+    ]
+  },
+  {
+    "id": "762_51_bcp",
+    "type": "AMMO",
+    "looks_like": "762_51",
+    "name": {
+      "str_sp": "7.62x51mm BCP FMJ 弹"
+    },
+    "description": "一枚BCP制造的7.62x51mm子弹，漆钢外壳内装有10.9克双金属全金属夹套铅芯子弹。用于狩猎，家庭防御和目标练习，尽管它的设计很基础，不过这个子弹依旧能够提供一个杰出的停止效果，以及能够穿透基本的防弹衣。",
+    "weight": "7 g",
+    "volume": "70 ml",
+    "price_postapoc": 2500,
+    "flags": [
+      "IRREPLACEABLE_CONSUMABLE"
+    ],
+    "material": [
+      "brass",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "yellow",
+    "count": 50,
+    "stack_size": 50,
+    "ammo_type": "308",
+    "casing": "308_casing",
+    "range": 65,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 62,
+      "armor_penetration": 5
+    },
+    "dispersion": 20,
+    "recoil": 3300,
+    "effects": [
+      "COOKOFF"
+    ]
+  }
+]

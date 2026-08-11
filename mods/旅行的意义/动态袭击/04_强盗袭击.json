@@ -1,0 +1,1314 @@
+[
+  {
+    "type": "item_group",
+    "id": "TRAVEL_RAID_BANDIT_COMMON_WORN",
+    "subtype": "collection",
+    "entries": [
+      {
+        "item": "tshirt"
+      },
+      {
+        "item": "pants_cargo"
+      },
+      {
+        "item": "boots"
+      },
+      {
+        "item": "hoodie"
+      },
+      {
+        "item": "gloves_fingerless"
+      },
+      {
+        "item": "bandana"
+      },
+      {
+        "item": "backpack"
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "TRAVEL_RAID_BANDIT_RIFLE_WORN",
+    "subtype": "collection",
+    "entries": [
+      {
+        "item": "under_armor"
+      },
+      {
+        "item": "pants_army"
+      },
+      {
+        "item": "boots_combat"
+      },
+      {
+        "item": "army_top"
+      },
+      {
+        "item": "kevlar"
+      },
+      {
+        "item": "tacvest"
+      },
+      {
+        "item": "glasses_safety"
+      },
+      {
+        "item": "backpack"
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "TRAVEL_RAID_BANDIT_THUG_WEAPON",
+    "subtype": "distribution",
+    "entries": [
+      {
+        "item": "crowbar",
+        "prob": 55
+      },
+      {
+        "item": "machete",
+        "prob": 45
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "TRAVEL_RAID_BANDIT_GUNNER_WEAPON",
+    "subtype": "collection",
+    "entries": [
+      {
+        "item": "m9",
+        "ammo-item": "9mm",
+        "charges": 15
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "TRAVEL_RAID_BANDIT_RIFLE_WEAPON",
+    "subtype": "collection",
+    "entries": [
+      {
+        "item": "m4_carbine",
+        "ammo-item": "556",
+        "charges": 30
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "TRAVEL_RAID_BANDIT_THUG_CARRY",
+    "subtype": "collection",
+    "entries": [
+      {
+        "item": "bandages",
+        "count": [
+          1,
+          2
+        ]
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "TRAVEL_RAID_BANDIT_GUNNER_CARRY",
+    "subtype": "collection",
+    "entries": [
+      {
+        "item": "m9mag",
+        "ammo-item": "9mm",
+        "charges": 15
+      },
+      {
+        "item": "m9mag",
+        "ammo-item": "9mm",
+        "charges": 15
+      },
+      {
+        "item": "bandages"
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "TRAVEL_RAID_BANDIT_RIFLE_CARRY",
+    "subtype": "collection",
+    "entries": [
+      {
+        "item": "stanag30",
+        "ammo-item": "556",
+        "charges": 30
+      },
+      {
+        "item": "stanag30",
+        "ammo-item": "556",
+        "charges": 30
+      },
+      {
+        "item": "bandages"
+      }
+    ]
+  },
+  {
+    "type": "npc_class",
+    "id": "NC_TRAVEL_RAID_BANDIT_THUG",
+    "name": {
+      "str": "强盗打手"
+    },
+    "job_description": "我靠近以后解决问题。",
+    "common": false,
+    "sells_belongings": false,
+    "worn_override": "TRAVEL_RAID_BANDIT_COMMON_WORN",
+    "weapon_override": "TRAVEL_RAID_BANDIT_THUG_WEAPON",
+    "carry_override": "TRAVEL_RAID_BANDIT_THUG_CARRY",
+    "skills": [
+      {
+        "skill": "melee",
+        "level": {
+          "rng": [
+            4,
+            4
+          ]
+        }
+      },
+      {
+        "skill": "bashing",
+        "level": {
+          "rng": [
+            4,
+            4
+          ]
+        }
+      },
+      {
+        "skill": "cutting",
+        "level": {
+          "rng": [
+            3,
+            3
+          ]
+        }
+      },
+      {
+        "skill": "dodge",
+        "level": {
+          "rng": [
+            3,
+            3
+          ]
+        }
+      },
+      {
+        "skill": "throw",
+        "level": {
+          "rng": [
+            2,
+            2
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "type": "npc_class",
+    "id": "NC_TRAVEL_RAID_BANDIT_GUNNER",
+    "name": {
+      "str": "强盗枪手"
+    },
+    "job_description": "我用手枪压住目标。",
+    "common": false,
+    "sells_belongings": false,
+    "worn_override": "TRAVEL_RAID_BANDIT_COMMON_WORN",
+    "weapon_override": "TRAVEL_RAID_BANDIT_GUNNER_WEAPON",
+    "carry_override": "TRAVEL_RAID_BANDIT_GUNNER_CARRY",
+    "skills": [
+      {
+        "skill": "gun",
+        "level": {
+          "rng": [
+            5,
+            5
+          ]
+        }
+      },
+      {
+        "skill": "pistol",
+        "level": {
+          "rng": [
+            5,
+            5
+          ]
+        }
+      },
+      {
+        "skill": "dodge",
+        "level": {
+          "rng": [
+            3,
+            3
+          ]
+        }
+      },
+      {
+        "skill": "melee",
+        "level": {
+          "rng": [
+            2,
+            2
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "type": "npc_class",
+    "id": "NC_TRAVEL_RAID_BANDIT_RIFLEMAN",
+    "name": {
+      "str": "强盗步枪手"
+    },
+    "job_description": "我负责远距离火力和追击。",
+    "common": false,
+    "sells_belongings": false,
+    "worn_override": "TRAVEL_RAID_BANDIT_RIFLE_WORN",
+    "weapon_override": "TRAVEL_RAID_BANDIT_RIFLE_WEAPON",
+    "carry_override": "TRAVEL_RAID_BANDIT_RIFLE_CARRY",
+    "skills": [
+      {
+        "skill": "gun",
+        "level": {
+          "rng": [
+            6,
+            6
+          ]
+        }
+      },
+      {
+        "skill": "rifle",
+        "level": {
+          "rng": [
+            6,
+            6
+          ]
+        }
+      },
+      {
+        "skill": "dodge",
+        "level": {
+          "rng": [
+            4,
+            4
+          ]
+        }
+      },
+      {
+        "skill": "melee",
+        "level": {
+          "rng": [
+            3,
+            3
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "type": "npc",
+    "id": "TRAVEL_RAID_BANDIT_THUG",
+    "class": "NC_TRAVEL_RAID_BANDIT_THUG",
+    "attitude": 10,
+    "mission": 0,
+    "chat": "TALK_DONE",
+    "faction": "hells_raiders",
+    "name_suffix": "强盗打手",
+    "personality": {
+      "aggression": 10,
+      "bravery": 10,
+      "collector": -10,
+      "altruism": -10
+    },
+    "follower_rules": {
+      "apply_to_all": true,
+      "engagement": "ENGAGE_FREE_FIRE",
+      "aim": "AIM_WHEN_CONVENIENT",
+      "use_guns": false,
+      "use_grenades": false,
+      "use_silent": false,
+      "avoid_friendly_fire": true,
+      "allow_pick_up": false,
+      "allow_bash": true,
+      "allow_sleep": false,
+      "allow_complain": false,
+      "allow_pulp": false,
+      "close_doors": false,
+      "avoid_doors": false,
+      "ignore_noise": false,
+      "forbid_engage": false,
+      "allow_improvised_throwing": false,
+      "never_flee": true,
+      "prefer_guns": false
+    },
+    "str": 11,
+    "dex": 9,
+    "int": 7,
+    "per": 8
+  },
+  {
+    "type": "npc",
+    "id": "TRAVEL_RAID_BANDIT_GUNNER",
+    "class": "NC_TRAVEL_RAID_BANDIT_GUNNER",
+    "attitude": 10,
+    "mission": 0,
+    "chat": "TALK_DONE",
+    "faction": "hells_raiders",
+    "name_suffix": "强盗枪手",
+    "personality": {
+      "aggression": 10,
+      "bravery": 10,
+      "collector": -10,
+      "altruism": -10
+    },
+    "follower_rules": {
+      "apply_to_all": true,
+      "engagement": "ENGAGE_FREE_FIRE",
+      "aim": "AIM_SPRAY",
+      "use_guns": true,
+      "use_grenades": false,
+      "use_silent": false,
+      "avoid_friendly_fire": true,
+      "allow_pick_up": false,
+      "allow_bash": true,
+      "allow_sleep": false,
+      "allow_complain": false,
+      "allow_pulp": false,
+      "close_doors": false,
+      "avoid_doors": false,
+      "ignore_noise": false,
+      "forbid_engage": false,
+      "allow_improvised_throwing": false,
+      "never_flee": true,
+      "prefer_guns": true
+    },
+    "str": 9,
+    "dex": 10,
+    "int": 8,
+    "per": 10
+  },
+  {
+    "type": "npc",
+    "id": "TRAVEL_RAID_BANDIT_RIFLEMAN",
+    "class": "NC_TRAVEL_RAID_BANDIT_RIFLEMAN",
+    "attitude": 10,
+    "mission": 0,
+    "chat": "TALK_DONE",
+    "faction": "hells_raiders",
+    "name_suffix": "强盗步枪手",
+    "personality": {
+      "aggression": 10,
+      "bravery": 10,
+      "collector": -10,
+      "altruism": -10
+    },
+    "follower_rules": {
+      "apply_to_all": true,
+      "engagement": "ENGAGE_FREE_FIRE",
+      "aim": "AIM_PRECISE",
+      "use_guns": true,
+      "use_grenades": false,
+      "use_silent": false,
+      "avoid_friendly_fire": true,
+      "allow_pick_up": false,
+      "allow_bash": true,
+      "allow_sleep": false,
+      "allow_complain": false,
+      "allow_pulp": false,
+      "close_doors": false,
+      "avoid_doors": false,
+      "ignore_noise": false,
+      "forbid_engage": false,
+      "allow_improvised_throwing": false,
+      "never_flee": true,
+      "prefer_guns": true
+    },
+    "str": 10,
+    "dex": 10,
+    "int": 9,
+    "per": 11
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_WARN_BANDIT",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_last_faction"
+          },
+          "=",
+          {
+            "const": 4
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_pending"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_REFRESH_WARNING_TIME"
+        ]
+      },
+      {
+        "u_message": "远处传来短促的口哨和金属碰撞声。有人正在包围这里，他们会在当前设置的预警时间结束后接触。",
+        "type": "warning"
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_START_BANDIT",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_warning_time",
+          "default": "5 minutes"
+        }
+      }
+    ],
+    "//": "第8天起进入四阵营随机池。每次进入预警时读取当前世界的共用袭击预警时间。"
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_START_BANDIT",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_pending"
+        },
+        "==",
+        {
+          "const": 1
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_pending"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "u_message": "几束手电光从黑暗里一闪而过。第一组强盗已经进入这一带。",
+        "type": "bad"
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 41
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SELECT_BANDIT_TIER"
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_41",
+        "time_in_future": "15 minutes"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_SELECT_BANDIT_TIER",
+    "effect": {
+      "run_eocs": [
+        "EOC_TRAVEL_DYNAMIC_SELECT_BANDIT_EARLY",
+        "EOC_TRAVEL_DYNAMIC_SELECT_BANDIT_GROWING",
+        "EOC_TRAVEL_DYNAMIC_SELECT_BANDIT_MATURE"
+      ]
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_SELECT_BANDIT_EARLY",
+    "condition": {
+      "compare_int": [
+        {
+          "time_since_cataclysm": "days"
+        },
+        "<",
+        {
+          "const": 10
+        }
+      ]
+    },
+    "effect": {
+      "run_eocs": [
+        "EOC_TRAVEL_DYNAMIC_BANDIT_EARLY_WAVE1"
+      ]
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_SELECT_BANDIT_GROWING",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "time_since_cataclysm": "days"
+            },
+            ">=",
+            {
+              "const": 10
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "time_since_cataclysm": "days"
+            },
+            "<",
+            {
+              "const": 30
+            }
+          ]
+        }
+      ]
+    },
+    "effect": {
+      "run_eocs": [
+        "EOC_TRAVEL_DYNAMIC_BANDIT_GROWING_WAVE1"
+      ]
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_SELECT_BANDIT_MATURE",
+    "condition": {
+      "compare_int": [
+        {
+          "time_since_cataclysm": "days"
+        },
+        ">=",
+        {
+          "const": 30
+        }
+      ]
+    },
+    "effect": {
+      "run_eocs": [
+        "EOC_TRAVEL_DYNAMIC_BANDIT_MATURE_WAVE1"
+      ]
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_BANDIT_EARLY_WAVE1",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_active"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            "==",
+            {
+              "const": 41
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "u_spawn_npc": "TRAVEL_RAID_BANDIT_THUG",
+        "real_count": 1,
+        "min_radius": 12,
+        "max_radius": 18,
+        "outdoor_only": false
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 42
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_BANDIT_EARLY_WAVE2",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_next_wave_delay",
+          "default": "45 seconds"
+        }
+      }
+    ],
+    "//": "第10天前第一波，一名打手。"
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_BANDIT_EARLY_WAVE2",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_active"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            "==",
+            {
+              "const": 42
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "u_message": "四十五秒过去，第二名强盗从侧面逼近。",
+        "type": "warning"
+      },
+      {
+        "u_spawn_npc": "TRAVEL_RAID_BANDIT_GUNNER",
+        "real_count": 1,
+        "min_radius": 12,
+        "max_radius": 18,
+        "outdoor_only": false
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 44
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_COMPLETE_BANDIT",
+        "time_in_future": "10 minutes"
+      }
+    ],
+    "//": "第10天前第二波，一名手枪手，共两人。"
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_BANDIT_GROWING_WAVE1",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_active"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            "==",
+            {
+              "const": 41
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "u_spawn_npc": "TRAVEL_RAID_BANDIT_THUG",
+        "real_count": 1,
+        "min_radius": 12,
+        "max_radius": 18,
+        "outdoor_only": false
+      },
+      {
+        "u_spawn_npc": "TRAVEL_RAID_BANDIT_GUNNER",
+        "real_count": 1,
+        "min_radius": 12,
+        "max_radius": 18,
+        "outdoor_only": false
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 42
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_BANDIT_GROWING_WAVE2",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_next_wave_delay",
+          "default": "45 seconds"
+        }
+      }
+    ],
+    "//": "第10天到第29天第一波，一名打手和一名手枪手。"
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_BANDIT_GROWING_WAVE2",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_active"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            "==",
+            {
+              "const": 42
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "u_message": "四十五秒过去，第二组强盗从另一方向加入包围。",
+        "type": "warning"
+      },
+      {
+        "u_spawn_npc": "TRAVEL_RAID_BANDIT_GUNNER",
+        "real_count": 1,
+        "min_radius": 12,
+        "max_radius": 18,
+        "outdoor_only": false
+      },
+      {
+        "u_spawn_npc": "TRAVEL_RAID_BANDIT_RIFLEMAN",
+        "real_count": 1,
+        "min_radius": 12,
+        "max_radius": 18,
+        "outdoor_only": false
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 44
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_COMPLETE_BANDIT",
+        "time_in_future": "10 minutes"
+      }
+    ],
+    "//": "第10天到第29天第二波，一名手枪手和一名步枪手，共四人。"
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_BANDIT_MATURE_WAVE1",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_active"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            "==",
+            {
+              "const": 41
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "u_spawn_npc": "TRAVEL_RAID_BANDIT_THUG",
+        "real_count": 1,
+        "min_radius": 12,
+        "max_radius": 18,
+        "outdoor_only": false
+      },
+      {
+        "u_spawn_npc": "TRAVEL_RAID_BANDIT_GUNNER",
+        "real_count": 1,
+        "min_radius": 12,
+        "max_radius": 18,
+        "outdoor_only": false
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 42
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_BANDIT_MATURE_WAVE2",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_next_wave_delay",
+          "default": "45 seconds"
+        }
+      }
+    ],
+    "//": "第30天起第一波，一名打手和一名手枪手。"
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_BANDIT_MATURE_WAVE2",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_active"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            "==",
+            {
+              "const": 42
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "u_message": "四十五秒过去，第二组强盗从侧翼压了上来。",
+        "type": "warning"
+      },
+      {
+        "u_spawn_npc": "TRAVEL_RAID_BANDIT_THUG",
+        "real_count": 1,
+        "min_radius": 12,
+        "max_radius": 18,
+        "outdoor_only": false
+      },
+      {
+        "u_spawn_npc": "TRAVEL_RAID_BANDIT_RIFLEMAN",
+        "real_count": 1,
+        "min_radius": 12,
+        "max_radius": 18,
+        "outdoor_only": false
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 43
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_BANDIT_MATURE_WAVE3",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_next_wave_delay",
+          "default": "45 seconds"
+        }
+      }
+    ],
+    "//": "第30天起第二波，一名打手和一名步枪手。"
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_BANDIT_MATURE_WAVE3",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_active"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            "==",
+            {
+              "const": 43
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "u_message": "又过四十五秒，最后一组强盗进入射程。",
+        "type": "bad"
+      },
+      {
+        "u_spawn_npc": "TRAVEL_RAID_BANDIT_GUNNER",
+        "real_count": 1,
+        "min_radius": 12,
+        "max_radius": 18,
+        "outdoor_only": false
+      },
+      {
+        "u_spawn_npc": "TRAVEL_RAID_BANDIT_RIFLEMAN",
+        "real_count": 1,
+        "min_radius": 12,
+        "max_radius": 18,
+        "outdoor_only": false
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 44
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_COMPLETE_BANDIT",
+        "time_in_future": "10 minutes"
+      }
+    ],
+    "//": "第30天起第三波，一名手枪手和一名步枪手，共六人。"
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_COMPLETE_BANDIT",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_active"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            "==",
+            {
+              "const": 44
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_pending"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_hostile_baseline"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_intro_mode"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_distance_lock"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "u_message": "远处不再传来新的口哨声，强盗的集中追踪暂时结束。仍然活着的人不会凭空消失。",
+        "type": "info"
+      }
+    ],
+    "//": "最终波后固定保留十分钟定位声，然后解除袭击调度。存活强盗不会被删除，仍会继续战斗。"
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_41",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_active"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            ">=",
+            {
+              "const": 41
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            "<=",
+            {
+              "const": 44
+            }
+          ]
+        }
+      ]
+    },
+    "effect": {
+      "run_eocs": [
+        "EOC_TRAVEL_DYNAMIC_ABORT_STUCK"
+      ]
+    },
+    "//": "仅作为队列异常保险，不检查强盗存活数量。"
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_DEBUG_SPAWN_BANDIT_PAIR",
+    "effect": [
+      {
+        "u_spawn_npc": "TRAVEL_RAID_BANDIT_THUG",
+        "real_count": 1,
+        "min_radius": 12,
+        "max_radius": 18,
+        "outdoor_only": false
+      },
+      {
+        "u_spawn_npc": "TRAVEL_RAID_BANDIT_GUNNER",
+        "real_count": 1,
+        "min_radius": 12,
+        "max_radius": 18,
+        "outdoor_only": false
+      }
+    ],
+    "//": "仅供调试菜单手动运行，直接生成一名打手和一名手枪手，用于验证模组自定义NPC模板。"
+  }
+]

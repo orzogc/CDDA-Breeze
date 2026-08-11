@@ -1,0 +1,169 @@
+[
+  {
+    "type": "martial_art",
+    "id": "style_wc_rework_ipman",
+    "copy-from": "style_wingchun",
+    "name": {
+      "str": "叶系咏春"
+    },
+    "description": "叶系咏春以守中用中，短桥窄马，黐手，八斩刀和六点半棍为核心。其历史渊源可上溯至广东地区长期流传的多支咏春脉络，现代最广为人知的一支由叶问在香港公开授拳后逐渐传播开来。李小龙早年也曾学习咏春，后来吸收拳击，击剑和其他训练方法，提出强调截击，简洁，直接和个人验证的截拳道。游戏中的叶系咏春以连续压迫中线，近距离连消带打和短促发力为主要特征。连续命中会逐步建立优势，提高攻击节奏，暴击率和物理穿甲。格挡后可以拍开攻势，并用冲拳震退目标。标指用于快速穿透和打乱对手，脱抓，八斩刀和六点半棍则负责控制，破门和远近距离转换。它与原版咏春作为两个独立流派并存，学习难度较高。",
+    "initiate": [
+      "你沉肩坠肘，守住中线，摆出叶系咏春的架势。",
+      "%s沉肩坠肘，守住中线，摆出叶系咏春的架势。"
+    ],
+    "learn_difficulty": 10,
+    "arm_block": 1,
+    "leg_block": 3,
+    "static_buffs": [
+      {
+        "id": "buff_wc_rework_centerline",
+        "name": "咏春黐手",
+        "description": "你借由黐手训练形成的触觉与距离判断捕捉来势，守住中线，并以短促转马卸开正面冲击。\n\n闪避技能增加感知的25%，格挡减伤增加感知的50%，格挡效率+2。",
+        "unarmed_allowed": true,
+        "melee_allowed": true,
+        "flat_bonuses": [
+          {
+            "stat": "dodge",
+            "scaling-stat": "per",
+            "scale": 0.25
+          },
+          {
+            "stat": "block",
+            "scaling-stat": "per",
+            "scale": 0.5
+          },
+          {
+            "stat": "block_effectiveness",
+            "scale": 2.0
+          }
+        ]
+      }
+    ],
+    "onhit_buffs": [
+      {
+        "id": "buff_wc_rework_chain_pressure",
+        "name": "中线压制",
+        "description": "你以连续命中逐步夺取对手中线，后续攻击更快、更容易抓住破绽，并沿护甲与结构的薄弱处贯入。\n\n每层：攻击耗时变为92%，暴击率+5%，全物理穿甲+2并额外增加感知的25%。持续3回合，最多叠加3层。",
+        "skill_requirements": [
+          {
+            "name": "melee",
+            "level": 1
+          }
+        ],
+        "unarmed_allowed": true,
+        "melee_allowed": true,
+        "buff_duration": 3,
+        "max_stacks": 3,
+        "mult_bonuses": [
+          {
+            "stat": "movecost",
+            "scale": 0.92
+          }
+        ],
+        "flat_bonuses": [
+          {
+            "stat": "arpen",
+            "type": "bash",
+            "scale": 2.0
+          },
+          {
+            "stat": "arpen",
+            "type": "bash",
+            "scaling-stat": "per",
+            "scale": 0.25
+          },
+          {
+            "stat": "arpen",
+            "type": "cut",
+            "scale": 2.0
+          },
+          {
+            "stat": "arpen",
+            "type": "cut",
+            "scaling-stat": "per",
+            "scale": 0.25
+          },
+          {
+            "stat": "arpen",
+            "type": "stab",
+            "scale": 2.0
+          },
+          {
+            "stat": "arpen",
+            "type": "stab",
+            "scaling-stat": "per",
+            "scale": 0.25
+          },
+          {
+            "stat": "crit_chance",
+            "scale": 5.0
+          }
+        ]
+      }
+    ],
+    "oncrit_buffs": [
+      {
+        "id": "buff_wc_rework_crit_momentum",
+        "name": "破门连势",
+        "description": "一次暴击撕开了对手的防线，你沿着暴露的中线连续逼入。\n\n每层：全物理伤害+10%。持续3回合，最多叠加3层。",
+        "skill_requirements": [
+          {
+            "name": "melee",
+            "level": 3
+          }
+        ],
+        "unarmed_allowed": true,
+        "melee_allowed": true,
+        "buff_duration": 3,
+        "max_stacks": 3,
+        "mult_bonuses": [
+          {
+            "stat": "damage",
+            "type": "bash",
+            "scale": 1.1
+          },
+          {
+            "stat": "damage",
+            "type": "cut",
+            "scale": 1.1
+          },
+          {
+            "stat": "damage",
+            "type": "stab",
+            "scale": 1.1
+          }
+        ]
+      }
+    ],
+    "onmove_buffs": [],
+    "onpause_buffs": [],
+    "onattack_buffs": [],
+    "ondodge_buffs": [],
+    "onblock_buffs": [],
+    "ongethit_buffs": [],
+    "onmiss_buffs": [],
+    "onkill_buffs": [],
+    "techniques": [
+      "tec_wc_rework_centerline_punch",
+      "tec_wc_rework_pak_sao",
+      "tec_wc_rework_low_kick",
+      "tec_wc_rework_one_inch",
+      "tec_wc_rework_biu_jee",
+      "tec_wc_rework_feint",
+      "tec_wc_rework_grab_break",
+      "tec_wc_rework_bridge_strike",
+      "tec_wc_rework_baat_jaam_flurry",
+      "tec_wc_rework_baat_jaam_crosscut",
+      "tec_wc_rework_luk_dim_thrust",
+      "tec_wc_rework_luk_dim_shove",
+      "tec_wc_rework_luk_dim_sweep"
+    ],
+    "weapon_category": [
+      "KNIVES",
+      "SHIVS",
+      "SHORT_SWORDS",
+      "BLADED_FARMING",
+      "POLEARMS"
+    ]
+  }
+]

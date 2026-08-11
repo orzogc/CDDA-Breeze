@@ -1,0 +1,1035 @@
+[
+  {
+    "id": "MP153_C",
+    "type": "GUN",
+    "name": {
+      "str": "“腐肉”MP-153 半自动霰弹枪"
+    },
+    "description": "一把经过穆尔卡定制过的半自动霰弹枪，这把是某人的赠礼，意义很大，估计已经有不少年头了，整把枪老套又朴素，不过它看起来还是挺好用的。",
+    "weight": "4600 g",
+    "volume": "1530 ml",
+    "longest_side": "90 cm",
+    "price": 950000,
+    "price_postapoc": 9500,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "range": 3,
+    "symbol": "(",
+    "color": "brown",
+    "skill": "shotgun",
+    "clip_size": 8,
+    "ammo": [
+      "shot"
+    ],
+    "reload_noise_volume": 10,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 0,
+      "armor_penetration": 20
+    },
+    "reload": 5,
+    "sight_dispersion": 200,
+    "dispersion": 100,
+    "durability": 10,
+    "default_mods": [
+      "153c_sp",
+      "153c_stock"
+    ],
+    "barrel_volume": "500 ml",
+    "valid_mod_locations": [
+      [
+        "sling",
+        1
+      ]
+    ],
+    "extend": {
+      "flags": [
+        "RELOAD_ONE",
+        "NEVER_JAMS",
+        "NO_TURRET"
+      ]
+    },
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "shot": 8
+        },
+        "allowed_speedloaders": [
+          "shot_speedloader6",
+          "shot_speedloader8"
+        ],
+        "rigid": true
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "MP153",
+    "looks_like": "remington_870",
+    "type": "GUN",
+    "name": {
+      "str": "贝加尔 MP-153 半自动霰弹枪 "
+    },
+    "description": "贝加尔MP-153是伊热夫斯克机械厂在1990年代末发展的导气式半自动霰弹枪，能适应从普通猎弹到马格南装药的较宽压力范围。它主要用于狩猎、运动和家庭防卫，并曾由雷明顿以SPR-453名义在美国销售。结构朴实、性价比高，但体积和做工不算精致。",
+    "weight": "3500 g",
+    "volume": "1000 ml",
+    "longest_side": "90 cm",
+    "price": 25000,
+    "price_postapoc": 1550,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "range": 3,
+    "symbol": "(",
+    "color": "dark_gray",
+    "skill": "shotgun",
+    "clip_size": 5,
+    "ammo": [
+      "shot"
+    ],
+    "reload_noise_volume": 10,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 2
+    },
+    "dispersion": 165,
+    "durability": 8,
+    "barrel_volume": "500 ml",
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "//": "我是土豆。",
+    "extend": {
+      "flags": [
+        "RELOAD_ONE",
+        "NO_TURRET"
+      ]
+    },
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "shot": 5
+        },
+        "allowed_speedloaders": [
+          "shot_speedloader6",
+          "shot_speedloader8"
+        ],
+        "rigid": true
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "vper",
+    "type": "GUN",
+    "name": {
+      "str": "VPER-12 半自动霰弹枪"
+    },
+    "description": "Vepr-12由俄罗斯莫洛特工厂以RPK加固机匣思路制造，是可拆卸弹匣供弹的12号半自动霰弹枪。它与Saiga-12同属AK式霰弹枪路线，却不是简单的现代改装版。民用射击、动态霰弹枪比赛和部分军警用户都曾采用，优点是装填迅速，缺点是笨重且对弹药较挑剔。",
+    "weight": "3160 g",
+    "volume": "2800 ml",
+    "longest_side": "75 cm",
+    "price": 15000,
+    "price_postapoc": 5500,
+    "material": [
+      "steel"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "shot"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 530,
+    "durability": 8,
+    "skill": "shotgun",
+    "default_mods": [
+      "wire_stock"
+    ],
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "barrel_volume": "230 ml",
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "vper_8"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "horus",
+    "type": "GUN",
+    "name": {
+      "str": "荷鲁斯之眼"
+    },
+    "description": "星野爱用的简约风格霰弹枪, 虽然星野本人爱偷懒，不过她的枪支每分每秒都保持在无懈可击的完美状态。",
+    "weight": "3000 g",
+    "volume": "1600 ml",
+    "longest_side": "110 cm",
+    "price": 400000,
+    "price_postapoc": 10000,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "range": 4,
+    "symbol": "(",
+    "color": "white",
+    "skill": "shotgun",
+    "clip_size": 8,
+    "ammo": [
+      "shot"
+    ],
+    "reload_noise_volume": 10,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 5
+    },
+    "dispersion": 180,
+    "durability": 5,
+    "barrel_volume": "500 ml",
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "extend": {
+      "flags": [
+        "RELOAD_ONE",
+        "NO_TURRET"
+      ]
+    },
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "shot": 8
+        },
+        "allowed_speedloaders": [
+          "shot_speedloader6",
+          "shot_speedloader8"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "toz",
+    "type": "GUN",
+    "name": {
+      "str": " TOZ-106 栓动霰弹枪 "
+    },
+    "description": "TOZ-106是俄罗斯面向民用防卫、狩猎与野外携行市场推出的紧凑20号栓动霰弹枪，源自更长的MTs 20-01。它使用可拆卸弹匣和向下折叠的钢制枪托，折叠后非常短小。结构简单、价格低廉，但射速、瞄准舒适性和弹药威力都不适合与正规战斗霰弹枪相比。",
+    "weight": "2800 g",
+    "volume": "900 ml",
+    "longest_side": "50 cm",
+    "price": 5000,
+    "price_postapoc": 500,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "range": 1,
+    "symbol": "(",
+    "color": "dark_gray",
+    "skill": "shotgun",
+    "ammo": [
+      "shot"
+    ],
+    "reload_noise_volume": 10,
+    "modes": [
+      [
+        "DEFAULT",
+        "single",
+        1
+      ]
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -5
+    },
+    "dispersion": 455,
+    "durability": 5,
+    "default_mods": [
+      "wire_stock"
+    ],
+    "barrel_volume": "300 ml",
+    "valid_mod_locations": [
+      [
+        "sling",
+        1
+      ]
+    ],
+    "//": "不是土豆。",
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "toz_5"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "MP156_M",
+    "type": "GUN",
+    "name": {
+      "str": "“槁骨”MP-156-M 半自动霰弹枪"
+    },
+    "//": "“忒修斯之船”",
+    "description": "“生物死去后，血肉会随时间被大自然慢慢腐蚀、瓦解，但它们的骨头却得以留存并可以保存上亿年之久，这是它们存在过的最好证明。”\n这把霰弹枪基于一把产自俄罗斯的MP-153霰弹枪改造而来，在经过了大量改动后将其改装为了一把MP-156，几乎整把枪的所有部件都是重新定制过的，大量使用了轻量化的高强度材料，在大幅减重的同时还具有极高的可靠性，看得出来这把枪的主人很在乎这把枪。",
+    "weight": "2300 g",
+    "volume": "1300 ml",
+    "longest_side": "90 cm",
+    "price": 1650000,
+    "price_postapoc": 10000,
+    "material": [
+      "superalloy",
+      "carbide"
+    ],
+    "range": 5,
+    "symbol": "(",
+    "color": "dark_gray",
+    "skill": "shotgun",
+    "clip_size": 8,
+    "ammo": [
+      "shot"
+    ],
+    "reload_noise_volume": 10,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 0,
+      "armor_penetration": 30
+    },
+    "reload": 5,
+    "dispersion": 50,
+    "durability": 10,
+    "default_mods": [
+      "156m_sp",
+      "156m_stock",
+      "156m_scope"
+    ],
+    "barrel_volume": "500 ml",
+    "valid_mod_locations": [
+      [
+        "sling",
+        1
+      ]
+    ],
+    "extend": {
+      "flags": [
+        "RELOAD_ONE",
+        "NEVER_JAMS",
+        "NO_TURRET"
+      ]
+    },
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "shot": 8
+        },
+        "allowed_speedloaders": [
+          "shot_speedloader6",
+          "shot_speedloader8"
+        ],
+        "rigid": true
+      }
+    ],
+    "bashing": 25
+  },
+  {
+    "id": "saigak",
+    "type": "GUN",
+    "name": {
+      "str": "Saiga-12K 半自动霰弹枪"
+    },
+    "description": "Saiga-12K由伊热夫斯克以AK式导气系统发展，使用可拆卸盒式弹匣，K型缩短枪管并配折叠枪托。它最初面向民用狩猎和出口市场，后来也出现军警、保安与动态射击型号。快速更换弹匣是优势，但不同装药强度可能要求调整导气或精心选择弹药。",
+    "weight": "2958 g",
+    "volume": "2430 ml",
+    "longest_side": "860 mm",
+    "price": 189000,
+    "price_postapoc": 6500,
+    "to_hit": -1,
+    "skill": "shotgun",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "dispersion": 395,
+    "durability": 7,
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "shot"
+    ],
+    "barrel_volume": "70 ml",
+    "default_mods": [
+      "wire_stock"
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "saiga10mag",
+          "saiga30mag"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "uts_15",
+    "looks_like": "remington_870",
+    "type": "GUN",
+    "name": {
+      "str": "UTS-15 泵动霰弹枪 "
+    },
+    "description": "UTS-15是由土耳其UTAS公司研制的无托结构泵动式霰弹枪，发射12号霰弹，采用双管式弹仓供弹，每个弹仓可容纳7发普通霰弹或6发马格南霰弹，使用者可通过顶部选择杆切换供弹模式。枪身总长662.94毫米，含469.9毫米镀铬枪管，85%部件为碳纤维增强聚合物材质，为首款全聚合物机匣枪械，配备AR式握把与战术导轨。",
+    "weight": "3500 g",
+    "volume": "3000 ml",
+    "longest_side": "620 mm",
+    "price": 75000,
+    "price_postapoc": 7500,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "skill": "shotgun",
+    "clip_size": 15,
+    "ammo": [
+      "shot"
+    ],
+    "reload_noise_volume": 10,
+    "modes": [
+      [
+        "DEFAULT",
+        "single",
+        1
+      ]
+    ],
+    "dispersion": 400,
+    "durability": 8,
+    "barrel_volume": "620 ml",
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "extend": {
+      "flags": [
+        "RELOAD_ONE",
+        "NO_TURRET"
+      ]
+    },
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "shot": 15
+        },
+        "allowed_speedloaders": [
+          "shot_speedloader6",
+          "shot_speedloader8"
+        ],
+        "rigid": true
+      }
+    ],
+    "bashing": 9
+  },
+  {
+    "id": "aa_12",
+    "type": "GUN",
+    "name": {
+      "str": "AA-12 全自动霰弹枪"
+    },
+    "description": "艾奇逊AA-12自动霰弹枪是由美国枪械设计师麦斯威尔·艾奇逊于1972年基于越南战争丛林作战经验研制的12号口径全自动霰弹枪，空枪重5.2公斤，枪管长457毫米，理论射速360发每分钟。该枪专为丛林和城市近战环境设计，旨在解决传统泵动霰弹枪射速慢、容弹量低的问题，为渗透巡逻队尖兵提供高效能的近程自卫武器。",
+    "weight": "4760 g",
+    "volume": "3580 ml",
+    "longest_side": "960 mm",
+    "price": 250000,
+    "price_postapoc": 13000,
+    "to_hit": -1,
+    "skill": "shotgun",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "dispersion": 300,
+    "durability": 7,
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "shot"
+    ],
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        2
+      ]
+    ],
+    "default_mods": [
+      "cr_part"
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "aa12_8",
+          "aa12_20"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "ga12sg",
+    "type": "GUN",
+    "name": {
+      "str": "GA-12SG 半自动霰弹枪 "
+    },
+    "description": "“格科斯勒的产品质量几乎总是一流水准，当然，价格也一样”\n这是一款格科斯勒生产的半自动霰弹枪，在部队内装备一部分的同时也有在民间进行售卖，毫无疑问的是它在同类型产品中绝对处于顶尖水平，枪身使用了大量的新式材料，重量轻，强度高，精度好，使用固定的8发弹仓，枪管经过CVD镀膜，可以在打出去上万发子弹后还能正常使用，缺点就是这东西有点贵，还有点长……不过这都是些小问题。",
+    "weight": "3000 g",
+    "volume": "2000 ml",
+    "longest_side": "90 cm",
+    "price": 75000,
+    "price_postapoc": 9000,
+    "material": [
+      "superalloy",
+      "plastic"
+    ],
+    "range": 5,
+    "symbol": "(",
+    "color": "dark_gray",
+    "skill": "shotgun",
+    "clip_size": 8,
+    "ammo": [
+      "shot"
+    ],
+    "reload_noise_volume": 10,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "default_mods": [
+      "ga_stock_h"
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 3
+    },
+    "dispersion": 130,
+    "durability": 10,
+    "barrel_volume": "500 ml",
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "extend": {
+      "flags": [
+        "RELOAD_ONE",
+        "NO_TURRET"
+      ]
+    },
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "shot": 8
+        },
+        "allowed_speedloaders": [
+          "shot_speedloader6",
+          "shot_speedloader8"
+        ],
+        "rigid": true
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "ga12sgs",
+    "type": "GUN",
+    "name": {
+      "str": "GA-12SGS 半自动霰弹枪 "
+    },
+    "description": "格科斯勒生产的一款半自动霰弹枪，基于GA-12SG改进而来，是为了应对需要在狭窄空间内射击而设计的，该枪将原本的枪托替换成了可折叠的钢架枪托并安装了手枪握把，整体长度被缩短导致弹容量和精度都要更差一些，枪口有个硕大的一体式消音器，消音效果良好的同时还耐用，总的来说，这把枪非常适合在那些需要短兵相接的同时还得不惊扰到太多人的情况下使用，或者在不惊动社区的情况下拆掉某家的门锁。",
+    "weight": "2800 g",
+    "volume": "1500 ml",
+    "longest_side": "80 cm",
+    "price": 85000,
+    "price_postapoc": 9000,
+    "material": [
+      "superalloy",
+      "plastic"
+    ],
+    "range": 2,
+    "symbol": "(",
+    "color": "dark_gray",
+    "skill": "shotgun",
+    "clip_size": 5,
+    "ammo": [
+      "shot"
+    ],
+    "reload_noise_volume": 10,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "default_mods": [
+      "ga_stock2",
+      "sgs_sp"
+    ],
+    "dispersion": 150,
+    "durability": 10,
+    "barrel_volume": "500 ml",
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "extend": {
+      "flags": [
+        "RELOAD_ONE",
+        "NO_TURRET"
+      ]
+    },
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "shot": 5
+        },
+        "allowed_speedloaders": [
+          "shot_speedloader6",
+          "shot_speedloader8"
+        ],
+        "rigid": true
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "brs23",
+    "type": "GUN",
+    "name": {
+      "str": "BRS-23 霰弹枪 "
+    },
+    "description": "BRS-23是由莫尔洛枪械制造的枪械，由KS-23仿制而来并在美国本土销售，使用威力巨大的23mm霰弹并沿用了KS-23的膛线设计，精度和射程都要比普通霰弹枪好不少，当然 包括威力，毕竟这玩意儿可是拿来打那些大型动物的。",
+    "weight": "3800 g",
+    "volume": "2500 ml",
+    "longest_side": "870 mm",
+    "price": 150000,
+    "price_postapoc": 15000,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "skill": "shotgun",
+    "clip_size": 4,
+    "ammo": [
+      "23mm"
+    ],
+    "reload_noise_volume": 10,
+    "modes": [
+      [
+        "DEFAULT",
+        "single",
+        1
+      ]
+    ],
+    "dispersion": 200,
+    "durability": 8,
+    "barrel_volume": "400 ml",
+    "valid_mod_locations": [
+      [
+        "sling",
+        1
+      ]
+    ],
+    "extend": {
+      "flags": [
+        "RELOAD_ONE",
+        "NO_TURRET"
+      ]
+    },
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "23mm": 4
+        },
+        "rigid": true
+      }
+    ],
+    "bashing": 15
+  }
+]

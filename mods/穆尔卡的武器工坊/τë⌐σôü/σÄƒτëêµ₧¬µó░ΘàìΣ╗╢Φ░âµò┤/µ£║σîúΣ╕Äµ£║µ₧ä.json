@@ -1,0 +1,48 @@
+[
+  {
+    "id": "match_trigger",
+    "copy-from": "match_trigger",
+    "type": "GUNMOD",
+    "name": {
+      "str": "配重扳机"
+    },
+    "description": "这种精密的配重扳机组件可以略为提升枪械命中率。",
+    "weight": "120 g",
+    "volume": "250 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": 1500,
+    "price_postapoc": 500,
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "mechanism",
+    "mod_targets": [
+      "smg",
+      "rifle",
+      "pistol",
+      "shotgun",
+      "launcher"
+    ],
+    "install_time": "30 m",
+    "dispersion_modifier": -10,
+    "handling_modifier": 1,
+    "min_skills": [
+      [
+        "weapon",
+        4
+      ],
+      [
+        "mechanics",
+        3
+      ],
+      [
+        "gun",
+        2
+      ]
+    ],
+    "longest_side": "18 cm"
+  }
+]

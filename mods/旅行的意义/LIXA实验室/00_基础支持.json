@@ -1,0 +1,26 @@
+[
+  {
+    "type": "connect_group",
+    "id": "LIXATUBE"
+  },
+  {
+    "id": "LIXA_SCIENCE_CARD",
+    "type": "json_flag",
+    "info": "这件物品使你能够进入LIXA研究所。"
+  },
+  {
+    "id": "LIXA_SCIENCE_CARD_2",
+    "type": "json_flag",
+    "info": "这件物品使你能够进入LIXA研究所的实验舱。"
+  },
+  {
+    "id": "LIXA_SCIENCE_CARD_3",
+    "type": "json_flag",
+    "info": "这件物品使你能够进入LIXA研究所的实验舱及防护服储藏室。"
+  },
+  {
+    "id": "LIXA_MILITARY_CARD",
+    "type": "json_flag",
+    "info": "这件物品使你能够进入LIXA研究所的禁止区域。"
+  }
+]

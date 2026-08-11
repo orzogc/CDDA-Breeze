@@ -1,0 +1,100 @@
+[
+  {
+    "type": "mod_tileset",
+    "compatibility": [
+      "UNDEAD_PEOPLE_BASE",
+      "UNDEAD_PEOPLE",
+      "MshockXottoplus"
+    ],
+    "tiles-new": [
+      {
+        "file": "mod_tileset/lixa_compact_32.png",
+        "sprite_width": 32,
+        "sprite_height": 32,
+        "tiles": [
+          {
+            "id": [
+              "f_LIXA_chair_folding_black",
+              "f_chair_folding"
+            ],
+            "fg": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "rotates": true
+          },
+          {
+            "id": [
+              "LIXA_chair_folding_black",
+              "chair_folding"
+            ],
+            "fg": 0,
+            "rotates": false
+          },
+          {
+            "id": [
+              "LIXA_surface_1a",
+              "LIXA_surface_2a",
+              "LIXA_surface_1b",
+              "LIXA_surface_2b",
+              "LIXA_roof_1a",
+              "LIXA_roof_2a",
+              "LIXA_roof_1b",
+              "LIXA_roof_2b",
+              "LIXA_entry_1",
+              "LIXA_entry_2",
+              "LIXA_road_guard",
+              "LIXA_road_guard_roof",
+              "LIXA_workfloor_1a",
+              "LIXA_workfloor_2a",
+              "LIXA_workfloor_1b",
+              "LIXA_workfloor_2b"
+            ],
+            "fg": 4,
+            "rotates": false
+          },
+          {
+            "id": [
+              "LIXA_stairshaft_1a",
+              "LIXA_stairshaft_1b",
+              "LIXA_stairshaft_1c",
+              "LIXA_stairshaft_1d",
+              "LIXA_stairshaft_2a",
+              "LIXA_stairshaft_2b",
+              "LIXA_stairshaft_2c",
+              "LIXA_stairshaft_2d"
+            ],
+            "fg": 5,
+            "rotates": false
+          },
+          {
+            "id": [
+              "LIXA_device_1",
+              "LIXA_device_2",
+              "LIXA_device_3",
+              "LIXA_device_2_roof",
+              "LIXA_device_3_roof",
+              "LIXA_device_unfolded_A",
+              "LIXA_device_unfolded_B",
+              "LIXA_device_unfolded_noaccess"
+            ],
+            "fg": 6,
+            "rotates": false
+          },
+          {
+            "id": "mon_LIXA_rm13_phase_guard",
+            "fg": 7,
+            "rotates": false
+          },
+          {
+            "id": "mon_LIXA_rm13_phase_echo",
+            "fg": 8,
+            "rotates": false
+          }
+        ]
+      }
+    ]
+  }
+]

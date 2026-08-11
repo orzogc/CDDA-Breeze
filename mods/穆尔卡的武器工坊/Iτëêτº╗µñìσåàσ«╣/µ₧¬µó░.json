@@ -1,0 +1,1356 @@
+[
+  {
+    "id": "fg422",
+    "type": "GUN",
+    "name": {
+      "str": "FG 42-2 伞兵步枪"
+    },
+    "description": "FG42是德国空军为伞兵研制的自动步枪，源于克里特岛战役后对伞降部队独立火力的需求。后期二型加固枪托、握把和机匣，试图在一支枪上兼顾步枪、自动步枪与轻机枪角色。它技术先进却昂贵复杂，产量有限，主要由精锐伞兵在战争后期使用。",
+    "weight": "4940 g",
+    "volume": "3200 ml",
+    "longest_side": "9750 mm",
+    "price": "10000 USD",
+    "price_postapoc": "100 USD",
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "79257"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 170,
+    "durability": 10,
+    "skill": "rifle",
+    "built_in_mods": [
+      "fg422bipod"
+    ],
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "Auto",
+        "auto",
+        3
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "fg422mag"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "gew98",
+    "type": "GUN",
+    "name": {
+      "str": "毛瑟 Gewehr 98 步枪"
+    },
+    "description": "毛瑟Gewehr 98于1898年成为德意志帝国制式步枪，使用7.92x57mm毛瑟弹和后来影响深远的旋转后拉枪机。它是第一次世界大战德军步兵的主力，在西线堑壕、东线与殖民地战场均大量出现；枪身修长而结实，精度良好，但在狭窄环境中不如后来的短步枪灵活。",
+    "weight": "4200 g",
+    "volume": "3020 ml",
+    "longest_side": "1250 mm",
+    "price": "1850 USD",
+    "price_postapoc": "70 USD",
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "color": "brown",
+    "symbol": "(",
+    "skill": "rifle",
+    "ammo": [
+      "79257"
+    ],
+    "reload_noise_volume": 10,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 2
+    },
+    "dispersion": 120,
+    "durability": 8,
+    "blackpowder_tolerance": 40,
+    "flags": [
+      "RELOAD_ONE"
+    ],
+    "valid_mod_locations": [
+      [
+        "barrel",
+        1
+      ],
+      [
+        "bayonet lug",
+        1
+      ],
+      [
+        "bore",
+        1
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "79257": 5
+        }
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "gew98s",
+    "type": "GUN",
+    "name": {
+      "str": "毛瑟 Gewehr 98 狙击步枪"
+    },
+    "description": "这是一支配有光学瞄准镜的Gewehr 98。第一次世界大战中，德军从精度较好的制式步枪中挑选枪支，安装早期瞄准镜供狙击手使用；长枪管和7.92x57mm弹赋予它不错的远射性能，但老式镜座、较窄视野和漫长枪身也让快速装填与近距离转移颇为笨拙。",
+    "weight": "4200 g",
+    "volume": "3020 ml",
+    "longest_side": "1250 mm",
+    "price": "3850 USD",
+    "price_postapoc": "100 USD",
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "color": "brown",
+    "symbol": "(",
+    "skill": "rifle",
+    "ammo": [
+      "79257"
+    ],
+    "reload_noise_volume": 10,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 2
+    },
+    "dispersion": 50,
+    "durability": 8,
+    "blackpowder_tolerance": 40,
+    "flags": [
+      "RELOAD_ONE"
+    ],
+    "valid_mod_locations": [
+      [
+        "barrel",
+        1
+      ],
+      [
+        "bayonet lug",
+        1
+      ],
+      [
+        "bore",
+        1
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "default_mods": [
+      "gewscope"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "79257": 5
+        }
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "kar98ks",
+    "type": "GUN",
+    "name": {
+      "str": "毛瑟 Kar98k 狙击步枪"
+    },
+    "description": "这是为精确射手安装光学瞄准镜的Kar98k。第二次世界大战期间，德军使用过ZF39、ZF41等多种瞄具方案，优先挑选精度较好的步枪配发狙击手。它保留毛瑟枪机的可靠性和全威力步枪弹的射程，却仍需每发手动操作枪机，火力持续性远逊于半自动步枪。",
+    "weight": "3800 g",
+    "volume": "3000 ml",
+    "longest_side": "1100 mm",
+    "price": "3850 USD",
+    "price_postapoc": "100 USD",
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "color": "brown",
+    "symbol": "(",
+    "skill": "rifle",
+    "ammo": [
+      "79257"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 70,
+    "durability": 8,
+    "blackpowder_tolerance": 40,
+    "flags": [
+      "RELOAD_ONE"
+    ],
+    "valid_mod_locations": [
+      [
+        "barrel",
+        1
+      ],
+      [
+        "bayonet lug",
+        1
+      ],
+      [
+        "bore",
+        1
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "default_mods": [
+      "zf42"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "79257": 5
+        }
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "type": "GUN",
+    "color": "light_gray",
+    "symbol": "⨽",
+    "weapon_category": [
+      "AUTOMATIC_RIFLES"
+    ],
+    "to_hit": {
+      "grip": "bad",
+      "length": "hand",
+      "surface": "any",
+      "balance": "uneven"
+    },
+    "//": "Buttstrokes aren't that good compared to a real melee weapon.",
+    "name": {
+      "str": "M110 半自动狙击步枪",
+      "//~": "NO_I18N"
+    },
+    "skill": "rifle",
+    "sight_dispersion": 40,
+    "durability": 8,
+    "handling": 20,
+    "reload": 150,
+    "reload_noise_volume": 10,
+    "faults": [
+      "fault_gun_blackpowder",
+      "fault_gun_dirt",
+      "fault_gun_chamber_spent"
+    ],
+    "id": "m110",
+    "price_postapoc": "18 USD",
+    "ammo": [
+      "308"
+    ],
+    "min_cycle_recoil": 2700,
+    "looks_like": "ar10",
+    "description": "M110半自动狙击系统由奈特军械的SR-25体系发展而来，在美国陆军竞标后于2000年代中期投入部队。20发弹匣和半自动机构使狙击小组在伊拉克、阿富汗及城市战中能迅速处理多个目标；配套消音器与光学瞄具提升隐蔽性，但整套系统比普通步枪更重。",
+    "weight": "2300 g",
+    "volume": "1600 ml",
+    "longest_side": "520 mm",
+    "price": "1 kUSD 200 USD",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "flags": [
+      "NO_TURRET"
+    ],
+    "dispersion": 150,
+    "valid_mod_locations": [
+      [
+        "barrel",
+        1
+      ],
+      [
+        "bore",
+        1
+      ],
+      [
+        "mechanism",
+        2
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock accessory",
+        1
+      ],
+      [
+        "stock",
+        1
+      ]
+    ],
+    "default_mods": [
+      "bipod",
+      "Leupold",
+      "suppressor",
+      "retool_sr25_308_medium"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "ar10mag_20rd",
+          "ar10_makeshiftmag"
+        ]
+      }
+    ],
+    "bashing": 13
+  },
+  {
+    "id": "mg42",
+    "type": "GUN",
+    "name": {
+      "str": "MG42 通用机枪"
+    },
+    "description": "MG42于1942年列装德军，采用滚柱闭锁短后坐结构和冲压件制造，以惊人的射速、可靠性及快速更换枪管闻名。它在东线、北非和诺曼底等战场构成德军班组火力核心，独特的撕布声常令对手印象深刻；战后其设计思想延续到使用北约弹药的MG3。",
+    "weight": "10600 g",
+    "volume": "5500 ml",
+    "longest_side": "1219 mm",
+    "price": "5000 USD",
+    "price_postapoc": "125 USD",
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "79257"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 330,
+    "durability": 10,
+    "skill": "rifle",
+    "built_in_mods": [
+      "mgbipod"
+    ],
+    "modes": [
+      [
+        "DEFAULT",
+        "短点射",
+        3
+      ],
+      [
+        "Auto",
+        "auto",
+        8
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip mount",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "mg42mag_50",
+          "mg42mag_250"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "type": "GUN",
+    "color": "light_gray",
+    "symbol": "⨽",
+    "weapon_category": [
+      "AUTOMATIC_RIFLES"
+    ],
+    "to_hit": {
+      "grip": "bad",
+      "length": "hand",
+      "surface": "any",
+      "balance": "uneven"
+    },
+    "//": "Buttstrokes aren't that good compared to a real melee weapon.",
+    "name": {
+      "str": "FN SCAR 16S 半自动步枪",
+      "//~": "NO_I18N"
+    },
+    "skill": "rifle",
+    "sight_dispersion": 40,
+    "durability": 8,
+    "handling": 20,
+    "reload": 150,
+    "reload_noise_volume": 10,
+    "faults": [
+      "fault_gun_blackpowder",
+      "fault_gun_dirt",
+      "fault_gun_chamber_spent"
+    ],
+    "id": "scar_16s",
+    "price_postapoc": "20 USD",
+    "ammo": [
+      "223"
+    ],
+    "min_cycle_recoil": 1350,
+    "description": "SCAR 16S是FN为美国民用市场推出的半自动轻型SCAR，血统来自美国特种作战司令部的SCAR-L计划。短行程活塞、可更换枪管组件和双手操作布局便于维护与改装，发射5.56x45mm弹。它没有军用型的全自动功能，但保留了模块化机匣和折叠伸缩枪托。",
+    "ascii_picture": "scar-L",
+    "weight": "1300 g",
+    "volume": "1600 ml",
+    "longest_side": "539 mm",
+    "price": "3 kUSD 839 USD",
+    "material": [
+      "steel",
+      "aluminum",
+      "plastic"
+    ],
+    "dispersion": 180,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "default_mods": [
+      "retool_scar_l_223_long_16s",
+      "high_end_folding_stock"
+    ],
+    "valid_mod_locations": [
+      [
+        "barrel",
+        1
+      ],
+      [
+        "bore",
+        1
+      ],
+      [
+        "mechanism",
+        2
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock accessory",
+        1
+      ],
+      [
+        "stock",
+        1
+      ]
+    ],
+    "bashing": 13,
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "stanag30",
+          "stanag5",
+          "stanag5ranger",
+          "stanag10",
+          "stanag10ranger",
+          "stanag20",
+          "stanag20ranger",
+          "stanag30ranger",
+          "stanag40",
+          "stanag40ranger",
+          "stanag50",
+          "stanag60",
+          "stanag60drum",
+          "stanag90",
+          "stanag100",
+          "stanag100drum",
+          "stanag150",
+          "survivor223mag"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "GUN",
+    "color": "light_gray",
+    "symbol": "⨽",
+    "weapon_category": [
+      "AUTOMATIC_RIFLES"
+    ],
+    "to_hit": {
+      "grip": "bad",
+      "length": "hand",
+      "surface": "any",
+      "balance": "uneven"
+    },
+    "//": "Buttstrokes aren't that good compared to a real melee weapon.",
+    "name": {
+      "str": "FN SCAR 17S 半自动步枪",
+      "//~": "NO_I18N"
+    },
+    "skill": "rifle",
+    "sight_dispersion": 40,
+    "durability": 8,
+    "handling": 20,
+    "reload": 150,
+    "reload_noise_volume": 10,
+    "faults": [
+      "fault_gun_blackpowder",
+      "fault_gun_dirt",
+      "fault_gun_chamber_spent"
+    ],
+    "id": "scar_17s",
+    "price_postapoc": "15 USD",
+    "ammo": [
+      "308"
+    ],
+    "min_cycle_recoil": 1350,
+    "description": "SCAR 17S是军用Mk 17或SCAR-H的半自动商业型，发射7.62x51mm弹。它以短行程活塞、轻合金上机匣和折叠伸缩枪托兼顾可靠性与便携性，军用家族曾随美国特种部队在阿富汗等地作战；较强弹药带来更远有效射程，也意味着明显后坐力和昂贵弹匣。",
+    "ascii_picture": "scar-H",
+    "weight": "1320 g",
+    "volume": "1630 ml",
+    "longest_side": "500 mm",
+    "price": "4 kUSD 239 USD",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "dispersion": 150,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "default_mods": [
+      "retool_scar_h_308_17s",
+      "high_end_folding_stock"
+    ],
+    "valid_mod_locations": [
+      [
+        "barrel",
+        1
+      ],
+      [
+        "bore",
+        1
+      ],
+      [
+        "mechanism",
+        2
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock accessory",
+        1
+      ],
+      [
+        "stock",
+        1
+      ]
+    ],
+    "looks_like": "scar_h",
+    "flags": [
+      "NO_TURRET"
+    ],
+    "bashing": 13,
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "scarhmag",
+          "scarhbigmag",
+          "scarhmag_30rd",
+          "scarh_makeshiftmag"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "GUN",
+    "color": "light_gray",
+    "symbol": "⨽",
+    "weapon_category": [
+      "AUTOMATIC_RIFLES"
+    ],
+    "to_hit": {
+      "grip": "bad",
+      "length": "hand",
+      "surface": "any",
+      "balance": "uneven"
+    },
+    "//": "Buttstrokes aren't that good compared to a real melee weapon.",
+    "name": {
+      "str": "FN SCAR-H Mk20 狙击步枪",
+      "//~": "NO_I18N"
+    },
+    "skill": "rifle",
+    "sight_dispersion": 40,
+    "durability": 8,
+    "handling": 20,
+    "reload": 150,
+    "reload_noise_volume": 10,
+    "faults": [
+      "fault_gun_blackpowder",
+      "fault_gun_dirt",
+      "fault_gun_chamber_spent"
+    ],
+    "id": "scar_h_mk20",
+    "price_postapoc": "15 USD",
+    "ammo": [
+      "308"
+    ],
+    "min_cycle_recoil": 1350,
+    "description": "Mk 20狙击支援步枪是SCAR-H家族的精确射击型，以更长重枪管、延长护木和适合瞄准镜的机匣改善持续精度。美国特种作战部队将其用于狙击支援与指定射手任务，半自动机构便于快速补射。它仍能使用SCAR-H弹匣，但体积和重量更接近专用精确步枪。",
+    "ascii_picture": "scar-L",
+    "weight": "1808 g",
+    "volume": "1700 ml",
+    "longest_side": "533 mm",
+    "price": "5 kUSD 400 USD",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "dispersion": 165,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "default_mods": [
+      "retool_scar_h_308_long_mk20",
+      "recoil_stock",
+      "cheek_pad",
+      "bipod",
+      "rifle_scope_high_end_mount",
+      "match_trigger",
+      "muzzle_brake"
+    ],
+    "valid_mod_locations": [
+      [
+        "barrel",
+        1
+      ],
+      [
+        "bore",
+        1
+      ],
+      [
+        "mechanism",
+        2
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock accessory",
+        1
+      ],
+      [
+        "stock",
+        1
+      ]
+    ],
+    "looks_like": "scar_h",
+    "flags": [
+      "NO_TURRET"
+    ],
+    "bashing": 13,
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "scarhmag",
+          "scarhbigmag",
+          "scarhmag_30rd",
+          "scarh_makeshiftmag"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "GUN",
+    "color": "light_gray",
+    "symbol": "⨽",
+    "weapon_category": [
+      "AUTOMATIC_RIFLES"
+    ],
+    "to_hit": {
+      "grip": "bad",
+      "length": "hand",
+      "surface": "any",
+      "balance": "uneven"
+    },
+    "//": "Changed from SG 553, which itself was originally the Sig 550, to the civilian legal copy",
+    "name": {
+      "str": "SIG SG550-SWAT 突击步枪",
+      "//~": "NO_I18N"
+    },
+    "skill": "rifle",
+    "sight_dispersion": 40,
+    "durability": 8,
+    "handling": 20,
+    "reload": 150,
+    "reload_noise_volume": 10,
+    "faults": [
+      "fault_gun_blackpowder",
+      "fault_gun_dirt",
+      "fault_gun_chamber_spent"
+    ],
+    "id": "sig_550_swat",
+    "price_postapoc": "15 USD",
+    "ammo": [
+      "223"
+    ],
+    "min_cycle_recoil": 1350,
+    "looks_like": "sig552",
+    "description": "这是一支按警务和特种用途配置的SIG SG550。SG550源自瑞士军方Stgw 90计划，以长行程活塞、旋转枪机和优良制造质量著称，折叠枪托便于车辆与城市行动。瑞士制式枪通常使用专用透明弹匣；眼前这支为适应美国后勤改用STANAG弹匣，因此更像定制外销型。",
+    "weight": "4100 g",
+    "volume": "3146 ml",
+    "longest_side": "1020 mm",
+    "price": "3 kUSD 200 USD",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "dispersion": 150,
+    "valid_mod_locations": [
+      [
+        "barrel",
+        1
+      ],
+      [
+        "mechanism",
+        2
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock accessory",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "built_in_mods": [
+      "folding_stock"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "stanag30",
+          "stanag5",
+          "stanag5ranger",
+          "stanag10",
+          "stanag10ranger",
+          "stanag20",
+          "stanag20ranger",
+          "stanag30ranger",
+          "stanag40",
+          "stanag40ranger",
+          "stanag50",
+          "stanag60",
+          "stanag60drum",
+          "stanag90",
+          "stanag100",
+          "stanag100drum",
+          "stanag150",
+          "survivor223mag"
+        ]
+      }
+    ],
+    "bashing": 13
+  },
+  {
+    "type": "GUN",
+    "color": "dark_gray",
+    "symbol": "(",
+    "weapon_category": [
+      "AUTOMATIC_RIFLES"
+    ],
+    "to_hit": -1,
+    "//": "Buttstrokes aren't that good compared to a real melee weapon.",
+    "name": {
+      "str": "SIG MCX-SPEAR 步枪",
+      "//~": "NO_I18N"
+    },
+    "skill": "rifle",
+    "sight_dispersion": 40,
+    "durability": 8,
+    "handling": 20,
+    "reload": 150,
+    "reload_noise_volume": 10,
+    "faults": [
+      "fault_gun_blackpowder",
+      "fault_gun_dirt",
+      "fault_gun_chamber_spent"
+    ],
+    "id": "sig_spear",
+    "price_postapoc": "18 USD",
+    "ammo": [
+      "68_51"
+    ],
+    "min_cycle_recoil": 2700,
+    "looks_like": "ar15",
+    "description": "MCX-SPEAR是SIG以军用M7平台推出的半自动商业型号，采用短行程活塞、旋转枪机以及前后两套非随动拉机柄。可更换枪管和现代附件接口让它能适配多种全威力口径；它继承下一代班组武器的结构，却没有军用全自动功能，更像昂贵而坚固的现代战斗步枪。",
+    "weight": "1800 g",
+    "volume": "1800 ml",
+    "longest_side": "560 mm",
+    "price": "5 kUSD 50 USD",
+    "default_mods": [
+      "adjustable_stock",
+      "sigsuppressor",
+      "retool_xm7_227_medium",
+      "xm157"
+    ],
+    "flags": [
+      "NO_TURRET"
+    ],
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "dispersion": 220,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "xm7mag_10rd",
+          "xm7mag_20rd",
+          "xm7_makeshiftmag"
+        ]
+      }
+    ],
+    "valid_mod_locations": [
+      [
+        "barrel",
+        1
+      ],
+      [
+        "bore",
+        1
+      ],
+      [
+        "mechanism",
+        2
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock accessory",
+        1
+      ],
+      [
+        "stock",
+        1
+      ]
+    ],
+    "bashing": 12
+  },
+  {
+    "type": "GUN",
+    "color": "dark_gray",
+    "symbol": "(",
+    "weapon_category": [
+      "AUTOMATIC_RIFLES"
+    ],
+    "to_hit": -1,
+    "//": "Buttstrokes aren't that good compared to a real melee weapon.",
+    "name": {
+      "str": "SIG M7 突击步枪",
+      "//~": "NO_I18N"
+    },
+    "skill": "rifle",
+    "sight_dispersion": 40,
+    "durability": 8,
+    "handling": 20,
+    "reload": 150,
+    "reload_noise_volume": 10,
+    "faults": [
+      "fault_gun_blackpowder",
+      "fault_gun_dirt",
+      "fault_gun_chamber_spent"
+    ],
+    "id": "sig_xm7",
+    "price_postapoc": "18 USD",
+    "ammo": [
+      "68_51"
+    ],
+    "min_cycle_recoil": 2700,
+    "looks_like": "ar15",
+    "description": "SIG MCX-SPEAR在美国陆军下一代班组武器竞标中胜出，最初称XM7，随后定型为M7。它围绕6.8x51mm高压弹设计，配套消音器和先进火控瞄具，计划优先装备近战部队以取得更远射程和更强穿透力；代价是枪、弹和弹匣都比M4体系更重，后坐力也更显著。",
+    "weight": "1800 g",
+    "volume": "1800 ml",
+    "longest_side": "560 mm",
+    "price": "5 kUSD 50 USD",
+    "default_mods": [
+      "adjustable_stock",
+      "sigsuppressor",
+      "retool_xm7_227_medium",
+      "xm157"
+    ],
+    "flags": [
+      "NO_TURRET"
+    ],
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "dispersion": 220,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        4
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "xm7mag_10rd",
+          "xm7mag_20rd",
+          "xm7_makeshiftmag"
+        ]
+      }
+    ],
+    "valid_mod_locations": [
+      [
+        "barrel",
+        1
+      ],
+      [
+        "bore",
+        1
+      ],
+      [
+        "mechanism",
+        2
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock accessory",
+        1
+      ],
+      [
+        "stock",
+        1
+      ]
+    ],
+    "bashing": 12
+  },
+  {
+    "type": "GUN",
+    "color": "light_gray",
+    "symbol": "⨽",
+    "weapon_category": [
+      "AUTOMATIC_RIFLES"
+    ],
+    "to_hit": {
+      "grip": "bad",
+      "length": "hand",
+      "surface": "any",
+      "balance": "uneven"
+    },
+    "//": "Buttstrokes aren't that good compared to a real melee weapon.",
+    "name": {
+      "str": "SR-25 半自动狙击步枪",
+      "//~": "NO_I18N"
+    },
+    "skill": "rifle",
+    "sight_dispersion": 40,
+    "durability": 8,
+    "handling": 20,
+    "reload": 150,
+    "reload_noise_volume": 10,
+    "faults": [
+      "fault_gun_blackpowder",
+      "fault_gun_dirt",
+      "fault_gun_chamber_spent"
+    ],
+    "id": "sr25",
+    "price_postapoc": "18 USD",
+    "ammo": [
+      "308"
+    ],
+    "min_cycle_recoil": 2700,
+    "looks_like": "ar10",
+    "description": "SR-25由尤金·斯通纳与奈特军械在AR-10思路上重新发展，结合AR-15时代的制造和人机工效，于1990年代形成成熟产品。其军用衍生型Mk 11被美国特种作战部队采用，并在阿富汗、伊拉克等冲突中担任半自动狙击和精确射手武器，后来又成为M110的重要基础。",
+    "weight": "1651 g",
+    "volume": "1600 ml",
+    "longest_side": "510 mm",
+    "price": "1 kUSD 200 USD",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "flags": [
+      "NO_TURRET"
+    ],
+    "dispersion": 150,
+    "valid_mod_locations": [
+      [
+        "barrel",
+        1
+      ],
+      [
+        "bore",
+        1
+      ],
+      [
+        "mechanism",
+        2
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock accessory",
+        1
+      ],
+      [
+        "stock",
+        1
+      ]
+    ],
+    "default_mods": [
+      "retool_sr25_308_medium"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "ar10mag_20rd",
+          "ar10_makeshiftmag"
+        ]
+      }
+    ],
+    "bashing": 13
+  },
+  {
+    "id": "avt_40",
+    "type": "GUN",
+    "name": {
+      "str_sp": "AVT-40 半自动步枪"
+    },
+    "description": "使用7.62x54mmR的自动步枪，为SVT40的全自动变种，后坐力难以控制，在苏联卫国战争早期紧急充作轻机枪使用过。",
+    "weight": "3850 g",
+    "volume": "2800 ml",
+    "longest_side": "1266 mm",
+    "price": 35000,
+    "price_postapoc": 2600,
+    "skill": "rifle",
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "symbol": "(",
+    "color": "brown",
+    "ammo": [
+      "762R"
+    ],
+    "reload_noise_volume": 10,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 2
+    },
+    "dispersion": 28,
+    "durability": 8,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_TURRET"
+    ],
+    "barrel_volume": "620 ml",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "svt_15",
+          "svt_10"
+        ]
+      }
+    ],
+    "bashing": 12,
+    "looks_like": "svt"
+  }
+]

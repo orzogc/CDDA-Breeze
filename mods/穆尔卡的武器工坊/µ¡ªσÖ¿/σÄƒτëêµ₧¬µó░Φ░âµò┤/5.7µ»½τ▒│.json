@@ -1,0 +1,70 @@
+[
+  {
+    "id": "fn_p90",
+    "copy-from": "fn_p90",
+    "looks_like": "hk_mp5",
+    "type": "GUN",
+    "name": {
+      "str": "FN 5.7x28mm PDW 冲锋枪"
+    },
+    "description": "这是一款 FN 赫斯塔尔公司制造的单兵防卫武器，这款自动武器使用高初速的专利5.7x28mm口径弹药。这款小型冲锋枪可容纳50发特制弹匣，弹匣安装在前握把后的机匣上，使得这款采用无托式设计、外形小巧的冲锋枪却能够发射出十分危险的弹药。它相对较小的高初速弹药使它既能击败有装甲的对手，也能在短连发射击时易于控制。",
+    "reload_noise_volume": 10,
+    "variant_type": "gun",
+    "variants": [
+      {
+        "id": "fn_p90",
+        "name": {
+          "str": "FN P90 冲锋枪"
+        },
+        "description": "世界上第一支使用了全新弹药的“个人防卫武器”。P90使用的是 FN 赫斯塔尔公司专利的 5.7x28mm 口径子弹。FN P90 冲锋枪最初是为了满足北约要求而设计的，它的口径比标准的9mm冲锋枪更适合用来穿透防弹衣。FN P90冲锋枪在单发和短连发发射时易于控制。PDW冲锋枪使用相对较小的高初速弹药，50发子弹能轻松放进安装在P90冲锋枪顶部的弹匣之中，能向任何装甲对手倾泻相当致命的火力，而枪械的无托式设计使其具有值得称赞的紧凑性。",
+        "weight": 1
+      }
+    ],
+    "weight": "2640 g",
+    "volume": "3817 ml",
+    "longest_side": "511 mm",
+    "price": 350000,
+    "price_postapoc": 3500,
+    "to_hit": -2,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "light_gray",
+    "ammo": [
+      "57"
+    ],
+    "skill": "smg",
+    "dispersion": 260,
+    "durability": 8,
+    "min_cycle_recoil": 81,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        4
+      ]
+    ],
+    "faults": [
+      "fault_gun_blackpowder",
+      "fault_gun_dirt",
+      "fault_gun_chamber_spent"
+    ],
+    "pocket_data": [
+      {
+        "magazine_well": "500 ml",
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "fnp90mag"
+        ]
+      }
+    ],
+    "bashing": 10
+  }
+]

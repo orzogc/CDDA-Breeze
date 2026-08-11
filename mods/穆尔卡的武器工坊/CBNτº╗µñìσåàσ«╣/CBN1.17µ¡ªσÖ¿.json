@@ -1,0 +1,395 @@
+[
+  {
+    "id": "arek_pdr",
+    "copy-from": "rifle_auto",
+    "type": "GUN",
+    "name": {
+      "str_sp": "AREK-PDR 突击步枪"
+    },
+    "description": "AREK-PDR是格科斯勒基于GAVK-762M突击步枪改进而来的武器，它与前者有很多相同之处，在短突击步枪中它的性能无疑是出类拔萃的，极佳的操控性，体积小，重量轻，与GAVK同样都使用平衡后座原理甚至要更紧凑，不过它为了降低价格而简化了一部分东西，这导致它在某些方面不如前者，短尺寸导致管下没有装配额外配件的位置，所以就直接装上了一个小的前握把，综合来说这是一把相当优秀的武器，除了不喜欢无托结构的人之外很少有人不想拥有它。",
+    "weight": "2000 g",
+    "volume": "1000 ml",
+    "price": "15000 USD",
+    "price_postapoc": "150 USD",
+    "skill": "rifle",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "223"
+    ],
+    "bashing": 10,
+    "dispersion": 150,
+    "durability": 9,
+    "handling": 40,
+    "reload": 300,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "BURST",
+        "2 rd.",
+        2
+      ],
+      [
+        "AUTO",
+        "auto",
+        4
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ]
+    ],
+    "default_mods": [
+      "grip"
+    ],
+    "flags": [
+      "NEVER_JAMS"
+    ],
+    "longest_side": "60 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "stanag30",
+          "stanag5",
+          "stanag10",
+          "stanag20",
+          "stanag40",
+          "stanag50",
+          "stanag60",
+          "stanag60drum",
+          "stanag90",
+          "stanag100",
+          "stanag100drum",
+          "stanag150",
+          "survivor223mag"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sa58_osw",
+    "copy-from": "rifle_auto",
+    "type": "GUN",
+    "name": {
+      "str_sp": "SA58 OSW 突击步枪"
+    },
+    "description": "SA58是美国DS Arms公司基于经典FN FAL步枪现代化改进的7.62x51mm战斗步枪，使用与奥地利StG-58同源的斯太尔-戴姆勒-普赫生产线制造，简单来说，SA58就是21世纪版的FN FAL，保留了FAL经典的导气式与偏移闭锁结构，同时在材料、导轨、人机工效等方面做了全面现代化升级，使其能够适配当代战术附件和作战需求。",
+    "weight": "4000 g",
+    "volume": "1600 ml",
+    "price": "5000 USD",
+    "price_postapoc": "80 USD",
+    "material": [
+      "steel"
+    ],
+    "color": "dark_gray",
+    "ammo": [
+      "308"
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -3
+    },
+    "dispersion": 180,
+    "handling": 5,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "longest_side": "65 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "falmag",
+          "falbigmag",
+          "fal_makeshiftmag"
+        ],
+        "magazine_well": "50 ml"
+      }
+    ]
+  },
+  {
+    "id": "g3ka4",
+    "copy-from": "rifle_auto",
+    "type": "GUN",
+    "name": {
+      "str_sp": "H&K G3KA4 突击步枪"
+    },
+    "description": "G3KA4是H&K公司基于G3A4而设计的短枪管版本，为那些需要便携火力的特种部队以及车辆乘员使用，G3KA4在缩短体积的同时仍保持了7.62x51mm NATO全威力弹的穿透力，且得益于G3系列滚柱延迟闭锁结构和较高的枪重，后坐力相对可控，精度也不错，必要时还能客串精确射手步枪。",
+    "weight": "4000 g",
+    "volume": "1500 ml",
+    "price": "1800 USD",
+    "price_postapoc": "50 USD",
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "color": "dark_gray",
+    "ammo": [
+      "308"
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -5
+    },
+    "dispersion": 160,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        2
+      ]
+    ],
+    "longest_side": "71 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "g3mag",
+          "g3bigmag",
+          "g3_makeshiftmag"
+        ],
+        "magazine_well": "50 ml"
+      }
+    ]
+  },
+  {
+    "id": "vssa",
+    "copy-from": "rifle_auto",
+    "type": "GUN",
+    "name": {
+      "str_sp": "VSS-A“温托蕾”特种狙击步枪"
+    },
+    "description": "VARN公司的VSS-A是VSS狙击步枪的终极重制版，其设计目的是为了解决VSS目前现有的一些问题，VSS-A在消音器内部的枪管更长，为了弥补对消音效果造成的损失所以对消音器进行了重新设计，机匣改为了铰链翻盖设计，在拥有皮卡汀尼导轨的同时还保留了侧面的燕尾槽，内部的部分枪机零件经过优化，枪托材质则换成了聚合物，握把处设有防滑纹并且更方便握持，虽然重量略重不过更先进的制造工艺与材料并没有让它增加多少重量，综合来说这是一把非常优秀的亚音速枪械，如果你需要一把安静并且远近皆可的武器那么选它准没错。",
+    "weight": "2600 g",
+    "volume": "1500 ml",
+    "price": "20000 USD",
+    "price_postapoc": "200 USD",
+    "skill": "rifle",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "939"
+    ],
+    "bashing": 10,
+    "dispersion": 10,
+    "durability": 10,
+    "handling": 10,
+    "range": 5,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "default_mods": [
+      "bcrf_sp"
+    ],
+    "longest_side": "90 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "939_magazine_10",
+          "939_magazine_20",
+          "939_magazine_30"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "csls7",
+    "copy-from": "smg_base",
+    "type": "GUN",
+    "name": {
+      "str": "CS/LS7 冲锋枪"
+    },
+    "description": "CS/LS7 冲锋枪是中国研制的一款紧凑型冲锋枪，是QCQ-171的外贸型号，其在设计上高度注重模块化，方便加装各种战术配件，整枪结构紧凑，性能可靠，无论是在海外的军警系统还是民用市场中都有着非常好的评价。\n\n在这把枪出现之前中国警察使用的还是老旧的79式冲锋枪，不过我觉得79式还可以再用个几十年！",
+    "weight": "2100 g",
+    "volume": "800 ml",
+    "price": "3000 USD",
+    "price_postapoc": "40 USD",
+    "to_hit": -2,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "color": "dark_gray",
+    "ammo": [
+      "9mm"
+    ],
+    "dispersion": 210,
+    "blackpowder_tolerance": 40,
+    "default_mods": [
+      "folding_stock"
+    ],
+    "modes": [
+      [
+        "DEFAULT",
+        "semi",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        4
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        3
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ]
+    ],
+    "longest_side": "65 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "csls7_30"
+        ],
+        "magazine_well": "100 ml"
+      }
+    ]
+  }
+]
