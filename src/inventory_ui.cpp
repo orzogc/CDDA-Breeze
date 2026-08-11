@@ -2005,6 +2005,13 @@ void inventory_selector::add_character_items( Character &character )
     }
 }
 
+void inventory_selector::add_character_ebooks( Character &character )
+{
+    for( item_location &ereader : character.all_items_loc() ) {
+        add_contained_ebooks( ereader );
+    }
+}
+
 void inventory_selector::add_map_items( const tripoint &target )
 {
     map &here = get_map();
@@ -2676,9 +2683,11 @@ void inventory_selector::draw_footer( const catacurses::window &w ) const
             wprintz( w, c_light_gray, " >" );
         }
 
-        right_print( w, getmaxy( w ) - border, border + 1, c_light_gray,
-                     string_format( "< [%s] %s >", ctxt.get_desc( "VIEW_CATEGORY_MODE" ),
-                                    io::enum_to_string( _uimode ) ) );
+        if( show_view_category_mode_ ) {
+            right_print( w, getmaxy( w ) - border, border + 1, c_light_gray,
+                         string_format( "< [%s] %s >", ctxt.get_desc( "VIEW_CATEGORY_MODE" ),
+                                        _( io::enum_to_string( _uimode ) ) ) );
+        }
         const auto footer = get_footer( mode );
         if( !footer.first.empty() ) {
             const int string_width = utf8_width( footer.first );
@@ -2808,7 +2817,7 @@ void inventory_selector::on_input( const inventory_input &input )
         toggle_active_column( scroll_direction::BACKWARD );
     } else if( input.action == "NEXT_COLUMN" ) {
         toggle_active_column( scroll_direction::FORWARD );
-    } else if( input.action == "VIEW_CATEGORY_MODE" ) {
+    } else if( input.action == "VIEW_CATEGORY_MODE" && show_view_category_mode_ ) {
         toggle_categorize_contained();
     } else if( input.action == "EXAMINE_CONTENTS" ) {
         const inventory_entry &selected = get_active_column().get_highlighted();
@@ -3569,7 +3578,7 @@ void inventory_multiselector::on_input( const inventory_input &input )
                                 ? count < max ? count + 1 : max
                                 : count > 1 ? count - 1 : 0;
         toggle_entry( entry, newcount );
-    } else if( input.action == "VIEW_CATEGORY_MODE" ) {
+    } else if( input.action == "VIEW_CATEGORY_MODE" && show_view_category_mode() ) {
         toggle_categorize_contained();
     } else {
         inventory_selector::on_input( input );

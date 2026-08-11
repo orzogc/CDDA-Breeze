@@ -129,7 +129,8 @@ static item_location inv_internal( Character &u, const inventory_selector_preset
                                    const std::string &title, int radius,
                                    const std::string &none_message,
                                    const std::string &hint = std::string(),
-                                   item_location container = item_location() )
+                                   item_location container = item_location(),
+                                   bool add_ebooks = false )
 {
     inventory_pick_selector inv_s( u, preset );
 
@@ -154,6 +155,9 @@ static item_location inv_internal( Character &u, const inventory_selector_preset
         // Default behavior.
         inv_s.add_character_items( u );
         inv_s.add_nearby_items( radius );
+        if( add_ebooks ) {
+            inv_s.add_character_ebooks( u );
+        }
     }
 
     if( u.has_activity( consuming ) ) {
@@ -1324,6 +1328,22 @@ class read_inventory_preset: public pickup_inventory_preset
         bool sort_compare( const inventory_entry &lhs, const inventory_entry &rhs ) const override {
             const bool base_sort = inventory_selector_preset::sort_compare( lhs, rhs );
 
+            if( lhs.any_item()->typeId() == rhs.any_item()->typeId() ) {
+                const auto is_ebook = []( const inventory_entry &entry ) {
+                    const item_location loc = entry.any_item();
+                    if( !loc.has_parent() ) {
+                        return false;
+                    }
+                    const item_location parent = loc.parent_item();
+                    return parent && parent->is_ebook_storage();
+                };
+                const bool lhs_ebook = is_ebook( lhs );
+                const bool rhs_ebook = is_ebook( rhs );
+                if( lhs_ebook != rhs_ebook ) {
+                    return !lhs_ebook;
+                }
+            }
+
             const bool known_a = is_known( lhs.any_item() );
             const bool known_b = is_known( rhs.any_item() );
 
@@ -1398,7 +1418,8 @@ item_location game_menus::inv::read( Character &you )
 {
     const std::string msg = you.is_avatar() ? _( "You have nothing to read." ) :
                             string_format( _( "%s has nothing to read." ), you.disp_name() );
-    return inv_internal( you, read_inventory_preset( you ), _( "Read" ), 1, msg );
+    return inv_internal( you, read_inventory_preset( you ), _( "Read" ), 1, msg, "", item_location(),
+                         true );
 }
 
 item_location game_menus::inv::ebookread( Character &you, item_location &ereader )

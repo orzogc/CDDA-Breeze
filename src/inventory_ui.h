@@ -618,6 +618,7 @@ class inventory_selector
                                   int indent = 0 );
         void add_contained_ebooks( item_location &container );
         void add_character_items( Character &character );
+        void add_character_ebooks( Character &character );
         void add_map_items( const tripoint &target );
         void add_vehicle_items( const tripoint &target );
         void add_nearby_items( int radius = 1 );
@@ -635,6 +636,13 @@ class inventory_selector
         /** Specify whether the header should show stats (weight and volume). */
         void set_display_stats( bool display_stats ) {
             this->display_stats = display_stats;
+        }
+        /** Hide the view-mode switch when it is not useful for a selector. */
+        void set_show_view_category_mode( bool show ) {
+            this->show_view_category_mode_ = show;
+        }
+        bool show_view_category_mode() const {
+            return show_view_category_mode_;
         }
         /** @return true when the selector is empty. */
         bool empty() const;
@@ -887,6 +895,7 @@ class inventory_selector
         bool is_empty = true;
         bool display_stats = true;
         bool use_invlet = true;
+        bool show_view_category_mode_ = true;
         selector_invlet_type invlet_type_ = SELECTOR_INVLET_DEFAULT;
         size_t entry_generation_number = 0;
 

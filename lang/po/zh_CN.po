@@ -436351,6 +436351,14 @@ msgstr "切换收藏"
 msgid "Category selection mode"
 msgstr "类别选择模式"
 
+#: src/inventory_ui.cpp:2681
+msgid "categories"
+msgstr "类别"
+
+#: src/inventory_ui.cpp:2681
+msgid "hierarchy"
+msgstr "层级"
+
 #: src/inventory_ui.cpp:2907
 msgid "Mark/unmark selected item"
 msgstr "标记/取消标记选择物品"
