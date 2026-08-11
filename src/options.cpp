@@ -2394,7 +2394,6 @@ void options_manager::add_options_graphics()
         { "white", to_translation( "白色" ) }
     }, "pale_cyan", COPT_CURSES_HIDE
        );
-    get_option( "ZLEVEL_OVERLAY_COLOR" ).setPrerequisite( "USE_TILES" );
 
     add_empty_line();
 

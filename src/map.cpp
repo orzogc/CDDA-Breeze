@@ -7806,6 +7806,16 @@ bool map::draw_maptile( const catacurses::window &w, const tripoint &p,
     return true;
 }
 
+// Tint used for lower-z-level terrain drawn through transparent floors.
+// Follows the same option as the tiles renderer so ASCII view can match tiles.
+static nc_color zlevel_overlay_color( const nc_color &c )
+{
+    if( get_option<std::string>( "ZLEVEL_OVERLAY_COLOR" ) == "white" ) {
+        return white_background( c );
+    }
+    return cyan_background( c );
+}
+
 void map::draw_from_above( const catacurses::window &w, const tripoint &p,
                            const const_maptile &curr_tile, const drawsq_params &params ) const
 {
@@ -7830,7 +7840,9 @@ void map::draw_from_above( const catacurses::window &w, const tripoint &p,
         sym = special_symbol( veh->face.dir_symbol( veh->part_sym( displayed_part, true ) ) );
         tercol = ( roof >= 0 ||
                    vpart_position( const_cast<vehicle &>( *veh ),
-                                   part_below ).obstacle_at_part() ) ? c_light_gray : c_light_gray_cyan;
+                                   part_below ).obstacle_at_part() ) ? c_light_gray :
+                 ( get_option<std::string>( "ZLEVEL_OVERLAY_COLOR" ) == "white" ?
+                   c_light_gray : c_light_gray_cyan );
     } else if( curr_ter.has_flag( ter_furn_flag::TFLAG_SEEN_FROM_ABOVE ) ) {
         if( curr_ter.has_flag( ter_furn_flag::TFLAG_AUTO_WALL_SYMBOL ) ) {
             sym = AUTO_WALL_PLACEHOLDER;
@@ -7847,9 +7859,10 @@ void map::draw_from_above( const catacurses::window &w, const tripoint &p,
         sym = '.';
         if( curr_ter.color() != c_cyan ) {
             // Need a special case here, it doesn't cyanize well
-            tercol = cyan_background( curr_ter.color() );
+            tercol = zlevel_overlay_color( curr_ter.color() );
         } else {
-            tercol = c_black_cyan;
+            tercol = get_option<std::string>( "ZLEVEL_OVERLAY_COLOR" ) == "white" ?
+                     c_black_white : c_black_cyan;
         }
     } else {
         sym = curr_ter.symbol();
