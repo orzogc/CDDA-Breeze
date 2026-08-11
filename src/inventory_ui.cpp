@@ -2393,7 +2393,8 @@ size_t inventory_selector::get_header_min_width() const
     size_t titles_width = std::max( utf8_width( title, true ),
                                     utf8_width( hint, true ) );
     for( const std::string &column_title : column_titles ) {
-        titles_width = std::max( titles_width, utf8_width( column_title, true ) );
+        titles_width = std::max( titles_width,
+                                 static_cast<size_t>( utf8_width( column_title, true ) ) );
     }
     if( !display_stats ) {
         return titles_width;
