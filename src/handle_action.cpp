@@ -2035,7 +2035,7 @@ static void read()
             if( ereader ) {
                 if( !ereader.held_by( player_character ) &&
                     !ereader->has_flag( flag_ALLOWS_REMOTE_USE ) ) {
-                    const std::vector<item *> ebooks = ereader->ebooks();
+                    const std::vector<const item *> ebooks = ereader->ebooks();
                     const auto selected_book = std::find( ebooks.begin(), ebooks.end(), loc.get_item() );
                     if( selected_book == ebooks.end() ) {
                         return;
@@ -2045,11 +2045,11 @@ static void read()
                     if( !ereader ) {
                         return;
                     }
-                    const std::vector<item *> obtained_ebooks = ereader->ebooks();
+                    const std::vector<const item *> obtained_ebooks = ereader->ebooks();
                     if( book_index >= obtained_ebooks.size() ) {
                         return;
                     }
-                    loc = item_location( ereader, obtained_ebooks[book_index] );
+                    loc = item_location( ereader, const_cast<item *>( obtained_ebooks[book_index] ) );
                 }
                 player_character.read( loc, ereader );
             } else {
