@@ -1471,6 +1471,27 @@ static bool cancel_if_book_invalid(
     return false;
 }
 
+static bool cancel_if_ereader_invalid(
+    player_activity &act, const item_location &ereader, const Character &who )
+{
+    if( !ereader || !ereader->is_ebook_storage() ) {
+        who.add_msg_player_or_npc(
+            _( "You no longer have the e-book reader." ),
+            _( "<npcname> no longer has the e-book reader." ) );
+        act.set_to_null();
+        return true;
+    }
+    if( ereader->is_broken() ) {
+        who.add_msg_player_or_npc(
+            _( "Your %s is broken and won't turn on." ),
+            _( "<npcname>'s %s is broken and won't turn on." ),
+            ereader->tname(), ereader->tname() );
+        act.set_to_null();
+        return true;
+    }
+    return false;
+}
+
 void read_activity_actor::start( player_activity &act, Character &who )
 {
     if( cancel_if_book_invalid( act, book, who ) ) {
@@ -1478,6 +1499,9 @@ void read_activity_actor::start( player_activity &act, Character &who )
     }
 
     using_ereader = !!ereader;
+    if( using_ereader && cancel_if_ereader_invalid( act, ereader, who ) ) {
+        return;
+    }
 
     bktype = book->type->use_methods.count( "MA_MANUAL" ) ?
              book_type::martial_art : book_type::normal;
@@ -1532,15 +1556,11 @@ void read_activity_actor::do_turn( player_activity &act, Character &who )
         who.moves = 0;
     }
 
-    if( using_ereader && !ereader ) {
-        who.add_msg_player_or_npc(
-            _( "You no longer have the e-book!" ),
-            _( "<npcname> no longer has the e-book!" ) );
-        who.cancel_activity();
+    if( using_ereader && cancel_if_ereader_invalid( act, ereader, who ) ) {
         return;
     }
 
-    if( using_ereader && !ereader->ammo_sufficient( &who ) ) {
+    if( using_ereader && !ereader->ammo_sufficient( &who, 1, true ) ) {
         add_msg_if_player_sees(
             who,
             _( "%1$s %2$s ran out of batteries." ),
@@ -1858,6 +1878,9 @@ bool read_activity_actor::npc_read( npc &learner )
 void read_activity_actor::finish( player_activity &act, Character &who )
 {
     if( cancel_if_book_invalid( act, book, who ) ) {
+        return;
+    }
+    if( using_ereader && cancel_if_ereader_invalid( act, ereader, who ) ) {
         return;
     }
 
@@ -2621,11 +2644,19 @@ void ebooksave_activity_actor::start( player_activity &act, Character &/*who*/ )
     act.moves_left = act.moves_total;
 }
 
-void ebooksave_activity_actor::do_turn( player_activity &/*act*/, Character &who )
+void ebooksave_activity_actor::do_turn( player_activity &act, Character &who )
 {
+    if( !ereader || !ereader->is_ebook_storage() ) {
+        who.add_msg_player_or_npc(
+            _( "You no longer have the e-book reader." ),
+            _( "<npcname> no longer has the e-book reader." ) );
+        act.set_to_null();
+        return;
+    }
+
     // only consume charges every 25 pages
     if( calendar::once_every( 25 * time_per_page ) ) {
-        if( !ereader->ammo_sufficient( &who ) ) {
+        if( !ereader->ammo_sufficient( &who, 1, true ) ) {
             add_msg_if_player_sees(
                 who,
                 _( "%1$s %2$s ran out of batteries." ),
@@ -2640,6 +2671,11 @@ void ebooksave_activity_actor::do_turn( player_activity &/*act*/, Character &who
 }
 void ebooksave_activity_actor::finish( player_activity &act, Character &who )
 {
+    if( !ereader || !ereader->is_ebook_storage() ) {
+        act.set_to_null();
+        return;
+    }
+
     std::set<itype_id> device_ebooks;
     for( const item *ebook : ereader->ebooks() ) {
         if( ebook->is_book() ) {

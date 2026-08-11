@@ -2033,19 +2033,23 @@ static void read()
                 }
             }
             if( ereader ) {
-                if( !ereader.held_by( player_character ) ) {
-                    const itype_id book_type = loc->typeId();
+                if( !ereader.held_by( player_character ) &&
+                    !ereader->has_flag( flag_ALLOWS_REMOTE_USE ) ) {
+                    const std::vector<item *> ebooks = ereader->ebooks();
+                    const auto selected_book = std::find( ebooks.begin(), ebooks.end(), loc.get_item() );
+                    if( selected_book == ebooks.end() ) {
+                        return;
+                    }
+                    const size_t book_index = std::distance( ebooks.begin(), selected_book );
                     ereader = ereader.obtain( player_character );
                     if( !ereader ) {
                         return;
                     }
-                    item *book = ereader->get_item_with( [&]( const item &candidate ) {
-                        return candidate.typeId() == book_type;
-                    } );
-                    if( book == nullptr ) {
+                    const std::vector<item *> obtained_ebooks = ereader->ebooks();
+                    if( book_index >= obtained_ebooks.size() ) {
                         return;
                     }
-                    loc = item_location( ereader, book );
+                    loc = item_location( ereader, obtained_ebooks[book_index] );
                 }
                 player_character.read( loc, ereader );
             } else {

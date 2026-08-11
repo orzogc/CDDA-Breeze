@@ -1928,7 +1928,7 @@ bool inventory_selector::add_entry_rec( inventory_column &entry_column,
     inventory_column temp_children( preset );
     bool vis_contents;
     if( add_ebooks && loc->is_ebook_storage() ) {
-        vis_contents = add_contained_ebooks( loc );
+        vis_contents = add_contained_ebooks( loc, children_column );
     } else {
         vis_contents =
             add_contained_items( loc, temp_children, children_category,
@@ -1983,6 +1983,11 @@ bool inventory_selector::add_contained_items( item_location &container, inventor
 
 bool inventory_selector::add_contained_ebooks( item_location &container )
 {
+    return add_contained_ebooks( container, own_inv_column );
+}
+
+bool inventory_selector::add_contained_ebooks( item_location &container, inventory_column &column )
+{
     if( !container->is_ebook_storage() ) {
         return false;
     }
@@ -1990,7 +1995,7 @@ bool inventory_selector::add_contained_ebooks( item_location &container )
     bool added = false;
     for( item *it : container->get_contents().ebooks() ) {
         item_location child( container, it );
-        add_entry( own_inv_column, std::vector<item_location>( 1, child ) );
+        add_entry( column, std::vector<item_location>( 1, child ) );
         added = true;
     }
     return added;

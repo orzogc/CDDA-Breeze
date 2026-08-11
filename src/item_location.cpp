@@ -63,6 +63,25 @@ static item *retrieve_index( const T &sel, int idx )
     return obj;
 }
 
+// Item locations can point into special pockets such as EBOOK, which are not
+// included by item::all_items_top().  Keep serialization and deserialization
+// on the same direct-content list.
+static std::list<const item *> all_items_container_top( const item_location &container )
+{
+    std::list<const item *> result;
+    if( !container ) {
+        return result;
+    }
+
+    for( int i = static_cast<int>( item_pocket::pocket_type::CONTAINER );
+         i < static_cast<int>( item_pocket::pocket_type::LAST ); ++i ) {
+        std::list<const item *> pocket_items = container->all_items_top(
+                    static_cast<item_pocket::pocket_type>( i ) );
+        result.splice( result.end(), pocket_items );
+    }
+    return result;
+}
+
 class item_location::impl
 {
     public:
@@ -229,6 +248,9 @@ class item_location::impl::item_on_map : public item_location::impl
             on_contents_changed();
             item obj = target()->split( qty );
             const auto get_local_location = []( Character & ch, item_location it ) {
+                if( !it ) {
+                    return item_location{};
+                }
                 if( ch.has_item( *it ) ) {
                     return item_location( ch, &*it );
                 } else {
@@ -236,9 +258,16 @@ class item_location::impl::item_on_map : public item_location::impl
                 }
             };
             if( !obj.is_null() ) {
-                return get_local_location( ch, ch.i_add( obj, should_stack ) );
+                item_location inv = ch.i_add( obj, should_stack );
+                if( !inv ) {
+                    target()->charges += obj.charges;
+                }
+                return get_local_location( ch, inv );
             } else {
                 item_location inv = ch.i_add( *target(), should_stack, nullptr, target() );
+                if( !inv ) {
+                    return inv;
+                }
                 remove_item();
                 return get_local_location( ch, inv );
             }
@@ -501,9 +530,16 @@ class item_location::impl::item_on_vehicle : public item_location::impl
             on_contents_changed();
             item obj = target()->split( qty );
             if( !obj.is_null() ) {
-                return ch.i_add( obj, should_stack );
+                item_location inv = ch.i_add( obj, should_stack );
+                if( !inv ) {
+                    target()->charges += obj.charges;
+                }
+                return inv;
             } else {
                 item_location inv = ch.i_add( *target(), should_stack, nullptr, target() );
+                if( !inv ) {
+                    return inv;
+                }
                 remove_item();
                 return inv;
             }
@@ -568,16 +604,13 @@ class item_location::impl::item_in_container : public item_location::impl
                 return -1;
             }
             int idx = 0;
-            for( const item *it : container->all_items_top() ) {
+            for( const item *it : all_items_container_top( container ) ) {
                 if( target() == it ) {
                     return idx;
                 }
                 idx++;
             }
-            if( container->empty() ) {
-                return -1;
-            }
-            return idx;
+            return -1;
         }
     public:
         item_location parent_item() const override {
@@ -596,10 +629,10 @@ class item_location::impl::item_in_container : public item_location::impl
         }
 
         item *unpack( int idx ) const override {
-            if( idx < 0 || static_cast<size_t>( idx ) >= target()->num_item_stacks() ) {
+            const std::list<const item *> all_items = all_items_container_top( container );
+            if( idx < 0 || static_cast<size_t>( idx ) >= all_items.size() ) {
                 return nullptr;
             }
-            std::list<const item *> all_items = container->all_items_ptr();
             auto iter = all_items.begin();
             std::advance( iter, idx );
             if( iter != all_items.end() ) {
@@ -650,12 +683,18 @@ class item_location::impl::item_in_container : public item_location::impl
             }
             const item obj = target()->split( qty );
             if( !obj.is_null() ) {
-                return ch.i_add( obj, should_stack,/*avoid=*/nullptr, nullptr,/*allow_drop=*/false );
+                item_location inv = ch.i_add( obj, should_stack,/*avoid=*/nullptr, nullptr,
+                                              /*allow_drop=*/false );
+                if( !inv ) {
+                    target()->charges += obj.charges;
+                }
+                return inv;
             } else {
                 item_location inv = ch.i_add( *target(), should_stack,/*avoid=*/nullptr,
                                               target(), /*allow_drop=*/false );
                 if( inv == item_location::nowhere ) {
                     debugmsg( "failed to add item to character inventory while obtaining from container" );
+                    return inv;
                 }
                 remove_item();
                 return inv;
@@ -806,11 +845,11 @@ void item_location::deserialize( const JsonObject &obj )
             ptr.reset( new impl::item_on_map( map_cursor( pos ), idx ) ); // drop on ground
             return;
         }
-        const std::list<item *> parent_contents = parent->all_items_top();
+        const std::list<const item *> parent_contents = all_items_container_top( parent );
         if( idx > -1 && idx < static_cast<int>( parent_contents.size() ) ) {
             auto iter = parent_contents.begin();
             std::advance( iter, idx );
-            ptr.reset( new impl::item_in_container( parent, *iter ) );
+            ptr.reset( new impl::item_in_container( parent, const_cast<item *>( *iter ) ) );
         } else {
             // probably pointing to the wrong item
             debugmsg( "contents index greater than contents size" );
