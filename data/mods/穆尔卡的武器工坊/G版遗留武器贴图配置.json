@@ -17,7 +17,7 @@
     ],
     "tiles-new": [
       {
-        "file": "G版遗留武器贴图.png",
+        "file": "tiles_legacy_g_weapons.png",
         "sprite_width": 32,
         "sprite_height": 32,
         "sprite_offset_x": 0,

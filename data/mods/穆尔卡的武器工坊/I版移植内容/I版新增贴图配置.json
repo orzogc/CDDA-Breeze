@@ -17,7 +17,7 @@
     ],
     "tiles-new": [
       {
-        "file": "I版新增护具贴图.png",
+        "file": "tiles_i_armor_extra.png",
         "sprite_width": 32,
         "sprite_height": 32,
         "sprite_offset_x": 0,
@@ -62,7 +62,7 @@
         ]
       },
       {
-        "file": "I版新增重武器贴图.png",
+        "file": "tiles_i_heavy_extra.png",
         "sprite_width": 64,
         "sprite_height": 64,
         "sprite_offset_x": -16,
@@ -143,7 +143,7 @@
         ]
       },
       {
-        "file": "I版新增弹药贴图.png",
+        "file": "tiles_i_ammo_extra.png",
         "sprite_width": 32,
         "sprite_height": 32,
         "sprite_offset_x": 0,
@@ -163,7 +163,7 @@
         ]
       },
       {
-        "file": "I版新增武器贴图.png",
+        "file": "tiles_i_weapons_extra.png",
         "sprite_width": 32,
         "sprite_height": 32,
         "sprite_offset_x": 0,

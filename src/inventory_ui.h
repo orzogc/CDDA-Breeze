@@ -630,6 +630,9 @@ class inventory_selector
         void set_title( const std::string &title ) {
             this->title = title;
         }
+        /** Assign titles to the carried-item and nearby-item columns. */
+        void set_column_titles( const std::string &carried_title,
+                                const std::string &nearby_title );
         /** Assigns a hint. */
         void set_hint( const std::string &hint ) {
             this->hint = hint;
@@ -794,6 +797,7 @@ class inventory_selector
         void refresh_window();
 
         void draw_header( const catacurses::window &w ) const;
+        void draw_column_titles( const catacurses::window &w ) const;
         void draw_footer( const catacurses::window &w ) const;
         void draw_columns( const catacurses::window &w );
         void draw_frame( const catacurses::window &w ) const;
@@ -884,6 +888,7 @@ class inventory_selector
 
         std::string title;
         std::string hint;
+        std::vector<std::string> column_titles;
         size_t active_column_index;
         std::list<item_category> categories;
         navigation_mode mode;

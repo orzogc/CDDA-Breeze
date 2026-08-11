@@ -2334,6 +2334,15 @@ void inventory_selector::prepare_layout()
     debug_print_timer( tp_prep, "prepare_layout took" );
 }
 
+void inventory_selector::set_column_titles( const std::string &carried_title,
+        const std::string &nearby_title )
+{
+    column_titles.clear();
+    if( !carried_title.empty() || !nearby_title.empty() ) {
+        column_titles = { carried_title, nearby_title };
+    }
+}
+
 shared_ptr_fast<ui_adaptor> inventory_selector::create_or_get_ui_adaptor()
 {
     shared_ptr_fast<ui_adaptor> current_ui = ui.lock();
@@ -2375,13 +2384,17 @@ size_t inventory_selector::get_layout_height() const
 
 size_t inventory_selector::get_header_height() const
 {
-    return display_stats || !hint.empty() ? 3 : 1;
+    const size_t base_height = display_stats || !hint.empty() ? 3 : 1;
+    return base_height + ( column_titles.empty() ? 0 : 1 );
 }
 
 size_t inventory_selector::get_header_min_width() const
 {
-    const size_t titles_width = std::max( utf8_width( title, true ),
-                                          utf8_width( hint, true ) );
+    size_t titles_width = std::max( utf8_width( title, true ),
+                                    utf8_width( hint, true ) );
+    for( const std::string &column_title : column_titles ) {
+        titles_width = std::max( titles_width, utf8_width( column_title, true ) );
+    }
     if( !display_stats ) {
         return titles_width;
     }
@@ -2421,6 +2434,56 @@ void inventory_selector::draw_header( const catacurses::window &w ) const
         for( const std::string &elem : get_stats() ) {
             right_print( w, y++, border + 1, c_dark_gray, elem );
         }
+    }
+
+    draw_column_titles( w );
+}
+
+void inventory_selector::draw_column_titles( const catacurses::window &w ) const
+{
+    if( column_titles.empty() ) {
+        return;
+    }
+
+    const auto visible_columns = get_visible_columns();
+    if( visible_columns.empty() ) {
+        return;
+    }
+
+    const int screen_width = getmaxx( w ) - 2 * ( border + 1 );
+    const bool centered = are_columns_centered( screen_width );
+    const int free_space = screen_width - get_columns_width( visible_columns );
+    const int max_gap = ( visible_columns.size() > 1 ) ? free_space / ( static_cast<int>(
+                        visible_columns.size() ) - 1 ) : free_space;
+    const int gap = centered ? max_gap : std::min<int>( max_gap, normal_column_gap );
+    const int gap_rounding_error = centered && visible_columns.size() > 1
+                                   ? free_space % ( visible_columns.size() - 1 ) : 0;
+
+    const size_t base_header_height = display_stats || !hint.empty() ? 3 : 1;
+    const int y = border + base_header_height;
+    size_t x = border + 1;
+
+    for( inventory_column * const &column : visible_columns ) {
+        if( &column == &visible_columns.back() ) {
+            x += gap_rounding_error;
+        }
+
+        size_t column_index = 0;
+        if( column == &map_column ) {
+            column_index = 1;
+        } else if( column != &own_inv_column && column != &own_gear_column ) {
+            const auto column_iter = std::find( columns.begin(), columns.end(), column );
+            if( column_iter != columns.end() ) {
+                column_index = std::distance( columns.begin(), column_iter );
+            }
+        }
+
+        if( column_index < column_titles.size() && !column_titles[column_index].empty() ) {
+            trim_and_print( w, point( x, y ), static_cast<int>( column->get_width() ), c_light_gray,
+                            column_titles[column_index] );
+        }
+
+        x += column->get_width() + gap;
     }
 }
 

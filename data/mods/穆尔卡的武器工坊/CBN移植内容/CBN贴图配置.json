@@ -9,7 +9,7 @@
     ],
     "tiles-new": [
       {
-        "file": "CBN武器贴图.png",
+        "file": "tiles_cbn_weapons.png",
         "tiles": [
           {
             "id": "krbk308",
@@ -113,7 +113,7 @@
     ],
     "tiles-new": [
       {
-        "file": "CBN弹药贴图.png",
+        "file": "tiles_cbn_ammo.png",
         "tiles": [
           {
             "id": "rpd_100",
@@ -145,7 +145,7 @@
     ],
     "tiles-new": [
       {
-        "file": "CBN护具贴图.png",
+        "file": "tiles_cbn_armor.png",
         "tiles": [
           {
             "id": "cu2_suit",
@@ -245,7 +245,7 @@
     ],
     "tiles-new": [
       {
-        "file": "CBN重武器贴图.png",
+        "file": "tiles_cbn_heavy.png",
         "tiles": [
           {
             "id": "gasc",
@@ -309,7 +309,7 @@
     ],
     "tiles-new": [
       {
-        "file": "CBN1.17武器贴图.png",
+        "file": "tiles_cbn117_weapons.png",
         "tiles": [
           {
             "id": "overlay_wielded_arek_pdr",
@@ -369,7 +369,7 @@
     ],
     "tiles-new": [
       {
-        "file": "CBN1.17护具贴图.png",
+        "file": "tiles_cbn117_armor.png",
         "tiles": [
           {
             "id": "da68sh_vest",
@@ -401,7 +401,7 @@
     ],
     "tiles-new": [
       {
-        "file": "CBN1.17头盔贴图.png",
+        "file": "tiles_cbn117_helmets.png",
         "tiles": [
           {
             "id": "chsh",

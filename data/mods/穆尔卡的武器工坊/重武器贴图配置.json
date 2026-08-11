@@ -17,7 +17,7 @@
     ],
     "tiles-new": [
       {
-        "file": "重武器贴图.png",
+        "file": "tiles_heavy_weapons.png",
         "tiles": [
           {
             "id": "ptrd",

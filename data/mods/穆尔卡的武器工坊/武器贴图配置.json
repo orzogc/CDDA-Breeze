@@ -17,7 +17,7 @@
     ],
     "tiles-new": [
       {
-        "file": "武器贴图.png",
+        "file": "tiles_weapons.png",
         "tiles": [
           {
             "id": "MP153_C",

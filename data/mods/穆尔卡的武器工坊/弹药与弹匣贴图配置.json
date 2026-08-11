@@ -17,7 +17,7 @@
     ],
     "tiles-new": [
       {
-        "file": "弹药贴图.png",
+        "file": "tiles_ammo.png",
         "tiles": [
           {
             "id": "939",

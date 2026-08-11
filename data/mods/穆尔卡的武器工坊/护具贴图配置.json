@@ -17,7 +17,7 @@
     ],
     "tiles-new": [
       {
-        "file": "护具贴图.png",
+        "file": "tiles_armor.png",
         "tiles": [
           {
             "id": "k1_plate",

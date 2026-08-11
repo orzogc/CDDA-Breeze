@@ -17,28 +17,29 @@
     ],
     "tiles-new": [
       {
-        "file": "变异贴图.png",
-        "tiles": [
-          {
-            "id": "overlay_mutation_murka_eye",
-            "fg": 0,
-            "rotates": false
-          },
-          {
-            "id": "overlay_mutation_murka_hair",
-            "fg": 1,
-            "rotates": false
-          },
-          {
-            "id": "overlay_mutation_murka_skin",
-            "fg": 2,
-            "rotates": false
-          }
-        ],
+        "file": "tiles_i_pistols.png",
         "sprite_width": 32,
         "sprite_height": 32,
         "sprite_offset_x": 0,
-        "sprite_offset_y": 0
+        "sprite_offset_y": 0,
+        "tiles": [
+          {
+            "id": "overlay_wielded_m1911",
+            "fg": 0
+          },
+          {
+            "id": "m1911",
+            "fg": 1
+          },
+          {
+            "id": "overlay_wielded_usp_45",
+            "fg": 2
+          },
+          {
+            "id": "usp_45",
+            "fg": 3
+          }
+        ]
       }
     ]
   }
