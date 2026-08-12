@@ -50,6 +50,18 @@
         [
           "arek_pdr",
           1
+        ],
+        [
+          "claw308h",
+          20
+        ],
+        [
+          "claw223e",
+          20
+        ],
+        [
+          "claw223a",
+          20
         ]
       ]
     },
@@ -68,6 +80,18 @@
         [
           "vssa",
           10
+        ],
+        [
+          "claw308h",
+          30
+        ],
+        [
+          "claw223e",
+          15
+        ],
+        [
+          "claw223a",
+          20
         ]
       ]
     },
@@ -86,6 +110,14 @@
         [
           "vssa",
           5
+        ],
+        [
+          "claw223a",
+          10
+        ],
+        [
+          "claw223e",
+          10
         ]
       ]
     },
@@ -99,6 +131,10 @@
       "items": [
         [
           "vssa",
+          1
+        ],
+        [
+          "claw308h",
           1
         ]
       ]
@@ -122,6 +158,18 @@
         [
           "arek_pdr",
           10
+        ],
+        [
+          "claw308h",
+          30
+        ],
+        [
+          "claw223e",
+          20
+        ],
+        [
+          "claw223a",
+          30
         ]
       ]
     },
@@ -182,6 +230,34 @@
         [
           "da68sh_vest",
           1
+        ]
+      ]
+    },
+    "subtype": "distribution"
+  },
+  {
+    "type": "item_group",
+    "id": "guns_rifle_common",
+    "copy-from": "guns_rifle_common",
+    "extend": {
+      "items": [
+        [
+          "claw308h",
+          2
+        ]
+      ]
+    },
+    "subtype": "distribution"
+  },
+  {
+    "type": "item_group",
+    "id": "guns_pistol_rare",
+    "copy-from": "guns_pistol_rare",
+    "extend": {
+      "items": [
+        [
+          "ga290r",
+          5
         ]
       ]
     },

@@ -21,10 +21,9 @@
     "ammo": [
       "223"
     ],
-    "bashing": 10,
     "dispersion": 150,
     "durability": 9,
-    "handling": 40,
+    "handling": 60,
     "reload": 300,
     "modes": [
       [
@@ -129,7 +128,7 @@
       "amount": -3
     },
     "dispersion": 180,
-    "handling": 5,
+    "handling": 23,
     "modes": [
       [
         "DEFAULT",
@@ -153,6 +152,48 @@
         ],
         "magazine_well": "50 ml"
       }
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
     ]
   },
   {
@@ -203,6 +244,48 @@
         ],
         "magazine_well": "50 ml"
       }
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
     ]
   },
   {
@@ -212,7 +295,7 @@
     "name": {
       "str_sp": "VSS-A“温托蕾”特种狙击步枪"
     },
-    "description": "VARN公司的VSS-A是VSS狙击步枪的终极重制版，其设计目的是为了解决VSS目前现有的一些问题，VSS-A在消音器内部的枪管更长，为了弥补对消音效果造成的损失所以对消音器进行了重新设计，机匣改为了铰链翻盖设计，在拥有皮卡汀尼导轨的同时还保留了侧面的燕尾槽，内部的部分枪机零件经过优化，枪托材质则换成了聚合物，握把处设有防滑纹并且更方便握持，虽然重量略重不过更先进的制造工艺与材料并没有让它增加多少重量，综合来说这是一把非常优秀的亚音速枪械，如果你需要一把安静并且远近皆可的武器那么选它准没错。",
+    "description": "VARN公司的VSS-A是VSS狙击步枪的终极重制版，其设计目的是为了解决VSS目前现有的一些问题，VSS-A在消音器内部的枪管更长，为了弥补对消音效果造成的损失所以对消音器进行了重新设计，机匣改为了铰链翻盖结构，在拥有皮卡汀尼导轨的同时还保留了侧面的燕尾槽，内部的部分枪机零件经过优化，枪托材质则换成了聚合物，握把处设有防滑纹并且更方便握持，虽然重量略重不过更先进的制造工艺与材料并没有让它增加多少重量，综合来说这是一把非常优秀的亚音速枪械，如果你需要一把安静并且远近皆可的武器那么选它准没错。\n“请不要大声喧哗，谢谢。”",
     "weight": "2600 g",
     "volume": "1500 ml",
     "price": "20000 USD",
@@ -227,10 +310,9 @@
     "ammo": [
       "939"
     ],
-    "bashing": 10,
-    "dispersion": 10,
+    "dispersion": 70,
     "durability": 10,
-    "handling": 10,
+    "handling": 30,
     "range": 5,
     "modes": [
       [

@@ -290,6 +290,14 @@
           {
             "id": "scgs_chimera",
             "fg": 91
+          },
+          {
+            "id": "overlay_wielded_claw308h",
+            "fg": 92
+          },
+          {
+            "id": "claw308h",
+            "fg": 93
           }
         ],
         "sprite_width": 64,
@@ -350,6 +358,30 @@
           {
             "id": "csls7",
             "fg": 393
+          },
+          {
+            "id": "overlay_wielded_ga290r",
+            "fg": 394
+          },
+          {
+            "id": "ga290r",
+            "fg": 395
+          },
+          {
+            "id": "overlay_wielded_claw223a",
+            "fg": 396
+          },
+          {
+            "id": "claw223a",
+            "fg": 397
+          },
+          {
+            "id": "overlay_wielded_claw223e",
+            "fg": 398
+          },
+          {
+            "id": "claw223e",
+            "fg": 399
           }
         ],
         "sprite_width": 32,
