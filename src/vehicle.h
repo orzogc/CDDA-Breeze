@@ -55,6 +55,9 @@ class vpart_position;
 class zone_data;
 struct input_event;
 struct itype;
+struct RGBColor;
+struct RGBColorPair;
+struct vehicle_prototype;
 struct uilist_entry;
 template <typename E> struct enum_traits;
 
@@ -530,6 +533,9 @@ struct vehicle_part {
         item &get_base();
         const item &get_base() const;
         void set_base( const item &new_base );
+        RGBColorPair get_color( bool ignore_default = false ) const;
+        void set_color( const RGBColor &bg, const RGBColor &fg );
+        bool has_custom_color() const;
         /**
          * Generate the corresponding item from this vehicle part. It includes
          * the hp (item damage), fuel charges (battery or liquids), aspect, ...
@@ -754,6 +760,7 @@ class RemovePartHandler;
 class vehicle
 {
     private:
+        void apply_color_palette( const vehicle_prototype &proto );
         bool has_structural_part( const point &dp ) const;
         bool is_structural_part_removed() const;
         void open_or_close( int part_index, bool opening );

@@ -74,6 +74,7 @@
 #include "units_utility.h"
 #include "value_ptr.h"
 #include "veh_type.h"
+#include "vehicle_palette.h"
 #include "vehicle_selector.h"
 #include "weather.h"
 #include "weather_gen.h"
@@ -197,6 +198,7 @@ vehicle::vehicle( map &placed_on, const vproto_id &type_id, int init_veh_fuel,
         // The game language may have changed after the blueprint was created,
         // so translated the prototype name again.
         name = proto.name.translated();
+        apply_color_palette( proto );
         init_state( placed_on, init_veh_fuel, init_veh_status, may_spawn_locked );
     }
     precalc_mounts( 0, pivot_rotation[0], pivot_anchor[0] );
@@ -206,6 +208,24 @@ vehicle::vehicle( map &placed_on, const vproto_id &type_id, int init_veh_fuel,
 vehicle::vehicle() : vehicle( get_map(), vproto_id() )
 {
     sm_pos = tripoint_zero;
+}
+
+void vehicle::apply_color_palette( const vehicle_prototype &proto )
+{
+    if( !proto.color_palette.is_valid() || proto.color_match.empty() ) {
+        return;
+    }
+    const std::vector<std::optional<RGBColor>> colors = proto.color_palette->pick_colors();
+    for( vehicle_part &part : parts ) {
+        const auto match = proto.color_match.find( part.id.str() );
+        if( match == proto.color_match.end() ) {
+            continue;
+        }
+        const int index = match->second;
+        if( index >= 0 && index < static_cast<int>( colors.size() ) && colors[index] ) {
+            part.set_color( *colors[index], *colors[index] );
+        }
+    }
 }
 
 vehicle::~vehicle() = default;

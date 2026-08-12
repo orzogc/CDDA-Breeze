@@ -1,0 +1,129 @@
+[
+  {
+    "type": "vehicle_color_palette", "id": "car_standard",
+    "palette": [ { "fuzzy_ids": [ "board", "windshield", "door", "roof", "trunk_flat", "hatch" ], "colors": [
+      { "color": "Jet black", "weight": 10 }, { "color": "Cataclysm Red", "weight": 10 },
+      { "color": "Cataclysm Green", "weight": 10 }, { "color": "Signal brown", "weight": 10 },
+      { "color": "Sapphire blue", "weight": 10 }, { "color": "Purple violet", "weight": 10 },
+      { "color": "Azure blue", "weight": 10 }, { "color": "Silver grey", "weight": 10 },
+      { "color": "Black grey", "weight": 10 }, { "color": "Bright red orange", "weight": 10 },
+      { "color": "Grass green", "weight": 10 }, { "color": "Golden yellow", "weight": 10 },
+      { "color": "Light blue", "weight": 10 }, { "color": "Telemagenta", "weight": 10 },
+      { "color": "Pastel blue", "weight": 10 }, { "color": "Traffic white", "weight": 10 }
+    ] } ]
+  },
+  {
+    "type": "vehicle_color_palette", "id": "cargo_standard",
+    "palette": [ { "fuzzy_ids": [ "board", "windshield", "door", "roof", "inflate", "trunk_flat", "hatch" ], "colors": [
+      { "color": "White aluminium", "weight": 8 }, { "color": "Silver grey", "weight": 8 },
+      { "color": "Grey aluminium", "weight": 8 }, { "color": "Black brown", "weight": 8 }, { "color": "Beige", "weight": 8 }
+    ] } ]
+  },
+  {
+    "type": "vehicle_color_palette", "id": "visibility_standard",
+    "palette": [ { "fuzzy_ids": [ "board", "windshield", "door", "roof", "inflate", "trunk_flat", "hatch" ], "colors": [
+      { "color": "Capri blue", "weight": 12 }, { "color": "Cataclysm Red", "weight": 20 },
+      { "color": "Orange brown", "weight": 4 }, { "color": "Yellow orange", "weight": 2 },
+      { "color": "Green grey", "weight": 4 }, { "color": "Yellow orange", "weight": 4 },
+      { "color": "Telemagenta", "weight": 4 }, { "color": "Traffic purple", "weight": 4 }
+    ] } ]
+  },
+  {
+    "type": "vehicle_color_palette", "id": "military_standard",
+    "palette": [ { "fuzzy_ids": [ "board", "windshield", "door", "roof", "trunk_flat", "hatch" ], "colors": [
+      { "color": "Pine green", "weight": 20 }, { "color": "Brown grey", "weight": 10 },
+      { "color": "Black grey", "weight": 10 }, { "color": "Olive grey", "weight": 5 },
+      { "color": "Sand yellow", "weight": 5 }, { "color": "Traffic purple", "weight": 1 }
+    ] } ]
+  },
+  {
+    "type": "vehicle_color_palette", "id": "military_fighter",
+    "palette": [ { "fuzzy_ids": [ "board", "wing", "propeller", "windshield", "door", "roof", "trunk_flat", "trunk_carbon_flat", "hatch" ], "colors": [
+      { "color": "Telegrey 1", "weight": 20 }, { "color": "Pastel turquoise", "weight": 10 },
+      { "color": "Black grey", "weight": 10 }, { "color": "Brilliant blue", "weight": 10 },
+      { "color": "Capri blue", "weight": 5 }, { "color": "Traffic purple", "weight": 1 }
+    ] } ]
+  },
+  {
+    "type": "vehicle_color_palette", "id": "military_heli",
+    "palette": [ { "fuzzy_ids": [ "board", "wing", "rotor", "windshield", "door", "roof", "trunk_flat", "hatch" ], "colors": [
+      { "color": "Cataclysm Green", "weight": 20 }, { "color": "Black grey", "weight": 10 },
+      { "color": "Pastel turquoise", "weight": 5 }, { "color": "White aluminium", "weight": 5 },
+      { "color": "Traffic purple", "weight": 1 }
+    ] } ]
+  },
+  {
+    "type": "vehicle_color_palette", "id": "military_boat",
+    "palette": [ { "fuzzy_ids": [ "board", "windshield", "door", "roof", "trunk_flat", "hatch" ], "colors": [
+      { "color": "Cataclysm Green", "weight": 20 }, { "color": "Grey aluminium", "weight": 10 },
+      { "color": "Black grey", "weight": 10 }, { "color": "Yellow olive", "weight": 5 },
+      { "color": "Traffic purple", "weight": 1 }
+    ] } ]
+  },
+  {
+    "type": "vehicle_color_palette", "id": "police_standard",
+    "palette": [ { "fuzzy_ids": [ "board", "windshield", "door", "roof", "trunk_flat", "hatch" ], "colors": [
+      { "color": "Black grey", "weight": 10 }, { "color": "Silver grey", "weight": 10 },
+      { "color": "Steel blue", "weight": 5 }, { "color": "Pastel blue", "weight": 2 }
+    ] } ]
+  },
+  { "type": "vehicle_color_palette", "id": "swat_standard", "palette": [ { "fuzzy_ids": [ "board", "windshield", "door", "roof", "trunk_flat", "hatch" ], "colors": [ { "color": "Black grey", "weight": 10 }, { "color": "Steel blue", "weight": 5 } ] } ] },
+  { "type": "vehicle_color_palette", "id": "construction_standard", "palette": [ { "fuzzy_ids": [ "board", "windshield", "door", "roof", "trunk_flat", "hatch" ], "colors": [ { "color": "Traffic yellow", "weight": 10 }, { "color": "Yellow orange", "weight": 5 } ] } ] },
+  {
+    "type": "vehicle_color_palette", "id": "farm_standard",
+    "palette": [ { "fuzzy_ids": [ "board", "windshield", "door", "roof", "trunk_flat", "hatch" ], "colors": [
+      { "color": "Flame red", "weight": 10 }, { "color": "Pearl green", "weight": 10 },
+      { "color": "Traffic blue", "weight": 2 }, { "color": "Traffic orange", "weight": 2 }, { "color": "Lemon yellow", "weight": 2 }
+    ] } ]
+  },
+  {
+    "type": "vehicle_color_palette", "id": "firetruck_standard",
+    "palette": [ { "fuzzy_ids": [ "board", "windshield", "door", "roof", "trunk_flat", "hatch" ], "colors": [
+      { "color": "Flame red", "weight": 20 }, { "color": "White aluminium", "weight": 5 },
+      { "color": "Broom yellow", "weight": 5 }, { "color": "Yellow green", "weight": 1 }
+    ] } ]
+  },
+  { "type": "vehicle_color_palette", "id": "ems_standard", "palette": [ { "fuzzy_ids": [ "board", "windshield", "door", "roof", "trunk_flat", "hatch" ], "colors": [ { "color": "White aluminium", "weight": 20 }, { "color": "Flame red", "weight": 10 }, { "color": "Traffic yellow", "weight": 1 } ] } ] },
+  { "type": "vehicle_color_palette", "id": "bus_standard", "palette": [ { "fuzzy_ids": [ "board", "windshield", "door", "roof", "trunk_flat", "hatch" ], "colors": [ { "color": "Traffic yellow", "weight": 1 } ] } ] },
+  { "type": "vehicle_color_palette", "id": "wienermobile_standard", "palette": [ { "fuzzy_ids": [ "board", "windshield", "door", "roof", "trunk_flat", "hatch" ], "colors": [ { "color": "Yellow orange", "weight": 1 } ] } ] },
+  { "type": "vehicle_color_palette", "id": "limo_standard", "palette": [ { "fuzzy_ids": [ "board", "windshield", "door", "roof", "trunk_flat", "hatch" ], "colors": [ { "color": "Black grey", "weight": 10 }, { "color": "White aluminium", "weight": 10 }, { "color": "Traffic purple", "weight": 1 } ] } ] },
+  { "type": "vehicle_color_palette", "id": "sneaky_standard", "palette": [ { "fuzzy_ids": [ "board", "windshield", "door", "roof", "trunk_flat", "hatch" ], "colors": [ { "color": "Grey aluminium", "weight": 10 }, { "color": "Black grey", "weight": 10 }, { "color": "Traffic purple", "weight": 5 } ] } ] },
+  {
+    "type": "vehicle_color_palette", "id": "aircraft_standard",
+    "palette": [ { "fuzzy_ids": [ "board", "wing", "rotor", "propeller", "windshield", "door", "roof", "trunk_flat", "hatch" ], "colors": [
+      { "color": "Pigeon blue", "weight": 10 }, { "color": "Black grey", "weight": 5 },
+      { "color": "Red orange", "weight": 5 }, { "color": "Pure orange", "weight": 5 },
+      { "color": "Traffic yellow", "weight": 5 }, { "color": "Pearl green", "weight": 5 },
+      { "color": "Light blue", "weight": 5 }, { "color": "Ultramarine blue", "weight": 1 }
+    ] } ]
+  },
+  {
+    "type": "vehicle_color_palette", "id": "aircraft_commercial",
+    "palette": [ { "fuzzy_ids": [ "board", "wing", "rotor", "propeller", "windshield", "door", "roof", "trunk_flat", "hatch" ], "colors": [
+      { "color": "White aluminium", "weight": 15 }, { "color": "Gentian blue", "weight": 10 },
+      { "color": "Red orange", "weight": 10 }, { "color": "Lemon yellow", "weight": 5 },
+      { "color": "Turquoise green", "weight": 5 }, { "color": "Ultramarine blue", "weight": 1 }
+    ] } ]
+  },
+  {
+    "type": "vehicle_color_palette", "id": "wooden_standard",
+    "palette": [
+      { "fuzzy_ids": [ "woodboard", "woodhalfboard", "boat_board", "raft_board", "wing_wood", "propeller_wood", "windshield", "wood box", "travois", "seat_wood", "wooden_aisle", "door_wood", "roof_wood" ], "colors": [
+        { "color": "Green beige", "weight": 5 }, { "color": "Beige", "weight": 5 }, { "color": "Brown beige", "weight": 5 },
+        { "color": "Broom yellow", "weight": 5 }, { "color": "Brown red", "weight": 5 }, { "color": "Beige red", "weight": 5 },
+        { "color": "Olive grey", "weight": 5 }, { "color": "Beige grey", "weight": 5 }, { "color": "Khaki grey", "weight": 5 },
+        { "color": "Green brown", "weight": 5 }, { "color": "Ochre brown", "weight": 5 }, { "color": "Clay brown", "weight": 5 },
+        { "color": "Olive brown", "weight": 5 }, { "color": "Nut brown", "weight": 5 }, { "color": "Sepia brown", "weight": 5 },
+        { "color": "Chestnut brown", "weight": 5 }, { "color": "Mahogany brown", "weight": 5 }, { "color": "Chocolate brown", "weight": 5 },
+        { "color": "Beige brown", "weight": 5 }
+      ] },
+      { "fuzzy_ids": [ "clothboard", "cloth_halfboard", "roof_cloth", "cargo_bag" ], "colors": [
+        { "color": "Oyster white", "weight": 5 }, { "color": "Ivory", "weight": 5 }, { "color": "Light ivory", "weight": 5 },
+        { "color": "Grey beige", "weight": 5 }, { "color": "Grey blue", "weight": 5 }, { "color": "Silver grey", "weight": 5 },
+        { "color": "Beige grey", "weight": 5 }, { "color": "Black grey", "weight": 5 }, { "color": "Light grey", "weight": 5 },
+        { "color": "Cream", "weight": 5 }, { "color": "Grey white", "weight": 5 }, { "color": "Papyrus white", "weight": 5 },
+        { "color": "Flame red", "weight": 5 }
+      ] }
+    ]
+  }
+]
