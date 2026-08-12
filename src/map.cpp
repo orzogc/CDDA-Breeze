@@ -7441,165 +7441,6 @@ static int get_memory_at( const tripoint &p )
 }
 
 
-std::map<tripoint, std::string> map::get_cable_visuals( const tripoint &center, int width, int height,
-        std::map<tripoint, itype_id> *tile_ids )
-{
-    std::map<tripoint, unsigned int> links;
-    std::map<tripoint, std::string> forced;
-    Character &player_character = get_player_character();
-
-    const int min_x = center.x - width / 2 - 2;
-    const int max_x = center.x + width / 2 + 2;
-    const int min_y = center.y - height / 2 - 2;
-    const int max_y = center.y + height / 2 + 2;
-    const auto in_view = [&]( const tripoint &p ) {
-        return p.z == center.z && p.x >= min_x && p.x <= max_x && p.y >= min_y && p.y <= max_y;
-    };
-    const auto visible_floor = [&]( const tripoint &p ) {
-        if( !inbounds( p ) || !player_character.sees( p ) ) {
-            return false;
-        }
-        // The cable is conceptually under these foreground objects.  Since tiles text overlays are
-        // drawn late, omit the glyph instead of painting over the foreground sprite.
-        return !has_furn( p ) && i_at( p ).empty() && !veh_at( p ) &&
-               get_creature_tracker().creature_at( p ) == nullptr;
-    };
-    const auto bit_for = []( const tripoint &from, const tripoint &to ) -> unsigned int {
-        const int dx = ( to.x > from.x ) - ( to.x < from.x );
-        const int dy = ( to.y > from.y ) - ( to.y < from.y );
-        if( dx == 0 && dy < 0 ) return 1U;
-        if( dx > 0 && dy < 0 ) return 2U;
-        if( dx > 0 && dy == 0 ) return 4U;
-        if( dx > 0 && dy > 0 ) return 8U;
-        if( dx == 0 && dy > 0 ) return 16U;
-        if( dx < 0 && dy > 0 ) return 32U;
-        if( dx < 0 && dy == 0 ) return 64U;
-        if( dx < 0 && dy < 0 ) return 128U;
-        return 0U;
-    };
-    const auto opposite = []( unsigned int bit ) -> unsigned int {
-        if( bit == 0U ) return 0U;
-        return bit <= 8U ? bit << 4U : bit >> 4U;
-    };
-
-    const auto add_item_link = [&]( const item &it, const tripoint &fallback_source,
-                                    const bool use_fallback_source ) {
-        if( !it.link || it.link->t_state == link_state::no_link ) {
-            return;
-        }
-        tripoint source = use_fallback_source || it.link->s_bub_pos == tripoint_min ?
-                          fallback_source : it.link->s_bub_pos;
-        const tripoint target = getlocal( it.link->t_abs_pos );
-
-        if( source.z != target.z ) {
-            if( in_view( source ) && visible_floor( source ) ) {
-                forced[source] = target.z > source.z ? "↑" : "↓";
-            }
-            if( in_view( target ) && visible_floor( target ) ) {
-                forced[target] = source.z > target.z ? "↑" : "↓";
-            }
-            return;
-        }
-        if( source.z != center.z ) {
-            return;
-        }
-
-        std::vector<tripoint> path;
-        path.emplace_back( source );
-        const std::vector<tripoint> remainder = line_to( source, target );
-        for( const tripoint &p : remainder ) {
-            if( path.empty() || path.back() != p ) {
-                path.emplace_back( p );
-            }
-        }
-        for( size_t i = 1; i < path.size(); ++i ) {
-            const tripoint &a = path[i - 1];
-            const tripoint &b = path[i];
-            const unsigned int ab = bit_for( a, b );
-            if( ab == 0U ) {
-                continue;
-            }
-            if( in_view( a ) && visible_floor( a ) ) {
-                links[a] |= ab;
-                if( tile_ids != nullptr && tile_ids->count( a ) == 0 ) {
-                    ( *tile_ids )[a] = it.typeId();
-                }
-            }
-            if( in_view( b ) && visible_floor( b ) ) {
-                links[b] |= opposite( ab );
-                if( tile_ids != nullptr && tile_ids->count( b ) == 0 ) {
-                    ( *tile_ids )[b] = it.typeId();
-                }
-            }
-        }
-    };
-
-    for( int y = std::max( 0, min_y ); y <= std::min( MAPSIZE_Y - 1, max_y ); ++y ) {
-        for( int x = std::max( 0, min_x ); x <= std::min( MAPSIZE_X - 1, max_x ); ++x ) {
-            const tripoint p( x, y, center.z );
-            for( item &top : i_at( p ) ) {
-                add_item_link( top, p, false );
-                top.visit_items( [&]( item *child, item * ) {
-                    add_item_link( *child, p, false );
-                    return VisitResponse::NEXT;
-                } );
-            }
-        }
-    }
-    // Installed appliance cords are stored inside vehicle part base items once connected.
-    // Scan those bases as well as loose items, otherwise only the temporary pulling preview is visible.
-    VehicleList cable_vehicles = get_vehicles();
-    for( wrapped_vehicle &wrapped : cable_vehicles ) {
-        vehicle *veh = wrapped.v;
-        if( veh == nullptr ) {
-            continue;
-        }
-        for( const vpart_reference &vpr : veh->get_all_parts() ) {
-            vehicle_part &part = vpr.part();
-            if( part.removed ) {
-                continue;
-            }
-            const tripoint source = veh->global_part_pos3( part );
-            item &base = part.get_base();
-            add_item_link( base, source, true );
-            for( item *cable : base.get_contents().cables( true ) ) {
-                add_item_link( *cable, source, true );
-            }
-        }
-    }
-
-    player_character.visit_items( [&]( item *it, item * ) {
-        add_item_link( *it, player_character.pos(), false );
-        return VisitResponse::NEXT;
-    } );
-
-    std::map<tripoint, std::string> result = std::move( forced );
-    for( const auto &entry : links ) {
-        if( result.count( entry.first ) != 0 ) {
-            continue;
-        }
-        const unsigned int mask = entry.second;
-        const bool vertical = ( mask & ( 1U | 16U ) ) != 0U;
-        const bool horizontal = ( mask & ( 4U | 64U ) ) != 0U;
-        const bool slash = ( mask & ( 2U | 32U ) ) != 0U;
-        const bool backslash = ( mask & ( 8U | 128U ) ) != 0U;
-        const int kinds = static_cast<int>( vertical ) + static_cast<int>( horizontal ) +
-                          static_cast<int>( slash ) + static_cast<int>( backslash );
-        if( kinds > 1 ) {
-            result[entry.first] = "+";
-        } else if( vertical ) {
-            result[entry.first] = "│";
-        } else if( horizontal ) {
-            result[entry.first] = "─";
-        } else if( slash ) {
-            result[entry.first] = "/";
-        } else if( backslash ) {
-            result[entry.first] = "\\";
-        }
-    }
-    return result;
-}
-
 void map::draw( const catacurses::window &w, const tripoint &center )
 {
     // We only need to draw anything if we're not in tiles mode.
@@ -7668,7 +7509,6 @@ void map::draw( const catacurses::window &w, const tripoint &center )
     };
 
     drawsq_params params = drawsq_params().memorize( true );
-    const std::map<tripoint, std::string> cable_visuals = get_cable_visuals( center, wnd_w, wnd_h );
     for( int wy = 0; wy < wnd_h; wy++ ) {
         for( int wx = 0; wx < wnd_w; wx++ ) {
             wmove( w, point( wx, wy ) );
@@ -7697,10 +7537,6 @@ void map::draw( const catacurses::window &w, const tripoint &center )
             if( !draw_maptile( w, p, curr_maptile, params ) ) {
                 const maptile tile_below = maptile_at_internal( p + tripoint_below );
                 draw_from_above( w, tripoint( p.xy(), p.z - 1 ), tile_below, params );
-            }
-            const auto cable_it = cable_visuals.find( p );
-            if( cable_it != cable_visuals.end() ) {
-                mvwprintz( w, point( wx, wy ), c_dark_gray, cable_it->second );
             }
         }
     }

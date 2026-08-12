@@ -433,11 +433,6 @@ class map
          */
         void draw( const catacurses::window &w, const tripoint &center );
 
-        // Build a non-persistent visual overlay for physical item cables.  Same-z links are
-        // represented as line glyphs, while cross-z links are represented only by endpoint arrows.
-        std::map<tripoint, std::string> get_cable_visuals( const tripoint &center, int width, int height,
-                std::map<tripoint, itype_id> *tile_ids = nullptr );
-
         /**
          * Draw the map tile at the given coordinate. Called by `map::draw()`.
          *

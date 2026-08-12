@@ -1334,18 +1334,6 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
     screentile_width = divide_round_up( width, tile_width );
     screentile_height = divide_round_up( height, tile_height );
 
-    std::map<tripoint, itype_id> cable_tile_ids;
-    const std::map<tripoint, std::string> cable_visuals =
-        here.get_cable_visuals( center, s.x, s.y, &cable_tile_ids );
-    for( const auto &entry : cable_visuals ) {
-        // Cross-z links deliberately remain endpoint arrows.  Same-z cells are drawn below
-        // with the real cable item's tileset sprite instead of +, |, -, / or backslash glyphs.
-        if( cable_tile_ids.count( entry.first ) == 0 ) {
-            overlay_strings.emplace( player_to_screen( entry.first.xy() ),
-                                     formatted_text( entry.second, catacurses::white,
-                                             text_alignment::left ) );
-        }
-    }
 
     const int min_col = 0;
     const int max_col = s.x;
@@ -1749,16 +1737,8 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
         }
 
 
-    // Draw physical same-z cables with the loaded tileset's existing item sprites.
-    for( const auto &entry : cable_tile_ids ) {
-        const itype_id &cable_id = entry.second;
-        if( !item::type_is_defined( cable_id ) ) {
-            continue;
-        }
-        int cable_height_3d = 0;
-        draw_from_id_string( cable_id.str(), TILE_CATEGORY::ITEM,
-                             cable_id->get_item_type_string(), entry.first, 0, 0,
-                             lit_level::LIT, false, cable_height_3d );
+    if( do_draw_appliance_connections ) {
+        draw_appliance_connections_frame();
     }
 
     // tile overrides are already drawn in the previous code
@@ -4092,6 +4072,62 @@ bool cata_tiles::draw_zone_mark( const tripoint &p, lit_level ll, int &height_3d
     return false;
 }
 
+
+static void draw_appliance_grid_line( SDL_Renderer *renderer, point start, point end,
+                                      Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha,
+                                      int radius )
+{
+    SDL_SetRenderDrawColor( renderer, red, green, blue, alpha );
+    for( int dx = -radius; dx <= radius; ++dx ) {
+        for( int dy = -radius; dy <= radius; ++dy ) {
+            if( std::abs( dx ) + std::abs( dy ) > radius ) {
+                continue;
+            }
+            SDL_RenderDrawLine( renderer, start.x + dx, start.y + dy, end.x + dx, end.y + dy );
+        }
+    }
+}
+
+void cata_tiles::draw_appliance_connections_frame()
+{
+    if( !do_draw_appliance_connections || appliance_connection_source == nullptr ) {
+        return;
+    }
+
+    map &here = get_map();
+    vehicle *source_vehicle = appliance_connection_source;
+    const tripoint source = source_vehicle->global_pos3();
+    const point middle( tile_width / 2, tile_height / 2 );
+    const point start = player_to_screen( source.xy() ) + middle;
+
+    const phmap::flat_hash_map<vehicle *, bool> connected =
+        vehicle::enumerate_vehicles( { source_vehicle } );
+
+    SetRenderDrawBlendMode( renderer, SDL_BLENDMODE_BLEND );
+    for( const std::pair<vehicle *const, bool> &entry : connected ) {
+        vehicle *target_vehicle = entry.first;
+        if( target_vehicle == nullptr || target_vehicle == source_vehicle ) {
+            continue;
+        }
+        const tripoint target = target_vehicle->global_pos3();
+        if( target.z != source.z ) {
+            continue;
+        }
+
+        // Skip stale/off-bubble endpoints.  enumerate_vehicles can know about cable-linked objects
+        // that are not currently drawable, and player_to_screen should only receive local map points.
+        if( !here.inbounds( target ) ) {
+            continue;
+        }
+        const point end = player_to_screen( target.xy() ) + middle;
+
+        // CBN-style visual language: opaque black border with a bright yellow inner line.
+        draw_appliance_grid_line( renderer.get(), start, end, 0, 0, 0, 230, 3 );
+        draw_appliance_grid_line( renderer.get(), start, end, 245, 255, 55, 220, 1 );
+    }
+    SetRenderDrawBlendMode( renderer, SDL_BLENDMODE_NONE );
+}
+
 bool cata_tiles::draw_zombie_revival_indicators( const tripoint &pos, const lit_level /*ll*/,
         int &/*height_3d*/, const std::array<bool, 5> &invisible )
 {
@@ -4303,6 +4339,18 @@ void cata_tiles::init_draw_highlight( const tripoint &p )
 {
     do_draw_highlight = true;
     highlights.emplace_back( p );
+}
+
+void cata_tiles::init_draw_appliance_connections( vehicle *veh )
+{
+    appliance_connection_source = veh;
+    do_draw_appliance_connections = veh != nullptr;
+}
+
+void cata_tiles::void_appliance_connections()
+{
+    do_draw_appliance_connections = false;
+    appliance_connection_source = nullptr;
 }
 void cata_tiles::init_draw_weather( weather_printable weather, std::string name )
 {

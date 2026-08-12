@@ -22,6 +22,10 @@
 #include "veh_utils.h"
 #include "vehicle.h"
 #include "vpart_range.h"
+#if defined(TILES)
+    #include "cata_tiles.h"
+    #include "sdltiles.h"
+#endif
 
 
 static const activity_id ACT_VEHICLE( "ACT_VEHICLE" );
@@ -936,9 +940,19 @@ void veh_app_interact::app_loop()
         {
             ui.reset();
             shared_ptr_fast<ui_adaptor> current_ui = create_or_get_ui_adaptor();
+#if defined(TILES)
+            if( tilecontext ) {
+                tilecontext->init_draw_appliance_connections( veh );
+            }
+#endif
             ui_manager::redraw();
             shared_ptr_fast<ui_adaptor> input_ui = imenu.create_or_get_ui_adaptor();
             imenu.query();
+#if defined(TILES)
+            if( tilecontext ) {
+                tilecontext->void_appliance_connections();
+            }
+#endif
         }
 
         int ret = imenu.ret;
