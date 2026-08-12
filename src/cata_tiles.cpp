@@ -1330,15 +1330,16 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
 
     op = dest;
 
+    // Rounding up to include incomplete tiles at the bottom/right edges
+    screentile_width = divide_round_up( width, tile_width );
+    screentile_height = divide_round_up( height, tile_height );
+
     const std::map<tripoint, std::string> cable_visuals = here.get_cable_visuals( center, s.x, s.y );
     for( const auto &entry : cable_visuals ) {
         overlay_strings.emplace( player_to_screen( entry.first.xy() ),
                                  formatted_text( entry.second, catacurses::white,
                                          text_alignment::left ) );
     }
-    // Rounding up to include incomplete tiles at the bottom/right edges
-    screentile_width = divide_round_up( width, tile_width );
-    screentile_height = divide_round_up( height, tile_height );
 
     const int min_col = 0;
     const int max_col = s.x;

@@ -6114,7 +6114,7 @@ void json_talk_topic::load( const JsonObject &jo )
     if( jo.has_bool( "insert_before_standard_exits" ) ) {
         insert_above_bottom = jo.get_bool( "insert_before_standard_exits" );
     }
-    if( !insert_above_bottom || responses.empty() ) {
+    if( !insert_above_bottom ) {
         for( JsonObject response : jo.get_array( "responses" ) ) {
             responses.emplace_back( response );
         }

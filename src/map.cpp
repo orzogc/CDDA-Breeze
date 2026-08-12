@@ -7669,7 +7669,7 @@ void map::draw( const catacurses::window &w, const tripoint &center )
             }
             const auto cable_it = cable_visuals.find( p );
             if( cable_it != cable_visuals.end() ) {
-                mvwprintz( w, point( wx, wy ), c_dark_gray, "%s", cable_it->second );
+                mvwprintz( w, point( wx, wy ), c_dark_gray, cable_it->second );
             }
         }
     }
