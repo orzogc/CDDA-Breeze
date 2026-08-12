@@ -220,11 +220,13 @@ void game_menus::inv::common( avatar &you )
     inventory_selector_preset inv_s_p = default_preset;
     inv_s_p.save_state = &inventory_ui_default_state;
     inventory_pick_selector inv_s( you, inv_s_p );
+    inv_s.enable_direct_equip();
 
     inv_s.set_title( _( "Inventory" ) );
     inv_s.set_hint( string_format(
-                        _( "Item hotkeys assigned: <color_light_gray>%d</color>/<color_light_gray>%d</color>" ),
-                        you.allocated_invlets().count(), inv_chars.size() ) );
+                        _( "按 %s 查看，按 %s 手持，按 %s 穿戴。" ),
+                        inv_s.key_desc( "EXAMINE" ), inv_s.key_desc( "WIELD" ),
+                        inv_s.key_desc( "WEAR" ) ) );
 
     int res = 0;
 

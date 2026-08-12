@@ -662,6 +662,9 @@ class inventory_selector
         /** Get last filter string set by set_filter or entered by player */
         std::string get_filter() const;
 
+        /** Key description for an action registered in this selector's input context. */
+        std::string key_desc( const std::string &action ) const;
+
         enum selector_invlet_type {
             SELECTOR_INVLET_DEFAULT,
             SELECTOR_INVLET_NUMERIC,
@@ -937,7 +940,14 @@ class inventory_pick_selector : public inventory_selector
                                           const inventory_selector_preset &preset = default_preset ) :
             inventory_selector( p, preset ) {}
 
+        /** Enable direct wield/wear actions for the normal i inventory. */
+        void enable_direct_equip();
         item_location execute();
+
+    private:
+        bool wield_highlighted();
+        bool wear_highlighted();
+        void refresh_after_use( const item_location &next_item );
 };
 
 class container_inventory_selector : public inventory_pick_selector

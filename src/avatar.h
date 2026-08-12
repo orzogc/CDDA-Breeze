@@ -360,6 +360,9 @@ class avatar : public Character
 
         int movecounter = 0;
 
+        // Runtime-only UI state: only announce follower catch-up once per auto-travel journey.
+        bool auto_travel_follower_wait_notified = false; // NOLINT(cata-serialize)
+
         // bionic power in the last turn
         units::energy power_prev_turn = 0_kJ;
         // balance/net power generation/loss during the last turn

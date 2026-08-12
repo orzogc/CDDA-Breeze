@@ -229,7 +229,8 @@ static bool get_liquid_target(Character& character, item &liquid, const item *co
         menu.text = string_format( pgettext( "liquid", "What to do with the %s?" ), liquid_name );
     }
     std::vector<std::function<void()>> actions;
-    if( character.can_consume_as_is( liquid ) && !source_mon && ( source_veh || source_pos ) ) {
+    // Allow consuming freshly crafted liquids while still excluding monster-source liquids.
+    if( character.can_consume_as_is( liquid ) && !source_mon ) {
         menu.addentry( -1, true, 'e', _( "Consume it" ) );
         actions.emplace_back( [&]() {
             target.dest_opt = LD_CONSUME;
