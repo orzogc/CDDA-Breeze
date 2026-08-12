@@ -391,7 +391,8 @@ bool perform_liquid_transfer(Character &character, item &liquid, const tripoint 
             // not on ground or similar. TODO: implement storing arbitrary container locations.
             if( target.item_loc && create_activity() ) {
                 serialize_liquid_target( character.activity, target.item_loc );
-            } else if( character.pour_into( target.item_loc, liquid, true ) ) {
+                return true;
+            } else if( target.item_loc && character.pour_into( target.item_loc, liquid, true ) ) {
                 // Polymorphism fail, have to introspect into the type to set the target container as active.
                 switch (target.item_loc.where()) {
                 case item_location::type::map:
@@ -406,8 +407,11 @@ bool perform_liquid_transfer(Character &character, item &liquid, const tripoint 
                     break;
                 }
                 character.mod_moves( -100 );
+                return true;
             }
-            return true;
+            // Do not report success when the target disappeared or could not accept
+            // any liquid; callers use this result to decide whether to retry handling.
+            return false;
         }
         case LD_VEH: {
             if( target.veh == nullptr ) {
