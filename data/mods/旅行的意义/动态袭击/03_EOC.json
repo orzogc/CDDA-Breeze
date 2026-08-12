@@ -7880,8 +7880,8 @@
     },
     "effect": {
       "u_make_sound": "模糊的脚步声",
-      "volume": 48,
-      "type": "movement"
+      "volume": 70,
+      "type": "alert"
     }
   },
   {
