@@ -15,6 +15,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
+#include <utility>
 
 #include "action.h"
 #include "activity_type.h"
@@ -5834,7 +5835,7 @@ json_talk_repeat_response::json_talk_repeat_response( const JsonObject &jo )
 }
 
 json_talk_response::json_talk_response( const JsonObject &jo )
-    : actual_response( jo )
+    : actual_response( jo ), response_id( jo.get_string( "response_id", "" ) )
 {
     load_condition( jo );
 }
@@ -6109,8 +6110,102 @@ void json_talk_topic::load( const JsonObject &jo )
             }
         }
     }
-    for( JsonObject response : jo.get_array( "responses" ) ) {
-        responses.emplace_back( response );
+    bool insert_above_bottom = false;
+    if( jo.has_bool( "insert_before_standard_exits" ) ) {
+        insert_above_bottom = jo.get_bool( "insert_before_standard_exits" );
+    }
+    if( !insert_above_bottom || responses.empty() ) {
+        for( JsonObject response : jo.get_array( "responses" ) ) {
+            responses.emplace_back( response );
+        }
+    } else {
+        int dec_count = 0;
+        if( !responses.empty() &&
+            responses.back().get_actual_response().success.next_topic.id == "TALK_DONE" ) {
+            dec_count = 1;
+        }
+        if( responses.size() >= 2 &&
+            responses[ responses.size() - 2 ].get_actual_response().success.next_topic.id == "TALK_NONE" ) {
+            dec_count = 2;
+        }
+        for( JsonObject response : jo.get_array( "responses" ) ) {
+            responses.emplace( responses.end() - dec_count, response );
+        }
+    }
+
+    if( jo.has_array( "response_patches" ) ) {
+        const auto find_response = [&]( const std::string &target ) {
+            return std::find_if( responses.begin(), responses.end(), [&]( const json_talk_response &response ) {
+                return response.get_response_id() == target;
+            } );
+        };
+        for( JsonObject patch : jo.get_array( "response_patches" ) ) {
+            const std::string op = patch.get_string( "op", "" );
+            const std::string target = patch.get_string( "target", "" );
+            if( op.empty() || target.empty() ) {
+                DebugLog( D_WARNING, DC_ALL ) << "Dialogue response patch skipped, missing op or target";
+                continue;
+            }
+            auto target_it = find_response( target );
+            if( target_it == responses.end() && op != "insert_before" && op != "insert_after" ) {
+                DebugLog( D_WARNING, DC_ALL ) << "Dialogue response patch target not found: " << target;
+                continue;
+            }
+
+            if( op == "delete" ) {
+                responses.erase( target_it );
+                continue;
+            }
+            if( op == "replace" ) {
+                if( !patch.has_object( "response" ) ) {
+                    DebugLog( D_WARNING, DC_ALL ) << "Dialogue replace patch has no response: " << target;
+                    continue;
+                }
+                json_talk_response replacement( patch.get_object( "response" ) );
+                if( replacement.get_response_id().empty() ) {
+                    replacement.set_response_id( target );
+                }
+                *target_it = std::move( replacement );
+                continue;
+            }
+            if( op == "insert_before" || op == "insert_after" ) {
+                target_it = find_response( target );
+                if( target_it == responses.end() ) {
+                    DebugLog( D_WARNING, DC_ALL ) << "Dialogue insert patch target not found: " << target;
+                    continue;
+                }
+                if( !patch.has_object( "response" ) ) {
+                    DebugLog( D_WARNING, DC_ALL ) << "Dialogue insert patch has no response: " << target;
+                    continue;
+                }
+                json_talk_response inserted( patch.get_object( "response" ) );
+                if( op == "insert_after" ) {
+                    ++target_it;
+                }
+                responses.insert( target_it, std::move( inserted ) );
+                continue;
+            }
+            if( op == "move_before" || op == "move_after" ) {
+                const std::string anchor = patch.get_string( "anchor", "" );
+                if( anchor.empty() || anchor == target ) {
+                    continue;
+                }
+                auto anchor_it = find_response( anchor );
+                if( anchor_it == responses.end() ) {
+                    DebugLog( D_WARNING, DC_ALL ) << "Dialogue move patch anchor not found: " << anchor;
+                    continue;
+                }
+                json_talk_response moved = std::move( *target_it );
+                responses.erase( target_it );
+                anchor_it = find_response( anchor );
+                if( op == "move_after" ) {
+                    ++anchor_it;
+                }
+                responses.insert( anchor_it, std::move( moved ) );
+                continue;
+            }
+            DebugLog( D_WARNING, DC_ALL ) << "Unknown dialogue response patch operation: " << op;
+        }
     }
     if( jo.has_object( "repeat_responses" ) ) {
         repeat_responses.emplace_back( jo.get_object( "repeat_responses" ) );
