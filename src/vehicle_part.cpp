@@ -15,6 +15,7 @@
 #include "enums.h"
 #include "flag.h"
 #include "game.h"
+#include "hsv_color.h"
 #include "item.h"
 #include "item_pocket.h"
 #include "itype.h"
@@ -75,6 +76,60 @@ const item &vehicle_part::get_base() const
 void vehicle_part::set_base( const item &new_base )
 {
     base = new_base;
+}
+
+
+RGBColorPair vehicle_part::get_color( const bool ignore_default ) const
+{
+    RGBColorPair result{};
+    const std::string all = base.get_var( "tint_color", "" );
+    if( !all.empty() ) {
+        const RGBColor color = RGBColor::from_hex( all );
+        result.bg = color;
+        result.fg = color;
+    } else {
+        const std::string bg = base.get_var( "tint_color_bg", "" );
+        const std::string fg = base.get_var( "tint_color_fg", "" );
+        if( !bg.empty() ) {
+            result.bg = RGBColor::from_hex( bg );
+        }
+        if( !fg.empty() ) {
+            result.fg = RGBColor::from_hex( fg );
+        }
+    }
+    if( ignore_default ) {
+        return result;
+    }
+    const RGBColor fallback = curses_color_to_RGB( info().color );
+    if( result.bg.a == 0 ) {
+        result.bg = fallback;
+    }
+    if( result.fg.a == 0 ) {
+        result.fg = fallback;
+    }
+    return result;
+}
+
+bool vehicle_part::has_custom_color() const
+{
+    return base.has_var( "tint_color" ) || base.has_var( "tint_color_bg" ) ||
+           base.has_var( "tint_color_fg" );
+}
+
+void vehicle_part::set_color( const RGBColor &bg, const RGBColor &fg )
+{
+    if( info().has_flag( "NO_PAINT" ) ) {
+        return;
+    }
+    if( bg == fg ) {
+        base.set_var( "tint_color", bg.to_hex() );
+        base.erase_var( "tint_color_bg" );
+        base.erase_var( "tint_color_fg" );
+    } else {
+        base.erase_var( "tint_color" );
+        base.set_var( "tint_color_bg", bg.to_hex() );
+        base.set_var( "tint_color_fg", fg.to_hex() );
+    }
 }
 
 item vehicle_part::properties_to_item() const

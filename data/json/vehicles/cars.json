@@ -1,6 +1,7 @@
 [
   {
     "id": "4x4_car",
+    "color_palette": "car_standard",
     "type": "vehicle",
     "name": "4x4 Car",
     "blueprint": [
@@ -66,6 +67,7 @@
   },
   {
     "id": "beetle",
+    "color_palette": "car_standard",
     "type": "vehicle",
     "name": "Beetle",
     "blueprint": [
@@ -155,6 +157,7 @@
   },
   {
     "id": "car",
+    "color_palette": "car_standard",
     "type": "vehicle",
     "name": "Car",
     "blueprint": [
@@ -209,6 +212,7 @@
   },
   {
     "id": "car_diesel",
+    "color_palette": "car_standard",
     "type": "vehicle",
     "name": "Car",
     "blueprint": [
@@ -263,6 +267,7 @@
   },
   {
     "id": "car_rack",
+    "color_palette": "car_standard",
     "type": "vehicle",
     "name": "Car with Bike Rack",
     "blueprint": [
@@ -317,6 +322,7 @@
   },
   {
     "id": "car_luxury",
+    "color_palette": "car_standard",
     "type": "vehicle",
     "name": "Luxury Car",
     "blueprint": [
@@ -371,6 +377,7 @@
   },
   {
     "id": "car_anmlcmpt",
+    "color_palette": "car_standard",
     "type": "vehicle",
     "//": "animal compartment version",
     "name": "Car",
@@ -426,6 +433,7 @@
   },
   {
     "id": "car_chassis",
+    "color_palette": "car_standard",
     "type": "vehicle",
     "name": "Car Chassis",
     "blueprint": [
@@ -466,6 +474,7 @@
   },
   {
     "id": "car_hybrid_rack",
+    "color_palette": "car_standard",
     "type": "vehicle",
     "name": "Hybrid Car with Bike Rack",
     "blueprint": [
@@ -521,6 +530,7 @@
   },
   {
     "id": "car_hybrid",
+    "color_palette": "car_standard",
     "type": "vehicle",
     "name": "Hybrid Car",
     "blueprint": [
@@ -576,6 +586,7 @@
   },
   {
     "id": "car_mini",
+    "color_palette": "car_standard",
     "type": "vehicle",
     "name": "City Car",
     "blueprint": [
@@ -616,6 +627,7 @@
   },
   {
     "id": "car_hatch",
+    "color_palette": "car_standard",
     "type": "vehicle",
     "name": "Hatchback",
     "blueprint": [
@@ -666,6 +678,7 @@
   },
   {
     "id": "car_hatch_diesel",
+    "color_palette": "car_standard",
     "type": "vehicle",
     "name": "Hatchback",
     "blueprint": [
@@ -716,6 +729,7 @@
   },
   {
     "id": "car_hatch_rack",
+    "color_palette": "car_standard",
     "type": "vehicle",
     "name": "Hatchback with Bike Rack",
     "blueprint": [
@@ -766,6 +780,7 @@
   },
   {
     "id": "car_sports",
+    "color_palette": "car_standard",
     "type": "vehicle",
     "name": "Sports Car",
     "blueprint": [
@@ -866,6 +881,7 @@
   },
   {
     "id": "car_sports_electric",
+    "color_palette": "car_standard",
     "type": "vehicle",
     "name": "Electric Sports Car",
     "blueprint": [
@@ -910,6 +926,7 @@
   },
   {
     "id": "car_racing_electric",
+    "color_palette": "car_standard",
     "type": "vehicle",
     "name": "Electric Racing Car",
     "blueprint": [
@@ -954,6 +971,7 @@
   },
   {
     "id": "electric_car",
+    "color_palette": "car_standard",
     "type": "vehicle",
     "name": "Electric Car",
     "blueprint": [
@@ -1003,6 +1021,7 @@
   },
   {
     "id": "rara_x",
+    "color_palette": "car_standard",
     "type": "vehicle",
     "name": "Solar Car",
     "blueprint": [
@@ -1051,6 +1070,7 @@
   },
   {
     "id": "suv",
+    "color_palette": "car_standard",
     "type": "vehicle",
     "name": "SUV",
     "blueprint": [
@@ -1118,6 +1138,7 @@
   },
   {
     "id": "suv_electric",
+    "color_palette": "car_standard",
     "type": "vehicle",
     "name": "Electric SUV",
     "blueprint": [
@@ -1184,6 +1205,7 @@
   },
   {
     "id": "suv_electric_rack",
+    "color_palette": "car_standard",
     "type": "vehicle",
     "name": "Electric SUV with Bike Rack",
     "blueprint": [
@@ -1249,6 +1271,7 @@
   },
   {
     "id": "surv_car",
+    "color_palette": "car_standard",
     "type": "vehicle",
     "name": "Survivor Car",
     "parts": [

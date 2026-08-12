@@ -44,6 +44,7 @@
 #include "flag.h"
 #include "gates.h"
 #include "harvest.h"
+#include "hsv_color.h"
 #include "item_action.h"
 #include "item_category.h"
 #include "item_factory.h"
@@ -102,6 +103,7 @@
 #include "type_id.h"
 #include "veh_type.h"
 #include "vehicle_group.h"
+#include "vehicle_palette.h"
 #include "vitamin.h"
 #include "weakpoint.h"
 #include "weather_type.h"
@@ -306,6 +308,8 @@ void DynamicDataLoader::initialize()
         item_action_generator::generator().load_item_action( jo );
     } );
 
+    add( "vehicle_color_palette", &VehiclePalette::load );
+    add( "named_color", &RGBColor::load_named_color );
     add( "vehicle_part",  &vpart_info::load );
     add( "vehicle_part_category",  &vpart_category::load );
     add( "vehicle_part_migration", &vpart_migration::load );
@@ -633,6 +637,8 @@ void DynamicDataLoader::unload_data()
     ter_furn_transform::reset();
     trap::reset();
     unload_talk_topics();
+    RGBColor::unload_names();
+    VehiclePalette::reset();
     VehicleGroup::reset();
     VehiclePlacement::reset();
     VehicleSpawn::reset();
@@ -781,6 +787,7 @@ void DynamicDataLoader::check_consistency( loading_ui &ui )
             { _( "Materials" ), &materials::check },
             { _( "Engine faults" ), &fault::check_consistency },
             { _( "Vehicle parts" ), &vpart_info::check },
+        { _( "Vehicle color palettes" ), &VehiclePalette::check },
             { _( "Mapgen definitions" ), &check_mapgen_definitions },
             { _( "Mapgen palettes" ), &mapgen_palette::check_definitions },
             {
