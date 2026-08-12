@@ -244,9 +244,9 @@ static std::optional<tripoint_abs_omt> find_or_create_om_terrain(
     // First try to get the position where we only allow existing overmaps.
     get_target_position();
 
-    if( target_pos == overmap::invalid_tripoint ) {
-        // If it's invalid, then that means we couldn't find it or create it (if allowed) on
-        // our current overmap. We'll now go ahead and try again but allow it to create new overmaps.
+    if( target_pos == overmap::invalid_tripoint && params.create_if_necessary ) {
+        // If creation is allowed, try again while permitting new overmaps to be generated.
+        // Otherwise the mission is explicitly limited to terrain that already exists.
         find_params.existing_only = false;
         get_target_position();
     }
@@ -407,6 +407,9 @@ mission_target_params mission_util::parse_mission_om_target( const JsonObject &j
     }
     if( jo.has_member( "random" ) ) {
         p.random = jo.get_bool( "random" );
+    }
+    if( jo.has_member( "create_if_necessary" ) ) {
+        p.create_if_necessary = jo.get_bool( "create_if_necessary" );
     }
     if( jo.has_member( "search_range" ) ) {
         p.search_range = std::max( 1, jo.get_int( "search_range" ) );
