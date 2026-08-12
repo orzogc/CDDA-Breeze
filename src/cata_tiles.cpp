@@ -1334,11 +1334,17 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
     screentile_width = divide_round_up( width, tile_width );
     screentile_height = divide_round_up( height, tile_height );
 
-    const std::map<tripoint, std::string> cable_visuals = here.get_cable_visuals( center, s.x, s.y );
+    std::map<tripoint, itype_id> cable_tile_ids;
+    const std::map<tripoint, std::string> cable_visuals =
+        here.get_cable_visuals( center, s.x, s.y, &cable_tile_ids );
     for( const auto &entry : cable_visuals ) {
-        overlay_strings.emplace( player_to_screen( entry.first.xy() ),
-                                 formatted_text( entry.second, catacurses::white,
-                                         text_alignment::left ) );
+        // Cross-z links deliberately remain endpoint arrows.  Same-z cells are drawn below
+        // with the real cable item's tileset sprite instead of +, |, -, / or backslash glyphs.
+        if( cable_tile_ids.count( entry.first ) == 0 ) {
+            overlay_strings.emplace( player_to_screen( entry.first.xy() ),
+                                     formatted_text( entry.second, catacurses::white,
+                                             text_alignment::left ) );
+        }
     }
 
     const int min_col = 0;
@@ -1742,6 +1748,18 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
                     formatted_text(temp_str, catacurses::white + 8, direction::NORTHEAST));
         }
 
+
+    // Draw physical same-z cables with the loaded tileset's existing item sprites.
+    for( const auto &entry : cable_tile_ids ) {
+        const itype_id &cable_id = entry.second;
+        if( !item::type_is_defined( cable_id ) ) {
+            continue;
+        }
+        int cable_height_3d = 0;
+        draw_from_id_string( cable_id.str(), TILE_CATEGORY::ITEM,
+                             cable_id->get_item_type_string(), entry.first, 0, 0,
+                             lit_level::LIT, false, cable_height_3d );
+    }
 
     // tile overrides are already drawn in the previous code
     void_radiation_override();

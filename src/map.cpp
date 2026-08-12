@@ -7441,7 +7441,8 @@ static int get_memory_at( const tripoint &p )
 }
 
 
-std::map<tripoint, std::string> map::get_cable_visuals( const tripoint &center, int width, int height )
+std::map<tripoint, std::string> map::get_cable_visuals( const tripoint &center, int width, int height,
+        std::map<tripoint, itype_id> *tile_ids )
 {
     std::map<tripoint, unsigned int> links;
     std::map<tripoint, std::string> forced;
@@ -7481,11 +7482,13 @@ std::map<tripoint, std::string> map::get_cable_visuals( const tripoint &center, 
         return bit <= 8U ? bit << 4U : bit >> 4U;
     };
 
-    const auto add_item_link = [&]( const item &it, const tripoint &fallback_source ) {
+    const auto add_item_link = [&]( const item &it, const tripoint &fallback_source,
+                                    const bool use_fallback_source ) {
         if( !it.link || it.link->t_state == link_state::no_link ) {
             return;
         }
-        tripoint source = it.link->s_bub_pos == tripoint_min ? fallback_source : it.link->s_bub_pos;
+        tripoint source = use_fallback_source || it.link->s_bub_pos == tripoint_min ?
+                          fallback_source : it.link->s_bub_pos;
         const tripoint target = getlocal( it.link->t_abs_pos );
 
         if( source.z != target.z ) {
@@ -7518,9 +7521,15 @@ std::map<tripoint, std::string> map::get_cable_visuals( const tripoint &center, 
             }
             if( in_view( a ) && visible_floor( a ) ) {
                 links[a] |= ab;
+                if( tile_ids != nullptr && tile_ids->count( a ) == 0 ) {
+                    ( *tile_ids )[a] = it.typeId();
+                }
             }
             if( in_view( b ) && visible_floor( b ) ) {
                 links[b] |= opposite( ab );
+                if( tile_ids != nullptr && tile_ids->count( b ) == 0 ) {
+                    ( *tile_ids )[b] = it.typeId();
+                }
             }
         }
     };
@@ -7529,16 +7538,38 @@ std::map<tripoint, std::string> map::get_cable_visuals( const tripoint &center, 
         for( int x = std::max( 0, min_x ); x <= std::min( MAPSIZE_X - 1, max_x ); ++x ) {
             const tripoint p( x, y, center.z );
             for( item &top : i_at( p ) ) {
-                add_item_link( top, p );
+                add_item_link( top, p, false );
                 top.visit_items( [&]( item *child, item * ) {
-                    add_item_link( *child, p );
+                    add_item_link( *child, p, false );
                     return VisitResponse::NEXT;
                 } );
             }
         }
     }
+    // Installed appliance cords are stored inside vehicle part base items once connected.
+    // Scan those bases as well as loose items, otherwise only the temporary pulling preview is visible.
+    VehicleList cable_vehicles = get_vehicles();
+    for( wrapped_vehicle &wrapped : cable_vehicles ) {
+        vehicle *veh = wrapped.v;
+        if( veh == nullptr ) {
+            continue;
+        }
+        for( const vpart_reference &vpr : veh->get_all_parts() ) {
+            vehicle_part &part = vpr.part();
+            if( part.removed ) {
+                continue;
+            }
+            const tripoint source = veh->global_part_pos3( part );
+            item &base = part.get_base();
+            add_item_link( base, source, true );
+            for( item *cable : base.get_contents().cables( true ) ) {
+                add_item_link( *cable, source, true );
+            }
+        }
+    }
+
     player_character.visit_items( [&]( item *it, item * ) {
-        add_item_link( *it, player_character.pos() );
+        add_item_link( *it, player_character.pos(), false );
         return VisitResponse::NEXT;
     } );
 
