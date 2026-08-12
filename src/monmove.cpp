@@ -97,7 +97,13 @@ constexpr int reverse_field_cross_z_radius = 72;
 constexpr std::size_t monster_route_cache_max_edges = 8192;
 constexpr std::size_t monster_reverse_field_max_count = 24;
 constexpr std::size_t monster_reverse_field_request_budget = 4096;
-constexpr std::size_t monster_reverse_field_turn_budget = 49152;
+constexpr std::size_t monster_reverse_field_default_turn_budget = 49152;
+constexpr std::size_t monster_reverse_field_min_turn_budget = 8192;
+constexpr std::size_t monster_route_search_default_turn_budget = 64;
+constexpr std::size_t monster_route_search_min_turn_budget = 16;
+// Once a loaded horde reaches this size, tighten the shared per-turn budgets
+// instead of allowing every monster to spend the normal solo-search allowance.
+constexpr std::size_t monster_pathfinding_horde_size_step = 64;
 
 int quantize_monster_bash_strength( int strength )
 {
@@ -330,6 +336,9 @@ monster_reverse_fields;
 std::vector<std::unique_ptr<monster_reverse_field_entry>> monster_reverse_field_pool;
 std::size_t monster_route_cache_edges = 0;
 std::size_t monster_reverse_field_nodes = 0;
+std::size_t monster_reverse_field_turn_budget = monster_reverse_field_default_turn_budget;
+std::size_t monster_route_search_turn_budget = monster_route_search_default_turn_budget;
+std::size_t monster_route_searches = 0;
 std::optional<bool> monster_improved_pathfinding_mode;
 int monster_pathfinding_mode_generation = 1;
 
@@ -339,6 +348,7 @@ void clear_monster_path_caches()
     monster_z_route_cache.clear();
     monster_route_cache_edges = 0;
     monster_reverse_field_nodes = 0;
+    monster_route_searches = 0;
 
     for( auto &field_pair : monster_reverse_fields ) {
         monster_reverse_field_pool.emplace_back( std::move( field_pair.second ) );
@@ -346,11 +356,30 @@ void clear_monster_path_caches()
     monster_reverse_fields.clear();
 }
 
+void update_monster_pathfinding_budgets()
+{
+    std::size_t monster_count = 0;
+    if( g != nullptr ) {
+        for( const monster &mon : g->all_monsters() ) {
+            ( void )mon;
+            ++monster_count;
+        }
+    }
+    const std::size_t horde_factor = std::max<std::size_t>( 1,
+            ( monster_count + monster_pathfinding_horde_size_step - 1 ) /
+            monster_pathfinding_horde_size_step );
+    monster_reverse_field_turn_budget = std::max<std::size_t>( monster_reverse_field_min_turn_budget,
+            monster_reverse_field_default_turn_budget / horde_factor );
+    monster_route_search_turn_budget = std::max<std::size_t>( monster_route_search_min_turn_budget,
+            monster_route_search_default_turn_budget / horde_factor );
+}
+
 void refresh_monster_path_caches()
 {
     if( !monster_path_cache_turn || *monster_path_cache_turn != calendar::turn ) {
         monster_path_cache_turn = calendar::turn;
         clear_monster_path_caches();
+        update_monster_pathfinding_budgets();
     }
 }
 
@@ -775,7 +804,6 @@ void monster::plan()
     if( pet_without_auto_follow && get_dest() == player_character.get_location() ) {
         unset_dest();
     }
-    flood_fill_zone(*this);
     // If we can see the player, move toward them or flee.
     if( friendly == 0 && seen_levels.test( player_character.pos().z + OVERMAP_DEPTH ) &&
         sees( player_character ) ) {
@@ -943,6 +971,7 @@ void monster::plan()
                                  turns_since_target );
     int turns_to_skip = max_turns_to_skip * rate_limiting_factor;
     if( friendly == 0 && ( turns_to_skip == 0 || turns_since_target % turns_to_skip == 0 ) ) {
+        flood_fill_zone( *this );
         for( const auto &fac_list : factions ) {
             mf_attitude faction_att = faction.obj().attitude( fac_list.first );
             if( faction_att == MFA_NEUTRAL || faction_att == MFA_FRIENDLY ) {
@@ -1504,6 +1533,7 @@ void monster::move()
 
     // If true, don't try to greedily avoid locally bad paths
     bool pathed = false;
+    bool pathfinding_budget_exhausted = false;
     const tripoint local_dest = here.getlocal( get_dest() );
 
     pathfinding_settings pf_settings = get_pathfinding_settings();
@@ -1780,6 +1810,14 @@ void monster::move()
                     route_settings.max_length = std::max( route_settings.max_length,
                                                          route_radius * 8 );
                 }
+                if( monster_route_searches >= monster_route_search_turn_budget ) {
+                    pathfinding_budget_exhausted = true;
+                    failed_pathfinding_target = absolute_route_dest;
+                    failed_pathfinding_cooldown = 2 +
+                                                   ( std::abs( posx() + posy() + posz() ) % 3 );
+                    return false;
+                }
+                ++monster_route_searches;
                 path = here.route( pos(), route_dest, route_settings, get_path_avoid() );
             }
 
@@ -1844,7 +1882,8 @@ void monster::move()
                                            std::max( pf_settings.max_dist,
                                                      cross_z_monster_path_radius ) :
                                            pf_settings.max_dist;
-            if( !try_route_to( local_dest ) && target_distance > target_path_radius ) {
+            if( !try_route_to( local_dest ) &&
+                ( target_distance > target_path_radius || pathfinding_budget_exhausted ) ) {
                 destination = local_dest;
                 moved = true;
             }
@@ -1899,7 +1938,8 @@ void monster::move()
                                               pf_settings.max_dist;
                 unset_dest();
 
-                if( !try_route_to( sound_dest ) && sound_distance > sound_path_radius ) {
+                if( !try_route_to( sound_dest ) &&
+                    ( sound_distance > sound_path_radius || pathfinding_budget_exhausted ) ) {
                     destination = sound_dest;
                     moved = true;
                 }
