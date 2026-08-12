@@ -1,0 +1,527 @@
+[
+  {
+    "type": "overmap_special",
+    "id": "New England Church Retreat",
+    "overmaps": [
+      {
+        "point": [
+          -4,
+          1,
+          0
+        ],
+        "overmap": "forest"
+      },
+      {
+        "point": [
+          -3,
+          1,
+          0
+        ],
+        "overmap": "forest"
+      },
+      {
+        "point": [
+          -2,
+          1,
+          0
+        ],
+        "overmap": "forest"
+      },
+      {
+        "point": [
+          -1,
+          1,
+          0
+        ],
+        "overmap": "dirt_road_forest_north"
+      },
+      {
+        "point": [
+          0,
+          1,
+          0
+        ],
+        "overmap": "forest"
+      },
+      {
+        "point": [
+          1,
+          1,
+          0
+        ],
+        "overmap": "forest"
+      },
+      {
+        "point": [
+          2,
+          1,
+          0
+        ],
+        "overmap": "forest"
+      },
+      {
+        "point": [
+          -4,
+          2,
+          0
+        ],
+        "overmap": "forest"
+      },
+      {
+        "point": [
+          -3,
+          2,
+          0
+        ],
+        "overmap": "forest_thick"
+      },
+      {
+        "point": [
+          -2,
+          2,
+          0
+        ],
+        "overmap": "forest_thick"
+      },
+      {
+        "point": [
+          -1,
+          2,
+          0
+        ],
+        "overmap": "dirt_road_forest_north"
+      },
+      {
+        "point": [
+          0,
+          2,
+          0
+        ],
+        "overmap": "forest_thick"
+      },
+      {
+        "point": [
+          1,
+          2,
+          0
+        ],
+        "overmap": "forest_thick"
+      },
+      {
+        "point": [
+          2,
+          2,
+          0
+        ],
+        "overmap": "forest"
+      },
+      {
+        "point": [
+          -2,
+          3,
+          0
+        ],
+        "overmap": "godco_3_north"
+      },
+      {
+        "point": [
+          -3,
+          3,
+          0
+        ],
+        "overmap": "forest_thick"
+      },
+      {
+        "point": [
+          -4,
+          3,
+          0
+        ],
+        "overmap": "forest_thick"
+      },
+      {
+        "point": [
+          -1,
+          3,
+          0
+        ],
+        "overmap": "godco_2_north"
+      },
+      {
+        "point": [
+          0,
+          3,
+          0
+        ],
+        "overmap": "godco_1_north"
+      },
+      {
+        "point": [
+          1,
+          3,
+          0
+        ],
+        "overmap": "forest_thick"
+      },
+      {
+        "point": [
+          2,
+          3,
+          0
+        ],
+        "overmap": "forest_thick"
+      },
+      {
+        "point": [
+          -2,
+          4,
+          0
+        ],
+        "overmap": "godco_6_north"
+      },
+      {
+        "point": [
+          -3,
+          4,
+          0
+        ],
+        "overmap": "forest_thick"
+      },
+      {
+        "point": [
+          -4,
+          4,
+          0
+        ],
+        "overmap": "forest_thick"
+      },
+      {
+        "point": [
+          -1,
+          4,
+          0
+        ],
+        "overmap": "godco_5_north"
+      },
+      {
+        "point": [
+          0,
+          4,
+          0
+        ],
+        "overmap": "godco_4_north"
+      },
+      {
+        "point": [
+          1,
+          4,
+          0
+        ],
+        "overmap": "forest_thick"
+      },
+      {
+        "point": [
+          2,
+          4,
+          0
+        ],
+        "overmap": "forest_thick"
+      },
+      {
+        "point": [
+          -2,
+          5,
+          0
+        ],
+        "overmap": "godco_9_north"
+      },
+      {
+        "point": [
+          -3,
+          5,
+          0
+        ],
+        "overmap": "forest_thick"
+      },
+      {
+        "point": [
+          -4,
+          5,
+          0
+        ],
+        "overmap": "forest_thick"
+      },
+      {
+        "point": [
+          -1,
+          5,
+          0
+        ],
+        "overmap": "godco_8_north"
+      },
+      {
+        "point": [
+          0,
+          5,
+          0
+        ],
+        "overmap": "godco_7_north"
+      },
+      {
+        "point": [
+          1,
+          5,
+          0
+        ],
+        "overmap": "forest_thick"
+      },
+      {
+        "point": [
+          2,
+          5,
+          0
+        ],
+        "overmap": "forest_thick"
+      },
+      {
+        "point": [
+          -2,
+          6,
+          0
+        ],
+        "overmap": "forest"
+      },
+      {
+        "point": [
+          -3,
+          6,
+          0
+        ],
+        "overmap": "forest_thick"
+      },
+      {
+        "point": [
+          -4,
+          6,
+          0
+        ],
+        "overmap": "forest_thick"
+      },
+      {
+        "point": [
+          -1,
+          6,
+          0
+        ],
+        "overmap": "forest_thick"
+      },
+      {
+        "point": [
+          0,
+          6,
+          0
+        ],
+        "overmap": "forest_thick"
+      },
+      {
+        "point": [
+          1,
+          6,
+          0
+        ],
+        "overmap": "forest_thick"
+      },
+      {
+        "point": [
+          2,
+          6,
+          0
+        ],
+        "overmap": "forest"
+      },
+      {
+        "point": [
+          -2,
+          7,
+          0
+        ],
+        "overmap": "forest"
+      },
+      {
+        "point": [
+          -3,
+          7,
+          0
+        ],
+        "overmap": "forest"
+      },
+      {
+        "point": [
+          -4,
+          7,
+          0
+        ],
+        "overmap": "forest_thick"
+      },
+      {
+        "point": [
+          -1,
+          7,
+          0
+        ],
+        "overmap": "forest_thick"
+      },
+      {
+        "point": [
+          0,
+          7,
+          0
+        ],
+        "overmap": "forest_thick"
+      },
+      {
+        "point": [
+          1,
+          7,
+          0
+        ],
+        "overmap": "forest"
+      },
+      {
+        "point": [
+          2,
+          7,
+          0
+        ],
+        "overmap": "forest"
+      },
+      {
+        "point": [
+          -2,
+          3,
+          1
+        ],
+        "overmap": "godco_3_1_north"
+      },
+      {
+        "point": [
+          -1,
+          3,
+          1
+        ],
+        "overmap": "godco_2_1_north"
+      },
+      {
+        "point": [
+          0,
+          3,
+          1
+        ],
+        "overmap": "godco_1_1_north"
+      },
+      {
+        "point": [
+          -2,
+          4,
+          1
+        ],
+        "overmap": "godco_6_1_north"
+      },
+      {
+        "point": [
+          -1,
+          4,
+          1
+        ],
+        "overmap": "godco_5_1_north"
+      },
+      {
+        "point": [
+          0,
+          4,
+          1
+        ],
+        "overmap": "godco_4_1_north"
+      },
+      {
+        "point": [
+          -2,
+          5,
+          1
+        ],
+        "overmap": "godco_9_1_north"
+      },
+      {
+        "point": [
+          -1,
+          5,
+          1
+        ],
+        "overmap": "godco_8_1_north"
+      },
+      {
+        "point": [
+          0,
+          5,
+          1
+        ],
+        "overmap": "godco_7_1_north"
+      },
+      {
+        "point": [
+          -1,
+          3,
+          2
+        ],
+        "overmap": "godco_2_2_north"
+      },
+      {
+        "point": [
+          0,
+          3,
+          2
+        ],
+        "overmap": "godco_1_2_north"
+      }
+    ],
+    "locations": [
+      "forest"
+    ],
+    "connections": [
+      {
+        "point": [
+          -1,
+          0,
+          0
+        ],
+        "terrain": "road",
+        "connection": "local_road",
+        "from": [
+          -1,
+          1,
+          0
+        ]
+      }
+    ],
+    "city_distance": [
+      3,
+      20
+    ],
+    "city_sizes": [
+      3,
+      -1
+    ],
+    "occurrences": [
+      100,
+      100
+    ],
+    "flags": [
+      "GLOBALLY_UNIQUE",
+      "SAFE_AT_WORLDGEN",
+      "MAN_MADE",
+      "WILDERNESS"
+    ],
+    "priority": 1,
+    "// travel_r11": "r11区域化：世界唯一、100%参与抽签并以priority 1优先放置，同时限制在规模3以上城市周边。保留原版locations与逐格约束，河流不属于可覆盖位置；若受河流、道路或大型占地阻挡，引擎会换位尝试而非删除水系。"
+  }
+]

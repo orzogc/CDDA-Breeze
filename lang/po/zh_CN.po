@@ -413770,13 +413770,20 @@ msgstr "门没有锁上。"
 msgid "That cannot be picked."
 msgstr "这里可撬不动。"
 
-#: src/activity_actor.cpp:2445
-msgid "You scan the book into your device."
-msgstr "你把书扫描进了设备中。"
+#: src/activity_actor.cpp:2666
+msgid "There is no book to scan."
+msgstr "没有可扫描的书籍。"
 
-#: src/activity_actor.cpp:2447
+#: src/activity_actor.cpp:2663
 #, c-format
-msgid "%s scans the book into their device."
+msgid "You scan %d book into your device."
+msgid_plural "You scan %d books into your device."
+msgstr[0] "你把 %d 本书扫描进了设备中。"
+msgstr[1] "你把 %d 本书扫描进了设备中。"
+
+#: src/activity_actor.cpp:2669
+#, c-format
+msgid "%s scans books into their device."
 msgstr "%s 把书扫描进了设备中。"
 
 #: src/activity_actor.cpp:2665
@@ -436344,6 +436351,14 @@ msgstr "切换收藏"
 msgid "Category selection mode"
 msgstr "类别选择模式"
 
+#: src/inventory_ui.cpp:2681
+msgid "categories"
+msgstr "类别"
+
+#: src/inventory_ui.cpp:2681
+msgid "hierarchy"
+msgstr "层级"
+
 #: src/inventory_ui.cpp:2907
 msgid "Mark/unmark selected item"
 msgstr "标记/取消标记选择物品"
@@ -442605,10 +442620,6 @@ msgstr[0] "将%1$s本书籍复制到设备。"
 msgid "Copied one book to the %2$s."
 msgid_plural "Copied %1$s books to the %2$s."
 msgstr[0] "将%1$s本书籍复制到%2$s。"
-
-#: src/iuse.cpp:9844
-msgid "Scan which book?"
-msgstr "扫描什么书？"
 
 #: src/iuse.cpp:9911
 msgid "You rethink trying to write underwater."

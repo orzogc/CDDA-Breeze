@@ -1,0 +1,61 @@
+[
+  {
+    "id": "skorpion_61",
+    "copy-from": "skorpion_61",
+    "looks_like": "hk_mp5",
+    "type": "GUN",
+    "name": {
+      "str": "Vz. 61 \"蝎\"式冲锋枪"
+    },
+    "description": "Vz. 61蝎式由捷克斯洛伐克在1950年代末研制，1960年代开始生产，最初为安全人员、车辆乘员和特种用途填补手枪与冲锋枪之间的空白。它使用7.65毫米勃朗宁弹，尺寸极小，独特的减速机构控制高射速。冷战时期广泛出口，也因隐蔽性被犯罪与武装组织滥用。",
+    "reload_noise_volume": 10,
+    "//": "枪械空重1301.81克，取整为1302克；当前折叠枪托重量为200克。",
+    "weight": "1300 g",
+    "volume": "788 ml",
+    "longest_side": "298 mm",
+    "price": 150000,
+    "price_postapoc": 2500,
+    "to_hit": -2,
+    "material": [
+      "steel"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "32"
+    ],
+    "skill": "smg",
+    "dispersion": 360,
+    "durability": 6,
+    "min_cycle_recoil": 135,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        4
+      ]
+    ],
+    "built_in_mods": [
+      "folding_stock"
+    ],
+    "faults": [
+      "fault_gun_blackpowder",
+      "fault_gun_dirt",
+      "fault_gun_chamber_spent"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "skorpion61mag"
+        ]
+      }
+    ],
+    "bashing": 9
+  }
+]

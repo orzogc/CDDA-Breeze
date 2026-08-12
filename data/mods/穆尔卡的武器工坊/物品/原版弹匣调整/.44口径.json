@@ -1,0 +1,38 @@
+[
+  {
+    "id": "44_speedloader6",
+    "copy-from": "44_speedloader6",
+    "looks_like": "38_speedloader",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "6发快速装弹器（.44口径）"
+    },
+    "description": "这个快速装弹器可以容纳 6 发 .44 弹，为兼容的左轮手枪快速装弹。",
+    "weight": "98 g",
+    "volume": "250 ml",
+    "price": 1600,
+    "price_postapoc": 100,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "44"
+    ],
+    "flags": [
+      "SPEEDLOADER",
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "44": 6
+        }
+      }
+    ],
+    "longest_side": "14 cm"
+  }
+]

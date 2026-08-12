@@ -1,0 +1,670 @@
+[
+  {
+    "id": "MP153_M",
+    "type": "GUN",
+    "name": {
+      "str": "“槁骨”MP-153M 半自动霰弹枪"
+    },
+    "description": "伊热夫斯克机械厂在20世纪90年代末开始研制MP-153；这是一种导气式12号半自动霰弹枪，设计目标之一是兼容从轻型运动装药到马格南猎弹的不同压力。眼前这把“槁骨”经过穆尔卡重新配重并安装定制枪托、瞄具和枪口附件，原本朴素的猎枪已被改成更偏战斗与竞技用途的配置。",
+    "//": "我以前是什么样子的来着.",
+    "weight": "2800 g",
+    "volume": "3000 ml",
+    "longest_side": "90 cm",
+    "price": 1650000,
+    "price_postapoc": 1650000,
+    "material": [
+      "superalloy",
+      "carbide"
+    ],
+    "range": 5,
+    "symbol": "(",
+    "color": "dark_gray",
+    "skill": "shotgun",
+    "ammo": [
+      "shot"
+    ],
+    "reload_noise_volume": 10,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 5,
+      "armor_penetration": 50
+    },
+    "bashing": 15,
+    "reload": 5,
+    "sight_dispersion": 200,
+    "dispersion": 100,
+    "durability": 10,
+    "default_mods": [
+      "153m_sp",
+      "153m_stock",
+      "153m_scope"
+    ],
+    "barrel_volume": "500 ml",
+    "valid_mod_locations": [
+      [
+        "sling",
+        1
+      ]
+    ],
+    "extend": {
+      "flags": [
+        "RELOAD_ONE",
+        "NEVER_JAMS"
+      ]
+    },
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "shot": 8
+        }
+      }
+    ],
+    "looks_like": "MP153"
+  },
+  {
+    "id": "ak109c",
+    "copy-from": "rifle_auto",
+    "type": "GUN",
+    "name": {
+      "str": "“廷达罗斯”AK-109 突击步枪"
+    },
+    "description": "AK-109是AK-100系列中使用7.62x39mm弹的平衡自动原理试验型：机匣内的反向运动配重用来抵消枪机组件带来的部分扰动，从而改善连发可控性，但结构也比普通AK复杂。眼前这把“廷达罗斯”又换上轻量折叠托、导轨护木、全息瞄具和补偿器，是一件建立在罕见原型枪上的私人改装品。",
+    "weight": "3000 g",
+    "volume": "1000 ml",
+    "longest_side": "940 mm",
+    "price": 65000,
+    "price_postapoc": 24000,
+    "material": [
+      "superalloy",
+      "carbide"
+    ],
+    "color": "brown",
+    "ammo": [
+      "762"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 150,
+    "bashing": 12,
+    "durability": 8,
+    "min_cycle_recoil": 50,
+    "default_mods": [
+      "race_rail",
+      "109_stock",
+      "tac_holo",
+      "tac_gun_muzzle"
+    ],
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "BURST",
+        "3 rd.",
+        3
+      ],
+      [
+        "AUTO",
+        "auto",
+        4
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "barrel",
+        1
+      ],
+      [
+        "bore",
+        1
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "akmag30",
+          "akmag10",
+          "akmag20",
+          "akmag40",
+          "akdrum75"
+        ]
+      }
+    ],
+    "looks_like": "ak108"
+  },
+  {
+    "id": "ash12",
+    "type": "GUN",
+    "name": {
+      "str": "ASH-12 突击步枪"
+    },
+    "description": "ASh-12后来以ShAK-12系统之名为人所知，是图拉TsKIB SOO／KBP体系为俄罗斯联邦安全局近距离高风险行动研制的大口径无托武器。它使用12.7x55mm专用弹，强调在城市和室内距离上的停止作用，而不是把巨大弹头送到很远；沉重弹药、有限射程和猛烈射击特征都是这种取舍的代价。",
+    "weight": "4500 g",
+    "volume": "1200 ml",
+    "longest_side": "700 mm",
+    "price": 65000,
+    "price_postapoc": 13500,
+    "material": [
+      "steel"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "12755"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 330,
+    "durability": 8,
+    "skill": "rifle",
+    "min_cycle_recoil": 3250,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        2
+      ]
+    ],
+    "barrel_volume": "250 ml",
+    "valid_mod_locations": [
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "ash_20"
+        ]
+      }
+    ],
+    "looks_like": "ash12"
+  },
+  {
+    "id": "fal_308",
+    "looks_like": "ar15",
+    "type": "GUN",
+    "name": {
+      "str_sp": "定制 FAL 突击步枪"
+    },
+    "description": "FN FAL由比利时FN首席设计师迪厄多内·赛夫主持发展，首批原型可追溯到1947年。它在冷战时期被众多国家采用，因广泛装备西方阵营而获得“自由世界的右手”之称。眼前这把7.62x51mmFAL换装轻型钢架枪托与现代附件，并喷有城市迷彩，显然经历过私人改装。",
+    "weight": "3500 g",
+    "volume": "2800 ml",
+    "longest_side": "1080 mm",
+    "price": 350000,
+    "price_postapoc": 5500,
+    "skill": "rifle",
+    "material": [
+      "steel"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "308"
+    ],
+    "reload_noise_volume": 10,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 5
+    },
+    "bashing": 12,
+    "dispersion": 150,
+    "durability": 8,
+    "min_cycle_recoil": 2700,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        2
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        3
+      ],
+      [
+        "barrel",
+        1
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ],
+      [
+        "sling",
+        1
+      ]
+    ],
+    "default_mods": [
+      "wire_stock"
+    ],
+    "barrel_volume": "500 ml",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "falmag",
+          "falbigmag",
+          "fal_makeshiftmag"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ks23",
+    "type": "GUN",
+    "name": {
+      "str": "KS-23 泵动式霰弹枪"
+    },
+    "description": "KS-23由苏联中央精密机械工程研究所为内务部门研制，20世纪80年代投入使用，最初任务包括监狱骚乱处置。它发射23x75mmR弹并采用膛线枪管，因此俄方正式称其为“卡宾枪”；巨大的弹径既能容纳强力鹿弹和独头弹，也能装填催泪、震爆等特种弹药。",
+    "weight": "3850 g",
+    "volume": "1250 ml",
+    "longest_side": "510 mm",
+    "price": 75000,
+    "price_postapoc": 5500,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "range": 5,
+    "symbol": "(",
+    "color": "brown",
+    "skill": "shotgun",
+    "ammo": [
+      "23mm"
+    ],
+    "reload_noise_volume": 10,
+    "modes": [
+      [
+        "DEFAULT",
+        "single",
+        1
+      ]
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 12
+    },
+    "bashing": 12,
+    "dispersion": 210,
+    "durability": 7,
+    "barrel_volume": "510 ml",
+    "valid_mod_locations": [
+      [
+        "sling",
+        1
+      ]
+    ],
+    "extend": {
+      "flags": [
+        "RELOAD_ONE"
+      ]
+    },
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "23mm": 4
+        }
+      }
+    ],
+    "looks_like": "ga23sg"
+  },
+  {
+    "id": "qbz",
+    "type": "GUN",
+    "name": {
+      "str": "QBZ-95 突击步枪"
+    },
+    "description": "QBZ-95是中国在20世纪90年代列装的5.8x42mm无托式步枪。无托布局把枪机和弹匣移到扳机后方，以较短全长保留较长枪管，适合车辆和城市环境；代价是操作布局、扳机手感和附件扩展受到限制。它曾长期作为中国军队最醒目的制式步枪之一。",
+    "weight": "3250 g",
+    "volume": "2220 ml",
+    "longest_side": "745 mm",
+    "price": 35000,
+    "price_postapoc": 7550,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "5842"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 270,
+    "durability": 8,
+    "skill": "rifle",
+    "min_cycle_recoil": 1110,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "barrel_volume": "463 ml",
+    "valid_mod_locations": [
+      [
+        "barrel",
+        1
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "underbarrel mount",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "95_30"
+        ]
+      }
+    ],
+    "looks_like": "qbz"
+  },
+  {
+    "id": "qbz191",
+    "type": "GUN",
+    "name": {
+      "str": "QBZ-191 突击步枪"
+    },
+    "description": "QBZ-191是中国新一代5.8x42mm步枪家族的标准型，于2019年国庆阅兵公开亮相。它放弃QBZ-95的无托结构，改用传统布局、伸缩枪托和贯通式附件接口，以改善人机工效和模块化能力；同族还包括短卡宾枪与精确射手型。它出现在新英格兰显然不是正常军需流通过程。",
+    "weight": "3650 g",
+    "volume": "2450 ml",
+    "longest_side": "745 mm",
+    "price": 47000,
+    "price_postapoc": 9500,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "5842"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 250,
+    "durability": 8,
+    "skill": "rifle",
+    "min_cycle_recoil": 1010,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "barrel_volume": "463 ml",
+    "valid_mod_locations": [
+      [
+        "barrel",
+        1
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "191_30"
+        ]
+      }
+    ],
+    "looks_like": "qbz191"
+  },
+  {
+    "id": "rpk16",
+    "type": "GUN",
+    "name": {
+      "str": "RPK-16 轻机枪"
+    },
+    "description": "RPK-16由卡拉什尼科夫集团在2016年首次公开，是以AK-12技术路线发展出的5.45x39mm班用轻机枪。它可使用30、45或95发弹匣，并曾提供长短两种枪管设想，让同一平台在轻机枪与重枪管突击步枪之间切换。它没有全面取代旧RPK，却是一件颇有代表性的过渡设计。",
+    "weight": "3300 g",
+    "volume": "1800 ml",
+    "longest_side": "95 cm",
+    "price": 85000,
+    "price_postapoc": 7500,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "545x39"
+    ],
+    "reload_noise_volume": 10,
+    "dispersion": 150,
+    "bashing": 12,
+    "durability": 8,
+    "skill": "rifle",
+    "min_cycle_recoil": 1450,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "barrel_volume": "500 ml",
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "barrel",
+        1
+      ],
+      [
+        "bore",
+        1
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "ak74mag",
+          "rpk74mag",
+          "casket74mag",
+          "rpk16_75"
+        ]
+      }
+    ],
+    "looks_like": "rpk16"
+  }
+]

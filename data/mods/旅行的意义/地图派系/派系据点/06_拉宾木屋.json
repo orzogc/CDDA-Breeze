@@ -1,0 +1,48 @@
+[
+  {
+    "type": "overmap_special",
+    "id": "Cabin_Lapin",
+    "overmaps": [
+      {
+        "point": [
+          0,
+          0,
+          0
+        ],
+        "overmap": "cabin_lapin_north"
+      },
+      {
+        "point": [
+          0,
+          0,
+          1
+        ],
+        "overmap": "cabin_roof_lapin_north"
+      }
+    ],
+    "locations": [
+      "forest"
+    ],
+    "city_distance": [
+      3,
+      20
+    ],
+    "occurrences": [
+      100,
+      100
+    ],
+    "//": "Inflated chance, effective rate ~40%",
+    "flags": [
+      "CLASSIC",
+      "WILDERNESS",
+      "MAN_MADE",
+      "GLOBALLY_UNIQUE"
+    ],
+    "city_sizes": [
+      3,
+      -1
+    ],
+    "priority": 1,
+    "// travel_r11": "r11区域化：世界唯一、100%参与抽签并以priority 1优先放置，同时限制在规模3以上城市周边。保留原版locations与逐格约束，河流不属于可覆盖位置；若受河流、道路或大型占地阻挡，引擎会换位尝试而非删除水系。"
+  }
+]

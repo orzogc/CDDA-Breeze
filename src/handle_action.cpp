@@ -2025,8 +2025,37 @@ static void read()
                 spell_book.active, player_character.pos());
         }
         else {
-            loc = loc.obtain(player_character);
-            player_character.read(loc);
+            item_location ereader;
+            if( loc.has_parent() ) {
+                item_location parent = loc.parent_item();
+                if( parent && parent->is_ebook_storage() ) {
+                    ereader = parent;
+                }
+            }
+            if( ereader ) {
+                if( !ereader.held_by( player_character ) &&
+                    !ereader->has_flag( flag_ALLOWS_REMOTE_USE ) ) {
+                    const std::vector<const item *> ebooks = ereader->ebooks();
+                    const auto selected_book = std::find( ebooks.begin(), ebooks.end(), loc.get_item() );
+                    if( selected_book == ebooks.end() ) {
+                        return;
+                    }
+                    const size_t book_index = std::distance( ebooks.begin(), selected_book );
+                    ereader = ereader.obtain( player_character );
+                    if( !ereader ) {
+                        return;
+                    }
+                    const std::vector<const item *> obtained_ebooks = ereader->ebooks();
+                    if( book_index >= obtained_ebooks.size() ) {
+                        return;
+                    }
+                    loc = item_location( ereader, const_cast<item *>( obtained_ebooks[book_index] ) );
+                }
+                player_character.read( loc, ereader );
+            } else {
+                loc = loc.obtain( player_character );
+                player_character.read( loc );
+            }
         }
     }
     else {

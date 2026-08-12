@@ -1,0 +1,5057 @@
+[
+  {
+    "type": "trap",
+    "id": "tr_LIXA_unfold_entry_1",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "action": "spell",
+    "spell_data": {
+      "id": "spell_LIXA_unfold_entry_1"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_unfold_entry_2",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "action": "spell",
+    "spell_data": {
+      "id": "spell_LIXA_unfold_entry_2"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_unfold_entry_3",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "action": "spell",
+    "spell_data": {
+      "id": "spell_LIXA_unfold_entry_3"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_unfold_entry_4",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "action": "spell",
+    "spell_data": {
+      "id": "spell_LIXA_unfold_entry_4"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_unfold_entry_5",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "action": "spell",
+    "spell_data": {
+      "id": "spell_LIXA_unfold_entry_5"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_unfold_entry_6",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "action": "spell",
+    "spell_data": {
+      "id": "spell_LIXA_unfold_entry_6"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_unfold_entry_7",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "action": "spell",
+    "spell_data": {
+      "id": "spell_LIXA_unfold_entry_7"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_unfold_entry_8",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "action": "spell",
+    "spell_data": {
+      "id": "spell_LIXA_unfold_entry_8"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_unfold_entry_9",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "action": "spell",
+    "spell_data": {
+      "id": "spell_LIXA_unfold_entry_9"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_unfold_entry_10",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "action": "spell",
+    "spell_data": {
+      "id": "spell_LIXA_unfold_entry_10"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_unfold_entry_11",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "action": "spell",
+    "spell_data": {
+      "id": "spell_LIXA_unfold_entry_11"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_unfold_entry_12",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "action": "spell",
+    "spell_data": {
+      "id": "spell_LIXA_unfold_entry_12"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_unfold_entry_13",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "action": "spell",
+    "spell_data": {
+      "id": "spell_LIXA_unfold_entry_13"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_unfold_entry_14",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "action": "spell",
+    "spell_data": {
+      "id": "spell_LIXA_unfold_entry_14"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_unfold_entry_15",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "action": "spell",
+    "spell_data": {
+      "id": "spell_LIXA_unfold_entry_15"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_unfold_entry_16",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "action": "spell",
+    "spell_data": {
+      "id": "spell_LIXA_unfold_entry_16"
+    }
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_unfold_entry_1",
+    "name": {
+      "str": "LIXA展开空间入口",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "进入LIXA展开空间。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_UNFOLD_ENTRY_SETUP_1"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_unfold_entry_2",
+    "name": {
+      "str": "LIXA展开空间入口",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "进入LIXA展开空间。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_UNFOLD_ENTRY_SETUP_2"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_unfold_entry_3",
+    "name": {
+      "str": "LIXA展开空间入口",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "进入LIXA展开空间。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_UNFOLD_ENTRY_SETUP_3"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_unfold_entry_4",
+    "name": {
+      "str": "LIXA展开空间入口",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "进入LIXA展开空间。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_UNFOLD_ENTRY_SETUP_4"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_unfold_entry_5",
+    "name": {
+      "str": "LIXA展开空间入口",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "进入LIXA展开空间。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_UNFOLD_ENTRY_SETUP_5"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_unfold_entry_6",
+    "name": {
+      "str": "LIXA展开空间入口",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "进入LIXA展开空间。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_UNFOLD_ENTRY_SETUP_6"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_unfold_entry_7",
+    "name": {
+      "str": "LIXA展开空间入口",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "进入LIXA展开空间。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_UNFOLD_ENTRY_SETUP_7"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_unfold_entry_8",
+    "name": {
+      "str": "LIXA展开空间入口",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "进入LIXA展开空间。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_UNFOLD_ENTRY_SETUP_8"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_unfold_entry_9",
+    "name": {
+      "str": "LIXA展开空间入口",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "进入LIXA展开空间。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_UNFOLD_ENTRY_SETUP_9"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_unfold_entry_10",
+    "name": {
+      "str": "LIXA展开空间入口",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "进入LIXA展开空间。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_UNFOLD_ENTRY_SETUP_10"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_unfold_entry_11",
+    "name": {
+      "str": "LIXA展开空间入口",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "进入LIXA展开空间。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_UNFOLD_ENTRY_SETUP_11"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_unfold_entry_12",
+    "name": {
+      "str": "LIXA展开空间入口",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "进入LIXA展开空间。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_UNFOLD_ENTRY_SETUP_12"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_unfold_entry_13",
+    "name": {
+      "str": "LIXA展开空间入口",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "进入LIXA展开空间。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_UNFOLD_ENTRY_SETUP_13"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_unfold_entry_14",
+    "name": {
+      "str": "LIXA展开空间入口",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "进入LIXA展开空间。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_UNFOLD_ENTRY_SETUP_14"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_unfold_entry_15",
+    "name": {
+      "str": "LIXA展开空间入口",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "进入LIXA展开空间。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_UNFOLD_ENTRY_SETUP_15"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_unfold_entry_16",
+    "name": {
+      "str": "LIXA展开空间入口",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "进入LIXA展开空间。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_UNFOLD_ENTRY_SETUP_16"
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_UNFOLD_ENTRY_SETUP_1",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_entry"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_LIXA_UNFOLD_ENTRY"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_UNFOLD_ENTRY_SETUP_2",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_entry"
+          },
+          "=",
+          {
+            "const": 2
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_LIXA_UNFOLD_ENTRY"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_UNFOLD_ENTRY_SETUP_3",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_entry"
+          },
+          "=",
+          {
+            "const": 3
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_LIXA_UNFOLD_ENTRY"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_UNFOLD_ENTRY_SETUP_4",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_entry"
+          },
+          "=",
+          {
+            "const": 4
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_LIXA_UNFOLD_ENTRY"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_UNFOLD_ENTRY_SETUP_5",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_entry"
+          },
+          "=",
+          {
+            "const": 5
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_LIXA_UNFOLD_ENTRY"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_UNFOLD_ENTRY_SETUP_6",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_entry"
+          },
+          "=",
+          {
+            "const": 6
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_LIXA_UNFOLD_ENTRY"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_UNFOLD_ENTRY_SETUP_7",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_entry"
+          },
+          "=",
+          {
+            "const": 7
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_LIXA_UNFOLD_ENTRY"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_UNFOLD_ENTRY_SETUP_8",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_entry"
+          },
+          "=",
+          {
+            "const": 8
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_LIXA_UNFOLD_ENTRY"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_UNFOLD_ENTRY_SETUP_9",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_entry"
+          },
+          "=",
+          {
+            "const": 9
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_LIXA_UNFOLD_ENTRY"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_UNFOLD_ENTRY_SETUP_10",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_entry"
+          },
+          "=",
+          {
+            "const": 10
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_LIXA_UNFOLD_ENTRY"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_UNFOLD_ENTRY_SETUP_11",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_entry"
+          },
+          "=",
+          {
+            "const": 11
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_LIXA_UNFOLD_ENTRY"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_UNFOLD_ENTRY_SETUP_12",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_entry"
+          },
+          "=",
+          {
+            "const": 12
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_LIXA_UNFOLD_ENTRY"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_UNFOLD_ENTRY_SETUP_13",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_entry"
+          },
+          "=",
+          {
+            "const": 13
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_LIXA_UNFOLD_ENTRY"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_UNFOLD_ENTRY_SETUP_14",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_entry"
+          },
+          "=",
+          {
+            "const": 14
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_LIXA_UNFOLD_ENTRY"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_UNFOLD_ENTRY_SETUP_15",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_entry"
+          },
+          "=",
+          {
+            "const": 15
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_LIXA_UNFOLD_ENTRY"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_UNFOLD_ENTRY_SETUP_16",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_entry"
+          },
+          "=",
+          {
+            "const": 16
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_LIXA_UNFOLD_ENTRY"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_UNFOLD_ENTRY",
+    "effect": [
+      {
+        "u_location_variable": {
+          "global_val": "LIXA_player_return"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_breeze_return_guard"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "place_override": {
+          "global_val": "place_name",
+          "default_str": "无限长廊"
+        },
+        "length": "1 day",
+        "key": "LIXA_escape_key"
+      },
+      {
+        "u_add_effect": "LIXA_unfolded_eff",
+        "duration": "PERMANENT",
+        "intensity": 1
+      },
+      {
+        "switch": {
+          "u_val": "var",
+          "var_name": "LIXA_entry"
+        },
+        "cases": [
+          {
+            "case": 1,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_forward_tp_1"
+              },
+              "force": true
+            }
+          },
+          {
+            "case": 2,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_forward_tp_2"
+              },
+              "force": true
+            }
+          },
+          {
+            "case": 3,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_forward_tp_3"
+              },
+              "force": true
+            }
+          },
+          {
+            "case": 4,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_forward_tp_4"
+              },
+              "force": true
+            }
+          },
+          {
+            "case": 5,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_forward_tp_5"
+              },
+              "force": true
+            }
+          },
+          {
+            "case": 6,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_forward_tp_6"
+              },
+              "force": true
+            }
+          },
+          {
+            "case": 7,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_forward_tp_7"
+              },
+              "force": true
+            }
+          },
+          {
+            "case": 8,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_forward_tp_8"
+              },
+              "force": true
+            }
+          },
+          {
+            "case": 9,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_forward_tp_9"
+              },
+              "force": true
+            }
+          },
+          {
+            "case": 10,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_forward_tp_10"
+              },
+              "force": true
+            }
+          },
+          {
+            "case": 11,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_forward_tp_11"
+              },
+              "force": true
+            }
+          },
+          {
+            "case": 12,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_forward_tp_12"
+              },
+              "force": true
+            }
+          },
+          {
+            "case": 13,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_forward_tp_13"
+              },
+              "force": true
+            }
+          },
+          {
+            "case": 14,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_forward_tp_14"
+              },
+              "force": true
+            }
+          },
+          {
+            "case": 15,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_forward_tp_15"
+              },
+              "force": true
+            }
+          },
+          {
+            "case": 16,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_forward_tp_16"
+              },
+              "force": true
+            }
+          }
+        ]
+      },
+      {
+        "u_message": "你步入一个空间，它在你周围展开，变得无边无际，完全平坦。每个表面的每一面都一览无余。你低头看着自己的双手；你可以看到正面、背面、每一根血管和骨骼的内部和外部，所有这些都在同一个表面上的同一个地方。你无法想象你的眼睛发生了什么变化，让你能够理解你所看到的一切。还有你的大脑。",
+        "popup": true
+      },
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_unfold_level"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_hallway_direction"
+          },
+          "=",
+          {
+            "const": 2
+          }
+        ]
+      },
+      {
+        "u_location_variable": {
+          "global_val": "LIXA_unfold_A"
+        },
+        "target_params": {
+          "om_terrain": "LIXA_device_unfolded_A",
+          "z": -8,
+          "om_special": "physics_lab_LIXA",
+          "search_range": 60,
+          "om_terrain_match_type": "PREFIX"
+        }
+      },
+      {
+        "u_location_variable": {
+          "global_val": "LIXA_unfold_B"
+        },
+        "target_params": {
+          "om_terrain": "LIXA_device_unfolded_B",
+          "z": -8,
+          "om_special": "physics_lab_LIXA",
+          "search_range": 60,
+          "om_terrain_match_type": "PREFIX"
+        }
+      },
+      {
+        "u_location_variable": {
+          "global_val": "LIXA_chamber_1"
+        },
+        "target_params": {
+          "om_terrain": "LIXA_device_1",
+          "z": -4,
+          "om_special": "physics_lab_LIXA",
+          "search_range": 60,
+          "om_terrain_match_type": "PREFIX"
+        }
+      },
+      {
+        "u_location_variable": {
+          "global_val": "LIXA_chamber_2"
+        },
+        "target_params": {
+          "om_terrain": "LIXA_device_2",
+          "z": -4,
+          "om_special": "physics_lab_LIXA",
+          "search_range": 60,
+          "om_terrain_match_type": "PREFIX"
+        }
+      },
+      {
+        "u_location_variable": {
+          "global_val": "LIXA_chamber_3"
+        },
+        "target_params": {
+          "om_terrain": "LIXA_device_3",
+          "z": -4,
+          "om_special": "physics_lab_LIXA",
+          "search_range": 60,
+          "om_terrain_match_type": "PREFIX"
+        }
+      },
+      {
+        "u_location_variable": {
+          "global_val": "LIXA_workfloor_NW"
+        },
+        "target_params": {
+          "om_terrain": "LIXA_workfloor_1a",
+          "z": -3,
+          "om_special": "physics_lab_LIXA",
+          "search_range": 60,
+          "om_terrain_match_type": "PREFIX"
+        }
+      },
+      {
+        "u_location_variable": {
+          "global_val": "LIXA_workfloor_NE"
+        },
+        "target_params": {
+          "om_terrain": "LIXA_workfloor_2a",
+          "z": -3,
+          "om_special": "physics_lab_LIXA",
+          "search_range": 60,
+          "om_terrain_match_type": "PREFIX"
+        }
+      },
+      {
+        "u_location_variable": {
+          "global_val": "LIXA_workfloor_SW"
+        },
+        "target_params": {
+          "om_terrain": "LIXA_workfloor_1b",
+          "z": -3,
+          "om_special": "physics_lab_LIXA",
+          "search_range": 60,
+          "om_terrain_match_type": "PREFIX"
+        }
+      },
+      {
+        "u_location_variable": {
+          "global_val": "LIXA_workfloor_SE"
+        },
+        "target_params": {
+          "om_terrain": "LIXA_workfloor_2b",
+          "z": -3,
+          "om_special": "physics_lab_LIXA",
+          "search_range": 60,
+          "om_terrain_match_type": "PREFIX"
+        }
+      },
+      {
+        "u_location_variable": {
+          "global_val": "LIXA_surface_NW"
+        },
+        "target_params": {
+          "om_terrain": "LIXA_surface_1a",
+          "z": 0,
+          "om_special": "physics_lab_LIXA",
+          "search_range": 60,
+          "om_terrain_match_type": "PREFIX"
+        }
+      },
+      {
+        "u_location_variable": {
+          "global_val": "LIXA_surface_NE"
+        },
+        "target_params": {
+          "om_terrain": "LIXA_surface_1b",
+          "z": 0,
+          "om_special": "physics_lab_LIXA",
+          "search_range": 60,
+          "om_terrain_match_type": "PREFIX"
+        }
+      },
+      {
+        "u_location_variable": {
+          "global_val": "LIXA_surface_SW"
+        },
+        "target_params": {
+          "om_terrain": "LIXA_surface_2a",
+          "z": 0,
+          "om_special": "physics_lab_LIXA",
+          "search_range": 60,
+          "om_terrain_match_type": "PREFIX"
+        }
+      },
+      {
+        "u_location_variable": {
+          "global_val": "LIXA_surface_SE"
+        },
+        "target_params": {
+          "om_terrain": "LIXA_surface_2b",
+          "z": 0,
+          "om_special": "physics_lab_LIXA",
+          "search_range": 60,
+          "om_terrain_match_type": "PREFIX"
+        }
+      }
+    ]
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_back_1",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "action": "spell",
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "spell_data": {
+      "id": "spell_LIXA_back_1"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_forward_1",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "action": "spell",
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "spell_data": {
+      "id": "spell_LIXA_forward_1"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_back_2",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "action": "spell",
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "spell_data": {
+      "id": "spell_LIXA_back_2"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_forward_2",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "action": "spell",
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "spell_data": {
+      "id": "spell_LIXA_forward_2"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_back_3",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "action": "spell",
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "spell_data": {
+      "id": "spell_LIXA_back_3"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_forward_3",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "action": "spell",
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "spell_data": {
+      "id": "spell_LIXA_forward_3"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_back_4",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "action": "spell",
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "spell_data": {
+      "id": "spell_LIXA_back_4"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_forward_4",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "action": "spell",
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "spell_data": {
+      "id": "spell_LIXA_forward_4"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_back_5",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "action": "spell",
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "spell_data": {
+      "id": "spell_LIXA_back_5"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_forward_5",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "action": "spell",
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "spell_data": {
+      "id": "spell_LIXA_forward_5"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_back_6",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "action": "spell",
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "spell_data": {
+      "id": "spell_LIXA_back_6"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_forward_6",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "action": "spell",
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "spell_data": {
+      "id": "spell_LIXA_forward_6"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_back_7",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "action": "spell",
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "spell_data": {
+      "id": "spell_LIXA_back_7"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_forward_7",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "action": "spell",
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "spell_data": {
+      "id": "spell_LIXA_forward_7"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_back_8",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "action": "spell",
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "spell_data": {
+      "id": "spell_LIXA_back_8"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_forward_8",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "action": "spell",
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "spell_data": {
+      "id": "spell_LIXA_forward_8"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_back_9",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "action": "spell",
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "spell_data": {
+      "id": "spell_LIXA_back_9"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_forward_9",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "action": "spell",
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "spell_data": {
+      "id": "spell_LIXA_forward_9"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_back_10",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "action": "spell",
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "spell_data": {
+      "id": "spell_LIXA_back_10"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_forward_10",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "action": "spell",
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "spell_data": {
+      "id": "spell_LIXA_forward_10"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_back_11",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "action": "spell",
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "spell_data": {
+      "id": "spell_LIXA_back_11"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_forward_11",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "action": "spell",
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "spell_data": {
+      "id": "spell_LIXA_forward_11"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_back_12",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "action": "spell",
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "spell_data": {
+      "id": "spell_LIXA_back_12"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_forward_12",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "action": "spell",
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "spell_data": {
+      "id": "spell_LIXA_forward_12"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_back_13",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "action": "spell",
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "spell_data": {
+      "id": "spell_LIXA_back_13"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_forward_13",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "action": "spell",
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "spell_data": {
+      "id": "spell_LIXA_forward_13"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_back_14",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "action": "spell",
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "spell_data": {
+      "id": "spell_LIXA_back_14"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_forward_14",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "action": "spell",
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "spell_data": {
+      "id": "spell_LIXA_forward_14"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_back_15",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "action": "spell",
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "spell_data": {
+      "id": "spell_LIXA_back_15"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_forward_15",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "action": "spell",
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "spell_data": {
+      "id": "spell_LIXA_forward_15"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_back_16",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "action": "spell",
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "spell_data": {
+      "id": "spell_LIXA_back_16"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_LIXA_forward_16",
+    "name": "",
+    "color": "green",
+    "symbol": "#",
+    "visibility": 99,
+    "always_invisible": true,
+    "avoidance": 99,
+    "difficulty": 99,
+    "trap_radius": 0,
+    "action": "spell",
+    "flags": [
+      "UNDODGEABLE",
+      "UNCONSUMED"
+    ],
+    "spell_data": {
+      "id": "spell_LIXA_forward_16"
+    }
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_back_1",
+    "name": {
+      "str": "LIXA后向传送",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "将目标向后传送。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_BACK_SETUP_1"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_forward_1",
+    "name": {
+      "str": "LIXA前向传送",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "将目标向前传送。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_FORWARD_SETUP_1"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_back_2",
+    "name": {
+      "str": "LIXA后向传送",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "将目标向后传送。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_BACK_SETUP_2"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_forward_2",
+    "name": {
+      "str": "LIXA前向传送",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "将目标向前传送。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_FORWARD_SETUP_2"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_back_3",
+    "name": {
+      "str": "LIXA后向传送",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "将目标向后传送。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_BACK_SETUP_3"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_forward_3",
+    "name": {
+      "str": "LIXA前向传送",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "将目标向前传送。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_FORWARD_SETUP_3"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_back_4",
+    "name": {
+      "str": "LIXA后向传送",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "将目标向后传送。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_BACK_SETUP_4"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_forward_4",
+    "name": {
+      "str": "LIXA前向传送",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "将目标向前传送。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_FORWARD_SETUP_4"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_back_5",
+    "name": {
+      "str": "LIXA后向传送",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "将目标向后传送。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_BACK_SETUP_5"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_forward_5",
+    "name": {
+      "str": "LIXA前向传送",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "将目标向前传送。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_FORWARD_SETUP_5"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_back_6",
+    "name": {
+      "str": "LIXA后向传送",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "将目标向后传送。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_BACK_SETUP_6"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_forward_6",
+    "name": {
+      "str": "LIXA前向传送",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "将目标向前传送。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_FORWARD_SETUP_6"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_back_7",
+    "name": {
+      "str": "LIXA后向传送",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "将目标向后传送。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_BACK_SETUP_7"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_forward_7",
+    "name": {
+      "str": "LIXA前向传送",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "将目标向前传送。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_FORWARD_SETUP_7"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_back_8",
+    "name": {
+      "str": "LIXA后向传送",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "将目标向后传送。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_BACK_SETUP_8"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_forward_8",
+    "name": {
+      "str": "LIXA前向传送",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "将目标向前传送。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_FORWARD_SETUP_8"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_back_9",
+    "name": {
+      "str": "LIXA后向传送",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "将目标向后传送。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_BACK_SETUP_9"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_forward_9",
+    "name": {
+      "str": "LIXA前向传送",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "将目标向前传送。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_FORWARD_SETUP_9"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_back_10",
+    "name": {
+      "str": "LIXA后向传送",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "将目标向后传送。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_BACK_SETUP_10"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_forward_10",
+    "name": {
+      "str": "LIXA前向传送",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "将目标向前传送。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_FORWARD_SETUP_10"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_back_11",
+    "name": {
+      "str": "LIXA后向传送",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "将目标向后传送。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_BACK_SETUP_11"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_forward_11",
+    "name": {
+      "str": "LIXA前向传送",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "将目标向前传送。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_FORWARD_SETUP_11"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_back_12",
+    "name": {
+      "str": "LIXA后向传送",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "将目标向后传送。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_BACK_SETUP_12"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_forward_12",
+    "name": {
+      "str": "LIXA前向传送",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "将目标向前传送。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_FORWARD_SETUP_12"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_back_13",
+    "name": {
+      "str": "LIXA后向传送",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "将目标向后传送。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_BACK_SETUP_13"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_forward_13",
+    "name": {
+      "str": "LIXA前向传送",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "将目标向前传送。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_FORWARD_SETUP_13"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_back_14",
+    "name": {
+      "str": "LIXA后向传送",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "将目标向后传送。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_BACK_SETUP_14"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_forward_14",
+    "name": {
+      "str": "LIXA前向传送",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "将目标向前传送。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_FORWARD_SETUP_14"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_back_15",
+    "name": {
+      "str": "LIXA后向传送",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "将目标向后传送。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_BACK_SETUP_15"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_forward_15",
+    "name": {
+      "str": "LIXA前向传送",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "将目标向前传送。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_FORWARD_SETUP_15"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_back_16",
+    "name": {
+      "str": "LIXA后向传送",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "将目标向后传送。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_BACK_SETUP_16"
+  },
+  {
+    "type": "SPELL",
+    "id": "spell_LIXA_forward_16",
+    "name": {
+      "str": "LIXA前向传送",
+      "//~": "NO_I18N"
+    },
+    "description": {
+      "str": "将目标向前传送。",
+      "//~": "NO_I18N"
+    },
+    "valid_targets": [
+      "self",
+      "hostile",
+      "ally"
+    ],
+    "max_level": 1,
+    "flags": [
+      "SILENT",
+      "NO_EXPLOSION_SFX"
+    ],
+    "base_casting_time": 1,
+    "shape": "blast",
+    "min_range": 0,
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_LIXA_FORWARD_SETUP_16"
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_BACK_SETUP_1",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_tp_back"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "run_eocs": "EOC_LIXA_BACK"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_FORWARD_SETUP_1",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_tp_forward"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "run_eocs": "EOC_LIXA_FORWARD"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_BACK_SETUP_2",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_tp_back"
+          },
+          "=",
+          {
+            "const": 2
+          }
+        ]
+      },
+      {
+        "run_eocs": "EOC_LIXA_BACK"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_FORWARD_SETUP_2",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_tp_forward"
+          },
+          "=",
+          {
+            "const": 2
+          }
+        ]
+      },
+      {
+        "run_eocs": "EOC_LIXA_FORWARD"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_BACK_SETUP_3",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_tp_back"
+          },
+          "=",
+          {
+            "const": 3
+          }
+        ]
+      },
+      {
+        "run_eocs": "EOC_LIXA_BACK"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_FORWARD_SETUP_3",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_tp_forward"
+          },
+          "=",
+          {
+            "const": 3
+          }
+        ]
+      },
+      {
+        "run_eocs": "EOC_LIXA_FORWARD"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_BACK_SETUP_4",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_tp_back"
+          },
+          "=",
+          {
+            "const": 4
+          }
+        ]
+      },
+      {
+        "run_eocs": "EOC_LIXA_BACK"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_FORWARD_SETUP_4",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_tp_forward"
+          },
+          "=",
+          {
+            "const": 4
+          }
+        ]
+      },
+      {
+        "run_eocs": "EOC_LIXA_FORWARD"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_BACK_SETUP_5",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_tp_back"
+          },
+          "=",
+          {
+            "const": 5
+          }
+        ]
+      },
+      {
+        "run_eocs": "EOC_LIXA_BACK"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_FORWARD_SETUP_5",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_tp_forward"
+          },
+          "=",
+          {
+            "const": 5
+          }
+        ]
+      },
+      {
+        "run_eocs": "EOC_LIXA_FORWARD"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_BACK_SETUP_6",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_tp_back"
+          },
+          "=",
+          {
+            "const": 6
+          }
+        ]
+      },
+      {
+        "run_eocs": "EOC_LIXA_BACK"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_FORWARD_SETUP_6",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_tp_forward"
+          },
+          "=",
+          {
+            "const": 6
+          }
+        ]
+      },
+      {
+        "run_eocs": "EOC_LIXA_FORWARD"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_BACK_SETUP_7",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_tp_back"
+          },
+          "=",
+          {
+            "const": 7
+          }
+        ]
+      },
+      {
+        "run_eocs": "EOC_LIXA_BACK"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_FORWARD_SETUP_7",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_tp_forward"
+          },
+          "=",
+          {
+            "const": 7
+          }
+        ]
+      },
+      {
+        "run_eocs": "EOC_LIXA_FORWARD"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_BACK_SETUP_8",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_tp_back"
+          },
+          "=",
+          {
+            "const": 8
+          }
+        ]
+      },
+      {
+        "run_eocs": "EOC_LIXA_BACK"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_FORWARD_SETUP_8",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_tp_forward"
+          },
+          "=",
+          {
+            "const": 8
+          }
+        ]
+      },
+      {
+        "run_eocs": "EOC_LIXA_FORWARD"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_BACK_SETUP_9",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_tp_back"
+          },
+          "=",
+          {
+            "const": 9
+          }
+        ]
+      },
+      {
+        "run_eocs": "EOC_LIXA_BACK"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_FORWARD_SETUP_9",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_tp_forward"
+          },
+          "=",
+          {
+            "const": 9
+          }
+        ]
+      },
+      {
+        "run_eocs": "EOC_LIXA_FORWARD"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_BACK_SETUP_10",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_tp_back"
+          },
+          "=",
+          {
+            "const": 10
+          }
+        ]
+      },
+      {
+        "run_eocs": "EOC_LIXA_BACK"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_FORWARD_SETUP_10",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_tp_forward"
+          },
+          "=",
+          {
+            "const": 10
+          }
+        ]
+      },
+      {
+        "run_eocs": "EOC_LIXA_FORWARD"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_BACK_SETUP_11",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_tp_back"
+          },
+          "=",
+          {
+            "const": 11
+          }
+        ]
+      },
+      {
+        "run_eocs": "EOC_LIXA_BACK"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_FORWARD_SETUP_11",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_tp_forward"
+          },
+          "=",
+          {
+            "const": 11
+          }
+        ]
+      },
+      {
+        "run_eocs": "EOC_LIXA_FORWARD"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_BACK_SETUP_12",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_tp_back"
+          },
+          "=",
+          {
+            "const": 12
+          }
+        ]
+      },
+      {
+        "run_eocs": "EOC_LIXA_BACK"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_FORWARD_SETUP_12",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_tp_forward"
+          },
+          "=",
+          {
+            "const": 12
+          }
+        ]
+      },
+      {
+        "run_eocs": "EOC_LIXA_FORWARD"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_BACK_SETUP_13",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_tp_back"
+          },
+          "=",
+          {
+            "const": 13
+          }
+        ]
+      },
+      {
+        "run_eocs": "EOC_LIXA_BACK"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_FORWARD_SETUP_13",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_tp_forward"
+          },
+          "=",
+          {
+            "const": 13
+          }
+        ]
+      },
+      {
+        "run_eocs": "EOC_LIXA_FORWARD"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_BACK_SETUP_14",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_tp_back"
+          },
+          "=",
+          {
+            "const": 14
+          }
+        ]
+      },
+      {
+        "run_eocs": "EOC_LIXA_BACK"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_FORWARD_SETUP_14",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_tp_forward"
+          },
+          "=",
+          {
+            "const": 14
+          }
+        ]
+      },
+      {
+        "run_eocs": "EOC_LIXA_FORWARD"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_BACK_SETUP_15",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_tp_back"
+          },
+          "=",
+          {
+            "const": 15
+          }
+        ]
+      },
+      {
+        "run_eocs": "EOC_LIXA_BACK"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_FORWARD_SETUP_15",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_tp_forward"
+          },
+          "=",
+          {
+            "const": 15
+          }
+        ]
+      },
+      {
+        "run_eocs": "EOC_LIXA_FORWARD"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_BACK_SETUP_16",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_tp_back"
+          },
+          "=",
+          {
+            "const": 16
+          }
+        ]
+      },
+      {
+        "run_eocs": "EOC_LIXA_BACK"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_FORWARD_SETUP_16",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_tp_forward"
+          },
+          "=",
+          {
+            "const": 16
+          }
+        ]
+      },
+      {
+        "run_eocs": "EOC_LIXA_FORWARD"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_BACK",
+    "effect": [
+      {
+        "switch": {
+          "u_val": "var",
+          "var_name": "LIXA_tp_back"
+        },
+        "cases": [
+          {
+            "case": 1,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_back_tp_1"
+              },
+              "force": true,
+              "success_message": "你走了很久。"
+            }
+          },
+          {
+            "case": 2,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_back_tp_2"
+              },
+              "force": true,
+              "success_message": "你走了很久。"
+            }
+          },
+          {
+            "case": 3,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_back_tp_3"
+              },
+              "force": true,
+              "success_message": "你走了很久。"
+            }
+          },
+          {
+            "case": 4,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_back_tp_4"
+              },
+              "force": true,
+              "success_message": "你走了很久。"
+            }
+          },
+          {
+            "case": 5,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_back_tp_5"
+              },
+              "force": true,
+              "success_message": "你走了很久。"
+            }
+          },
+          {
+            "case": 6,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_back_tp_6"
+              },
+              "force": true,
+              "success_message": "你走了很久。"
+            }
+          },
+          {
+            "case": 7,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_back_tp_7"
+              },
+              "force": true,
+              "success_message": "你走了很久。"
+            }
+          },
+          {
+            "case": 8,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_back_tp_8"
+              },
+              "force": true,
+              "success_message": "你走了很久。"
+            }
+          },
+          {
+            "case": 9,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_back_tp_9"
+              },
+              "force": true,
+              "success_message": "你走了很久。"
+            }
+          },
+          {
+            "case": 10,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_back_tp_10"
+              },
+              "force": true,
+              "success_message": "你走了很久。"
+            }
+          },
+          {
+            "case": 11,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_back_tp_11"
+              },
+              "force": true,
+              "success_message": "你走了很久。"
+            }
+          },
+          {
+            "case": 12,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_back_tp_12"
+              },
+              "force": true,
+              "success_message": "你走了很久。"
+            }
+          },
+          {
+            "case": 13,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_back_tp_13"
+              },
+              "force": true,
+              "success_message": "你走了很久。"
+            }
+          },
+          {
+            "case": 14,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_back_tp_14"
+              },
+              "force": true,
+              "success_message": "你走了很久。"
+            }
+          },
+          {
+            "case": 15,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_back_tp_15"
+              },
+              "force": true,
+              "success_message": "你走了很久。"
+            }
+          },
+          {
+            "case": 16,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_back_tp_16"
+              },
+              "force": true,
+              "success_message": "你走了很久。"
+            }
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          {
+            "id": "EOC_LIXA_back_check",
+            "condition": {
+              "compare_int": [
+                {
+                  "u_val": "var",
+                  "var_name": "LIXA_hallway_direction"
+                },
+                "==",
+                {
+                  "const": 1
+                }
+              ]
+            },
+            "effect": [
+              {
+                "run_eocs": "EOC_LIXA_UNFOLD_SHIFT"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_hallway_direction"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_FORWARD",
+    "effect": [
+      {
+        "switch": {
+          "u_val": "var",
+          "var_name": "LIXA_tp_forward"
+        },
+        "cases": [
+          {
+            "case": 1,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_forward_tp_1"
+              },
+              "force": true,
+              "success_message": "你走了很久。"
+            }
+          },
+          {
+            "case": 2,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_forward_tp_2"
+              },
+              "force": true,
+              "success_message": "你走了很久。"
+            }
+          },
+          {
+            "case": 3,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_forward_tp_3"
+              },
+              "force": true,
+              "success_message": "你走了很久。"
+            }
+          },
+          {
+            "case": 4,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_forward_tp_4"
+              },
+              "force": true,
+              "success_message": "你走了很久。"
+            }
+          },
+          {
+            "case": 5,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_forward_tp_5"
+              },
+              "force": true,
+              "success_message": "你走了很久。"
+            }
+          },
+          {
+            "case": 6,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_forward_tp_6"
+              },
+              "force": true,
+              "success_message": "你走了很久。"
+            }
+          },
+          {
+            "case": 7,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_forward_tp_7"
+              },
+              "force": true,
+              "success_message": "你走了很久。"
+            }
+          },
+          {
+            "case": 8,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_forward_tp_8"
+              },
+              "force": true,
+              "success_message": "你走了很久。"
+            }
+          },
+          {
+            "case": 9,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_forward_tp_9"
+              },
+              "force": true,
+              "success_message": "你走了很久。"
+            }
+          },
+          {
+            "case": 10,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_forward_tp_10"
+              },
+              "force": true,
+              "success_message": "你走了很久。"
+            }
+          },
+          {
+            "case": 11,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_forward_tp_11"
+              },
+              "force": true,
+              "success_message": "你走了很久。"
+            }
+          },
+          {
+            "case": 12,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_forward_tp_12"
+              },
+              "force": true,
+              "success_message": "你走了很久。"
+            }
+          },
+          {
+            "case": 13,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_forward_tp_13"
+              },
+              "force": true,
+              "success_message": "你走了很久。"
+            }
+          },
+          {
+            "case": 14,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_forward_tp_14"
+              },
+              "force": true,
+              "success_message": "你走了很久。"
+            }
+          },
+          {
+            "case": 15,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_forward_tp_15"
+              },
+              "force": true,
+              "success_message": "你走了很久。"
+            }
+          },
+          {
+            "case": 16,
+            "effect": {
+              "u_teleport": {
+                "global_val": "LIXA_forward_tp_16"
+              },
+              "force": true,
+              "success_message": "你走了很久。"
+            }
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          {
+            "id": "EOC_LIXA_forward_check",
+            "condition": {
+              "compare_int": [
+                {
+                  "u_val": "var",
+                  "var_name": "LIXA_hallway_direction"
+                },
+                "==",
+                {
+                  "const": 2
+                }
+              ]
+            },
+            "effect": [
+              {
+                "run_eocs": "EOC_LIXA_UNFOLD_SHIFT"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_hallway_direction"
+          },
+          "=",
+          {
+            "const": 2
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_unfold_spawn_goodbye_cards",
+    "condition": {
+      "compare_int": [
+        {
+          "u_val": "var",
+          "var_name": "LIXA_entry"
+        },
+        "!=",
+        {
+          "const": 0
+        }
+      ]
+    },
+    "effect": [
+      {
+        "mapgen_update": "LIXA_goodbye_cards",
+        "target_var": {
+          "global_val": "LIXA_chamber_3"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_unfold_level"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_tp_forward"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_tp_back"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_entry"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_unfold_return",
+    "condition": {
+      "and": [
+        {
+          "u_has_effect": "LIXA_unfolded_eff"
+        },
+        {
+          "compare_int": [
+            {
+              "u_val": "var",
+              "var_name": "LIXA_breeze_return_guard"
+            },
+            "==",
+            {
+              "const": 2
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_breeze_return_guard"
+          },
+          "=",
+          {
+            "const": 3
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_unfold_level"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_hallway_direction"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "alter_timed_events": "LIXA_escape_key"
+      },
+      {
+        "u_lose_effect": "LIXA_unfolded_eff"
+      },
+      {
+        "u_teleport": {
+          "global_val": "LIXA_return_tp"
+        },
+        "force": true
+      },
+      {
+        "time_in_future": "1 second",
+        "queue_eocs": "EOC_LIXA_unfold_spawn_goodbye_cards"
+      },
+      {
+        "time_in_future": "2 seconds",
+        "queue_eocs": "EOC_LIXA_power_down_after_return"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_UNFOLD_SHIFT",
+    "effect": [
+      {
+        "switch": {
+          "u_val": "var",
+          "var_name": "LIXA_unfold_level"
+        },
+        "cases": [
+          {
+            "case": 0,
+            "effect": {
+              "time_in_future": "2 seconds",
+              "queue_eocs": "EOC_LIXA_unfold_shift_0"
+            }
+          },
+          {
+            "case": 1,
+            "effect": {
+              "run_eocs": [
+                {
+                  "id": "EOC_LIXA_unfold_shift_1_setup",
+                  "effect": [
+                    {
+                      "mapgen_update": "cleanup_LIXA",
+                      "target_var": {
+                        "global_val": "LIXA_unfold_A"
+                      }
+                    },
+                    {
+                      "mapgen_update": "cleanup_LIXA",
+                      "target_var": {
+                        "global_val": "LIXA_unfold_B"
+                      }
+                    },
+                    {
+                      "time_in_future": "2 seconds",
+                      "queue_eocs": "EOC_LIXA_unfold_shift_1"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "case": 2,
+            "effect": {
+              "run_eocs": [
+                {
+                  "id": "EOC_LIXA_unfold_shift_2_setup",
+                  "effect": [
+                    {
+                      "mapgen_update": "cleanup_LIXA",
+                      "target_var": {
+                        "global_val": "LIXA_unfold_A"
+                      }
+                    },
+                    {
+                      "mapgen_update": "cleanup_LIXA",
+                      "target_var": {
+                        "global_val": "LIXA_unfold_B"
+                      }
+                    },
+                    {
+                      "time_in_future": "2 seconds",
+                      "queue_eocs": "EOC_LIXA_unfold_shift_2"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "case": 3,
+            "effect": {
+              "run_eocs": [
+                {
+                  "id": "EOC_LIXA_unfold_shift_3_setup",
+                  "effect": [
+                    {
+                      "mapgen_update": "cleanup_LIXA",
+                      "target_var": {
+                        "global_val": "LIXA_unfold_A"
+                      }
+                    },
+                    {
+                      "mapgen_update": "cleanup_LIXA",
+                      "target_var": {
+                        "global_val": "LIXA_unfold_B"
+                      }
+                    },
+                    {
+                      "time_in_future": "2 seconds",
+                      "queue_eocs": "EOC_LIXA_unfold_shift_3"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "case": 4,
+            "effect": {
+              "run_eocs": [
+                {
+                  "id": "EOC_LIXA_unfold_shift_4_setup",
+                  "effect": [
+                    {
+                      "mapgen_update": "cleanup_LIXA",
+                      "target_var": {
+                        "global_val": "LIXA_unfold_A"
+                      }
+                    },
+                    {
+                      "mapgen_update": "cleanup_LIXA",
+                      "target_var": {
+                        "global_val": "LIXA_unfold_B"
+                      }
+                    },
+                    {
+                      "time_in_future": "2 seconds",
+                      "queue_eocs": "EOC_LIXA_unfold_shift_4"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "case": 5,
+            "effect": {
+              "run_eocs": [
+                {
+                  "id": "EOC_LIXA_unfold_shift_5_setup",
+                  "effect": [
+                    {
+                      "mapgen_update": "cleanup_LIXA",
+                      "target_var": {
+                        "global_val": "LIXA_unfold_A"
+                      }
+                    },
+                    {
+                      "mapgen_update": "cleanup_LIXA",
+                      "target_var": {
+                        "global_val": "LIXA_unfold_B"
+                      }
+                    },
+                    {
+                      "time_in_future": "2 seconds",
+                      "queue_eocs": "EOC_LIXA_unfold_shift_5"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "case": 6,
+            "effect": {
+              "run_eocs": [
+                {
+                  "id": "EOC_LIXA_unfold_shift_6_setup",
+                  "effect": [
+                    {
+                      "mapgen_update": "cleanup_LIXA",
+                      "target_var": {
+                        "global_val": "LIXA_unfold_A"
+                      }
+                    },
+                    {
+                      "mapgen_update": "cleanup_LIXA",
+                      "target_var": {
+                        "global_val": "LIXA_unfold_B"
+                      }
+                    },
+                    {
+                      "time_in_future": "2 seconds",
+                      "queue_eocs": "EOC_LIXA_unfold_shift_6"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_unfold_shift_0",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_unfold_level"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_unfold_shift_1",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_unfold_level"
+          },
+          "=",
+          {
+            "const": 2
+          }
+        ]
+      },
+      {
+        "mapgen_update": "spawn_LIXA_1a",
+        "target_var": {
+          "global_val": "LIXA_unfold_A"
+        }
+      },
+      {
+        "mapgen_update": "spawn_LIXA_1b",
+        "target_var": {
+          "global_val": "LIXA_unfold_B"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_unfold_shift_2",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_unfold_level"
+          },
+          "=",
+          {
+            "const": 3
+          }
+        ]
+      },
+      {
+        "mapgen_update": "spawn_LIXA_2a",
+        "target_var": {
+          "global_val": "LIXA_unfold_A"
+        }
+      },
+      {
+        "mapgen_update": "spawn_LIXA_2b",
+        "target_var": {
+          "global_val": "LIXA_unfold_B"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_unfold_shift_3",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_unfold_level"
+          },
+          "=",
+          {
+            "const": 4
+          }
+        ]
+      },
+      {
+        "mapgen_update": "spawn_LIXA_3a",
+        "target_var": {
+          "global_val": "LIXA_unfold_A"
+        }
+      },
+      {
+        "mapgen_update": "spawn_LIXA_3b",
+        "target_var": {
+          "global_val": "LIXA_unfold_B"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_unfold_shift_4",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_unfold_level"
+          },
+          "=",
+          {
+            "const": 5
+          }
+        ]
+      },
+      {
+        "mapgen_update": "spawn_LIXA_4a",
+        "target_var": {
+          "global_val": "LIXA_unfold_A"
+        }
+      },
+      {
+        "mapgen_update": "spawn_LIXA_4b",
+        "target_var": {
+          "global_val": "LIXA_unfold_B"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_unfold_shift_5",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_unfold_level"
+          },
+          "=",
+          {
+            "const": 6
+          }
+        ]
+      },
+      {
+        "mapgen_update": "spawn_LIXA_5a",
+        "target_var": {
+          "global_val": "LIXA_unfold_A"
+        }
+      },
+      {
+        "mapgen_update": "spawn_LIXA_5b",
+        "target_var": {
+          "global_val": "LIXA_unfold_B"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_unfold_shift_6",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_unfold_level"
+          },
+          "=",
+          {
+            "const": 6
+          }
+        ]
+      },
+      {
+        "mapgen_update": "spawn_LIXA_6a",
+        "target_var": {
+          "global_val": "LIXA_unfold_A"
+        }
+      },
+      {
+        "mapgen_update": "spawn_LIXA_6b",
+        "target_var": {
+          "global_val": "LIXA_unfold_B"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "unfolded_death",
+    "eoc_type": "AVATAR_DEATH",
+    "condition": {
+      "u_has_effect": "LIXA_unfolded_eff"
+    },
+    "effect": {
+      "u_message": "你没有死。死亡是发生在时间平面上的事情，而现在你已成为此地的一部分，再也看不到那个平面了。你很快就会开始希望自己当时已经死去。",
+      "snippet": true,
+      "type": "bad"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_mark_final_boss_dead",
+    "condition": {
+      "and": [
+        {
+          "u_has_effect": "LIXA_unfolded_eff"
+        },
+        {
+          "compare_int": [
+            {
+              "u_val": "var",
+              "var_name": "LIXA_unfold_level"
+            },
+            "==",
+            {
+              "const": 6
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "u_val": "var",
+              "var_name": "LIXA_breeze_return_guard"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_breeze_return_guard"
+          },
+          "=",
+          {
+            "const": 2
+          }
+        ]
+      },
+      {
+        "time_in_future": "2 seconds",
+        "queue_eocs": "EOC_LIXA_unfold_return"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_power_down_after_return",
+    "condition": {
+      "compare_int": [
+        {
+          "u_val": "var",
+          "var_name": "LIXA_breeze_return_guard"
+        },
+        "==",
+        {
+          "const": 3
+        }
+      ]
+    },
+    "effect": [
+      {
+        "mapgen_update": "turn_off_LIXA",
+        "target_var": {
+          "global_val": "LIXA_chamber_1"
+        }
+      },
+      {
+        "mapgen_update": "turn_off_LIXA",
+        "target_var": {
+          "global_val": "LIXA_chamber_2"
+        }
+      },
+      {
+        "mapgen_update": "turn_off_LIXA",
+        "target_var": {
+          "global_val": "LIXA_chamber_3"
+        }
+      },
+      {
+        "mapgen_update": "turn_off_LIXA",
+        "target_var": {
+          "global_val": "LIXA_workfloor_NW"
+        }
+      },
+      {
+        "mapgen_update": "turn_off_LIXA",
+        "target_var": {
+          "global_val": "LIXA_workfloor_NE"
+        }
+      },
+      {
+        "mapgen_update": "turn_off_LIXA",
+        "target_var": {
+          "global_val": "LIXA_workfloor_SW"
+        }
+      },
+      {
+        "mapgen_update": "turn_off_LIXA",
+        "target_var": {
+          "global_val": "LIXA_workfloor_SE"
+        }
+      },
+      {
+        "mapgen_update": "turn_off_LIXA",
+        "target_var": {
+          "global_val": "LIXA_surface_NW"
+        }
+      },
+      {
+        "mapgen_update": "turn_off_LIXA",
+        "target_var": {
+          "global_val": "LIXA_surface_NE"
+        }
+      },
+      {
+        "mapgen_update": "turn_off_LIXA",
+        "target_var": {
+          "global_val": "LIXA_surface_SW"
+        }
+      },
+      {
+        "mapgen_update": "turn_off_LIXA",
+        "target_var": {
+          "global_val": "LIXA_surface_SE"
+        }
+      },
+      {
+        "u_message": "一声轻响，如同空旷音乐厅里弹开的香槟软木塞。世界恢复了原样，LIXA设备在断电后仍安静地嗡鸣着。",
+        "popup": true
+      },
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_breeze_return_guard"
+          },
+          "=",
+          {
+            "const": 4
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_stuck_after_return_watch",
+    "recurrence": 1,
+    "condition": {
+      "and": [
+        {
+          "or": [
+            {
+              "u_at_om_location": "LIXA_device_unfolded_A_north"
+            },
+            {
+              "u_at_om_location": "LIXA_device_unfolded_A_east"
+            },
+            {
+              "u_at_om_location": "LIXA_device_unfolded_A_south"
+            },
+            {
+              "u_at_om_location": "LIXA_device_unfolded_A_west"
+            },
+            {
+              "u_at_om_location": "LIXA_device_unfolded_B_north"
+            },
+            {
+              "u_at_om_location": "LIXA_device_unfolded_B_east"
+            },
+            {
+              "u_at_om_location": "LIXA_device_unfolded_B_south"
+            },
+            {
+              "u_at_om_location": "LIXA_device_unfolded_B_west"
+            },
+            {
+              "u_at_om_location": "LIXA_device_unfolded_noaccess_north"
+            },
+            {
+              "u_at_om_location": "LIXA_device_unfolded_noaccess_east"
+            },
+            {
+              "u_at_om_location": "LIXA_device_unfolded_noaccess_south"
+            },
+            {
+              "u_at_om_location": "LIXA_device_unfolded_noaccess_west"
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "u_val": "var",
+              "var_name": "LIXA_breeze_return_guard"
+            },
+            ">=",
+            {
+              "const": 2
+            }
+          ]
+        },
+        {
+          "not": {
+            "u_has_effect": "LIXA_unfolded_eff"
+          }
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_breeze_return_guard"
+          },
+          "=",
+          {
+            "const": 5
+          }
+        ]
+      },
+      {
+        "time_in_future": "1 second",
+        "queue_eocs": "EOC_LIXA_stuck_after_return_execute"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_stuck_after_return_execute",
+    "condition": {
+      "compare_int": [
+        {
+          "u_val": "var",
+          "var_name": "LIXA_breeze_return_guard"
+        },
+        "==",
+        {
+          "const": 5
+        }
+      ]
+    },
+    "effect": [
+      {
+        "u_teleport": {
+          "global_val": "LIXA_return_tp"
+        },
+        "force": true
+      },
+      {
+        "u_message": "残余的空间折叠终于闭合，将你送回LIXA实验舱。",
+        "type": "good",
+        "popup": true
+      },
+      {
+        "arithmetic": [
+          {
+            "u_val": "var",
+            "var_name": "LIXA_breeze_return_guard"
+          },
+          "=",
+          {
+            "const": 4
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_LIXA_restore_shutdown_consoles_compat",
+    "eoc_type": "OM_MOVE",
+    "condition": {
+      "and": [
+        {
+          "or": [
+            {
+              "u_at_om_location": "LIXA_workfloor_1a"
+            },
+            {
+              "u_at_om_location": "LIXA_workfloor_1b"
+            },
+            {
+              "u_at_om_location": "LIXA_workfloor_2a"
+            },
+            {
+              "u_at_om_location": "LIXA_workfloor_2b"
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "u_val": "var",
+              "var_name": "LIXA_breeze_return_guard"
+            },
+            "==",
+            {
+              "const": 4
+            }
+          ]
+        }
+      ]
+    },
+    "effect": {
+      "mapgen_update": "restore_LIXA_emergency_consoles"
+    }
+  }
+]

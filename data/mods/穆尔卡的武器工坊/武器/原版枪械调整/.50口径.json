@@ -1,0 +1,53 @@
+[
+  {
+    "id": "m2browning",
+    "copy-from": "m2browning",
+    "looks_like": "ar15",
+    "type": "GUN",
+    "name": {
+      "str_sp": "M2HB 勃朗宁重机枪"
+    },
+    "description": "勃朗宁M2重机枪在1920年代定型，M2HB重枪管型成为最长寿的美国制式武器之一。它发射.50 BMG弹，既能压制人员与轻装甲，也能攻击车辆、飞机和器材。自第二次世界大战起，它持续出现在朝鲜、越南、海湾战争、阿富汗和伊拉克，通常安装于三脚架、车辆或炮塔。",
+    "weight": "38000 g",
+    "volume": "9020 ml",
+    "longest_side": "165 cm",
+    "price": 1800000,
+    "price_postapoc": 10000,
+    "to_hit": -1,
+    "material": [
+      "steel"
+    ],
+    "ammo": [
+      "50"
+    ],
+    "range": 110,
+    "dispersion": 250,
+    "durability": 8,
+    "min_cycle_recoil": 23625,
+    "reload": 400,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        2
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "belt50"
+        ]
+      }
+    ],
+    "bashing": 12
+  }
+]

@@ -1,0 +1,459 @@
+[
+  {
+    "id": "TDI",
+    "copy-from": "TDI",
+    "looks_like": "hk_mp5",
+    "type": "GUN",
+    "name": {
+      "str": "格洛克冲锋枪"
+    },
+    "description": "这其实是KRISS Vector .45冲锋枪，只因能使用格洛克21系列弹匣而被俗称为格洛克冲锋枪。Vector的Super V机构让枪机向下运动，试图抑制.45 ACP全自动射击时的枪口上跳。它主要面向民用和少量执法市场，外形醒目，却没有大规模战争服役经历。",
+    "reload_noise_volume": 10,
+    "//": [
+      "Yes, I know it's not really a glock smg.",
+      "It takes glock magazines, and it's own special one that I am also renaming to a glock magazine",
+      "so, I'm calling it a glock smg."
+    ],
+    "variant_type": "gun",
+    "variants": [
+      {
+        "id": "TDI",
+        "name": {
+          "str": "维克托 .45 冲锋枪"
+        },
+        "description": "维克托 SDP 冲锋枪是一把延迟反冲式冲锋枪，有着独特的同轴设计，使射手的手和肩与枪膛轴线平齐，有助于减少连发射击时的枪口上跳后坐力。这把冲锋枪使用 .45 ACP 弹。",
+        "weight": 1
+      }
+    ],
+    "weight": "3100 g",
+    "volume": "4248 ml",
+    "longest_side": "611 mm",
+    "price": 310000,
+    "price_postapoc": 3500,
+    "to_hit": -2,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "45"
+    ],
+    "skill": "smg",
+    "dispersion": 280,
+    "durability": 7,
+    "min_cycle_recoil": 540,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "BURST",
+        "2 rd.",
+        2
+      ],
+      [
+        "AUTO",
+        "auto",
+        5
+      ]
+    ],
+    "faults": [
+      "fault_gun_blackpowder",
+      "fault_gun_dirt",
+      "fault_gun_chamber_spent"
+    ],
+    "default_mods": [
+      "folding_stock"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "tdi_mag",
+          "glock_21mag",
+          "glock_21mag26"
+        ]
+      }
+    ],
+    "bashing": 9
+  },
+  {
+    "id": "hk_ump45",
+    "copy-from": "hk_ump45",
+    "looks_like": "hk_mp5",
+    "type": "GUN",
+    "name": {
+      "str": "UMP45 冲锋枪"
+    },
+    "description": "UMP是黑克勒-科赫在1990年代为军警市场设计的轻型冲锋枪，目标是以更简单、便宜的结构补充而非完全取代MP5。UMP45采用自由枪机原理和聚合物机匣，发射.45 ACP弹，折叠枪托便于近距离行动。它威力充足、维护简单，但射击平顺性通常不及滚柱延迟的MP5。",
+    "reload_noise_volume": 10,
+    "variant_type": "gun",
+    "variants": [
+      {
+        "id": "hk_ump45",
+        "name": {
+          "str": "黑克勒-科赫 UMP45 冲锋枪"
+        },
+        "description": "作为经典MP5的升级版本，UMP45保留了原先高精度和低后坐力的设计，并换上了威力更高的.45口径子弹。",
+        "weight": 1
+      }
+    ],
+    "ascii_picture": "hk_ump",
+    "weight": "2300 g",
+    "volume": "4451 ml",
+    "longest_side": "452 mm",
+    "price": 290000,
+    "price_postapoc": 3000,
+    "to_hit": -2,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "45"
+    ],
+    "skill": "smg",
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 1
+    },
+    "dispersion": 240,
+    "durability": 8,
+    "min_cycle_recoil": 540,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        2
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        3
+      ],
+      [
+        "barrel",
+        1
+      ],
+      [
+        "bore",
+        1
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "faults": [
+      "fault_gun_blackpowder",
+      "fault_gun_dirt",
+      "fault_gun_chamber_spent"
+    ],
+    "default_mods": [
+      "folding_stock"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "ump45mag",
+          "ump45_makeshiftmag"
+        ]
+      }
+    ],
+    "bashing": 11
+  },
+  {
+    "id": "mac_10",
+    "copy-from": "mac_10",
+    "looks_like": "hk_mp5",
+    "type": "GUN",
+    "name": {
+      "str": "MAC-10 冲锋枪"
+    },
+    "description": "MAC-10由戈登·英格拉姆在1960年代设计，是一支结构极为紧凑的开放枪机冲锋枪。它可配大型消音器，曾向军警和特种用途市场推销，却因射速高、枪口上跳明显而未获大规模制式采用。其方正外形后来频繁出现在电影、犯罪新闻和各类廉价仿制品中。",
+    "reload_noise_volume": 10,
+    "variant_type": "gun",
+    "variants": [
+      {
+        "id": "mac_10",
+        "name": {
+          "str": "MAC-10 冲锋枪"
+        },
+        "description": "MAC-10冲锋枪最初是为军队而设计的，然而经过许多年的更新换代，这款有\"美国最便宜的冲锋枪\"之称的MAC-10已经彻底沦为那些囊中羞涩的犯罪分子心目中的首选。",
+        "weight": 1
+      }
+    ],
+    "weight": "2810 g",
+    "volume": "1195 ml",
+    "longest_side": "298 mm",
+    "price": 180000,
+    "price_postapoc": 2500,
+    "to_hit": -2,
+    "material": [
+      "steel"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "45"
+    ],
+    "skill": "smg",
+    "dispersion": 520,
+    "durability": 7,
+    "min_cycle_recoil": 540,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        5
+      ]
+    ],
+    "built_in_mods": [
+      "wire_stock"
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        3
+      ],
+      [
+        "barrel",
+        1
+      ],
+      [
+        "bore",
+        1
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "faults": [
+      "fault_gun_blackpowder",
+      "fault_gun_dirt",
+      "fault_gun_chamber_spent"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "mac10mag",
+          "smg_45_mag"
+        ]
+      }
+    ],
+    "bashing": 8
+  },
+  {
+    "id": "tommygun",
+    "copy-from": "tommygun",
+    "looks_like": "hk_mp5",
+    "type": "GUN",
+    "name": {
+      "str": "汤普森冲锋枪"
+    },
+    "description": "汤普森冲锋枪在第一次世界大战末期完成设计，随后因禁酒时期的黑帮、警察与新闻照片而声名大噪。第二次世界大战中，美军、英联邦和多国部队大量使用M1928、M1与M1A1型。它发射.45 ACP弹，近战火力强且操控稳重，但结构昂贵、整枪沉重，最终被更廉价的M3取代。",
+    "reload_noise_volume": 10,
+    "variant_type": "gun",
+    "variants": [
+      {
+        "id": "tommygun",
+        "name": {
+          "str": "汤普森 M1928A1 冲锋枪"
+        },
+        "description": "一把一战末期美国制造的冲锋枪，由于研发太晚，在一战时期没有什么作为。然而，汤普逊冲锋枪在二十世纪20年代在美国黑帮里面很是流行，因此声名狼藉，得名汤米冲锋枪（Tommy Gun）、芝加哥打字机（Chicago Typewriter）、芝加哥小提琴（Chicago Violin）等等。并且该枪在二战时期，在比其更廉价的替代品被研发之前，也被美军装备使用过。",
+        "weight": 1
+      }
+    ],
+    "weight": "4899 g",
+    "volume": "1230 ml",
+    "longest_side": "832 mm",
+    "price": 450000,
+    "price_postapoc": 2750,
+    "to_hit": -2,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "symbol": "(",
+    "color": "brown",
+    "ammo": [
+      "45"
+    ],
+    "skill": "smg",
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 2
+    },
+    "dispersion": 360,
+    "durability": 7,
+    "min_cycle_recoil": 540,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        4
+      ]
+    ],
+    "barrel_volume": "500 ml",
+    "valid_mod_locations": [
+      [
+        "accessories",
+        3
+      ],
+      [
+        "barrel",
+        1
+      ],
+      [
+        "bore",
+        1
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "faults": [
+      "fault_gun_blackpowder",
+      "fault_gun_dirt",
+      "fault_gun_chamber_spent"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "thompson_mag",
+          "thompson_bigmag",
+          "thompson_drum",
+          "thompson_makeshiftmag"
+        ]
+      }
+    ],
+    "bashing": 10
+  }
+]

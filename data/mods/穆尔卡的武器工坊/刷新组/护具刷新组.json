@@ -1,0 +1,402 @@
+[
+  {
+    "id": "power_armor_sets",
+    "type": "item_group",
+    "//": "该组用于成套动力装甲，以及终局奖励地点中的战斗护甲。",
+    "copy-from": "power_armor_sets",
+    "extend": {
+      "entries": [
+        {
+          "distribution": [
+            {
+              "collection": [
+                {
+                  "item": "power_armor_frame"
+                },
+                {
+                  "item": "power_armor_generator"
+                },
+                {
+                  "item": "power_armor_basic"
+                },
+                {
+                  "item": "power_armor_helmet_basic"
+                }
+              ],
+              "prob": 30
+            },
+            {
+              "collection": [
+                {
+                  "item": "power_armor_frame"
+                },
+                {
+                  "item": "power_armor_generator"
+                },
+                {
+                  "item": "power_armor_heavy"
+                },
+                {
+                  "item": "power_armor_helmet_heavy"
+                }
+              ],
+              "prob": 10
+            },
+            {
+              "collection": [
+                {
+                  "item": "power_armor_frame"
+                },
+                {
+                  "item": "power_armor_generator"
+                },
+                {
+                  "item": "power_armor_helmet_light"
+                },
+                {
+                  "item": "power_armor_light"
+                }
+              ],
+              "prob": 55
+            },
+            {
+              "collection": [
+                {
+                  "item": "Wolftegaon_helmet"
+                },
+                {
+                  "item": "Wolftegaon"
+                },
+                {
+                  "item": "ecb1"
+                }
+              ],
+              "prob": 5
+            },
+            {
+              "collection": [
+                {
+                  "item": "rm13_armor"
+                },
+                {
+                  "item": "heavy_atomic_battery_cell",
+                  "charges": 10000
+                }
+              ],
+              "prob": 5
+            }
+          ],
+          "prob": 100
+        }
+      ]
+    },
+    "subtype": "collection"
+  },
+  {
+    "type": "item_group",
+    "id": "nanofab_recipes",
+    "copy-from": "nanofab_recipes",
+    "//": "极其稀有的高阶战利品。该列表不会直接刷新，而是用于生成纳米制造机模板中的配方。",
+    "magazine": 100,
+    "extend": {
+      "entries": [
+        {
+          "item": "Wolftegaon_helmet",
+          "prob": 10
+        },
+        {
+          "item": "ecb1",
+          "prob": 10
+        },
+        {
+          "item": "Wolftegaon",
+          "prob": 10
+        },
+        {
+          "item": "cews_27",
+          "prob": 30
+        },
+        {
+          "item": "em_bolt",
+          "prob": 30
+        },
+        {
+          "item": "gelx_2n",
+          "prob": 5
+        },
+        {
+          "item": "gelx_3l",
+          "prob": 3
+        },
+        {
+          "item": "cornerstone_helmet",
+          "prob": 3
+        },
+        {
+          "item": "cornerstone_armor",
+          "prob": 3
+        },
+        {
+          "item": "ecu3_suit",
+          "prob": 5
+        }
+      ]
+    },
+    "subtype": "distribution"
+  },
+  {
+    "id": "SUS_gunstore_gear",
+    "type": "item_group",
+    "copy-from": "SUS_gunstore_gear",
+    "extend": {
+      "items": [
+        [
+          "alytin",
+          0.5
+        ],
+        [
+          "dh_machete",
+          3
+        ],
+        [
+          "knife_ck12",
+          3
+        ],
+        [
+          "sps3",
+          1
+        ],
+        [
+          "maska",
+          0.5
+        ],
+        [
+          "6b13",
+          0.5
+        ],
+        [
+          "6b43",
+          0.5
+        ],
+        [
+          "pilot_helmet",
+          5
+        ],
+        [
+          "6sh117",
+          1
+        ],
+        [
+          "cva_plate",
+          1
+        ],
+        [
+          "cva2_plate",
+          1
+        ],
+        [
+          "stsh",
+          1
+        ],
+        [
+          "speedloader_pouch",
+          50
+        ],
+        [
+          "mlc1",
+          20
+        ],
+        [
+          "mlc2",
+          10
+        ],
+        [
+          "mlv",
+          10
+        ],
+        [
+          "shotbox_belt",
+          3
+        ],
+        [
+          "shotbox2_belt",
+          2
+        ],
+        [
+          "k1_plate",
+          10
+        ],
+        [
+          "k1l_plate",
+          10
+        ],
+        [
+          "tln_plate",
+          1
+        ],
+        [
+          "tln2_plate",
+          1
+        ],
+        [
+          "ch_1",
+          0.5
+        ],
+        [
+          "ch_2",
+          0.5
+        ]
+      ]
+    },
+    "subtype": "distribution"
+  },
+  {
+    "type": "item_group",
+    "id": "swat_gear",
+    "copy-from": "swat_gear",
+    "extend": {
+      "items": [
+        [
+          "avs",
+          35
+        ],
+        [
+          "fast_2",
+          35
+        ],
+        [
+          "fast_2",
+          35
+        ],
+        [
+          "pzarmor_l",
+          35
+        ],
+        [
+          "pzarmor_m",
+          35
+        ],
+        [
+          "pzarmor_h",
+          35
+        ],
+        [
+          "pd_1",
+          5
+        ],
+        [
+          "pdh_2",
+          3
+        ],
+        [
+          "edcu1v",
+          1
+        ],
+        [
+          "ch_1",
+          5
+        ],
+        [
+          "ch_2",
+          3
+        ],
+        [
+          "ammo_satchel_leg",
+          5
+        ],
+        [
+          "ch1_helmet",
+          5
+        ],
+        [
+          "ch2_helmet",
+          3
+        ],
+        [
+          "cu2_suit",
+          4
+        ],
+        [
+          "da30l_vest",
+          4
+        ],
+        [
+          "da32_vest",
+          2
+        ]
+      ]
+    },
+    "subtype": "distribution"
+  },
+  {
+    "type": "item_group",
+    "id": "mil_armor",
+    "copy-from": "mil_armor",
+    "extend": {
+      "items": [
+        [
+          "alytin",
+          4
+        ],
+        [
+          "maska",
+          4
+        ],
+        [
+          "6b13",
+          7
+        ],
+        [
+          "6b43",
+          5
+        ],
+        [
+          "pilot_helmet",
+          15
+        ],
+        [
+          "6sh117",
+          1
+        ],
+        [
+          "stsh",
+          10
+        ],
+        [
+          "emb_belt",
+          10
+        ],
+        [
+          "lmag_pouch",
+          15
+        ],
+        [
+          "helmet_pasgt",
+          12
+        ]
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "civilian_ballistic_inserts",
+    "copy-from": "civilian_ballistic_inserts",
+    "extend": {
+      "items": [
+        [
+          "mlc1",
+          20
+        ],
+        [
+          "mlc2",
+          10
+        ],
+        [
+          "mlv",
+          5
+        ]
+      ]
+    },
+    "subtype": "distribution"
+  }
+]

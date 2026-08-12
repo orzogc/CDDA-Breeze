@@ -1,0 +1,698 @@
+[
+  {
+    "type": "talk_topic",
+    "id": "TALK_ROBOFAC_INTERCOM_SERVICES",
+    "responses": [
+      {
+        "text": "关于武器与装备的制造、维护……",
+        "condition": {
+          "or": [
+            {
+              "and": [
+                {
+                  "u_has_items": {
+                    "item": "kt_yinglong_template",
+                    "count": 1
+                  }
+                },
+                {
+                  "u_has_var": "completed_robofac_intercom_lixa_sm_1",
+                  "type": "dialogue",
+                  "context": "intercom",
+                  "value": "yes"
+                },
+                {
+                  "not": {
+                    "u_has_var": "completed_hub_yinglong",
+                    "type": "dialogue",
+                    "context": "hub_rnd",
+                    "value": "yes"
+                  }
+                }
+              ]
+            },
+            {
+              "u_has_var": "u_current_project",
+              "type": "dialogue",
+              "context": "hub_rnd",
+              "value": "yinglong_hm12"
+            },
+            {
+              "u_has_var": "u_current_project",
+              "type": "dialogue",
+              "context": "hub_rnd",
+              "value": "yinglong_newcore"
+            },
+            {
+              "u_has_var": "completed_hub_yinglong",
+              "type": "dialogue",
+              "context": "hub_rnd",
+              "value": "yes"
+            }
+          ]
+        },
+        "topic": "TALK_HUB_EQUIPMENT_PROJECTS"
+      }
+    ],
+    "//": "在HUB主服务菜单追加统一的武器与装备项目入口。应龙的模板提交、复原进度、验收、评价与补给均收纳到子菜单，以后可继续并列加入寻光之旅等枪械、护甲打印与维修项目。"
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HUB_EQUIPMENT_PROJECTS",
+    "dynamic_line": "“制造与维护项目档案已调出。这里处理需要研究部门、原型车间或专用设备介入的装备；普通交易仍在上一层菜单办理。”",
+    "responses": [
+      {
+        "text": "关于康陶®G-58“应龙”智能冲锋枪……",
+        "condition": {
+          "or": [
+            {
+              "and": [
+                {
+                  "u_has_items": {
+                    "item": "kt_yinglong_template",
+                    "count": 1
+                  }
+                },
+                {
+                  "u_has_var": "completed_robofac_intercom_lixa_sm_1",
+                  "type": "dialogue",
+                  "context": "intercom",
+                  "value": "yes"
+                },
+                {
+                  "not": {
+                    "u_has_var": "completed_hub_yinglong",
+                    "type": "dialogue",
+                    "context": "hub_rnd",
+                    "value": "yes"
+                  }
+                }
+              ]
+            },
+            {
+              "u_has_var": "u_current_project",
+              "type": "dialogue",
+              "context": "hub_rnd",
+              "value": "yinglong_hm12"
+            },
+            {
+              "u_has_var": "u_current_project",
+              "type": "dialogue",
+              "context": "hub_rnd",
+              "value": "yinglong_newcore"
+            },
+            {
+              "u_has_var": "completed_hub_yinglong",
+              "type": "dialogue",
+              "context": "hub_rnd",
+              "value": "yes"
+            }
+          ]
+        },
+        "topic": "TALK_HUB_YINGLONG_MENU"
+      },
+      {
+        "text": "返回其他事务。",
+        "topic": "TALK_ROBOFAC_INTERCOM_SERVICES"
+      },
+      {
+        "text": "结束通讯。",
+        "topic": "TALK_DONE"
+      }
+    ],
+    "//": "未来装备制造、打印、升级与维修项目的统一一级菜单。"
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HUB_YINGLONG_MENU",
+    "dynamic_line": "“康陶®G-58‘应龙’项目档案已调出。模板解析、制造排期、验收记录与技术评价均归入这一项目。常规弹药和供弹具在项目完成后转入HUB交易库存。”",
+    "responses": [
+      {
+        "text": "我在LIXA找到了一份带有康陶标识的制造模板。",
+        "condition": {
+          "and": [
+            {
+              "u_has_items": {
+                "item": "kt_yinglong_template",
+                "count": 1
+              }
+            },
+            {
+              "u_has_var": "completed_robofac_intercom_lixa_sm_1",
+              "type": "dialogue",
+              "context": "intercom",
+              "value": "yes"
+            },
+            {
+              "not": {
+                "u_has_var": "completed_hub_yinglong",
+                "type": "dialogue",
+                "context": "hub_rnd",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "u_has_var": "u_project_ongoing",
+                "type": "dialogue",
+                "context": "hub_rnd",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "topic": "TALK_HUB_YINGLONG_OFFER"
+      },
+      {
+        "text": "我从LIXA带回了一份异常制造模板，但你们的设备似乎还在忙。",
+        "condition": {
+          "and": [
+            {
+              "u_has_items": {
+                "item": "kt_yinglong_template",
+                "count": 1
+              }
+            },
+            {
+              "u_has_var": "completed_robofac_intercom_lixa_sm_1",
+              "type": "dialogue",
+              "context": "intercom",
+              "value": "yes"
+            },
+            {
+              "not": {
+                "u_has_var": "completed_hub_yinglong",
+                "type": "dialogue",
+                "context": "hub_rnd",
+                "value": "yes"
+              }
+            },
+            {
+              "u_has_var": "u_project_ongoing",
+              "type": "dialogue",
+              "context": "hub_rnd",
+              "value": "yes"
+            }
+          ]
+        },
+        "topic": "TALK_HUB_YINGLONG_BUSY"
+      },
+      {
+        "text": "应龙的复原进度怎么样？",
+        "condition": {
+          "and": [
+            {
+              "u_compare_time_since_var": "u_waiting_on_yinglong",
+              "type": "timer",
+              "context": "hub_rnd",
+              "op": "<",
+              "time": "7 d"
+            },
+            {
+              "u_has_var": "u_current_project",
+              "type": "dialogue",
+              "context": "hub_rnd",
+              "value": "yinglong_hm12"
+            }
+          ]
+        },
+        "topic": "TALK_HUB_YINGLONG_ONGOING"
+      },
+      {
+        "text": "七天已经过去了。应龙完成了吗？",
+        "condition": {
+          "and": [
+            {
+              "u_compare_time_since_var": "u_waiting_on_yinglong",
+              "type": "timer",
+              "context": "hub_rnd",
+              "op": ">=",
+              "time": "7 d"
+            },
+            {
+              "u_has_var": "u_current_project",
+              "type": "dialogue",
+              "context": "hub_rnd",
+              "value": "yinglong_hm12"
+            }
+          ]
+        },
+        "topic": "TALK_HUB_YINGLONG_COMPLETE"
+      },
+      {
+        "text": "应龙的复原进度怎么样？",
+        "condition": {
+          "and": [
+            {
+              "u_compare_time_since_var": "u_waiting_on_yinglong",
+              "type": "timer",
+              "context": "hub_rnd",
+              "op": "<",
+              "time": "7 d"
+            },
+            {
+              "u_has_var": "u_current_project",
+              "type": "dialogue",
+              "context": "hub_rnd",
+              "value": "yinglong_newcore"
+            }
+          ]
+        },
+        "topic": "TALK_HUB_YINGLONG_ONGOING_NEWCORE"
+      },
+      {
+        "text": "七天已经过去了。应龙完成了吗？",
+        "condition": {
+          "and": [
+            {
+              "u_compare_time_since_var": "u_waiting_on_yinglong",
+              "type": "timer",
+              "context": "hub_rnd",
+              "op": ">=",
+              "time": "7 d"
+            },
+            {
+              "u_has_var": "u_current_project",
+              "type": "dialogue",
+              "context": "hub_rnd",
+              "value": "yinglong_newcore"
+            }
+          ]
+        },
+        "topic": "TALK_HUB_YINGLONG_COMPLETE"
+      },
+      {
+        "text": "你们最终如何评价应龙？",
+        "condition": {
+          "u_has_var": "completed_hub_yinglong",
+          "type": "dialogue",
+          "context": "hub_rnd",
+          "value": "yes"
+        },
+        "topic": "TALK_HUB_YINGLONG_FINAL_ASSESSMENT"
+      },
+      {
+        "text": "[1枚HUB金币] 我需要一份新的《康陶®G-58“应龙”智能弹改装记录》。",
+        "condition": {
+          "and": [
+            {
+              "u_has_var": "completed_hub_yinglong",
+              "type": "dialogue",
+              "context": "hub_rnd",
+              "value": "yes"
+            },
+            {
+              "u_has_items": {
+                "item": "RobofacCoin",
+                "count": 1
+              }
+            }
+          ]
+        },
+        "effect": [
+          {
+            "u_sell_item": "RobofacCoin",
+            "count": 1
+          },
+          {
+            "u_spawn_item": "kt_yinglong_ammo_record",
+            "count": 1
+          }
+        ],
+        "topic": "TALK_HUB_YINGLONG_RECIPE"
+      },
+      {
+        "text": "[2枚HUB金币] 我需要一套康陶®G-58“应龙”弹药改装套件。",
+        "condition": {
+          "and": [
+            {
+              "u_has_var": "completed_hub_yinglong",
+              "type": "dialogue",
+              "context": "hub_rnd",
+              "value": "yes"
+            },
+            {
+              "u_has_items": {
+                "item": "RobofacCoin",
+                "count": 2
+              }
+            },
+            {
+              "not": {
+                "u_has_items": {
+                  "item": "kt_yinglong_ammo_conversion_kit",
+                  "count": 1
+                }
+              }
+            }
+          ]
+        },
+        "effect": [
+          {
+            "u_sell_item": "RobofacCoin",
+            "count": 2
+          },
+          {
+            "u_spawn_item": "kt_yinglong_ammo_conversion_kit",
+            "count": 1
+          }
+        ],
+        "topic": "TALK_HUB_YINGLONG_KIT"
+      },
+      {
+        "text": "返回武器与装备项目。",
+        "topic": "TALK_HUB_EQUIPMENT_PROJECTS"
+      }
+    ],
+    "//": "应龙项目的专属二级菜单，避免相关选项散落在HUB首页。"
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HUB_YINGLONG_OFFER",
+    "dynamic_line": "&托盘没有立刻打开。键盘声停了。对讲机随即静音；不到半分钟，第二条、第三条内部线路接入，有人要求切断外网，有人把模板时间戳逐位念了一遍。\n\n“请稍候。”\n\n&又过了一分钟，原来的值班员没有回来。换上的是一个更年长、措辞明显更谨慎的声音。\n\n“三次离线解析一致。我们已暂停两项常规排产。这份模板从现在起列为一级研究项目。”",
+    "responses": [
+      {
+        "text": "继续。",
+        "topic": "TALK_HUB_YINGLONG_TEMPLATE_ANALYSIS"
+      },
+      {
+        "text": "直接说明你们需要什么。",
+        "topic": "TALK_HUB_YINGLONG_PLAN"
+      },
+      {
+        "text": "我先考虑一下。",
+        "topic": "TALK_HUB_YINGLONG_MENU"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HUB_YINGLONG_STARTED_NEWCORE",
+    "dynamic_line": "“确认收到模板与30枚HUB金币。我们会从基础材料打印识别核心，逐层烧录预测模型，再同步校准瞄具、机匣、弹匣和弹药触点。”\n\n“预计七天。交付包括应龙、两只装满的45发弹匣、180发散装智能弹，以及一份纸质弹药改装记录，合计270发。”\n\n“常规排产已经让路。我们不会用缩短验收来换取缩短工期。”",
+    "responses": [
+      {
+        "text": "七天后见。",
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我还要谈点别的。",
+        "topic": "TALK_HUB_EQUIPMENT_PROJECTS"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HUB_YINGLONG_ONGOING",
+    "dynamic_line": "“机匣打印早已结束。现在的问题不是能否开火，而是四十五个弹位能否保持独立校准，三连射能否在几毫秒内保留三套解算，同时不让过载系统抢占弹道处理器。”\n\n“两个版本已经被拒收。七日排产不代表降低标准。”",
+    "responses": [
+      {
+        "text": "明白了。",
+        "topic": "TALK_HUB_YINGLONG_MENU"
+      },
+      {
+        "text": "我稍后再来。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HUB_YINGLONG_ONGOING_NEWCORE",
+    "dynamic_line": "“新核心已经完成。第一版在第三次三连射后出现光学时钟漂移；第二版把弹匣写入队列误判成了电源故障。两者都已拆解。”\n\n“目前版本正在进行热循环、强电磁干扰与高速横向追踪测试。两条测试线仍由这个项目独占。”",
+    "responses": [
+      {
+        "text": "明白了。",
+        "topic": "TALK_HUB_YINGLONG_MENU"
+      },
+      {
+        "text": "我稍后再来。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HUB_YINGLONG_COMPLETE",
+    "dynamic_line": "&托盘仍然锁着。对讲机下方的状态灯连续闪了三次，随后几条内部线路同时接通。背景里有人压低声音核对弹匣编号，又有人要求把最终测试记录写入只读介质。\n\n“康陶®G-58‘应龙’复原项目完成。你可以直接接收，也可以先听研究组的结论。”",
+    "responses": [
+      {
+        "text": "先说结论。",
+        "topic": "TALK_HUB_YINGLONG_COMPLETE_TESTS"
+      },
+      {
+        "text": "[直接接收整套装备。]",
+        "topic": "TALK_HUB_YINGLONG_AFTER_RECEIVE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HUB_YINGLONG_RECIPE",
+    "dynamic_line": "&托盘滑出一份重新装订的技术记录。\n\n“这是项目结论的纸质副本。配方由书中记录提供，不通过对讲机写入；阅读时请保留最后两页的校验表。”",
+    "responses": [
+      {
+        "text": "收下记录。",
+        "topic": "TALK_HUB_YINGLONG_MENU"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HUB_YINGLONG_KIT",
+    "dynamic_line": "&托盘滑出，里面是一只带有夹具、蚀刻头和数据接口的紧凑设备。\n\n“这是可重复使用的改装套件。我们在复原应龙时额外制造了几套，因此无需为这一件重新排产。不要拆开校准封条，也不要把它当作传统压弹机使用。”",
+    "responses": [
+      {
+        "text": "收下套件。",
+        "topic": "TALK_HUB_YINGLONG_MENU"
+      },
+      {
+        "text": "离开。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HUB_YINGLONG_BUSY",
+    "dynamic_line": "“我们已经看到了模板的摘要，也理解它的研究价值。但主制造线当前正被另一项HUB项目占用。模板不会因此失效；请在现有项目交付后再次联系，我们会立即重新评估排产。”",
+    "responses": [
+      {
+        "text": "明白，我会在当前项目结束后再来。",
+        "topic": "TALK_HUB_YINGLONG_MENU"
+      },
+      {
+        "text": "离开。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HUB_YINGLONG_ASSESSMENT",
+    "dynamic_line": "“它真正先进的不是某一个零件，而是闭环协同：瞄具预测目标位置，机匣在供弹瞬间写入修正参数，三连射中的每发弹丸保留独立解算，过载系统也共享同一份锁定结果。”\n\n“我们只能用本世界可稳定生产的材料与控制器复原，因此成品仍是受限版本。”",
+    "responses": [
+      {
+        "text": "继续查看模板。",
+        "topic": "TALK_HUB_YINGLONG_OFFER"
+      },
+      {
+        "text": "返回服务菜单。",
+        "topic": "TALK_HUB_YINGLONG_MENU"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HUB_YINGLONG_AFTER_RECEIVE",
+    "dynamic_line": "&锁扣弹开，托盘缓慢滑出。黑色机匣与白色复合护壳的康陶®G-58“应龙”智能冲锋枪固定在泡沫支架中；旁边是两只已经装满的45发弹匣、180发散装智能弹，以及一沓盖有HUB校验章的技术记录。\n\n“合计270发。记录中包含120发一批的弹药改装流程；它是纸质资料，不会再通过对话系统写入配方。”",
+    "responses": [
+      {
+        "text": "收下装备。",
+        "topic": "TALK_HUB_YINGLONG_MENU"
+      },
+      {
+        "text": "离开。",
+        "topic": "TALK_DONE"
+      }
+    ],
+    "speaker_effect": {
+      "effect": [
+        {
+          "u_spawn_item": "kt_yinglong_delivery_package",
+          "use_item_group": true
+        },
+        {
+          "u_add_var": "completed_hub_yinglong",
+          "type": "dialogue",
+          "context": "hub_rnd",
+          "value": "yes"
+        },
+        {
+          "u_add_var": "u_project_ongoing",
+          "type": "dialogue",
+          "context": "hub_rnd",
+          "value": "no"
+        },
+        {
+          "u_add_var": "u_current_project",
+          "type": "dialogue",
+          "context": "hub_rnd",
+          "value": "none"
+        }
+      ]
+    }
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HUB_YINGLONG_FINAL_ASSESSMENT",
+    "dynamic_line": "“康陶®G-58‘应龙’智能冲锋枪，最终评级：战术价值高，量产价值受本地材料限制，研究价值不可替代。”\n\n“常规武器把瞄准、武器和弹药视为三个环节；应龙把它们压成一个实时系统。四十五发弹药不再只是库存，而是四十五个等待写入答案的执行端。”\n\n“我们无法独立证明2077年的时间戳，但也无法用伪造、损坏或LIXA的数据错位解释这份模板。直到出现反证，HUB会把它视为本设施接触过最重要的先进武器样本之一。”",
+    "responses": [
+      {
+        "text": "明白了。",
+        "topic": "TALK_HUB_YINGLONG_MENU"
+      },
+      {
+        "text": "离开。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HUB_YINGLONG_TEMPLATE_ANALYSIS",
+    "dynamic_line": "“先说我们确认了什么：这不是一张枪械图纸。它同时包含材料公差、装配顺序、光学标定、控制固件、弹药写入协议、故障树与整套验收记录。任意一层删掉，剩下的都只会退化成普通冲锋枪。”\n\n“文件内部没有拼接痕迹。每一份记录都指向同一个日期体系——2077年。”",
+    "responses": [
+      {
+        "text": "它和常规武器的差别究竟在哪里？",
+        "topic": "TALK_HUB_YINGLONG_IMPORTANCE"
+      },
+      {
+        "text": "直接说明复原方案。",
+        "topic": "TALK_HUB_YINGLONG_PLAN"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HUB_YINGLONG_IMPORTANCE",
+    "dynamic_line": "“常规步枪或冲锋枪再精密，核心问题仍是枪管指向哪里、扳机何时释放。瞄具可以帮助射手，弹丸本身却是被动零件；离膛之后，计算基本结束。”\n\n“应龙不是。四十五发弹药都能被单独寻址。三发连射不是把同一答案重复三次，而是在供弹瞬间把三套独立修正写入三发弹丸。瞄具、机匣、电源、弹匣和弹药共同构成闭环。”\n\n“把它叫作一把枪，就像把无线电台叫作一段铜线：没有错，但几乎遗漏了全部重点。”",
+    "responses": [
+      {
+        "text": "你们能把这套体系复原到什么程度？",
+        "topic": "TALK_HUB_YINGLONG_CAPABILITIES"
+      },
+      {
+        "text": "我已经明白重要性了。说明方案。",
+        "topic": "TALK_HUB_YINGLONG_PLAN"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HUB_YINGLONG_CAPABILITIES",
+    "dynamic_line": "“模板允许我们复原目标预测、逐发写入、四十五发弹匣、智能单发、三发追踪连射，以及共享锁定数据的电击和EMP过载系统。”\n\n“我们无法复原传闻中绕过封闭掩体的弹道，也不会伪造做不到的性能。但即使是这个受限版本，也已经把当代常见的光学火控推进成了弹药级火控。”\n\n“研究组内部有人称它为不可能的武器。另一名成员纠正说：不，它只是在2020年不可能。”",
+    "responses": [
+      {
+        "text": "说明复原方案。",
+        "topic": "TALK_HUB_YINGLONG_PLAN"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HUB_YINGLONG_PLAN",
+    "dynamic_line": "“复原应龙不再拆解HM12。那台机器人拥有独立用途，也是一件难以替代的HUB装备样本。”\n\n“支付30枚HUB金币，我们会从基础材料打印识别核心，逐层烧录预测模型，再同步校准瞄具、机匣、弹匣和弹药触点。预计七天。”\n\n“应龙的EMP设计目标是破坏。它可能直接烧毁机器人的控制核心，不适合用来温和停机后重新编程。”",
+    "responses": [
+      {
+        "text": "[30枚HUB金币] 从基础材料制造核心，七天完成。",
+        "condition": {
+          "u_has_items": {
+            "item": "RobofacCoin",
+            "count": 30
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "RobofacCoin",
+            "count": 30
+          },
+          {
+            "u_consume_item": "kt_yinglong_template",
+            "count": 1,
+            "popup": true
+          },
+          {
+            "u_add_faction_trust": 3
+          },
+          {
+            "u_add_var": "u_waiting_on_yinglong",
+            "type": "timer",
+            "context": "hub_rnd",
+            "time": true
+          },
+          {
+            "u_add_var": "u_project_ongoing",
+            "type": "dialogue",
+            "context": "hub_rnd",
+            "value": "yes"
+          },
+          {
+            "u_add_var": "u_current_project",
+            "type": "dialogue",
+            "context": "hub_rnd",
+            "value": "yinglong_newcore"
+          }
+        ],
+        "topic": "TALK_HUB_YINGLONG_STARTED_NEWCORE"
+      },
+      {
+        "text": "我暂不决定。",
+        "topic": "TALK_HUB_YINGLONG_MENU"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HUB_YINGLONG_COMPLETE_TESTS",
+    "dynamic_line": "“若按我们平时的标准，它是一把结构紧凑、可靠、使用四十五发弹匣的冲锋枪。这个判断完全正确，也完全没有意义。”\n\n“它通过了高速横移、目标短暂遮挡、强电磁干扰和连续热循环测试。更重要的是，三发连射中的每发弹药都保留了自己的修正参数。”",
+    "responses": [
+      {
+        "text": "继续。",
+        "topic": "TALK_HUB_YINGLONG_COMPLETE_OPERATION"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HUB_YINGLONG_COMPLETE_OPERATION",
+    "dynamic_line": "“常规武器的计算大多停在枪口。射手或瞄具决定方向，弹丸离膛后只服从空气、重力和它原有的旋转。”\n\n“应龙把计算延伸到供弹过程：系统预测目标将出现的位置，弹匣确认弹位，机匣在最后时刻向每发弹丸写入不同答案。辅助过载系统再复用同一份锁定结果，释放电击与EMP脉冲。”",
+    "responses": [
+      {
+        "text": "这为什么会让你们如此震动？",
+        "topic": "TALK_HUB_YINGLONG_COMPLETE_IMPORTANCE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HUB_YINGLONG_COMPLETE_IMPORTANCE",
+    "dynamic_line": "&对讲机安静了几秒。再次开口的是模板初检时那名年长研究员。\n\n“因为我们熟悉的先进武器，通常只是更好的材料、更精密的枪管、更坚固的机匣或更聪明的瞄具。它们仍然没有改变‘弹药是被动消耗品’这件事。”\n\n“这份2077年模板却把目标识别、运动预测、逐发编程、电源管理、终端电击和EMP协调压进一件单兵武器。如果时间戳真实，那么未来的军工并非只把枪造得更好；它重新定义了哪一部分才算武器。”\n\n“我们暂停两项项目，不是为了得到一把威力更大的冲锋枪。我们是在研究一套提前五十多年抵达这里的工业方法。”",
+    "responses": [
+      {
+        "text": "最后说明限制。",
+        "topic": "TALK_HUB_YINGLONG_COMPLETE_LIMITS"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HUB_YINGLONG_COMPLETE_LIMITS",
+    "dynamic_line": "“它仍然需要专用智能弹、精密光学与UPS供电；锁定不足时，优势会明显下降。弹丸不能穿墙，也不能绕过封闭掩体。”\n\n“EMP脉冲尤其需要注意。它的输出足以破坏控制器和电源管理部件，机器人可能在倒下时已经失去可恢复的核心。需要俘获目标时，请使用更温和的停机手段。”\n\n“除此以外——请妥善保管。HUB目前没有第二份同等完整的模板。”",
+    "responses": [
+      {
+        "text": "[接收应龙整套装备。]",
+        "topic": "TALK_HUB_YINGLONG_AFTER_RECEIVE"
+      }
+    ]
+  }
+]

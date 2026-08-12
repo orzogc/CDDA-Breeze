@@ -1,0 +1,29 @@
+[
+  {
+    "type": "sound_effect",
+    "id": "fire_gun",
+    "variant": "travel_titan_string_bow",
+    "volume": 100,
+    "files": [
+      "fire_gun/bows/bow_1.ogg"
+    ]
+  },
+  {
+    "type": "sound_effect",
+    "id": "fire_gun",
+    "variant": "travel_titan_string_bow_medium",
+    "volume": 100,
+    "files": [
+      "fire_gun/bows/bow_1.ogg"
+    ]
+  },
+  {
+    "type": "sound_effect",
+    "id": "fire_gun",
+    "variant": "travel_titan_string_bow_high",
+    "volume": 100,
+    "files": [
+      "fire_gun/bows/bow_1.ogg"
+    ]
+  }
+]

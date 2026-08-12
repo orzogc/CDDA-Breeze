@@ -1,0 +1,38 @@
+[
+  {
+    "id": "csls7_30",
+    "looks_like": "evo_30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "CS/LS7 30发弹匣"
+    },
+    "description": "一个MPX的30发弹匣，使用9x19mm弹药。",
+    "weight": "150 g",
+    "volume": "250 ml",
+    "price": "20 USD",
+    "price_postapoc": "200 cent",
+    "material": [
+      "plastic"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "9mm"
+    ],
+    "reload_time": 50,
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "longest_side": "24 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "9mm": 30
+        }
+      }
+    ],
+    "capacity": 30
+  }
+]

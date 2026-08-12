@@ -1,0 +1,38 @@
+[
+  {
+    "id": "500_speedloader5",
+    "copy-from": "500_speedloader5",
+    "looks_like": "glock17_17",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "5发快速装弹器（.500口径）"
+    },
+    "description": "这个快速装弹器可以容纳 5 发 .500 弹，为兼容的左轮手枪快速装弹。",
+    "weight": "118 g",
+    "volume": "250 ml",
+    "price": 2500,
+    "price_postapoc": 100,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "500"
+    ],
+    "flags": [
+      "SPEEDLOADER",
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "500": 5
+        }
+      }
+    ],
+    "longest_side": "14 cm"
+  }
+]

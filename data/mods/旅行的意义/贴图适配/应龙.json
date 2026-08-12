@@ -1,0 +1,29 @@
+[
+  {
+    "type": "mod_tileset",
+    "compatibility": [
+      "UNDEAD_PEOPLE_BASE",
+      "UNDEAD_PEOPLE",
+      "MshockXottoplus"
+    ],
+    "tiles-new": [
+      {
+        "file": "mod_tileset/kt_yinglong_tiles.png",
+        "sprite_width": 32,
+        "sprite_height": 32,
+        "tiles": [
+          {
+            "id": "kt_yinglong_hub",
+            "fg": 0,
+            "rotates": false
+          },
+          {
+            "id": "overlay_wielded_kt_yinglong_hub",
+            "fg": 1,
+            "rotates": false
+          }
+        ]
+      }
+    ]
+  }
+]

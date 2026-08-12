@@ -1,0 +1,36 @@
+[
+  {
+    "id": "clip223_10rd",
+    "copy-from": "clip223_10rd",
+    "looks_like": "stanag30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "5.56x45mm/.300BLK 10发弹夹"
+    },
+    "description": "一块体积小巧中有凹槽的金属片，用来让射手快速为栓动步枪快速装入10发 5.56x45mm 或 .300 BLK 弹。",
+    "weight": "9 g",
+    "volume": "10 ml",
+    "longest_side": "10 cm",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "223"
+    ],
+    "flags": [
+      "SPEEDLOADER",
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "223": 10,
+          "300blk": 10
+        }
+      }
+    ]
+  }
+]

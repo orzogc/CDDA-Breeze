@@ -1,0 +1,1224 @@
+[
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_CONFIG_INIT",
+    "//": "集中配置仅在新存档开始后执行一次。袭击按引导轮次依次出现尸群，三尖树和米戈，再进入四阵营随机轮换。随机轮换不会连续抽到同一阵营。随行袭击可以在任何时段启动预警，各波间隔四十五秒。预警时长会在每次袭击进入预警时重新读取当前世界设置。",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_interval_days"
+          },
+          "=",
+          {
+            "world_option": "TRAVEL_CAMP_RAID_INTERVAL_DAYS"
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_warning_minutes"
+          },
+          "=",
+          {
+            "world_option": "TRAVEL_CAMP_RAID_WARNING_MINUTES"
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_warning_time"
+          },
+          "=",
+          {
+            "arithmetic": [
+              {
+                "global_val": "var",
+                "var_name": "travel_dynamic_cfg_warning_minutes"
+              },
+              "*",
+              {
+                "time": "1 minute"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_next_wave_delay"
+          },
+          "=",
+          {
+            "time": "45 seconds"
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_clear_check_delay"
+          },
+          "=",
+          {
+            "time": "5 seconds"
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_wave_timeout"
+          },
+          "=",
+          {
+            "time": "20 minutes"
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_z_tutorial_w1"
+          },
+          "=",
+          {
+            "const": 2
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_z_tutorial_w2"
+          },
+          "=",
+          {
+            "const": 2
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_z_tutorial_w3"
+          },
+          "=",
+          {
+            "const": 2
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_z_early_w1"
+          },
+          "=",
+          {
+            "const": 2
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_z_early_w2"
+          },
+          "=",
+          {
+            "const": 3
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_z_early_w3"
+          },
+          "=",
+          {
+            "const": 3
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_z_growing_w1"
+          },
+          "=",
+          {
+            "const": 3
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_z_growing_w2"
+          },
+          "=",
+          {
+            "const": 4
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_z_growing_w3"
+          },
+          "=",
+          {
+            "const": 4
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_z_mature_w1"
+          },
+          "=",
+          {
+            "const": 4
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_z_mature_w2"
+          },
+          "=",
+          {
+            "const": 5
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_z_mature_w3"
+          },
+          "=",
+          {
+            "const": 6
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_z_late_w1"
+          },
+          "=",
+          {
+            "const": 5
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_z_late_w2"
+          },
+          "=",
+          {
+            "const": 7
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_z_late_w3"
+          },
+          "=",
+          {
+            "const": 9
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_t_intro_w1"
+          },
+          "=",
+          {
+            "const": 2
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_t_intro_w2"
+          },
+          "=",
+          {
+            "const": 3
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_t_early_w1"
+          },
+          "=",
+          {
+            "const": 2
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_t_early_w2"
+          },
+          "=",
+          {
+            "const": 3
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_t_growing_w1"
+          },
+          "=",
+          {
+            "const": 3
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_t_growing_w2"
+          },
+          "=",
+          {
+            "const": 4
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_t_mature_w1"
+          },
+          "=",
+          {
+            "const": 4
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_t_mature_w2"
+          },
+          "=",
+          {
+            "const": 5
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_t_late_w1"
+          },
+          "=",
+          {
+            "const": 5
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_t_late_w2"
+          },
+          "=",
+          {
+            "const": 7
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_m_intro_w1"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_m_early_w1"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_m_growing_w1"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_m_growing_w2"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_m_mature_w1"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_m_mature_w2"
+          },
+          "=",
+          {
+            "const": 2
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_m_late_w1"
+          },
+          "=",
+          {
+            "const": 2
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_m_late_w2"
+          },
+          "=",
+          {
+            "const": 3
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_a_early_w1"
+          },
+          "=",
+          {
+            "const": 2
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_a_early_w2"
+          },
+          "=",
+          {
+            "const": 2
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_a_mature_w1"
+          },
+          "=",
+          {
+            "const": 2
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_a_mature_w2"
+          },
+          "=",
+          {
+            "const": 3
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_a_late_w1"
+          },
+          "=",
+          {
+            "const": 3
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_a_late_w2"
+          },
+          "=",
+          {
+            "const": 3
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_intro_step"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_intro_mode"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_next_raid_day"
+          },
+          "=",
+          {
+            "world_option": "TRAVEL_CAMP_RAID_INTERVAL_DAYS"
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_pending"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_select_step"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_last_faction"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_distance_lock"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_config_initialized"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      }
+    ],
+    "recurrence": "1 second",
+    "global": true,
+    "run_for_npcs": false,
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_config_initialized"
+        },
+        "<=",
+        {
+          "const": 0
+        }
+      ]
+    },
+    "deactivate_condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_config_initialized"
+        },
+        ">=",
+        {
+          "const": 1
+        }
+      ]
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_REFRESH_WARNING_TIME",
+    "//": "每次随行袭击进入预警时调用。把当前世界的分钟设置转换为EOC队列使用的时间长度。已经排队的袭击保存的是排队时的延迟，不会被之后的设置修改追溯改变。",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_warning_minutes"
+          },
+          "=",
+          {
+            "world_option": "TRAVEL_CAMP_RAID_WARNING_MINUTES"
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_warning_time"
+          },
+          "=",
+          {
+            "arithmetic": [
+              {
+                "global_val": "var",
+                "var_name": "travel_dynamic_cfg_warning_minutes"
+              },
+              "*",
+              {
+                "time": "1 minute"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_CONFIG_MIGRATE_21_NIGHT_RAID",
+    "//": "既有存档迁移。同步动态袭击预警缓存，不重置袭击日程，波次数量或当前已经排队的袭击。之后每场新袭击都会再次读取当前世界设置。",
+    "recurrence": "1 second",
+    "global": true,
+    "run_for_npcs": false,
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_config_initialized"
+            },
+            ">=",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_migration_21_night_raid"
+            },
+            "<=",
+            {
+              "const": 0
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_warning_minutes"
+          },
+          "=",
+          {
+            "world_option": "TRAVEL_CAMP_RAID_WARNING_MINUTES"
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_warning_time"
+          },
+          "=",
+          {
+            "arithmetic": [
+              {
+                "global_val": "var",
+                "var_name": "travel_dynamic_cfg_warning_minutes"
+              },
+              "*",
+              {
+                "time": "1 minute"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_migration_21_night_raid"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      }
+    ],
+    "deactivate_condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_migration_21_night_raid"
+        },
+        ">=",
+        {
+          "const": 1
+        }
+      ]
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_CONFIG_MIGRATE_22_BANDIT_RAID",
+    "recurrence": "1 turn",
+    "global": true,
+    "run_for_npcs": false,
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_config_initialized"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_migration_22_bandit_raid"
+            },
+            "!=",
+            {
+              "const": 1
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_migration_22_bandit_raid"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      }
+    ],
+    "//": "旧存档只写入2.2强盗袭击迁移标记，不重置下一次袭击日期和当前轮次。"
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_CONFIG_MIGRATE_23_TIMED_BANDIT",
+    "recurrence": "1 turn",
+    "global": true,
+    "run_for_npcs": false,
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_config_initialized"
+            },
+            ">=",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_migration_23_timed_bandit"
+            },
+            "!=",
+            {
+              "const": 1
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_next_wave_delay"
+          },
+          "=",
+          {
+            "time": "45 seconds"
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_migration_23_timed_bandit"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      }
+    ],
+    "deactivate_condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_migration_23_timed_bandit"
+        },
+        ">=",
+        {
+          "const": 1
+        }
+      ]
+    },
+    "//": "既有存档迁移为四十五秒分波，只更新分波间隔，不重置袭击日程和当前轮次。"
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_CONFIG_MIGRATE_24_EARLY_SCHEDULE",
+    "condition": {
+      "compare_int": [
+        {
+          "time_since_cataclysm": "days"
+        },
+        "<",
+        {
+          "const": 8
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_intro_step"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_select_step"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_intro_mode"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_last_faction"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_next_raid_day"
+          },
+          "=",
+          {
+            "time_since_cataclysm": "days"
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_next_raid_day"
+          },
+          "+=",
+          {
+            "const": 1
+          }
+        ]
+      }
+    ],
+    "//": "修复开局早期存档。取消过早触发，并从下一次重新按尸群，三尖树，米戈的引导顺序开始。"
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_CONFIG_MIGRATE_24_LATE_SCHEDULE",
+    "condition": {
+      "compare_int": [
+        {
+          "time_since_cataclysm": "days"
+        },
+        ">=",
+        {
+          "const": 8
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_intro_step"
+          },
+          "=",
+          {
+            "const": 3
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_select_step"
+          },
+          "=",
+          {
+            "const": 3
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_intro_mode"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      }
+    ],
+    "//": "中后期存档保持随机轮换阶段，不强制重放前三场引导袭击。"
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_CONFIG_MIGRATE_24_RAID_FLOW",
+    "recurrence": "1 turn",
+    "global": true,
+    "run_for_npcs": false,
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_config_initialized"
+            },
+            ">=",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_migration_24_raid_flow"
+            },
+            "!=",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_active"
+            },
+            "<=",
+            {
+              "const": 0
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_pending"
+            },
+            "<=",
+            {
+              "const": 0
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_next_wave_delay"
+          },
+          "=",
+          {
+            "time": "45 seconds"
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_cfg_wave_timeout"
+          },
+          "=",
+          {
+            "time": "20 minutes"
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_distance_lock"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_CONFIG_MIGRATE_24_EARLY_SCHEDULE",
+          "EOC_TRAVEL_DYNAMIC_CONFIG_MIGRATE_24_LATE_SCHEDULE"
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_migration_24_raid_flow"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      }
+    ],
+    "deactivate_condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_migration_24_raid_flow"
+        },
+        ">=",
+        {
+          "const": 1
+        }
+      ]
+    },
+    "//": "2.4迁移会等待当前袭击彻底结束。早期存档从下一次重新开始固定引导，后期存档保留随机阶段。"
+  }
+]

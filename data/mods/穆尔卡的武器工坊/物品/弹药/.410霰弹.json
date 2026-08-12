@@ -1,0 +1,60 @@
+[
+  {
+    "id": "410shot_000",
+    "copy-from": "410shot_000",
+    "type": "AMMO",
+    "name": {
+      "str_sp": ".410 000 号霰弹"
+    },
+    "description": "一发装有五颗000号大型鹿弹丸的.410霰弹。近距离对中型猎物或无防护目标仍有威力，但弹丸数量和总装药都明显少于12号霰弹。",
+    "range": 20,
+    "dispersion": 100,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 30,
+      "armor_penetration": 2
+    },
+    "shot_damage": {
+      "damage_type": "bullet",
+      "amount": 10,
+      "armor_penetration": 2
+    },
+    "projectile_count": 3,
+    "shot_spread": 0,
+    "recoil": 1350,
+    "effects": [
+      "COOKOFF",
+      "SHOT"
+    ],
+    "longest_side": "8 cm"
+  },
+  {
+    "id": "410shot_bird",
+    "copy-from": "410shot_000",
+    "type": "AMMO",
+    "name": {
+      "str_sp": ".410猎鸟弹"
+    },
+    "description": "一发装有约3/8盎司4号镀黄铜钢鸟弹丸的.410霰弹，原本用于猎取鸟类和小型猎物。密集的小弹丸适合近距离打击脆弱目标，对装甲或大型目标则几乎无能为力。",
+    "range": 15,
+    "dispersion": 100,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 15,
+      "armor_penetration": 1
+    },
+    "shot_damage": {
+      "damage_type": "bullet",
+      "amount": 5,
+      "armor_penetration": 1
+    },
+    "projectile_count": 3,
+    "shot_spread": 0,
+    "recoil": 950,
+    "effects": [
+      "COOKOFF",
+      "SHOT"
+    ],
+    "longest_side": "7 cm"
+  }
+]

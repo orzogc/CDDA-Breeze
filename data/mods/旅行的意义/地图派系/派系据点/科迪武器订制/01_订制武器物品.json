@@ -1,0 +1,302 @@
+[
+  {
+    "type": "GENERIC",
+    "id": "hc_mace",
+    "copy-from": "mace",
+    "name": {
+      "str": "高碳钢钉头锤"
+    },
+    "description": "科迪以优质高碳钢定制的钉头锤。沉重锤头仍以破坏骨骼和护甲为本职，钢材与热处理则让它比普通量产品更加可靠。",
+    "material": [
+      "hc_steel",
+      "wood"
+    ],
+    "repairs_with": [
+      "hc_steel"
+    ],
+    "bashing": 41,
+    "proportional": {
+      "price": 1.05,
+      "price_postapoc": 1.05
+    }
+  },
+  {
+    "type": "GENERIC",
+    "id": "qt_mace",
+    "copy-from": "mace",
+    "name": {
+      "str": "淬火钢钉头锤"
+    },
+    "description": "科迪以淬火钢精心定制的钉头锤。锤头硬度、柄部配重与表面处理都经过反复调整，是一件足以长期服役的重击武器。",
+    "material": [
+      "qt_steel",
+      "wood"
+    ],
+    "repairs_with": [
+      "qt_steel"
+    ],
+    "bashing": 43,
+    "proportional": {
+      "price": 1.15,
+      "price_postapoc": 1.15
+    }
+  },
+  {
+    "type": "GENERIC",
+    "id": "hc_warhammer",
+    "copy-from": "warhammer",
+    "name": {
+      "str": "高碳钢战锤"
+    },
+    "description": "科迪以高碳钢定制的战锤，一端用于沉重敲击，另一端的尖喙用于集中力量破坏护甲。它结实、平衡，而且没有多余装饰。",
+    "material": [
+      "hc_steel",
+      "wood"
+    ],
+    "repairs_with": [
+      "hc_steel"
+    ],
+    "bashing": 23,
+    "proportional": {
+      "price": 1.05,
+      "price_postapoc": 1.05
+    }
+  },
+  {
+    "type": "GENERIC",
+    "id": "qt_warhammer",
+    "copy-from": "warhammer",
+    "name": {
+      "str": "淬火钢战锤"
+    },
+    "description": "科迪以淬火钢定制的战锤。锤面、尖喙和配重经过精细热处理，挥动时沉稳得近乎不合末日手工作坊的身份。",
+    "material": [
+      "qt_steel",
+      "wood"
+    ],
+    "repairs_with": [
+      "qt_steel"
+    ],
+    "bashing": 25,
+    "proportional": {
+      "price": 1.15,
+      "price_postapoc": 1.15
+    }
+  },
+  {
+    "type": "GENERIC",
+    "id": "hc_steel_staff",
+    "copy-from": "q_staff",
+    "name": {
+      "str": "高碳钢箍长棍",
+      "str_pl": "高碳钢箍长棍"
+    },
+    "description": "一根以金属环带和两端钢帽加强的长棍。科迪使用高碳钢制作加固件，使它在保留木棍韧性的同时能够打出远重于普通齐眉棍的冲击。",
+    "price": 6000,
+    "price_postapoc": 1500,
+    "material": [
+      "wood",
+      "hc_steel"
+    ],
+    "repairs_with": [
+      "wood",
+      "hc_steel"
+    ],
+    "weight": "1750 g",
+    "volume": "1550 ml",
+    "longest_side": "180 cm",
+    "bashing": 30,
+    "flags": [
+      "NONCONDUCTIVE",
+      "SHEATH_SPEAR",
+      "ALWAYS_TWOHAND",
+      "DURABLE_MELEE"
+    ],
+    "techniques": [
+      "WBLOCK_2",
+      "RAPID",
+      "SWEEP"
+    ],
+    "weapon_category": [
+      "QUARTERSTAVES"
+    ],
+    "qualities": [
+      [
+        "HAMMER",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "GENERIC",
+    "id": "qt_steel_staff",
+    "copy-from": "q_staff",
+    "name": {
+      "str": "淬火钢箍长棍",
+      "str_pl": "淬火钢箍长棍"
+    },
+    "description": "一根以淬火钢环带和端帽加强的长棍。科迪把配重与钢件硬度控制得恰到好处，既能封挡，也能用沉重棍端将目标砸倒。",
+    "price": 6900,
+    "price_postapoc": 1725,
+    "material": [
+      "wood",
+      "qt_steel"
+    ],
+    "repairs_with": [
+      "wood",
+      "qt_steel"
+    ],
+    "weight": "1750 g",
+    "volume": "1550 ml",
+    "longest_side": "180 cm",
+    "bashing": 32,
+    "flags": [
+      "NONCONDUCTIVE",
+      "SHEATH_SPEAR",
+      "ALWAYS_TWOHAND",
+      "DURABLE_MELEE"
+    ],
+    "techniques": [
+      "WBLOCK_2",
+      "RAPID",
+      "SWEEP"
+    ],
+    "weapon_category": [
+      "QUARTERSTAVES"
+    ],
+    "qualities": [
+      [
+        "HAMMER",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "TOOL",
+    "id": "hc_battleaxe",
+    "copy-from": "battleaxe",
+    "name": {
+      "str": "高碳钢战斧"
+    },
+    "description": "科迪以高碳钢锻造的重型战斧。可靠的斧刃、坚固的斧眼与长柄配重让它既适合劈开目标，也经得起粗暴使用。",
+    "material": [
+      "hc_steel",
+      "wood"
+    ],
+    "repairs_with": [
+      "hc_steel"
+    ],
+    "cutting": 40,
+    "proportional": {
+      "price": 1.05,
+      "price_postapoc": 1.05
+    }
+  },
+  {
+    "type": "TOOL",
+    "id": "qt_battleaxe",
+    "copy-from": "battleaxe",
+    "name": {
+      "str": "淬火钢战斧"
+    },
+    "description": "科迪以淬火钢锻造的重型战斧。刃口、韧性与整体配重都达到手工兵器的顶尖水平，足以让任何披甲目标认真对待。",
+    "material": [
+      "qt_steel",
+      "wood"
+    ],
+    "repairs_with": [
+      "qt_steel"
+    ],
+    "cutting": 42,
+    "proportional": {
+      "price": 1.15,
+      "price_postapoc": 1.15
+    }
+  },
+  {
+    "type": "TOOL",
+    "id": "hc_kukri",
+    "copy-from": "kukri",
+    "name": {
+      "str": "高碳钢廓尔喀弯刀"
+    },
+    "description": "科迪以高碳钢定制的廓尔喀弯刀。内弯重刃兼顾砍切与工具用途，刃线扎实，握柄也按长时间使用重新调整。",
+    "material": [
+      "hc_steel",
+      "plastic"
+    ],
+    "repairs_with": [
+      "hc_steel"
+    ],
+    "cutting": 24,
+    "proportional": {
+      "price": 1.05,
+      "price_postapoc": 1.05
+    }
+  },
+  {
+    "type": "TOOL",
+    "id": "qt_kukri",
+    "copy-from": "kukri",
+    "name": {
+      "str": "淬火钢廓尔喀弯刀"
+    },
+    "description": "科迪以淬火钢定制的廓尔喀弯刀。厚实而锋利的内弯刃经过精细热处理，是一件足以陪伴使用者穿过漫长灾变的作品。",
+    "material": [
+      "qt_steel",
+      "plastic"
+    ],
+    "repairs_with": [
+      "qt_steel"
+    ],
+    "cutting": 26,
+    "proportional": {
+      "price": 1.15,
+      "price_postapoc": 1.15
+    }
+  },
+  {
+    "type": "TOOL",
+    "id": "hc_knife_trench",
+    "copy-from": "knife_trench",
+    "name": {
+      "str": "高碳钢堑壕刀",
+      "str_pl": "高碳钢堑壕刀"
+    },
+    "description": "科迪以高碳钢定制的堑壕刀，护手既保护指节，也能用于封挡和重击。短刃坚固锋利，很适合最危险的贴身距离。",
+    "material": [
+      "hc_steel",
+      "wood"
+    ],
+    "repairs_with": [
+      "hc_steel"
+    ],
+    "cutting": 20,
+    "proportional": {
+      "price": 1.05,
+      "price_postapoc": 1.05
+    }
+  },
+  {
+    "type": "TOOL",
+    "id": "qt_knife_trench",
+    "copy-from": "knife_trench",
+    "name": {
+      "str": "淬火钢堑壕刀",
+      "str_pl": "淬火钢堑壕刀"
+    },
+    "description": "科迪以淬火钢定制的堑壕刀。刃尖、护手和握柄都被处理得近乎挑不出毛病，仿佛专为守住一条永远不会得到增援的战壕而造。",
+    "material": [
+      "qt_steel",
+      "wood"
+    ],
+    "repairs_with": [
+      "qt_steel"
+    ],
+    "cutting": 22,
+    "proportional": {
+      "price": 1.15,
+      "price_postapoc": 1.15
+    }
+  }
+]

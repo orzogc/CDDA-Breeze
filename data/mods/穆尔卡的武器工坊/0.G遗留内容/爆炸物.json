@@ -1,0 +1,79 @@
+[
+  {
+    "id": "rgd5",
+    "type": "TOOL",
+    "category": "weapons",
+    "name": {
+      "str": "RGD-5 进攻手榴弹"
+    },
+    "description": "如果你想要在烧烤时烤点土豆，恰好你的朋友拿出了这么一个看起来像是土豆的铁疙瘩的话，什么都不要说，跑就是了，因为那可能是一颗苏联的RGD-5手榴弹，这颗小玩意儿的杀伤力可要比一个冻住的土豆强太多了。",
+    "weight": "310 g",
+    "volume": "400 ml",
+    "price": 75,
+    "price_postapoc": 750,
+    "material": [
+      "steel"
+    ],
+    "symbol": "*",
+    "color": "green",
+    "use_action": {
+      "need_wielding": true,
+      "target": "rgd5_act",
+      "msg": "你拉开了手雷的保险销。",
+      "target_charges": 5,
+      "active": true,
+      "menu_text": "拔掉插销",
+      "type": "transform"
+    },
+    "flags": [
+      "RADIO_MODABLE",
+      "RADIO_INVOKE_PROC",
+      "BOMB",
+      "GRENADE"
+    ],
+    "to_hit": -1,
+    "bashing": 5
+  },
+  {
+    "id": "rgd5_act",
+    "type": "TOOL",
+    "category": "weapons",
+    "name": {
+      "str": "拔掉插栓的RGD-5 进攻手榴弹"
+    },
+    "description": "烤好的土豆如果不丢出去可能会烫伤你的手，但是这个东西点着了不丢出去那么你的手可就要完蛋了，因为它是进攻型手榴弹，所以爆炸威力和范围可能确实有限，不过它可以确保你基本上不会被到处飞的弹片击伤，但在范围之外可能依旧会被爆炸波及。",
+    "weight": "300 g",
+    "volume": "380 ml",
+    "price": 0,
+    "price_postapoc": 0,
+    "material": [
+      "steel"
+    ],
+    "symbol": "*",
+    "color": "green",
+    "initial_charges": 5,
+    "max_charges": 5,
+    "turns_per_charge": 1,
+    "use_action": {
+      "type": "explosion",
+      "sound_volume": 0,
+      "sound_msg": "嘶——",
+      "no_deactivate_msg": "你已经拔掉了%s的保险销，最好赶紧把它扔出去。",
+      "explosion": {
+        "power": 180,
+        "distance_factor": 4.2,
+        "shrapnel": {
+          "casing_mass": 110,
+          "fragment_mass": 0.12
+        }
+      }
+    },
+    "flags": [
+      "BOMB",
+      "TRADER_AVOID",
+      "DANGEROUS"
+    ],
+    "to_hit": -1,
+    "bashing": 5
+  }
+]

@@ -1,0 +1,40 @@
+[
+  {
+    "id": "knife_KABAR",
+    "copy-from": "knife_combat",
+    "looks_like": "knife_combat",
+    "type": "TOOL",
+    "category": "weapons",
+    "name": {
+      "str": "KA-BAR军刀",
+      "str_pl": "KA-BAR军刀"
+    },
+    "longest_side": "30 cm",
+    "description": "一把坚固的KA-BAR战斗／工具刀。这个经典式样为第二次世界大战中的美军人员而设计，后来成为美国海军陆战队最具辨识度的随身刀具之一；厚实刀身既能切削，也能承担粗重野外工作。"
+  },
+  {
+    "id": "knife_rm42",
+    "copy-from": "knife_rm42",
+    "type": "TOOL",
+    "category": "weapons",
+    "name": {
+      "str": "费尔贝恩–赛克斯格斗匕首",
+      "str_pl": "费尔贝恩–赛克斯格斗匕首"
+    },
+    "material": [
+      "qt_steel",
+      "brass"
+    ],
+    "repairs_with": [
+      "steel"
+    ],
+    "longest_side": "30 cm",
+    "description": "一把双刃费尔贝恩–赛克斯格斗匕首，由威廉·尤尔特·费尔贝恩和埃里克·安东尼·赛克斯共同开发。它在第二次世界大战中成为英国突击队与特种部队的代表性近战武器，细长刀身尤其适合刺击。",
+    "cutting": 22,
+    "extend": {
+      "flags": [
+        "STAB"
+      ]
+    }
+  }
+]

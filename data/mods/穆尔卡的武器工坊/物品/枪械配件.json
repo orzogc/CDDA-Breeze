@@ -1,0 +1,2319 @@
+[
+  {
+    "id": "vss_sp",
+    "type": "GUNMOD",
+    "name": {
+      "str": "VSS/VAL一体式消音器"
+    },
+    "description": "Vintorez微声狙击步枪的一体式消音器，不可被拆卸。",
+    "weight": "5 g",
+    "volume": "1 ml",
+    "longest_side": "1 cm",
+    "integral_longest_side": "1 cm",
+    "price": 3500,
+    "price_postapoc": 75,
+    "install_time": "15 s",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "muzzle",
+    "mod_targets": [
+      "vss",
+      "val"
+    ],
+    "damage_modifier": {
+      "damage_type": "bullet",
+      "amount": -2
+    },
+    "handling_modifier": 1,
+    "loudness_modifier": -100,
+    "flags": [
+      "IRREMOVABLE"
+    ]
+  },
+  {
+    "id": "153c_stock",
+    "type": "GUNMOD",
+    "name": {
+      "str": "MP153-C 枪托套件"
+    },
+    "description": "一个帆布做的枪托垫子，可以牢实的绑在枪托上，还有一个缓冲垫，安装在枪托末端。",
+    "volume": "0 ml",
+    "price": 1,
+    "price_postapoc": 1,
+    "install_time": "1 m",
+    "material": [
+      "canvas"
+    ],
+    "symbol": ":",
+    "color": "brown",
+    "location": "stock",
+    "mod_targets": [
+      "MP153_C"
+    ],
+    "sight_dispersion": 30,
+    "field_of_view": 3000,
+    "dispersion_modifier": -180,
+    "aim_speed_modifier": 9000,
+    "handling_modifier": 1,
+    "flags": [
+      "IRREMOVABLE",
+      "ZERO_WEIGHT"
+    ],
+    "longest_side": "30 cm"
+  },
+  {
+    "id": "153c_sp",
+    "type": "GUNMOD",
+    "name": {
+      "str": "MP-153C 铁管消音"
+    },
+    "description": "MP-153C专属消音，由一根比较粗的不锈钢管制成，内部有两个隔间，上方的隔间内部是一般消音器的结构，下方的隔间是用来容纳长弹仓的地方，两个隔间之间是不互通的，这种独特的结构使它无法被拧在枪管上，只能套上去，然后用螺丝固定。",
+    "volume": "1 ml",
+    "price": 1,
+    "price_postapoc": 1,
+    "install_time": "1 s",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "muzzle",
+    "mod_targets": [
+      "MP153_C"
+    ],
+    "shot_spread_multiplier_modifier": -2,
+    "loudness_modifier": -200,
+    "flags": [
+      "IRREMOVABLE",
+      "ZERO_WEIGHT"
+    ],
+    "longest_side": "26 cm"
+  },
+  {
+    "id": "ak74_brake",
+    "type": "GUNMOD",
+    "name": {
+      "str": "AK 制退器"
+    },
+    "description": "AK系列步枪的常规枪口制退器。",
+    "weight": "220 g",
+    "volume": "150 ml",
+    "longest_side": "4 cm",
+    "integral_longest_side": "4 cm",
+    "price": 14000,
+    "price_postapoc": 250,
+    "install_time": "1 m",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "light_gray",
+    "location": "muzzle",
+    "mod_targets": [
+      "rifle"
+    ],
+    "dispersion_modifier": 3,
+    "handling_modifier": 8,
+    "loudness_modifier": 5,
+    "min_skills": [
+      [
+        "weapon",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "pso",
+    "type": "GUNMOD",
+    "name": {
+      "str": "PSO-1 瞄准镜"
+    },
+    "description": "一个PSO-1四倍瞄准镜，适用于SVD枪族，不过一部分AK也可以使用。",
+    "weight": "350 g",
+    "volume": "200 ml",
+    "price": 18000,
+    "price_postapoc": 350,
+    "material": [
+      "aluminum",
+      "glass"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "sights",
+    "mod_targets": [
+      "rifle"
+    ],
+    "install_time": "1 m",
+    "sight_dispersion": 0,
+    "aim_speed_modifier": -1,
+    "field_of_view": 270,
+    "min_skills": [
+      [
+        "weapon",
+        1
+      ],
+      [
+        "gun",
+        1
+      ]
+    ],
+    "flags": [
+      "ZOOM"
+    ],
+    "longest_side": "28 cm"
+  },
+  {
+    "id": "choke_s",
+    "type": "GUNMOD",
+    "name": {
+      "str": "高效喉缩"
+    },
+    "description": "CVA公司生产的一种一种相当高效的喉缩，可以比普通喉缩达成更好的收束效果。",
+    "volume": "1 ml",
+    "price": 7200,
+    "price_postapoc": 720,
+    "install_time": "1 m",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "muzzle",
+    "mod_targets": [
+      "shotgun"
+    ],
+    "damage_modifier": {
+      "damage_type": "bullet",
+      "amount": 2
+    },
+    "dispersion_modifier": -80,
+    "handling_modifier": 7,
+    "shot_spread_multiplier_modifier": -3,
+    "flags": [
+      "CHOKE",
+      "ZERO_WEIGHT"
+    ],
+    "longest_side": "18 cm"
+  },
+  {
+    "id": "barrel_long",
+    "type": "GUNMOD",
+    "name": {
+      "str": "长枪管套件"
+    },
+    "description": "格科斯勒工业推出的一套适配冲锋枪，步枪以及霰弹枪的长枪管套件，在一定程度上增加了子弹的射程和精度，可以拆卸。",
+    "volume": "125 ml",
+    "weight": "350g",
+    "price": 27500,
+    "price_postapoc": 2450,
+    "install_time": "10 m",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "damage_modifier": {
+      "damage_type": "bullet",
+      "amount": 6
+    },
+    "handling_modifier": 5,
+    "dispersion_modifier": -90,
+    "integral_longest_side": "30 cm",
+    "integral_volume": "125 ml",
+    "integral_weight": "350 g",
+    "range_modifier": 8,
+    "color": "light_gray",
+    "location": "barrel",
+    "mod_targets": [
+      "smg",
+      "rifle",
+      "shotgun"
+    ],
+    "longest_side": "18 cm"
+  },
+  {
+    "id": "barrel_heavy",
+    "type": "GUNMOD",
+    "name": {
+      "str": "重枪管套件"
+    },
+    "description": "格科斯勒工业推出的一套适配冲锋枪，步枪以及霰弹枪的重枪管套件，虽然不增加长度,但是增加了不少重量，高精度制造的枪管对于后坐力控制和精准度会很有帮助，额外的气密性也增加了子弹的出膛速度可以拆卸。",
+    "volume": "100 ml",
+    "weight": "350g",
+    "price": 30500,
+    "price_postapoc": 3500,
+    "install_time": "10 m",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "damage_modifier": {
+      "damage_type": "bullet",
+      "amount": 4,
+      "armor_penetration": 3
+    },
+    "handling_modifier": 7,
+    "dispersion_modifier": -45,
+    "integral_weight": "600 g",
+    "color": "light_gray",
+    "location": "barrel",
+    "mod_targets": [
+      "smg",
+      "rifle",
+      "shotgun"
+    ],
+    "longest_side": "18 cm"
+  },
+  {
+    "id": "barrel_short",
+    "type": "GUNMOD",
+    "name": {
+      "str": "短枪管套件"
+    },
+    "description": "格科斯勒工业推出的一套适配冲锋枪，步枪以及霰弹枪的短枪管套件，虽然不像锯断枪管那样影响散布，但是会导致伤害降低，可以拆卸。",
+    "volume": "70 ml",
+    "longest_side": "10 cm",
+    "price": 4500,
+    "price_postapoc": 1120,
+    "install_time": "10 m",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "damage_modifier": {
+      "damage_type": "bullet",
+      "amount": -3
+    },
+    "handling_modifier": 3,
+    "color": "light_gray",
+    "location": "barrel",
+    "mod_targets": [
+      "smg",
+      "rifle",
+      "shotgun"
+    ],
+    "flags": [
+      "COLLAPSED_STOCK",
+      "ZERO_WEIGHT"
+    ]
+  },
+  {
+    "id": "grip_tac",
+    "type": "GUNMOD",
+    "name": {
+      "str": "战术三角握把"
+    },
+    "description": "格科斯勒工业生产的三角握把，性能优秀，符合人体工学，可以增加额外的控制性。",
+    "weight": "50 g",
+    "volume": "76 ml",
+    "price": 7000,
+    "price_postapoc": 700,
+    "install_time": "50 s",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "underbarrel",
+    "mod_targets": [
+      "shotgun",
+      "smg",
+      "rifle",
+      "crossbow",
+      "launcher"
+    ],
+    "handling_modifier": 8,
+    "min_skills": [
+      [
+        "weapon",
+        3
+      ]
+    ],
+    "flags": [
+      "PUMP_RAIL_COMPATIBLE"
+    ],
+    "longest_side": "18 cm"
+  },
+  {
+    "id": "tac_rail",
+    "type": "GUNMOD",
+    "name": {
+      "str": "战术护木"
+    },
+    "description": "格科斯勒工业生产的战术导轨护木，兼容性好，性能优秀。",
+    "weight": "120 g",
+    "volume": "250 ml",
+    "integral_volume": "70 ml",
+    "integral_weight": "70 g",
+    "price": 75000,
+    "price_postapoc": 2500,
+    "material": [
+      "superalloy"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "mechanism",
+    "mod_targets": [
+      "smg",
+      "rifle",
+      "shotgun"
+    ],
+    "install_time": "10 m",
+    "dispersion_modifier": -20,
+    "handling_modifier": 4,
+    "aim_speed_modifier": 120,
+    "sight_dispersion": 30,
+    "field_of_view": 3000,
+    "min_skills": [
+      [
+        "weapon",
+        4
+      ],
+      [
+        "mechanics",
+        4
+      ],
+      [
+        "gun",
+        4
+      ]
+    ],
+    "longest_side": "18 cm"
+  },
+  {
+    "id": "tac_balance",
+    "type": "GUNMOD",
+    "name": {
+      "str": "枪械平衡套件"
+    },
+    "description": "格科斯勒工业生产的符合人体工学的枪械套件，可以减少举枪瞄准时所产生的惯性，在极大程度上提升武器的灵活性。",
+    "weight": "120 g",
+    "volume": "250 ml",
+    "integral_volume": "10 ml",
+    "price": 75000,
+    "price_postapoc": 7500,
+    "material": [
+      "superalloy"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "mechanism",
+    "mod_targets": [
+      "smg",
+      "rifle",
+      "shotgun"
+    ],
+    "install_time": "15 m",
+    "min_skills": [
+      [
+        "weapon",
+        3
+      ]
+    ],
+    "aim_speed_modifier": 200,
+    "sight_dispersion": 30,
+    "field_of_view": 3000,
+    "flags": [
+      "ZERO_WEIGHT"
+    ],
+    "longest_side": "18 cm"
+  },
+  {
+    "id": "choke",
+    "copy-from": "choke",
+    "type": "GUNMOD",
+    "name": {
+      "str": "喉缩"
+    },
+    "description": "喉缩是一种装在霰弹枪口的配件，可以减少弹丸的散布以获得更好的精度.",
+    "weight": "300 g",
+    "volume": "150 ml",
+    "longest_side": "4 cm",
+    "integral_longest_side": "4 cm",
+    "price": 78000,
+    "price_postapoc": 1500,
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "muzzle",
+    "mod_targets": [
+      "shotgun"
+    ],
+    "install_time": "1 m",
+    "dispersion_modifier": -50,
+    "handling_modifier": 2,
+    "shot_spread_multiplier_modifier": -2,
+    "flags": [
+      "CHOKE"
+    ]
+  },
+  {
+    "id": "m3c_stock",
+    "type": "GUNMOD",
+    "name": {
+      "str": "M3 自制枪托"
+    },
+    "description": "或许给这种老古董改现代化有点太离谱了，但是没准有人就好这一口，祖国人他爹有句话说的好：“女人就像美酒,越老就越醇美。”你很难想象这把枪的主人是怎么把M16的老式木头枪托装在这把枪上的，枪托上面还有个托腮垫。",
+    "weight": "350 g",
+    "volume": "500 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": 500,
+    "price_postapoc": 500,
+    "install_time": "10 m",
+    "material": [
+      "wood"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "stock",
+    "mod_targets": [
+      "m3_grease_c"
+    ],
+    "handling_modifier": 5,
+    "flags": [
+      "IRREMOVABLE",
+      "ZERO_WEIGHT"
+    ],
+    "longest_side": "30 cm"
+  },
+  {
+    "id": "m3c_sp",
+    "type": "GUNMOD",
+    "name": {
+      "str": "M3 自制消音器"
+    },
+    "description": "你知道吗？没点精神病的人真做不出这东西，究竟是什么样的奇葩会想到用WD40做消音器？好消息是它的品质还是过关的……包括罐子,虽然它体积大了一些，不过比较有效。",
+    "weight": "350 g",
+    "volume": "500 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": 500,
+    "price_postapoc": 500,
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "muzzle",
+    "mod_targets": [
+      "m3_grease_c"
+    ],
+    "install_time": "30 s",
+    "handling_modifier": 2,
+    "loudness_modifier": -30,
+    "flags": [
+      "IRREMOVABLE",
+      "ZERO_WEIGHT"
+    ],
+    "longest_side": "26 cm"
+  },
+  {
+    "id": "m3_scope",
+    "type": "GUNMOD",
+    "name": {
+      "str": "M3 自制瞄准镜"
+    },
+    "description": "这是这把M3焊上去的导轨和一个红点瞄准镜，谢天谢地，这把枪的瞄具还算正常，至少比其他的野路子东西要正常太多了。",
+    "weight": "350 g",
+    "volume": "500 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": 500,
+    "price_postapoc": 500,
+    "install_time": "5 m",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "sights",
+    "mod_targets": [
+      "m3_grease_c"
+    ],
+    "sight_dispersion": 23,
+    "aim_speed_modifier": 20,
+    "field_of_view": 630,
+    "flags": [
+      "IRREMOVABLE",
+      "ZERO_WEIGHT",
+      "DISABLE_SIGHTS"
+    ],
+    "longest_side": "28 cm"
+  },
+  {
+    "id": "156m_stock",
+    "type": "GUNMOD",
+    "name": {
+      "str": "MP-153-M 枪托护木套件"
+    },
+    "description": "MP-153-M专属的一套配件，包含了帆布托腮垫，缓冲垫，以及使用了碳纤维材料的枪托和护木，在大幅度减少重量的同时保证了结构强度和人机功效。",
+    "volume": "0 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": 1,
+    "price_postapoc": 1,
+    "install_time": "1 m",
+    "material": [
+      "canvas",
+      "carbide"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "配套部件",
+    "mod_targets": [
+      "MP156_M"
+    ],
+    "handling_modifier": 8,
+    "flags": [
+      "IRREMOVABLE",
+      "ZERO_WEIGHT"
+    ],
+    "longest_side": "30 cm"
+  },
+  {
+    "id": "156m_sp",
+    "type": "GUNMOD",
+    "name": {
+      "str": "MP-153-M 碳纤维消音器"
+    },
+    "description": "MP-153-M专属消音，用一个很长的消音器弥补短枪管长度的设计，重量轻，结实耐用，效果非常好。",
+    "volume": "1 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": 1,
+    "price_postapoc": 1,
+    "install_time": "1 s",
+    "material": [
+      "carbide"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "muzzle",
+    "mod_targets": [
+      "MP156_M"
+    ],
+    "shot_spread_multiplier_modifier": -2.5,
+    "dispersion_modifier": -180,
+    "loudness_modifier": -120,
+    "handling_modifier": 4,
+    "flags": [
+      "IRREMOVABLE",
+      "ZERO_WEIGHT"
+    ],
+    "longest_side": "26 cm"
+  },
+  {
+    "id": "156m_scope",
+    "type": "GUNMOD",
+    "name": {
+      "str": "MP-153-M 红点瞄准镜"
+    },
+    "description": "MP-153-M的专属瞄具，私人订制的单倍红点瞄准镜，轻便耐用，在任何环境下都相当可靠。",
+    "volume": "0 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": 1,
+    "price_postapoc": 1,
+    "install_time": "1 m",
+    "material": [
+      "steel",
+      "carbide",
+      "glass"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "sights",
+    "mod_targets": [
+      "MP156_M"
+    ],
+    "field_of_view": 3000,
+    "sight_dispersion": 0,
+    "aim_speed_modifier": 9000,
+    "flags": [
+      "IRREMOVABLE",
+      "ZERO_WEIGHT"
+    ],
+    "longest_side": "28 cm"
+  },
+  {
+    "id": "shortgrip_tac",
+    "type": "GUNMOD",
+    "name": {
+      "str": "短前直握把"
+    },
+    "description": "格科斯勒集团生产的战术前握把，符合人体工程学，更小的体积节约了重量。",
+    "weight": "95 g",
+    "volume": "100 ml",
+    "price": 5000,
+    "price_postapoc": 500,
+    "install_time": "50 s",
+    "material": [
+      "plastic"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "underbarrel",
+    "mod_targets": [
+      "shotgun",
+      "smg",
+      "rifle",
+      "crossbow",
+      "launcher"
+    ],
+    "handling_modifier": 2,
+    "min_skills": [
+      [
+        "weapon",
+        3
+      ]
+    ],
+    "flags": [
+      "PUMP_RAIL_COMPATIBLE"
+    ],
+    "longest_side": "18 cm"
+  },
+  {
+    "id": "znt2stock",
+    "type": "GUNMOD",
+    "name": {
+      "str": "泽宁特高级枪托"
+    },
+    "description": "泽宁特生产的高级枪托。",
+    "weight": "200 g",
+    "volume": "350 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": 4200,
+    "price_postapoc": 750,
+    "install_time": "1 m",
+    "material": [
+      "plastic",
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "min_skills": [
+      [
+        "weapon",
+        3
+      ]
+    ],
+    "handling_modifier": 10,
+    "location": "stock",
+    "mod_targets": [
+      "smg",
+      "rifle",
+      "shotgun",
+      "launcher"
+    ],
+    "use_action": {
+      "type": "transform",
+      "msg": "你折叠枪托，以便携带。",
+      "menu_text": "折叠",
+      "target": "znt2stock_folded",
+      "moves": 120
+    },
+    "longest_side": "30 cm"
+  },
+  {
+    "id": "znt2stock_folded",
+    "type": "GUNMOD",
+    "name": {
+      "str": "泽宁特高级枪托 (折叠)"
+    },
+    "description": "泽宁特生产的高级枪托，目前已被折叠。",
+    "copy-from": "znt2stock",
+    "use_action": {
+      "type": "transform",
+      "msg": "你展开枪托，准备战斗。",
+      "menu_text": "展开",
+      "target": "znt2stock",
+      "moves": 120
+    },
+    "flags": [
+      "FOLDED_STOCK"
+    ],
+    "longest_side": "30 cm"
+  },
+  {
+    "id": "tac_reddot",
+    "type": "GUNMOD",
+    "name": {
+      "str": "小型战术红点瞄准镜"
+    },
+    "description": "格科斯勒生产的一款体积很小的红点瞄准镜，指向性强，视野良好，非常适合中近距离作战。",
+    "weight": "50 g",
+    "volume": "60 ml",
+    "price": 6500,
+    "price_postapoc": 1250,
+    "install_time": "1 m",
+    "material": [
+      "steel",
+      "glass"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "sights",
+    "mod_targets": [
+      "shotgun",
+      "smg",
+      "rifle",
+      "crossbow",
+      "launcher"
+    ],
+    "field_of_view": 800,
+    "sight_dispersion": 25,
+    "aim_speed_modifier": 60,
+    "longest_side": "28 cm"
+  },
+  {
+    "id": "tac_gun_sp",
+    "type": "GUNMOD",
+    "name": {
+      "str": "“华夫饼制造器”消音器"
+    },
+    "description": "由Hexagon公司制造的“华夫制造器”消声器，外形独特，酷似华夫饼，有着很好的消音效果，并且可以提供额外的操作性能。",
+    "weight": "450 g",
+    "volume": "450 ml",
+    "price": 12500,
+    "price_postapoc": 7200,
+    "install_time": "50 s",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "muzzle",
+    "mod_targets": [
+      "smg",
+      "rifle"
+    ],
+    "loudness_modifier": -155,
+    "dispersion_modifier": -35,
+    "handling_modifier": 4,
+    "longest_side": "26 cm"
+  },
+  {
+    "id": "barrel_lh",
+    "type": "GUNMOD",
+    "name": {
+      "str": "LHB超重型长枪管套件"
+    },
+    "description": "格科斯勒工业推出的一套适配步枪的高精度制造的超重型长枪管套件，具有重型枪管和长枪管的所有特点，代价则是会大幅度削弱武器的灵活性，建议给狙击步枪使用,可以拆卸。",
+    "volume": "500 ml",
+    "weight": "1350g",
+    "price": 64500,
+    "price_postapoc": 7450,
+    "install_time": "20 m",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "damage_modifier": {
+      "damage_type": "bullet",
+      "amount": 10,
+      "armor_penetration": 5
+    },
+    "handling_modifier": 5,
+    "dispersion_modifier": -150,
+    "integral_longest_side": "35 cm",
+    "integral_volume": "2000 ml",
+    "integral_weight": "2000 g",
+    "range_modifier": 10,
+    "color": "light_gray",
+    "location": "barrel",
+    "mod_targets": [
+      "rifle"
+    ],
+    "longest_side": "18 cm"
+  },
+  {
+    "id": "ga_basic",
+    "type": "GUNMOD",
+    "name": {
+      "str": "GA系列枪械基础结构"
+    },
+    "description": "GA系列枪械的独特结构，在保证了稳定性的同时还提高了操控性能。",
+    "weight": "120 g",
+    "volume": "250 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": 10,
+    "price_postapoc": 10,
+    "material": [
+      "superalloy"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "GA枪械结构",
+    "mod_targets": [
+      "smg",
+      "rifle",
+      "shotgun"
+    ],
+    "install_time": "15 m",
+    "min_skills": [
+      [
+        "weapon",
+        3
+      ]
+    ],
+    "handling_modifier": 10,
+    "aim_speed_modifier": 150,
+    "sight_dispersion": 30,
+    "field_of_view": 3000,
+    "flags": [
+      "IRREMOVABLE",
+      "ZERO_WEIGHT"
+    ],
+    "longest_side": "18 cm"
+  },
+  {
+    "id": "103_stock",
+    "type": "GUNMOD",
+    "name": {
+      "str": "AK-103 定制枪托"
+    },
+    "description": "AK-103的特殊定制枪托。",
+    "weight": "200 g",
+    "volume": "350 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": 4200,
+    "price_postapoc": 750,
+    "install_time": "1 m",
+    "material": [
+      "plastic",
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "min_skills": [
+      [
+        "weapon",
+        3
+      ]
+    ],
+    "location": "stock",
+    "mod_targets": [
+      "ak103c"
+    ],
+    "use_action": {
+      "type": "transform",
+      "msg": "你折叠枪托，以便携带。",
+      "menu_text": "折叠",
+      "target": "103stock_folded",
+      "moves": 120
+    },
+    "longest_side": "30 cm"
+  },
+  {
+    "id": "103stock_folded",
+    "type": "GUNMOD",
+    "name": {
+      "str": "AK-103 定制枪托 (折叠)"
+    },
+    "description": "AK-103的定制枪托，目前已被折叠。",
+    "copy-from": "103_stock",
+    "use_action": {
+      "type": "transform",
+      "msg": "你展开枪托，准备战斗。",
+      "menu_text": "展开",
+      "target": "103_stock",
+      "moves": 120
+    },
+    "flags": [
+      "FOLDED_STOCK"
+    ],
+    "longest_side": "30 cm"
+  },
+  {
+    "id": "tac_holo",
+    "type": "GUNMOD",
+    "name": {
+      "str": "战术全息瞄准镜"
+    },
+    "description": "格科斯勒生产的一款全息瞄准镜，是一款非常优秀的瞄准镜。",
+    "weight": "50 g",
+    "volume": "60 ml",
+    "price": 9500,
+    "price_postapoc": 2550,
+    "install_time": "1 m",
+    "material": [
+      "superalloy",
+      "glass"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "sights",
+    "mod_targets": [
+      "shotgun",
+      "smg",
+      "rifle",
+      "crossbow",
+      "launcher"
+    ],
+    "field_of_view": 1200,
+    "sight_dispersion": 25,
+    "aim_speed_modifier": 60,
+    "longest_side": "28 cm"
+  },
+  {
+    "id": "tac_gun_muzzle",
+    "type": "GUNMOD",
+    "name": {
+      "str": "MZ-L 制退器"
+    },
+    "description": "格科斯勒生产的一款六角枪口制退器，可以大幅度减少后坐力和枪口火焰。",
+    "weight": "130 g",
+    "volume": "20 ml",
+    "price": 6500,
+    "price_postapoc": 3500,
+    "install_time": "10 s",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "muzzle",
+    "mod_targets": [
+      "smg",
+      "rifle"
+    ],
+    "handling_modifier": 10,
+    "longest_side": "18 cm"
+  },
+  {
+    "id": "race_rail",
+    "type": "GUNMOD",
+    "name": {
+      "str": "RTR 竞技护木"
+    },
+    "description": "格科斯勒工业生产的竞技护木，重量更轻，性能也更好。",
+    "weight": "120 g",
+    "volume": "250 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": 75000,
+    "price_postapoc": 5500,
+    "material": [
+      "superalloy",
+      "carbide"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "mechanism",
+    "mod_targets": [
+      "smg",
+      "rifle",
+      "shotgun"
+    ],
+    "install_time": "10 m",
+    "dispersion_modifier": -30,
+    "handling_modifier": 6,
+    "aim_speed_modifier": 100,
+    "sight_dispersion": 30,
+    "field_of_view": 3000,
+    "weight_multiplier": 0.8,
+    "min_skills": [
+      [
+        "weapon",
+        4
+      ],
+      [
+        "mechanics",
+        4
+      ],
+      [
+        "gun",
+        4
+      ]
+    ],
+    "longest_side": "18 cm"
+  },
+  {
+    "id": "7x50_binocular",
+    "type": "GUNMOD",
+    "name": {
+      "str": "7x50 双目望远瞄准镜"
+    },
+    "description": "天才的造物，把望远镜装在瞄具导轨上来充当瞄准镜——这枪的主人要么是个左右撇子要么就喜欢用两只眼睛瞄准，这可太可怕了。",
+    "weight": "450 g",
+    "volume": "250 ml",
+    "price": 4500,
+    "price_postapoc": 1730,
+    "install_time": "1 m",
+    "material": [
+      "plastic",
+      "glass"
+    ],
+    "symbol": ":",
+    "color": "brown",
+    "location": "sights",
+    "mod_targets": [
+      "vss47"
+    ],
+    "flags": [
+      "IRREMOVABLE"
+    ],
+    "field_of_view": 600,
+    "sight_dispersion": 10,
+    "aim_speed_modifier": 50,
+    "longest_side": "28 cm"
+  },
+  {
+    "id": "ub_makarov",
+    "type": "GUNMOD",
+    "name": {
+      "str": "下挂马卡洛夫手枪"
+    },
+    "description": "这是……一把用电工胶带粘在这把枪的枪管下面的马卡洛夫手枪，在充当前握把的同时还提供了额外的攻击方式，这可真是亵渎啊（虽然按理来说这东西无法正常开枪，不过管它呢）。",
+    "weight": "730 g",
+    "volume": "346 ml",
+    "longest_side": "196 mm",
+    "price": 95000,
+    "price_postapoc": 2000,
+    "install_time": "1 m",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": ":",
+    "color": "brown",
+    "handling_modifier": 8,
+    "location": "underbarrel",
+    "mod_targets": [
+      "vss47"
+    ],
+    "flags": [
+      "IRREMOVABLE"
+    ],
+    "gun_data": {
+      "ammo": "9x18",
+      "skill": "pistol",
+      "dispersion": 480,
+      "durability": 6,
+      "clip_size": 8
+    },
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "makarovmag"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "honey_badger_sp",
+    "type": "GUNMOD",
+    "name": {
+      "str": "蜜獾 AAC 一体式消音器"
+    },
+    "description": "蜜獾AAC的一体式消音器，不可被拆卸。",
+    "weight": "5 g",
+    "volume": "1 ml",
+    "price": 3500,
+    "price_postapoc": 75,
+    "install_time": "15 s",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "muzzle",
+    "mod_targets": [
+      "honey_badger"
+    ],
+    "handling_modifier": 1,
+    "loudness_modifier": -100,
+    "flags": [
+      "IRREMOVABLE"
+    ],
+    "longest_side": "26 cm"
+  },
+  {
+    "id": "amb_sp",
+    "type": "GUNMOD",
+    "name": {
+      "str": "AMB-17 一体式消音器"
+    },
+    "description": "AMB-17的一体式消音器，不可被拆卸。",
+    "weight": "5 g",
+    "volume": "1 ml",
+    "price": 3500,
+    "price_postapoc": 75,
+    "install_time": "15 s",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "muzzle",
+    "mod_targets": [
+      "amb17"
+    ],
+    "handling_modifier": 1,
+    "loudness_modifier": -100,
+    "flags": [
+      "IRREMOVABLE"
+    ],
+    "longest_side": "26 cm"
+  },
+  {
+    "id": "ga_stock",
+    "type": "GUNMOD",
+    "name": {
+      "str": "GA折叠枪托"
+    },
+    "description": "GA系列步枪的通用枪托。",
+    "weight": "200 g",
+    "volume": "350 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": 4200,
+    "price_postapoc": 750,
+    "install_time": "1 m",
+    "material": [
+      "plastic",
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "min_skills": [
+      [
+        "weapon",
+        3
+      ]
+    ],
+    "handling_modifier": 10,
+    "location": "stock",
+    "mod_targets": [
+      "rifle"
+    ],
+    "use_action": {
+      "type": "transform",
+      "msg": "你折叠枪托，以便携带。",
+      "menu_text": "折叠",
+      "target": "ga_stock_folded",
+      "moves": 120
+    },
+    "longest_side": "30 cm"
+  },
+  {
+    "id": "ga_stock_folded",
+    "type": "GUNMOD",
+    "name": {
+      "str": "GA折叠枪托(折叠)"
+    },
+    "description": "GA系列步枪的通用枪托，目前已被折叠。",
+    "copy-from": "ga_stock",
+    "use_action": {
+      "type": "transform",
+      "msg": "你展开枪托，准备战斗。",
+      "menu_text": "展开",
+      "target": "ga_stock",
+      "moves": 120
+    },
+    "flags": [
+      "FOLDED_STOCK"
+    ],
+    "longest_side": "30 cm"
+  },
+  {
+    "id": "ga_stock2",
+    "type": "GUNMOD",
+    "name": {
+      "str": "GA轻量化折叠枪托"
+    },
+    "description": "GA系列步枪的轻量化枪托，适用于近距离战斗。",
+    "weight": "200 g",
+    "volume": "350 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": 4200,
+    "price_postapoc": 750,
+    "install_time": "1 m",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "min_skills": [
+      [
+        "weapon",
+        3
+      ]
+    ],
+    "handling_modifier": 5,
+    "location": "stock",
+    "mod_targets": [
+      "rifle"
+    ],
+    "use_action": {
+      "type": "transform",
+      "msg": "你折叠枪托，以便携带。",
+      "menu_text": "折叠",
+      "target": "ga_stock2_folded",
+      "moves": 120
+    },
+    "longest_side": "30 cm"
+  },
+  {
+    "id": "ga_stock2_folded",
+    "type": "GUNMOD",
+    "name": {
+      "str": "GA轻量化折叠枪托(折叠)"
+    },
+    "description": "GA系列步枪的轻量化枪托，目前已被折叠。",
+    "copy-from": "ga_stock2",
+    "use_action": {
+      "type": "transform",
+      "msg": "你展开枪托，准备战斗。",
+      "menu_text": "展开",
+      "target": "ga_stock2",
+      "moves": 120
+    },
+    "flags": [
+      "FOLDED_STOCK"
+    ],
+    "longest_side": "30 cm"
+  },
+  {
+    "id": "tac_h_scope",
+    "type": "GUNMOD",
+    "name": {
+      "str": "LSC“光晕”光学瞄准镜"
+    },
+    "description": "格科斯勒生产的高级光学瞄准镜，适用于远距离狙击。",
+    "weight": "500 g",
+    "volume": "750 ml",
+    "price": 36500,
+    "price_postapoc": 1550,
+    "install_time": "1 m",
+    "material": [
+      "superalloy",
+      "glass"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "sights",
+    "mod_targets": [
+      "rifle"
+    ],
+    "field_of_view": 600,
+    "sight_dispersion": 0,
+    "flags": [
+      "ZOOM"
+    ],
+    "longest_side": "28 cm"
+  },
+  {
+    "id": "tac_m_scope",
+    "type": "GUNMOD",
+    "name": {
+      "str": "“拉兹瓦”瞄准镜"
+    },
+    "description": "格科斯勒生产的光学瞄准镜，适用于中距离战斗。",
+    "weight": "500 g",
+    "volume": "750 ml",
+    "price": 36500,
+    "price_postapoc": 1350,
+    "install_time": "1 m",
+    "material": [
+      "superalloy",
+      "glass"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "sights",
+    "mod_targets": [
+      "rifle"
+    ],
+    "field_of_view": 900,
+    "aim_speed_modifier": 50,
+    "sight_dispersion": 9,
+    "flags": [
+      "ZOOM"
+    ],
+    "longest_side": "28 cm"
+  },
+  {
+    "id": "ga_stock_h",
+    "type": "GUNMOD",
+    "name": {
+      "str": "GA重型枪托"
+    },
+    "description": "GA系列步枪的重型枪托，略微累赘，无法折叠，但是可以很好的增加稳定性和精度。",
+    "weight": "200 g",
+    "volume": "350 ml",
+    "integral_volume": "500 ml",
+    "integral_weight": "500 g",
+    "price": 7400,
+    "price_postapoc": 1150,
+    "install_time": "1 m",
+    "material": [
+      "plastic",
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "min_skills": [
+      [
+        "weapon",
+        3
+      ]
+    ],
+    "handling_modifier": 12,
+    "dispersion_modifier": -30,
+    "location": "stock",
+    "mod_targets": [
+      "rifle"
+    ],
+    "longest_side": "30 cm"
+  },
+  {
+    "id": "vssc_stock",
+    "type": "GUNMOD",
+    "name": {
+      "str": "VSS 定制枪托"
+    },
+    "description": "定制的VSS枪托，整体被涂成了灰色，并且额外加上了一个托腮垫。",
+    "weight": "200 g",
+    "volume": "350 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": 500,
+    "price_postapoc": 50,
+    "install_time": "1 m",
+    "material": [
+      "plastic"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "min_skills": [
+      [
+        "weapon",
+        3
+      ]
+    ],
+    "handling_modifier": 15,
+    "location": "stock",
+    "mod_targets": [
+      "vss",
+      "vssc"
+    ],
+    "longest_side": "30 cm"
+  },
+  {
+    "id": "tac_s_scope",
+    "type": "GUNMOD",
+    "name": {
+      "str": "“奇美拉”定制组合瞄具"
+    },
+    "description": "格科斯勒生产的组合式瞄准镜，任何距离的战斗几乎都能应对，VSSC专用。",
+    "weight": "400 g",
+    "volume": "300 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": 56500,
+    "price_postapoc": 2730,
+    "install_time": "5 s",
+    "material": [
+      "superalloy",
+      "glass"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "sights",
+    "mod_targets": [
+      "vssc"
+    ],
+    "field_of_view": 3000,
+    "aim_speed_modifier": 3000,
+    "sight_dispersion": 5,
+    "flags": [
+      "ZOOM"
+    ],
+    "longest_side": "28 cm"
+  },
+  {
+    "id": "gun_sp_a",
+    "type": "GUNMOD",
+    "looks_like": "tac_gun_sp",
+    "name": {
+      "str": "SUB-A 消音器"
+    },
+    "description": "猎鹿人户外用品生产的一种轻型消音器，适用于使用手枪弹的枪械，消音效果优秀。",
+    "weight": "250 g",
+    "volume": "250 ml",
+    "integral_longest_side": "10 cm",
+    "price": 6500,
+    "price_postapoc": 3500,
+    "install_time": "10 s",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "muzzle",
+    "blacklist_mod": [
+      "barrel_ported",
+      "knife_combat_army",
+      "knife_combat",
+      "knife_combat_marine",
+      "makeshift_bayonet",
+      "sword_bayonet"
+    ],
+    "flags": [
+      "DISABLE_SIGHTS"
+    ],
+    "mod_targets": [
+      "pistol",
+      "smg"
+    ],
+    "loudness_modifier": -100,
+    "dispersion_modifier": -3,
+    "handling_modifier": 1,
+    "longest_side": "26 cm"
+  },
+  {
+    "id": "gun_sp_m",
+    "type": "GUNMOD",
+    "looks_like": "tac_gun_sp",
+    "name": {
+      "str": "SUB-M 消音器"
+    },
+    "description": "猎鹿人户外用品生产的一种常规消音器，适用于步枪或者霰弹枪，消音效果优秀，并且可以提供额外的控制性和精度。",
+    "weight": "400 g",
+    "volume": "400 ml",
+    "integral_longest_side": "15 cm",
+    "price": 6500,
+    "price_postapoc": 6500,
+    "install_time": "10 s",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "muzzle",
+    "blacklist_mod": [
+      "barrel_ported",
+      "knife_combat_army",
+      "knife_combat",
+      "knife_combat_marine",
+      "makeshift_bayonet",
+      "sword_bayonet"
+    ],
+    "flags": [
+      "DISABLE_SIGHTS"
+    ],
+    "mod_targets": [
+      "rifle",
+      "shotgun"
+    ],
+    "loudness_modifier": -180,
+    "dispersion_modifier": -5,
+    "handling_modifier": 3,
+    "longest_side": "26 cm"
+  },
+  {
+    "id": "gun_sp_h",
+    "type": "GUNMOD",
+    "looks_like": "tac_gun_sp",
+    "name": {
+      "str": "SUB-H 消音器"
+    },
+    "description": "猎鹿人户外用品生产的一种大型消音器，适用于步枪或者霰弹枪，消音效果非常杰出，并且可以提供更多额外的控制性和精度。",
+    "weight": "500 g",
+    "volume": "600 ml",
+    "integral_longest_side": "30 cm",
+    "price": 9500,
+    "price_postapoc": 9500,
+    "install_time": "10 s",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "muzzle",
+    "blacklist_mod": [
+      "barrel_ported",
+      "knife_combat_army",
+      "knife_combat",
+      "knife_combat_marine",
+      "makeshift_bayonet",
+      "sword_bayonet"
+    ],
+    "flags": [
+      "DISABLE_SIGHTS"
+    ],
+    "mod_targets": [
+      "rifle",
+      "shotgun"
+    ],
+    "loudness_modifier": -220,
+    "dispersion_modifier": -10,
+    "handling_modifier": 5,
+    "longest_side": "26 cm"
+  },
+  {
+    "id": "gun_sp_sh",
+    "type": "GUNMOD",
+    "looks_like": "tac_gun_sp",
+    "name": {
+      "str": "“铁锤”消音器"
+    },
+    "description": "猎鹿人户外用品生产的一种超重型消音器，适用于大口径武器，完完全全为了消音效果而制造出来的产物，结构复杂，但是消音效果极佳，代价则是这东西有一把枪那么沉。",
+    "weight": "3000 g",
+    "volume": "3000 ml",
+    "integral_longest_side": "60 cm",
+    "price": 18500,
+    "price_postapoc": 18500,
+    "install_time": "10 m",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "muzzle",
+    "blacklist_mod": [
+      "barrel_ported",
+      "knife_combat_army",
+      "knife_combat",
+      "knife_combat_marine",
+      "makeshift_bayonet",
+      "sword_bayonet"
+    ],
+    "flags": [
+      "DISABLE_SIGHTS"
+    ],
+    "mod_targets": [
+      "rifle",
+      "shotgun"
+    ],
+    "loudness_modifier": -500,
+    "dispersion_modifier": -10,
+    "handling_modifier": 10,
+    "longest_side": "26 cm"
+  },
+  {
+    "id": "ga_bore_545",
+    "type": "GUNMOD",
+    "looks_like": "tac_gun_sp",
+    "name": {
+      "str": "GA系列5.45x39mm口径改件"
+    },
+    "description": "一套用于GA枪系的通用性口径转换装置，可以将口径转换成5.45x39mm，为用户提供了更多样化的选择。",
+    "weight": "500 g",
+    "volume": "500 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": 75000,
+    "price_postapoc": 7500,
+    "material": [
+      "superalloy"
+    ],
+    "symbol": ":",
+    "color": "green",
+    "location": "bore",
+    "mod_targets": [
+      "ga290k",
+      "ga290lmg",
+      "ga290dmr",
+      "ga290c",
+      "ga290"
+    ],
+    "install_time": "1 m",
+    "ammo_modifier": [
+      "545x39"
+    ],
+    "magazine_adaptor": [
+      [
+        "545x39",
+        [
+          "737_cta_20",
+          "737_cta_30",
+          "737_cta_50",
+          "737_cta_100"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        1
+      ]
+    ],
+    "longest_side": "18 cm"
+  },
+  {
+    "id": "ga_bore_762",
+    "type": "GUNMOD",
+    "looks_like": "tac_gun_sp",
+    "name": {
+      "str": "GA系列7.62x39mm口径改件"
+    },
+    "description": "一套用于GA枪系的通用性口径转换装置，可以将口径转换成7.62x39mm，为用户提供了更多样化的选择。",
+    "weight": "500 g",
+    "volume": "500 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": 75000,
+    "price_postapoc": 7500,
+    "material": [
+      "superalloy"
+    ],
+    "symbol": ":",
+    "color": "green",
+    "location": "bore",
+    "mod_targets": [
+      "ga290k",
+      "ga290lmg",
+      "ga290dmr",
+      "ga290c",
+      "ga290"
+    ],
+    "install_time": "1 m",
+    "ammo_modifier": [
+      "762"
+    ],
+    "magazine_adaptor": [
+      [
+        "762",
+        [
+          "737_cta_20",
+          "737_cta_30",
+          "737_cta_50",
+          "737_cta_100"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        1
+      ]
+    ],
+    "longest_side": "18 cm"
+  },
+  {
+    "id": "1022_afp",
+    "type": "GUNMOD",
+    "name": {
+      "str": "阿金斯加速器"
+    },
+    "description": "由Akins Group, Inc.开发，是一种用于Ruger 10/22步枪的枪托。它包含一个线性运动装置，使步枪在射击时能够在枪托内后坐，从而实现扳机的自动复位，让射手无需每次射击后手动复位扳机，可连续射击，直到弹匣空仓或射手松开扳机，能给射手带来类似全自动射击的效果。",
+    "weight": "50 g",
+    "volume": "50 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": 7000,
+    "price_postapoc": 700,
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "red",
+    "location": "mechanism",
+    "mod_targets": [
+      "ruger_1022"
+    ],
+    "install_time": "5 m",
+    "mode_modifier": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        5
+      ]
+    ],
+    "min_skills": [
+      [
+        "rifle",
+        2
+      ]
+    ],
+    "longest_side": "18 cm"
+  },
+  {
+    "id": "tac_x_scope",
+    "type": "GUNMOD",
+    "name": {
+      "str": "“HOV”数码瞄准镜"
+    },
+    "description": "格科斯勒生产的单倍率数码瞄准镜，适用于近距离战斗。",
+    "weight": "100 g",
+    "volume": "150 ml",
+    "price": 60000,
+    "price_postapoc": 6250,
+    "install_time": "1 m",
+    "material": [
+      "superalloy",
+      "glass"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "sights",
+    "mod_targets": [
+      "pistol",
+      "smg",
+      "rifle",
+      "shotgun"
+    ],
+    "field_of_view": 900,
+    "aim_speed_modifier": 150,
+    "sight_dispersion": 9,
+    "flags": [
+      "ZOOM"
+    ],
+    "longest_side": "28 cm"
+  },
+  {
+    "id": "vovk_silencer",
+    "type": "GUNMOD",
+    "looks_like": "tac_gun_sp",
+    "name": {
+      "str": "VOVK 消音器"
+    },
+    "description": "格科斯勒生产的消音器，与常规的消音器结构有点不同，它更像是制退器与消音器的结合体，内部结构也比较特殊。",
+    "weight": "200 g",
+    "volume": "300 ml",
+    "integral_longest_side": "15 cm",
+    "price": 8500,
+    "price_postapoc": 8500,
+    "install_time": "10 s",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "muzzle",
+    "flags": [
+      "DISABLE_SIGHTS"
+    ],
+    "blacklist_mod": [
+      "barrel_ported",
+      "knife_combat_army",
+      "knife_combat",
+      "knife_combat_marine",
+      "makeshift_bayonet",
+      "sword_bayonet"
+    ],
+    "mod_targets": [
+      "rifle",
+      "shotgun"
+    ],
+    "loudness_modifier": -110,
+    "dispersion_modifier": -5,
+    "handling_modifier": 5,
+    "longest_side": "26 cm"
+  },
+  {
+    "id": "psu_silencer",
+    "type": "GUNMOD",
+    "looks_like": "tac_gun_sp",
+    "name": {
+      "str": "PSU 消音器"
+    },
+    "description": "格科斯勒生产的消音器，可以用于绝大多数的枪械上，但是效果要差一些。",
+    "weight": "250 g",
+    "volume": "350 ml",
+    "integral_longest_side": "15 cm",
+    "price": 8500,
+    "price_postapoc": 8500,
+    "install_time": "10 s",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "muzzle",
+    "flags": [
+      "DISABLE_SIGHTS"
+    ],
+    "blacklist_mod": [
+      "barrel_ported",
+      "knife_combat_army",
+      "knife_combat",
+      "knife_combat_marine",
+      "makeshift_bayonet",
+      "sword_bayonet"
+    ],
+    "mod_targets": [
+      "pistol",
+      "smg",
+      "rifle",
+      "shotgun"
+    ],
+    "loudness_modifier": -90,
+    "handling_modifier": 1,
+    "longest_side": "26 cm"
+  },
+  {
+    "id": "ak_autopart",
+    "type": "GUNMOD",
+    "name": {
+      "str": "AK系全自动扳机组"
+    },
+    "description": "一套用于常规半自动AK的全自动扳机组使其可以像正规的AK一样进行全自动射击并且不会对枪械本身造成任何影响，这可不是什么撞火枪托，不过你需要一些相关知识才能安装它。",
+    "weight": "50 g",
+    "volume": "50 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": 10000,
+    "price_postapoc": 1000,
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "red",
+    "location": "mechanism",
+    "mod_targets": [
+      "aksemi",
+      "akm",
+      "ak308",
+      "draco",
+      "ak556",
+      "minidraco556"
+    ],
+    "install_time": "20 m",
+    "mode_modifier": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        2
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        4
+      ],
+      [
+        "mechanics",
+        3
+      ],
+      [
+        "gun",
+        4
+      ]
+    ],
+    "longest_side": "18 cm"
+  },
+  {
+    "id": "d30_grip",
+    "type": "GUNMOD",
+    "name": {
+      "str": "D30 高端握把"
+    },
+    "description": "格科斯勒生产的枪械握把，可以在很大程度上改善后坐力",
+    "weight": "100 g",
+    "volume": "250 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": 55000,
+    "price_postapoc": 2550,
+    "install_time": "10 m",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "grip",
+    "mod_targets": [
+      "smg",
+      "rifle",
+      "pistol",
+      "shotgun",
+      "crossbow",
+      "launcher",
+      "bow"
+    ],
+    "handling_modifier": 5,
+    "min_skills": [
+      [
+        "weapon",
+        2
+      ]
+    ],
+    "longest_side": "18 cm"
+  },
+  {
+    "id": "grip_d45",
+    "type": "GUNMOD",
+    "name": {
+      "str": "D45 斜向前握把"
+    },
+    "description": "格科斯勒工业生产的倾斜握把，非常适合用来控制后坐力。",
+    "weight": "130 g",
+    "volume": "130 ml",
+    "price": 14000,
+    "price_postapoc": 1400,
+    "install_time": "50 s",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "underbarrel",
+    "mod_targets": [
+      "shotgun",
+      "smg",
+      "rifle",
+      "crossbow",
+      "launcher"
+    ],
+    "handling_modifier": 10,
+    "min_skills": [
+      [
+        "weapon",
+        3
+      ]
+    ],
+    "flags": [
+      "PUMP_RAIL_COMPATIBLE"
+    ],
+    "longest_side": "18 cm"
+  },
+  {
+    "id": "gdv_stock",
+    "type": "GUNMOD",
+    "name": {
+      "str": "GDV-2 枪托"
+    },
+    "description": "一个可以用于绝大多数武器的枪托，用于替换其原来的枪托，可以提供非常好的后坐力控制。",
+    "weight": "350 g",
+    "volume": "500 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": 65000,
+    "price_postapoc": 3500,
+    "install_time": "5 m",
+    "to_hit": 1,
+    "material": [
+      "plastic",
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "stock",
+    "mod_targets": [
+      "smg",
+      "rifle",
+      "shotgun",
+      "crossbow",
+      "launcher"
+    ],
+    "dispersion_modifier": -10,
+    "handling_modifier": 10,
+    "longest_side": "30 cm",
+    "bashing": 6
+  },
+  {
+    "id": "vdh_stock",
+    "type": "GUNMOD",
+    "name": {
+      "str": "VDH-1 重型枪托"
+    },
+    "description": "基于GDV-2改进而来的枪托，完完全全为了后坐力控制而诞生的产物，会使便携性降低。",
+    "weight": "350 g",
+    "volume": "500 ml",
+    "integral_volume": "250 ml",
+    "integral_weight": "350 g",
+    "price": 65000,
+    "price_postapoc": 3500,
+    "install_time": "5 m",
+    "to_hit": 1,
+    "material": [
+      "plastic",
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "stock",
+    "mod_targets": [
+      "smg",
+      "rifle",
+      "shotgun",
+      "crossbow",
+      "launcher"
+    ],
+    "dispersion_modifier": -20,
+    "handling_modifier": 16,
+    "longest_side": "30 cm",
+    "bashing": 6
+  },
+  {
+    "id": "shs_muzzle",
+    "type": "GUNMOD",
+    "name": {
+      "str": "MZ-SHS 制退器"
+    },
+    "description": "格科斯勒生产的一款制退器，整体呈长方形，侧面有很多排气孔，可以将火药燃气排向后方来大幅度减小后坐力。",
+    "weight": "230 g",
+    "volume": "120 ml",
+    "price": 8500,
+    "price_postapoc": 8500,
+    "install_time": "10 s",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "muzzle",
+    "mod_targets": [
+      "smg",
+      "rifle"
+    ],
+    "handling_modifier": 15,
+    "longest_side": "18 cm"
+  },
+  {
+    "id": "jsls_mz",
+    "type": "GUNMOD",
+    "name": {
+      "str": "杰希林斯枪口制退器"
+    },
+    "description": "杰希林斯的枪口制退器，要比枪管粗了整整一圈。",
+    "weight": "5 g",
+    "volume": "1 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": 5,
+    "price_postapoc": 5,
+    "install_time": "15 s",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "muzzle",
+    "mod_targets": [
+      "jsls_50"
+    ],
+    "damage_modifier": {
+      "damage_type": "bullet",
+      "amount": -2
+    },
+    "handling_modifier": 15,
+    "flags": [
+      "IRREMOVABLE"
+    ],
+    "longest_side": "18 cm"
+  },
+  {
+    "id": "cr_part",
+    "type": "GUNMOD",
+    "name": {
+      "str": "恒定后座系统"
+    },
+    "description": "一种独特的枪械内部结构，其原理是通过加长枪机后坐行程，让后坐能量被复进簧充分吸收，以此降低射手感受到的后坐力，但是会降低射速并增加体积",
+    "weight": "50 g",
+    "volume": "50 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": 1,
+    "price_postapoc": 1,
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "red",
+    "location": "mechanism",
+    "mod_targets": [
+      "smg",
+      "rifle",
+      "pistol",
+      "shotgun",
+      "launcher"
+    ],
+    "install_time": "30 m",
+    "handling_modifier": 25,
+    "flags": [
+      "IRREMOVABLE",
+      "ZERO_WEIGHT"
+    ],
+    "longest_side": "18 cm"
+  },
+  {
+    "id": "bars",
+    "copy-from": "bars",
+    "type": "GUNMOD",
+    "name": {
+      "str": "平衡后座系统"
+    },
+    "description": "平衡后座系统是一种用于枪械的减后坐技术，其原理是通过反向运动的配重部件抵消射击时的后坐冲量，以此提升射击稳定性。",
+    "weight": "60 g",
+    "volume": "250 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": 10,
+    "price_postapoc": 10,
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "red",
+    "location": "mechanism",
+    "mod_targets": [
+      "smg",
+      "rifle",
+      "pistol",
+      "shotgun",
+      "launcher"
+    ],
+    "install_time": "30 m",
+    "handling_modifier": 22,
+    "flags": [
+      "IRREMOVABLE",
+      "ZERO_WEIGHT"
+    ],
+    "longest_side": "18 cm"
+  },
+  {
+    "id": "recoil_a",
+    "copy-from": "bars",
+    "type": "GUNMOD",
+    "name": {
+      "str": "低后座结构"
+    },
+    "description": "用于区分枪械之间的后坐力。",
+    "weight": "1 g",
+    "volume": "1 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": 1,
+    "price_postapoc": 1,
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "red",
+    "location": "mechanism",
+    "mod_targets": [
+      "smg",
+      "rifle",
+      "pistol",
+      "shotgun",
+      "launcher"
+    ],
+    "install_time": "1 m",
+    "handling_modifier": 2,
+    "flags": [
+      "IRREMOVABLE",
+      "ZERO_WEIGHT"
+    ],
+    "longest_side": "18 cm"
+  },
+  {
+    "id": "recoil_b",
+    "copy-from": "bars",
+    "type": "GUNMOD",
+    "name": {
+      "str": "高后座结构"
+    },
+    "description": "用于区分枪械之间的后坐力。",
+    "weight": "1 g",
+    "volume": "1 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": 1,
+    "price_postapoc": 1,
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "red",
+    "location": "mechanism",
+    "mod_targets": [
+      "smg",
+      "rifle",
+      "pistol",
+      "shotgun",
+      "launcher"
+    ],
+    "install_time": "1 m",
+    "handling_modifier": -2,
+    "flags": [
+      "IRREMOVABLE",
+      "ZERO_WEIGHT"
+    ],
+    "longest_side": "18 cm"
+  },
+  {
+    "id": "dhzr_mz",
+    "type": "GUNMOD",
+    "name": {
+      "str": "DHZR 制退器"
+    },
+    "description": "DHZR的枪口制退器，看起来跟巴雷特上面的那个差不多，不过要更大。",
+    "weight": "5 g",
+    "volume": "1 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": 5,
+    "price_postapoc": 5,
+    "install_time": "15 s",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "muzzle",
+    "mod_targets": [
+      "dhzr"
+    ],
+    "handling_modifier": 15,
+    "flags": [
+      "IRREMOVABLE"
+    ],
+    "longest_side": "18 cm"
+  },
+  {
+    "id": "sgs_sp",
+    "type": "GUNMOD",
+    "name": {
+      "str": "GA-12SGS 消音器"
+    },
+    "description": "GA-12SGS一体式消音，侧面呈长方形，可以提供相当不错的消音效果。",
+    "volume": "1 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": 1,
+    "price_postapoc": 1,
+    "install_time": "1 s",
+    "material": [
+      "superalloy"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "muzzle",
+    "mod_targets": [
+      "gs_12sgs"
+    ],
+    "loudness_modifier": -80,
+    "handling_modifier": 2,
+    "flags": [
+      "IRREMOVABLE",
+      "ZERO_WEIGHT"
+    ],
+    "longest_side": "26 cm"
+  }
+]

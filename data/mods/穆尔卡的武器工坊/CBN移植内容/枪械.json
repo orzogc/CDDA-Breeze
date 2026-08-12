@@ -1,0 +1,2297 @@
+[
+  {
+    "id": "9a91",
+    "copy-from": "rifle_auto",
+    "type": "GUN",
+    "name": {
+      "str_sp": "9A91 突击步枪"
+    },
+    "description": "9A-91由图拉KBP在1990年代初研制，是面向俄国内务与特种单位的紧凑9x39mm武器。它比AS VAL更便宜简单，可折叠枪托和短机匣适合城市、车辆与近距离行动。该枪及其VSK-94精确型曾在车臣等反恐作战环境中出现，但整体装备规模有限。",
+    "weight": "1800 g",
+    "volume": "1800 ml",
+    "price": "6300 USD",
+    "price_postapoc": "63 USD",
+    "skill": "rifle",
+    "material": [
+      "steel"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "939"
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -3
+    },
+    "bashing": 10,
+    "dispersion": 220,
+    "durability": 8,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "default_mods": [
+      "wire_stock"
+    ],
+    "barrel_volume": "100 ml",
+    "longest_side": "60 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "kc14_20",
+          "9a91_20"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ac556",
+    "copy-from": "rifle_auto",
+    "type": "GUN",
+    "name": {
+      "str": "鲁格 AC-556 突击步枪"
+    },
+    "description": "鲁格AC-556是Mini-14的选择射击军警型号，1970年代后期推出，使用5.56毫米弹并保留类似M14的传统木质枪托外形。它曾销往美国警察、监狱和少量海外单位，折叠枪托短型尤其便于车辆使用。随着AR系卡宾枪普及，AC-556逐渐退出主流。",
+    "weight": "2900 g",
+    "volume": "1700 ml",
+    "price": "1200 USD",
+    "price_postapoc": "4750 cent",
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "color": "brown",
+    "ammo": "223",
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -2
+    },
+    "dispersion": 170,
+    "default_mods": [
+      "wire_stock"
+    ],
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "BURST",
+        "3 rd.",
+        3
+      ],
+      [
+        "AUTO",
+        "auto",
+        4
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "longest_side": "94 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "ruger20",
+          "ruger5",
+          "ruger10",
+          "ruger30",
+          "ruger90",
+          "ruger100",
+          "ruger_makeshiftmag"
+        ],
+        "magazine_well": "100 ml"
+      }
+    ]
+  },
+  {
+    "id": "bulldog_sar",
+    "copy-from": "rifle_auto",
+    "type": "GUN",
+    "name": {
+      "str": "斗牛犬-SAR 短突击步枪"
+    },
+    "description": "泽尔纳防务的一款紧凑型突击步枪，斗牛犬系列的第二把枪，整体看上去是常规的AR外形，但是它很短，非常短，不知道的话估计会有人以为它是一把大号手枪，小体积带来的便携性是毋庸置疑的，虽然它可以让你在近距离快速瞄准目标，但是枪口初速，精准度和操控性极度糟糕，不过它还是靠着可以塞进手提包的小尺寸和便宜的价格获得了不错的销量。",
+    "weight": "1520 g",
+    "volume": "1000 ml",
+    "price": "2000 USD",
+    "price_postapoc": "20 USD",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "223"
+    ],
+    "dispersion": 300,
+    "bashing": 10,
+    "durability": 7,
+    "skill": "rifle",
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -5
+    },
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        4
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "default_mods": [
+      "wire_stock"
+    ],
+    "flags": [
+      "NEVER_JAMS"
+    ],
+    "longest_side": "66 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "stanag30",
+          "stanag5",
+          "stanag10",
+          "stanag20",
+          "stanag40",
+          "stanag50",
+          "stanag60",
+          "stanag60drum",
+          "stanag90",
+          "stanag100",
+          "stanag100drum",
+          "stanag150",
+          "stanag30",
+          "survivor223mag"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bulldog_smg",
+    "copy-from": "smg_base",
+    "type": "GUN",
+    "name": {
+      "str": "斗牛犬-SMG 微型冲锋枪"
+    },
+    "description": "泽尔纳防务的一款紧凑型冲锋枪，使用MP5的弹匣，配有钢架枪托，尺寸非常小，重量轻，价格也便宜，但缺点也很明显，紧凑的体积让它的枪管很短，这导致枪口初速和精度惨不忍睹，过短的护木也让它没有改装空间。",
+    "weight": "1200 g",
+    "volume": "600 ml",
+    "price": "1500 USD",
+    "price_postapoc": "15 USD",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "9mm"
+    ],
+    "dispersion": 400,
+    "bashing": 10,
+    "durability": 7,
+    "skill": "smg",
+    "default_mods": [
+      "wire_stock"
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -2
+    },
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        4
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ]
+    ],
+    "longest_side": "45 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "mp5mag",
+          "mp5bigmag"
+        ],
+        "magazine_well": "100 ml"
+      }
+    ]
+  },
+  {
+    "id": "carbon_rifle",
+    "copy-from": "rifle_auto",
+    "looks_like": "ar15",
+    "type": "GUN",
+    "name": {
+      "str": "PCR-15 碳纤维突击步枪"
+    },
+    "description": "这把3D打印碳纤维突击步枪属于典型的“幽灵枪”，它的设计图由一名不知名用户上传，虽然该设计图很快便被删除但它还是在一定范围传播开了，该枪使用了大量的碳纤维，只有关键部件使用了金属，重量非常轻，结构类似于普通的AR15并同样使用STANAG弹匣，再加上可以全自动射击的功能使其成为多国司法部门最讨厌的武器之一。",
+    "weight": "1900 g",
+    "volume": "2800 ml",
+    "longest_side": "85 cm",
+    "price": "1400 USD",
+    "price_postapoc": "55 USD",
+    "to_hit": -1,
+    "bashing": 8,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "223"
+    ],
+    "dispersion": 165,
+    "durability": 5,
+    "min_cycle_recoil": 1350,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "automatic",
+        5
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "stanag30",
+          "stanag5",
+          "stanag5ranger",
+          "stanag10",
+          "stanag10ranger",
+          "stanag20",
+          "stanag20ranger",
+          "stanag30ranger",
+          "stanag40",
+          "stanag40ranger",
+          "stanag50",
+          "stanag60",
+          "stanag60drum",
+          "stanag90",
+          "stanag100",
+          "stanag100drum",
+          "stanag150",
+          "survivor223mag"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cews_28",
+    "type": "GUN",
+    "name": {
+      "str": "CEWS-28 激光机枪"
+    },
+    "description": "基于CEWS-27改进而来的武器，增加了全自动功能并且射速相当之快，为了适应高速射击从而降低了功率并改善了散热，虽然这导致了威力和精度被大幅度削弱，另外不少人都觉得它在连续射击中产生的光束太亮了，尤其是在黑夜中，所以不少人喜欢叫它“大号手电筒”，但这也不耽误它因其优秀的性能而成为不少激光武器爱好者的梦中情枪。",
+    "weight": "4500 g",
+    "volume": "3000 ml",
+    "price": "50000 USD",
+    "price_postapoc": "500 USD",
+    "to_hit": -1,
+    "bashing": 10,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "skill": "rifle",
+    "range": 40,
+    "ranged_damage": {
+      "damage_type": "heat",
+      "amount": 30,
+      "armor_penetration": 30
+    },
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "emitter",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "dispersion": 80,
+    "durability": 10,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        5
+      ]
+    ],
+    "loudness": 100,
+    "ups_charges": 20,
+    "reload": 0,
+    "ammo_effects": [
+      "NO_PENETRATE_OBSTACLES",
+      "DRAW_LASER_BEAM"
+    ],
+    "longest_side": "120 cm"
+  },
+  {
+    "id": "cews_29",
+    "type": "GUN",
+    "name": {
+      "str": "CEWS-29 激光突击步枪"
+    },
+    "description": "CEWS-29是由CEWS-28进行轻量化后而得到的产物，更轻，更便宜，两者基本上是在同一时间装备到部队的，同时这也是市面上最受欢迎的激光武器之一，虽然它的威力不如它的前辈们，但是低耗能可以让它在同等情况下拥有更持久的火力输出。",
+    "weight": "3100 g",
+    "volume": "2200 ml",
+    "price": "30000 USD",
+    "price_postapoc": "300 USD",
+    "to_hit": -1,
+    "bashing": 10,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "skill": "rifle",
+    "range": 40,
+    "ranged_damage": {
+      "damage_type": "heat",
+      "amount": 25,
+      "armor_penetration": 25
+    },
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "emitter",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "dispersion": 120,
+    "durability": 10,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "loudness": 100,
+    "ups_charges": 15,
+    "reload": 0,
+    "ammo_effects": [
+      "NO_PENETRATE_OBSTACLES",
+      "DRAW_LASER_BEAM"
+    ],
+    "longest_side": "86 cm"
+  },
+  {
+    "id": "dp_28",
+    "copy-from": "rifle_auto",
+    "type": "GUN",
+    "name": {
+      "str": "DP-28 轻机枪"
+    },
+    "description": "DP-28是苏联在1928年装备的第一款自主研发的轻机枪，通常由47发容量的弹盘供弹，使用7.62x54mmR莫辛纳甘弹，是二战中苏军的主力轻机枪，哪怕二战后也经常在其他战争中出现，整枪大量使用冲压件，可靠性良好，但是它的重量可算不上轻便，这一把看起来是苏联时期将其作为过时武器低价出口的，反正它还能正常使用。",
+    "weight": "9120 g",
+    "volume": "4000 ml",
+    "price": "5000 USD",
+    "price_postapoc": "50 USD",
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "762R"
+    ],
+    "bashing": 15,
+    "dispersion": 310,
+    "durability": 8,
+    "skill": "rifle",
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        2
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "sling",
+        1
+      ]
+    ],
+    "default_mods": [
+      "bipod"
+    ],
+    "longest_side": "127 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "dp28_47"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ga23sg",
+    "copy-from": "shotgun_pump",
+    "type": "GUN",
+    "name": {
+      "str": "GA-23SG 霰弹枪 "
+    },
+    "description": "如果说格科斯勒哪一把枪最好的话人们可能会争个不停，但要是说哪一把枪最暴力的话非GA-23SG莫属，这把枪本来是为了满足俄罗斯部分精英反恐部队的需求而设计的泵动式霰弹枪，因为KS-23的弹容量太少，但其他国家的一些部队或“组织”看中了它可以在近距离连续造成大规模破坏的特点——可以用于对付某些“危险动物”。\n这把枪使用了KS-23同款的23mm霰弹，由两根枪管上方的弹仓供弹，类似KSG，可以在长度不变的情况下装填更多弹药，但这也导致它与瞄准镜无缘。\n由于其外形，一些见过它的人喜欢叫它“大头娃娃”，但用过它的人知道它用一枪就可以在物理层面上消除任何对它有偏见的人。",
+    "weight": "4500 g",
+    "volume": "2800 ml",
+    "price": "16000 USD",
+    "price_postapoc": "160 USD",
+    "material": [
+      "superalloy",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "skill": "shotgun",
+    "clip_size": 12,
+    "ammo": [
+      "23mm"
+    ],
+    "modes": [
+      [
+        "DEFAULT",
+        "single",
+        1
+      ]
+    ],
+    "bashing": 10,
+    "dispersion": 150,
+    "durability": 8,
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "flags": [
+      "RELOAD_ONE"
+    ],
+    "longest_side": "93 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "23mm": 12
+        }
+      }
+    ]
+  },
+  {
+    "id": "gasc",
+    "copy-from": "rifle_semi",
+    "type": "GUN",
+    "name": {
+      "str": "GASC “巨人克星” 反器材炮"
+    },
+    "description": "一款产自格科斯勒作为班组支援武器使用，针对装甲单位而设计的单兵反器材炮，只需要一发就可以在极远距离精准报废所有型号的机甲以及动力甲，使用半自动管退式原理和五发容量的弹仓供弹，配有脚架，瞄准镜和托腮板，为了削弱它巨大的后坐力所以在枪口加装了拳头那么大的制退器，可以根据作战环境更换部件来兼容其他口径的主流机炮弹药，但你现在恐怕只能用的上25x137mm，整枪大量使用了新式材料，重量属于可以接受的范围，体格好点的勉强能端着打，但这也让它变得更加昂贵，在特定环境下它会很有用。",
+    "weight": "20000 g",
+    "volume": "10000 ml",
+    "price": "85000 USD",
+    "price_postapoc": "850 USD",
+    "material": [
+      "superalloy",
+      "carbide"
+    ],
+    "range": 150,
+    "symbol": "(",
+    "color": "green",
+    "skill": "rifle",
+    "clip_size": 5,
+    "ammo": [
+      "25mm"
+    ],
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -15
+    },
+    "bashing": 30,
+    "dispersion": 0,
+    "durability": 10,
+    "handling": 35,
+    "reload": 200,
+    "default_mods": [
+      "ga_stock_h",
+      "tac_h_scope",
+      "bipod"
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "flags": [
+      "RELOAD_ONE",
+      "NEVER_JAMS"
+    ],
+    "longest_side": "210 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "25mm": 5
+        }
+      }
+    ]
+  },
+  {
+    "id": "gaspgl",
+    "copy-from": "launcher_base",
+    "type": "GUN",
+    "name": {
+      "str_sp": "GA-SPGL 泵动式榴弹发射器"
+    },
+    "description": "格科斯勒设计的一种泵动式榴弹发射器，这一款是SPGL系列中使用40mm榴弹的版本，其设计初衷是为了打造一款多口径并且可以装填多发榴弹的榴弹发射器，它的总体重量比较轻便，弹容量六发，其操作方式与普通的泵动式霰弹枪非常相似，是一款非常受欢迎的榴弹发射器，当然也有人喜欢装填榴霰弹把它当成大号霰弹枪使用……",
+    "weight": "4000 g",
+    "volume": "2000 ml",
+    "price": "13000 USD",
+    "price_postapoc": "130 USD",
+    "material": [
+      "superalloy",
+      "plastic"
+    ],
+    "ammo": [
+      "40x53mm",
+      "40x46mm"
+    ],
+    "dispersion": 230,
+    "clip_size": 6,
+    "reload": 150,
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "flags": [
+      "RELOAD_ONE",
+      "NEVER_JAMS"
+    ],
+    "longest_side": "81 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "40x53mm": 6,
+          "40x46mm": 6
+        }
+      }
+    ]
+  },
+  {
+    "id": "hk_xm8",
+    "copy-from": "rifle_auto",
+    "type": "GUN",
+    "name": {
+      "str": "H&K XM8 突击步枪"
+    },
+    "description": "XM8源自美德联合的OICW计划，黑克勒-科赫以G36机构为基础为美军设计模块化5.56毫米家族。2000年代初的测试型大量采用聚合物外壳，可变换卡宾枪、精确型和班用自动武器配置。计划最终因需求、预算与采购争议取消，仅有少数样枪和海外小规模使用。",
+    "weight": "2660 g",
+    "volume": "2000 ml",
+    "price": "23000 USD",
+    "price_postapoc": "230 USD",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "223"
+    ],
+    "dispersion": 120,
+    "bashing": 10,
+    "durability": 9,
+    "handling": 5,
+    "skill": "rifle",
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "default_mods": [
+      "folding_stock"
+    ],
+    "flags": [
+      "NEVER_JAMS"
+    ],
+    "longest_side": "84 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "stanag30",
+          "stanag5",
+          "stanag10",
+          "stanag20",
+          "stanag40",
+          "stanag50",
+          "stanag60",
+          "stanag60drum",
+          "stanag90",
+          "stanag100",
+          "stanag100drum",
+          "stanag150",
+          "stanag30",
+          "survivor223mag"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "hout_mosin",
+    "copy-from": "rifle_auto",
+    "type": "GUN",
+    "name": {
+      "str": "莫辛纳甘 M1891/30 自动步枪"
+    },
+    "description": "一款基于莫辛纳甘改造而来的自动步枪，其原理和结构参考了一战时期的霍特自动步枪，在枪管上开孔并安装导气活塞来推动枪机实现全自动射击，使用25发弹鼓供弹，枪管上还安装了散热用的风冷套筒。\n“变废为宝的诀窍就是想象力。”",
+    "weight": "5900 g",
+    "volume": "4200 ml",
+    "price": "999 USD",
+    "price_postapoc": "80 USD",
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "762R"
+    ],
+    "bashing": 15,
+    "dispersion": 130,
+    "durability": 8,
+    "clip_size": 25,
+    "skill": "rifle",
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        2
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "sling",
+        1
+      ]
+    ],
+    "flags": [
+      "RELOAD_ONE"
+    ],
+    "longest_side": "123 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "762R_clip"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "krbk308",
+    "copy-from": "rifle_auto",
+    "type": "GUN",
+    "name": {
+      "str": "KRBK-308 步枪"
+    },
+    "description": "7.62x51mm NATO口径的AK在美国市场并不算常见，泽尔纳防务的KRBK-308步枪就是为应对此需求而设计的武器，它在结构方面跟普通的AK并没有太大的区别，无非就是换了枪托，护木，以及更长的枪管，硬要说的话……它使用了弹匣井。",
+    "weight": "3800 g",
+    "volume": "2600 ml",
+    "price": "6000 USD",
+    "price_postapoc": "60 USD",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "color": "brown",
+    "ammo": [
+      "308"
+    ],
+    "dispersion": 80,
+    "bashing": 10,
+    "durability": 8,
+    "blackpowder_tolerance": 24,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "default_mods": [
+      "rifle_scope",
+      "muzzle_brake"
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS"
+    ],
+    "longest_side": "94 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "308_akmag"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "m1919",
+    "copy-from": "rifle_auto",
+    "type": "GUN",
+    "name": {
+      "str_sp": "勃朗宁 M1919A4 中型机枪"
+    },
+    "description": "勃朗宁M1919是由M1917水冷机枪改成气冷结构的.30口径机枪家族，A4型以三脚架使用，是第二次世界大战美军步兵连的重要持续火力。它还参加朝鲜战争，并被安装于车辆、飞机和舰艇。可靠耐用但枪身、三脚架和弹药都很沉重，后来被通用机枪取代。",
+    "weight": "14000 g",
+    "volume": "3 L",
+    "price": "7000 USD",
+    "price_postapoc": "70 USD",
+    "material": "steel",
+    "ammo": "3006",
+    "range": 70,
+    "dispersion": 220,
+    "barrel_volume": "1250 ml",
+    "modes": [
+      [
+        "DEFAULT",
+        "semi",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "longest_side": "104 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "3006_belt"
+        ],
+        "magazine_well": "50 ml"
+      }
+    ]
+  },
+  {
+    "id": "mss_r22",
+    "copy-from": "rifle_semi",
+    "type": "GUN",
+    "name": {
+      "str_sp": "MSS-R22 微声冲锋枪"
+    },
+    "description": "MSS-R22 微声冲锋枪是德尔梅维森枪械一款使用.22 LR弹药的枪械，这把枪的定位非常模糊，谁也不好说它究竟是冲锋枪还是突击步枪，这种武器射击时的噪音和后座非常小，自带的钢架枪托可以进一步缩小体积。",
+    "weight": "2250 g",
+    "volume": "1100 ml",
+    "price": "1000 USD",
+    "price_postapoc": "40 USD",
+    "to_hit": -1,
+    "bashing": 10,
+    "material": [
+      "steel"
+    ],
+    "color": "brown",
+    "symbol": "(",
+    "skill": "rifle",
+    "ammo": [
+      "22"
+    ],
+    "dispersion": 250,
+    "durability": 8,
+    "handling": 10,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 1
+    },
+    "default_mods": [
+      "bcrf_sp"
+    ],
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        2
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "longest_side": "54 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "mss_mag",
+          "mss_drum",
+          "mss_big_drum"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "phzg50",
+    "copy-from": "rifle_auto",
+    "type": "GUN",
+    "name": {
+      "str_sp": "PHZG-50“阿特拉斯”手提式重机枪"
+    },
+    "description": "在动力装甲刚服役的那段时间就有非常多使用动力装甲的士兵反应它们需要一把更方便使用的重机枪，因为M2HB重机枪并不适合手持使用，于是泽尔纳防务便按照需求设计了这样一款武器，PHZG-50虽然看起来跟M2HB截然不同但却有着不少相似点，这款武器使用了手提式握把并且为了在穿戴动力护甲时更方便使用所以它没有扳机护圈，保险的尺寸也被设计的更大，枪管上方有块巨大的散热板以应对长时间射击，枪口处有一个巨大的制退器，开火时枪口处会产生独特的水平V型火光，虽然它没有枪托，但是对于动力护甲来说已经足够了，如果体格够好的话也可以在不穿戴动力装甲的情况下使用它。",
+    "weight": "30000 g",
+    "volume": "8000 ml",
+    "price": "20000 USD",
+    "price_postapoc": "200 USD",
+    "skill": "rifle",
+    "material": [
+      "steel"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "50"
+    ],
+    "bashing": 20,
+    "dispersion": 350,
+    "durability": 8,
+    "handling": 30,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        2
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sling",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS"
+    ],
+    "longest_side": "150 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "belt50"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ptrk",
+    "copy-from": "rifle_auto",
+    "type": "GUN",
+    "name": {
+      "str": "PTRK 反器材步枪"
+    },
+    "description": "苏联在解体的几年之前就开始秘密研究动力装甲了，不过他们那时候管这东西叫特殊作战服，在过程中设计师们发现常规武器对于穿戴这种护甲的士兵来说威力太小了，所以他们就将目光放到了14.5x114mm弹药上，PTRK这把疯狂的武器便由此诞生。\nPTRK算是PTRS-41的超级重制版，结构上非常相似，不同的是它使用弹匣或弹鼓供弹，还有全自动射击功能，重量尚可，测试者对这种武器的评价相当好。\n不幸的是这种武器只生产了一小部分便停产了，已经生产的那一部分成品随着苏联的解体流向了其他国家。",
+    "weight": "23000 g",
+    "volume": "8000 ml",
+    "price": "20000 USD",
+    "price_postapoc": "200 USD",
+    "symbol": "(",
+    "color": "dark_gray",
+    "material": [
+      "steel"
+    ],
+    "ammo": [
+      "145114"
+    ],
+    "range": 100,
+    "skill": "rifle",
+    "bashing": 30,
+    "dispersion": 200,
+    "durability": 8,
+    "handling": 10,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -10
+    },
+    "default_mods": [
+      "muzzle_brake"
+    ],
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        2
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS"
+    ],
+    "longest_side": "200 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "ptrk_mag",
+          "ptrk_drum"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ptrkvk",
+    "copy-from": "rifle_auto",
+    "type": "GUN",
+    "name": {
+      "str": "PTRK-VK 反器材狙击步枪"
+    },
+    "description": "作为格科斯勒对PTRK的仿制品，PTRK-VK算得上是青出于蓝而胜于蓝，它在几乎所有方面的性能都要远超前辈，PTRK有的功能它也有，在现代化改进后它的改装度更高，新式材料减轻了重量，重新设计的制退器比原版性能更好，这是一把非常优秀的武器，一些部队喜欢把它当反器材狙击步枪使用——或者临时的重机枪。",
+    "weight": "15000 g",
+    "volume": "4000 ml",
+    "price": "30000 USD",
+    "price_postapoc": "300 USD",
+    "symbol": "(",
+    "color": "dark_gray",
+    "material": [
+      "superalloy"
+    ],
+    "ammo": [
+      "145114"
+    ],
+    "range": 140,
+    "skill": "rifle",
+    "bashing": 30,
+    "dispersion": 50,
+    "durability": 10,
+    "handling": 25,
+    "default_mods": [
+      "bipod",
+      "muzzle_brake"
+    ],
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        2
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS"
+    ],
+    "longest_side": "215 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "ptrk_mag",
+          "ptrk_drum"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rpd",
+    "copy-from": "rifle_auto",
+    "type": "GUN",
+    "name": {
+      "str": "RPD 轻机枪"
+    },
+    "description": "RPD轻机枪是苏联于二战后研制的第一代班用轻机枪。该枪采用7.62x39mm弹药，结构紧凑、坚固耐用，便于单兵携行。作为步兵班组的核心火力支援武器其在朝鲜战争、越南战争等多场冲突中表现卓越，在越战中的SOG部队也很喜欢这种武器。",
+    "weight": "7400 g",
+    "volume": "4500 ml",
+    "price": "28000 USD",
+    "price_postapoc": "280 USD",
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "symbol": "(",
+    "color": "brown",
+    "ammo": [
+      "762"
+    ],
+    "bashing": 15,
+    "dispersion": 300,
+    "handling": 5,
+    "durability": 9,
+    "skill": "rifle",
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "barrel_volume": "605 ml",
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS"
+    ],
+    "longest_side": "104 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "rpd_100"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sig_mpx",
+    "copy-from": "rifle_auto",
+    "type": "GUN",
+    "name": {
+      "str": "西格绍尔 MPX 冲锋枪"
+    },
+    "description": "SIG MPX于2010年代推出，是一套采用短行程活塞和旋转枪机的模块化手枪口径平台，操作布局接近AR步枪。闭膛待击有利于首发精度，枪管、护木和枪托可按任务更换。它被部分军警与安保用户采用，也在美国民用市场流行，但装备规模仍不及传统MP5。",
+    "weight": "2100 g",
+    "volume": "900 ml",
+    "price": "7000 USD",
+    "price_postapoc": "70 USD",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "light_gray",
+    "ammo": [
+      "9mm"
+    ],
+    "dispersion": 220,
+    "bashing": 10,
+    "durability": 9,
+    "handling": 15,
+    "default_mods": [
+      "folding_stock"
+    ],
+    "skill": "rifle",
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        4
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "bore",
+        1
+      ],
+      [
+        "magazine",
+        1
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS"
+    ],
+    "longest_side": "61 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "mpx_9_mag",
+          "mpx_9_drum"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tnks_hr",
+    "copy-from": "rifle_semi",
+    "type": "GUN",
+    "name": {
+      "str_sp": "TNK-S 狩猎步枪"
+    },
+    "description": "可以使用.357马格南的半自动步枪在市面上很少见，于是德尔梅维森枪械就灵机一动搞出来了这么个东西，TNK-S 狩猎步枪是一款半自动步枪，十发弹仓，长枪管，可以使用.357马格南和.38弹药，但是使用不同的弹药需要调整气体调节器和一个类似保险的旋钮来切换。",
+    "weight": "3020 g",
+    "volume": "2500 ml",
+    "price": "1500 USD",
+    "price_postapoc": "30 USD",
+    "material": [
+      "iron",
+      "wood"
+    ],
+    "color": "brown",
+    "ammo": [
+      "357mag",
+      "38"
+    ],
+    "handling": 30,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 5
+    },
+    "dispersion": 120,
+    "clip_size": 10,
+    "range": 13,
+    "flags": [
+      "RELOAD_ONE"
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        2
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "longest_side": "102 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "357mag": 10
+        }
+      }
+    ]
+  },
+  {
+    "id": "trk_ar",
+    "copy-from": "rifle_semi",
+    "type": "GUN",
+    "name": {
+      "str_sp": "TRK-卡申科 突击步枪"
+    },
+    "description": "TRK-卡申科 突击步枪是一款使用.300 BLK口径的突击步枪，该枪是德尔梅维森枪械旗下的产品，这把枪的体积相当紧凑，价格也便宜，自带一个一体式的消音器，在同类型产品中是个不错的下位替代品，尽管为了压缩价格使得它在某些地方的做工比较粗糙。",
+    "weight": "2820 g",
+    "volume": "1700 ml",
+    "price": "600 USD",
+    "price_postapoc": "35 USD",
+    "to_hit": -1,
+    "bashing": 10,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "color": "brown",
+    "symbol": "(",
+    "skill": "rifle",
+    "ammo": [
+      "300blk"
+    ],
+    "dispersion": 280,
+    "durability": 6,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -4
+    },
+    "default_mods": [
+      "bcrf_sp"
+    ],
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "sling",
+        1
+      ]
+    ],
+    "longest_side": "82 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "stanag30",
+          "stanag5",
+          "stanag10",
+          "stanag20",
+          "stanag40",
+          "stanag50",
+          "stanag60",
+          "stanag60drum",
+          "stanag90",
+          "stanag100",
+          "stanag100drum",
+          "stanag150",
+          "stanag30",
+          "survivor223mag"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "zagl40",
+    "copy-from": "launcher_base",
+    "type": "GUN",
+    "name": {
+      "str": "ZAGL-40 手提式榴弹机枪"
+    },
+    "description": "对于动力装甲士兵来说普通的榴弹发射器威力太小了，既然有条件的话那为什么不弄一把更大的呢？泽尔纳防务的ZAGL-40便应运而生，它使用40x53mm榴弹并且通用Mark 19的弹链，虽然重量不低，但手提式握把可以很大程度上改善操控性，虽然这会导致它无法装备瞄具，它在针对动力装甲的操作方面进行了一些改善，如果你对你自己的力量很有信心的话也可以试着不穿动力装甲使用它。\n“除此之外，因为某些不知名因素导致有些人喜欢叫它爆弹枪——至少挺酷的。”",
+    "weight": "33000 g",
+    "volume": "4 L",
+    "price": "20000 USD",
+    "price_postapoc": "200 USD",
+    "to_hit": -1,
+    "bashing": 14,
+    "material": "steel",
+    "ammo": "40x53mm",
+    "range": 30,
+    "dispersion": 170,
+    "reload": 350,
+    "loudness": -20,
+    "valid_mod_locations": [
+      [
+        "accessories",
+        2
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "rail",
+        1
+      ]
+    ],
+    "modes": [
+      [
+        "DEFAULT",
+        "semi",
+        1,
+        "NPC_AVOID"
+      ],
+      [
+        "AUTO",
+        "auto",
+        2,
+        "NPC_AVOID"
+      ]
+    ],
+    "longest_side": "98 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "belt40mm"
+        ],
+        "magazine_well": "100 ml"
+      }
+    ]
+  },
+  {
+    "id": "viking_shotgun",
+    "copy-from": "shotgun_base",
+    "type": "GUN",
+    "weapon_category": [
+      "SHOTGUNS",
+      "2H_AXES",
+      "AUTOLOADING"
+    ],
+    "name": {
+      "str": "“维京人”半自动霰弹枪"
+    },
+    "description": "猎鹿人户外用品推出的半自动霰弹枪，枪口下方固定着一片装饰华丽的斧刃。它原本面向喜爱奇特收藏品的猎人，八发管状弹仓仍能提供可靠火力，厚重枪身也适合格挡和劈砍；但前端刀刃破坏了重心，既不如真正的斧头灵活，也让快速指向更加费力。壁炉上它是一件醒目的工艺品，灾变后却成了能够一枪一斧解决问题的粗犷武器。",
+    "weight": "3800 g",
+    "volume": "2300 ml",
+    "price": "20000 USD",
+    "price_postapoc": "200 USD",
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "symbol": "(",
+    "color": "brown",
+    "skill": "shotgun",
+    "ammo": [
+      "shot"
+    ],
+    "techniques": [
+      "WBLOCK_1",
+      "BRUTAL",
+      "SWEEP"
+    ],
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "bashing": 26,
+    "cutting": 45,
+    "dispersion": 350,
+    "durability": 9,
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ],
+      [
+        "loading port",
+        1
+      ]
+    ],
+    "flags": [
+      "RELOAD_ONE",
+      "DURABLE_MELEE",
+      "SHEATH_AXE"
+    ],
+    "longest_side": "110 cm",
+    "barrel_volume": "500 ml",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "shot": 8
+        }
+      }
+    ]
+  },
+  {
+    "id": "scgs_chimera",
+    "copy-from": "shotgun_base",
+    "type": "GUN",
+    "weapon_category": [
+      "SHOTGUNS",
+      "SPEARS",
+      "AUTOLOADING"
+    ],
+    "name": {
+      "str_sp": "SCGS“嵌合体”特殊战斗枪矛"
+    },
+    "description": "泽尔纳防务为近距离危险目标处置而设计的特殊战斗枪矛。复合材料长柄前端装有坚韧的合金矛刃，刃背又嵌入一具五发左轮式霰弹枪，使使用者能够先以枪弹阻滞目标，再用长柄武器保持距离。它轻便、耐用且几乎不怕恶劣环境，但怪异结构让瞄准和装填都不如传统霰弹枪顺手，更适合狭窄空间、变异生物控制和动力装甲人员使用。",
+    "weight": "1500 g",
+    "volume": "1000 ml",
+    "price": "18000 USD",
+    "price_postapoc": "180 USD",
+    "material": [
+      "steel",
+      "superalloy",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "skill": "shotgun",
+    "ammo": [
+      "shot"
+    ],
+    "default_mods": [
+      "scgs_blade"
+    ],
+    "techniques": [
+      "WBLOCK_1",
+      "IMPALE"
+    ],
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "bashing": 5,
+    "cutting": 5,
+    "dispersion": 500,
+    "durability": 10,
+    "flags": [
+      "RELOAD_ONE",
+      "NONCONDUCTIVE",
+      "STAB",
+      "SHEATH_SPEAR",
+      "DURABLE_MELEE"
+    ],
+    "longest_side": "150 cm",
+    "barrel_volume": "200 ml",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "shot": 5
+        }
+      }
+    ]
+  },
+  {
+    "id": "gavk_762",
+    "copy-from": "rifle_auto",
+    "type": "GUN",
+    "name": {
+      "str": "GAVK-762M 突击步枪"
+    },
+    "description": "格科斯勒制造的7.62x39mm无托突击步枪，以平衡式后坐机构、低枪管轴线和轻量化材料压低全自动射击时的枪口跳动。无托布局在短小全长内保留了完整枪管，并继续使用常见的AK弹匣，适合车辆乘员和室内战斗。代价是弹匣井位于肩后，换弹动作较慢，扳机连杆手感也不如传统布局直接；昂贵的制造成本更使它成为少数专业单位和收藏家的装备。",
+    "weight": "2500 g",
+    "volume": "1500 ml",
+    "price": "13000 USD",
+    "price_postapoc": "130 USD",
+    "material": [
+      "superalloy",
+      "plastic"
+    ],
+    "color": "brown",
+    "ammo": [
+      "762"
+    ],
+    "dispersion": 120,
+    "bashing": 10,
+    "durability": 10,
+    "handling": 50,
+    "reload": 300,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 2
+    },
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "BURST",
+        "2 rd.",
+        2
+      ],
+      [
+        "AUTO",
+        "auto",
+        4
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS"
+    ],
+    "longest_side": "72 cm",
+    "barrel_volume": "300 ml",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "akmag10",
+          "akmag20",
+          "akmag30",
+          "akmag40",
+          "akdrum75"
+        ],
+        "magazine_well": "250 ml"
+      }
+    ]
+  }
+]

@@ -1,0 +1,662 @@
+[
+  {
+    "id": "Wolftegaon",
+    "type": "TOOL_ARMOR",
+    "repairs_like": "power_armor_basic",
+    "category": "armor",
+    "symbol": "[",
+    "color": "dark_gray",
+    "name": {
+      "str": "“沃夫特冈”单兵作战防护系统（关闭）"
+    },
+    "description": "这件装备是格科斯勒的新式装备，绰号沃夫特冈，是目前世界上已经被装备的最优秀的战斗装甲之一，只配备给了“千斤顶”机械化战斗工兵部队和“EOV”异界探索部队，内置了一个新式的“船锚”维度稳定器，确保你不会受到一些来自异空间的伤害，EXC-G外骨骼可以让使用者在携带大量重物时依旧可以保持灵活姿态，其外骨骼上的惯性稳定器和辅助运动的伺服电机可以在节能模式下照常运作，配套的增加额外部件的DA33防弹套装以及ECU3作战服可以为其提供无与伦比的防弹以及环境防护，几乎可以让使用者在任何极端环境下作战，外骨骼在运作时也会依靠运动来回收一部分能量，以此来达成节能效果从而适应长时间作战，激活以开启。",
+    "flags": [
+      "STURDY",
+      "RAINPROOF",
+      "WATERPROOF",
+      "RAD_PROOF",
+      "PORTAL_PROOF",
+      "DIMENSIONAL_ANCHOR",
+      "NANOFAB_REPAIR",
+      "ELECTRIC_IMMUNE",
+      "PADDED",
+      "USE_UPS",
+      "COMBAT_TOGGLEABLE"
+    ],
+    "price": 7920000,
+    "price_postapoc": 850000,
+    "weight_capacity_bonus": "70 kg",
+    "material": [
+      "carbide",
+      "superalloy",
+      "kevlar_layered",
+      "ceramic"
+    ],
+    "weight": "35000 g",
+    "volume": "50 L",
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "4 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "4 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "4 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "4 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "4 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "4 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "4 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "240 mm",
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "4 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "300 mm",
+        "max_contains_volume": "1500 ml",
+        "max_contains_weight": "6 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT",
+          "MAG_BULKY"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_item_length": "300 mm",
+        "max_contains_volume": "1500 ml",
+        "max_contains_weight": "6 kg",
+        "moves": 40,
+        "flag_restriction": [
+          "MAG_COMPACT",
+          "MAG_BULKY"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "3000 ml",
+        "max_contains_weight": "20 kg",
+        "moves": 30,
+        "flag_restriction": [
+          "GRENADE"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "3000 ml",
+        "max_contains_weight": "20 kg",
+        "moves": 30,
+        "flag_restriction": [
+          "GRENADE"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "description": "小刀鞘",
+        "magazine_well": "350 ml",
+        "holster": true,
+        "max_contains_volume": "750 ml",
+        "max_contains_weight": "5 kg",
+        "max_item_length": "70 cm",
+        "moves": 20,
+        "flag_restriction": [
+          "SHEATH_KNIFE"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "20 L",
+        "max_contains_weight": "40 kg",
+        "moves": 40,
+        "max_item_length": "30 cm",
+        "volume_encumber_modifier": 0,
+        "description": "储物袋."
+      },
+      {
+        "description": "工具挂钩",
+        "holster": true,
+        "volume_encumber_modifier": 0,
+        "weight_multiplier": 0.0,
+        "max_contains_volume": "3250 ml",
+        "max_contains_weight": "5000 g",
+        "max_item_length": "90 cm",
+        "moves": 10,
+        "flag_restriction": [
+          "BELT_CLIP"
+        ]
+      },
+      {
+        "description": "工具挂钩",
+        "holster": true,
+        "volume_encumber_modifier": 0,
+        "weight_multiplier": 0.0,
+        "max_contains_volume": "3250 ml",
+        "max_contains_weight": "5000 g",
+        "max_item_length": "90 cm",
+        "moves": 10,
+        "flag_restriction": [
+          "BELT_CLIP"
+        ]
+      }
+    ],
+    "environmental_protection": 100,
+    "warmth": 10,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WORN",
+          "condition": "ACTIVE",
+          "values": [
+            {
+              "value": "CLIMATE_CONTROL_HEAT",
+              "add": 500
+            },
+            {
+              "value": "CLIMATE_CONTROL_CHILL",
+              "add": 500
+            }
+          ]
+        }
+      ]
+    },
+    "use_action": {
+      "type": "transform",
+      "msg": "GKSLE系统已启动，恒温系统，载重系统已生效。",
+      "target": "Wolftegaon_on",
+      "active": true,
+      "need_charges": 1,
+      "need_charges_msg": "未检测到可用电源。"
+    },
+    "armor": [
+      {
+        "material": [
+          {
+            "type": "carbide",
+            "covered_by_mat": 100,
+            "thickness": 5
+          },
+          {
+            "type": "kevlar",
+            "covered_by_mat": 50,
+            "thickness": 3
+          }
+        ],
+        "encumbrance": 2,
+        "rigid_layer_only": true,
+        "coverage": 100,
+        "cover_vitals": 80,
+        "covers": [
+          "hand_l",
+          "hand_r"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "material": [
+          {
+            "type": "carbide",
+            "covered_by_mat": 60,
+            "thickness": 3
+          },
+          {
+            "type": "superalloy",
+            "covered_by_mat": 100,
+            "thickness": 5
+          }
+        ],
+        "encumbrance": 5,
+        "rigid_layer_only": true,
+        "coverage": 100,
+        "cover_vitals": 40,
+        "covers": [
+          "foot_l",
+          "foot_r"
+        ],
+        "specifically_covers": [
+          "foot_toes_r",
+          "foot_toes_l",
+          "foot_ankle_r",
+          "foot_ankle_l",
+          "foot_heel_r",
+          "foot_heel_l",
+          "foot_arch_r",
+          "foot_arch_l"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "material": [
+          {
+            "type": "carbide",
+            "covered_by_mat": 80,
+            "thickness": 3
+          },
+          {
+            "type": "rubber",
+            "covered_by_mat": 100,
+            "thickness": 15
+          }
+        ],
+        "encumbrance": 0,
+        "rigid_layer_only": true,
+        "coverage": 100,
+        "cover_vitals": 95,
+        "covers": [
+          "foot_l",
+          "foot_r"
+        ],
+        "specifically_covers": [
+          "foot_sole_r",
+          "foot_sole_l"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "material": [
+          {
+            "type": "kevlar",
+            "covered_by_mat": 100,
+            "thickness": 5
+          },
+          {
+            "type": "carbide",
+            "covered_by_mat": 100,
+            "thickness": 5
+          },
+          {
+            "type": "ceramic",
+            "covered_by_mat": 95,
+            "thickness": 30
+          }
+        ],
+        "covers": [
+          "torso"
+        ],
+        "rigid_layer_only": true,
+        "coverage": 100,
+        "cover_vitals": 95,
+        "encumbrance": 8,
+        "layers": [
+          "OUTER"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "material": [
+          {
+            "type": "kevlar",
+            "covered_by_mat": 100,
+            "thickness": 5
+          },
+          {
+            "type": "carbide",
+            "covered_by_mat": 100,
+            "thickness": 3
+          },
+          {
+            "type": "ceramic",
+            "covered_by_mat": 90,
+            "thickness": 30
+          }
+        ],
+        "covers": [
+          "arm_l",
+          "arm_r"
+        ],
+        "specifically_covers": [
+          "arm_shoulder_l",
+          "arm_shoulder_r",
+          "arm_upper_l",
+          "arm_upper_r",
+          "arm_elbow_l",
+          "arm_elbow_r"
+        ],
+        "rigid_layer_only": true,
+        "coverage": 100,
+        "cover_vitals": 90,
+        "encumbrance": 3,
+        "layers": [
+          "OUTER"
+        ],
+        "volume_encumber_modifier": 0
+      },
+      {
+        "material": [
+          {
+            "type": "kevlar",
+            "covered_by_mat": 100,
+            "thickness": 3
+          },
+          {
+            "type": "carbide",
+            "covered_by_mat": 100,
+            "thickness": 3
+          },
+          {
+            "type": "ceramic",
+            "covered_by_mat": 85,
+            "thickness": 20
+          }
+        ],
+        "covers": [
+          "arm_l",
+          "arm_r"
+        ],
+        "specifically_covers": [
+          "arm_lower_l",
+          "arm_lower_r"
+        ],
+        "rigid_layer_only": true,
+        "coverage": 100,
+        "cover_vitals": 90,
+        "encumbrance": 2,
+        "volume_encumber_modifier": 0
+      },
+      {
+        "material": [
+          {
+            "type": "kevlar",
+            "covered_by_mat": 100,
+            "thickness": 3
+          },
+          {
+            "type": "carbide",
+            "covered_by_mat": 100,
+            "thickness": 3
+          },
+          {
+            "type": "ceramic",
+            "covered_by_mat": 85,
+            "thickness": 20
+          }
+        ],
+        "covers": [
+          "leg_l",
+          "leg_r"
+        ],
+        "rigid_layer_only": true,
+        "coverage": 100,
+        "cover_vitals": 90,
+        "encumbrance": 5,
+        "layers": [
+          "OUTER"
+        ],
+        "volume_encumber_modifier": 0
+      }
+    ],
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "Wolftegaon_on",
+    "repairs_like": "power_armor_basic",
+    "type": "TOOL_ARMOR",
+    "name": {
+      "str": "“沃夫特冈”单兵作战防护系统（开启）"
+    },
+    "description": "这件装备是格科斯勒的新式装备，绰号沃夫特冈，是目前世界上已经被装备的最优秀的外骨骼之一，只配备给了“千斤顶”机械化战斗工兵部队和“EOV”异界探索部队，内置了一个新式的“船锚”维度稳定器，确保你不会受到一些来自异空间的伤害，EXC-G外骨骼可以让使用者在携带大量重物时依旧可以保持灵活姿态，其外骨骼上的惯性稳定器和辅助运动的伺服电机可以在节能模式下照常运作，配套的增加额外部件的DA33防弹套装以及ECU3作战服可以为其提供无与伦比的防弹以及环境防护，几乎可以让使用者在任何极端环境下作战，外骨骼在运作时也会依靠运动来回收一部分能量，以此来达成节能效果从而适应长时间作战，激活以关闭。",
+    "turns_per_charge": 45,
+    "copy-from": "Wolftegaon",
+    "revert_to": "Wolftegaon",
+    "use_action": {
+      "type": "transform",
+      "menu_text": "关闭",
+      "msg": "节能模式已启动。",
+      "target": "Wolftegaon"
+    },
+    "weight_capacity_bonus": "240 kg",
+    "longest_side": "65 cm"
+  },
+  {
+    "id": "Wolftegaon_helmet",
+    "type": "TOOL_ARMOR",
+    "repairs_like": "power_armor_helmet_basic",
+    "category": "armor",
+    "name": {
+      "str": "GHH-V 集成战斗头盔"
+    },
+    "description": "格科斯勒生产的新式战斗头盔，可以在战斗中为用户提供最大的保护，具有多种功能，头盔上装有一台GCIV-K集成显示系统，可以同时提供夜视与热成像两种功能，在环境防护系统RBU的过滤装置可以过滤掉几乎所有类型的有害气体，除此之外它还可以抵挡闪光，辐射，噪音，精神攻击以及提供恒温功能，哪怕有着如此多的功能它的重量也不算重，被誉为世界上最好的头盔也不为过，它也因其外观被称呼为独眼恶魔",
+    "weight": "2000 g",
+    "volume": "3000 ml",
+    "price": 455000,
+    "price_postapoc": 255000,
+    "symbol": "[",
+    "color": "green",
+    "warmth": 20,
+    "material_thickness": 5,
+    "environmental_protection": 10,
+    "techniques": [
+      "WBLOCK_1"
+    ],
+    "use_action": {
+      "type": "transform",
+      "msg": "集成显示模式/过滤系统已开启。",
+      "target": "Wolftegaon_helmet_on",
+      "active": true,
+      "need_charges": 1,
+      "need_charges_msg": "未检测到可用电源。"
+    },
+    "flags": [
+      "WATERPROOF",
+      "STURDY",
+      "FLASH_PROTECTION",
+      "RAINPROOF",
+      "PADDED",
+      "SUN_GLASSES",
+      "PARTIAL_DEAF",
+      "ELECTRIC_IMMUNE",
+      "NANOFAB_REPAIR",
+      "RAD_PROOF",
+      "PSYSHIELD_PARTIAL",
+      "SWIM_GOGGLES",
+      "USE_UPS",
+      "COMBAT_TOGGLEABLE"
+    ],
+    "armor": [
+      {
+        "material": [
+          {
+            "type": "superalloy",
+            "covered_by_mat": 100,
+            "thickness": 8
+          },
+          {
+            "type": "carbide",
+            "covered_by_mat": 100,
+            "thickness": 2
+          }
+        ],
+        "covers": [
+          "head"
+        ],
+        "rigid_layer_only": true,
+        "coverage": 100,
+        "encumbrance": 6
+      },
+      {
+        "material": [
+          {
+            "type": "superalloy",
+            "covered_by_mat": 100,
+            "thickness": 6
+          }
+        ],
+        "covers": [
+          "eyes",
+          "mouth"
+        ],
+        "rigid_layer_only": true,
+        "coverage": 100,
+        "encumbrance": 2,
+        "layers": [
+          "OUTER"
+        ]
+      }
+    ],
+    "longest_side": "40 cm"
+  },
+  {
+    "id": "Wolftegaon_helmet_on",
+    "repairs_like": "power_armor_helmet_basic",
+    "type": "TOOL_ARMOR",
+    "name": {
+      "str": "GHH-V 集成战斗头盔（开启）"
+    },
+    "description": "格科斯勒生产的新式战斗头盔，可以在战斗中为用户提供最大的保护，具有多种功能，头盔上装有一台GCIV-K集成显示系统，可以同时提供夜视与热成像两种功能，在环境防护系统RBU的过滤装置可以过滤掉几乎所有类型的有害气体，除此之外它还可以抵挡闪光，辐射，噪音，精神攻击以及提供恒温功能，哪怕有着如此多的功能它的重量也不算重，被誉为世界上最好的头盔也不为过，它也因其外观被称呼为独眼恶魔",
+    "turns_per_charge": 10,
+    "environmental_protection": 100,
+    "copy-from": "Wolftegaon_helmet",
+    "revert_to": "Wolftegaon_helmet",
+    "use_action": {
+      "type": "transform",
+      "menu_text": "关闭",
+      "msg": "集成显示模式/过滤系统已关闭。",
+      "target": "Wolftegaon_helmet"
+    },
+    "longest_side": "40 cm",
+    "extend": {
+      "flags": [
+        "GNV_EFFECT",
+        "IR_EFFECT",
+        "REBREATHER",
+        "ZOOM",
+        "GAS_PROOF",
+        "ALARMCLOCK",
+        "THERMOMETER",
+        "WATCH"
+      ]
+    }
+  },
+  {
+    "id": "ecb1",
+    "type": "ARMOR",
+    "repairs_like": "power_armor_basic",
+    "name": {
+      "str": "ECB-1 装甲背包"
+    },
+    "description": "格科斯勒设计的一种外骨骼背包，坚固，稳定，空间利用率非常好，使用了特有的物质压缩技术，搭配外骨骼可以极好的分散重量，非常适合远距离行军或者携带补给，虽然可以单独佩戴，但是更建议搭配可以提供负重能力的外骨骼使用。",
+    "//": "我知道，这个背包没有穿着贴图，我主要是担心这个贴图会把外骨骼的贴图盖住导致影响观感，另一个问题就是这套装备本来就是为了可以携带大量重物长途跋涉而设计的，性能很好，但是代价则是极为罕见，这也算是弥补了这一点，而且这个背包也是别人反应这个问题才临时加的，后续可能会有改动，我本来打算让它成为只有穿着特定装备才能穿上该物品的装备，但是机制我还没太搞明白——物品.zip.",
+    "weight": "9500 g",
+    "volume": "45 L",
+    "price": 798000,
+    "price_postapoc": 798000,
+    "material": [
+      "superalloy",
+      "carbide"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "material_thickness": 10,
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "volume_encumber_modifier": 0,
+        "max_contains_volume": "150 L",
+        "max_contains_weight": "400 kg",
+        "max_item_length": "80 cm",
+        "moves": 50
+      }
+    ],
+    "flags": [
+      "TARDIS",
+      "ELECTRIC_IMMUNE",
+      "PADDED",
+      "BELTED",
+      "OVERSIZE",
+      "STURDY"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          0,
+          0
+        ],
+        "coverage": 85,
+        "covers": [
+          "torso"
+        ],
+        "rigid_layer_only": true,
+        "specifically_covers": [
+          "torso_hanging_back"
+        ]
+      }
+    ],
+    "longest_side": "38 cm"
+  }
+]

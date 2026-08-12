@@ -1,0 +1,2036 @@
+[
+  {
+    "id": "Leupold",
+    "type": "GUNMOD",
+    "name": {
+      "str": "刘波尔德 Mark 4 光学瞄准镜"
+    },
+    "description": "一具坚固的中高倍率光学瞄准镜，适合精确射击步枪。",
+    "weight": "800 g",
+    "volume": "500 ml",
+    "price": "500 USD",
+    "price_postapoc": "10 USD",
+    "install_time": "1 m",
+    "material": [
+      "superalloy",
+      "glass"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "sights",
+    "mod_targets": [
+      "rifle"
+    ],
+    "field_of_view": 500,
+    "sight_dispersion": 0,
+    "flags": [
+      "ZOOM"
+    ],
+    "longest_side": "40 cm"
+  },
+  {
+    "id": "TANGO6T",
+    "type": "GUNMOD",
+    "name": {
+      "str": "SIG SAUER TANGO6T 可变倍瞄准镜"
+    },
+    "description": "西格绍尔生产的1至6倍可变倍率瞄准镜，兼顾近距离搜索与中远距离精确射击。",
+    "weight": "627 g",
+    "volume": "500 ml",
+    "price": "500 USD",
+    "price_postapoc": "10 USD 50 cent",
+    "install_time": "1 m",
+    "material": [
+      "superalloy",
+      "glass"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "sights",
+    "mod_targets": [
+      "rifle"
+    ],
+    "field_of_view": 600,
+    "sight_dispersion": 0,
+    "flags": [
+      "ZOOM"
+    ],
+    "longest_side": "40 cm"
+  },
+  {
+    "id": "ar_autopart",
+    "type": "GUNMOD",
+    "name": {
+      "str": "AR系全自动扳机组"
+    },
+    "description": "一套用于常规半自动AR的全自动扳机组使其可以像正规的军用AR一样进行全自动射击并且不会对枪械本身造成任何影响，这可不是什么撞火枪托，不过你需要一些相关知识才能安装它。",
+    "weight": "50 g",
+    "volume": "50 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": "100 USD",
+    "price_postapoc": "10 USD",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "red",
+    "location": "mechanism",
+    "mod_targets": [
+      "ar15",
+      "m4a1",
+      "m16a4",
+      "ar10",
+      "sr25",
+      "m110",
+      "scar_h_mk20",
+      "scar_17s",
+      "scar_16s",
+      "sig_spear",
+      "sig_xm7"
+    ],
+    "install_time": "20 m",
+    "mode_modifier": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        4
+      ],
+      [
+        "mechanics",
+        3
+      ],
+      [
+        "gun",
+        4
+      ]
+    ],
+    "longest_side": "40 cm"
+  },
+  {
+    "id": "fg422bipod",
+    "type": "GUNMOD",
+    "name": {
+      "str": "FG42 两脚架"
+    },
+    "description": "Bipods are commonly used on rifles and machine guns to provide a forward rest and reduce motion.  Although they greatly improve handling of recoil, they are usable only on certain surfaces (or from the prone position), and are slow to equip.",
+    "weight": "500 g",
+    "volume": "300 ml",
+    "price": "680 USD",
+    "price_postapoc": "5 USD",
+    "install_time": "1 m",
+    "to_hit": -1,
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "brown",
+    "location": "underbarrel",
+    "mod_targets": [
+      "rifle",
+      "launcher",
+      "smg",
+      "shotgun",
+      "crossbow"
+    ],
+    "handling_modifier": 18,
+    "min_skills": [
+      [
+        "weapon",
+        2
+      ]
+    ],
+    "flags": [
+      "BIPOD",
+      "SLOW_WIELD"
+    ],
+    "bashing": 10,
+    "longest_side": "40 cm"
+  },
+  {
+    "id": "gewscope",
+    "type": "GUNMOD",
+    "name": {
+      "str": "蔡司三倍光学瞄准镜"
+    },
+    "description": "一个古老的蔡司三倍瞄准镜，可以装在狙击型Gewehr98上。性能差于现代光学瞄准镜但总比没有强。",
+    "weight": "300 g",
+    "volume": "200 ml",
+    "price": "1800 USD",
+    "price_postapoc": "3 USD",
+    "material": [
+      "aluminum",
+      "glass"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "sights",
+    "mod_targets": [
+      "rifle"
+    ],
+    "install_time": "1 m",
+    "sight_dispersion": 0,
+    "aim_speed_modifier": -1,
+    "field_of_view": 255,
+    "min_skills": [
+      [
+        "weapon",
+        1
+      ],
+      [
+        "gun",
+        1
+      ]
+    ],
+    "flags": [
+      "ZOOM"
+    ],
+    "longest_side": "40 cm"
+  },
+  {
+    "id": "mg42semi",
+    "type": "GUNMOD",
+    "name": {
+      "str": "MG42 半自动扳机组"
+    },
+    "description": "A trigger modification that allows the MG42 to switch between semi and full automatic modes.",
+    "weight": "60 g",
+    "volume": "250 ml",
+    "integral_volume": "0 ml",
+    "price": "240 USD",
+    "price_postapoc": "3 USD 50 cent",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "red",
+    "location": "mechanism",
+    "mod_targets": [
+      "mg42"
+    ],
+    "install_time": "2 h",
+    "consume_chance": 50,
+    "consume_divisor": 110,
+    "mode_modifier": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "短点射",
+        "auto",
+        3
+      ],
+      [
+        "AUTO",
+        "auto",
+        8
+      ]
+    ],
+    "min_skills": [
+      [
+        "mechanics",
+        4
+      ],
+      [
+        "rifle",
+        5
+      ]
+    ],
+    "flags": [
+      "INSTALL_DIFFICULT",
+      "CONSUMABLE"
+    ],
+    "longest_side": "40 cm"
+  },
+  {
+    "id": "mgbipod",
+    "type": "GUNMOD",
+    "name": {
+      "str": "MG34/MG42 两脚架"
+    },
+    "description": "Bipods are commonly used on rifles and machine guns to provide a forward rest and reduce motion.  Although they greatly improve handling of recoil, they are usable only on certain surfaces (or from the prone position), and are slow to equip.",
+    "weight": "1000 g",
+    "volume": "500 ml",
+    "price": "680 USD",
+    "price_postapoc": "5 USD",
+    "install_time": "1 m",
+    "to_hit": -1,
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "brown",
+    "location": "underbarrel",
+    "mod_targets": [
+      "rifle",
+      "launcher",
+      "smg",
+      "shotgun",
+      "crossbow"
+    ],
+    "handling_modifier": 18,
+    "min_skills": [
+      [
+        "weapon",
+        2
+      ]
+    ],
+    "flags": [
+      "BIPOD",
+      "SLOW_WIELD"
+    ],
+    "bashing": 10,
+    "longest_side": "40 cm"
+  },
+  {
+    "id": "pkbipod",
+    "type": "GUNMOD",
+    "name": {
+      "str": "PK系列两脚架"
+    },
+    "description": "Bipods are commonly used on rifles and machine guns to provide a forward rest and reduce motion.  Although they greatly improve handling of recoil, they are usable only on certain surfaces (or from the prone position), and are slow to equip.",
+    "weight": "500 g",
+    "volume": "500 ml",
+    "price": "680 USD",
+    "price_postapoc": "5 USD",
+    "install_time": "1 m",
+    "to_hit": -1,
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "brown",
+    "location": "underbarrel",
+    "mod_targets": [
+      "rifle",
+      "launcher",
+      "smg",
+      "shotgun",
+      "crossbow"
+    ],
+    "handling_modifier": 18,
+    "min_skills": [
+      [
+        "weapon",
+        2
+      ]
+    ],
+    "flags": [
+      "BIPOD",
+      "SLOW_WIELD"
+    ],
+    "bashing": 10,
+    "longest_side": "40 cm"
+  },
+  {
+    "id": "retool_ar10_308_medium",
+    "type": "GUNMOD",
+    "name": {
+      "str": "AR-10 标准枪管上机匣"
+    },
+    "description": "一套适用于AR-10平台的完整标准枪管上机匣，包含枪管、护木和枪机组件，可用于调整武器长度、精度与7.62毫米供弹系统。",
+    "weight": "1890 g",
+    "volume": "1800 ml",
+    "longest_side": "528 mm",
+    "integral_volume": "1800 ml",
+    "integral_weight": "2806 g",
+    "integral_longest_side": "528 mm",
+    "price": "309 USD 99 cent",
+    "price_postapoc": "10 USD",
+    "material": [
+      "steel",
+      "aluminum",
+      "plastic"
+    ],
+    "symbol": ":",
+    "color": "green",
+    "location": "bore",
+    "mod_targets": [
+      "m110a1",
+      "hk417_13",
+      "ar10"
+    ],
+    "install_time": "5 m",
+    "ammo_modifier": [
+      "308"
+    ],
+    "magazine_adaptor": [
+      [
+        "308",
+        [
+          "ar10mag_20rd",
+          "ar10_makeshiftmag"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        0
+      ]
+    ],
+    "add_mod": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ],
+      [
+        "muzzle",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "retool_hk417_308_long",
+    "type": "GUNMOD",
+    "name": {
+      "str": "HK417 长枪管上机匣"
+    },
+    "description": "一套适用于HK417平台的完整长枪管上机匣，包含枪管、护木和枪机组件，可用于调整武器长度、精度与7.62毫米供弹系统。",
+    "weight": "3239 g",
+    "volume": "2000 ml",
+    "longest_side": "610 mm",
+    "integral_volume": "2000 ml",
+    "integral_weight": "3239 g",
+    "integral_longest_side": "610 mm",
+    "price": "339 USD 99 cent",
+    "price_postapoc": "10 USD",
+    "material": [
+      "steel",
+      "aluminum",
+      "plastic"
+    ],
+    "symbol": ":",
+    "color": "green",
+    "location": "bore",
+    "mod_targets": [
+      "m110a1",
+      "hk417_13",
+      "ar10"
+    ],
+    "install_time": "5 m",
+    "ammo_modifier": [
+      "308"
+    ],
+    "magazine_adaptor": [
+      [
+        "308",
+        [
+          "hk417mag_20rd",
+          "hk417mag_10rd",
+          "hk417_makeshiftmag"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        0
+      ]
+    ],
+    "add_mod": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ],
+      [
+        "muzzle",
+        1
+      ]
+    ],
+    "dispersion_modifier": -75
+  },
+  {
+    "id": "retool_hk417_308_medium",
+    "type": "GUNMOD",
+    "name": {
+      "str": "HK417 标准枪管上机匣"
+    },
+    "description": "一套适用于HK417平台的完整标准枪管上机匣，包含枪管、护木和枪机组件，可用于调整武器长度、精度与7.62毫米供弹系统。",
+    "weight": "2700 g",
+    "volume": "1800 ml",
+    "longest_side": "508 mm",
+    "integral_volume": "1800 ml",
+    "integral_weight": "2700 g",
+    "integral_longest_side": "508 mm",
+    "price": "309 USD 99 cent",
+    "price_postapoc": "10 USD",
+    "material": [
+      "steel",
+      "aluminum",
+      "plastic"
+    ],
+    "symbol": ":",
+    "color": "green",
+    "location": "bore",
+    "mod_targets": [
+      "m110a1",
+      "hk417_13",
+      "ar10"
+    ],
+    "install_time": "5 m",
+    "ammo_modifier": [
+      "308"
+    ],
+    "magazine_adaptor": [
+      [
+        "308",
+        [
+          "hk417mag_20rd",
+          "hk417mag_10rd",
+          "hk417_makeshiftmag"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        0
+      ]
+    ],
+    "add_mod": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ],
+      [
+        "muzzle",
+        1
+      ]
+    ],
+    "dispersion_modifier": -50
+  },
+  {
+    "id": "retool_hk417_308_short",
+    "type": "GUNMOD",
+    "name": {
+      "str": "HK417 短枪管上机匣"
+    },
+    "description": "一套适用于HK417平台的完整短枪管上机匣，包含枪管、护木和枪机组件，可用于调整武器长度、精度与7.62毫米供弹系统。",
+    "weight": "2200 g",
+    "volume": "1300 ml",
+    "longest_side": "414 mm",
+    "integral_volume": "1300 ml",
+    "integral_weight": "2200 g",
+    "integral_longest_side": "414 mm",
+    "price": "269 USD 99 cent",
+    "price_postapoc": "10 USD",
+    "material": [
+      "steel",
+      "aluminum",
+      "plastic"
+    ],
+    "symbol": ":",
+    "color": "green",
+    "location": "bore",
+    "mod_targets": [
+      "m110a1",
+      "hk417_13",
+      "ar10"
+    ],
+    "install_time": "5 m",
+    "ammo_modifier": [
+      "308"
+    ],
+    "magazine_adaptor": [
+      [
+        "308",
+        [
+          "hk417mag_20rd",
+          "hk417mag_10rd",
+          "hk417_makeshiftmag"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        0
+      ]
+    ],
+    "add_mod": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ],
+      [
+        "muzzle",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "retool_scar_h_308_17s",
+    "type": "GUNMOD",
+    "name": {
+      "str": "SCAR-H 标准枪管上机匣"
+    },
+    "description": "一套适用于SCAR-H平台的完整标准枪管上机匣，包含枪管、护木和枪机组件，可用于调整武器长度、精度与7.62毫米供弹系统。",
+    "weight": "2439 g",
+    "volume": "1500 ml",
+    "longest_side": "413 mm",
+    "integral_volume": "1500 ml",
+    "integral_weight": "2439 g",
+    "integral_longest_side": "413 mm",
+    "price": "250 USD 50 cent",
+    "price_postapoc": "10 USD",
+    "material": [
+      "steel",
+      "aluminum",
+      "plastic"
+    ],
+    "symbol": ":",
+    "color": "green",
+    "location": "bore",
+    "mod_targets": [
+      "scar_h",
+      "scar_h_mk20",
+      "scar_17s"
+    ],
+    "install_time": "5 m",
+    "ammo_modifier": [
+      "308"
+    ],
+    "magazine_adaptor": [
+      [
+        "308",
+        [
+          "scarhmag",
+          "scarhbigmag",
+          "scarhmag_30rd",
+          "scarh_makeshiftmag"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        0
+      ]
+    ],
+    "add_mod": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ],
+      [
+        "muzzle",
+        1
+      ]
+    ],
+    "dispersion_modifier": -5
+  },
+  {
+    "id": "retool_scar_h_308_cqb_gen3",
+    "type": "GUNMOD",
+    "name": {
+      "str": "SCAR-H 短枪管上机匣"
+    },
+    "description": "一套适用于SCAR-H平台的完整短枪管上机匣，包含枪管、护木和枪机组件，可用于调整武器长度、精度与7.62毫米供弹系统。",
+    "weight": "2200 g",
+    "volume": "1300 ml",
+    "longest_side": "330 mm",
+    "integral_volume": "1300 ml",
+    "integral_weight": "2200 g",
+    "integral_longest_side": "330 mm",
+    "price": "200 USD 50 cent",
+    "price_postapoc": "10 USD",
+    "material": [
+      "steel",
+      "aluminum",
+      "plastic"
+    ],
+    "symbol": ":",
+    "color": "green",
+    "location": "bore",
+    "mod_targets": [
+      "scar_h",
+      "scar_h_mk20",
+      "scar_17s"
+    ],
+    "install_time": "5 m",
+    "ammo_modifier": [
+      "308"
+    ],
+    "magazine_adaptor": [
+      [
+        "308",
+        [
+          "scarhmag",
+          "scarhbigmag",
+          "scarhmag_30rd",
+          "scarh_makeshiftmag"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        0
+      ]
+    ],
+    "add_mod": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ],
+      [
+        "muzzle",
+        1
+      ]
+    ],
+    "dispersion_modifier": 25
+  },
+  {
+    "id": "retool_scar_h_308_cqb_mk2",
+    "type": "GUNMOD",
+    "name": {
+      "str": "SCAR-H 短枪管上机匣"
+    },
+    "description": "一套适用于SCAR-H平台的完整短枪管上机匣，包含枪管、护木和枪机组件，可用于调整武器长度、精度与7.62毫米供弹系统。",
+    "weight": "2200 g",
+    "volume": "1300 ml",
+    "longest_side": "330 mm",
+    "integral_volume": "1300 ml",
+    "integral_weight": "2200 g",
+    "integral_longest_side": "330 mm",
+    "price": "200 USD 50 cent",
+    "price_postapoc": "10 USD",
+    "material": [
+      "steel",
+      "aluminum",
+      "plastic"
+    ],
+    "symbol": ":",
+    "color": "green",
+    "location": "bore",
+    "mod_targets": [
+      "scar_h",
+      "scar_h_mk20",
+      "scar_17s"
+    ],
+    "install_time": "5 m",
+    "ammo_modifier": [
+      "308"
+    ],
+    "magazine_adaptor": [
+      [
+        "308",
+        [
+          "scarhmag",
+          "scarhbigmag",
+          "scarhmag_30rd",
+          "scarh_makeshiftmag"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        0
+      ]
+    ],
+    "add_mod": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ],
+      [
+        "muzzle",
+        1
+      ]
+    ],
+    "dispersion_modifier": 25
+  },
+  {
+    "id": "retool_scar_h_308_long_gen3",
+    "type": "GUNMOD",
+    "name": {
+      "str": "SCAR-H 长枪管上机匣"
+    },
+    "description": "一套适用于SCAR-H平台的完整长枪管上机匣，包含枪管、护木和枪机组件，可用于调整武器长度、精度与7.62毫米供弹系统。",
+    "weight": "3000 g",
+    "volume": "1800 ml",
+    "longest_side": "508 mm",
+    "integral_volume": "1800 ml",
+    "integral_weight": "3000 g",
+    "integral_longest_side": "508 mm",
+    "price": "300 USD 50 cent",
+    "price_postapoc": "10 USD",
+    "material": [
+      "steel",
+      "aluminum",
+      "plastic"
+    ],
+    "symbol": ":",
+    "color": "green",
+    "location": "bore",
+    "mod_targets": [
+      "scar_h",
+      "scar_h_mk20",
+      "scar_17s"
+    ],
+    "install_time": "5 m",
+    "ammo_modifier": [
+      "308"
+    ],
+    "magazine_adaptor": [
+      [
+        "308",
+        [
+          "scarhmag",
+          "scarhbigmag",
+          "scarhmag_30rd",
+          "scarh_makeshiftmag"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        0
+      ]
+    ],
+    "add_mod": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ],
+      [
+        "muzzle",
+        1
+      ]
+    ],
+    "dispersion_modifier": -50
+  },
+  {
+    "id": "retool_scar_h_308_long_mk20",
+    "type": "GUNMOD",
+    "name": {
+      "str": "SCAR-H 长枪管上机匣"
+    },
+    "description": "一套适用于SCAR-H平台的完整长枪管上机匣，包含枪管、护木和枪机组件，可用于调整武器长度、精度与7.62毫米供弹系统。",
+    "weight": "3000 g",
+    "volume": "1800 ml",
+    "longest_side": "508 mm",
+    "integral_volume": "1800 ml",
+    "integral_weight": "3000 g",
+    "integral_longest_side": "508 mm",
+    "price": "300 USD 50 cent",
+    "price_postapoc": "10 USD",
+    "material": [
+      "steel",
+      "aluminum",
+      "plastic"
+    ],
+    "symbol": ":",
+    "color": "green",
+    "location": "bore",
+    "mod_targets": [
+      "scar_h",
+      "scar_h_mk20",
+      "scar_17s"
+    ],
+    "install_time": "5 m",
+    "ammo_modifier": [
+      "308"
+    ],
+    "magazine_adaptor": [
+      [
+        "308",
+        [
+          "scarhmag",
+          "scarhbigmag",
+          "scarhmag_30rd",
+          "scarh_makeshiftmag"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        0
+      ]
+    ],
+    "add_mod": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ],
+      [
+        "muzzle",
+        1
+      ]
+    ],
+    "dispersion_modifier": -50
+  },
+  {
+    "id": "retool_scar_h_308_short_gen3",
+    "type": "GUNMOD",
+    "name": {
+      "str": "SCAR-H 短枪管上机匣"
+    },
+    "description": "一套适用于SCAR-H平台的完整短枪管上机匣，包含枪管、护木和枪机组件，可用于调整武器长度、精度与7.62毫米供弹系统。",
+    "weight": "2400 g",
+    "volume": "1250 ml",
+    "longest_side": "406 mm",
+    "integral_volume": "1250 ml",
+    "integral_weight": "2400 g",
+    "integral_longest_side": "406 mm",
+    "price": "250 USD 50 cent",
+    "price_postapoc": "10 USD",
+    "material": [
+      "steel",
+      "aluminum",
+      "plastic"
+    ],
+    "symbol": ":",
+    "color": "green",
+    "location": "bore",
+    "mod_targets": [
+      "scar_h",
+      "scar_h_mk20",
+      "scar_17s"
+    ],
+    "install_time": "5 m",
+    "ammo_modifier": [
+      "308"
+    ],
+    "magazine_adaptor": [
+      [
+        "308",
+        [
+          "scarhmag",
+          "scarhbigmag",
+          "scarhmag_30rd",
+          "scarh_makeshiftmag"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        0
+      ]
+    ],
+    "add_mod": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ],
+      [
+        "muzzle",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "retool_scar_h_308_short_mk2",
+    "type": "GUNMOD",
+    "name": {
+      "str": "SCAR-H 短枪管上机匣"
+    },
+    "description": "一套适用于SCAR-H平台的完整短枪管上机匣，包含枪管、护木和枪机组件，可用于调整武器长度、精度与7.62毫米供弹系统。",
+    "weight": "2400 g",
+    "volume": "1250 ml",
+    "longest_side": "406 mm",
+    "integral_volume": "1250 ml",
+    "integral_weight": "2400 g",
+    "integral_longest_side": "406 mm",
+    "price": "250 USD 50 cent",
+    "price_postapoc": "10 USD",
+    "material": [
+      "steel",
+      "aluminum",
+      "plastic"
+    ],
+    "symbol": ":",
+    "color": "green",
+    "location": "bore",
+    "mod_targets": [
+      "scar_h",
+      "scar_h_mk20",
+      "scar_17s"
+    ],
+    "install_time": "5 m",
+    "ammo_modifier": [
+      "308"
+    ],
+    "magazine_adaptor": [
+      [
+        "308",
+        [
+          "scarhmag",
+          "scarhbigmag",
+          "scarhmag_30rd",
+          "scarh_makeshiftmag"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        0
+      ]
+    ],
+    "add_mod": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ],
+      [
+        "muzzle",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "retool_scar_l_223_cqc_gen3",
+    "type": "GUNMOD",
+    "name": {
+      "str": "SCAR-L 短枪管上机匣"
+    },
+    "description": "一套适用于SCAR-L平台的完整短枪管上机匣，包含枪管、护木和枪机组件，可用于调整武器长度、精度与5.56毫米供弹系统。",
+    "weight": "1900 g",
+    "volume": "1200 ml",
+    "longest_side": "254 mm",
+    "integral_volume": "1200 ml",
+    "integral_weight": "1900 g",
+    "integral_longest_side": "254 mm",
+    "price": "220 USD 50 cent",
+    "price_postapoc": "10 USD",
+    "material": [
+      "steel",
+      "aluminum",
+      "plastic"
+    ],
+    "symbol": ":",
+    "color": "green",
+    "location": "bore",
+    "mod_targets": [
+      "scar_l",
+      "scar_16s"
+    ],
+    "install_time": "5 m",
+    "ammo_modifier": [
+      "223"
+    ],
+    "magazine_adaptor": [
+      [
+        "223",
+        [
+          "stanag30",
+          "stanag5",
+          "stanag5ranger",
+          "stanag10",
+          "stanag10ranger",
+          "stanag20",
+          "stanag20ranger",
+          "stanag30ranger",
+          "stanag40",
+          "stanag40ranger",
+          "stanag50",
+          "stanag60",
+          "stanag60drum",
+          "stanag90",
+          "stanag100",
+          "stanag100drum",
+          "stanag150",
+          "survivor223mag"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        0
+      ]
+    ],
+    "add_mod": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ],
+      [
+        "muzzle",
+        1
+      ]
+    ],
+    "dispersion_modifier": 25
+  },
+  {
+    "id": "retool_scar_l_223_cqc_mk2",
+    "type": "GUNMOD",
+    "name": {
+      "str": "SCAR-L 短枪管上机匣"
+    },
+    "description": "一套适用于SCAR-L平台的完整短枪管上机匣，包含枪管、护木和枪机组件，可用于调整武器长度、精度与5.56毫米供弹系统。",
+    "weight": "2100 g",
+    "volume": "1200 ml",
+    "longest_side": "254 mm",
+    "integral_volume": "1200 ml",
+    "integral_weight": "2100 g",
+    "integral_longest_side": "254 mm",
+    "price": "225 USD 50 cent",
+    "price_postapoc": "10 USD",
+    "material": [
+      "steel",
+      "aluminum",
+      "plastic"
+    ],
+    "symbol": ":",
+    "color": "green",
+    "location": "bore",
+    "mod_targets": [
+      "scar_l",
+      "scar_16s"
+    ],
+    "install_time": "5 m",
+    "ammo_modifier": [
+      "223"
+    ],
+    "magazine_adaptor": [
+      [
+        "223",
+        [
+          "stanag30",
+          "stanag5",
+          "stanag5ranger",
+          "stanag10",
+          "stanag10ranger",
+          "stanag20",
+          "stanag20ranger",
+          "stanag30ranger",
+          "stanag40",
+          "stanag40ranger",
+          "stanag50",
+          "stanag60",
+          "stanag60drum",
+          "stanag90",
+          "stanag100",
+          "stanag100drum",
+          "stanag150",
+          "survivor223mag"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        0
+      ]
+    ],
+    "add_mod": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ],
+      [
+        "muzzle",
+        1
+      ]
+    ],
+    "dispersion_modifier": 25
+  },
+  {
+    "id": "retool_scar_l_223_long_16s",
+    "type": "GUNMOD",
+    "name": {
+      "str": "SCAR-L 长枪管上机匣"
+    },
+    "description": "一套适用于SCAR-L平台的完整长枪管上机匣，包含枪管、护木和枪机组件，可用于调整武器长度、精度与5.56毫米供弹系统。",
+    "weight": "1989 g",
+    "volume": "1500 ml",
+    "longest_side": "413 mm",
+    "integral_volume": "1500 ml",
+    "integral_weight": "2300 g",
+    "integral_longest_side": "413 mm",
+    "price": "255 USD 50 cent",
+    "price_postapoc": "10 USD",
+    "material": [
+      "steel",
+      "aluminum",
+      "plastic"
+    ],
+    "symbol": ":",
+    "color": "green",
+    "location": "bore",
+    "mod_targets": [
+      "scar_l",
+      "scar_16s"
+    ],
+    "install_time": "5 m",
+    "ammo_modifier": [
+      "223"
+    ],
+    "magazine_adaptor": [
+      [
+        "223",
+        [
+          "stanag30",
+          "stanag5",
+          "stanag5ranger",
+          "stanag10",
+          "stanag10ranger",
+          "stanag20",
+          "stanag20ranger",
+          "stanag30ranger",
+          "stanag40",
+          "stanag40ranger",
+          "stanag50",
+          "stanag60",
+          "stanag60drum",
+          "stanag90",
+          "stanag100",
+          "stanag100drum",
+          "stanag150",
+          "survivor223mag"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        0
+      ]
+    ],
+    "add_mod": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ],
+      [
+        "muzzle",
+        1
+      ]
+    ],
+    "dispersion_modifier": -25
+  },
+  {
+    "id": "retool_scar_l_223_long_gen3",
+    "type": "GUNMOD",
+    "name": {
+      "str": "SCAR-L 长枪管上机匣"
+    },
+    "description": "一套适用于SCAR-L平台的完整长枪管上机匣，包含枪管、护木和枪机组件，可用于调整武器长度、精度与5.56毫米供弹系统。",
+    "weight": "2100 g",
+    "volume": "1500 ml",
+    "longest_side": "457 mm",
+    "integral_volume": "1500 ml",
+    "integral_weight": "2100 g",
+    "integral_longest_side": "457 mm",
+    "price": "265 USD 50 cent",
+    "price_postapoc": "10 USD",
+    "material": [
+      "steel",
+      "aluminum",
+      "plastic"
+    ],
+    "symbol": ":",
+    "color": "green",
+    "location": "bore",
+    "mod_targets": [
+      "scar_l",
+      "scar_16s"
+    ],
+    "install_time": "5 m",
+    "ammo_modifier": [
+      "223"
+    ],
+    "magazine_adaptor": [
+      [
+        "223",
+        [
+          "stanag30",
+          "stanag5",
+          "stanag5ranger",
+          "stanag10",
+          "stanag10ranger",
+          "stanag20",
+          "stanag20ranger",
+          "stanag30ranger",
+          "stanag40",
+          "stanag40ranger",
+          "stanag50",
+          "stanag60",
+          "stanag60drum",
+          "stanag90",
+          "stanag100",
+          "stanag100drum",
+          "stanag150",
+          "survivor223mag"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        0
+      ]
+    ],
+    "add_mod": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ],
+      [
+        "muzzle",
+        1
+      ]
+    ],
+    "dispersion_modifier": -25
+  },
+  {
+    "id": "retool_scar_l_223_medium_gen3",
+    "type": "GUNMOD",
+    "name": {
+      "str": "SCAR-L 标准枪管上机匣"
+    },
+    "description": "一套适用于SCAR-L平台的完整标准枪管上机匣，包含枪管、护木和枪机组件，可用于调整武器长度、精度与5.56毫米供弹系统。",
+    "weight": "2000 g",
+    "volume": "1350 ml",
+    "longest_side": "351 mm",
+    "integral_volume": "1350 ml",
+    "integral_weight": "2000 g",
+    "integral_longest_side": "351 mm",
+    "price": "240 USD 50 cent",
+    "price_postapoc": "10 USD",
+    "material": [
+      "steel",
+      "aluminum",
+      "plastic"
+    ],
+    "symbol": ":",
+    "color": "green",
+    "location": "bore",
+    "mod_targets": [
+      "scar_l",
+      "scar_16s"
+    ],
+    "install_time": "5 m",
+    "ammo_modifier": [
+      "223"
+    ],
+    "magazine_adaptor": [
+      [
+        "223",
+        [
+          "stanag30",
+          "stanag5",
+          "stanag5ranger",
+          "stanag10",
+          "stanag10ranger",
+          "stanag20",
+          "stanag20ranger",
+          "stanag30ranger",
+          "stanag40",
+          "stanag40ranger",
+          "stanag50",
+          "stanag60",
+          "stanag60drum",
+          "stanag90",
+          "stanag100",
+          "stanag100drum",
+          "stanag150",
+          "survivor223mag"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        0
+      ]
+    ],
+    "add_mod": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ],
+      [
+        "muzzle",
+        1
+      ]
+    ],
+    "dispersion_modifier": 25
+  },
+  {
+    "id": "retool_scar_l_223_medium_mk2",
+    "type": "GUNMOD",
+    "name": {
+      "str": "SCAR-L 标准枪管上机匣"
+    },
+    "description": "一套适用于SCAR-L平台的完整标准枪管上机匣，包含枪管、护木和枪机组件，可用于调整武器长度、精度与5.56毫米供弹系统。",
+    "weight": "2300 g",
+    "volume": "1400 ml",
+    "longest_side": "368 mm",
+    "integral_volume": "1400 ml",
+    "integral_weight": "2300 g",
+    "integral_longest_side": "368 mm",
+    "price": "250 USD 50 cent",
+    "price_postapoc": "10 USD",
+    "material": [
+      "steel",
+      "aluminum",
+      "plastic"
+    ],
+    "symbol": ":",
+    "color": "green",
+    "location": "bore",
+    "mod_targets": [
+      "scar_l",
+      "scar_16s"
+    ],
+    "install_time": "5 m",
+    "ammo_modifier": [
+      "223"
+    ],
+    "magazine_adaptor": [
+      [
+        "223",
+        [
+          "stanag30",
+          "stanag5",
+          "stanag5ranger",
+          "stanag10",
+          "stanag10ranger",
+          "stanag20",
+          "stanag20ranger",
+          "stanag30ranger",
+          "stanag40",
+          "stanag40ranger",
+          "stanag50",
+          "stanag60",
+          "stanag60drum",
+          "stanag90",
+          "stanag100",
+          "stanag100drum",
+          "stanag150",
+          "survivor223mag"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        0
+      ]
+    ],
+    "add_mod": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ],
+      [
+        "muzzle",
+        1
+      ]
+    ],
+    "dispersion_modifier": -5
+  },
+  {
+    "id": "retool_sr25_308_long",
+    "type": "GUNMOD",
+    "name": {
+      "str": "SR-25 长枪管上机匣"
+    },
+    "description": "一套适用于SR-25平台的完整长枪管上机匣，包含枪管、护木和枪机组件，可用于调整武器长度、精度与7.62毫米供弹系统。",
+    "weight": "3239 g",
+    "volume": "2000 ml",
+    "longest_side": "610 mm",
+    "integral_volume": "2000 ml",
+    "integral_weight": "3239 g",
+    "integral_longest_side": "610 mm",
+    "price": "339 USD 99 cent",
+    "price_postapoc": "10 USD",
+    "material": [
+      "steel",
+      "aluminum",
+      "plastic"
+    ],
+    "symbol": ":",
+    "color": "green",
+    "location": "bore",
+    "mod_targets": [
+      "m110a1",
+      "hk417_13",
+      "ar10"
+    ],
+    "install_time": "5 m",
+    "ammo_modifier": [
+      "308"
+    ],
+    "magazine_adaptor": [
+      [
+        "308",
+        [
+          "ar10mag_20rd",
+          "ar10_makeshiftmag"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        0
+      ]
+    ],
+    "add_mod": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ],
+      [
+        "muzzle",
+        1
+      ]
+    ],
+    "dispersion_modifier": -75
+  },
+  {
+    "id": "retool_sr25_308_medium",
+    "type": "GUNMOD",
+    "name": {
+      "str": "SR-25 标准枪管上机匣"
+    },
+    "description": "一套适用于SR-25平台的完整标准枪管上机匣，包含枪管、护木和枪机组件，可用于调整武器长度、精度与7.62毫米供弹系统。",
+    "weight": "2700 g",
+    "volume": "1750 ml",
+    "longest_side": "508 mm",
+    "integral_volume": "1750 ml",
+    "integral_weight": "2700 g",
+    "integral_longest_side": "508 mm",
+    "price": "309 USD 99 cent",
+    "price_postapoc": "10 USD",
+    "material": [
+      "steel",
+      "aluminum",
+      "plastic"
+    ],
+    "symbol": ":",
+    "color": "green",
+    "location": "bore",
+    "mod_targets": [
+      "m110a1",
+      "hk417_13",
+      "ar10"
+    ],
+    "install_time": "5 m",
+    "ammo_modifier": [
+      "308"
+    ],
+    "magazine_adaptor": [
+      [
+        "308",
+        [
+          "ar10mag_20rd",
+          "ar10_makeshiftmag"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        0
+      ]
+    ],
+    "add_mod": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ],
+      [
+        "muzzle",
+        1
+      ]
+    ],
+    "dispersion_modifier": -50
+  },
+  {
+    "id": "retool_sr25_308_short",
+    "type": "GUNMOD",
+    "name": {
+      "str": "SR-25 短枪管上机匣"
+    },
+    "description": "一套适用于SR-25平台的完整短枪管上机匣，包含枪管、护木和枪机组件，可用于调整武器长度、精度与7.62毫米供弹系统。",
+    "weight": "2200 g",
+    "volume": "1300 ml",
+    "longest_side": "414 mm",
+    "integral_volume": "1300 ml",
+    "integral_weight": "2200 g",
+    "integral_longest_side": "414 mm",
+    "price": "269 USD 99 cent",
+    "price_postapoc": "10 USD",
+    "material": [
+      "steel",
+      "aluminum",
+      "plastic"
+    ],
+    "symbol": ":",
+    "color": "green",
+    "location": "bore",
+    "mod_targets": [
+      "m110a1",
+      "hk417_13",
+      "ar10"
+    ],
+    "install_time": "5 m",
+    "ammo_modifier": [
+      "308"
+    ],
+    "magazine_adaptor": [
+      [
+        "308",
+        [
+          "ar10mag_20rd",
+          "ar10_makeshiftmag"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        0
+      ]
+    ],
+    "add_mod": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ],
+      [
+        "muzzle",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "retool_xm7_227_medium",
+    "type": "GUNMOD",
+    "name": {
+      "str": "M7 标准枪管上机匣"
+    },
+    "description": "一套适用于M7平台的完整标准枪管上机匣，包含枪管、护木和枪机组件，可用于调整武器长度、精度与6.8毫米供弹系统。",
+    "weight": "2200 g",
+    "volume": "1300 ml",
+    "longest_side": "330 mm",
+    "integral_volume": "1300 ml",
+    "integral_weight": "2000 g",
+    "integral_longest_side": "330 mm",
+    "price": "300 USD 99 cent",
+    "price_postapoc": "10 USD",
+    "material": [
+      "steel",
+      "aluminum",
+      "plastic"
+    ],
+    "symbol": ":",
+    "color": "green",
+    "location": "bore",
+    "mod_targets": [
+      "m110a1",
+      "hk417_13",
+      "ar10"
+    ],
+    "install_time": "5 m",
+    "ammo_modifier": [
+      "68_51"
+    ],
+    "magazine_adaptor": [
+      [
+        "68_51",
+        [
+          "xm7mag_10rd",
+          "xm7mag_20rd",
+          "xm7_makeshiftmag"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        0
+      ]
+    ],
+    "add_mod": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ],
+      [
+        "muzzle",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "sigsuppressor",
+    "type": "GUNMOD",
+    "name": {
+      "str": "SIG SLX 6.8 消音器"
+    },
+    "//": "SIG XM7 SLX 6.8 DUMMY SUPPRESSOR W/ FLASH HIDER",
+    "description": "为6.8x51mm步枪设计的快速拆装消音器，可降低枪口焰与射击声。",
+    "weight": "357 g",
+    "volume": "200 ml",
+    "longest_side": "182 mm",
+    "integral_longest_side": "14 mm",
+    "price": "770 USD",
+    "price_postapoc": "15 USD",
+    "to_hit": 1,
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "muzzle",
+    "mod_targets": [
+      "pistol",
+      "smg",
+      "rifle"
+    ],
+    "install_time": "30 s",
+    "handling_modifier": 2,
+    "consume_chance": 1,
+    "consume_divisor": 840,
+    "flags": [
+      "CONSUMABLE"
+    ],
+    "bashing": 3,
+    "loudness_modifier": -35
+  },
+  {
+    "id": "xm157",
+    "type": "GUNMOD",
+    "name": {
+      "str": "Vortex XM157 火控瞄具"
+    },
+    "description": "为新一代班组武器设计的综合火控瞄具，具备测距与弹道辅助能力。",
+    "weight": "550 g",
+    "volume": "500 ml",
+    "price": "2500 USD",
+    "price_postapoc": "10 USD 50 cent",
+    "install_time": "1 m",
+    "material": [
+      "superalloy",
+      "glass"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "sights",
+    "mod_targets": [
+      "rifle"
+    ],
+    "field_of_view": 600,
+    "sight_dispersion": 0,
+    "flags": [
+      "ZOOM"
+    ],
+    "longest_side": "40 cm"
+  },
+  {
+    "id": "zf42",
+    "type": "GUNMOD",
+    "name": {
+      "str": "ZF42 光学瞄准镜"
+    },
+    "description": "一个二战时期的蔡司四倍瞄准镜，通常装在Kar98K上。",
+    "weight": "300 g",
+    "volume": "200 ml",
+    "price": "1800 USD",
+    "price_postapoc": "3 USD",
+    "material": [
+      "aluminum",
+      "glass"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "sights",
+    "mod_targets": [
+      "rifle"
+    ],
+    "install_time": "1 m",
+    "sight_dispersion": 0,
+    "aim_speed_modifier": -1,
+    "field_of_view": 270,
+    "min_skills": [
+      [
+        "weapon",
+        1
+      ],
+      [
+        "gun",
+        1
+      ]
+    ],
+    "flags": [
+      "ZOOM"
+    ],
+    "longest_side": "40 cm"
+  }
+]

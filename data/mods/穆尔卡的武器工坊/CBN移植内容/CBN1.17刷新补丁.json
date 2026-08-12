@@ -1,0 +1,190 @@
+[
+  {
+    "type": "item_group",
+    "id": "guns_smg_common",
+    "copy-from": "guns_smg_common",
+    "extend": {
+      "items": [
+        [
+          "csls7",
+          20
+        ]
+      ]
+    },
+    "subtype": "distribution"
+  },
+  {
+    "type": "item_group",
+    "id": "guns_smg_rare",
+    "copy-from": "guns_smg_rare",
+    "extend": {
+      "items": [
+        [
+          "csls7",
+          20
+        ]
+      ]
+    },
+    "subtype": "distribution"
+  },
+  {
+    "type": "item_group",
+    "id": "guns_smg_obscure",
+    "copy-from": "guns_smg_obscure",
+    "extend": {
+      "items": [
+        [
+          "csls7",
+          3
+        ]
+      ]
+    },
+    "subtype": "distribution"
+  },
+  {
+    "type": "item_group",
+    "id": "guns_rifle_rare",
+    "copy-from": "guns_rifle_rare",
+    "extend": {
+      "items": [
+        [
+          "arek_pdr",
+          1
+        ]
+      ]
+    },
+    "subtype": "distribution"
+  },
+  {
+    "type": "item_group",
+    "id": "guns_rifle_milspec",
+    "copy-from": "guns_rifle_milspec",
+    "extend": {
+      "items": [
+        [
+          "arek_pdr",
+          10
+        ],
+        [
+          "vssa",
+          10
+        ]
+      ]
+    },
+    "subtype": "distribution"
+  },
+  {
+    "type": "item_group",
+    "id": "guns_rifle_obscure",
+    "copy-from": "guns_rifle_obscure",
+    "extend": {
+      "items": [
+        [
+          "arek_pdr",
+          5
+        ],
+        [
+          "vssa",
+          5
+        ]
+      ]
+    },
+    "subtype": "distribution"
+  },
+  {
+    "type": "item_group",
+    "id": "guns_bank_vault",
+    "copy-from": "guns_bank_vault",
+    "extend": {
+      "items": [
+        [
+          "vssa",
+          1
+        ]
+      ]
+    },
+    "subtype": "distribution"
+  },
+  {
+    "type": "item_group",
+    "id": "guns_swat",
+    "copy-from": "guns_swat",
+    "extend": {
+      "items": [
+        [
+          "g3ka4",
+          10
+        ],
+        [
+          "sa58_osw",
+          20
+        ],
+        [
+          "arek_pdr",
+          10
+        ]
+      ]
+    },
+    "subtype": "distribution"
+  },
+  {
+    "type": "item_group",
+    "id": "mags_milspec",
+    "copy-from": "mags_milspec",
+    "extend": {
+      "items": [
+        [
+          "csls7_30",
+          30
+        ]
+      ]
+    },
+    "subtype": "distribution"
+  },
+  {
+    "type": "item_group",
+    "id": "mags_smg_common",
+    "copy-from": "mags_smg_common",
+    "extend": {
+      "items": [
+        [
+          "csls7_30",
+          40
+        ]
+      ]
+    },
+    "subtype": "distribution"
+  },
+  {
+    "type": "item_group",
+    "id": "mags_smg_rare",
+    "copy-from": "mags_smg_rare",
+    "extend": {
+      "items": [
+        [
+          "csls7_30",
+          40
+        ]
+      ]
+    },
+    "subtype": "distribution"
+  },
+  {
+    "type": "item_group",
+    "id": "swat_gear",
+    "copy-from": "swat_gear",
+    "extend": {
+      "items": [
+        [
+          "chsh",
+          1
+        ],
+        [
+          "da68sh_vest",
+          1
+        ]
+      ]
+    },
+    "subtype": "distribution"
+  }
+]

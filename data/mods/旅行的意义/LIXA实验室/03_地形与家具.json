@@ -1,0 +1,1042 @@
+[
+  {
+    "type": "terrain",
+    "id": "t_carpet_concrete_green_olight",
+    "name": "工业绿地毯",
+    "description": "坚实、短绒、耐磨的绿色工业地毯，铺设在裸露的混凝土地面上；上方天花板还装着一盏仍能工作的灯。",
+    "symbol": ".",
+    "color": "green",
+    "move_cost": 2,
+    "light_emitted": 120,
+    "looks_like": "t_carpet_green",
+    "connect_groups": "INDOORFLOOR",
+    "flags": [
+      "TRANSPARENT",
+      "FLAMMABLE_HARD",
+      "SUPPORTS_ROOF",
+      "COLLAPSES",
+      "INDOORS",
+      "FLAT",
+      "RUG"
+    ],
+    "bash": {
+      "str_min": 4,
+      "str_max": 12,
+      "sound": "玻璃破裂声！",
+      "sound_fail": "喀啦！",
+      "sound_vol": 16,
+      "sound_fail_vol": 10,
+      "ter_set": "t_carpet_concrete_green",
+      "items": [
+        {
+          "item": "glass_shard",
+          "count": [
+            8,
+            16
+          ]
+        }
+      ]
+    },
+    "shoot": {
+      "chance_to_hit": 50,
+      "reduce_damage": [
+        0,
+        0
+      ],
+      "reduce_damage_laser": [
+        0,
+        0
+      ],
+      "destroy_damage": [
+        2,
+        8
+      ]
+    }
+  },
+  {
+    "type": "terrain",
+    "id": "t_lixa_wall",
+    "name": "强化混凝土墙",
+    "looks_like": "t_concrete_wall",
+    "description": "一堵填满钢筋水泥的坚韧墙壁。极适合支持多层建筑，只有烈性爆炸物和高速撞击才能破坏这堵墙。",
+    "symbol": "#",
+    "color": "light_gray",
+    "move_cost": 0,
+    "coverage": 100,
+    "roof": "t_concrete_roof",
+    "connect_groups": "WALL",
+    "connects_to": "WALL",
+    "flags": [
+      "NOITEM",
+      "SUPPORTS_ROOF",
+      "WALL",
+      "NO_SCENT",
+      "AUTO_WALL_SYMBOL",
+      "MINEABLE",
+      "BLOCK_WIND"
+    ],
+    "bash": {
+      "str_min": 120,
+      "str_max": 460,
+      "sound": "呲啦咔咔！",
+      "sound_fail": "哐嘡！",
+      "ter_set": "t_folded_wall"
+    }
+  },
+  {
+    "type": "terrain",
+    "id": "t_folded_wall",
+    "name": "折叠墙",
+    "description": "用余光看向这堵墙时，它似乎是弯曲的，从正面看过去，墙面上不断重复着六角形的混凝土图案。",
+    "symbol": "#",
+    "color": "yellow_cyan",
+    "move_cost": 0,
+    "coverage": 100,
+    "roof": "t_concrete_roof",
+    "connect_groups": "WALL",
+    "connects_to": "WALL",
+    "flags": [
+      "NOITEM",
+      "SUPPORTS_ROOF",
+      "WALL",
+      "NO_SCENT",
+      "AUTO_WALL_SYMBOL",
+      "MINEABLE",
+      "BLOCK_WIND"
+    ],
+    "bash": {
+      "str_min": 120,
+      "str_max": 460,
+      "sound": "呲啦咔咔！",
+      "sound_fail": "哐嘡！",
+      "ter_set": "t_unfolded_wall"
+    },
+    "looks_like": "t_concrete_wall"
+  },
+  {
+    "type": "terrain",
+    "id": "t_unfolded_wall",
+    "name": "展开墙",
+    "description": "当你观察这面墙时，它的表面呈现出镶嵌的效果。",
+    "symbol": "#",
+    "color": "cyan_red",
+    "move_cost": 0,
+    "coverage": 100,
+    "roof": "t_concrete_roof",
+    "connect_groups": "WALL",
+    "connects_to": "WALL",
+    "flags": [
+      "NOITEM",
+      "SUPPORTS_ROOF",
+      "WALL",
+      "NO_SCENT",
+      "AUTO_WALL_SYMBOL",
+      "MINEABLE",
+      "BLOCK_WIND"
+    ],
+    "bash": {
+      "str_min": 120,
+      "str_max": 460,
+      "sound": "呲啦咔咔！",
+      "sound_fail": "哐嘡！",
+      "ter_set": "t_lixa_wall"
+    },
+    "looks_like": "t_concrete_wall"
+  },
+  {
+    "type": "terrain",
+    "id": "t_LIXA_tube",
+    "name": "激光舱",
+    "looks_like": "t_sewage_pipe",
+    "description": "一根巨大的金属管，挂在弹簧支架上保持平衡，以防止振动影响内部的激光。",
+    "symbol": "1",
+    "color": "light_gray",
+    "move_cost": 3,
+    "coverage": 50,
+    "connect_groups": [
+      "INDOORFLOOR",
+      "LIXATUBE"
+    ],
+    "connects_to": "LIXATUBE",
+    "flags": [
+      "TRANSPARENT",
+      "MOUNTABLE",
+      "PERMEABLE",
+      "THIN_OBSTACLE",
+      "MINEABLE",
+      "UNSTABLE",
+      "INDOORS"
+    ],
+    "bash": {
+      "str_min": 30,
+      "str_max": 210,
+      "sound": "尖锐的金属撕裂声！",
+      "sound_fail": "铛啷！",
+      "ter_set": "t_thconc_floor",
+      "items": [
+        {
+          "item": "scrap",
+          "count": [
+            6,
+            10
+          ]
+        },
+        {
+          "item": "spring",
+          "count": [
+            10,
+            20
+          ]
+        }
+      ]
+    },
+    "shoot": {
+      "chance_to_hit": 100,
+      "reduce_damage": [
+        0,
+        0
+      ],
+      "reduce_damage_laser": [
+        0,
+        0
+      ],
+      "destroy_damage": [
+        10,
+        15
+      ]
+    }
+  },
+  {
+    "type": "terrain",
+    "id": "t_LIXA_portal_pulse",
+    "name": "空间压缩器",
+    "description": "这台机器的外壳上有一系列复杂得令人眼花缭乱的装置和读数。你完全无法想象里面会是怎样。",
+    "symbol": "{",
+    "color": "light_gray",
+    "looks_like": "f_machinery_electronic",
+    "move_cost": 0,
+    "coverage": 50,
+    "connect_groups": [
+      "WALL",
+      "INDOORFLOOR"
+    ],
+    "connects_to": "WALL",
+    "flags": [
+      "TRANSPARENT",
+      "NOITEM",
+      "WALL",
+      "INDOORS",
+      "PERMEABLE"
+    ],
+    "bash": {
+      "str_min": 20,
+      "str_max": 150,
+      "explosive": 7,
+      "ter_set": "t_thconc_floor",
+      "sound_fail": "铛啷！",
+      "items": [
+        {
+          "item": "processor",
+          "prob": 25
+        },
+        {
+          "item": "RAM",
+          "count": [
+            4,
+            6
+          ],
+          "prob": 50
+        },
+        {
+          "item": "cable",
+          "charges": [
+            1,
+            2
+          ],
+          "prob": 50
+        },
+        {
+          "item": "small_lcd_screen",
+          "prob": 25
+        },
+        {
+          "item": "e_scrap",
+          "count": [
+            1,
+            4
+          ],
+          "prob": 50
+        },
+        {
+          "item": "circuit",
+          "count": [
+            0,
+            2
+          ],
+          "prob": 50
+        },
+        {
+          "item": "power_supply",
+          "prob": 25
+        },
+        {
+          "item": "amplifier",
+          "prob": 25
+        },
+        {
+          "item": "plastic_chunk",
+          "count": [
+            4,
+            10
+          ],
+          "prob": 50
+        },
+        {
+          "item": "scrap",
+          "count": [
+            2,
+            6
+          ],
+          "prob": 50
+        }
+      ]
+    },
+    "shoot": {
+      "chance_to_hit": 100,
+      "reduce_damage": [
+        0,
+        0
+      ],
+      "reduce_damage_laser": [
+        0,
+        0
+      ],
+      "destroy_damage": [
+        20,
+        30
+      ]
+    }
+  },
+  {
+    "type": "terrain",
+    "id": "t_LIXA_unfolded_portal_pulse",
+    "name": "分形压缩器",
+    "description": "这块空间似乎是无限的，无始无终。但你可以在这里看到两者，在这个不停变换角度的物体之中。",
+    "symbol": "{",
+    "color": "light_gray",
+    "light_emitted": 120,
+    "looks_like": "f_machinery_electronic",
+    "move_cost": 0,
+    "coverage": 50,
+    "connect_groups": [
+      "WALL",
+      "INDOORFLOOR"
+    ],
+    "connects_to": "WALL",
+    "flags": [
+      "TRANSPARENT",
+      "NOITEM",
+      "WALL",
+      "INDOORS",
+      "PERMEABLE"
+    ],
+    "bash": {
+      "str_min": 5,
+      "str_max": 15,
+      "explosive": 10,
+      "ter_set": "t_LIXA_thconc_floor",
+      "sound_fail": "铛啷！"
+    },
+    "shoot": {
+      "chance_to_hit": 100,
+      "reduce_damage": [
+        0,
+        0
+      ],
+      "reduce_damage_laser": [
+        0,
+        0
+      ],
+      "destroy_damage": [
+        20,
+        30
+      ]
+    }
+  },
+  {
+    "type": "terrain",
+    "id": "t_LIXA_unfolded_tube",
+    "name": "激光舱（展开）",
+    "looks_like": "t_sewage_pipe",
+    "description": "你可以看到这个管子的内表面，以及它包含的东西。粘稠的红色光线从里面渗出。",
+    "symbol": "1",
+    "color": "light_gray",
+    "move_cost": 3,
+    "coverage": 50,
+    "connect_groups": [
+      "INDOORFLOOR",
+      "LIXATUBE"
+    ],
+    "connects_to": "LIXATUBE",
+    "flags": [
+      "TRANSPARENT",
+      "MOUNTABLE",
+      "PERMEABLE",
+      "INDOORS",
+      "THIN_OBSTACLE",
+      "UNSTABLE",
+      "MINEABLE"
+    ],
+    "bash": {
+      "str_min": 7,
+      "str_max": 17,
+      "sound": "一声空洞的爆裂声，接着是凝固光线慢慢从管子里漏出来时发出的病态的湿漉漉的吱吱声。",
+      "sound_fail": "什么也没有。",
+      "ter_set": "t_LIXA_unfolded_tube_broken"
+    },
+    "shoot": {
+      "chance_to_hit": 100,
+      "reduce_damage": [
+        0,
+        0
+      ],
+      "reduce_damage_laser": [
+        0,
+        0
+      ],
+      "destroy_damage": [
+        10,
+        15
+      ]
+    }
+  },
+  {
+    "type": "terrain",
+    "id": "t_LIXA_unfolded_tube_broken",
+    "name": "激光舱（泄漏）",
+    "looks_like": "t_sewage_pipe",
+    "description": "凝结的光线像加热后的果酱一样从舱室侧面的缺口滴落下来。",
+    "symbol": "1",
+    "color": "light_gray",
+    "light_emitted": 120,
+    "move_cost": 2,
+    "coverage": 50,
+    "connect_groups": [
+      "INDOORFLOOR",
+      "LIXATUBE"
+    ],
+    "connects_to": "LIXATUBE",
+    "flags": [
+      "TRANSPARENT",
+      "MOUNTABLE",
+      "PERMEABLE",
+      "INDOORS",
+      "THIN_OBSTACLE",
+      "UNSTABLE",
+      "MINEABLE"
+    ],
+    "emissions": [
+      "emit_congealed_light"
+    ]
+  },
+  {
+    "type": "terrain",
+    "id": "t_LIXA_thconc_floor",
+    "name": "混凝土地板",
+    "looks_like": "t_thconc_floor",
+    "description": "你可以看到这块破旧的混凝土裂缝的每一面，从头到尾。你不敢盯着看太久。",
+    "symbol": ".",
+    "color": "cyan",
+    "move_cost": 2,
+    "roof": "t_concrete_roof",
+    "flags": [
+      "TRANSPARENT",
+      "SUPPORTS_ROOF",
+      "INDOORS",
+      "FLAT",
+      "ROAD"
+    ],
+    "connect_groups": [
+      "CONCRETE",
+      "INDOORFLOOR"
+    ],
+    "connects_to": "CONCRETE"
+  },
+  {
+    "type": "terrain",
+    "id": "t_LIXA_strconc_wall",
+    "name": "强化混凝土墙",
+    "looks_like": "t_concrete_wall",
+    "description": "你可以看到这块破旧的混凝土裂缝的每一面，从头到尾。你不敢盯着看太久。",
+    "symbol": "#",
+    "color": "light_gray",
+    "move_cost": 0,
+    "coverage": 100,
+    "roof": "t_concrete_roof",
+    "connect_groups": "WALL",
+    "connects_to": "WALL",
+    "flags": [
+      "NOITEM",
+      "SUPPORTS_ROOF",
+      "WALL",
+      "NO_SCENT",
+      "AUTO_WALL_SYMBOL",
+      "BLOCK_WIND"
+    ]
+  },
+  {
+    "type": "terrain",
+    "id": "t_card_LIXA",
+    "name": "读卡器",
+    "description": "一个读卡器。上面骄傲地印着银色的LIXA字样。",
+    "//": "Science",
+    "symbol": "6",
+    "color": "pink",
+    "looks_like": "t_card_science",
+    "move_cost": 0,
+    "roof": "t_metal_roof",
+    "connect_groups": [
+      "INDOORFLOOR",
+      "WALL"
+    ],
+    "connects_to": "WALL",
+    "flags": [
+      "NOITEM",
+      "INDOORS"
+    ],
+    "examine_action": {
+      "type": "cardreader",
+      "flags": [
+        "LIXA_SCIENCE_CARD"
+      ],
+      "consume_card": false,
+      "allow_hacking": true,
+      "terrain_changes": {
+        "t_door_metal_locked": "t_door_metal_c"
+      },
+      "query_msg": "刷卡吗？",
+      "success_msg": "你刷了钥匙卡。\n<color_light_green>附近的门锁打开了。</color>",
+      "redundant_msg": "附近的门已经开着了。"
+    },
+    "bash": {
+      "str_min": 18,
+      "str_max": 180,
+      "sound": "嘎嚓！",
+      "sound_fail": "喀啦！",
+      "ter_set": "t_card_reader_broken",
+      "items": [
+        {
+          "item": "plastic_chunk",
+          "count": [
+            0,
+            2
+          ]
+        },
+        {
+          "item": "scrap",
+          "prob": 50
+        }
+      ]
+    }
+  },
+  {
+    "type": "terrain",
+    "id": "t_card_LIXA_2",
+    "name": "读卡器（重连线）",
+    "description": "一个读卡器。外壳已经损坏，但用胶带修补好了。",
+    "//": "Science",
+    "symbol": "6",
+    "color": "pink",
+    "looks_like": "t_card_science",
+    "move_cost": 0,
+    "roof": "t_metal_roof",
+    "connect_groups": [
+      "INDOORFLOOR",
+      "WALL"
+    ],
+    "connects_to": "WALL",
+    "flags": [
+      "NOITEM",
+      "INDOORS"
+    ],
+    "examine_action": {
+      "type": "cardreader",
+      "flags": [
+        "LIXA_SCIENCE_CARD_2"
+      ],
+      "consume_card": false,
+      "allow_hacking": false,
+      "terrain_changes": {
+        "t_door_metal_locked": "t_door_metal_c"
+      },
+      "query_msg": "刷卡吗？",
+      "success_msg": "你刷了钥匙卡。\n<color_light_green>附近的门锁打开了。</color>",
+      "redundant_msg": "附近的门已经开着了。"
+    },
+    "bash": {
+      "str_min": 14,
+      "str_max": 140,
+      "sound": "嘎嚓！",
+      "sound_fail": "喀啦！",
+      "ter_set": "t_card_reader_broken",
+      "items": [
+        {
+          "item": "plastic_chunk",
+          "count": [
+            0,
+            2
+          ]
+        },
+        {
+          "item": "scrap",
+          "prob": 50
+        }
+      ]
+    }
+  },
+  {
+    "type": "terrain",
+    "id": "t_card_LIXA_3",
+    "name": "防护服储藏室读卡器",
+    "description": "一个读卡器。上面的标识写着：“防护服储藏室”",
+    "//": "Science",
+    "symbol": "6",
+    "color": "pink",
+    "looks_like": "t_card_science",
+    "move_cost": 0,
+    "roof": "t_metal_roof",
+    "connect_groups": [
+      "INDOORFLOOR",
+      "WALL"
+    ],
+    "connects_to": "WALL",
+    "flags": [
+      "NOITEM",
+      "INDOORS"
+    ],
+    "examine_action": {
+      "type": "cardreader",
+      "flags": [
+        "LIXA_SCIENCE_CARD_3"
+      ],
+      "consume_card": false,
+      "allow_hacking": false,
+      "terrain_changes": {
+        "t_door_metal_locked": "t_door_metal_c"
+      },
+      "query_msg": "刷卡吗？",
+      "success_msg": "你刷了钥匙卡。\n<color_light_green>附近的门锁打开了。</color>",
+      "redundant_msg": "附近的门已经开着了。"
+    },
+    "bash": {
+      "str_min": 14,
+      "str_max": 140,
+      "sound": "嘎嚓！",
+      "sound_fail": "喀啦！",
+      "ter_set": "t_card_reader_broken",
+      "items": [
+        {
+          "item": "plastic_chunk",
+          "count": [
+            0,
+            2
+          ]
+        },
+        {
+          "item": "scrap",
+          "prob": 50
+        }
+      ]
+    }
+  },
+  {
+    "type": "terrain",
+    "id": "t_card_LIXA_mil",
+    "name": "读卡器",
+    "description": "一个读卡器。它的外表是一种令人生畏的黑色，没有任何可以识别的符号。",
+    "//": "Science",
+    "symbol": "6",
+    "color": "dark_gray",
+    "looks_like": "t_card_military",
+    "move_cost": 0,
+    "roof": "t_metal_roof",
+    "connect_groups": [
+      "INDOORFLOOR",
+      "WALL"
+    ],
+    "connects_to": "WALL",
+    "flags": [
+      "NOITEM",
+      "INDOORS"
+    ],
+    "examine_action": {
+      "type": "cardreader",
+      "flags": [
+        "LIXA_MILITARY_CARD"
+      ],
+      "consume_card": false,
+      "allow_hacking": false,
+      "terrain_changes": {
+        "t_door_metal_locked": "t_door_metal_c"
+      },
+      "query_msg": "刷卡吗？",
+      "success_msg": "你刷了钥匙卡。\n<color_light_green>附近的门锁打开了。</color>",
+      "redundant_msg": "附近的门已经开着了。"
+    },
+    "bash": {
+      "str_min": 18,
+      "str_max": 180,
+      "sound": "嘎嚓！",
+      "sound_fail": "喀啦！",
+      "ter_set": "t_card_reader_broken",
+      "items": [
+        {
+          "item": "plastic_chunk",
+          "count": [
+            0,
+            2
+          ]
+        },
+        {
+          "item": "scrap",
+          "prob": 50
+        }
+      ]
+    }
+  },
+  {
+    "type": "terrain",
+    "id": "t_LIXA_laser",
+    "name": "精密激光发射器",
+    "description": "一台巨大无比的机器，里面有一系列装置用于激发和聚焦具有惊人精度波长的激光。",
+    "symbol": "$",
+    "color": "yellow",
+    "looks_like": "t_machinery_electronic",
+    "move_cost": 3,
+    "roof": "t_metal_roof",
+    "flags": [
+      "TRANSPARENT",
+      "FLAMMABLE",
+      "FLAT"
+    ],
+    "connect_groups": [
+      "INDOORFLOOR",
+      "LIXATUBE"
+    ],
+    "connects_to": "LIXATUBE",
+    "deconstruct": {
+      "ter_set": "t_metal_floor",
+      "items": [
+        {
+          "item": "lc_wire",
+          "count": [
+            1,
+            3
+          ]
+        },
+        {
+          "item": "pipe",
+          "count": [
+            1,
+            2
+          ]
+        },
+        {
+          "item": "mc_steel_chunk",
+          "count": [
+            1,
+            4
+          ]
+        },
+        {
+          "item": "processor",
+          "count": 1
+        },
+        {
+          "item": "RAM",
+          "count": [
+            1,
+            4
+          ]
+        },
+        {
+          "item": "cable",
+          "charges": [
+            1,
+            4
+          ]
+        },
+        {
+          "item": "lens",
+          "count": 8
+        },
+        {
+          "item": "e_scrap",
+          "count": [
+            5,
+            10
+          ]
+        },
+        {
+          "item": "circuit",
+          "count": [
+            3,
+            8
+          ]
+        },
+        {
+          "item": "power_supply",
+          "count": [
+            1,
+            3
+          ]
+        },
+        {
+          "item": "amplifier",
+          "count": [
+            1,
+            3
+          ]
+        },
+        {
+          "item": "plastic_chunk",
+          "count": [
+            2,
+            8
+          ]
+        },
+        {
+          "item": "scrap",
+          "count": [
+            1,
+            5
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "furniture",
+    "id": "f_LIXA_unfold_barrier",
+    "name": "平坦时空墙",
+    "looks_like": "fd_fatigue",
+    "description": "从远处看，这就像是房间的尽头；一堵平坦的墙，后面挂着一幅非常详细的隧道画。但当你走近时，你可以看到它轻轻荡漾，有如一滩懒洋洋的水，并注意到图像呈现出平面永远无法给出的空间角度。",
+    "symbol": "@",
+    "color": "light_gray",
+    "move_cost_mod": 1,
+    "coverage": 0,
+    "required_str": -1,
+    "flags": [
+      "TRANSPARENT"
+    ]
+  },
+  {
+    "type": "furniture",
+    "id": "f_LIXA_machinery_electronic",
+    "name": "被展开的机器",
+    "looks_like": "t_machinery_electronic",
+    "description": "这台不可思议的机器上充满了电线、电路板和连接器。你可以看到它们中的每一个，这让你头疼。",
+    "symbol": "$",
+    "color": "yellow",
+    "move_cost_mod": 8,
+    "coverage": 55,
+    "required_str": -1,
+    "flags": [
+      "TRANSPARENT",
+      "CONTAINER",
+      "SEALED",
+      "FLAMMABLE",
+      "PLACE_ITEM"
+    ]
+  },
+  {
+    "type": "furniture",
+    "id": "f_LIXA_electrical_conduit",
+    "name": "光子电路",
+    "looks_like": "f_electrical_conduit",
+    "description": "你可以透过这根管子的金属外壳，看到穿过其中的炽热亮光。",
+    "symbol": "|",
+    "color": "light_gray",
+    "move_cost_mod": 1,
+    "required_str": -1,
+    "flags": [
+      "TRANSPARENT",
+      "NOCOLLIDE"
+    ]
+  },
+  {
+    "type": "furniture",
+    "id": "f_lixa_whiteboard",
+    "name": "白板",
+    "description": "一块宽阔的白板，可以用可清洗的记号笔在上面写字。不过，很久没有人洗过它了；上面写满了密密麻麻的方程式和波形图。",
+    "symbol": "6",
+    "color": "blue",
+    "looks_like": "f_bulletin",
+    "move_cost_mod": -1,
+    "coverage": 75,
+    "required_str": -1,
+    "flags": [
+      "FLAMMABLE",
+      "ORGANIC",
+      "TRANSPARENT"
+    ],
+    "max_volume": "120 ml",
+    "deconstruct": {
+      "items": [
+        {
+          "item": "2x4",
+          "count": 4
+        },
+        {
+          "item": "nail",
+          "charges": [
+            4,
+            8
+          ]
+        }
+      ]
+    },
+    "bash": {
+      "str_min": 3,
+      "str_max": 40,
+      "sound": "嘎嚓！",
+      "sound_fail": "哐嘡。",
+      "items": [
+        {
+          "item": "2x4",
+          "count": [
+            0,
+            3
+          ]
+        },
+        {
+          "item": "nail",
+          "charges": [
+            4,
+            6
+          ]
+        },
+        {
+          "item": "splinter",
+          "count": [
+            1,
+            4
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "furniture",
+    "id": "f_LIXA_chair_black",
+    "name": "黑色木椅",
+    "symbol": "#",
+    "description": "一把涂成黑色的普通木椅，有四条腿、椅面和靠背。坐下来歇歇脚，再配上一张合适的桌子，几乎能让人假装一切仍旧如常。",
+    "color": "light_gray",
+    "looks_like": "f_chair",
+    "move_cost_mod": 1,
+    "coverage": 40,
+    "comfort": 1,
+    "floor_bedding_warmth": -1500,
+    "bonus_fire_warmth_feet": 1000,
+    "required_str": 4,
+    "flags": [
+      "TRANSPARENT",
+      "FLAMMABLE_ASH",
+      "ORGANIC",
+      "MOUNTABLE",
+      "CAN_SIT",
+      "EASY_DECONSTRUCT",
+      "ALIGN_WORKBENCH"
+    ],
+    "deconstruct": {
+      "items": [
+        {
+          "item": "chair_wood_black",
+          "count": 1
+        }
+      ]
+    },
+    "bash": {
+      "str_min": 6,
+      "str_max": 25,
+      "sound": "嘎嚓！",
+      "sound_fail": "砰。",
+      "items": [
+        {
+          "item": "wooden_post_short",
+          "count": 1
+        },
+        {
+          "item": "nuts_bolts",
+          "charges": [
+            2,
+            10
+          ]
+        },
+        {
+          "item": "splinter",
+          "count": [
+            1,
+            10
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "furniture",
+    "id": "f_LIXA_chair_folding_black",
+    "name": "黑色折叠塑料椅",
+    "symbol": "#",
+    "description": "一把装在钢制框架上的黑色折叠塑料椅。谈不上舒适，但至少有地方可以坐。",
+    "color": "light_gray",
+    "looks_like": "f_chair_folding",
+    "move_cost_mod": 1,
+    "coverage": 30,
+    "comfort": 1,
+    "floor_bedding_warmth": -1500,
+    "bonus_fire_warmth_feet": 1000,
+    "required_str": 3,
+    "deployed_item": "LIXA_chair_folding_black",
+    "examine_action": "deployed_furniture",
+    "flags": [
+      "TRANSPARENT",
+      "FLAMMABLE",
+      "EASY_DECONSTRUCT",
+      "CAN_SIT",
+      "ALIGN_WORKBENCH"
+    ],
+    "max_volume": "750 L",
+    "deconstruct": {
+      "items": [
+        {
+          "item": "LIXA_chair_folding_black",
+          "count": 1
+        }
+      ]
+    },
+    "bash": {
+      "str_min": 5,
+      "str_max": 15,
+      "sound": "砰！",
+      "sound_fail": "咚。",
+      "items": [
+        {
+          "item": "plastic_chunk",
+          "count": [
+            3,
+            12
+          ]
+        },
+        {
+          "item": "scrap",
+          "charges": [
+            5,
+            25
+          ]
+        }
+      ]
+    }
+  }
+]

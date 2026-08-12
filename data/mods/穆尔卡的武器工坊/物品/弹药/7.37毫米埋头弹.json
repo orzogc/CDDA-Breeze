@@ -1,0 +1,181 @@
+[
+  {
+    "id": "5C3",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "7.37x40mm 5C3 标准埋头弹"
+    },
+    "description": "7.37x40mm的5C3型标准弹药，在Rivtech设计出大名鼎鼎的的8mm无壳弹后格科斯勒为了拥有可以与其抗衡的子弹便研发出了一种规格为7.37x40mm（英制单位.290）口径的子弹，这种子弹采用了更保守也更有潜力的埋头弹设计，改进的埋头弹设计在降低造价的同时还确保了性能，弹壳采用高级工程塑料制作，大幅度降低了重量还可以循环利用，弹头使用淬火高碳钢芯制造和双金属外壳设计，杀伤力和穿透性能优秀，是目前该弹种内生产数量最多，使用范围最广泛的子弹。",
+    "weight": "5 g",
+    "volume": "130 ml",
+    "price": 2700,
+    "price_postapoc": 5500,
+    "flags": [
+      "IRREPLACEABLE_CONSUMABLE"
+    ],
+    "material": [
+      "steel",
+      "plastic",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "green",
+    "count": 50,
+    "stack_size": 50,
+    "ammo_type": "737_cta",
+    "casing": "737_casing",
+    "range": 50,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 50,
+      "armor_penetration": 15
+    },
+    "dispersion": 20,
+    "recoil": 1500,
+    "effects": [
+      "COOKOFF",
+      "NEVER_MISFIRES"
+    ],
+    "longest_side": "8 cm"
+  },
+  {
+    "id": "5C1R",
+    "copy-from": "5C3",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "7.37x40mm 5C1R 民用埋头弹"
+    },
+    "casing": "737_casing",
+    "description": "7.37x40mm的5C1R型民用弹药，弹头使用了传统的铅芯被甲弹设计，穿透力略有下降，但同时价格也变得相当亲民了，对无甲单位的伤害也略有提升。",
+    "price": 1500,
+    "price_postapoc": 2500,
+    "dispersion": 25,
+    "relative": {
+      "damage": {
+        "damage_type": "bullet",
+        "amount": 5,
+        "armor_penetration": -10
+      }
+    },
+    "proportional": {
+      "recoil": 0.7
+    },
+    "extend": {
+      "effects": [
+        "NEVER_MISFIRES"
+      ]
+    },
+    "longest_side": "8 cm"
+  },
+  {
+    "id": "5C3T",
+    "copy-from": "5C3",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "7.37x40mm 5C3T 曳光埋头弹"
+    },
+    "casing": "737_casing",
+    "description": "7.37x40mm的5C3T型曳光弹药，基于5C3制式弹药设计出来的曳光弹，提供了良好的夜间指向性，并且有可能对目标造成灼伤，但性能偏弱。",
+    "price": 2800,
+    "price_postapoc": 5600,
+    "dispersion": 15,
+    "relative": {
+      "damage": {
+        "damage_type": "bullet",
+        "amount": -1,
+        "armor_penetration": -1
+      }
+    },
+    "extend": {
+      "effects": [
+        "NEVER_MISFIRES",
+        "INCENDIARY"
+      ]
+    },
+    "longest_side": "8 cm"
+  },
+  {
+    "id": "6C6TC",
+    "copy-from": "5C3",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "7.37x40mm 6C6TC 穿甲埋头弹"
+    },
+    "casing": "737_casing",
+    "description": "7.37x40mm的6C6TC型穿甲弹，弹头由碳化钨制造，是种为了应对可能会出现的高防护步兵单位而设计的子弹，穿透性能得到了质的飞跃，不过价格相对而言更贵，而且5C3的性能在当前也完全够格。",
+    "price": 5500,
+    "dispersion": 20,
+    "price_postapoc": 9500,
+    "relative": {
+      "damage": {
+        "damage_type": "bullet",
+        "amount": 3,
+        "armor_penetration": 15
+      }
+    },
+    "extend": {
+      "effects": [
+        "NEVER_MISFIRES"
+      ]
+    },
+    "longest_side": "8 cm"
+  },
+  {
+    "id": "6C7DU",
+    "copy-from": "5C3",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "7.37x40mm 6C7DU 实验穿甲埋头弹"
+    },
+    "casing": "737_casing",
+    "description": "7.37x40mm的6C7DU型实验性弹药，是一种使用了贫铀合金弹芯和双金属外壳设计的穿甲弹，穿透性极为可怕，可以击穿部分现役装甲车和目前所有型号的动力装甲，但是价格昂贵，数量稀少，还有对射手可能的潜在危害以及不人道等诸多因素导致该弹药最终只生产了一批就停产了……这东西对你来说可不是个好兆头，所以你打算用它来打穿什么东西。",
+    "price": 72500,
+    "price_postapoc": 72500,
+    "relative": {
+      "damage": {
+        "damage_type": "bullet",
+        "amount": 5,
+        "armor_penetration": 150
+      }
+    },
+    "proportional": {
+      "recoil": 10
+    },
+    "extend": {
+      "effects": [
+        "NEVER_MISFIRES"
+      ]
+    },
+    "longest_side": "8 cm"
+  },
+  {
+    "id": "5C2SB",
+    "copy-from": "5C3",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "7.37x40mm 5C2SB 亚音速埋头弹"
+    },
+    "casing": "737_casing",
+    "description": "7.37x40mm的5C2SB型亚音速弹药，减装药虽然影响了射程，但是也降低了后坐力和噪音，重弹头弥补了威力和精度上的不足，但这也进一步缩短了射程，建议搭配消音器使用。",
+    "price": 4000,
+    "price_postapoc": 7000,
+    "range": 30,
+    "loudness": 100,
+    "relative": {
+      "damage": {
+        "damage_type": "bullet",
+        "amount": 5,
+        "armor_penetration": 3
+      }
+    },
+    "proportional": {
+      "recoil": 0.7
+    },
+    "extend": {
+      "effects": [
+        "NEVER_MISFIRES"
+      ]
+    },
+    "longest_side": "8 cm"
+  }
+]

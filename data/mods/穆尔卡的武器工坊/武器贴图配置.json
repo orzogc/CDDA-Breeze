@@ -1,0 +1,1702 @@
+[
+  {
+    "type": "mod_tileset",
+    "compatibility": [
+      "Chibi_Ultica",
+      "MshockRealXotto",
+      "UltimateCataclysm",
+      "MshockXottoplus",
+      "UNDEAD_PEOPLE",
+      "UNDEAD_PEOPLE_BASE",
+      "UNDEAD_PEOPLE_LEGACY",
+      "UlticaShell",
+      "MshockXottoplus12",
+      "MSX++DEAD_PEOPLE",
+      "MXplus12_for_cosmetics",
+      "MSXotto+"
+    ],
+    "tiles-new": [
+      {
+        "file": "tiles_weapons.png",
+        "tiles": [
+          {
+            "id": "MP153_C",
+            "fg": 1
+          },
+          {
+            "id": "overlay_wielded_MP153_C",
+            "fg": 0
+          },
+          {
+            "id": "znar223",
+            "fg": 3
+          },
+          {
+            "id": "overlay_wielded_znar223",
+            "fg": 2
+          },
+          {
+            "id": "MP153",
+            "fg": 5
+          },
+          {
+            "id": "overlay_wielded_MP153",
+            "fg": 4
+          },
+          {
+            "id": "vss",
+            "fg": 7
+          },
+          {
+            "id": "overlay_wielded_vss",
+            "fg": 6
+          },
+          {
+            "id": "aks74u",
+            "fg": 9
+          },
+          {
+            "id": "overlay_wielded_aks74u",
+            "fg": 8
+          },
+          {
+            "id": "rpk16",
+            "fg": 11
+          },
+          {
+            "id": "overlay_wielded_rpk16",
+            "fg": 10
+          },
+          {
+            "id": "brs23",
+            "fg": 13
+          },
+          {
+            "id": "overlay_wielded_brs23",
+            "fg": 12
+          },
+          {
+            "id": "ak74n",
+            "fg": 15
+          },
+          {
+            "id": "overlay_wielded_ak74n",
+            "fg": 14
+          },
+          {
+            "id": "ak74uf",
+            "fg": 17
+          },
+          {
+            "id": "overlay_wielded_ak74uf",
+            "fg": 16
+          },
+          {
+            "id": "akm",
+            "fg": 21
+          },
+          {
+            "id": "overlay_wielded_akm",
+            "fg": 20
+          },
+          {
+            "id": "akms",
+            "fg": 23
+          },
+          {
+            "id": "overlay_wielded_akms",
+            "fg": 22
+          },
+          {
+            "id": "an94",
+            "fg": 25
+          },
+          {
+            "id": "overlay_wielded_an94",
+            "fg": 24
+          },
+          {
+            "id": "aek",
+            "fg": 27
+          },
+          {
+            "id": "overlay_wielded_aek",
+            "fg": 26
+          },
+          {
+            "id": "pp1901",
+            "fg": 29
+          },
+          {
+            "id": "overlay_wielded_pp1901",
+            "fg": 28
+          },
+          {
+            "id": "pp91",
+            "fg": 31
+          },
+          {
+            "id": "overlay_wielded_pp91",
+            "fg": 30
+          },
+          {
+            "id": "ak12",
+            "fg": 33
+          },
+          {
+            "id": "overlay_wielded_ak12",
+            "fg": 32
+          },
+          {
+            "id": "am17",
+            "fg": 35
+          },
+          {
+            "id": "overlay_wielded_am17",
+            "fg": 34
+          },
+          {
+            "id": "whitefang",
+            "fg": 37
+          },
+          {
+            "id": "overlay_wielded_whitefang",
+            "fg": 36
+          },
+          {
+            "id": "svch",
+            "fg": 39
+          },
+          {
+            "id": "overlay_wielded_svch",
+            "fg": 38
+          },
+          {
+            "id": "hellbreath",
+            "fg": 41
+          },
+          {
+            "id": "overlay_wielded_hellbreath",
+            "fg": 40
+          },
+          {
+            "id": "9a91",
+            "fg": 47
+          },
+          {
+            "id": "overlay_wielded_9a91",
+            "fg": 46
+          },
+          {
+            "id": "ash12",
+            "fg": 49
+          },
+          {
+            "id": "overlay_wielded_ash12",
+            "fg": 48
+          },
+          {
+            "id": "qbz",
+            "fg": 51
+          },
+          {
+            "id": "overlay_wielded_qbz",
+            "fg": 50
+          },
+          {
+            "id": "qbz191",
+            "fg": 53
+          },
+          {
+            "id": "overlay_wielded_qbz191",
+            "fg": 52
+          },
+          {
+            "id": "pp19",
+            "fg": 55
+          },
+          {
+            "id": "overlay_wielded_pp19",
+            "fg": 54
+          },
+          {
+            "id": "vper",
+            "fg": 57
+          },
+          {
+            "id": "overlay_wielded_vper",
+            "fg": 56
+          },
+          {
+            "id": "horus",
+            "fg": 59
+          },
+          {
+            "id": "overlay_wielded_horus",
+            "fg": 58
+          },
+          {
+            "id": "rpk74",
+            "fg": 61
+          },
+          {
+            "id": "overlay_wielded_rpk74",
+            "fg": 60
+          },
+          {
+            "id": "fnc",
+            "fg": 63
+          },
+          {
+            "id": "overlay_wielded_fnc",
+            "fg": 62
+          },
+          {
+            "id": "toz",
+            "fg": 65
+          },
+          {
+            "id": "overlay_wielded_toz",
+            "fg": 64
+          },
+          {
+            "id": "svt",
+            "fg": 67
+          },
+          {
+            "id": "overlay_wielded_svt",
+            "fg": 66
+          },
+          {
+            "id": "val",
+            "fg": 69
+          },
+          {
+            "id": "overlay_wielded_val",
+            "fg": 68
+          },
+          {
+            "id": "grenade",
+            "fg": 71
+          },
+          {
+            "id": "overlay_wielded_grenade",
+            "fg": 70
+          },
+          {
+            "id": "grenade_act",
+            "fg": 73
+          },
+          {
+            "id": "overlay_wielded_grenade_act",
+            "fg": 72
+          },
+          {
+            "id": "vector_9mm",
+            "fg": 75
+          },
+          {
+            "id": "overlay_wielded_vector_9mm",
+            "fg": 74
+          },
+          {
+            "id": "overlay_wielded_modular_m27_assault_rifle",
+            "fg": 78
+          },
+          {
+            "id": "modular_m27_assault_rifle",
+            "fg": 79
+          },
+          {
+            "id": [
+              "modular_m27iar",
+              "modular_m27_assault_rifle_var_modular_m27iar"
+            ],
+            "fg": 79
+          },
+          {
+            "id": [
+              "overlay_wielded_modular_m27iar",
+              "overlay_wielded_modular_m27_assault_rifle_var_modular_m27iar"
+            ],
+            "fg": 78
+          },
+          {
+            "id": [
+              "modular_h&k416a5",
+              "modular_m27_assault_rifle_var_modular_h&k416a5"
+            ],
+            "fg": 79
+          },
+          {
+            "id": [
+              "overlay_wielded_modular_h&k416a5",
+              "overlay_wielded_modular_m27_assault_rifle_var_modular_h&k416a5"
+            ],
+            "fg": 78
+          },
+          {
+            "id": "overlay_wielded_hk_mp5",
+            "fg": 80
+          },
+          {
+            "id": "hk_mp5",
+            "fg": 81
+          },
+          {
+            "id": "overlay_wielded_hk_mp5sd",
+            "fg": 82
+          },
+          {
+            "id": "hk_mp5sd",
+            "fg": 83
+          },
+          {
+            "id": "overlay_wielded_hk_mp5k",
+            "fg": 84
+          },
+          {
+            "id": "hk_mp5k",
+            "fg": 85
+          },
+          {
+            "id": "overlay_wielded_hk_ump45",
+            "fg": 86
+          },
+          {
+            "id": "hk_ump45",
+            "fg": 87
+          },
+          {
+            "id": "overlay_wielded_remington_1100",
+            "fg": 88
+          },
+          {
+            "id": "remington_1100",
+            "fg": 89
+          },
+          {
+            "id": [
+              "overlay_wielded_remington_1100",
+              "overlay_wielded_remington_870_var_remington_1100"
+            ],
+            "fg": 88
+          },
+          {
+            "id": [
+              "remington_1100",
+              "remington_870_var_remington_1100"
+            ],
+            "fg": 89
+          },
+          {
+            "id": "overlay_wielded_draco",
+            "fg": 90
+          },
+          {
+            "id": "draco",
+            "fg": 91
+          },
+          {
+            "id": "overlay_wielded_ak556",
+            "fg": 92
+          },
+          {
+            "id": "ak556",
+            "fg": 93
+          },
+          {
+            "id": "overlay_wielded_minidraco556",
+            "fg": 94
+          },
+          {
+            "id": "minidraco556",
+            "fg": 95
+          },
+          {
+            "id": "overlay_wielded_marlin_9a",
+            "fg": 96
+          },
+          {
+            "id": "marlin_9a",
+            "fg": 97
+          },
+          {
+            "id": [
+              "overlay_wielded_modular_m4a1",
+              "overlay_wielded_modular_m4_carbine_var_m4a1"
+            ],
+            "fg": 98
+          },
+          {
+            "id": [
+              "modular_m4a1",
+              "modular_m4_carbine_var_m4a1"
+            ],
+            "fg": 99
+          },
+          {
+            "id": [
+              "m4a1",
+              "m4_carbine_var_m4a1",
+              "modular_m4a1",
+              "modular_m4_carbine"
+            ],
+            "fg": 99,
+            "rotates": false
+          },
+          {
+            "id": [
+              "overlay_wielded_m4a1",
+              "overlay_wielded_m4_carbine_var_m4a1",
+              "overlay_wielded_modular_m4a1",
+              "overlay_wielded_modular_m4_carbine"
+            ],
+            "fg": 98,
+            "rotates": false
+          },
+          {
+            "id": [
+              "m4_cqbr",
+              "m4_carbine_var_m4_cqbr"
+            ],
+            "fg": 99,
+            "rotates": false
+          },
+          {
+            "id": [
+              "overlay_wielded_m4_cqbr",
+              "overlay_wielded_m4_carbine_var_m4_cqbr"
+            ],
+            "fg": 98,
+            "rotates": false
+          },
+          {
+            "id": "overlay_wielded_rifle_auto",
+            "fg": 98
+          },
+          {
+            "id": "rifle_auto",
+            "fg": 99
+          },
+          {
+            "id": "overlay_wielded_m1a",
+            "fg": 100
+          },
+          {
+            "id": "m1a",
+            "fg": 101
+          },
+          {
+            "id": "overlay_wielded_ruger_mini",
+            "fg": 102
+          },
+          {
+            "id": "ruger_mini",
+            "fg": 103
+          },
+          {
+            "id": "overlay_wielded_fn_fal_semi",
+            "fg": 104
+          },
+          {
+            "id": "fn_fal_semi",
+            "fg": 105
+          },
+          {
+            "id": "overlay_wielded_modular_ar15",
+            "fg": 106
+          },
+          {
+            "id": "modular_ar15",
+            "fg": 107
+          },
+          {
+            "id": "overlay_wielded_acr_300blk",
+            "fg": 108
+          },
+          {
+            "id": "acr_300blk",
+            "fg": 109
+          },
+          {
+            "id": "overlay_wielded_modular_acr",
+            "fg": 108
+          },
+          {
+            "id": "modular_acr",
+            "fg": 109
+          },
+          {
+            "id": [
+              "overlay_wielded_acr",
+              "overlay_wielded_m16_auto_rifle_var_acr"
+            ],
+            "fg": 108
+          },
+          {
+            "id": [
+              "acr",
+              "m16_auto_rifle_var_acr"
+            ],
+            "fg": 109
+          },
+          {
+            "id": "overlay_wielded_m16_auto_rifle",
+            "fg": 108
+          },
+          {
+            "id": "m16_auto_rifle",
+            "fg": 109
+          },
+          {
+            "id": [
+              "overlay_wielded_scar_l",
+              "overlay_wielded_m27_assault_rifle_var_scar_l"
+            ],
+            "fg": 110
+          },
+          {
+            "id": [
+              "scar_l",
+              "m27_assault_rifle_var_scar_l"
+            ],
+            "fg": 111
+          },
+          {
+            "id": "overlay_wielded_scar_h",
+            "fg": 112
+          },
+          {
+            "id": "scar_h",
+            "fg": 113
+          },
+          {
+            "id": "overlay_wielded_garand",
+            "fg": 114
+          },
+          {
+            "id": "garand",
+            "fg": 115
+          },
+          {
+            "id": "overlay_wielded_browning_blr",
+            "fg": 116
+          },
+          {
+            "id": "browning_blr",
+            "fg": 117
+          },
+          {
+            "id": "overlay_wielded_m1903",
+            "fg": 118
+          },
+          {
+            "id": "m1903",
+            "fg": 119
+          },
+          {
+            "id": "overlay_wielded_obrez",
+            "fg": 120
+          },
+          {
+            "id": "obrez",
+            "fg": 121
+          },
+          {
+            "id": "overlay_wielded_m14ebr",
+            "fg": 122
+          },
+          {
+            "id": "m14ebr",
+            "fg": 123
+          },
+          {
+            "id": [
+              "overlay_wielded_sig553",
+              "overlay_wielded_sig_assault_rifle_var_sig553"
+            ],
+            "fg": 124
+          },
+          {
+            "id": [
+              "sig553",
+              "sig_assault_rifle_var_sig553"
+            ],
+            "fg": 125
+          },
+          {
+            "id": "overlay_wielded_m1918",
+            "fg": 126
+          },
+          {
+            "id": "m1918",
+            "fg": 127
+          },
+          {
+            "id": "overlay_wielded_m1carbine",
+            "fg": 128
+          },
+          {
+            "id": "m1carbine",
+            "fg": 129
+          },
+          {
+            "id": "overlay_wielded_hk417_13",
+            "fg": 130
+          },
+          {
+            "id": "hk417_13",
+            "fg": 131
+          },
+          {
+            "id": "overlay_wielded_modular_m38dmr",
+            "fg": 130
+          },
+          {
+            "id": "modular_m38dmr",
+            "fg": 131
+          },
+          {
+            "id": [
+              "m38dmr",
+              "modular_m27_assault_rifle_var_modular_m38dmr"
+            ],
+            "fg": 131
+          },
+          {
+            "id": [
+              "overlay_wielded_m38dmr",
+              "overlay_wielded_modular_m27_assault_rifle_var_modular_m38dmr"
+            ],
+            "fg": 130
+          },
+          {
+            "id": "overlay_wielded_m110a1",
+            "fg": 132
+          },
+          {
+            "id": "m110a1",
+            "fg": 133
+          },
+          {
+            "id": "overlay_wielded_sig_mcx_rattler_sbr",
+            "fg": 134
+          },
+          {
+            "id": "sig_mcx_rattler_sbr",
+            "fg": 135
+          },
+          {
+            "id": "overlay_wielded_ruger_1022",
+            "fg": 136
+          },
+          {
+            "id": "ruger_1022",
+            "fg": 137
+          },
+          {
+            "id": "overlay_wielded_bh_m89",
+            "fg": 138
+          },
+          {
+            "id": "bh_m89",
+            "fg": 139
+          },
+          {
+            "id": "overlay_wielded_henry_big_boy",
+            "fg": 138
+          },
+          {
+            "id": "henry_big_boy",
+            "fg": 139
+          },
+          {
+            "id": "overlay_wielded_ksg",
+            "fg": 140
+          },
+          {
+            "id": "ksg",
+            "fg": 141
+          },
+          {
+            "id": "overlay_wielded_1895sbl",
+            "fg": 146
+          },
+          {
+            "id": "1895sbl",
+            "fg": 147
+          },
+          {
+            "id": "overlay_wielded_remington_870",
+            "fg": 148
+          },
+          {
+            "id": "remington_870",
+            "fg": 149
+          },
+          {
+            "id": "overlay_wielded_remington_870_express",
+            "fg": 150
+          },
+          {
+            "id": "remington_870_express",
+            "fg": 151
+          },
+          {
+            "id": "overlay_wielded_m1014",
+            "fg": 152
+          },
+          {
+            "id": "m1014",
+            "fg": 153
+          },
+          {
+            "id": [
+              "overlay_wielded_m1014",
+              "overlay_wielded_mossberg_930_var_m1014"
+            ],
+            "fg": 152
+          },
+          {
+            "id": [
+              "m1014",
+              "mossberg_930_var_m1014"
+            ],
+            "fg": 153
+          },
+          {
+            "id": "overlay_wielded_saiga_12",
+            "fg": 154
+          },
+          {
+            "id": "saiga_12",
+            "fg": 155
+          },
+          {
+            "id": "overlay_wielded_browning_a5",
+            "fg": 156
+          },
+          {
+            "id": "browning_a5",
+            "fg": 157
+          },
+          {
+            "id": [
+              "overlay_wielded_browning_a5",
+              "overlay_wielded_remington_870_var_browning_a5"
+            ],
+            "fg": 156
+          },
+          {
+            "id": [
+              "browning_a5",
+              "remington_870_var_browning_a5"
+            ],
+            "fg": 157
+          },
+          {
+            "id": "overlay_wielded_SPAS_12",
+            "fg": 158
+          },
+          {
+            "id": "SPAS_12",
+            "fg": 159
+          },
+          {
+            "id": "overlay_wielded_mossberg_500",
+            "fg": 160
+          },
+          {
+            "id": "mossberg_500",
+            "fg": 161
+          },
+          {
+            "id": [
+              "overlay_wielded_mossberg_500",
+              "overlay_wielded_mossberg_500_var_mossberg_500"
+            ],
+            "fg": 160
+          },
+          {
+            "id": [
+              "mossberg_500",
+              "mossberg_500_var_mossberg_500"
+            ],
+            "fg": 161
+          },
+          {
+            "id": "overlay_wielded_mossberg_500_security",
+            "fg": 162
+          },
+          {
+            "id": "mossberg_500_security",
+            "fg": 163
+          },
+          {
+            "id": [
+              "overlay_wielded_mossberg_500_security",
+              "overlay_wielded_mossberg_500_var_mossberg_500_security"
+            ],
+            "fg": 162
+          },
+          {
+            "id": [
+              "mossberg_500_security",
+              "mossberg_500_var_mossberg_500_security"
+            ],
+            "fg": 163
+          },
+          {
+            "id": "overlay_wielded_mossberg_590",
+            "fg": 164
+          },
+          {
+            "id": "mossberg_590",
+            "fg": 165
+          },
+          {
+            "id": "overlay_wielded_mossberg_930",
+            "fg": 166
+          },
+          {
+            "id": "mossberg_930",
+            "fg": 167
+          },
+          {
+            "id": "overlay_wielded_kord",
+            "fg": 168
+          },
+          {
+            "id": "kord",
+            "fg": 169
+          },
+          {
+            "id": "overlay_wielded_ksub2000",
+            "fg": 170
+          },
+          {
+            "id": "ksub2000",
+            "fg": 171
+          },
+          {
+            "id": "overlay_wielded_savage_111f",
+            "fg": 172
+          },
+          {
+            "id": "savage_111f",
+            "fg": 173
+          },
+          {
+            "id": "overlay_wielded_vz58_p",
+            "fg": 174
+          },
+          {
+            "id": "vz58_p",
+            "fg": 175
+          },
+          {
+            "id": "overlay_wielded_vz58ts",
+            "fg": 176
+          },
+          {
+            "id": "vz58ts",
+            "fg": 177
+          },
+          {
+            "id": "overlay_wielded_TDI",
+            "fg": 178
+          },
+          {
+            "id": "TDI",
+            "fg": 179
+          },
+          {
+            "id": "overlay_wielded_hk_g3",
+            "fg": 180
+          },
+          {
+            "id": "hk_g3",
+            "fg": 181
+          },
+          {
+            "id": "overlay_wielded_mp40",
+            "fg": 182
+          },
+          {
+            "id": "mp40",
+            "fg": 183
+          },
+          {
+            "id": "overlay_wielded_mp40semi",
+            "fg": 182
+          },
+          {
+            "id": "mp40semi",
+            "fg": 183
+          },
+          {
+            "id": "overlay_wielded_tommygun",
+            "fg": 184
+          },
+          {
+            "id": "tommygun",
+            "fg": 185
+          },
+          {
+            "id": "overlay_wielded_ak74",
+            "fg": 186
+          },
+          {
+            "id": "ak74",
+            "fg": 187
+          },
+          {
+            "id": "overlay_wielded_ak47",
+            "fg": 188
+          },
+          {
+            "id": "ak47",
+            "fg": 189
+          },
+          {
+            "id": "overlay_wielded_aksemi",
+            "fg": 188
+          },
+          {
+            "id": "aksemi",
+            "fg": 189
+          },
+          {
+            "id": "overlay_wielded_m249",
+            "fg": 190
+          },
+          {
+            "id": "m249",
+            "fg": 191
+          },
+          {
+            "id": "overlay_wielded_m249_semi",
+            "fg": 190
+          },
+          {
+            "id": "m249_semi",
+            "fg": 191
+          },
+          {
+            "id": "overlay_wielded_m60",
+            "fg": 194
+          },
+          {
+            "id": "m60",
+            "fg": 195
+          },
+          {
+            "id": "overlay_wielded_m60_semi",
+            "fg": 194
+          },
+          {
+            "id": "m60_semi",
+            "fg": 195
+          },
+          {
+            "id": "overlay_wielded_steyr_aug",
+            "fg": 198
+          },
+          {
+            "id": "steyr_aug",
+            "fg": 199
+          },
+          {
+            "id": "overlay_wielded_remington_870_breacher",
+            "fg": 200
+          },
+          {
+            "id": "remington_870_breacher",
+            "fg": 201
+          },
+          {
+            "id": "overlay_wielded_greasegun",
+            "fg": 202
+          },
+          {
+            "id": "greasegun",
+            "fg": 203
+          },
+          {
+            "id": "overlay_wielded_czevo3",
+            "fg": 204
+          },
+          {
+            "id": "czevo3",
+            "fg": 205
+          },
+          {
+            "id": "overlay_wielded_aks74n",
+            "fg": 206
+          },
+          {
+            "id": "aks74n",
+            "fg": 207
+          },
+          {
+            "id": "overlay_wielded_m3_grease_c",
+            "fg": 208
+          },
+          {
+            "id": "m3_grease_c",
+            "fg": 209
+          },
+          {
+            "id": "overlay_wielded_MP156_M",
+            "fg": 210
+          },
+          {
+            "id": "MP156_M",
+            "fg": 211
+          },
+          {
+            "id": "overlay_wielded_saigak",
+            "fg": 212
+          },
+          {
+            "id": "saigak",
+            "fg": 213
+          },
+          {
+            "id": "overlay_wielded_aks74um",
+            "fg": 214
+          },
+          {
+            "id": "aks74um",
+            "fg": 215
+          },
+          {
+            "id": "overlay_wielded_ak103c",
+            "fg": 216
+          },
+          {
+            "id": "ak103c",
+            "fg": 217
+          },
+          {
+            "id": "overlay_wielded_vss47",
+            "fg": 218
+          },
+          {
+            "id": "vss47",
+            "fg": 219
+          },
+          {
+            "id": "overlay_wielded_vector_9mm_c",
+            "fg": 220
+          },
+          {
+            "id": "vector_9mm_c",
+            "fg": 221
+          },
+          {
+            "id": "overlay_wielded_honey_badger",
+            "fg": 222
+          },
+          {
+            "id": "honey_badger",
+            "fg": 223
+          },
+          {
+            "id": "overlay_wielded_amb17",
+            "fg": 224
+          },
+          {
+            "id": "amb17",
+            "fg": 225
+          },
+          {
+            "id": [
+              "m16a3",
+              "m16_auto_rifle_var_m16a3"
+            ],
+            "fg": 227
+          },
+          {
+            "id": [
+              "overlay_wielded_m16a3",
+              "overlay_wielded_m16_auto_rifle_var_m16a3"
+            ],
+            "fg": 226
+          },
+          {
+            "id": "overlay_wielded_m16a4",
+            "fg": 226
+          },
+          {
+            "id": "m16a4",
+            "fg": 227
+          },
+          {
+            "id": [
+              "m16a3",
+              "m16_auto_rifle_var_m16a3",
+              "modular_m16_auto_rifle"
+            ],
+            "fg": 227
+          },
+          {
+            "id": [
+              "overlay_wielded_m16a3",
+              "overlay_wielded_m16_auto_rifle_var_m16a3",
+              "overlay_wielded_modular_m16_auto_rifle"
+            ],
+            "fg": 226
+          },
+          {
+            "id": [
+              "m16a4",
+              "modular_m16a4"
+            ],
+            "fg": 227
+          },
+          {
+            "id": [
+              "overlay_wielded_m16a4",
+              "overlay_wielded_modular_m16a4"
+            ],
+            "fg": 226
+          },
+          {
+            "id": "overlay_wielded_ar57",
+            "fg": 228
+          },
+          {
+            "id": "ar57",
+            "fg": 229
+          },
+          {
+            "id": "overlay_wielded_american_180",
+            "fg": 230
+          },
+          {
+            "id": "american_180",
+            "fg": 231
+          },
+          {
+            "id": "overlay_wielded_dh_machete",
+            "fg": 232
+          },
+          {
+            "id": "dh_machete",
+            "fg": 233
+          },
+          {
+            "id": "overlay_wielded_knife_ck12",
+            "fg": 236
+          },
+          {
+            "id": "knife_ck12",
+            "fg": 237
+          },
+          {
+            "id": "overlay_wielded_sps3",
+            "fg": 234
+          },
+          {
+            "id": "sps3",
+            "fg": 235
+          },
+          {
+            "id": "overlay_wielded_ga290",
+            "fg": 240
+          },
+          {
+            "id": "ga290",
+            "fg": 241
+          },
+          {
+            "id": "overlay_wielded_ga290c",
+            "fg": 242
+          },
+          {
+            "id": "ga290c",
+            "fg": 243
+          },
+          {
+            "id": "overlay_wielded_ga290dmr",
+            "fg": 244
+          },
+          {
+            "id": "ga290dmr",
+            "fg": 245
+          },
+          {
+            "id": "overlay_wielded_ga290lmg",
+            "fg": 246
+          },
+          {
+            "id": "ga290lmg",
+            "fg": 247
+          },
+          {
+            "id": "overlay_wielded_vssc",
+            "fg": 248
+          },
+          {
+            "id": "vssc",
+            "fg": 249
+          },
+          {
+            "id": "overlay_wielded_ga290k",
+            "fg": 250
+          },
+          {
+            "id": "ga290k",
+            "fg": 251
+          },
+          {
+            "id": "overlay_wielded_ak108",
+            "fg": 252
+          },
+          {
+            "id": "ak108",
+            "fg": 253
+          },
+          {
+            "id": "overlay_wielded_ak102",
+            "fg": 254
+          },
+          {
+            "id": "ak102",
+            "fg": 255
+          },
+          {
+            "id": "overlay_wielded_ak101",
+            "fg": 256
+          },
+          {
+            "id": "ak101",
+            "fg": 257
+          },
+          {
+            "id": "overlay_wielded_sks",
+            "fg": 258
+          },
+          {
+            "id": "sks",
+            "fg": 259
+          },
+          {
+            "id": "overlay_wielded_ppsh",
+            "fg": 260
+          },
+          {
+            "id": "ppsh",
+            "fg": 261
+          },
+          {
+            "id": "overlay_wielded_uzi",
+            "fg": 262
+          },
+          {
+            "id": "uzi",
+            "fg": 263
+          },
+          {
+            "id": "overlay_wielded_mac_10",
+            "fg": 264
+          },
+          {
+            "id": "mac_10",
+            "fg": 265
+          },
+          {
+            "id": "overlay_wielded_mac_11",
+            "fg": 264
+          },
+          {
+            "id": "mac_11",
+            "fg": 265
+          },
+          {
+            "id": "overlay_wielded_skorpion_61",
+            "fg": 266
+          },
+          {
+            "id": "skorpion_61",
+            "fg": 267
+          },
+          {
+            "id": "overlay_wielded_skorpion_82",
+            "fg": 266
+          },
+          {
+            "id": "skorpion_82",
+            "fg": 267
+          },
+          {
+            "id": "overlay_wielded_arx160",
+            "fg": 268
+          },
+          {
+            "id": "arx160",
+            "fg": 269
+          },
+          {
+            "id": "overlay_wielded_bt_apc9k",
+            "fg": 270
+          },
+          {
+            "id": "bt_apc9k",
+            "fg": 271
+          },
+          {
+            "id": "overlay_wielded_cews_27",
+            "fg": 272
+          },
+          {
+            "id": "cews_27",
+            "fg": 273
+          },
+          {
+            "id": "overlay_wielded_mp5_10",
+            "fg": 274
+          },
+          {
+            "id": "mp5_10",
+            "fg": 275
+          },
+          {
+            "id": "overlay_wielded_bren2_556",
+            "fg": 276
+          },
+          {
+            "id": "bren2_556",
+            "fg": 277
+          },
+          {
+            "id": "overlay_wielded_bren2_762",
+            "fg": 278
+          },
+          {
+            "id": "bren2_762",
+            "fg": 279
+          },
+          {
+            "id": "overlay_wielded_ak308",
+            "fg": 280
+          },
+          {
+            "id": "ak308",
+            "fg": 281
+          },
+          {
+            "id": "overlay_wielded_cz600",
+            "fg": 282
+          },
+          {
+            "id": "cz600",
+            "fg": 283
+          },
+          {
+            "id": "overlay_wielded_colt_ro635",
+            "fg": 284
+          },
+          {
+            "id": "colt_ro635",
+            "fg": 285
+          },
+          {
+            "id": "overlay_wielded_sten",
+            "fg": 286
+          },
+          {
+            "id": "sten",
+            "fg": 287
+          },
+          {
+            "id": "overlay_wielded_fn_p90",
+            "fg": 288
+          },
+          {
+            "id": "fn_p90",
+            "fg": 289
+          },
+          {
+            "id": "overlay_wielded_fn_ps90",
+            "fg": 288
+          },
+          {
+            "id": "fn_ps90",
+            "fg": 289
+          },
+          {
+            "id": "overlay_wielded_hk_g36",
+            "fg": 290
+          },
+          {
+            "id": "hk_g36",
+            "fg": 291
+          },
+          {
+            "id": "overlay_wielded_hk_mp7",
+            "fg": 292
+          },
+          {
+            "id": "hk_mp7",
+            "fg": 293
+          },
+          {
+            "id": "overlay_wielded_mk47",
+            "fg": 294
+          },
+          {
+            "id": "mk47",
+            "fg": 295
+          },
+          {
+            "id": "overlay_wielded_cx4",
+            "fg": 296
+          },
+          {
+            "id": "cx4",
+            "fg": 297
+          },
+          {
+            "id": "overlay_wielded_calico",
+            "fg": 298
+          },
+          {
+            "id": "calico",
+            "fg": 299
+          },
+          {
+            "id": "overlay_wielded_plr16",
+            "fg": 300
+          },
+          {
+            "id": "plr16",
+            "fg": 301
+          },
+          {
+            "id": "overlay_wielded_zovk_762t",
+            "fg": 302
+          },
+          {
+            "id": "zovk_762t",
+            "fg": 303
+          },
+          {
+            "id": "overlay_wielded_zona_9pb",
+            "fg": 304
+          },
+          {
+            "id": "zona_9pb",
+            "fg": 305
+          },
+          {
+            "id": "overlay_wielded_uts_15",
+            "fg": 306
+          },
+          {
+            "id": "uts_15",
+            "fg": 307
+          },
+          {
+            "id": "overlay_wielded_pps43",
+            "fg": 308
+          },
+          {
+            "id": "pps43",
+            "fg": 309
+          },
+          {
+            "id": "overlay_wielded_type_81_1",
+            "fg": 310
+          },
+          {
+            "id": "type_81_1",
+            "fg": 311
+          },
+          {
+            "id": "overlay_wielded_zlar223",
+            "fg": 312
+          },
+          {
+            "id": "zlar223",
+            "fg": 313
+          },
+          {
+            "id": "overlay_wielded_dtbk223",
+            "fg": 314
+          },
+          {
+            "id": "dtbk223",
+            "fg": 315
+          },
+          {
+            "id": "overlay_wielded_star15",
+            "fg": 316
+          },
+          {
+            "id": "star15",
+            "fg": 317
+          },
+          {
+            "id": "overlay_wielded_ruger_1022m",
+            "fg": 318
+          },
+          {
+            "id": "ruger_1022m",
+            "fg": 319
+          },
+          {
+            "id": "overlay_wielded_dtbc9",
+            "fg": 320
+          },
+          {
+            "id": "dtbc9",
+            "fg": 321
+          },
+          {
+            "id": "overlay_wielded_ar10",
+            "fg": 322
+          },
+          {
+            "id": "ar10",
+            "fg": 323
+          },
+          {
+            "id": "overlay_wielded_shotgun_d",
+            "fg": 324
+          },
+          {
+            "id": "shotgun_d",
+            "fg": 325
+          },
+          {
+            "id": "overlay_wielded_shotgun_s",
+            "fg": 324
+          },
+          {
+            "id": "shotgun_s",
+            "fg": 325
+          },
+          {
+            "id": "overlay_wielded_revolver_shotgun",
+            "fg": 326
+          },
+          {
+            "id": "revolver_shotgun",
+            "fg": 327
+          },
+          {
+            "id": "overlay_wielded_morl_3",
+            "fg": 328
+          },
+          {
+            "id": "morl_3",
+            "fg": 329
+          },
+          {
+            "id": "overlay_wielded_aa_12",
+            "fg": 330
+          },
+          {
+            "id": "aa_12",
+            "fg": 331
+          },
+          {
+            "id": "overlay_wielded_dhzr",
+            "fg": 332
+          },
+          {
+            "id": "dhzr",
+            "fg": 333
+          },
+          {
+            "id": "overlay_wielded_jsls_50",
+            "fg": 334
+          },
+          {
+            "id": "jsls_50",
+            "fg": 335
+          },
+          {
+            "id": "overlay_wielded_cmt_rv",
+            "fg": 336
+          },
+          {
+            "id": "cmt_rv",
+            "fg": 337
+          },
+          {
+            "id": "overlay_wielded_dtsk223",
+            "fg": 338
+          },
+          {
+            "id": "dtsk223",
+            "fg": 339
+          },
+          {
+            "id": "overlay_wielded_ga12sg",
+            "fg": 340
+          },
+          {
+            "id": "ga12sg",
+            "fg": 341
+          },
+          {
+            "id": "overlay_wielded_ga12sgs",
+            "fg": 342
+          },
+          {
+            "id": "ga12sgs",
+            "fg": 343
+          },
+          {
+            "id": "overlay_wielded_gmtr1t",
+            "fg": 344
+          },
+          {
+            "id": "gmtr1t",
+            "fg": 345
+          },
+          {
+            "id": "overlay_wielded_jlz68",
+            "fg": 346
+          },
+          {
+            "id": "jlz68",
+            "fg": 347
+          },
+          {
+            "id": "overlay_wielded_jlz70",
+            "fg": 348
+          },
+          {
+            "id": "jlz70",
+            "fg": 349
+          },
+          {
+            "id": "overlay_wielded_gelx_2n",
+            "fg": 350
+          },
+          {
+            "id": "gelx_2n",
+            "fg": 351
+          },
+          {
+            "id": "overlay_wielded_kc14",
+            "fg": 352
+          },
+          {
+            "id": "kc14",
+            "fg": 353
+          }
+        ],
+        "sprite_width": 32,
+        "sprite_height": 32,
+        "sprite_offset_x": 0,
+        "sprite_offset_y": 0
+      }
+    ]
+  }
+]

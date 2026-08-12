@@ -1,0 +1,72 @@
+[
+  {
+    "id": "300blkcbj",
+    "looks_like": "300blk",
+    "copy-from": "300blk",
+    "type": "AMMO",
+    "name": {
+      "str": ".300 BLK CBJ 弹"
+    },
+    "description": ".300 BLK CBJ 穿甲弹，内含钨制弹头。",
+    "weight": "6 g",
+    "volume": "50 ml",
+    "price": 350,
+    "price_postapoc": 1200,
+    "flags": [
+      "IRREPLACEABLE_CONSUMABLE"
+    ],
+    "material": [
+      "brass",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "yellow",
+    "count": 50,
+    "stack_size": 50,
+    "ammo_type": "300blk",
+    "casing": "300blk_casing",
+    "range": 45,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 45,
+      "armor_penetration": 12
+    },
+    "dispersion": 30,
+    "recoil": 1700,
+    "effects": [
+      "COOKOFF"
+    ],
+    "longest_side": "8 cm"
+  },
+  {
+    "id": "reloaded_300blkcbj",
+    "copy-from": "300blkcbj",
+    "looks_like": "300blk",
+    "type": "AMMO",
+    "name": {
+      "str_sp": ".300 BLK CBJ 弹（复装）"
+    },
+    "description": "一发手工复装的.300 BLK CBJ 亚音速弹，性能相对而言差一点。",
+    "proportional": {
+      "price": 0.9,
+      "damage": {
+        "damage_type": "bullet",
+        "amount": 0.9
+      }
+    },
+    "extend": {
+      "effects": [
+        "RECYCLED"
+      ]
+    },
+    "delete": {
+      "effects": [
+        "NEVER_MISFIRES"
+      ],
+      "flags": [
+        "IRREPLACEABLE_CONSUMABLE"
+      ]
+    },
+    "longest_side": "8 cm"
+  }
+]

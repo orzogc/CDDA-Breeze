@@ -1,0 +1,378 @@
+[
+  {
+    "type": "mod_tileset",
+    "compatibility": [
+      "Chibi_Ultica",
+      "MshockRealXotto",
+      "UltimateCataclysm",
+      "MshockXottoplus",
+      "UNDEAD_PEOPLE",
+      "UNDEAD_PEOPLE_BASE",
+      "UNDEAD_PEOPLE_LEGACY",
+      "UlticaShell",
+      "MshockXottoplus12",
+      "MSX++DEAD_PEOPLE",
+      "MXplus12_for_cosmetics",
+      "MSXotto+"
+    ],
+    "tiles-new": [
+      {
+        "file": "tiles_ammo.png",
+        "tiles": [
+          {
+            "id": "939",
+            "fg": 0
+          },
+          {
+            "id": "939_casing",
+            "fg": 1
+          },
+          {
+            "id": "939_magazine_10",
+            "fg": 2
+          },
+          {
+            "id": "939_magazine_20",
+            "fg": 2
+          },
+          {
+            "id": "939_magazine_30",
+            "fg": 2
+          },
+          {
+            "id": "23mm",
+            "fg": 6
+          },
+          {
+            "id": "23mm_casing",
+            "fg": 6
+          },
+          {
+            "id": "23mm_shot",
+            "fg": 6
+          },
+          {
+            "id": "23mm_slug",
+            "fg": 6
+          },
+          {
+            "id": "rpk16_75",
+            "fg": 2
+          },
+          {
+            "id": "ak74_brake",
+            "fg": 7
+          },
+          {
+            "id": "54r_snb",
+            "fg": 5
+          },
+          {
+            "id": "54r_7n37",
+            "fg": 5
+          },
+          {
+            "id": "svd_10",
+            "fg": 2
+          },
+          {
+            "id": "pso",
+            "fg": 7
+          },
+          {
+            "id": "939_sp6",
+            "fg": 4
+          },
+          {
+            "id": "pp91_30",
+            "fg": 2
+          },
+          {
+            "id": "1901_30",
+            "fg": 2
+          },
+          {
+            "id": "bh_15",
+            "fg": 2
+          },
+          {
+            "id": "pk_200",
+            "fg": 2
+          },
+          {
+            "id": "12755",
+            "fg": 8
+          },
+          {
+            "id": "12755_casing",
+            "fg": 1
+          },
+          {
+            "id": "5842",
+            "fg": 3
+          },
+          {
+            "id": "5842_casing",
+            "fg": 1
+          },
+          {
+            "id": "qbz_30",
+            "fg": 2
+          },
+          {
+            "id": "191_30",
+            "fg": 2
+          },
+          {
+            "id": "pp19_64",
+            "fg": 2
+          },
+          {
+            "id": "vper_8",
+            "fg": 2
+          },
+          {
+            "id": "toz_5",
+            "fg": 2
+          },
+          {
+            "id": "145114",
+            "fg": 9
+          },
+          {
+            "id": "ptrs_5",
+            "fg": 2
+          },
+          {
+            "id": "145114_casing",
+            "fg": 1
+          },
+          {
+            "id": "127108",
+            "fg": 10
+          },
+          {
+            "id": "127108_casing",
+            "fg": 1
+          },
+          {
+            "id": "ksvk_5",
+            "fg": 2
+          },
+          {
+            "id": "nsv_100",
+            "fg": 2
+          },
+          {
+            "id": "choke_s",
+            "fg": 7
+          },
+          {
+            "id": "tac_rail",
+            "fg": 7
+          },
+          {
+            "id": "barrel_long",
+            "fg": 7
+          },
+          {
+            "id": "barrel_heavy",
+            "fg": 7
+          },
+          {
+            "id": "barrel_short",
+            "fg": 7
+          },
+          {
+            "id": "grip_tac",
+            "fg": 7
+          },
+          {
+            "id": "m3_30",
+            "fg": 2
+          },
+          {
+            "id": "evo_30",
+            "fg": 2
+          },
+          {
+            "id": "737_cta_20",
+            "fg": 2
+          },
+          {
+            "id": "shortgrip_tac",
+            "fg": 7
+          },
+          {
+            "id": "znt2stock",
+            "fg": 7
+          },
+          {
+            "id": "tac_reddot",
+            "fg": 7
+          },
+          {
+            "id": "tac_gun_sp",
+            "fg": 7
+          },
+          {
+            "id": "barrel_lh",
+            "fg": 7
+          },
+          {
+            "id": "939_bp",
+            "fg": 12
+          },
+          {
+            "id": "race_rail",
+            "fg": 7
+          },
+          {
+            "id": "tac_holo",
+            "fg": 7
+          },
+          {
+            "id": "tac_gun_muzzle",
+            "fg": 7
+          },
+          {
+            "id": "tac_s_scope",
+            "fg": 7
+          },
+          {
+            "id": "vssc_stock",
+            "fg": 7
+          },
+          {
+            "id": "ga_stock_h",
+            "fg": 7
+          },
+          {
+            "id": "tac_m_scope",
+            "fg": 7
+          },
+          {
+            "id": "tac_h_scope",
+            "fg": 7
+          },
+          {
+            "id": "ga_stock2_folded",
+            "fg": 7
+          },
+          {
+            "id": "ga_stock2",
+            "fg": 7
+          },
+          {
+            "id": "ga_stock_folded",
+            "fg": 7
+          },
+          {
+            "id": "ga_stock",
+            "fg": 7
+          },
+          {
+            "id": "5C3",
+            "fg": 11
+          },
+          {
+            "id": "737_casing",
+            "fg": 13
+          },
+          {
+            "id": "ak101_30",
+            "fg": 2
+          },
+          {
+            "id": "g43_10",
+            "fg": 2
+          },
+          {
+            "id": "zovk_30",
+            "fg": 2
+          },
+          {
+            "id": "m200_7",
+            "fg": 2
+          },
+          {
+            "id": "79257_fmj",
+            "fg": 14
+          },
+          {
+            "id": "408_ct_ball",
+            "fg": 15
+          },
+          {
+            "id": "1022_afp",
+            "fg": 7
+          },
+          {
+            "id": "tac_x_scope",
+            "fg": 7
+          },
+          {
+            "id": "vovk_silencer",
+            "fg": 7
+          },
+          {
+            "id": "psu_silencer",
+            "fg": 7
+          },
+          {
+            "id": "ak_autopart",
+            "fg": 7
+          },
+          {
+            "id": "d30_grip",
+            "fg": 7
+          },
+          {
+            "id": "grip_d45",
+            "fg": 7
+          },
+          {
+            "id": "gdv_stock",
+            "fg": 7
+          },
+          {
+            "id": "shs_muzzle",
+            "fg": 7
+          },
+          {
+            "id": "vdh_stock",
+            "fg": 7
+          },
+          {
+            "id": "aa12_8",
+            "fg": 2
+          },
+          {
+            "id": "aa12_20",
+            "fg": 2
+          },
+          {
+            "id": "em_bolt",
+            "fg": 16
+          },
+          {
+            "id": "em_bolt_1",
+            "fg": 16
+          },
+          {
+            "id": "em_bolt_2",
+            "fg": 16
+          },
+          {
+            "id": "kc14_20",
+            "fg": 2
+          }
+        ],
+        "sprite_width": 32,
+        "sprite_height": 32,
+        "sprite_offset_x": 0,
+        "sprite_offset_y": 0
+      }
+    ]
+  }
+]

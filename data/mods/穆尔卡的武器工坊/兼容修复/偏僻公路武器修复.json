@@ -1,0 +1,102 @@
+[
+  {
+    "id": "pulverizer",
+    "copy-from": "pulverizer",
+    "type": "TOOL",
+    "name": {
+      "str": "Disorders 失控者"
+    },
+    "description": "一把又大又重的大钢锤，被改装成武器。侧面有个显眼的保护装置，锤头后部安装了一个可以装填步枪空包弹的发射机构。当锤头碰撞且保护装置关闭时，空包弹被击发，向前移动活塞，造成巨大伤害。锤头上刻着“她已失控”的字样。",
+    "weight": "5100 g",
+    "volume": "1250 ml",
+    "longest_side": "80 cm",
+    "price": 14400,
+    "price_postapoc": 600,
+    "material": [
+      "wood",
+      "steel"
+    ],
+    "symbol": "/",
+    "color": "brown",
+    "bashing": 50,
+    "to_hit": {
+      "grip": "weapon",
+      "length": "long",
+      "surface": "any",
+      "balance": "uneven"
+    },
+    "weapon_category": [
+      "HOOKING_WEAPONRY",
+      "GREAT_HAMMERS"
+    ],
+    "techniques": [
+      "WBLOCK_1",
+      "BRUTAL",
+      "WIDE",
+      "SWEEP",
+      "SWEETSPOT"
+    ],
+    "qualities": [
+      [
+        "HAMMER",
+        1
+      ]
+    ],
+    "extend": {
+      "flags": [
+        "NONCONDUCTIVE",
+        "ALWAYS_TWOHAND",
+        "DURABLE_MELEE"
+      ]
+    }
+  },
+  {
+    "id": "louverture",
+    "copy-from": "louverture",
+    "type": "TOOL",
+    "name": {
+      "str_sp": "Louverture 喷火槌"
+    },
+    "description": "一把奇怪的喷火钉头槌，在槌柄上安装上了一个内置油箱。可以喷射出大量汽油并点燃。",
+    "category": "weapons",
+    "weight": "1800 g",
+    "volume": "1375 ml",
+    "longest_side": "80 cm",
+    "price": 120000,
+    "price_postapoc": 7200,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "symbol": "/",
+    "color": "dark_gray",
+    "bashing": 40,
+    "to_hit": {
+      "grip": "weapon",
+      "length": "short",
+      "surface": "any",
+      "balance": "neutral"
+    },
+    "weapon_category": [
+      "MACES"
+    ],
+    "techniques": [
+      "WBLOCK_1",
+      "SWEEP"
+    ],
+    "qualities": [
+      [
+        "HAMMER",
+        1
+      ]
+    ],
+    "extend": {
+      "flags": [
+        "DURABLE_MELEE",
+        "NONCONDUCTIVE",
+        "BELT_CLIP",
+        "FIRESTARTER"
+      ]
+    }
+  }
+]

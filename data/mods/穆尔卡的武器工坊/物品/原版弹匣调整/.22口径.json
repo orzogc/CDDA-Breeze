@@ -1,0 +1,97 @@
+[
+  {
+    "id": "marlin_tubeloader",
+    "copy-from": "marlin_tubeloader",
+    "looks_like": "stanag30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "19发管状装弹器（.22口径）"
+    },
+    "description": "一根可预装19发.22口径弹药的快速装填管，用于给兼容的管状弹仓步枪迅速补弹。",
+    "weight": "180 g",
+    "volume": "250 ml",
+    "price": 1200,
+    "price_postapoc": 100,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "22"
+    ],
+    "flags": [
+      "SPEEDLOADER",
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "22": 19
+        }
+      }
+    ],
+    "longest_side": "14 cm"
+  },
+  {
+    "id": "22_speedloader8",
+    "copy-from": "22_speedloader8",
+    "looks_like": "38_speedloader",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "8发快速装弹器（.22口径）"
+    },
+    "description": "这个快速装弹器可以容纳 8 发 .22 弹，为兼容的左轮手枪快速装弹。",
+    "weight": "64 g",
+    "volume": "250 ml",
+    "price": 600,
+    "price_postapoc": 100,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "22"
+    ],
+    "flags": [
+      "SPEEDLOADER",
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "22": 8
+        }
+      }
+    ],
+    "longest_side": "14 cm"
+  },
+  {
+    "id": "ruger1022bigmag",
+    "copy-from": "ruger1022bigmag",
+    "looks_like": "stanag30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "25发捕猎步枪弹匣"
+    },
+    "description": "一种容纳25发.22口径弹药的加长弹匣，供兼容的捕猎步枪使用。",
+    "variant_type": "gun",
+    "variants": [
+      {
+        "id": "ruger1022bigmag",
+        "name": {
+          "str": "鲁格 10/22 25发弹匣"
+        },
+        "description": "一个扩容的25发条形弹匣，可用于鲁格10/22步枪。它的代号为BX-25。"
+      }
+    ],
+    "weight": "180 g",
+    "volume": "300 ml",
+    "longest_side": "14 cm"
+  }
+]

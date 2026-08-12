@@ -1,0 +1,8 @@
+[
+  {
+    "type": "ammunition_type",
+    "id": "25mm",
+    "name": "25x137mm机炮弹",
+    "default": "25mm_hei"
+  }
+]

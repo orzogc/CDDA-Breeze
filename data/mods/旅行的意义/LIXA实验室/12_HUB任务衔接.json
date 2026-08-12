@@ -1,0 +1,396 @@
+[
+  {
+    "//1": "This is the main talk topic for all of the intercom's contracts.  The player is able to learn more about missions here, and accept new ones.",
+    "//2": "This also contains dialogue topics to complete one-time missions.  Repeatables are handled in 'robofac_intercom_trades.json' instead.",
+    "id": [
+      "TALK_ROBOFAC_INTERCOM_CONTRACTS",
+      "MISSION_ROBOFAC_INTERCOM_2_ACCEPTED",
+      "MISSION_ROBOFAC_INTERCOM_ROBOT_SM_1_ACCEPTED",
+      "MISSION_ROBOFAC_INTERCOM_PORTAL_SM_1_ACCEPTED",
+      "MISSION_ROBOFAC_INTERCOM_NRE_RECORDER_REPLACEMENT_Complete"
+    ],
+    "type": "talk_topic",
+    "responses": [
+      {
+        "text": "我从LIXA实验室那回来了。[交出数据。]",
+        "condition": {
+          "and": [
+            {
+              "u_has_mission": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1"
+            },
+            {
+              "u_has_item": "lixa_data"
+            }
+          ]
+        },
+        "effect": [
+          {
+            "u_consume_item": "lixa_data",
+            "count": 1,
+            "popup": true
+          },
+          {
+            "u_spawn_item": "RobofacCoin",
+            "count": 5
+          },
+          {
+            "finish_mission": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1",
+            "success": true
+          }
+        ],
+        "topic": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_COMPLETE"
+      },
+      {
+        "text": "[合约：数据回收]",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_mission": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1"
+              }
+            },
+            {
+              "not": {
+                "u_has_var": "completed_robofac_intercom_lixa_sm_1",
+                "type": "dialogue",
+                "context": "intercom",
+                "value": "yes"
+              }
+            },
+            {
+              "or": [
+                {
+                  "u_has_var": "completed_robofac_intercom_portal_sm_1",
+                  "type": "dialogue",
+                  "context": "intercom",
+                  "value": "yes"
+                },
+                {
+                  "npc_has_var": "accepted_nre_recording",
+                  "type": "dialogue",
+                  "context": "intercom",
+                  "value": "yes"
+                }
+              ]
+            }
+          ]
+        },
+        "topic": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_OFFER"
+      }
+    ],
+    "//LIXA": "只向主合同话题及微风原有的合同别名话题追加LIXA专属响应；加载顺序使其位于本体合同与“谈点其他事情”之后，不复制任何本体响应。"
+  },
+  {
+    "id": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1",
+    "type": "mission_definition",
+    "name": {
+      "str": "数据检索"
+    },
+    "description": "到达LIXA设施，并在该区域搜索任何值得关注的东西。对讲机警告你地面上有许多丧尸，地下很可能还有更多。",
+    "goal": "MGOAL_NULL",
+    "difficulty": 5,
+    "value": 0,
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "LIXA_road_guard",
+        "reveal_radius": 2,
+        "z": 0,
+        "om_terrain_match_type": "TYPE",
+        "search_range": 180,
+        "must_see": false
+      },
+      "//": "LIXA is guaranteed during world generation; this mission only finds and reveals it and must not place a late special over explored terrain."
+    },
+    "end": {
+      "effect": [
+        {
+          "u_add_var": "completed_robofac_intercom_lixa_sm_1",
+          "type": "dialogue",
+          "context": "intercom",
+          "value": "yes"
+        },
+        {
+          "arithmetic": [
+            {
+              "u_val": "var",
+              "var_name": "hub01_completed_missions"
+            },
+            "+=",
+            {
+              "const": 1
+            }
+          ]
+        }
+      ]
+    },
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "has_generic_rewards": false,
+    "dialogue": {
+      "describe": "……",
+      "offer": "……",
+      "accepted": "……",
+      "rejected": "……",
+      "advice": "……",
+      "inquire": "……",
+      "success": "……",
+      "success_lie": "……",
+      "failure": "……"
+    }
+  },
+  {
+    "id": [
+      "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_OFFER",
+      "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_WHAT_ELSE",
+      "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_OFFER_ADVICE",
+      "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_LIXA_ACRONYM",
+      "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_OFFER_ADVICE_Replacement"
+    ],
+    "type": "talk_topic",
+    "dynamic_line": "大灾变期间，我们与一处姐妹站点——LIXA失去了联系。空中侦察显示该设施内的居民已死亡，除现已变为丧尸的安保人员外，该区域应人口稀少。我们希望你进入设施，并使用提供的微型驱动器复制他们正在进行的研究数据。此外，我们会为你提供一张至少能让你进入正门的通行卡。”\n\n“成功取回数据，我们将支付标准的 5 HUB金币酬劳。如果这还不够吸引你，我们在与该设施失联前的清单上看到库存中有几套特制动力装甲。若还有剩余，你可以自由带走。”",
+    "responses": [
+      {
+        "text": "好吧，我看看能不能帮你们带来这些数据。",
+        "effect": [
+          {
+            "assign_mission": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1"
+          },
+          {
+            "u_spawn_item": "id_LIXA",
+            "count": 1
+          },
+          {
+            "u_spawn_item": "usb_drive_nano",
+            "count": 1
+          }
+        ],
+        "topic": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_ACCEPTED"
+      },
+      {
+        "text": "能和我说说他们之前在那里做过些什么吗？",
+        "topic": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_WHAT_ELSE"
+      },
+      {
+        "text": "LIXA到底是什么意思？",
+        "topic": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_LIXA_ACRONYM"
+      },
+      {
+        "text": "如果我把ID卡或是U盘弄丢了，要怎么办？",
+        "topic": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_OFFER_ADVICE_Replacement"
+      },
+      {
+        "text": "你们还有别的活吗？",
+        "topic": "TALK_ROBOFAC_INTERCOM_CONTRACTS"
+      }
+    ]
+  },
+  {
+    "id": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_WHAT_ELSE",
+    "type": "talk_topic",
+    "dynamic_line": "我所能告诉你的是，他们正在进行尖端研究，主要是——”对讲机突然中断了几秒钟，然后再次开启，声音带着些歉意：”对不起，事实上我无权透露相关信息。然而我能提醒你的是，如果那台NRE记录器没弄丢的话，建议你随身携带。"
+  },
+  {
+    "id": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_LIXA_ACRONYM",
+    "type": "talk_topic",
+    "dynamic_line": "它是“激光干涉异维度共振阵列”的简称。"
+  },
+  {
+    "id": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_OFFER_ADVICE_Replacement",
+    "type": "talk_topic",
+    "//": "I feel like this could be phrased better.",
+    "dynamic_line": "严格来说，如果你能想出闯入该设施的安全门的办法，那ID卡就没有必要了。”声音停顿了一下，“但话说回来，我们只有这一张ID卡，所以除非你有信心不用它就可以进去，否则请不要弄丢它。至于U盘，我强烈建议你不要弄丢，因为按照目前的情况，带有与安全终端接口所需硬件安全模块的便携式驱动器供不应求。当然，如果你足够幸运的话，很可能在现场能找到一些。"
+  },
+  {
+    "id": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_ACCEPTED",
+    "type": "talk_topic",
+    "//": "Is it a semi-colon or colon that goes here? Man, idk.",
+    "dynamic_line": "正在传输物品。”对讲机托盘滑开，露出了对应设施的ID卡和一个看起来像U盘的东西。“再强调一遍：请注意不要丢失这两个物品，因为我们无法再制造更多。",
+    "responses": [
+      {
+        "text": "继续查看可用合约。",
+        "topic": "TALK_ROBOFAC_INTERCOM_CONTRACTS"
+      }
+    ],
+    "replace_built_in_responses": true
+  },
+  {
+    "id": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_COMPLETE",
+    "type": "talk_topic",
+    "dynamic_line": "正如我们在签订合约时所说过的，我们知道现场状况很危险，但除了通过远程遥感所获得的信息外，我们无法推断出其他信息。如果你能提供所遇到的具体危险的描述，我们很乐意记下来。",
+    "responses": [
+      {
+        "text": "还有一件事。我在RM-13房间找到了一份带有康陶标识的制造模板。",
+        "condition": {
+          "and": [
+            {
+              "u_has_items": {
+                "item": "kt_yinglong_template",
+                "count": 1
+              }
+            },
+            {
+              "not": {
+                "u_has_var": "completed_hub_yinglong",
+                "type": "dialogue",
+                "context": "hub_rnd",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "u_has_var": "u_project_ongoing",
+                "type": "dialogue",
+                "context": "hub_rnd",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "topic": "TALK_HUB_YINGLONG_OFFER"
+      },
+      {
+        "text": "我还从RM-13房间带回了一份异常制造模板，不过你们似乎正在处理别的项目。",
+        "condition": {
+          "and": [
+            {
+              "u_has_items": {
+                "item": "kt_yinglong_template",
+                "count": 1
+              }
+            },
+            {
+              "not": {
+                "u_has_var": "completed_hub_yinglong",
+                "type": "dialogue",
+                "context": "hub_rnd",
+                "value": "yes"
+              }
+            },
+            {
+              "u_has_var": "u_project_ongoing",
+              "type": "dialogue",
+              "context": "hub_rnd",
+              "value": "yes"
+            }
+          ]
+        },
+        "topic": "TALK_HUB_YINGLONG_BUSY"
+      },
+      {
+        "text": "[详细说明研究设施的情况。一直讲了快十分钟。]",
+        "effect": {
+          "u_assign_activity": "ACT_GENERIC_EOC",
+          "duration": "10 minutes"
+        },
+        "topic": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_COMPLETE_Explainer"
+      },
+      {
+        "text": "【让他们知道这次事件有多糟糕。】",
+        "topic": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_COMPLETE_ChewingOut"
+      },
+      {
+        "text": "……算了吧。我们再也别提这个了。",
+        "topic": "TALK_ROBOFAC_INTERCOM_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_COMPLETE_Explainer",
+    "type": "talk_topic",
+    "dynamic_line": "&在几分钟的时间里，你平静地详述了设施内发生的一系列事件：地下意外出现的僵尸、实验楼层的异常性质，以及在走廊中遭遇的扭曲且充满敌意的研究人员。整个讲述过程中，对方不时提问，暂停的间隙里回响着敲击键盘的声音。\n\n“我们十分感谢你详尽的报告，”那个声音最终回应道，“鉴于该设施异常且难以预测的特性，你在这种情况下的应对是值得称赞的。如果你寻找更多的雇佣合同工作，请放心，我们在未来的任务分配中会考虑到异常情况的可能性，并相应地告知。”",
+    "responses": [
+      {
+        "text": "没事。至少现在我们知道了未来。",
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "是的，是的。不客气。",
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我们再也不要那样做了。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_COMPLETE_ChewingOut",
+    "type": "talk_topic",
+    "dynamic_line": "&对讲机耐心地等待。",
+    "responses": [
+      {
+        "text": "天啊，我该从何说起呢？首先，你们提供的情报就像潜艇上的挡风门一样有用！“没什么人”，去你妈的！你们怎么没看到电梯井下面那个该死的丧尸狂欢乐园！？",
+        "topic": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_COMPLETE_ChewingOut_1"
+      }
+    ]
+  },
+  {
+    "id": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_COMPLETE_ChewingOut_1",
+    "type": "talk_topic",
+    "dynamic_line": "我们很抱歉，但是——",
+    "responses": [
+      {
+        "text": "噢，吼吼吼喔，不，我的朋友，你没资格说话。当我好不容易下到实验楼层的时候，你知道我发现了什么吗？整个走廊变成了一幅二维图像！他们到底在搞什么鬼，居然把整片区域变成了一个像是闹鬼的电子游戏入口一样的画！？",
+        "topic": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_COMPLETE_ChewingOut_2"
+      },
+      {
+        "text": "[停下来。]",
+        "topic": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_COMPLETE_ChewingOut_5"
+      }
+    ]
+  },
+  {
+    "id": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_COMPLETE_ChewingOut_2",
+    "type": "talk_topic",
+    "dynamic_line": "你刚刚说——",
+    "//": "I realize I'm assuming the player has encountered congealed light by accidentally breaking open the terrain features, but eh.",
+    "responses": [
+      {
+        "text": "我说tmd闭嘴！它把我传送到一个无限循环的走廊里了！无限！循环！走廊！我的意思是，妈的，你见过埃舍尔的那些画吗？就像那样，但你不仅仅看到你了所见事物的表面，还能看到所有东西的里面，老兄，我告诉你，亲眼看见我的消化系统内部可不是什么美丽景色。噢，还有那光，对，当一些激光管破裂时，它们喷射出的光线，很疼！非常疼！",
+        "topic": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_COMPLETE_ChewingOut_3"
+      },
+      {
+        "text": "[停下来。]",
+        "topic": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_COMPLETE_ChewingOut_4"
+      }
+    ]
+  },
+  {
+    "id": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_COMPLETE_ChewingOut_3",
+    "type": "talk_topic",
+    "dynamic_line": "请慢一点——",
+    "responses": [
+      {
+        "text": "你知道那些激光管是怎么破的吗？我在跟那些残余的疯狂研究员战斗！他们在墙上攀爬，吐着光线！还有走廊本身不知怎地也参与了进来！我在跟该死的大楼搏斗！我做过的噩梦都比跟那东西打架更有逻辑！",
+        "topic": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_COMPLETE_ChewingOut_4"
+      },
+      {
+        "text": "[停下来。]",
+        "topic": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_COMPLETE_ChewingOut_4"
+      }
+    ]
+  },
+  {
+    "id": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_COMPLETE_ChewingOut_4",
+    "type": "talk_topic",
+    "dynamic_line": "&对讲机另一边鸦雀无声，似乎难以置信。",
+    "responses": [
+      {
+        "text": "[等待。]",
+        "topic": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_COMPLETE_ChewingOut_5"
+      }
+    ]
+  },
+  {
+    "id": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_COMPLETE_ChewingOut_5",
+    "type": "talk_topic",
+    "dynamic_line": "呃…是的，抱歉。我会，em…我会做个记录，看看能否为你未来的合同获取更详细的信息。",
+    "responses": [
+      {
+        "text": "好。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  }
+]

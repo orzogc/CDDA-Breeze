@@ -1,0 +1,82 @@
+[
+  {
+    "id": "cluster_grenade",
+    "type": "TOOL",
+    "category": "weapons",
+    "name": {
+      "str": "集束手榴弹"
+    },
+    "description": "这是一种通过把四个手榴弹绑在一根短木棍上而制造出来的集束手榴弹，这种武器源自于第一次世界大战，通常被用于反坦克，它的威力是手榴弹的数倍，重量也是，但要是你劲儿够大的话这完全不是问题。",
+    "weight": "1500 g",
+    "volume": "800 ml",
+    "price": "45 USD",
+    "price_postapoc": "40 USD",
+    "to_hit": -1,
+    "bashing": 20,
+    "material": [
+      "steel"
+    ],
+    "symbol": "*",
+    "color": "green",
+    "use_action": {
+      "target": "cluster_grenade_act",
+      "msg": "你拉开了手雷的保险销。",
+      "target_charges": 5,
+      "active": true,
+      "menu_text": "拔掉插销",
+      "type": "transform"
+    },
+    "flags": [
+      "RADIO_MODABLE",
+      "RADIO_INVOKE_PROC",
+      "BOMB",
+      "GRENADE"
+    ],
+    "longest_side": "11 cm"
+  },
+  {
+    "id": "cluster_grenade_act",
+    "type": "TOOL",
+    "category": "weapons",
+    "name": {
+      "str": "激活的集束手榴弹"
+    },
+    "description": "你不确定这么做是否正确，但你看见手里这个冒着烟的大宝贝就感觉到心慌，你应该快点把这个烫手的马铃薯丢出去然后跑的越远越好，而不是在这里看简介！",
+    "weight": "1500 g",
+    "volume": "800 ml",
+    "price": "0 cent",
+    "price_postapoc": "0 cent",
+    "to_hit": -1,
+    "bashing": 20,
+    "material": [
+      "steel"
+    ],
+    "symbol": "*",
+    "color": "green",
+    "initial_charges": 5,
+    "max_charges": 5,
+    "turns_per_charge": 1,
+    "use_action": {
+      "type": "explosion",
+      "sound_msg": "滴答。",
+      "no_deactivate_msg": "你已经拔掉了%s的插销；现在应该把它扔出去。",
+      "explosion": {
+        "damage": 100,
+        "radius": 6,
+        "fragment": {
+          "impact": {
+            "damage_type": "bullet",
+            "amount": 150,
+            "armor_multiplier": 8
+          },
+          "range": 15
+        }
+      }
+    },
+    "flags": [
+      "BOMB",
+      "TRADER_AVOID"
+    ],
+    "longest_side": "11 cm"
+  }
+]

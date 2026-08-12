@@ -1,0 +1,720 @@
+[
+  {
+    "id": "TALK_GUNSMITH_SERVICES",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "欢迎，这里是美国首家军火银行，我们将你的商品和服务转换为新的金本位制，这里有你在其他地方搞不到的好货，每隔一段时间我们这里都会有新商品，没准以后会有什么新类型的商品，看看有没有什么你中意的吧。"
+    ],
+    "responses": [
+      {
+        "text": "军火吗？那你有没有什么特别的武器给我看。",
+        "topic": "TALK_GUNSMITH_SPEC_GUN"
+      },
+      {
+        "text": "我想知道你是从哪里来的这么多枪械弹药，它们总不能是从地里长出来的吧。",
+        "topic": "TALK_GUNSMITH_ABOUT_BUSINESS"
+      }
+    ]
+  },
+  {
+    "id": "TALK_GUNSMITH_ABOUT_BUSINESS",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "好问题，要知道这里总是会来其他的幸存者进行交易，我为他们提供服务或和他们进行贸易以此从中获得利润，当然我也会采购制作弹药的原材料来制造出标准的弹药，甚至是穿甲弹，这可是一门手艺活，而且我这里也有设备。"
+    ],
+    "responses": [
+      {
+        "text": "听上去很好，回到刚才的话题吧。",
+        "topic": "TALK_GUNSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_GUNSMITH_SPEC_GUN",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "特别的家伙事儿哈……？如果说是一般的枪那我可能不会跟你特地提这个，不过我这里确实有一些你会感兴趣的枪（瞥了一眼身后的柜台）如果你感兴趣的话可以看看，那都是些比较特殊的枪，我保证它们会比一般的枪要强很多，当然，它们不便宜，我敢肯定你找不到第二个卖这些东西的人。"
+    ],
+    "responses": [
+      {
+        "text": "[询问奇怪的霰弹枪]",
+        "topic": "TALK_GUNSMITH_MP153C"
+      },
+      {
+        "text": "[询问定制M3]",
+        "topic": "TALK_GUNSMITH_M3C"
+      },
+      {
+        "text": "[询问VSS]",
+        "topic": "TALK_GUNSMITH_VSS"
+      },
+      {
+        "text": "[询问定制AK74U]",
+        "topic": "TALK_GUNSMITH_BUY_74UM"
+      },
+      {
+        "text": "[询问定制AK103]",
+        "topic": "TALK_GUNSMITH_BUY_103C"
+      },
+      {
+        "text": "[询问定制AK-109]",
+        "topic": "TALK_GUNSMITH_BUY_109C"
+      },
+      {
+        "text": "[询问VSS47]",
+        "topic": "TALK_GUNSMITH_BUY_VSS47"
+      },
+      {
+        "text": "[询问定制维克托9]",
+        "topic": "TALK_GUNSMITH_BUY_VC9C"
+      },
+      {
+        "text": "[询问定制VSS]",
+        "topic": "TALK_GUNSMITH_BUY_VSSC"
+      },
+      {
+        "text": "[询问WHITE FANG 556]",
+        "topic": "TALK_GUNSMITH_BUY_WF556"
+      },
+      {
+        "text": "[询问荷鲁斯之眼]",
+        "topic": "TALK_GUNSMITH_BUY_HORUS"
+      },
+      {
+        "text": "[询问定制MP-156-M]",
+        "topic": "TALK_GUNSMITH_BUY_156"
+      },
+      {
+        "text": "仔细想想还是算了，告辞。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_GUNSMITH_SPEC_GUN2",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "当然，朋友，不着急，你是顾客。"
+    ],
+    "responses": [
+      {
+        "text": "[询问奇怪的霰弹枪]",
+        "topic": "TALK_GUNSMITH_MP153C"
+      },
+      {
+        "text": "[询问定制M3]",
+        "topic": "TALK_GUNSMITH_M3C"
+      },
+      {
+        "text": "[询问VSS]",
+        "topic": "TALK_GUNSMITH_VSS"
+      },
+      {
+        "text": "[询问定制AK74U]",
+        "topic": "TALK_GUNSMITH_BUY_74UM"
+      },
+      {
+        "text": "[询问定制AK103]",
+        "topic": "TALK_GUNSMITH_BUY_103C"
+      },
+      {
+        "text": "[询问定制AK-109]",
+        "topic": "TALK_GUNSMITH_BUY_109C"
+      },
+      {
+        "text": "[询问VSS47]",
+        "topic": "TALK_GUNSMITH_BUY_VSS47"
+      },
+      {
+        "text": "[询问定制维克托9]",
+        "topic": "TALK_GUNSMITH_BUY_VC9C"
+      },
+      {
+        "text": "[询问定制VSS]",
+        "topic": "TALK_GUNSMITH_BUY_VSSC"
+      },
+      {
+        "text": "[询问WHITE FANG 556]",
+        "topic": "TALK_GUNSMITH_BUY_WF556"
+      },
+      {
+        "text": "[询问荷鲁斯之眼]",
+        "topic": "TALK_GUNSMITH_BUY_HORUS"
+      },
+      {
+        "text": "[询问定制MP-156-M]",
+        "topic": "TALK_GUNSMITH_BUY_156"
+      },
+      {
+        "text": "[询问定制防弹衣]",
+        "topic": "TALK_GUNSMITH_VEST"
+      },
+      {
+        "text": "仔细想想还是算了，告辞。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_GUNSMITH_MP153C",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "那把枪吗？嗯……看上去是一把产自俄罗斯的MP-153霰弹枪，枪身上写着一个小小的俄语单词，翻译过来就是穆尔卡，应该是这把枪的主人，枪托上有一个缝制的帆布托腮垫，上面还刻着整整一枪托的计数符号，这把枪用的是短枪管，但是用一个很特别的消音器巧妙的弥补了长度，虽然说这么大的消音器可能会影响长弹仓的安装，不过设计它的人倒是很贴心的在消音器里面为长弹仓空出来一个独立的隔间，至于这把枪是怎么来的……说来也没那么复杂，你也看见我们这里有个菜园，前一段时间我们种了不少土豆，里面有一株相当大的，当我们收菜时把它拔出来发现这株土豆的根死死的缠着这把枪，就好像它是跟这土豆一起从地里长出来的，并且没有任何损坏或生锈的痕迹，顺便这把枪的使用手感很奇怪，这东西就好像被祈福了一样，手感出奇的好，我知道这些话听起来很离谱，但是你看看现在这个世界，离谱的事情还少吗？"
+    ],
+    "responses": [
+      {
+        "text": "奇怪的故事，那么它多少钱。",
+        "topic": "TALK_GUNSMITH_BUY_MP153C"
+      },
+      {
+        "text": "算了，我再看看别的吧。",
+        "topic": "TALK_GUNSMITH_SPEC_GUN2"
+      }
+    ]
+  },
+  {
+    "id": "TALK_GUNSMITH_BUY_MP153C",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "虽然我可能不会用它，不过它对我来说还是挺有意思的，出于这东西的特殊性……2000商会币，一口价。"
+    ],
+    "responses": [
+      {
+        "text": "[2000 商会币] 我不知道我为什么要这么做……但我觉得花这么多钱值得。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 2000
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 2000
+          },
+          {
+            "u_spawn_item": "MP153_C"
+          },
+          {
+            "npc_add_var": "gunsmith_sell_gun",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "yes"
+          }
+        ],
+        "topic": "TALK_GUNSMITH_SPEC_GUN2"
+      },
+      {
+        "text": "你比强盗还要擅长抢劫……所以我还是看看别的吧。",
+        "topic": "TALK_GUNSMITH_SPEC_GUN2"
+      }
+    ]
+  },
+  {
+    "id": "TALK_GUNSMITH_M3C",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "虽然我不知道你为什么会对这东西感兴趣,不过你想听的话我倒是不介意再讲一遍，你听说过一个叫豺狼的人吗？他脑袋上戴着个狼头骨，那家伙一直乐忠于对二战的老古董动些“大手术”，你也看见了，这东西改的确实挺野蛮的，至于它为什么在这里？之前他来这里买东西的时候用这把枪换了点子弹，就是这样，说好听一点，这叫物尽其用，说不好听一点，他这叫另寻新欢。"
+    ],
+    "responses": [
+      {
+        "text": "多少钱。",
+        "topic": "TALK_GUNSMITH_BUY_M3C"
+      },
+      {
+        "text": "算了，我再看看别的吧。",
+        "topic": "TALK_GUNSMITH_SPEC_GUN2"
+      }
+    ]
+  },
+  {
+    "id": "TALK_GUNSMITH_BUY_M3C",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "这东西对我毫无用处，顶多就是像个收藏品一样摆在那里，我便宜点卖你吧，100商会币，这比我当初从他那买的的价格低多了。"
+    ],
+    "responses": [
+      {
+        "text": "[100 商会币] 行吧，这里是钱，它归我了。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 100
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 100
+          },
+          {
+            "u_spawn_item": "m3_grease_c"
+          },
+          {
+            "npc_add_var": "gunsmith_sell_gun",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "yes"
+          }
+        ],
+        "topic": "TALK_GUNSMITH_SPEC_GUN2"
+      },
+      {
+        "text": "算了，我再看看别的吧。",
+        "topic": "TALK_GUNSMITH_SPEC_GUN2"
+      }
+    ]
+  },
+  {
+    "id": "TALK_GUNSMITH_VSS",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "眼光不错，Vintorez，这是一把好枪，你也可以叫它“螺纹裁剪机”，这是一种由苏联设计的微声射手步枪，声音小，易操控，杀伤力强，但极为罕见，使用9x39mm的亚音速子弹，或许你会认为这种子弹压根就不会出现在美国，但其实并不是，Wolf polyperformance这家公司就会出售俄制武器的子弹，毕竟用这子弹的枪又不止这一种，毫无疑问这是一种优秀的子弹。"
+    ],
+    "responses": [
+      {
+        "text": "多少钱。",
+        "topic": "TALK_GUNSMITH_BUY_VSS"
+      },
+      {
+        "text": "算了，我再看看别的吧。",
+        "topic": "TALK_GUNSMITH_SPEC_GUN2"
+      }
+    ]
+  },
+  {
+    "id": "TALK_GUNSMITH_BUY_VSS",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "这东西不是很常见，不过我这里还是有点存货的，550商会币。"
+    ],
+    "responses": [
+      {
+        "text": "[550 商会币] 成交。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 550
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 550
+          },
+          {
+            "u_spawn_item": "vss"
+          },
+          {
+            "npc_add_var": "gunsmith_sell_gun",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "yes"
+          }
+        ],
+        "topic": "TALK_GUNSMITH_SPEC_GUN2"
+      },
+      {
+        "text": "算了，我再看看别的吧。",
+        "topic": "TALK_GUNSMITH_SPEC_GUN2"
+      }
+    ]
+  },
+  {
+    "id": "TALK_GUNSMITH_BUY_74UM",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "我自己改装过的一把AKS-74U，做了很多现代化改装，比如枪托，护木，瞄准镜，枪口和前握把，是把好枪，如果你想的话，750商会币。"
+    ],
+    "responses": [
+      {
+        "text": "[750 商会币] 成交。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 750
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 750
+          },
+          {
+            "u_spawn_item": "aks74um"
+          },
+          {
+            "npc_add_var": "gunsmith_sell_gun",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "yes"
+          }
+        ],
+        "topic": "TALK_GUNSMITH_SPEC_GUN2"
+      },
+      {
+        "text": "算了，我再看看别的吧。",
+        "topic": "TALK_GUNSMITH_SPEC_GUN2"
+      }
+    ]
+  },
+  {
+    "id": "TALK_GUNSMITH_BUY_103C",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "眼光不错，那把枪是俄国产的一把AK-103，这把装枪装上了全息瞄准镜，补偿器，更好的护木，还有一个我从没见过的折叠枪托，这把改装过的枪出自别人之手，具体是谁做的，我也不知道，枪上写着个不起眼的词——廷达罗斯，这是把好枪，1250商会币。"
+    ],
+    "responses": [
+      {
+        "text": "[1250 商会币] 成交。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 1250
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 1250
+          },
+          {
+            "u_spawn_item": "ak103c"
+          },
+          {
+            "npc_add_var": "gunsmith_sell_gun",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "yes"
+          }
+        ],
+        "topic": "TALK_GUNSMITH_SPEC_GUN2"
+      },
+      {
+        "text": "算了，我再看看别的吧。",
+        "topic": "TALK_GUNSMITH_SPEC_GUN2"
+      }
+    ]
+  },
+  {
+    "id": "TALK_GUNSMITH_BUY_VSS47",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "那东西……呃，乍一看它看上去是把VSS，但是这东西用的是AK的7.62弹匣，而且这枪的瞄准镜是个双目望远镜，这把枪甚至还有个充当前握把的马卡洛夫手枪，650商会币。"
+    ],
+    "responses": [
+      {
+        "text": "[650 商会币] 成交。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 650
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 650
+          },
+          {
+            "u_spawn_item": "vss47"
+          },
+          {
+            "npc_add_var": "gunsmith_sell_gun",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "yes"
+          }
+        ],
+        "topic": "TALK_GUNSMITH_SPEC_GUN2"
+      },
+      {
+        "text": "算了，我再看看别的吧。",
+        "topic": "TALK_GUNSMITH_SPEC_GUN2"
+      }
+    ]
+  },
+  {
+    "id": "TALK_GUNSMITH_BUY_VC9C",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "这是一把改装过的维克托9MM冲锋枪，配件装有有瞄准镜，消音器和前握把，650商会币。"
+    ],
+    "responses": [
+      {
+        "text": "[650 商会币] 成交。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 650
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 650
+          },
+          {
+            "u_spawn_item": "vector_9mm_c"
+          },
+          {
+            "npc_add_var": "gunsmith_sell_gun",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "yes"
+          }
+        ],
+        "topic": "TALK_GUNSMITH_SPEC_GUN2"
+      },
+      {
+        "text": "算了，我再看看别的吧。",
+        "topic": "TALK_GUNSMITH_SPEC_GUN2"
+      }
+    ]
+  },
+  {
+    "id": "TALK_GUNSMITH_BUY_VSSC",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "这把VSS应该跟那把AK-103出自同一个作者之手，毕竟配色都差不多，这把枪有一个装了托腮板的枪托，一个三角握把和瞄准镜，而且还被校准的很好，这是一把非常好的武器，2750商会币。"
+    ],
+    "responses": [
+      {
+        "text": "[2750 商会币] 成交。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 2750
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 2750
+          },
+          {
+            "u_spawn_item": "vssc"
+          },
+          {
+            "npc_add_var": "gunsmith_sell_gun",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "yes"
+          }
+        ],
+        "topic": "TALK_GUNSMITH_SPEC_GUN2"
+      },
+      {
+        "text": "算了，我再看看别的吧。",
+        "topic": "TALK_GUNSMITH_SPEC_GUN2"
+      }
+    ]
+  },
+  {
+    "id": "TALK_GUNSMITH_BUY_WF556",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "我不知道你是否对游戏或者动漫之类的感兴趣，这东西好像出自某部作品。不巧的是我对这些不熟；你可以把它理解成一把换上打印外壳、内部结构基本未改的SIG 550。这是别人委托我制作后留下的成品，1500商会币。"
+    ],
+    "responses": [
+      {
+        "text": "[1500 商会币] 成交。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 1500
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 1500
+          },
+          {
+            "u_spawn_item": "whitefang"
+          },
+          {
+            "npc_add_var": "gunsmith_sell_gun",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "yes"
+          }
+        ],
+        "topic": "TALK_GUNSMITH_SPEC_GUN2"
+      },
+      {
+        "text": "算了，我再看看别的吧。",
+        "topic": "TALK_GUNSMITH_SPEC_GUN2"
+      }
+    ]
+  },
+  {
+    "id": "TALK_GUNSMITH_BUY_HORUS",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "这是一把披着特殊打印枪身的贝内利M3，和那把WHITE FANG 556一样，主要变化在外观，内部结构基本未改。1500商会币。"
+    ],
+    "responses": [
+      {
+        "text": "[1500 商会币] 成交。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 1500
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 1500
+          },
+          {
+            "u_spawn_item": "horus"
+          },
+          {
+            "npc_add_var": "gunsmith_sell_gun",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "yes"
+          }
+        ],
+        "topic": "TALK_GUNSMITH_SPEC_GUN2"
+      },
+      {
+        "text": "算了，我再看看别的吧。",
+        "topic": "TALK_GUNSMITH_SPEC_GUN2"
+      }
+    ]
+  },
+  {
+    "id": "TALK_GUNSMITH_BUY_156",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "这一把是产自俄罗斯的MP156半自动霰弹枪，奇怪的是这一把改了很多东西，并且貌似改装自一把MP153，要不是枪身侧面的名称的话压根看不出来这是什么枪，乍一看有些地方跟这里的另一把MP153非常相似，但我不知道这两把枪为何会同时出现，不管怎么说，这把枪改的非常好，内部结构也被更改过，3500商会币。"
+    ],
+    "responses": [
+      {
+        "text": "[3500 商会币] 好吧好吧你说服我了……这是钱。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 3500
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 3500
+          },
+          {
+            "u_spawn_item": "MP156_M"
+          },
+          {
+            "npc_add_var": "gunsmith_sell_gun",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "yes"
+          }
+        ],
+        "topic": "TALK_GUNSMITH_SPEC_GUN2"
+      },
+      {
+        "text": "呃……我感觉还有一些更有性价比的选择，我看看别的。",
+        "topic": "TALK_GUNSMITH_SPEC_GUN2"
+      }
+    ]
+  },
+  {
+    "id": "TALK_GUNSMITH_BUY_109C",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "眼光不错，那把枪是俄国产的一把AK-109，使用了跟KORD一样的平衡后座原理，体感后坐力非常小，这把装枪装上了全息瞄准镜，补偿器，更好的护木，还有一个我从没见过的折叠枪托，这把改装过的枪出自别人之手，具体是谁做的，我也不知道，枪上写着个不起眼的词——廷达罗斯，这是把好枪，1250商会币。"
+    ],
+    "responses": [
+      {
+        "text": "[1250 商会币] 成交。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 1250
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 1250
+          },
+          {
+            "u_spawn_item": "ak109c"
+          },
+          {
+            "npc_add_var": "gunsmith_sell_gun",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "yes"
+          }
+        ],
+        "topic": "TALK_GUNSMITH_SPEC_GUN2"
+      },
+      {
+        "text": "算了，我再看看别的吧。",
+        "topic": "TALK_GUNSMITH_SPEC_GUN2"
+      }
+    ]
+  },
+  {
+    "id": "TALK_GUNSMITH_VEST",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "你是说那件防弹衣吗，从一个神经兮兮的变种人手里收购的，看样子应该用了多款防弹衣的材料再手工改造，勉强还能看出一点6B43的影子。"
+    ],
+    "responses": [
+      {
+        "text": "那么这东西多少钱。",
+        "topic": "TALK_GUNSMITH_BUY_VEST"
+      },
+      {
+        "text": "算了，我再看看别的。",
+        "topic": "TALK_GUNSMITH_SPEC_GUN2"
+      }
+    ]
+  },
+  {
+    "id": "TALK_GUNSMITH_BUY_VEST",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "250商会币，一口价。"
+    ],
+    "responses": [
+      {
+        "text": "[250 商会币] 行吧，这里是钱，它归我了。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 250
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 250
+          },
+          {
+            "u_spawn_item": "eniotv"
+          },
+          {
+            "npc_add_var": "gunsmith_sell_gun",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "yes"
+          }
+        ],
+        "topic": "TALK_GUNSMITH_SPEC_GUN2"
+      },
+      {
+        "text": "我还是看看别的。",
+        "topic": "TALK_GUNSMITH_SPEC_GUN2"
+      }
+    ]
+  }
+]

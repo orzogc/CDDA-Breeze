@@ -1,0 +1,285 @@
+[
+  {
+    "type": "item_group",
+    "id": "MURKA_I_NEW_WEAPONS",
+    "subtype": "distribution",
+    "items": [
+      [
+        "gew98",
+        12
+      ],
+      [
+        "gew98s",
+        5
+      ],
+      [
+        "kar98ks",
+        4
+      ],
+      [
+        "mg42",
+        2
+      ],
+      [
+        "fg422",
+        3
+      ],
+      [
+        "m110",
+        5
+      ],
+      [
+        "sr25",
+        6
+      ],
+      [
+        "scar_16s",
+        6
+      ],
+      [
+        "scar_17s",
+        5
+      ],
+      [
+        "scar_h_mk20",
+        2
+      ],
+      [
+        "sig_xm7",
+        3
+      ],
+      [
+        "sig_spear",
+        2
+      ],
+      [
+        "sig_550_swat",
+        4
+      ],
+      [
+        "avt_40",
+        5
+      ]
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "MURKA_I_NEW_MAGAZINES",
+    "subtype": "distribution",
+    "items": [
+      [
+        "fg422mag",
+        20
+      ],
+      [
+        "mg42mag_50",
+        12
+      ],
+      [
+        "mg42mag_250",
+        5
+      ],
+      [
+        "xm7_makeshiftmag",
+        8
+      ],
+      [
+        "xm7mag_10rd",
+        15
+      ],
+      [
+        "xm7mag_20rd",
+        20
+      ],
+      [
+        "svt_15",
+        5
+      ]
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "MURKA_I_NEW_AMMO",
+    "subtype": "collection",
+    "entries": [
+      {
+        "item": "68_51_fmj",
+        "prob": 20,
+        "charges": [
+          20,
+          100
+        ]
+      },
+      {
+        "item": "79257_smk",
+        "prob": 12,
+        "charges": [
+          10,
+          60
+        ]
+      },
+      {
+        "item": "79257_smkh",
+        "prob": 5,
+        "charges": [
+          5,
+          30
+        ]
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "MURKA_I_NEW_GEAR",
+    "subtype": "distribution",
+    "items": [
+      [
+        "emb_belt",
+        10
+      ],
+      [
+        "lmag_pouch",
+        15
+      ],
+      [
+        "helmet_pasgt",
+        12
+      ]
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "MURKA_I_NEW_GUNMODS",
+    "subtype": "distribution",
+    "items": [
+      [
+        "Leupold",
+        10
+      ],
+      [
+        "TANGO6T",
+        10
+      ],
+      [
+        "ar_autopart",
+        10
+      ],
+      [
+        "fg422bipod",
+        10
+      ],
+      [
+        "gewscope",
+        10
+      ],
+      [
+        "mg42semi",
+        10
+      ],
+      [
+        "mgbipod",
+        10
+      ],
+      [
+        "pkbipod",
+        10
+      ],
+      [
+        "retool_ar10_308_medium",
+        5
+      ],
+      [
+        "retool_hk417_308_long",
+        5
+      ],
+      [
+        "retool_hk417_308_medium",
+        5
+      ],
+      [
+        "retool_hk417_308_short",
+        5
+      ],
+      [
+        "retool_scar_h_308_17s",
+        5
+      ],
+      [
+        "retool_scar_h_308_cqb_gen3",
+        5
+      ],
+      [
+        "retool_scar_h_308_cqb_mk2",
+        5
+      ],
+      [
+        "retool_scar_h_308_long_gen3",
+        5
+      ],
+      [
+        "retool_scar_h_308_long_mk20",
+        5
+      ],
+      [
+        "retool_scar_h_308_short_gen3",
+        5
+      ],
+      [
+        "retool_scar_h_308_short_mk2",
+        5
+      ],
+      [
+        "retool_scar_l_223_cqc_gen3",
+        5
+      ],
+      [
+        "retool_scar_l_223_cqc_mk2",
+        5
+      ],
+      [
+        "retool_scar_l_223_long_16s",
+        5
+      ],
+      [
+        "retool_scar_l_223_long_gen3",
+        5
+      ],
+      [
+        "retool_scar_l_223_medium_gen3",
+        5
+      ],
+      [
+        "retool_scar_l_223_medium_mk2",
+        5
+      ],
+      [
+        "retool_sr25_308_long",
+        5
+      ],
+      [
+        "retool_sr25_308_medium",
+        5
+      ],
+      [
+        "retool_sr25_308_short",
+        5
+      ],
+      [
+        "retool_xm7_227_medium",
+        5
+      ],
+      [
+        "sigsuppressor",
+        10
+      ],
+      [
+        "xm157",
+        10
+      ],
+      [
+        "zf42",
+        10
+      ]
+    ]
+  }
+]

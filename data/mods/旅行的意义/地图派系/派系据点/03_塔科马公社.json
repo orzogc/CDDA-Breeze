@@ -1,0 +1,775 @@
+[
+  {
+    "type": "overmap_special",
+    "id": "ranch_camp",
+    "overmaps": [
+      {
+        "point": [
+          0,
+          0,
+          0
+        ],
+        "overmap": "ranch_camp_1_north"
+      },
+      {
+        "point": [
+          1,
+          0,
+          0
+        ],
+        "overmap": "ranch_camp_2_north"
+      },
+      {
+        "point": [
+          2,
+          0,
+          0
+        ],
+        "overmap": "ranch_camp_3_north"
+      },
+      {
+        "point": [
+          3,
+          0,
+          0
+        ],
+        "overmap": "ranch_camp_4_north"
+      },
+      {
+        "point": [
+          4,
+          0,
+          0
+        ],
+        "overmap": "ranch_camp_5_north"
+      },
+      {
+        "point": [
+          5,
+          0,
+          0
+        ],
+        "overmap": "ranch_camp_6_north"
+      },
+      {
+        "point": [
+          6,
+          0,
+          0
+        ],
+        "overmap": "ranch_camp_7_north"
+      },
+      {
+        "point": [
+          7,
+          0,
+          0
+        ],
+        "overmap": "ranch_camp_8_north"
+      },
+      {
+        "point": [
+          8,
+          0,
+          0
+        ],
+        "overmap": "ranch_camp_9_north"
+      },
+      {
+        "point": [
+          0,
+          1,
+          0
+        ],
+        "overmap": "ranch_camp_10_north"
+      },
+      {
+        "point": [
+          1,
+          1,
+          0
+        ],
+        "overmap": "ranch_camp_11_north"
+      },
+      {
+        "point": [
+          2,
+          1,
+          0
+        ],
+        "overmap": "ranch_camp_12_north"
+      },
+      {
+        "point": [
+          3,
+          1,
+          0
+        ],
+        "overmap": "ranch_camp_13_north"
+      },
+      {
+        "point": [
+          4,
+          1,
+          0
+        ],
+        "overmap": "ranch_camp_14_north"
+      },
+      {
+        "point": [
+          5,
+          1,
+          0
+        ],
+        "overmap": "ranch_camp_15_north"
+      },
+      {
+        "point": [
+          6,
+          1,
+          0
+        ],
+        "overmap": "ranch_camp_16_north"
+      },
+      {
+        "point": [
+          7,
+          1,
+          0
+        ],
+        "overmap": "ranch_camp_17_north"
+      },
+      {
+        "point": [
+          8,
+          1,
+          0
+        ],
+        "overmap": "ranch_camp_18_north"
+      },
+      {
+        "point": [
+          0,
+          2,
+          0
+        ],
+        "overmap": "ranch_camp_19_north"
+      },
+      {
+        "point": [
+          1,
+          2,
+          0
+        ],
+        "overmap": "ranch_camp_20_north"
+      },
+      {
+        "point": [
+          2,
+          2,
+          0
+        ],
+        "overmap": "ranch_camp_21_north"
+      },
+      {
+        "point": [
+          3,
+          2,
+          0
+        ],
+        "overmap": "ranch_camp_22_north"
+      },
+      {
+        "point": [
+          4,
+          2,
+          0
+        ],
+        "overmap": "ranch_camp_23_north"
+      },
+      {
+        "point": [
+          5,
+          2,
+          0
+        ],
+        "overmap": "ranch_camp_24_north"
+      },
+      {
+        "point": [
+          6,
+          2,
+          0
+        ],
+        "overmap": "ranch_camp_25_north"
+      },
+      {
+        "point": [
+          7,
+          2,
+          0
+        ],
+        "overmap": "ranch_camp_26_north"
+      },
+      {
+        "point": [
+          8,
+          2,
+          0
+        ],
+        "overmap": "ranch_camp_27_north"
+      },
+      {
+        "point": [
+          0,
+          3,
+          0
+        ],
+        "overmap": "ranch_camp_28_north"
+      },
+      {
+        "point": [
+          1,
+          3,
+          0
+        ],
+        "overmap": "ranch_camp_29_north"
+      },
+      {
+        "point": [
+          2,
+          3,
+          0
+        ],
+        "overmap": "ranch_camp_30_north"
+      },
+      {
+        "point": [
+          3,
+          3,
+          0
+        ],
+        "overmap": "ranch_camp_31_north"
+      },
+      {
+        "point": [
+          4,
+          3,
+          0
+        ],
+        "overmap": "ranch_camp_32_north"
+      },
+      {
+        "point": [
+          5,
+          3,
+          0
+        ],
+        "overmap": "ranch_camp_33_north"
+      },
+      {
+        "point": [
+          6,
+          3,
+          0
+        ],
+        "overmap": "ranch_camp_34_north"
+      },
+      {
+        "point": [
+          7,
+          3,
+          0
+        ],
+        "overmap": "ranch_camp_35_north"
+      },
+      {
+        "point": [
+          8,
+          3,
+          0
+        ],
+        "overmap": "ranch_camp_36_north"
+      },
+      {
+        "point": [
+          0,
+          4,
+          0
+        ],
+        "overmap": "ranch_camp_37_north"
+      },
+      {
+        "point": [
+          1,
+          4,
+          0
+        ],
+        "overmap": "ranch_camp_38_north"
+      },
+      {
+        "point": [
+          2,
+          4,
+          0
+        ],
+        "overmap": "ranch_camp_39_north"
+      },
+      {
+        "point": [
+          3,
+          4,
+          0
+        ],
+        "overmap": "ranch_camp_40_north"
+      },
+      {
+        "point": [
+          4,
+          4,
+          0
+        ],
+        "overmap": "ranch_camp_41_north"
+      },
+      {
+        "point": [
+          5,
+          4,
+          0
+        ],
+        "overmap": "ranch_camp_42_north"
+      },
+      {
+        "point": [
+          6,
+          4,
+          0
+        ],
+        "overmap": "ranch_camp_43_north"
+      },
+      {
+        "point": [
+          7,
+          4,
+          0
+        ],
+        "overmap": "ranch_camp_44_north"
+      },
+      {
+        "point": [
+          8,
+          4,
+          0
+        ],
+        "overmap": "ranch_camp_45_north"
+      },
+      {
+        "point": [
+          0,
+          5,
+          0
+        ],
+        "overmap": "ranch_camp_46_north"
+      },
+      {
+        "point": [
+          1,
+          5,
+          0
+        ],
+        "overmap": "ranch_camp_47_north"
+      },
+      {
+        "point": [
+          2,
+          5,
+          0
+        ],
+        "overmap": "ranch_camp_48_north"
+      },
+      {
+        "point": [
+          3,
+          5,
+          0
+        ],
+        "overmap": "ranch_camp_49_north"
+      },
+      {
+        "point": [
+          4,
+          5,
+          0
+        ],
+        "overmap": "ranch_camp_50_north"
+      },
+      {
+        "point": [
+          5,
+          5,
+          0
+        ],
+        "overmap": "ranch_camp_51_north"
+      },
+      {
+        "point": [
+          6,
+          5,
+          0
+        ],
+        "overmap": "ranch_camp_52_north"
+      },
+      {
+        "point": [
+          7,
+          5,
+          0
+        ],
+        "overmap": "ranch_camp_53_north"
+      },
+      {
+        "point": [
+          8,
+          5,
+          0
+        ],
+        "overmap": "ranch_camp_54_north"
+      },
+      {
+        "point": [
+          0,
+          6,
+          0
+        ],
+        "overmap": "ranch_camp_55_north"
+      },
+      {
+        "point": [
+          1,
+          6,
+          0
+        ],
+        "overmap": "ranch_camp_56_north"
+      },
+      {
+        "point": [
+          2,
+          6,
+          0
+        ],
+        "overmap": "ranch_camp_57_north"
+      },
+      {
+        "point": [
+          2,
+          6,
+          1
+        ],
+        "overmap": "ranch_camp_57_roof_north"
+      },
+      {
+        "point": [
+          2,
+          6,
+          2
+        ],
+        "overmap": "ranch_camp_57_silo_north"
+      },
+      {
+        "point": [
+          2,
+          6,
+          3
+        ],
+        "overmap": "ranch_camp_57_silocap_north"
+      },
+      {
+        "point": [
+          3,
+          6,
+          0
+        ],
+        "overmap": "ranch_camp_58_north"
+      },
+      {
+        "point": [
+          4,
+          6,
+          0
+        ],
+        "overmap": "ranch_camp_59_north"
+      },
+      {
+        "point": [
+          5,
+          6,
+          0
+        ],
+        "overmap": "ranch_camp_60_north"
+      },
+      {
+        "point": [
+          6,
+          6,
+          0
+        ],
+        "overmap": "ranch_camp_61_north"
+      },
+      {
+        "point": [
+          7,
+          6,
+          0
+        ],
+        "overmap": "ranch_camp_62_north"
+      },
+      {
+        "point": [
+          8,
+          6,
+          0
+        ],
+        "overmap": "ranch_camp_63_north"
+      },
+      {
+        "point": [
+          0,
+          7,
+          0
+        ],
+        "overmap": "ranch_camp_64_north"
+      },
+      {
+        "point": [
+          1,
+          7,
+          0
+        ],
+        "overmap": "ranch_camp_65_north"
+      },
+      {
+        "point": [
+          1,
+          7,
+          1
+        ],
+        "overmap": "ranch_camp_65_roof_north"
+      },
+      {
+        "point": [
+          2,
+          7,
+          0
+        ],
+        "overmap": "ranch_camp_66_north"
+      },
+      {
+        "point": [
+          2,
+          7,
+          1
+        ],
+        "overmap": "ranch_camp_66_roof_north"
+      },
+      {
+        "point": [
+          3,
+          7,
+          0
+        ],
+        "overmap": "ranch_camp_67_north"
+      },
+      {
+        "point": [
+          3,
+          7,
+          1
+        ],
+        "overmap": "ranch_camp_67_roof_north"
+      },
+      {
+        "point": [
+          4,
+          7,
+          0
+        ],
+        "overmap": "ranch_camp_68_north"
+      },
+      {
+        "point": [
+          4,
+          7,
+          1
+        ],
+        "overmap": "ranch_camp_68_roof_north"
+      },
+      {
+        "point": [
+          4,
+          7,
+          -1
+        ],
+        "overmap": "ranch_camp_68_basement_north"
+      },
+      {
+        "point": [
+          5,
+          7,
+          0
+        ],
+        "overmap": "ranch_camp_69_north"
+      },
+      {
+        "point": [
+          6,
+          7,
+          0
+        ],
+        "overmap": "ranch_camp_70_north"
+      },
+      {
+        "point": [
+          7,
+          7,
+          0
+        ],
+        "overmap": "ranch_camp_71_north"
+      },
+      {
+        "point": [
+          8,
+          7,
+          0
+        ],
+        "overmap": "ranch_camp_72_north"
+      },
+      {
+        "point": [
+          0,
+          8,
+          0
+        ],
+        "overmap": "ranch_camp_73_north"
+      },
+      {
+        "point": [
+          1,
+          8,
+          0
+        ],
+        "overmap": "ranch_camp_74_north"
+      },
+      {
+        "point": [
+          1,
+          8,
+          1
+        ],
+        "overmap": "ranch_camp_74_roof_north"
+      },
+      {
+        "point": [
+          2,
+          8,
+          0
+        ],
+        "overmap": "ranch_camp_75_north"
+      },
+      {
+        "point": [
+          2,
+          8,
+          1
+        ],
+        "overmap": "ranch_camp_75_roof_north"
+      },
+      {
+        "point": [
+          3,
+          8,
+          0
+        ],
+        "overmap": "ranch_camp_76_north"
+      },
+      {
+        "point": [
+          4,
+          8,
+          0
+        ],
+        "overmap": "ranch_camp_77_north"
+      },
+      {
+        "point": [
+          5,
+          8,
+          0
+        ],
+        "overmap": "ranch_camp_78_north"
+      },
+      {
+        "point": [
+          6,
+          8,
+          0
+        ],
+        "overmap": "ranch_camp_79_north"
+      },
+      {
+        "point": [
+          7,
+          8,
+          0
+        ],
+        "overmap": "ranch_camp_80_north"
+      },
+      {
+        "point": [
+          8,
+          8,
+          0
+        ],
+        "overmap": "ranch_camp_81_north"
+      },
+      {
+        "point": [
+          4,
+          9,
+          0
+        ],
+        "overmap": "road_end_south"
+      }
+    ],
+    "connections": [
+      {
+        "point": [
+          4,
+          9,
+          0
+        ]
+      }
+    ],
+    "locations": [
+      "wilderness"
+    ],
+    "city_distance": [
+      3,
+      20
+    ],
+    "occurrences": [
+      100,
+      100
+    ],
+    "flags": [
+      "SAFE_AT_WORLDGEN",
+      "MAN_MADE",
+      "GLOBALLY_UNIQUE"
+    ],
+    "city_sizes": [
+      3,
+      -1
+    ],
+    "priority": 1,
+    "// travel_r11": "r11区域化：世界唯一、100%参与抽签并以priority 1优先放置，同时限制在规模3以上城市周边。保留原版locations与逐格约束，河流不属于可覆盖位置；若受河流、道路或大型占地阻挡，引擎会换位尝试而非删除水系。"
+  }
+]

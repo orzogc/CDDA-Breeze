@@ -1,0 +1,537 @@
+[
+  {
+    "type": "technique",
+    "id": "tec_wc_rework_pak_sao",
+    "name": "拍手震退",
+    "messages": [
+      "你拍开%s的攻势，同时沿中线打出冲拳将其震退",
+      "<npcname>拍开%s的攻势，同时沿中线打出冲拳将其震退"
+    ],
+    "skill_requirements": [
+      {
+        "name": "unarmed",
+        "level": 2
+      }
+    ],
+    "unarmed_allowed": true,
+    "block_counter": true,
+    "crit_ok": true,
+    "flat_bonuses": [
+      {
+        "stat": "hit",
+        "scale": 2.0
+      }
+    ],
+    "mult_bonuses": [
+      {
+        "stat": "movecost",
+        "scale": 0.0
+      },
+      {
+        "stat": "damage",
+        "type": "bash",
+        "scale": 1.1
+      },
+      {
+        "stat": "damage",
+        "type": "cut",
+        "scale": 1.1
+      },
+      {
+        "stat": "damage",
+        "type": "stab",
+        "scale": 1.1
+      }
+    ],
+    "attack_vectors": [
+      "HAND"
+    ],
+    "knockback_dist": 1
+  },
+  {
+    "type": "technique",
+    "id": "tec_wc_rework_centerline_punch",
+    "name": "日字冲拳",
+    "messages": [
+      "你沿中线向%s打出短促而沉实的日字冲拳",
+      "<npcname>沿中线向%s打出短促而沉实的日字冲拳"
+    ],
+    "skill_requirements": [
+      {
+        "name": "unarmed",
+        "level": 1
+      }
+    ],
+    "unarmed_allowed": true,
+    "mult_bonuses": [
+      {
+        "stat": "movecost",
+        "scale": 0.85
+      },
+      {
+        "stat": "damage",
+        "type": "bash",
+        "scale": 1.2
+      },
+      {
+        "stat": "damage",
+        "type": "cut",
+        "scale": 1.2
+      },
+      {
+        "stat": "damage",
+        "type": "stab",
+        "scale": 1.2
+      }
+    ],
+    "attack_vectors": [
+      "HAND"
+    ],
+    "weighting": 2
+  },
+  {
+    "type": "technique",
+    "id": "tec_wc_rework_low_kick",
+    "name": "咏春低踢",
+    "messages": [
+      "你一脚截在%s的下盘",
+      "<npcname>一脚截在%s的下盘"
+    ],
+    "skill_requirements": [
+      {
+        "name": "unarmed",
+        "level": 2
+      }
+    ],
+    "unarmed_allowed": true,
+    "down_dur": 1,
+    "mult_bonuses": [
+      {
+        "stat": "damage",
+        "type": "bash",
+        "scale": 1.1
+      },
+      {
+        "stat": "damage",
+        "type": "cut",
+        "scale": 1.1
+      },
+      {
+        "stat": "damage",
+        "type": "stab",
+        "scale": 1.1
+      }
+    ],
+    "attack_vectors": [
+      "FOOT"
+    ]
+  },
+  {
+    "type": "technique",
+    "id": "tec_wc_rework_one_inch",
+    "name": "寸劲",
+    "messages": [
+      "你贴近%s，在几乎没有蓄势的距离内沉肩发劲，力量骤然贯入，将其震退",
+      "<npcname>贴近%s，在几乎没有蓄势的距离内沉肩发劲，力量骤然贯入，将其震退"
+    ],
+    "skill_requirements": [
+      {
+        "name": "unarmed",
+        "level": 4
+      }
+    ],
+    "unarmed_allowed": true,
+    "crit_tec": true,
+    "stun_dur": 1,
+    "mult_bonuses": [
+      {
+        "stat": "movecost",
+        "scale": 1.1
+      },
+      {
+        "stat": "damage",
+        "type": "bash",
+        "scale": 1.8
+      },
+      {
+        "stat": "damage",
+        "type": "cut",
+        "scale": 1.8
+      },
+      {
+        "stat": "damage",
+        "type": "stab",
+        "scale": 1.8
+      }
+    ],
+    "attack_vectors": [
+      "HAND"
+    ],
+    "knockback_dist": 1,
+    "weighting": 2
+  },
+  {
+    "type": "technique",
+    "id": "tec_wc_rework_biu_jee",
+    "name": "标指截击",
+    "messages": [
+      "你在%s防线将合未合的一瞬抢入中线，以标指、肘桥与短促转马连成一次截击",
+      "<npcname>在%s防线将合未合的一瞬抢入中线，以标指、肘桥与短促转马连成一次截击"
+    ],
+    "skill_requirements": [
+      {
+        "name": "unarmed",
+        "level": 5
+      }
+    ],
+    "unarmed_allowed": true,
+    "mult_bonuses": [
+      {
+        "stat": "movecost",
+        "scale": 0.65
+      },
+      {
+        "stat": "damage",
+        "type": "bash",
+        "scale": 1.5
+      },
+      {
+        "stat": "damage",
+        "type": "cut",
+        "scale": 1.5
+      },
+      {
+        "stat": "damage",
+        "type": "stab",
+        "scale": 1.5
+      }
+    ],
+    "attack_vectors": [
+      "HAND"
+    ],
+    "crit_tec": true,
+    "stun_dur": 1,
+    "flat_bonuses": [
+      {
+        "stat": "hit",
+        "scale": 3.0
+      },
+      {
+        "stat": "arpen",
+        "type": "bash",
+        "scale": 8.0
+      },
+      {
+        "stat": "arpen",
+        "type": "cut",
+        "scale": 8.0
+      },
+      {
+        "stat": "arpen",
+        "type": "stab",
+        "scale": 8.0
+      }
+    ]
+  },
+  {
+    "type": "technique",
+    "id": "tec_wc_rework_feint",
+    "name": "佯攻换线",
+    "messages": [
+      "你朝%s虚晃一击，随即沿中线换线再进",
+      "<npcname>朝%s虚晃一击，随即沿中线换线再进"
+    ],
+    "skill_requirements": [
+      {
+        "name": "melee",
+        "level": 3
+      }
+    ],
+    "unarmed_allowed": true,
+    "melee_allowed": true,
+    "defensive": true,
+    "miss_recovery": true
+  },
+  {
+    "type": "technique",
+    "id": "tec_wc_rework_grab_break",
+    "name": "摊膀脱手",
+    "messages": [
+      "%s试图抓住你，但你以摊膀脱手挣开！",
+      "%s试图抓住<npcname>，但被其以摊膀脱手挣开！"
+    ],
+    "skill_requirements": [
+      {
+        "name": "melee",
+        "level": 2
+      }
+    ],
+    "unarmed_allowed": true,
+    "melee_allowed": true,
+    "defensive": true,
+    "grab_break": true
+  },
+  {
+    "type": "technique",
+    "id": "tec_wc_rework_bridge_strike",
+    "name": "寻桥连击",
+    "messages": [
+      "你沿中线以兵器连续追击%s",
+      "<npcname>沿中线以兵器连续追击%s"
+    ],
+    "skill_requirements": [
+      {
+        "name": "melee",
+        "level": 1
+      }
+    ],
+    "melee_allowed": true,
+    "mult_bonuses": [
+      {
+        "stat": "movecost",
+        "scale": 0.8
+      },
+      {
+        "stat": "damage",
+        "type": "bash",
+        "scale": 1.1
+      },
+      {
+        "stat": "damage",
+        "type": "cut",
+        "scale": 1.1
+      },
+      {
+        "stat": "damage",
+        "type": "stab",
+        "scale": 1.1
+      }
+    ],
+    "attack_vectors": [
+      "WEAPON"
+    ]
+  },
+  {
+    "type": "technique",
+    "id": "tec_wc_rework_baat_jaam_flurry",
+    "name": "八斩刀连斩",
+    "messages": [
+      "你的短刃贴着中线疾斩%s",
+      "<npcname>的短刃贴着中线疾斩%s"
+    ],
+    "skill_requirements": [
+      {
+        "name": "melee",
+        "level": 2
+      }
+    ],
+    "melee_allowed": true,
+    "weapon_categories_allowed": [
+      "KNIVES",
+      "SHIVS",
+      "SHORT_SWORDS",
+      "BLADED_FARMING"
+    ],
+    "mult_bonuses": [
+      {
+        "stat": "movecost",
+        "scale": 0.65
+      },
+      {
+        "stat": "damage",
+        "type": "cut",
+        "scale": 1.1
+      },
+      {
+        "stat": "damage",
+        "type": "stab",
+        "scale": 1.1
+      }
+    ],
+    "attack_vectors": [
+      "WEAPON"
+    ]
+  },
+  {
+    "type": "technique",
+    "id": "tec_wc_rework_baat_jaam_crosscut",
+    "name": "八斩刀交剪破门",
+    "messages": [
+      "你以八斩刀交剪封住%s的防线，短刃随即破门而入",
+      "<npcname>以八斩刀交剪封住%s的防线，短刃随即破门而入"
+    ],
+    "skill_requirements": [
+      {
+        "name": "melee",
+        "level": 4
+      }
+    ],
+    "melee_allowed": true,
+    "weapon_categories_allowed": [
+      "KNIVES",
+      "SHIVS",
+      "SHORT_SWORDS",
+      "BLADED_FARMING"
+    ],
+    "crit_tec": true,
+    "stun_dur": 1,
+    "mult_bonuses": [
+      {
+        "stat": "damage",
+        "type": "cut",
+        "scale": 1.5
+      },
+      {
+        "stat": "damage",
+        "type": "stab",
+        "scale": 1.5
+      }
+    ],
+    "attack_vectors": [
+      "WEAPON"
+    ]
+  },
+  {
+    "type": "technique",
+    "id": "tec_wc_rework_luk_dim_thrust",
+    "name": "六点半棍点刺",
+    "messages": [
+      "你沿中线以棍梢点刺%s，始终保持长兵距离",
+      "<npcname>沿中线以棍梢点刺%s，始终保持长兵距离"
+    ],
+    "skill_requirements": [
+      {
+        "name": "melee",
+        "level": 1
+      }
+    ],
+    "melee_allowed": true,
+    "weapon_categories_allowed": [
+      "POLEARMS"
+    ],
+    "mult_bonuses": [
+      {
+        "stat": "movecost",
+        "scale": 0.8
+      },
+      {
+        "stat": "damage",
+        "type": "bash",
+        "scale": 1.2
+      },
+      {
+        "stat": "damage",
+        "type": "stab",
+        "scale": 1.2
+      }
+    ],
+    "attack_vectors": [
+      "WEAPON"
+    ],
+    "reach_tec": true
+  },
+  {
+    "type": "technique",
+    "id": "tec_wc_rework_luk_dim_shove",
+    "name": "六点半棍撑退",
+    "messages": [
+      "你以棍身封住%s的中线，短促发力将其震开",
+      "<npcname>以棍身封住%s的中线，短促发力将其震开"
+    ],
+    "skill_requirements": [
+      {
+        "name": "melee",
+        "level": 2
+      }
+    ],
+    "melee_allowed": true,
+    "weapon_categories_allowed": [
+      "POLEARMS"
+    ],
+    "knockback_dist": 1,
+    "mult_bonuses": [
+      {
+        "stat": "damage",
+        "type": "bash",
+        "scale": 1.1
+      }
+    ],
+    "attack_vectors": [
+      "WEAPON"
+    ],
+    "stun_dur": 1,
+    "weighting": 2
+  },
+  {
+    "type": "technique",
+    "id": "tec_wc_rework_luk_dim_sweep",
+    "name": "六点半棍横扫",
+    "messages": [
+      "你以六点半棍横扫%s和其身旁的敌人",
+      "<npcname>以六点半棍横扫%s和其身旁的敌人"
+    ],
+    "skill_requirements": [
+      {
+        "name": "melee",
+        "level": 4
+      }
+    ],
+    "melee_allowed": true,
+    "weapon_categories_allowed": [
+      "POLEARMS"
+    ],
+    "crit_tec": true,
+    "aoe": "wide",
+    "down_dur": 1,
+    "mult_bonuses": [
+      {
+        "stat": "damage",
+        "type": "bash",
+        "scale": 1.2
+      },
+      {
+        "stat": "damage",
+        "type": "cut",
+        "scale": 1.2
+      }
+    ],
+    "attack_vectors": [
+      "WEAPON"
+    ]
+  },
+  {
+    "type": "technique",
+    "id": "tec_travel_liang_staff_snap_thrust",
+    "name": "知遥·回棍点刺",
+    "messages": [
+      "你借定制握位迅速收回棍梢，沿中线轻点%s",
+      "<npcname>借定制握位迅速收回棍梢，沿中线轻点%s"
+    ],
+    "skill_requirements": [
+      {
+        "name": "melee",
+        "level": 3
+      },
+      {
+        "name": "bashing",
+        "level": 3
+      }
+    ],
+    "melee_allowed": true,
+    "reach_ok": true,
+    "mult_bonuses": [
+      {
+        "stat": "movecost",
+        "scale": 0.7
+      },
+      {
+        "stat": "damage",
+        "type": "bash",
+        "scale": 0.8
+      }
+    ],
+    "attack_vectors": [
+      "WEAPON"
+    ]
+  }
+]

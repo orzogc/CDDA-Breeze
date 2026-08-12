@@ -1,0 +1,3120 @@
+[
+  {
+    "type": "talk_topic",
+    "id": "TALK_BLACKSMITH_SERVICES",
+    "responses": [
+      {
+        "text": "你能替我打造一件武器吗？",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_var": "gunsmith_mentioned_quest",
+                "type": "dialogue",
+                "context": "artisans",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "u_has_var": "blacksmith_crafting",
+                "type": "dialogue",
+                "context": "artisans",
+                "value": "yes"
+              }
+            },
+            {
+              "u_has_var": "blacksmith_heard_the_deal",
+              "type": "dialogue",
+              "context": "artisans",
+              "value": "yes"
+            }
+          ]
+        },
+        "topic": "TALK_BLACKSMITH_NOT_INTERESTED_FABRICATE"
+      },
+      {
+        "text": "你能替我定制一件高级武器吗？",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_var": "blacksmith_crafting",
+                "type": "dialogue",
+                "context": "artisans",
+                "value": "yes"
+              }
+            },
+            {
+              "u_has_var": "gunsmith_mentioned_quest",
+              "type": "dialogue",
+              "context": "artisans",
+              "value": "yes"
+            }
+          ]
+        },
+        "topic": "TALK_BLACKSMITH_WEAPONSMITH_CCB"
+      },
+      {
+        "text": "我订制的武器进展如何？",
+        "condition": {
+          "and": [
+            {
+              "u_has_var": "blacksmith_crafting",
+              "type": "dialogue",
+              "context": "artisans",
+              "value": "yes"
+            },
+            {
+              "u_has_var": "u_current_project",
+              "type": "dialogue",
+              "context": "artisans",
+              "value": "weapon"
+            },
+            {
+              "u_has_var": "blacksmith_weapon_wait",
+              "type": "number",
+              "context": "artisans",
+              "value": "2"
+            },
+            {
+              "u_compare_time_since_var": "u_waiting_on_weapon",
+              "type": "timer",
+              "context": "artisans",
+              "op": "<",
+              "time": "2 d"
+            }
+          ]
+        },
+        "topic": "TALK_BLACKSMITH_WEAPON_NOT_READY_CCB"
+      },
+      {
+        "text": "我订制的武器应该已经完成了。",
+        "condition": {
+          "and": [
+            {
+              "u_has_var": "blacksmith_crafting",
+              "type": "dialogue",
+              "context": "artisans",
+              "value": "yes"
+            },
+            {
+              "u_has_var": "u_current_project",
+              "type": "dialogue",
+              "context": "artisans",
+              "value": "weapon"
+            },
+            {
+              "u_has_var": "blacksmith_weapon_wait",
+              "type": "number",
+              "context": "artisans",
+              "value": "2"
+            },
+            {
+              "u_compare_time_since_var": "u_waiting_on_weapon",
+              "type": "timer",
+              "context": "artisans",
+              "op": ">=",
+              "time": "2 d"
+            }
+          ]
+        },
+        "topic": "TALK_BLACKSMITH_WEAPON_READY_CCB"
+      },
+      {
+        "text": "我订制的武器进展如何？",
+        "condition": {
+          "and": [
+            {
+              "u_has_var": "blacksmith_crafting",
+              "type": "dialogue",
+              "context": "artisans",
+              "value": "yes"
+            },
+            {
+              "u_has_var": "u_current_project",
+              "type": "dialogue",
+              "context": "artisans",
+              "value": "weapon"
+            },
+            {
+              "u_has_var": "blacksmith_weapon_wait",
+              "type": "number",
+              "context": "artisans",
+              "value": "3"
+            },
+            {
+              "u_compare_time_since_var": "u_waiting_on_weapon",
+              "type": "timer",
+              "context": "artisans",
+              "op": "<",
+              "time": "3 d"
+            }
+          ]
+        },
+        "topic": "TALK_BLACKSMITH_WEAPON_NOT_READY_CCB"
+      },
+      {
+        "text": "我订制的武器应该已经完成了。",
+        "condition": {
+          "and": [
+            {
+              "u_has_var": "blacksmith_crafting",
+              "type": "dialogue",
+              "context": "artisans",
+              "value": "yes"
+            },
+            {
+              "u_has_var": "u_current_project",
+              "type": "dialogue",
+              "context": "artisans",
+              "value": "weapon"
+            },
+            {
+              "u_has_var": "blacksmith_weapon_wait",
+              "type": "number",
+              "context": "artisans",
+              "value": "3"
+            },
+            {
+              "u_compare_time_since_var": "u_waiting_on_weapon",
+              "type": "timer",
+              "context": "artisans",
+              "op": ">=",
+              "time": "3 d"
+            }
+          ]
+        },
+        "topic": "TALK_BLACKSMITH_WEAPON_READY_CCB"
+      },
+      {
+        "text": "我订制的武器进展如何？",
+        "condition": {
+          "and": [
+            {
+              "u_has_var": "blacksmith_crafting",
+              "type": "dialogue",
+              "context": "artisans",
+              "value": "yes"
+            },
+            {
+              "u_has_var": "u_current_project",
+              "type": "dialogue",
+              "context": "artisans",
+              "value": "weapon"
+            },
+            {
+              "u_has_var": "blacksmith_weapon_wait",
+              "type": "number",
+              "context": "artisans",
+              "value": "4"
+            },
+            {
+              "u_compare_time_since_var": "u_waiting_on_weapon",
+              "type": "timer",
+              "context": "artisans",
+              "op": "<",
+              "time": "4 d"
+            }
+          ]
+        },
+        "topic": "TALK_BLACKSMITH_WEAPON_NOT_READY_CCB"
+      },
+      {
+        "text": "我订制的武器应该已经完成了。",
+        "condition": {
+          "and": [
+            {
+              "u_has_var": "blacksmith_crafting",
+              "type": "dialogue",
+              "context": "artisans",
+              "value": "yes"
+            },
+            {
+              "u_has_var": "u_current_project",
+              "type": "dialogue",
+              "context": "artisans",
+              "value": "weapon"
+            },
+            {
+              "u_has_var": "blacksmith_weapon_wait",
+              "type": "number",
+              "context": "artisans",
+              "value": "4"
+            },
+            {
+              "u_compare_time_since_var": "u_waiting_on_weapon",
+              "type": "timer",
+              "context": "artisans",
+              "op": ">=",
+              "time": "4 d"
+            }
+          ]
+        },
+        "topic": "TALK_BLACKSMITH_WEAPON_READY_CCB"
+      },
+      {
+        "text": "我订制的武器进展如何？",
+        "condition": {
+          "and": [
+            {
+              "u_has_var": "blacksmith_crafting",
+              "type": "dialogue",
+              "context": "artisans",
+              "value": "yes"
+            },
+            {
+              "u_has_var": "u_current_project",
+              "type": "dialogue",
+              "context": "artisans",
+              "value": "weapon"
+            },
+            {
+              "u_has_var": "blacksmith_weapon_wait",
+              "type": "number",
+              "context": "artisans",
+              "value": "5"
+            },
+            {
+              "u_compare_time_since_var": "u_waiting_on_weapon",
+              "type": "timer",
+              "context": "artisans",
+              "op": "<",
+              "time": "5 d"
+            }
+          ]
+        },
+        "topic": "TALK_BLACKSMITH_WEAPON_NOT_READY_CCB"
+      },
+      {
+        "text": "我订制的武器应该已经完成了。",
+        "condition": {
+          "and": [
+            {
+              "u_has_var": "blacksmith_crafting",
+              "type": "dialogue",
+              "context": "artisans",
+              "value": "yes"
+            },
+            {
+              "u_has_var": "u_current_project",
+              "type": "dialogue",
+              "context": "artisans",
+              "value": "weapon"
+            },
+            {
+              "u_has_var": "blacksmith_weapon_wait",
+              "type": "number",
+              "context": "artisans",
+              "value": "5"
+            },
+            {
+              "u_compare_time_since_var": "u_waiting_on_weapon",
+              "type": "timer",
+              "context": "artisans",
+              "op": ">=",
+              "time": "5 d"
+            }
+          ]
+        },
+        "topic": "TALK_BLACKSMITH_WEAPON_READY_CCB"
+      },
+      {
+        "text": "我订制的武器进展如何？",
+        "condition": {
+          "and": [
+            {
+              "u_has_var": "blacksmith_crafting",
+              "type": "dialogue",
+              "context": "artisans",
+              "value": "yes"
+            },
+            {
+              "u_has_var": "u_current_project",
+              "type": "dialogue",
+              "context": "artisans",
+              "value": "weapon"
+            },
+            {
+              "u_has_var": "blacksmith_weapon_wait",
+              "type": "number",
+              "context": "artisans",
+              "value": "6"
+            },
+            {
+              "u_compare_time_since_var": "u_waiting_on_weapon",
+              "type": "timer",
+              "context": "artisans",
+              "op": "<",
+              "time": "6 d"
+            }
+          ]
+        },
+        "topic": "TALK_BLACKSMITH_WEAPON_NOT_READY_CCB"
+      },
+      {
+        "text": "我订制的武器应该已经完成了。",
+        "condition": {
+          "and": [
+            {
+              "u_has_var": "blacksmith_crafting",
+              "type": "dialogue",
+              "context": "artisans",
+              "value": "yes"
+            },
+            {
+              "u_has_var": "u_current_project",
+              "type": "dialogue",
+              "context": "artisans",
+              "value": "weapon"
+            },
+            {
+              "u_has_var": "blacksmith_weapon_wait",
+              "type": "number",
+              "context": "artisans",
+              "value": "6"
+            },
+            {
+              "u_compare_time_since_var": "u_waiting_on_weapon",
+              "type": "timer",
+              "context": "artisans",
+              "op": ">=",
+              "time": "6 d"
+            }
+          ]
+        },
+        "topic": "TALK_BLACKSMITH_WEAPON_READY_CCB"
+      }
+    ],
+    "//": "向Breeze科迪服务菜单追加CCB高级武器订制；不替换本体盔甲与交易响应。"
+  },
+  {
+    "id": "EOC_blacksmith_crafting_weapon_CCB",
+    "type": "effect_on_condition",
+    "effect": [
+      {
+        "u_add_var": "u_current_project",
+        "type": "dialogue",
+        "context": "artisans",
+        "value": "weapon"
+      },
+      {
+        "u_add_var": "blacksmith_crafting",
+        "type": "dialogue",
+        "context": "artisans",
+        "value": "yes"
+      },
+      {
+        "u_add_var": "u_waiting_on_weapon",
+        "type": "timer",
+        "context": "artisans",
+        "time": true
+      }
+    ]
+  },
+  {
+    "id": "EOC_blacksmith_weapon_cleanup_CCB",
+    "type": "effect_on_condition",
+    "effect": [
+      {
+        "u_add_var": "blacksmith_crafting",
+        "type": "dialogue",
+        "context": "artisans",
+        "value": "no"
+      },
+      {
+        "u_add_var": "u_current_project",
+        "type": "dialogue",
+        "context": "artisans",
+        "value": "none"
+      },
+      {
+        "u_lose_var": "blacksmith_weapon",
+        "type": "dialogue",
+        "context": "artisans"
+      },
+      {
+        "u_lose_var": "blacksmith_weapon_wait",
+        "type": "number",
+        "context": "artisans"
+      },
+      {
+        "u_lose_var": "u_waiting_on_weapon",
+        "type": "timer",
+        "context": "artisans"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPONSMITH_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“当然。在你替我们解决那些麻烦以后，我愿意拿出最好的手艺。价格和工期取决于武器尺寸；高碳钢已经足够可靠，若额外支付50枚商会币并多等两天，我还能把它做成淬火钢版本。”",
+    "responses": [
+      {
+        "text": "先不订了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "[200商会币，3天起] 我需要一件钉头锤。",
+        "topic": "TALK_BLACKSMITH_WEAPON_STEEL_MACE_CCB"
+      },
+      {
+        "text": "[250商会币，4天起] 我需要一件战锤。",
+        "topic": "TALK_BLACKSMITH_WEAPON_STEEL_WARHAMMER_CCB"
+      },
+      {
+        "text": "[200商会币，3天起] 我需要一件钢箍长棍。",
+        "topic": "TALK_BLACKSMITH_WEAPON_STEEL_STEEL_STAFF_CCB"
+      },
+      {
+        "text": "[250商会币，4天起] 我需要一件战斧。",
+        "topic": "TALK_BLACKSMITH_WEAPON_STEEL_BATTLEAXE_CCB"
+      },
+      {
+        "text": "[250商会币，4天起] 我需要一件长剑。",
+        "topic": "TALK_BLACKSMITH_WEAPON_STEEL_LONGSWORD_CCB"
+      },
+      {
+        "text": "[250商会币，4天起] 我需要一件野太刀。",
+        "topic": "TALK_BLACKSMITH_WEAPON_STEEL_NODACHI_CCB"
+      },
+      {
+        "text": "[250商会币，4天起] 我需要一件双手巨剑。",
+        "topic": "TALK_BLACKSMITH_WEAPON_STEEL_ZWEIHANDER_CCB"
+      },
+      {
+        "text": "[200商会币，3天起] 我需要一件武装剑。",
+        "topic": "TALK_BLACKSMITH_WEAPON_STEEL_ARMING_SWORD_CCB"
+      },
+      {
+        "text": "[200商会币，3天起] 我需要一件阔剑。",
+        "topic": "TALK_BLACKSMITH_WEAPON_STEEL_BROADSWORD_CCB"
+      },
+      {
+        "text": "[200商会币，3天起] 我需要一件骑兵军刀。",
+        "topic": "TALK_BLACKSMITH_WEAPON_STEEL_CAVALRY_SABRE_CCB"
+      },
+      {
+        "text": "[200商会币，3天起] 我需要一件水手弯刀。",
+        "topic": "TALK_BLACKSMITH_WEAPON_STEEL_CUTLASS_CCB"
+      },
+      {
+        "text": "[200商会币，3天起] 我需要一件武士刀。",
+        "topic": "TALK_BLACKSMITH_WEAPON_STEEL_KATANA_CCB"
+      },
+      {
+        "text": "[170商会币，3天起] 我需要一件胁差。",
+        "topic": "TALK_BLACKSMITH_WEAPON_STEEL_WAKIZASHI_CCB"
+      },
+      {
+        "text": "[150商会币，2天起] 我需要一件廓尔喀弯刀。",
+        "topic": "TALK_BLACKSMITH_WEAPON_STEEL_KUKRI_CCB"
+      },
+      {
+        "text": "[250商会币，4天起] 我需要一件破甲剑。",
+        "topic": "TALK_BLACKSMITH_WEAPON_STEEL_ESTOC_CCB"
+      },
+      {
+        "text": "[200商会币，3天起] 我需要一件细剑。",
+        "topic": "TALK_BLACKSMITH_WEAPON_STEEL_RAPIER_CCB"
+      },
+      {
+        "text": "[70商会币，2天起] 我需要一件堑壕刀。",
+        "topic": "TALK_BLACKSMITH_WEAPON_STEEL_KNIFE_TRENCH_CCB"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_STEEL_MACE_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“钉头锤，明白。高碳钢版本结实可靠；淬火钢会更耐用、刃口或工作面也更出色，不过要多花50枚商会币，再多等两天。”",
+    "responses": [
+      {
+        "text": "[200商会币，3天] 高碳钢就好。",
+        "effect": [
+          {
+            "u_add_var": "blacksmith_weapon",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "hc_mace"
+          },
+          {
+            "u_add_var": "blacksmith_weapon_wait",
+            "type": "number",
+            "context": "artisans",
+            "value": "3"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_WEAPON_PAY_HC_MACE_CCB"
+      },
+      {
+        "text": "[250商会币，5天] 使用淬火钢。",
+        "effect": [
+          {
+            "u_add_var": "blacksmith_weapon",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "qt_mace"
+          },
+          {
+            "u_add_var": "blacksmith_weapon_wait",
+            "type": "number",
+            "context": "artisans",
+            "value": "5"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_WEAPON_PAY_QT_MACE_CCB"
+      },
+      {
+        "text": "我再看看别的武器。",
+        "topic": "TALK_BLACKSMITH_WEAPONSMITH_CCB"
+      },
+      {
+        "text": "算了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_PAY_HC_MACE_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“一件高碳钢钉头锤，价格200枚商会币，工期3天。钱先付清，我就开始动工。成交？”",
+    "responses": [
+      {
+        "text": "[200商会币] 成交，3天后见。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 200
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 200,
+            "true_eocs": "EOC_blacksmith_crafting_weapon_CCB"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我现在没有这么多商会币。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "先不做了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_PAY_QT_MACE_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“一件淬火钢钉头锤，价格250枚商会币，工期5天。钱先付清，我就开始动工。成交？”",
+    "responses": [
+      {
+        "text": "[250商会币] 成交，5天后见。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 250
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 250,
+            "true_eocs": "EOC_blacksmith_crafting_weapon_CCB"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我现在没有这么多商会币。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "先不做了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_STEEL_WARHAMMER_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“战锤，明白。高碳钢版本结实可靠；淬火钢会更耐用、刃口或工作面也更出色，不过要多花50枚商会币，再多等两天。”",
+    "responses": [
+      {
+        "text": "[250商会币，4天] 高碳钢就好。",
+        "effect": [
+          {
+            "u_add_var": "blacksmith_weapon",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "hc_warhammer"
+          },
+          {
+            "u_add_var": "blacksmith_weapon_wait",
+            "type": "number",
+            "context": "artisans",
+            "value": "4"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_WEAPON_PAY_HC_WARHAMMER_CCB"
+      },
+      {
+        "text": "[300商会币，6天] 使用淬火钢。",
+        "effect": [
+          {
+            "u_add_var": "blacksmith_weapon",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "qt_warhammer"
+          },
+          {
+            "u_add_var": "blacksmith_weapon_wait",
+            "type": "number",
+            "context": "artisans",
+            "value": "6"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_WEAPON_PAY_QT_WARHAMMER_CCB"
+      },
+      {
+        "text": "我再看看别的武器。",
+        "topic": "TALK_BLACKSMITH_WEAPONSMITH_CCB"
+      },
+      {
+        "text": "算了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_PAY_HC_WARHAMMER_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“一件高碳钢战锤，价格250枚商会币，工期4天。钱先付清，我就开始动工。成交？”",
+    "responses": [
+      {
+        "text": "[250商会币] 成交，4天后见。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 250
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 250,
+            "true_eocs": "EOC_blacksmith_crafting_weapon_CCB"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我现在没有这么多商会币。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "先不做了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_PAY_QT_WARHAMMER_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“一件淬火钢战锤，价格300枚商会币，工期6天。钱先付清，我就开始动工。成交？”",
+    "responses": [
+      {
+        "text": "[300商会币] 成交，6天后见。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 300
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 300,
+            "true_eocs": "EOC_blacksmith_crafting_weapon_CCB"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我现在没有这么多商会币。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "先不做了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_STEEL_STEEL_STAFF_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“钢箍长棍，明白。高碳钢版本结实可靠；淬火钢会更耐用、刃口或工作面也更出色，不过要多花50枚商会币，再多等两天。”",
+    "responses": [
+      {
+        "text": "[200商会币，3天] 高碳钢就好。",
+        "effect": [
+          {
+            "u_add_var": "blacksmith_weapon",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "hc_steel_staff"
+          },
+          {
+            "u_add_var": "blacksmith_weapon_wait",
+            "type": "number",
+            "context": "artisans",
+            "value": "3"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_WEAPON_PAY_HC_STEEL_STAFF_CCB"
+      },
+      {
+        "text": "[250商会币，5天] 使用淬火钢。",
+        "effect": [
+          {
+            "u_add_var": "blacksmith_weapon",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "qt_steel_staff"
+          },
+          {
+            "u_add_var": "blacksmith_weapon_wait",
+            "type": "number",
+            "context": "artisans",
+            "value": "5"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_WEAPON_PAY_QT_STEEL_STAFF_CCB"
+      },
+      {
+        "text": "我再看看别的武器。",
+        "topic": "TALK_BLACKSMITH_WEAPONSMITH_CCB"
+      },
+      {
+        "text": "算了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_PAY_HC_STEEL_STAFF_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“一件高碳钢钢箍长棍，价格200枚商会币，工期3天。钱先付清，我就开始动工。成交？”",
+    "responses": [
+      {
+        "text": "[200商会币] 成交，3天后见。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 200
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 200,
+            "true_eocs": "EOC_blacksmith_crafting_weapon_CCB"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我现在没有这么多商会币。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "先不做了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_PAY_QT_STEEL_STAFF_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“一件淬火钢钢箍长棍，价格250枚商会币，工期5天。钱先付清，我就开始动工。成交？”",
+    "responses": [
+      {
+        "text": "[250商会币] 成交，5天后见。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 250
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 250,
+            "true_eocs": "EOC_blacksmith_crafting_weapon_CCB"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我现在没有这么多商会币。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "先不做了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_STEEL_BATTLEAXE_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“战斧，明白。高碳钢版本结实可靠；淬火钢会更耐用、刃口或工作面也更出色，不过要多花50枚商会币，再多等两天。”",
+    "responses": [
+      {
+        "text": "[250商会币，4天] 高碳钢就好。",
+        "effect": [
+          {
+            "u_add_var": "blacksmith_weapon",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "hc_battleaxe"
+          },
+          {
+            "u_add_var": "blacksmith_weapon_wait",
+            "type": "number",
+            "context": "artisans",
+            "value": "4"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_WEAPON_PAY_HC_BATTLEAXE_CCB"
+      },
+      {
+        "text": "[300商会币，6天] 使用淬火钢。",
+        "effect": [
+          {
+            "u_add_var": "blacksmith_weapon",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "qt_battleaxe"
+          },
+          {
+            "u_add_var": "blacksmith_weapon_wait",
+            "type": "number",
+            "context": "artisans",
+            "value": "6"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_WEAPON_PAY_QT_BATTLEAXE_CCB"
+      },
+      {
+        "text": "我再看看别的武器。",
+        "topic": "TALK_BLACKSMITH_WEAPONSMITH_CCB"
+      },
+      {
+        "text": "算了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_PAY_HC_BATTLEAXE_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“一件高碳钢战斧，价格250枚商会币，工期4天。钱先付清，我就开始动工。成交？”",
+    "responses": [
+      {
+        "text": "[250商会币] 成交，4天后见。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 250
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 250,
+            "true_eocs": "EOC_blacksmith_crafting_weapon_CCB"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我现在没有这么多商会币。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "先不做了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_PAY_QT_BATTLEAXE_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“一件淬火钢战斧，价格300枚商会币，工期6天。钱先付清，我就开始动工。成交？”",
+    "responses": [
+      {
+        "text": "[300商会币] 成交，6天后见。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 300
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 300,
+            "true_eocs": "EOC_blacksmith_crafting_weapon_CCB"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我现在没有这么多商会币。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "先不做了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_STEEL_LONGSWORD_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“长剑，明白。高碳钢版本结实可靠；淬火钢会更耐用、刃口或工作面也更出色，不过要多花50枚商会币，再多等两天。”",
+    "responses": [
+      {
+        "text": "[250商会币，4天] 高碳钢就好。",
+        "effect": [
+          {
+            "u_add_var": "blacksmith_weapon",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "hc_longsword"
+          },
+          {
+            "u_add_var": "blacksmith_weapon_wait",
+            "type": "number",
+            "context": "artisans",
+            "value": "4"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_WEAPON_PAY_HC_LONGSWORD_CCB"
+      },
+      {
+        "text": "[300商会币，6天] 使用淬火钢。",
+        "effect": [
+          {
+            "u_add_var": "blacksmith_weapon",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "qt_longsword"
+          },
+          {
+            "u_add_var": "blacksmith_weapon_wait",
+            "type": "number",
+            "context": "artisans",
+            "value": "6"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_WEAPON_PAY_QT_LONGSWORD_CCB"
+      },
+      {
+        "text": "我再看看别的武器。",
+        "topic": "TALK_BLACKSMITH_WEAPONSMITH_CCB"
+      },
+      {
+        "text": "算了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_PAY_HC_LONGSWORD_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“一件高碳钢长剑，价格250枚商会币，工期4天。钱先付清，我就开始动工。成交？”",
+    "responses": [
+      {
+        "text": "[250商会币] 成交，4天后见。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 250
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 250,
+            "true_eocs": "EOC_blacksmith_crafting_weapon_CCB"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我现在没有这么多商会币。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "先不做了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_PAY_QT_LONGSWORD_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“一件淬火钢长剑，价格300枚商会币，工期6天。钱先付清，我就开始动工。成交？”",
+    "responses": [
+      {
+        "text": "[300商会币] 成交，6天后见。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 300
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 300,
+            "true_eocs": "EOC_blacksmith_crafting_weapon_CCB"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我现在没有这么多商会币。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "先不做了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_STEEL_NODACHI_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“野太刀，明白。高碳钢版本结实可靠；淬火钢会更耐用、刃口或工作面也更出色，不过要多花50枚商会币，再多等两天。”",
+    "responses": [
+      {
+        "text": "[250商会币，4天] 高碳钢就好。",
+        "effect": [
+          {
+            "u_add_var": "blacksmith_weapon",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "hc_nodachi"
+          },
+          {
+            "u_add_var": "blacksmith_weapon_wait",
+            "type": "number",
+            "context": "artisans",
+            "value": "4"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_WEAPON_PAY_HC_NODACHI_CCB"
+      },
+      {
+        "text": "[300商会币，6天] 使用淬火钢。",
+        "effect": [
+          {
+            "u_add_var": "blacksmith_weapon",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "qt_nodachi"
+          },
+          {
+            "u_add_var": "blacksmith_weapon_wait",
+            "type": "number",
+            "context": "artisans",
+            "value": "6"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_WEAPON_PAY_QT_NODACHI_CCB"
+      },
+      {
+        "text": "我再看看别的武器。",
+        "topic": "TALK_BLACKSMITH_WEAPONSMITH_CCB"
+      },
+      {
+        "text": "算了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_PAY_HC_NODACHI_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“一件高碳钢野太刀，价格250枚商会币，工期4天。钱先付清，我就开始动工。成交？”",
+    "responses": [
+      {
+        "text": "[250商会币] 成交，4天后见。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 250
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 250,
+            "true_eocs": "EOC_blacksmith_crafting_weapon_CCB"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我现在没有这么多商会币。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "先不做了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_PAY_QT_NODACHI_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“一件淬火钢野太刀，价格300枚商会币，工期6天。钱先付清，我就开始动工。成交？”",
+    "responses": [
+      {
+        "text": "[300商会币] 成交，6天后见。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 300
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 300,
+            "true_eocs": "EOC_blacksmith_crafting_weapon_CCB"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我现在没有这么多商会币。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "先不做了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_STEEL_ZWEIHANDER_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“双手巨剑，明白。高碳钢版本结实可靠；淬火钢会更耐用、刃口或工作面也更出色，不过要多花50枚商会币，再多等两天。”",
+    "responses": [
+      {
+        "text": "[250商会币，4天] 高碳钢就好。",
+        "effect": [
+          {
+            "u_add_var": "blacksmith_weapon",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "hc_zweihander"
+          },
+          {
+            "u_add_var": "blacksmith_weapon_wait",
+            "type": "number",
+            "context": "artisans",
+            "value": "4"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_WEAPON_PAY_HC_ZWEIHANDER_CCB"
+      },
+      {
+        "text": "[300商会币，6天] 使用淬火钢。",
+        "effect": [
+          {
+            "u_add_var": "blacksmith_weapon",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "qt_zweihander"
+          },
+          {
+            "u_add_var": "blacksmith_weapon_wait",
+            "type": "number",
+            "context": "artisans",
+            "value": "6"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_WEAPON_PAY_QT_ZWEIHANDER_CCB"
+      },
+      {
+        "text": "我再看看别的武器。",
+        "topic": "TALK_BLACKSMITH_WEAPONSMITH_CCB"
+      },
+      {
+        "text": "算了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_PAY_HC_ZWEIHANDER_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“一件高碳钢双手巨剑，价格250枚商会币，工期4天。钱先付清，我就开始动工。成交？”",
+    "responses": [
+      {
+        "text": "[250商会币] 成交，4天后见。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 250
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 250,
+            "true_eocs": "EOC_blacksmith_crafting_weapon_CCB"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我现在没有这么多商会币。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "先不做了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_PAY_QT_ZWEIHANDER_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“一件淬火钢双手巨剑，价格300枚商会币，工期6天。钱先付清，我就开始动工。成交？”",
+    "responses": [
+      {
+        "text": "[300商会币] 成交，6天后见。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 300
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 300,
+            "true_eocs": "EOC_blacksmith_crafting_weapon_CCB"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我现在没有这么多商会币。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "先不做了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_STEEL_ARMING_SWORD_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“武装剑，明白。高碳钢版本结实可靠；淬火钢会更耐用、刃口或工作面也更出色，不过要多花50枚商会币，再多等两天。”",
+    "responses": [
+      {
+        "text": "[200商会币，3天] 高碳钢就好。",
+        "effect": [
+          {
+            "u_add_var": "blacksmith_weapon",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "hc_arming_sword"
+          },
+          {
+            "u_add_var": "blacksmith_weapon_wait",
+            "type": "number",
+            "context": "artisans",
+            "value": "3"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_WEAPON_PAY_HC_ARMING_SWORD_CCB"
+      },
+      {
+        "text": "[250商会币，5天] 使用淬火钢。",
+        "effect": [
+          {
+            "u_add_var": "blacksmith_weapon",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "qt_arming_sword"
+          },
+          {
+            "u_add_var": "blacksmith_weapon_wait",
+            "type": "number",
+            "context": "artisans",
+            "value": "5"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_WEAPON_PAY_QT_ARMING_SWORD_CCB"
+      },
+      {
+        "text": "我再看看别的武器。",
+        "topic": "TALK_BLACKSMITH_WEAPONSMITH_CCB"
+      },
+      {
+        "text": "算了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_PAY_HC_ARMING_SWORD_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“一件高碳钢武装剑，价格200枚商会币，工期3天。钱先付清，我就开始动工。成交？”",
+    "responses": [
+      {
+        "text": "[200商会币] 成交，3天后见。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 200
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 200,
+            "true_eocs": "EOC_blacksmith_crafting_weapon_CCB"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我现在没有这么多商会币。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "先不做了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_PAY_QT_ARMING_SWORD_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“一件淬火钢武装剑，价格250枚商会币，工期5天。钱先付清，我就开始动工。成交？”",
+    "responses": [
+      {
+        "text": "[250商会币] 成交，5天后见。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 250
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 250,
+            "true_eocs": "EOC_blacksmith_crafting_weapon_CCB"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我现在没有这么多商会币。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "先不做了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_STEEL_BROADSWORD_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“阔剑，明白。高碳钢版本结实可靠；淬火钢会更耐用、刃口或工作面也更出色，不过要多花50枚商会币，再多等两天。”",
+    "responses": [
+      {
+        "text": "[200商会币，3天] 高碳钢就好。",
+        "effect": [
+          {
+            "u_add_var": "blacksmith_weapon",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "hc_broadsword"
+          },
+          {
+            "u_add_var": "blacksmith_weapon_wait",
+            "type": "number",
+            "context": "artisans",
+            "value": "3"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_WEAPON_PAY_HC_BROADSWORD_CCB"
+      },
+      {
+        "text": "[250商会币，5天] 使用淬火钢。",
+        "effect": [
+          {
+            "u_add_var": "blacksmith_weapon",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "qt_broadsword"
+          },
+          {
+            "u_add_var": "blacksmith_weapon_wait",
+            "type": "number",
+            "context": "artisans",
+            "value": "5"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_WEAPON_PAY_QT_BROADSWORD_CCB"
+      },
+      {
+        "text": "我再看看别的武器。",
+        "topic": "TALK_BLACKSMITH_WEAPONSMITH_CCB"
+      },
+      {
+        "text": "算了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_PAY_HC_BROADSWORD_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“一件高碳钢阔剑，价格200枚商会币，工期3天。钱先付清，我就开始动工。成交？”",
+    "responses": [
+      {
+        "text": "[200商会币] 成交，3天后见。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 200
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 200,
+            "true_eocs": "EOC_blacksmith_crafting_weapon_CCB"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我现在没有这么多商会币。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "先不做了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_PAY_QT_BROADSWORD_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“一件淬火钢阔剑，价格250枚商会币，工期5天。钱先付清，我就开始动工。成交？”",
+    "responses": [
+      {
+        "text": "[250商会币] 成交，5天后见。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 250
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 250,
+            "true_eocs": "EOC_blacksmith_crafting_weapon_CCB"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我现在没有这么多商会币。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "先不做了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_STEEL_CAVALRY_SABRE_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“骑兵军刀，明白。高碳钢版本结实可靠；淬火钢会更耐用、刃口或工作面也更出色，不过要多花50枚商会币，再多等两天。”",
+    "responses": [
+      {
+        "text": "[200商会币，3天] 高碳钢就好。",
+        "effect": [
+          {
+            "u_add_var": "blacksmith_weapon",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "hc_cavalry_sabre"
+          },
+          {
+            "u_add_var": "blacksmith_weapon_wait",
+            "type": "number",
+            "context": "artisans",
+            "value": "3"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_WEAPON_PAY_HC_CAVALRY_SABRE_CCB"
+      },
+      {
+        "text": "[250商会币，5天] 使用淬火钢。",
+        "effect": [
+          {
+            "u_add_var": "blacksmith_weapon",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "qt_cavalry_sabre"
+          },
+          {
+            "u_add_var": "blacksmith_weapon_wait",
+            "type": "number",
+            "context": "artisans",
+            "value": "5"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_WEAPON_PAY_QT_CAVALRY_SABRE_CCB"
+      },
+      {
+        "text": "我再看看别的武器。",
+        "topic": "TALK_BLACKSMITH_WEAPONSMITH_CCB"
+      },
+      {
+        "text": "算了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_PAY_HC_CAVALRY_SABRE_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“一件高碳钢骑兵军刀，价格200枚商会币，工期3天。钱先付清，我就开始动工。成交？”",
+    "responses": [
+      {
+        "text": "[200商会币] 成交，3天后见。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 200
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 200,
+            "true_eocs": "EOC_blacksmith_crafting_weapon_CCB"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我现在没有这么多商会币。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "先不做了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_PAY_QT_CAVALRY_SABRE_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“一件淬火钢骑兵军刀，价格250枚商会币，工期5天。钱先付清，我就开始动工。成交？”",
+    "responses": [
+      {
+        "text": "[250商会币] 成交，5天后见。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 250
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 250,
+            "true_eocs": "EOC_blacksmith_crafting_weapon_CCB"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我现在没有这么多商会币。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "先不做了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_STEEL_CUTLASS_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“水手弯刀，明白。高碳钢版本结实可靠；淬火钢会更耐用、刃口或工作面也更出色，不过要多花50枚商会币，再多等两天。”",
+    "responses": [
+      {
+        "text": "[200商会币，3天] 高碳钢就好。",
+        "effect": [
+          {
+            "u_add_var": "blacksmith_weapon",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "hc_cutlass"
+          },
+          {
+            "u_add_var": "blacksmith_weapon_wait",
+            "type": "number",
+            "context": "artisans",
+            "value": "3"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_WEAPON_PAY_HC_CUTLASS_CCB"
+      },
+      {
+        "text": "[250商会币，5天] 使用淬火钢。",
+        "effect": [
+          {
+            "u_add_var": "blacksmith_weapon",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "qt_cutlass"
+          },
+          {
+            "u_add_var": "blacksmith_weapon_wait",
+            "type": "number",
+            "context": "artisans",
+            "value": "5"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_WEAPON_PAY_QT_CUTLASS_CCB"
+      },
+      {
+        "text": "我再看看别的武器。",
+        "topic": "TALK_BLACKSMITH_WEAPONSMITH_CCB"
+      },
+      {
+        "text": "算了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_PAY_HC_CUTLASS_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“一件高碳钢水手弯刀，价格200枚商会币，工期3天。钱先付清，我就开始动工。成交？”",
+    "responses": [
+      {
+        "text": "[200商会币] 成交，3天后见。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 200
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 200,
+            "true_eocs": "EOC_blacksmith_crafting_weapon_CCB"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我现在没有这么多商会币。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "先不做了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_PAY_QT_CUTLASS_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“一件淬火钢水手弯刀，价格250枚商会币，工期5天。钱先付清，我就开始动工。成交？”",
+    "responses": [
+      {
+        "text": "[250商会币] 成交，5天后见。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 250
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 250,
+            "true_eocs": "EOC_blacksmith_crafting_weapon_CCB"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我现在没有这么多商会币。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "先不做了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_STEEL_KATANA_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“武士刀，明白。高碳钢版本结实可靠；淬火钢会更耐用、刃口或工作面也更出色，不过要多花50枚商会币，再多等两天。”",
+    "responses": [
+      {
+        "text": "[200商会币，3天] 高碳钢就好。",
+        "effect": [
+          {
+            "u_add_var": "blacksmith_weapon",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "hc_katana"
+          },
+          {
+            "u_add_var": "blacksmith_weapon_wait",
+            "type": "number",
+            "context": "artisans",
+            "value": "3"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_WEAPON_PAY_HC_KATANA_CCB"
+      },
+      {
+        "text": "[250商会币，5天] 使用淬火钢。",
+        "effect": [
+          {
+            "u_add_var": "blacksmith_weapon",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "qt_katana"
+          },
+          {
+            "u_add_var": "blacksmith_weapon_wait",
+            "type": "number",
+            "context": "artisans",
+            "value": "5"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_WEAPON_PAY_QT_KATANA_CCB"
+      },
+      {
+        "text": "我再看看别的武器。",
+        "topic": "TALK_BLACKSMITH_WEAPONSMITH_CCB"
+      },
+      {
+        "text": "算了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_PAY_HC_KATANA_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“一件高碳钢武士刀，价格200枚商会币，工期3天。钱先付清，我就开始动工。成交？”",
+    "responses": [
+      {
+        "text": "[200商会币] 成交，3天后见。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 200
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 200,
+            "true_eocs": "EOC_blacksmith_crafting_weapon_CCB"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我现在没有这么多商会币。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "先不做了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_PAY_QT_KATANA_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“一件淬火钢武士刀，价格250枚商会币，工期5天。钱先付清，我就开始动工。成交？”",
+    "responses": [
+      {
+        "text": "[250商会币] 成交，5天后见。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 250
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 250,
+            "true_eocs": "EOC_blacksmith_crafting_weapon_CCB"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我现在没有这么多商会币。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "先不做了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_STEEL_WAKIZASHI_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“胁差，明白。高碳钢版本结实可靠；淬火钢会更耐用、刃口或工作面也更出色，不过要多花50枚商会币，再多等两天。”",
+    "responses": [
+      {
+        "text": "[170商会币，3天] 高碳钢就好。",
+        "effect": [
+          {
+            "u_add_var": "blacksmith_weapon",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "hc_wakizashi"
+          },
+          {
+            "u_add_var": "blacksmith_weapon_wait",
+            "type": "number",
+            "context": "artisans",
+            "value": "3"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_WEAPON_PAY_HC_WAKIZASHI_CCB"
+      },
+      {
+        "text": "[220商会币，5天] 使用淬火钢。",
+        "effect": [
+          {
+            "u_add_var": "blacksmith_weapon",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "qt_wakizashi"
+          },
+          {
+            "u_add_var": "blacksmith_weapon_wait",
+            "type": "number",
+            "context": "artisans",
+            "value": "5"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_WEAPON_PAY_QT_WAKIZASHI_CCB"
+      },
+      {
+        "text": "我再看看别的武器。",
+        "topic": "TALK_BLACKSMITH_WEAPONSMITH_CCB"
+      },
+      {
+        "text": "算了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_PAY_HC_WAKIZASHI_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“一件高碳钢胁差，价格170枚商会币，工期3天。钱先付清，我就开始动工。成交？”",
+    "responses": [
+      {
+        "text": "[170商会币] 成交，3天后见。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 170
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 170,
+            "true_eocs": "EOC_blacksmith_crafting_weapon_CCB"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我现在没有这么多商会币。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "先不做了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_PAY_QT_WAKIZASHI_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“一件淬火钢胁差，价格220枚商会币，工期5天。钱先付清，我就开始动工。成交？”",
+    "responses": [
+      {
+        "text": "[220商会币] 成交，5天后见。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 220
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 220,
+            "true_eocs": "EOC_blacksmith_crafting_weapon_CCB"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我现在没有这么多商会币。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "先不做了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_STEEL_KUKRI_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“廓尔喀弯刀，明白。高碳钢版本结实可靠；淬火钢会更耐用、刃口或工作面也更出色，不过要多花50枚商会币，再多等两天。”",
+    "responses": [
+      {
+        "text": "[150商会币，2天] 高碳钢就好。",
+        "effect": [
+          {
+            "u_add_var": "blacksmith_weapon",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "hc_kukri"
+          },
+          {
+            "u_add_var": "blacksmith_weapon_wait",
+            "type": "number",
+            "context": "artisans",
+            "value": "2"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_WEAPON_PAY_HC_KUKRI_CCB"
+      },
+      {
+        "text": "[200商会币，4天] 使用淬火钢。",
+        "effect": [
+          {
+            "u_add_var": "blacksmith_weapon",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "qt_kukri"
+          },
+          {
+            "u_add_var": "blacksmith_weapon_wait",
+            "type": "number",
+            "context": "artisans",
+            "value": "4"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_WEAPON_PAY_QT_KUKRI_CCB"
+      },
+      {
+        "text": "我再看看别的武器。",
+        "topic": "TALK_BLACKSMITH_WEAPONSMITH_CCB"
+      },
+      {
+        "text": "算了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_PAY_HC_KUKRI_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“一件高碳钢廓尔喀弯刀，价格150枚商会币，工期2天。钱先付清，我就开始动工。成交？”",
+    "responses": [
+      {
+        "text": "[150商会币] 成交，2天后见。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 150
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 150,
+            "true_eocs": "EOC_blacksmith_crafting_weapon_CCB"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我现在没有这么多商会币。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "先不做了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_PAY_QT_KUKRI_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“一件淬火钢廓尔喀弯刀，价格200枚商会币，工期4天。钱先付清，我就开始动工。成交？”",
+    "responses": [
+      {
+        "text": "[200商会币] 成交，4天后见。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 200
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 200,
+            "true_eocs": "EOC_blacksmith_crafting_weapon_CCB"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我现在没有这么多商会币。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "先不做了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_STEEL_ESTOC_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“破甲剑，明白。高碳钢版本结实可靠；淬火钢会更耐用、刃口或工作面也更出色，不过要多花50枚商会币，再多等两天。”",
+    "responses": [
+      {
+        "text": "[250商会币，4天] 高碳钢就好。",
+        "effect": [
+          {
+            "u_add_var": "blacksmith_weapon",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "hc_estoc"
+          },
+          {
+            "u_add_var": "blacksmith_weapon_wait",
+            "type": "number",
+            "context": "artisans",
+            "value": "4"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_WEAPON_PAY_HC_ESTOC_CCB"
+      },
+      {
+        "text": "[300商会币，6天] 使用淬火钢。",
+        "effect": [
+          {
+            "u_add_var": "blacksmith_weapon",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "qt_estoc"
+          },
+          {
+            "u_add_var": "blacksmith_weapon_wait",
+            "type": "number",
+            "context": "artisans",
+            "value": "6"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_WEAPON_PAY_QT_ESTOC_CCB"
+      },
+      {
+        "text": "我再看看别的武器。",
+        "topic": "TALK_BLACKSMITH_WEAPONSMITH_CCB"
+      },
+      {
+        "text": "算了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_PAY_HC_ESTOC_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“一件高碳钢破甲剑，价格250枚商会币，工期4天。钱先付清，我就开始动工。成交？”",
+    "responses": [
+      {
+        "text": "[250商会币] 成交，4天后见。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 250
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 250,
+            "true_eocs": "EOC_blacksmith_crafting_weapon_CCB"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我现在没有这么多商会币。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "先不做了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_PAY_QT_ESTOC_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“一件淬火钢破甲剑，价格300枚商会币，工期6天。钱先付清，我就开始动工。成交？”",
+    "responses": [
+      {
+        "text": "[300商会币] 成交，6天后见。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 300
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 300,
+            "true_eocs": "EOC_blacksmith_crafting_weapon_CCB"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我现在没有这么多商会币。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "先不做了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_STEEL_RAPIER_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“细剑，明白。高碳钢版本结实可靠；淬火钢会更耐用、刃口或工作面也更出色，不过要多花50枚商会币，再多等两天。”",
+    "responses": [
+      {
+        "text": "[200商会币，3天] 高碳钢就好。",
+        "effect": [
+          {
+            "u_add_var": "blacksmith_weapon",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "hc_rapier"
+          },
+          {
+            "u_add_var": "blacksmith_weapon_wait",
+            "type": "number",
+            "context": "artisans",
+            "value": "3"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_WEAPON_PAY_HC_RAPIER_CCB"
+      },
+      {
+        "text": "[250商会币，5天] 使用淬火钢。",
+        "effect": [
+          {
+            "u_add_var": "blacksmith_weapon",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "qt_rapier"
+          },
+          {
+            "u_add_var": "blacksmith_weapon_wait",
+            "type": "number",
+            "context": "artisans",
+            "value": "5"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_WEAPON_PAY_QT_RAPIER_CCB"
+      },
+      {
+        "text": "我再看看别的武器。",
+        "topic": "TALK_BLACKSMITH_WEAPONSMITH_CCB"
+      },
+      {
+        "text": "算了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_PAY_HC_RAPIER_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“一件高碳钢细剑，价格200枚商会币，工期3天。钱先付清，我就开始动工。成交？”",
+    "responses": [
+      {
+        "text": "[200商会币] 成交，3天后见。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 200
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 200,
+            "true_eocs": "EOC_blacksmith_crafting_weapon_CCB"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我现在没有这么多商会币。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "先不做了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_PAY_QT_RAPIER_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“一件淬火钢细剑，价格250枚商会币，工期5天。钱先付清，我就开始动工。成交？”",
+    "responses": [
+      {
+        "text": "[250商会币] 成交，5天后见。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 250
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 250,
+            "true_eocs": "EOC_blacksmith_crafting_weapon_CCB"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我现在没有这么多商会币。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "先不做了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_STEEL_KNIFE_TRENCH_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“堑壕刀，明白。高碳钢版本结实可靠；淬火钢会更耐用、刃口或工作面也更出色，不过要多花50枚商会币，再多等两天。”",
+    "responses": [
+      {
+        "text": "[70商会币，2天] 高碳钢就好。",
+        "effect": [
+          {
+            "u_add_var": "blacksmith_weapon",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "hc_knife_trench"
+          },
+          {
+            "u_add_var": "blacksmith_weapon_wait",
+            "type": "number",
+            "context": "artisans",
+            "value": "2"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_WEAPON_PAY_HC_KNIFE_TRENCH_CCB"
+      },
+      {
+        "text": "[120商会币，4天] 使用淬火钢。",
+        "effect": [
+          {
+            "u_add_var": "blacksmith_weapon",
+            "type": "dialogue",
+            "context": "artisans",
+            "value": "qt_knife_trench"
+          },
+          {
+            "u_add_var": "blacksmith_weapon_wait",
+            "type": "number",
+            "context": "artisans",
+            "value": "4"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_WEAPON_PAY_QT_KNIFE_TRENCH_CCB"
+      },
+      {
+        "text": "我再看看别的武器。",
+        "topic": "TALK_BLACKSMITH_WEAPONSMITH_CCB"
+      },
+      {
+        "text": "算了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_PAY_HC_KNIFE_TRENCH_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“一件高碳钢堑壕刀，价格70枚商会币，工期2天。钱先付清，我就开始动工。成交？”",
+    "responses": [
+      {
+        "text": "[70商会币] 成交，2天后见。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 70
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 70,
+            "true_eocs": "EOC_blacksmith_crafting_weapon_CCB"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我现在没有这么多商会币。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "先不做了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_PAY_QT_KNIFE_TRENCH_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“一件淬火钢堑壕刀，价格120枚商会币，工期4天。钱先付清，我就开始动工。成交？”",
+    "responses": [
+      {
+        "text": "[120商会币] 成交，4天后见。",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 120
+          }
+        },
+        "effect": [
+          {
+            "u_sell_item": "FMCNote",
+            "count": 120,
+            "true_eocs": "EOC_blacksmith_crafting_weapon_CCB"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我现在没有这么多商会币。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "先不做了。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_NOT_READY_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“还在做。高级钢材不是把颜色烧得好看就算完事；我得让每一段受力、每一个刃角和配重都过关。到约定日期再来。”",
+    "responses": [
+      {
+        "text": "好，我到时再来。",
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "我还要谈点别的。",
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLACKSMITH_WEAPON_READY_CCB",
+    "type": "talk_topic",
+    "dynamic_line": "“完成了。别只看表面；拿起来试试配重。高碳钢版本是可靠的工具，淬火钢版本则是我现在能做出的最好作品。”",
+    "responses": [
+      {
+        "text": "[接过高碳钢钉头锤。]",
+        "condition": {
+          "u_has_var": "blacksmith_weapon",
+          "type": "dialogue",
+          "context": "artisans",
+          "value": "hc_mace"
+        },
+        "effect": [
+          {
+            "u_spawn_item": "hc_mace"
+          },
+          {
+            "run_eocs": "EOC_blacksmith_weapon_cleanup_CCB"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "[接过淬火钢钉头锤。]",
+        "condition": {
+          "u_has_var": "blacksmith_weapon",
+          "type": "dialogue",
+          "context": "artisans",
+          "value": "qt_mace"
+        },
+        "effect": [
+          {
+            "u_spawn_item": "qt_mace"
+          },
+          {
+            "run_eocs": "EOC_blacksmith_weapon_cleanup_CCB"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "[接过高碳钢战锤。]",
+        "condition": {
+          "u_has_var": "blacksmith_weapon",
+          "type": "dialogue",
+          "context": "artisans",
+          "value": "hc_warhammer"
+        },
+        "effect": [
+          {
+            "u_spawn_item": "hc_warhammer"
+          },
+          {
+            "run_eocs": "EOC_blacksmith_weapon_cleanup_CCB"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "[接过淬火钢战锤。]",
+        "condition": {
+          "u_has_var": "blacksmith_weapon",
+          "type": "dialogue",
+          "context": "artisans",
+          "value": "qt_warhammer"
+        },
+        "effect": [
+          {
+            "u_spawn_item": "qt_warhammer"
+          },
+          {
+            "run_eocs": "EOC_blacksmith_weapon_cleanup_CCB"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "[接过高碳钢钢箍长棍。]",
+        "condition": {
+          "u_has_var": "blacksmith_weapon",
+          "type": "dialogue",
+          "context": "artisans",
+          "value": "hc_steel_staff"
+        },
+        "effect": [
+          {
+            "u_spawn_item": "hc_steel_staff"
+          },
+          {
+            "run_eocs": "EOC_blacksmith_weapon_cleanup_CCB"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "[接过淬火钢钢箍长棍。]",
+        "condition": {
+          "u_has_var": "blacksmith_weapon",
+          "type": "dialogue",
+          "context": "artisans",
+          "value": "qt_steel_staff"
+        },
+        "effect": [
+          {
+            "u_spawn_item": "qt_steel_staff"
+          },
+          {
+            "run_eocs": "EOC_blacksmith_weapon_cleanup_CCB"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "[接过高碳钢战斧。]",
+        "condition": {
+          "u_has_var": "blacksmith_weapon",
+          "type": "dialogue",
+          "context": "artisans",
+          "value": "hc_battleaxe"
+        },
+        "effect": [
+          {
+            "u_spawn_item": "hc_battleaxe"
+          },
+          {
+            "run_eocs": "EOC_blacksmith_weapon_cleanup_CCB"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "[接过淬火钢战斧。]",
+        "condition": {
+          "u_has_var": "blacksmith_weapon",
+          "type": "dialogue",
+          "context": "artisans",
+          "value": "qt_battleaxe"
+        },
+        "effect": [
+          {
+            "u_spawn_item": "qt_battleaxe"
+          },
+          {
+            "run_eocs": "EOC_blacksmith_weapon_cleanup_CCB"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "[接过高碳钢长剑。]",
+        "condition": {
+          "u_has_var": "blacksmith_weapon",
+          "type": "dialogue",
+          "context": "artisans",
+          "value": "hc_longsword"
+        },
+        "effect": [
+          {
+            "u_spawn_item": "hc_longsword"
+          },
+          {
+            "run_eocs": "EOC_blacksmith_weapon_cleanup_CCB"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "[接过淬火钢长剑。]",
+        "condition": {
+          "u_has_var": "blacksmith_weapon",
+          "type": "dialogue",
+          "context": "artisans",
+          "value": "qt_longsword"
+        },
+        "effect": [
+          {
+            "u_spawn_item": "qt_longsword"
+          },
+          {
+            "run_eocs": "EOC_blacksmith_weapon_cleanup_CCB"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "[接过高碳钢野太刀。]",
+        "condition": {
+          "u_has_var": "blacksmith_weapon",
+          "type": "dialogue",
+          "context": "artisans",
+          "value": "hc_nodachi"
+        },
+        "effect": [
+          {
+            "u_spawn_item": "hc_nodachi"
+          },
+          {
+            "run_eocs": "EOC_blacksmith_weapon_cleanup_CCB"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "[接过淬火钢野太刀。]",
+        "condition": {
+          "u_has_var": "blacksmith_weapon",
+          "type": "dialogue",
+          "context": "artisans",
+          "value": "qt_nodachi"
+        },
+        "effect": [
+          {
+            "u_spawn_item": "qt_nodachi"
+          },
+          {
+            "run_eocs": "EOC_blacksmith_weapon_cleanup_CCB"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "[接过高碳钢双手巨剑。]",
+        "condition": {
+          "u_has_var": "blacksmith_weapon",
+          "type": "dialogue",
+          "context": "artisans",
+          "value": "hc_zweihander"
+        },
+        "effect": [
+          {
+            "u_spawn_item": "hc_zweihander"
+          },
+          {
+            "run_eocs": "EOC_blacksmith_weapon_cleanup_CCB"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "[接过淬火钢双手巨剑。]",
+        "condition": {
+          "u_has_var": "blacksmith_weapon",
+          "type": "dialogue",
+          "context": "artisans",
+          "value": "qt_zweihander"
+        },
+        "effect": [
+          {
+            "u_spawn_item": "qt_zweihander"
+          },
+          {
+            "run_eocs": "EOC_blacksmith_weapon_cleanup_CCB"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "[接过高碳钢武装剑。]",
+        "condition": {
+          "u_has_var": "blacksmith_weapon",
+          "type": "dialogue",
+          "context": "artisans",
+          "value": "hc_arming_sword"
+        },
+        "effect": [
+          {
+            "u_spawn_item": "hc_arming_sword"
+          },
+          {
+            "run_eocs": "EOC_blacksmith_weapon_cleanup_CCB"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "[接过淬火钢武装剑。]",
+        "condition": {
+          "u_has_var": "blacksmith_weapon",
+          "type": "dialogue",
+          "context": "artisans",
+          "value": "qt_arming_sword"
+        },
+        "effect": [
+          {
+            "u_spawn_item": "qt_arming_sword"
+          },
+          {
+            "run_eocs": "EOC_blacksmith_weapon_cleanup_CCB"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "[接过高碳钢阔剑。]",
+        "condition": {
+          "u_has_var": "blacksmith_weapon",
+          "type": "dialogue",
+          "context": "artisans",
+          "value": "hc_broadsword"
+        },
+        "effect": [
+          {
+            "u_spawn_item": "hc_broadsword"
+          },
+          {
+            "run_eocs": "EOC_blacksmith_weapon_cleanup_CCB"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "[接过淬火钢阔剑。]",
+        "condition": {
+          "u_has_var": "blacksmith_weapon",
+          "type": "dialogue",
+          "context": "artisans",
+          "value": "qt_broadsword"
+        },
+        "effect": [
+          {
+            "u_spawn_item": "qt_broadsword"
+          },
+          {
+            "run_eocs": "EOC_blacksmith_weapon_cleanup_CCB"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "[接过高碳钢骑兵军刀。]",
+        "condition": {
+          "u_has_var": "blacksmith_weapon",
+          "type": "dialogue",
+          "context": "artisans",
+          "value": "hc_cavalry_sabre"
+        },
+        "effect": [
+          {
+            "u_spawn_item": "hc_cavalry_sabre"
+          },
+          {
+            "run_eocs": "EOC_blacksmith_weapon_cleanup_CCB"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "[接过淬火钢骑兵军刀。]",
+        "condition": {
+          "u_has_var": "blacksmith_weapon",
+          "type": "dialogue",
+          "context": "artisans",
+          "value": "qt_cavalry_sabre"
+        },
+        "effect": [
+          {
+            "u_spawn_item": "qt_cavalry_sabre"
+          },
+          {
+            "run_eocs": "EOC_blacksmith_weapon_cleanup_CCB"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "[接过高碳钢水手弯刀。]",
+        "condition": {
+          "u_has_var": "blacksmith_weapon",
+          "type": "dialogue",
+          "context": "artisans",
+          "value": "hc_cutlass"
+        },
+        "effect": [
+          {
+            "u_spawn_item": "hc_cutlass"
+          },
+          {
+            "run_eocs": "EOC_blacksmith_weapon_cleanup_CCB"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "[接过淬火钢水手弯刀。]",
+        "condition": {
+          "u_has_var": "blacksmith_weapon",
+          "type": "dialogue",
+          "context": "artisans",
+          "value": "qt_cutlass"
+        },
+        "effect": [
+          {
+            "u_spawn_item": "qt_cutlass"
+          },
+          {
+            "run_eocs": "EOC_blacksmith_weapon_cleanup_CCB"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "[接过高碳钢武士刀。]",
+        "condition": {
+          "u_has_var": "blacksmith_weapon",
+          "type": "dialogue",
+          "context": "artisans",
+          "value": "hc_katana"
+        },
+        "effect": [
+          {
+            "u_spawn_item": "hc_katana"
+          },
+          {
+            "run_eocs": "EOC_blacksmith_weapon_cleanup_CCB"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "[接过淬火钢武士刀。]",
+        "condition": {
+          "u_has_var": "blacksmith_weapon",
+          "type": "dialogue",
+          "context": "artisans",
+          "value": "qt_katana"
+        },
+        "effect": [
+          {
+            "u_spawn_item": "qt_katana"
+          },
+          {
+            "run_eocs": "EOC_blacksmith_weapon_cleanup_CCB"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "[接过高碳钢胁差。]",
+        "condition": {
+          "u_has_var": "blacksmith_weapon",
+          "type": "dialogue",
+          "context": "artisans",
+          "value": "hc_wakizashi"
+        },
+        "effect": [
+          {
+            "u_spawn_item": "hc_wakizashi"
+          },
+          {
+            "run_eocs": "EOC_blacksmith_weapon_cleanup_CCB"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "[接过淬火钢胁差。]",
+        "condition": {
+          "u_has_var": "blacksmith_weapon",
+          "type": "dialogue",
+          "context": "artisans",
+          "value": "qt_wakizashi"
+        },
+        "effect": [
+          {
+            "u_spawn_item": "qt_wakizashi"
+          },
+          {
+            "run_eocs": "EOC_blacksmith_weapon_cleanup_CCB"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "[接过高碳钢廓尔喀弯刀。]",
+        "condition": {
+          "u_has_var": "blacksmith_weapon",
+          "type": "dialogue",
+          "context": "artisans",
+          "value": "hc_kukri"
+        },
+        "effect": [
+          {
+            "u_spawn_item": "hc_kukri"
+          },
+          {
+            "run_eocs": "EOC_blacksmith_weapon_cleanup_CCB"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "[接过淬火钢廓尔喀弯刀。]",
+        "condition": {
+          "u_has_var": "blacksmith_weapon",
+          "type": "dialogue",
+          "context": "artisans",
+          "value": "qt_kukri"
+        },
+        "effect": [
+          {
+            "u_spawn_item": "qt_kukri"
+          },
+          {
+            "run_eocs": "EOC_blacksmith_weapon_cleanup_CCB"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "[接过高碳钢破甲剑。]",
+        "condition": {
+          "u_has_var": "blacksmith_weapon",
+          "type": "dialogue",
+          "context": "artisans",
+          "value": "hc_estoc"
+        },
+        "effect": [
+          {
+            "u_spawn_item": "hc_estoc"
+          },
+          {
+            "run_eocs": "EOC_blacksmith_weapon_cleanup_CCB"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "[接过淬火钢破甲剑。]",
+        "condition": {
+          "u_has_var": "blacksmith_weapon",
+          "type": "dialogue",
+          "context": "artisans",
+          "value": "qt_estoc"
+        },
+        "effect": [
+          {
+            "u_spawn_item": "qt_estoc"
+          },
+          {
+            "run_eocs": "EOC_blacksmith_weapon_cleanup_CCB"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "[接过高碳钢细剑。]",
+        "condition": {
+          "u_has_var": "blacksmith_weapon",
+          "type": "dialogue",
+          "context": "artisans",
+          "value": "hc_rapier"
+        },
+        "effect": [
+          {
+            "u_spawn_item": "hc_rapier"
+          },
+          {
+            "run_eocs": "EOC_blacksmith_weapon_cleanup_CCB"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "[接过淬火钢细剑。]",
+        "condition": {
+          "u_has_var": "blacksmith_weapon",
+          "type": "dialogue",
+          "context": "artisans",
+          "value": "qt_rapier"
+        },
+        "effect": [
+          {
+            "u_spawn_item": "qt_rapier"
+          },
+          {
+            "run_eocs": "EOC_blacksmith_weapon_cleanup_CCB"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "[接过高碳钢堑壕刀。]",
+        "condition": {
+          "u_has_var": "blacksmith_weapon",
+          "type": "dialogue",
+          "context": "artisans",
+          "value": "hc_knife_trench"
+        },
+        "effect": [
+          {
+            "u_spawn_item": "hc_knife_trench"
+          },
+          {
+            "run_eocs": "EOC_blacksmith_weapon_cleanup_CCB"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "[接过淬火钢堑壕刀。]",
+        "condition": {
+          "u_has_var": "blacksmith_weapon",
+          "type": "dialogue",
+          "context": "artisans",
+          "value": "qt_knife_trench"
+        },
+        "effect": [
+          {
+            "u_spawn_item": "qt_knife_trench"
+          },
+          {
+            "run_eocs": "EOC_blacksmith_weapon_cleanup_CCB"
+          }
+        ],
+        "topic": "TALK_BLACKSMITH_SERVICES"
+      },
+      {
+        "text": "我稍后再取。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  }
+]

@@ -1,0 +1,579 @@
+[
+  {
+    "id": "calico",
+    "copy-from": "calico",
+    "looks_like": "hk_mp5",
+    "type": "GUN",
+    "name": {
+      "str": "卡利科全自动卡宾枪"
+    },
+    "description": "卡利科系列在1980年代的美国出现，最醒目的特征是机匣上方50或100发螺旋弹匣。高容量让它能持续射击，弹匣置于上方也降低枪身高度，但装填、平衡和机构复杂度并不讨喜。它主要进入民用收藏、影视和少量执法测试，从未成为主流军用冲锋枪。",
+    "reload_noise_volume": 10,
+    "variant_type": "gun",
+    "variants": [
+      {
+        "id": "calico",
+        "name": {
+          "str_sp": "卡利科 M960 冲锋枪"
+        },
+        "//": "全自动型号，理论射速每分钟750发。",
+        "description": "这是一把明显秉承“泼水祈祷”思路设计的紧凑型冲锋枪。卡利科M960自动卡宾枪威力、可靠性和精度都不出众；它原本面向军警市场，却因整体表现不佳而从未广泛服役。它唯一真正醒目的优点，是能使用独特的50发或100发螺旋弹匣。只要它没有卡壳、故障或彻底罢工，就能在很长一段时间里向前方倾泻大量弹药。"
+      }
+    ],
+    "weight": "2270 g",
+    "volume": "2420 ml",
+    "longest_side": "655 mm",
+    "price": 240000,
+    "price_postapoc": 5000,
+    "to_hit": -2,
+    "material": [
+      "steel"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "9mm"
+    ],
+    "skill": "smg",
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 2
+    },
+    "dispersion": 280,
+    "durability": 6,
+    "min_cycle_recoil": 450,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "faults": [
+      "fault_gun_blackpowder",
+      "fault_gun_dirt",
+      "fault_gun_chamber_spent"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "calicomag",
+          "calicomag_100rd"
+        ]
+      }
+    ],
+    "bashing": 9
+  },
+  {
+    "id": "hk_mp5",
+    "copy-from": "hk_mp5",
+    "//": "冲锋枪贴图白名单。",
+    "type": "GUN",
+    "name": {
+      "str": "黑克勒-科赫 MP5A2 冲锋枪"
+    },
+    "description": "MP5于1960年代由黑克勒-科赫按G3的滚柱延迟原理缩小设计，闭膛待击使它在冲锋枪中拥有出色的单发精度。它被世界各地军警采用，并因1977年摩加迪沙劫机营救与1980年伦敦伊朗使馆突击等行动成为反恐象征。9毫米后坐柔和，但价格和维护成本高于简单自由枪机武器。",
+    "reload_noise_volume": 10,
+    "ascii_picture": "hk_mp5a2",
+    "weight": "2726 g",
+    "volume": "3932 ml",
+    "longest_side": "682 mm",
+    "price": 280000,
+    "price_postapoc": 3500,
+    "to_hit": -2,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "9mm"
+    ],
+    "skill": "smg",
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 1
+    },
+    "dispersion": 240,
+    "durability": 8,
+    "min_cycle_recoil": 450,
+    "blackpowder_tolerance": 32,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "BURST",
+        "3 rd.",
+        3
+      ],
+      [
+        "AUTO",
+        "auto",
+        4
+      ]
+    ],
+    "faults": [
+      "fault_gun_blackpowder",
+      "fault_gun_dirt",
+      "fault_gun_chamber_spent"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "mp5mag",
+          "mp5mag_10rd",
+          "mp5mag_15rd",
+          "mp5mag_20rd",
+          "mp5mag_38rd",
+          "mp5mag_40rd",
+          "mp5bigmag",
+          "mp5mag_100rd"
+        ]
+      }
+    ],
+    "bashing": 10
+  },
+  {
+    "id": "hk_mp5sd",
+    "copy-from": "hk_mp5sd",
+    "type": "GUN",
+    "name": {
+      "str": "黑克勒-科赫 MP5SD 冲锋枪"
+    },
+    "description": "黑克勒-科赫 MP5SD 冲锋枪发射亚音速弹，但其性能仍与黑克勒-科赫 MP5 冲锋枪类似，其轻便性也得以保留。它附带的大型消音器显著减弱了枪口火焰，加强了其在夜间的可用性。这同时还降低了在诸如非法实验室等地点引发火灾或爆炸的几率，因此在特警部队中也曾有广泛使用。由于其穿透性不佳，且护甲的使用更加广泛，MP5SD 冲锋枪的使用率已逐渐下降。",
+    "ascii_picture": "hk_mp5sd",
+    "weight": "3230 g",
+    "volume": "3499 ml",
+    "longest_side": "666 mm",
+    "price": 3000000,
+    "price_postapoc": 14000,
+    "built_in_mods": [
+      "mp5sd_suppressor"
+    ]
+  },
+  {
+    "id": "hk_mp5k",
+    "type": "GUN",
+    "name": {
+      "str": "黑克勒-科赫 MP5K-PDW 冲锋枪"
+    },
+    "description": "黑克勒-科赫 MP5 冲锋枪是全世界应用最广的冲锋枪之一，特警和军队都有选用。它优越的精度与极小的后坐力为之赢得了广泛的赞扬。MP5K-PDW 型号配有更短的枪管，一体的前置握柄，以及便于载具或航空乘员使用中的侧向折叠枪托。",
+    "copy-from": "hk_mp5k",
+    "ascii_picture": "hk_mp5-pdw",
+    "weight": "2292 g",
+    "volume": "2601 ml",
+    "//": "已扣除前握把的68克重量与119毫升体积。",
+    "longest_side": "377 mm",
+    "price_postapoc": 3500,
+    "dispersion": 270,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 0
+    },
+    "built_in_mods": [
+      "folding_stock",
+      "grip"
+    ],
+    "bashing": 8
+  },
+  {
+    "id": "mp40",
+    "copy-from": "mp40",
+    "looks_like": "hk_mp5",
+    "type": "GUN",
+    "name": {
+      "str": "MP 40 冲锋枪"
+    },
+    "description": "MP40是纳粹德国在第二次世界大战中广泛使用的9毫米冲锋枪，冲压件、开放枪机和下折叠金属枪托便于批量生产与机械化携行。它主要配发班长、装甲兵、伞兵等，而非每名步兵。该枪活跃于欧洲、北非和东线，战后仍在中东及其他地区继续使用。",
+    "variant_type": "gun",
+    "variants": [
+      {
+        "id": "mp40",
+        "name": {
+          "str": "福尔默 MP 40"
+        },
+        "description": "这是一把由海因里希·福尔默为德国军队研制的著名9x19mm冲锋枪。它于1940年列装，在第二次世界大战的东西两线广泛使用，并凭借可靠性与当时较先进的设计受到士兵好评。枪上带有一体式折叠钢丝枪托；这把枪很可能是某位退伍军人作为战利品带回美国的。盟军常把它称作“施迈瑟”，但设计MP 18的胡戈·施迈瑟实际上并未参与MP 40的设计或生产。"
+      }
+    ],
+    "weight": "3969 g",
+    "volume": "2320 ml",
+    "longest_side": "648 mm",
+    "price": 1500000,
+    "price_postapoc": 1500,
+    "material": [
+      "steel"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "ammo": [
+      "9mm"
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 1
+    },
+    "dispersion": 360,
+    "durability": 6,
+    "min_cycle_recoil": 450,
+    "built_in_mods": [
+      "under_folding_stock"
+    ],
+    "modes": [
+      [
+        "DEFAULT",
+        "burst",
+        2
+      ]
+    ],
+    "pocket_data": [
+      {
+        "magazine_well": "40 ml",
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "mp40mag_32rd"
+        ]
+      }
+    ],
+    "bashing": 10
+  },
+  {
+    "id": "smg_9mm",
+    "copy-from": "smg_9mm",
+    "looks_like": "hk_mp5",
+    "type": "GUN",
+    "name": {
+      "str": "Luty冲锋枪：9x19mm",
+      "str_pl": "Luty冲锋枪：9x19mm"
+    },
+    "description": "Luty式自制无膛线冲锋枪，使用具有更先进动力的手动工具，由各种钢制零件拼凑而成。也许是能够在工厂车间外制造出的最复杂的枪支之一，但仍然很不可靠。这一款专为9x19mm弹设计，同时能够兼容斯登冲锋枪弹匣。",
+    "//": "制作配方原本需要角磨机、台式砂轮机、角尺和台钳，但游戏中尚未提供这些工具。",
+    "weight": "3520 g",
+    "volume": "1110 ml",
+    "longest_side": "538 mm",
+    "price": 20000,
+    "price_postapoc": 750,
+    "to_hit": -1,
+    "material": [
+      "steel"
+    ],
+    "color": "dark_gray",
+    "ammo": [
+      "9mm"
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -3
+    },
+    "dispersion": 590,
+    "durability": 4,
+    "blackpowder_tolerance": 24,
+    "min_cycle_recoil": 380,
+    "modes": [
+      [
+        "DEFAULT",
+        "burst",
+        2
+      ]
+    ],
+    "loudness": 25,
+    "barrel_volume": "250 ml",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "survivor9mm_mag",
+          "stenmag"
+        ]
+      }
+    ],
+    "bashing": 10
+  },
+  {
+    "id": "sten",
+    "copy-from": "sten",
+    "looks_like": "hk_mp5",
+    "type": "GUN",
+    "reload_noise_volume": 10,
+    "name": {
+      "str": "斯登Mk II冲锋枪",
+      "str_pl": "斯登Mk II冲锋枪"
+    },
+    "description": "斯登冲锋枪由雷金纳德·谢泼德与哈罗德·特平于1940年在恩菲尔德皇家轻武器工厂主持设计，名称来自两人姓氏首字母与Enfield的“En”。Mk II结构极其简化，适合在战时由非专业工厂大批生产，成为第二次世界大战期间英军、加拿大军队和欧洲抵抗组织广泛使用的9毫米冲锋枪。",
+    "weight": "3200 g",
+    "volume": "1240 ml",
+    "longest_side": "765 mm",
+    "price": 40000,
+    "price_postapoc": 1500,
+    "material": [
+      "steel"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "ammo": [
+      "9mm"
+    ],
+    "skill": "smg",
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 1
+    },
+    "dispersion": 360,
+    "durability": 5,
+    "blackpowder_tolerance": 24,
+    "min_cycle_recoil": 450,
+    "modes": [
+      [
+        "DEFAULT",
+        "burst",
+        2
+      ]
+    ],
+    "faults": [
+      "fault_gun_blackpowder",
+      "fault_gun_dirt",
+      "fault_gun_chamber_spent"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "stenmag",
+          "survivor9mm_mag"
+        ]
+      }
+    ],
+    "bashing": 10
+  },
+  {
+    "id": "uzi",
+    "copy-from": "uzi",
+    "looks_like": "hk_mp5",
+    "type": "GUN",
+    "name": {
+      "str_sp": "乌兹 9x19mm 冲锋枪"
+    },
+    "description": "乌兹冲锋枪由乌齐·盖尔在以色列建国初期设计，1950年代进入以色列国防军。弹匣置于握把内便于在黑暗中快速装填，伸缩包络式枪机让整枪紧凑。它参加苏伊士、六日和赎罪日战争，并被众多国家军警采用；后来逐渐被更轻的短卡宾枪取代。",
+    "//": "冲锋枪不像步枪、手枪或霰弹枪那样常见于商业交易，因此缺少可靠定价参考。枪械总重3500克，当前折叠枪托重量为200克。",
+    "weight": "3500 g",
+    "volume": "2150 ml",
+    "longest_side": "480 mm",
+    "price": 208000,
+    "price_postapoc": 3000,
+    "to_hit": -2,
+    "material": [
+      "steel"
+    ],
+    "color": "dark_gray",
+    "ammo": [
+      "9mm"
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 1
+    },
+    "dispersion": 360,
+    "durability": 7,
+    "min_cycle_recoil": 450,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        2
+      ]
+    ],
+    "built_in_mods": [
+      "wire_stock"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "uzimag",
+          "uzimag_20rd",
+          "uzimag_25rd",
+          "uzimag_40rd",
+          "uzimag_50rd",
+          "uzimag_100rd"
+        ]
+      }
+    ],
+    "bashing": 10
+  },
+  {
+    "id": "glock_18c",
+    "copy-from": "glock_18c",
+    "type": "GUN",
+    "name": {
+      "str": "格洛克自动手枪"
+    },
+    "description": "Glock 18是为军警特种需求发展的选择射击9毫米手枪，18C型在套筒与枪管上开设补偿孔以抑制全自动枪口上跳。它体积接近普通勤务手枪，却拥有极高射速，因此短点射尚可，持续连发极难控制。现实中供应严格受限，主要作为特殊单位近距离武器。",
+    "variant_type": "gun",
+    "variants": [
+      {
+        "id": "glock_18c",
+        "name": {
+          "str": "格洛克 18C 手枪"
+        },
+        "description": "格洛克17手枪可选射击模式的衍生型号，最初设计供奥地利的 EKO 眼镜蛇部队使用。它有一个沿着枪管走向的枪口补偿器，使其后坐力能在掌控范围内。",
+        "weight": 1
+      }
+    ],
+    "ascii_picture": "glock_18c",
+    "weight": "620 g",
+    "price": 100000,
+    "price_postapoc": 2500,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        6
+      ]
+    ],
+    "built_in_mods": [
+      "barrel_ported"
+    ],
+    "longest_side": "25 cm"
+  },
+  {
+    "id": "colt_ro635",
+    "copy-from": "colt_ro635",
+    "looks_like": "ar15",
+    "type": "GUN",
+    "name": {
+      "str": "柯尔特 Model 635 冲锋枪"
+    },
+    "description": "一把采用9x19mm 口径的冲锋枪，基于 M16A2 步枪为原型开发，采用封闭式机匣和反冲式枪机。抛壳口处有块大型塑料制弹壳挡板，没有辅助推机柄。它看起来与 M4 卡宾枪非常相似，但是使用的是乌兹冲锋枪族的弹匣。",
+    "weight": "2690 g",
+    "volume": "3450 ml",
+    "longest_side": "655 mm",
+    "price": 100000,
+    "price_postapoc": 1750,
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "color": "dark_gray",
+    "ammo": [
+      "9mm"
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 1
+    },
+    "dispersion": 240,
+    "durability": 8,
+    "min_cycle_recoil": 450,
+    "blackpowder_tolerance": 32,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "faults": [
+      "fault_gun_blackpowder",
+      "fault_gun_dirt",
+      "fault_gun_chamber_spent"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "uzimag",
+          "uzimag_20rd",
+          "uzimag_25rd",
+          "uzimag_40rd",
+          "uzimag_50rd",
+          "uzimag_100rd"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "bt_apc9k",
+    "copy-from": "bt_apc9k",
+    "looks_like": "ar15",
+    "type": "GUN",
+    "name": {
+      "str": "B&T APC9 PRO K 冲锋枪"
+    },
+    "description": "B&T APC9是瑞士布鲁加-托梅在2010年代推出的9毫米冲锋枪家族，K型进一步缩短枪管和机匣，强调贴身护卫与车辆环境。美国陆军在2019年选择APC9K作为小批量紧凑冲锋枪，用于特定警卫任务。它采用闭膛自由枪机和液压缓冲，做工精良但价格昂贵。",
+    "weight": "2400 g",
+    "volume": "1890 ml",
+    "longest_side": "525 mm",
+    "price": 500000,
+    "price_postapoc": 6000,
+    "to_hit": -2,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "color": "dark_gray",
+    "ammo": [
+      "9mm"
+    ],
+    "dispersion": 300,
+    "durability": 8,
+    "min_cycle_recoil": 450,
+    "blackpowder_tolerance": 32,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        4
+      ]
+    ],
+    "default_mods": [
+      "wire_stock",
+      "red_dot_sight"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "btmp9mag_9x19mm_15",
+          "btmp9mag_9x19mm_10rd",
+          "btmp9mag_9x19mm_20",
+          "btmp9mag_9x19mm_25",
+          "btmp9mag_9x19mm_30",
+          "btmp9mag_9x19mm_50rd"
+        ]
+      }
+    ],
+    "bashing": 9
+  }
+]

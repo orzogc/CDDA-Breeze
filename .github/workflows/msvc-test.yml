@@ -82,11 +82,25 @@ jobs:
           .\build-scripts\windist.ps1
           Expand-Archive -LiteralPath cataclysmdda-0.G.zip -DestinationPath windows-test-build -Force
 
+      - name: Validate embedded weapon workshop
+        shell: pwsh
+        run: |
+          $requiredFiles = @(
+            "windows-test-build\data\mods\穆尔卡的武器工坊\modinfo.json",
+            "windows-test-build\data\mods\穆尔卡的武器工坊\物品\弹药\.408CheyTac.json"
+          )
+          foreach( $requiredFile in $requiredFiles ) {
+            if( -not ( Test-Path -LiteralPath $requiredFile ) ) {
+              throw "Embedded weapon workshop file is missing: $requiredFile"
+            }
+          }
+
       - name: Upload temporary Windows build
         uses: actions/upload-artifact@v4
         with:
           name: CDDA-Breeze-windows-msvc-test-${{ github.run_number }}
           path: windows-test-build
+          include-hidden-files: true
           if-no-files-found: error
           retention-days: 7
   android:

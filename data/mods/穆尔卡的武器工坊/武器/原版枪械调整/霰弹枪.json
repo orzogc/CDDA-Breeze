@@ -1,0 +1,308 @@
+[
+  {
+    "id": "ksg",
+    "copy-from": "ksg",
+    "looks_like": "remington_870",
+    "type": "GUN",
+    "name": {
+      "str": "紧凑无托霰弹枪"
+    },
+    "description": "这把泵动式霰弹枪使用一个由两个管形弹匣组成的系统来携带总共14发12号口径霰弹。每根管子都必须单独装填，但这提供了为不同情况装填不同弹药的选项。由于该武器的扳机位于膛室前方，被称为“无托式”设计，虽然与更经典设计的霰弹枪相比其容量相对较高，但它的结构明显比同类武器更紧凑。",
+    "variant_type": "gun",
+    "variants": [
+      {
+        "id": "ksg",
+        "name": {
+          "str_sp": "凯尔科技 KSG 霰弹枪"
+        },
+        "description": "一支无托式泵动霰弹枪，凯尔科技 KSG 霰弹枪有两个单独的管仓供弹机构，以增加其载弹量。每条供弹管仓都要单独装填，射击时也只能选择其中一个管仓供弹，这样也提供了在不同情境下快速切换不同弹药的便利。"
+      }
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "shot": 7
+        },
+        "allowed_speedloaders": [
+          "shot_speedloader6",
+          "shot_speedloader8"
+        ]
+      }
+    ],
+    "longest_side": "672 mm"
+  },
+  {
+    "id": "ksg-25",
+    "copy-from": "ksg-25",
+    "looks_like": "remington_870",
+    "type": "GUN",
+    "name": {
+      "str": "加长无托霰弹枪"
+    },
+    "description": "这把泵动式霰弹枪使用一个由两个管形弹匣组成的系统来携带总共24发12号口径霰弹。每根管子都必须单独装填，但这提供了为不同情况装填不同弹药的选项。由于该武器的扳机位于膛室前方，被称为“无托式”设计，虽然与其他霰弹枪相比其容量相对较高，但长度仍然和传统的霰弹枪一样。",
+    "variant_type": "gun",
+    "variants": [
+      {
+        "id": "ksg-25",
+        "name": {
+          "str_sp": "凯尔科技 KSG-25 霰弹枪"
+        },
+        "description": "一支无托式泵动霰弹枪，凯尔科技 KSG-25 霰弹枪有两个单独的管仓供弹机构，以增加其载弹量。每条供弹管仓都要单独装填，射击时也只能选择其中一个管仓供弹，这样也提供了在不同情境下快速切换不同弹药的便利。作为 KSG 霰弹枪的老大哥，它有根更长的枪管和更长的弹匣。"
+      }
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "shot": 12
+        },
+        "allowed_speedloaders": [
+          "shot_speedloader6",
+          "shot_speedloader8"
+        ]
+      }
+    ],
+    "longest_side": "971 mm"
+  },
+  {
+    "id": "mossberg_500",
+    "copy-from": "mossberg_500",
+    "looks_like": "remington_870",
+    "type": "GUN",
+    "name": {
+      "str": "6发紧凑霰弹枪"
+    },
+    "description": "作为执法人员、军人和捕杀丧尸的动作片英雄的忠实伙伴，这款古雅的霰弹枪有根超过20英寸长的枪管、6发弹匣，标志性的泵动设计既简单又有效。作为历史上最受欢迎的枪械设计之一，这把武器可以可靠地完成任务，无论使用者只是想打猎，还是想配上合适的弹药，将活死人的头变成大坨丧尸肉泥。",
+    "//": "它并不完全算战斗霰弹枪，但很难想出一个不只是“6发霰弹枪”的名字。正式资料提到它经常被军方使用，因此这里称作战斗霰弹枪。",
+    "variant_type": "gun",
+    "variants": [
+      {
+        "id": "mossberg_500",
+        "name": {
+          "str_sp": "莫斯伯格 500 霰弹枪（野外型）"
+        },
+        "description": "莫斯伯格 500 霰弹枪是广受欢迎的泵动式霰弹枪系列，通常由军方使用。它以其高耐久度和低后坐力而十分闻名。这款型号采用 28 英寸枪管以及肋条式瞄具。"
+      },
+      {
+        "id": "mossberg_500_security",
+        "name": {
+          "str_sp": "莫斯伯格 500 霰弹枪（安防型）"
+        },
+        "description": "莫斯伯格 500 霰弹枪是广受欢迎的泵动式霰弹枪系列，通常由军方使用。它以其高耐久度和低后坐力而十分闻名。这款型号采用 18.5 英寸枪管。",
+        "ascii_picture": "mossberg500_sec"
+      }
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "shot": 6
+        },
+        "allowed_speedloaders": [
+          "shot_speedloader6",
+          "shot_speedloader8"
+        ]
+      }
+    ],
+    "longest_side": "1166 mm"
+  },
+  {
+    "id": "mossberg_590",
+    "copy-from": "mossberg_590",
+    "type": "GUN",
+    "name": {
+      "str": "9发紧凑霰弹枪"
+    },
+    "description": "这是一款面向军方的改进型号，基于经典泵动式霰弹枪设计配方，它的弹匣经过扩容，能够容纳9发12号口径霰弹。它有根更重的枪管和一个刺刀座，既是一把非常吓人的武器，也是对你在末日后中可能碰到的大多数丑恶玩意的满意回应。",
+    "variant_type": "gun",
+    "variants": [
+      {
+        "id": "mossberg_590",
+        "name": {
+          "str_sp": "莫斯伯格 590A1 霰弹枪"
+        },
+        "description": "莫斯伯格 590A1 霰弹枪是莫斯伯格 500 霰弹枪军用和警用的版本。它的特点是一根更重的枪管，一个刺刀卡口，和与原版不同更容易清洗及维护的管状弹匣。"
+      },
+      {
+        "id": "SPAS_12",
+        "name": {
+          "str": "弗兰齐 SPAS-12 霰弹枪"
+        },
+        "description": "因其充满恶意且令人生畏的外观，SPAS-12 霰弹枪被联邦法例宣布为毁灭性武器，并因此被禁止进口，虽然这份荣誉令人生疑，但这无疑增添了它原本已相当大的吸引力。它是一把泵动式和半自动枪械的组合体，带有一个手臂稳定搭钩，能够采用单手射击。"
+      }
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "shot": 8
+        },
+        "allowed_speedloaders": [
+          "shot_speedloader6",
+          "shot_speedloader8"
+        ]
+      }
+    ],
+    "longest_side": "1043 mm"
+  },
+  {
+    "id": "mossberg_930",
+    "copy-from": "mossberg_930",
+    "type": "GUN",
+    "name": {
+      "str": "8发自动霰弹枪"
+    },
+    "description": "一把半自动滑膛霰弹枪，这把武器既符合人体工程学设计，同时能在管状弹匣中塞入8发霰弹。这种枪械既适用于竞赛射击，也适用于进攻性战斗角色，与传统的泵动式型号相比，它的射击速度更快，但需要注意的是，它比手动操作的同类武器更难维护，因为它依赖内部气体系统完成装弹循环，而非使用者自己的物理输入。",
+    "variant_type": "gun",
+    "variants": [
+      {
+        "id": "mossberg_930",
+        "name": {
+          "str": "莫斯伯格 930 SPX 霰弹枪"
+        },
+        "description": "这把由莫斯伯格公司出品的半自动霰弹枪有一个降低后坐力的排气系统，步枪风格的瞄具以及出厂自带的皮卡汀尼导轨。低廉的价格和不错的人体工学设计使它成为三枪竞赛中流行的入门级霰弹枪。"
+      },
+      {
+        "id": "m1014",
+        "name": {
+          "str": "M1014 霰弹枪"
+        },
+        "description": "伯奈利公司出品的首把采用气体驱动的霰弹枪，采用双活塞提高使用各种弹药时的可靠性，此外还有一个可折叠的枪托，将整体长度减少了约8英寸。于1999年被军方采购并编号为 M1014 三军战斗霰弹枪，伯奈利 M4 霰弹枪是现有最好的战斗霰弹枪之一。"
+      }
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "shot": 8
+        },
+        "allowed_speedloaders": [
+          "shot_speedloader6",
+          "shot_speedloader8"
+        ]
+      }
+    ],
+    "longest_side": "994 mm"
+  },
+  {
+    "id": "remington_870",
+    "copy-from": "remington_870",
+    "//": "霰弹枪贴图白名单。",
+    "type": "GUN",
+    "name": {
+      "str": "5发狩猎霰弹枪"
+    },
+    "description": "在几乎所有方面都称得上是非常经典的霰弹枪；一个多世纪以来，像这种又大又笨、非常吓人的枪支一直被以各种形式制造，既有泵动式，也有半自动式。这款枪满足了竞赛射击、执法和打猎的需要，具有标准容量的5发弹匣。尽管枪械的弹匣空间很小，但容量上的不足由它在近距离时的有效性和停止力所补偿。",
+    "variant_type": "gun",
+    "variants": [
+      {
+        "id": "remington_870",
+        "name": {
+          "str_sp": "雷明顿 870 \"翼主\"霰弹枪"
+        },
+        "description": "雷明顿 870 霰弹枪是市面上最受欢迎的霰弹枪之一，共计制造了超过一千万只。由于其优秀的命中率和高初速而受到各国猎人和执法机关的青睐。这款型号采用 28 英寸枪管，用于狩猎各式禽鸟和猎物。"
+      },
+      {
+        "id": "remington_1100",
+        "name": {
+          "str": "雷明顿 1100 竞赛型霰弹枪"
+        },
+        "description": "这把半自动霰弹枪采用一套自补偿的排气系统，使其能够使用各类弹药供弹的同时也减少了枪械的后坐力。它于1963年推出，深受执法人员、猎人和竞赛选手的青睐，是美国历史上最畅销的自动装弹霰弹枪。这把是表面采用镍抛光，并涂上了聚四氟乙烯涂层的竞赛用型号，使用全枪长管状弹匣和一根30英寸的枪管。",
+        "ascii_picture": "remington1100"
+      },
+      {
+        "id": "browning_a5",
+        "name": {
+          "str": "勃朗宁 Auto 5 霰弹枪"
+        },
+        "description": "这把外观简陋的霰弹枪是一把最早成功的半自动霰弹枪，也是美国历史上第二成功的霰弹枪，在1902年到1998年间一共制造了超过270万支。位于护手下方的后坐力调节机构和较长的枪机驻留时间，为其提供了不错的射击手感。"
+      },
+      {
+        "id": "ithaca37",
+        "name": {
+          "str": "伊萨卡 M37 轻量型"
+        },
+        "description": "伊萨卡M37是美国狩猎与射击文化中的老兵，也是仍在生产的最古老泵动霰弹枪之一。八十多年来，它一直服务于猎人和执法人员。其下方装填、下方抛壳的结构能让机匣较少暴露在风雨与尘土中。这件传家宝从大灾变前的狩猎旅程到异界深处都依旧实用，近距离遭遇危险时，最好把它放在手边。"
+      }
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "shot": 5
+        },
+        "allowed_speedloaders": [
+          "shot_speedloader6",
+          "shot_speedloader8"
+        ]
+      }
+    ],
+    "longest_side": "1234 mm"
+  },
+  {
+    "id": "remington_870_breacher",
+    "copy-from": "remington_870_breacher",
+    "type": "GUN",
+    "name": {
+      "str": "破门型霰弹枪"
+    },
+    "description": "这是一支以雷明顿870为基础缩短的破门霰弹枪。870自1950年推出后成为产量极大的泵动霰弹枪，军警用户常将短管型用于近距离行动。破门时通常以专用弹攻击门锁、铰链或门闩，而不是把它当普通抵肩武器；无枪托和极短枪管也会放大后坐与枪口焰。",
+    "variant_type": "gun",
+    "variants": [
+      {
+        "id": "remington_870_breacher",
+        "name": {
+          "str": "雷明顿 870 MCS 霰弹枪"
+        },
+        "description": "这把雷明顿 870 MCS 模块化战斗霰弹枪专为室内破门行动而设计，采用10英寸的枪管而且没有枪托。它体积足够小，可以作为次武器携带，特别适合用来打开你所遇到的任何烦人的门。握把设计使后坐力可控但仍会引起不适，而枪管上缺乏任何瞄具。"
+      }
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "shot": 4
+        },
+        "allowed_speedloaders": [
+          "shot_speedloader6",
+          "shot_speedloader8"
+        ]
+      }
+    ],
+    "longest_side": "53 cm"
+  },
+  {
+    "id": "remington_870_express",
+    "copy-from": "remington_870_express",
+    "type": "GUN",
+    "name": {
+      "str": "7发防暴霰弹枪"
+    },
+    "description": "雷明顿870自1950年推出后成为最成功的泵动霰弹枪之一，生产数量以千万计，广泛服务狩猎、竞赛、家庭防卫和军警。眼前这支短枪管、加长弹仓的防暴型更适合室内与车辆附近行动。泵动结构可靠、能兼容多种装药，但每次射击后都必须手动推拉护木。",
+    "variant_type": "gun",
+    "variants": [
+      {
+        "id": "remington_870_express",
+        "name": {
+          "str": "雷明顿 870 \"急速\"霰弹枪",
+          "str_pl": "雷明顿 870 Express 霰弹枪"
+        },
+        "description": "雷明顿 870 霰弹枪是市面上最受欢迎的霰弹枪之一，共计制造了超过一千万只。由于其优秀的命中率和高初速而受到各国猎人和执法机关的青睐。这款型号采用 18.5 英寸枪管，主要用于自卫。"
+      }
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "shot": 7
+        },
+        "allowed_speedloaders": [
+          "shot_speedloader6",
+          "shot_speedloader8"
+        ]
+      }
+    ],
+    "longest_side": "983 mm"
+  }
+]

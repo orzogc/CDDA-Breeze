@@ -1,0 +1,2657 @@
+[
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_GLOBAL_TICK",
+    "recurrence": "30 minutes",
+    "global": true,
+    "run_for_npcs": false,
+    "condition": {
+      "compare_int": [
+        {
+          "world_option": "TRAVEL_RAID_SYSTEM_MODE"
+        },
+        "==",
+        {
+          "const": 1
+        }
+      ]
+    },
+    "effect": {
+      "run_eocs_for_nearby_camp": "EOC_TRAVEL_CAMP_TICK",
+      "radius": {
+        "arithmetic": [
+          {
+            "world_option": "TRAVEL_CAMP_RAID_TRIGGER_RADIUS"
+          },
+          "+",
+          {
+            "const": 0
+          }
+        ]
+      }
+    },
+    "//": "每半小时只处理玩家附近最近的一个营地，远处营地不扫描地图，也不生成袭击者。"
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_WARNING_TICK",
+    "recurrence": "1 minute",
+    "global": true,
+    "run_for_npcs": false,
+    "condition": {
+      "compare_int": [
+        {
+          "world_option": "TRAVEL_RAID_SYSTEM_MODE"
+        },
+        "==",
+        {
+          "const": 1
+        }
+      ]
+    },
+    "effect": {
+      "run_eocs_for_nearby_camp": "EOC_TRAVEL_CAMP_SPAWN_IF_READY",
+      "radius": {
+        "arithmetic": [
+          {
+            "world_option": "TRAVEL_CAMP_RAID_TRIGGER_RADIUS"
+          },
+          "+",
+          {
+            "const": 0
+          }
+        ]
+      }
+    },
+    "//": "预警阶段每分钟只检查玩家附近最近的一个营地，完整袭击调度仍保持每半小时一次。"
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_OM_MOVE",
+    "eoc_type": "OM_MOVE",
+    "run_for_npcs": false,
+    "condition": {
+      "compare_int": [
+        {
+          "world_option": "TRAVEL_RAID_SYSTEM_MODE"
+        },
+        "==",
+        {
+          "const": 1
+        }
+      ]
+    },
+    "effect": {
+      "run_eocs_for_nearby_camp": "EOC_TRAVEL_CAMP_TICK",
+      "radius": {
+        "arithmetic": [
+          {
+            "world_option": "TRAVEL_CAMP_RAID_TRIGGER_RADIUS"
+          },
+          "+",
+          {
+            "const": 0
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_TICK",
+    "run_for_npcs": false,
+    "effect": [
+      {
+        "run_eocs": "EOC_TRAVEL_CAMP_INIT_IF_NEEDED"
+      },
+      {
+        "run_eocs": "EOC_TRAVEL_CAMP_MIGRATE_WARNING_MINUTES"
+      },
+      {
+        "run_eocs": "EOC_TRAVEL_CAMP_MARK_DUE"
+      },
+      {
+        "run_eocs": "EOC_TRAVEL_CAMP_SPAWN_IF_READY"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_MIGRATE_WARNING_MINUTES",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "camp_value": "travel_raid_warning_deadline_minute",
+              "default": 0
+            },
+            "<=",
+            {
+              "const": 0
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "camp_value": "travel_raid_warning_deadline_hour",
+              "default": 0
+            },
+            ">",
+            {
+              "const": 0
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "camp_value": "travel_raid_pending_waves",
+              "default": 0
+            },
+            ">",
+            {
+              "const": 0
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_camp_tmp_deadline_minute"
+          },
+          "=",
+          {
+            "arithmetic": [
+              {
+                "camp_value": "travel_raid_warning_deadline_hour",
+                "default": 0
+              },
+              "*",
+              {
+                "const": 60
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "set_camp_value": "travel_raid_warning_deadline_minute",
+        "value": {
+          "global_val": "var",
+          "var_name": "travel_camp_tmp_deadline_minute",
+          "default": 0
+        }
+      },
+      {
+        "set_camp_value": "travel_raid_warning_deadline_hour",
+        "value": "0"
+      }
+    ],
+    "//": "把旧版本按绝对小时保存的营地预警截止时间换算为绝对分钟，只处理仍有待处理袭击的旧营地。"
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_INIT_IF_NEEDED",
+    "condition": {
+      "compare_int": [
+        {
+          "camp_value": "travel_raid_initialized",
+          "default": 0
+        },
+        "<",
+        {
+          "const": 1
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_camp_tmp_interval_hours"
+          },
+          "=",
+          {
+            "arithmetic": [
+              {
+                "world_option": "TRAVEL_CAMP_RAID_INTERVAL_DAYS"
+              },
+              "*",
+              {
+                "const": 24
+              }
+            ]
+          }
+        ],
+        "min": 24
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_camp_tmp_next_hour"
+          },
+          "=",
+          {
+            "arithmetic": [
+              {
+                "time_since_cataclysm": "hours"
+              },
+              "+",
+              {
+                "global_val": "var",
+                "var_name": "travel_camp_tmp_interval_hours",
+                "default": 168
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "set_camp_value": "travel_raid_initialized",
+        "value": "1"
+      },
+      {
+        "set_camp_value": "travel_raid_next_hour",
+        "value": {
+          "global_val": "var",
+          "var_name": "travel_camp_tmp_next_hour",
+          "default": 0
+        }
+      },
+      {
+        "set_camp_value": "travel_raid_pending_waves",
+        "value": "0"
+      },
+      {
+        "set_camp_value": "travel_raid_warning_deadline_minute",
+        "value": "0"
+      },
+      {
+        "set_camp_value": "travel_raid_selected_faction",
+        "value": "0"
+      },
+      {
+        "set_camp_value": "travel_raid_last_faction",
+        "value": "0"
+      },
+      {
+        "set_camp_value": "travel_raid_sequence",
+        "value": "0"
+      },
+      {
+        "set_camp_value": "travel_raid_count",
+        "value": "0"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_MARK_DUE",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "world_option": "TRAVEL_RAID_SYSTEM_MODE"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "camp_value": "travel_raid_enabled",
+              "default": 1
+            },
+            ">=",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "camp_value": "travel_raid_initialized",
+              "default": 0
+            },
+            ">=",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "camp_value": "travel_raid_pending_waves",
+              "default": 0
+            },
+            "<=",
+            {
+              "const": 0
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "time_since_cataclysm": "hours"
+            },
+            ">=",
+            {
+              "camp_value": "travel_raid_next_hour",
+              "default": 0
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_camp_tmp_interval_hours"
+          },
+          "=",
+          {
+            "arithmetic": [
+              {
+                "world_option": "TRAVEL_CAMP_RAID_INTERVAL_DAYS"
+              },
+              "*",
+              {
+                "const": 24
+              }
+            ]
+          }
+        ],
+        "min": 24
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_camp_tmp_overdue_hours"
+          },
+          "=",
+          {
+            "arithmetic": [
+              {
+                "time_since_cataclysm": "hours"
+              },
+              "-",
+              {
+                "camp_value": "travel_raid_next_hour",
+                "default": 0
+              }
+            ]
+          }
+        ],
+        "min": 0
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_camp_tmp_waves"
+          },
+          "=",
+          {
+            "arithmetic": [
+              {
+                "const": 1
+              },
+              "+",
+              {
+                "arithmetic": [
+                  {
+                    "global_val": "var",
+                    "var_name": "travel_camp_tmp_overdue_hours",
+                    "default": 0
+                  },
+                  "/",
+                  {
+                    "global_val": "var",
+                    "var_name": "travel_camp_tmp_interval_hours",
+                    "default": 168
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "min": 1,
+        "max": {
+          "arithmetic": [
+            {
+              "world_option": "TRAVEL_CAMP_RAID_MERGE_CAP"
+            },
+            "+",
+            {
+              "const": 0
+            }
+          ]
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_camp_tmp_deadline_minute"
+          },
+          "=",
+          {
+            "arithmetic": [
+              {
+                "time_since_cataclysm": "minutes"
+              },
+              "+",
+              {
+                "world_option": "TRAVEL_CAMP_RAID_WARNING_MINUTES"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_camp_tmp_next_hour"
+          },
+          "=",
+          {
+            "arithmetic": [
+              {
+                "time_since_cataclysm": "hours"
+              },
+              "+",
+              {
+                "global_val": "var",
+                "var_name": "travel_camp_tmp_interval_hours",
+                "default": 168
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "set_camp_value": "travel_raid_pending_waves",
+        "value": {
+          "global_val": "var",
+          "var_name": "travel_camp_tmp_waves",
+          "default": 1
+        }
+      },
+      {
+        "set_camp_value": "travel_raid_warning_deadline_minute",
+        "value": {
+          "global_val": "var",
+          "var_name": "travel_camp_tmp_deadline_minute",
+          "default": 0
+        }
+      },
+      {
+        "set_camp_value": "travel_raid_next_hour",
+        "value": {
+          "global_val": "var",
+          "var_name": "travel_camp_tmp_next_hour",
+          "default": 0
+        }
+      },
+      {
+        "run_eocs": "EOC_TRAVEL_CAMP_SELECT_FACTION"
+      },
+      {
+        "u_message": "营地侦察哨发现了逼近的动静，袭击已经进入预警阶段，离开营地只会推迟敌人出现。",
+        "type": "warning"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_SELECT_FACTION",
+    "effect": {
+      "run_eocs": [
+        "EOC_TRAVEL_CAMP_SELECT_FIRST_ZOMBIE",
+        "EOC_TRAVEL_CAMP_SELECT_SECOND_TRIFFID",
+        "EOC_TRAVEL_CAMP_SELECT_THIRD_MIGO",
+        "EOC_TRAVEL_CAMP_SELECT_RANDOM"
+      ]
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_SELECT_FIRST_ZOMBIE",
+    "condition": {
+      "compare_int": [
+        {
+          "camp_value": "travel_raid_sequence",
+          "default": 0
+        },
+        "==",
+        {
+          "const": 0
+        }
+      ]
+    },
+    "effect": {
+      "set_camp_value": "travel_raid_selected_faction",
+      "value": "1"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_SELECT_SECOND_TRIFFID",
+    "condition": {
+      "compare_int": [
+        {
+          "camp_value": "travel_raid_sequence",
+          "default": 0
+        },
+        "==",
+        {
+          "const": 1
+        }
+      ]
+    },
+    "effect": {
+      "set_camp_value": "travel_raid_selected_faction",
+      "value": "2"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_SELECT_THIRD_MIGO",
+    "condition": {
+      "compare_int": [
+        {
+          "camp_value": "travel_raid_sequence",
+          "default": 0
+        },
+        "==",
+        {
+          "const": 2
+        }
+      ]
+    },
+    "effect": {
+      "set_camp_value": "travel_raid_selected_faction",
+      "value": "3"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_SELECT_RANDOM",
+    "condition": {
+      "compare_int": [
+        {
+          "camp_value": "travel_raid_sequence",
+          "default": 0
+        },
+        ">=",
+        {
+          "const": 3
+        }
+      ]
+    },
+    "effect": {
+      "run_eocs": [
+        "EOC_TRAVEL_CAMP_RANDOM_AFTER_NONE",
+        "EOC_TRAVEL_CAMP_RANDOM_AFTER_ZOMBIE",
+        "EOC_TRAVEL_CAMP_RANDOM_AFTER_TRIFFID",
+        "EOC_TRAVEL_CAMP_RANDOM_AFTER_MIGO",
+        "EOC_TRAVEL_CAMP_RANDOM_AFTER_BANDIT"
+      ]
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_RANDOM_AFTER_NONE",
+    "condition": {
+      "compare_int": [
+        {
+          "camp_value": "travel_raid_last_faction",
+          "default": 0
+        },
+        "<=",
+        {
+          "const": 0
+        }
+      ]
+    },
+    "effect": {
+      "weighted_list_eocs": [
+        [
+          "EOC_TRAVEL_CAMP_SET_ZOMBIE",
+          {
+            "const": 1
+          }
+        ],
+        [
+          "EOC_TRAVEL_CAMP_SET_TRIFFID",
+          {
+            "const": 1
+          }
+        ],
+        [
+          "EOC_TRAVEL_CAMP_SET_MIGO",
+          {
+            "const": 1
+          }
+        ],
+        [
+          "EOC_TRAVEL_CAMP_SET_BANDIT",
+          {
+            "const": 1
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_RANDOM_AFTER_ZOMBIE",
+    "condition": {
+      "compare_int": [
+        {
+          "camp_value": "travel_raid_last_faction",
+          "default": 0
+        },
+        "==",
+        {
+          "const": 1
+        }
+      ]
+    },
+    "effect": {
+      "weighted_list_eocs": [
+        [
+          "EOC_TRAVEL_CAMP_SET_TRIFFID",
+          {
+            "const": 1
+          }
+        ],
+        [
+          "EOC_TRAVEL_CAMP_SET_MIGO",
+          {
+            "const": 1
+          }
+        ],
+        [
+          "EOC_TRAVEL_CAMP_SET_BANDIT",
+          {
+            "const": 1
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_RANDOM_AFTER_TRIFFID",
+    "condition": {
+      "compare_int": [
+        {
+          "camp_value": "travel_raid_last_faction",
+          "default": 0
+        },
+        "==",
+        {
+          "const": 2
+        }
+      ]
+    },
+    "effect": {
+      "weighted_list_eocs": [
+        [
+          "EOC_TRAVEL_CAMP_SET_ZOMBIE",
+          {
+            "const": 1
+          }
+        ],
+        [
+          "EOC_TRAVEL_CAMP_SET_MIGO",
+          {
+            "const": 1
+          }
+        ],
+        [
+          "EOC_TRAVEL_CAMP_SET_BANDIT",
+          {
+            "const": 1
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_RANDOM_AFTER_MIGO",
+    "condition": {
+      "compare_int": [
+        {
+          "camp_value": "travel_raid_last_faction",
+          "default": 0
+        },
+        "==",
+        {
+          "const": 3
+        }
+      ]
+    },
+    "effect": {
+      "weighted_list_eocs": [
+        [
+          "EOC_TRAVEL_CAMP_SET_ZOMBIE",
+          {
+            "const": 1
+          }
+        ],
+        [
+          "EOC_TRAVEL_CAMP_SET_TRIFFID",
+          {
+            "const": 1
+          }
+        ],
+        [
+          "EOC_TRAVEL_CAMP_SET_BANDIT",
+          {
+            "const": 1
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_RANDOM_AFTER_BANDIT",
+    "condition": {
+      "compare_int": [
+        {
+          "camp_value": "travel_raid_last_faction",
+          "default": 0
+        },
+        "==",
+        {
+          "const": 4
+        }
+      ]
+    },
+    "effect": {
+      "weighted_list_eocs": [
+        [
+          "EOC_TRAVEL_CAMP_SET_ZOMBIE",
+          {
+            "const": 1
+          }
+        ],
+        [
+          "EOC_TRAVEL_CAMP_SET_TRIFFID",
+          {
+            "const": 1
+          }
+        ],
+        [
+          "EOC_TRAVEL_CAMP_SET_MIGO",
+          {
+            "const": 1
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_SET_ZOMBIE",
+    "effect": {
+      "set_camp_value": "travel_raid_selected_faction",
+      "value": "1"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_SET_TRIFFID",
+    "effect": {
+      "set_camp_value": "travel_raid_selected_faction",
+      "value": "2"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_SET_MIGO",
+    "effect": {
+      "set_camp_value": "travel_raid_selected_faction",
+      "value": "3"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_SET_BANDIT",
+    "effect": {
+      "set_camp_value": "travel_raid_selected_faction",
+      "value": "4"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_SPAWN_IF_READY",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "world_option": "TRAVEL_RAID_SYSTEM_MODE"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "camp_value": "travel_raid_enabled",
+              "default": 1
+            },
+            ">=",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "camp_value": "travel_raid_pending_waves",
+              "default": 0
+            },
+            ">",
+            {
+              "const": 0
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "time_since_cataclysm": "minutes"
+            },
+            ">=",
+            {
+              "camp_value": "travel_raid_warning_deadline_minute",
+              "default": 0
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "camp_metric": "distance"
+            },
+            "<=",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_active",
+              "default": 0
+            },
+            "<=",
+            {
+              "const": 0
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_pending",
+              "default": 0
+            },
+            "<=",
+            {
+              "const": 0
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "camp_value": "travel_raid_selected_faction",
+              "default": 0
+            },
+            ">=",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "camp_value": "travel_raid_selected_faction",
+              "default": 0
+            },
+            "<=",
+            {
+              "const": 4
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_camp_tmp_threat"
+          },
+          "=",
+          {
+            "arithmetic": [
+              {
+                "arithmetic": [
+                  {
+                    "arithmetic": [
+                      {
+                        "camp_metric": "development"
+                      },
+                      "+",
+                      {
+                        "arithmetic": [
+                          {
+                            "camp_metric": "survivors"
+                          },
+                          "*",
+                          {
+                            "const": 10
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "+",
+                  {
+                    "arithmetic": [
+                      {
+                        "world_option": "TRAVEL_CAMP_RAID_DIFFICULTY"
+                      },
+                      "*",
+                      {
+                        "const": 30
+                      }
+                    ]
+                  }
+                ]
+              },
+              "+",
+              {
+                "arithmetic": [
+                  {
+                    "arithmetic": [
+                      {
+                        "camp_value": "travel_raid_pending_waves",
+                        "default": 1
+                      },
+                      "-",
+                      {
+                        "const": 1
+                      }
+                    ]
+                  },
+                  "*",
+                  {
+                    "const": 80
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "min": 0
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_camp_bonus_count"
+          },
+          "=",
+          {
+            "arithmetic": [
+              {
+                "global_val": "var",
+                "var_name": "travel_camp_tmp_threat",
+                "default": 0
+              },
+              "/",
+              {
+                "const": 100
+              }
+            ]
+          }
+        ],
+        "min": 0,
+        "max": 4
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_last_faction"
+          },
+          "=",
+          {
+            "camp_value": "travel_raid_selected_faction",
+            "default": 0
+          }
+        ],
+        "min": 1,
+        "max": 4
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_intro_mode"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_pending"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "run_eocs": "EOC_TRAVEL_CAMP_DISPATCH"
+      },
+      {
+        "run_eocs": "EOC_TRAVEL_CAMP_REINFORCEMENT_DISPATCH"
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_camp_tmp_sequence"
+          },
+          "=",
+          {
+            "arithmetic": [
+              {
+                "camp_value": "travel_raid_sequence",
+                "default": 0
+              },
+              "+",
+              {
+                "const": 1
+              }
+            ]
+          }
+        ],
+        "min": 1
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_camp_tmp_count"
+          },
+          "=",
+          {
+            "arithmetic": [
+              {
+                "camp_value": "travel_raid_count",
+                "default": 0
+              },
+              "+",
+              {
+                "const": 1
+              }
+            ]
+          }
+        ],
+        "min": 1
+      },
+      {
+        "set_camp_value": "travel_raid_last_faction",
+        "value": {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_last_faction",
+          "default": 1
+        }
+      },
+      {
+        "set_camp_value": "travel_raid_sequence",
+        "value": {
+          "global_val": "var",
+          "var_name": "travel_camp_tmp_sequence",
+          "default": 1
+        }
+      },
+      {
+        "set_camp_value": "travel_raid_count",
+        "value": {
+          "global_val": "var",
+          "var_name": "travel_camp_tmp_count",
+          "default": 1
+        }
+      },
+      {
+        "set_camp_value": "travel_raid_pending_waves",
+        "value": "0"
+      },
+      {
+        "set_camp_value": "travel_raid_warning_deadline_minute",
+        "value": "0"
+      },
+      {
+        "set_camp_value": "travel_raid_selected_faction",
+        "value": "0"
+      }
+    ],
+    "//": "若另一个营地的袭击仍在运行，本营地保持待处理，不会同时生成两支互相攻击的队伍。"
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_DISPATCH",
+    "effect": {
+      "run_eocs": [
+        "EOC_TRAVEL_CAMP_DISPATCH_ZOMBIE",
+        "EOC_TRAVEL_CAMP_DISPATCH_TRIFFID",
+        "EOC_TRAVEL_CAMP_DISPATCH_MIGO",
+        "EOC_TRAVEL_CAMP_DISPATCH_BANDIT"
+      ]
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_DISPATCH_ZOMBIE",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_last_faction",
+          "default": 0
+        },
+        "==",
+        {
+          "const": 1
+        }
+      ]
+    },
+    "effect": {
+      "run_eocs": "EOC_TRAVEL_DYNAMIC_START_ZOMBIE"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_DISPATCH_TRIFFID",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_last_faction",
+          "default": 0
+        },
+        "==",
+        {
+          "const": 2
+        }
+      ]
+    },
+    "effect": {
+      "run_eocs": "EOC_TRAVEL_DYNAMIC_START_TRIFFID"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_DISPATCH_MIGO",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_last_faction",
+          "default": 0
+        },
+        "==",
+        {
+          "const": 3
+        }
+      ]
+    },
+    "effect": {
+      "run_eocs": "EOC_TRAVEL_DYNAMIC_START_MIGO"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_DISPATCH_BANDIT",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_last_faction",
+          "default": 0
+        },
+        "==",
+        {
+          "const": 4
+        }
+      ]
+    },
+    "effect": {
+      "run_eocs": "EOC_TRAVEL_DYNAMIC_START_BANDIT"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_REINFORCEMENT_DISPATCH",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_camp_bonus_count",
+          "default": 0
+        },
+        ">",
+        {
+          "const": 0
+        }
+      ]
+    },
+    "effect": {
+      "run_eocs": [
+        "EOC_TRAVEL_CAMP_REINFORCE_ZOMBIE",
+        "EOC_TRAVEL_CAMP_REINFORCE_TRIFFID",
+        "EOC_TRAVEL_CAMP_REINFORCE_MIGO",
+        "EOC_TRAVEL_CAMP_REINFORCE_BANDIT"
+      ]
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_REINFORCE_ZOMBIE",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_last_faction",
+          "default": 0
+        },
+        "==",
+        {
+          "const": 1
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_camp_bonus_count",
+            "default": 0
+          }
+        ],
+        "min": 0,
+        "max": 4
+      },
+      {
+        "run_eocs": "EOC_TRAVEL_DYNAMIC_SPAWN_ZOMBIE_RECURSIVE"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_REINFORCE_TRIFFID",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_last_faction",
+          "default": 0
+        },
+        "==",
+        {
+          "const": 2
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_camp_bonus_count",
+            "default": 0
+          }
+        ],
+        "min": 0,
+        "max": 4
+      },
+      {
+        "run_eocs": "EOC_TRAVEL_DYNAMIC_SPAWN_TRIFFID_RECURSIVE"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_REINFORCE_MIGO",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_last_faction",
+          "default": 0
+        },
+        "==",
+        {
+          "const": 3
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_camp_bonus_count",
+            "default": 0
+          }
+        ],
+        "min": 0,
+        "max": 4
+      },
+      {
+        "run_eocs": "EOC_TRAVEL_DYNAMIC_SPAWN_MIGO_RECURSIVE"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_REINFORCE_BANDIT",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_last_faction",
+          "default": 0
+        },
+        "==",
+        {
+          "const": 4
+        }
+      ]
+    },
+    "effect": [
+      {
+        "u_spawn_npc": "TRAVEL_RAID_BANDIT_THUG",
+        "real_count": {
+          "global_val": "var",
+          "var_name": "travel_dynamic_camp_bonus_count",
+          "default": 0
+        },
+        "min_radius": 18,
+        "max_radius": 30,
+        "outdoor_only": true,
+        "open_air_allowed": true,
+        "spawn_message": "营地外围又出现了强盗增援。",
+        "spawn_message_plural": "营地外围又出现了一批强盗增援。"
+      },
+      {
+        "run_eocs": "EOC_TRAVEL_CAMP_REINFORCE_BANDIT_GUNNER"
+      },
+      {
+        "run_eocs": "EOC_TRAVEL_CAMP_REINFORCE_BANDIT_RIFLEMAN"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_REINFORCE_BANDIT_GUNNER",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_camp_bonus_count",
+          "default": 0
+        },
+        ">=",
+        {
+          "const": 2
+        }
+      ]
+    },
+    "effect": {
+      "u_spawn_npc": "TRAVEL_RAID_BANDIT_GUNNER",
+      "real_count": 1,
+      "min_radius": 20,
+      "max_radius": 34,
+      "outdoor_only": true,
+      "open_air_allowed": true
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_REINFORCE_BANDIT_RIFLEMAN",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_camp_bonus_count",
+          "default": 0
+        },
+        ">=",
+        {
+          "const": 4
+        }
+      ]
+    },
+    "effect": {
+      "u_spawn_npc": "TRAVEL_RAID_BANDIT_RIFLEMAN",
+      "real_count": 1,
+      "min_radius": 24,
+      "max_radius": 38,
+      "outdoor_only": true,
+      "open_air_allowed": true
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_ACTION_ENABLE",
+    "condition": {
+      "compare_int": [
+        {
+          "world_option": "TRAVEL_RAID_SYSTEM_MODE"
+        },
+        "==",
+        {
+          "const": 1
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_camp_tmp_interval_hours"
+          },
+          "=",
+          {
+            "arithmetic": [
+              {
+                "world_option": "TRAVEL_CAMP_RAID_INTERVAL_DAYS"
+              },
+              "*",
+              {
+                "const": 24
+              }
+            ]
+          }
+        ],
+        "min": 24
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_camp_tmp_next_hour"
+          },
+          "=",
+          {
+            "arithmetic": [
+              {
+                "time_since_cataclysm": "hours"
+              },
+              "+",
+              {
+                "global_val": "var",
+                "var_name": "travel_camp_tmp_interval_hours",
+                "default": 168
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "set_camp_value": "travel_raid_enabled",
+        "value": "1"
+      },
+      {
+        "set_camp_value": "travel_raid_initialized",
+        "value": "1"
+      },
+      {
+        "set_camp_value": "travel_raid_next_hour",
+        "value": {
+          "global_val": "var",
+          "var_name": "travel_camp_tmp_next_hour",
+          "default": 0
+        }
+      },
+      {
+        "set_camp_value": "travel_raid_pending_waves",
+        "value": "0"
+      },
+      {
+        "set_camp_value": "travel_raid_warning_deadline_minute",
+        "value": "0"
+      },
+      {
+        "set_camp_value": "travel_raid_selected_faction",
+        "value": "0"
+      },
+      {
+        "u_message": "这个营地的袭击已经开启，新的袭击时钟从现在开始计算。",
+        "type": "good"
+      }
+    ],
+    "false_effect": {
+      "u_message": "当前世界没有启用营地袭击模式。",
+      "type": "info"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_ACTION_DISABLE",
+    "condition": {
+      "compare_int": [
+        {
+          "world_option": "TRAVEL_RAID_SYSTEM_MODE"
+        },
+        "==",
+        {
+          "const": 1
+        }
+      ]
+    },
+    "effect": [
+      {
+        "run_eocs": "EOC_TRAVEL_CAMP_INIT_IF_NEEDED"
+      },
+      {
+        "set_camp_value": "travel_raid_enabled",
+        "value": "0"
+      },
+      {
+        "set_camp_value": "travel_raid_pending_waves",
+        "value": "0"
+      },
+      {
+        "set_camp_value": "travel_raid_warning_deadline_minute",
+        "value": "0"
+      },
+      {
+        "set_camp_value": "travel_raid_selected_faction",
+        "value": "0"
+      },
+      {
+        "u_message": "这个营地的袭击已经关闭，待处理袭击已经清除，已经出现的敌人不会消失。",
+        "type": "good"
+      }
+    ],
+    "false_effect": {
+      "u_message": "当前世界没有启用营地袭击模式。",
+      "type": "info"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_ACTION_RESET",
+    "condition": {
+      "compare_int": [
+        {
+          "world_option": "TRAVEL_RAID_SYSTEM_MODE"
+        },
+        "==",
+        {
+          "const": 1
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_camp_tmp_interval_hours"
+          },
+          "=",
+          {
+            "arithmetic": [
+              {
+                "world_option": "TRAVEL_CAMP_RAID_INTERVAL_DAYS"
+              },
+              "*",
+              {
+                "const": 24
+              }
+            ]
+          }
+        ],
+        "min": 24
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_camp_tmp_next_hour"
+          },
+          "=",
+          {
+            "arithmetic": [
+              {
+                "time_since_cataclysm": "hours"
+              },
+              "+",
+              {
+                "global_val": "var",
+                "var_name": "travel_camp_tmp_interval_hours",
+                "default": 168
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "set_camp_value": "travel_raid_initialized",
+        "value": "1"
+      },
+      {
+        "set_camp_value": "travel_raid_next_hour",
+        "value": {
+          "global_val": "var",
+          "var_name": "travel_camp_tmp_next_hour",
+          "default": 0
+        }
+      },
+      {
+        "set_camp_value": "travel_raid_pending_waves",
+        "value": "0"
+      },
+      {
+        "set_camp_value": "travel_raid_warning_deadline_minute",
+        "value": "0"
+      },
+      {
+        "set_camp_value": "travel_raid_selected_faction",
+        "value": "0"
+      },
+      {
+        "set_camp_value": "travel_raid_last_faction",
+        "value": "0"
+      },
+      {
+        "set_camp_value": "travel_raid_sequence",
+        "value": "0"
+      },
+      {
+        "set_camp_value": "travel_raid_count",
+        "value": "0"
+      },
+      {
+        "u_message": "这个营地的袭击时钟已经重置，待处理袭击和阵营轮次已经清除。",
+        "type": "good"
+      }
+    ],
+    "false_effect": {
+      "u_message": "当前世界没有启用营地袭击模式。",
+      "type": "info"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_ACTION_TEST",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "world_option": "TRAVEL_RAID_SYSTEM_MODE"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "camp_value": "travel_raid_enabled",
+              "default": 1
+            },
+            ">=",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "world_option": "TRAVEL_CAMP_RAID_DEBUG"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "run_eocs": "EOC_TRAVEL_CAMP_INIT_IF_NEEDED"
+      },
+      {
+        "set_camp_value": "travel_raid_pending_waves",
+        "value": "1"
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_camp_tmp_deadline_minute"
+          },
+          "=",
+          {
+            "arithmetic": [
+              {
+                "time_since_cataclysm": "minutes"
+              },
+              "+",
+              {
+                "world_option": "TRAVEL_CAMP_RAID_WARNING_MINUTES"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "set_camp_value": "travel_raid_warning_deadline_minute",
+        "value": {
+          "global_val": "var",
+          "var_name": "travel_camp_tmp_deadline_minute",
+          "default": 0
+        }
+      },
+      {
+        "run_eocs": "EOC_TRAVEL_CAMP_SELECT_FACTION"
+      },
+      {
+        "u_message": "测试袭击已经加入这个营地的待处理队列。",
+        "type": "warning"
+      },
+      {
+        "run_eocs": "EOC_TRAVEL_CAMP_SPAWN_IF_READY"
+      }
+    ],
+    "false_effect": {
+      "u_message": "测试袭击没有启用，请检查世界设置中的袭击模式和测试开关。",
+      "type": "info"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_ACTION_STATUS",
+    "condition": {
+      "compare_int": [
+        {
+          "world_option": "TRAVEL_RAID_SYSTEM_MODE"
+        },
+        "==",
+        {
+          "const": 1
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_status_development"
+          },
+          "=",
+          {
+            "camp_metric": "development"
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_status_survivors"
+          },
+          "=",
+          {
+            "camp_metric": "survivors"
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_status_workers"
+          },
+          "=",
+          {
+            "camp_metric": "workers"
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_status_distance"
+          },
+          "=",
+          {
+            "camp_metric": "distance"
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_status_interval"
+          },
+          "=",
+          {
+            "world_option": "TRAVEL_CAMP_RAID_INTERVAL_DAYS"
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_status_difficulty"
+          },
+          "=",
+          {
+            "world_option": "TRAVEL_CAMP_RAID_DIFFICULTY"
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_status_radius"
+          },
+          "=",
+          {
+            "world_option": "TRAVEL_CAMP_RAID_TRIGGER_RADIUS"
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_status_merge_cap"
+          },
+          "=",
+          {
+            "world_option": "TRAVEL_CAMP_RAID_MERGE_CAP"
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_status_warning"
+          },
+          "=",
+          {
+            "world_option": "TRAVEL_CAMP_RAID_WARNING_MINUTES"
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_status_initialized"
+          },
+          "=",
+          {
+            "camp_value": "travel_raid_initialized",
+            "default": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_status_next_hour"
+          },
+          "=",
+          {
+            "camp_value": "travel_raid_next_hour",
+            "default": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_status_pending"
+          },
+          "=",
+          {
+            "camp_value": "travel_raid_pending_waves",
+            "default": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_status_deadline_minute"
+          },
+          "=",
+          {
+            "camp_value": "travel_raid_warning_deadline_minute",
+            "default": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_status_selected"
+          },
+          "=",
+          {
+            "camp_value": "travel_raid_selected_faction",
+            "default": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_status_last"
+          },
+          "=",
+          {
+            "camp_value": "travel_raid_last_faction",
+            "default": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_status_sequence"
+          },
+          "=",
+          {
+            "camp_value": "travel_raid_sequence",
+            "default": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_status_count"
+          },
+          "=",
+          {
+            "camp_value": "travel_raid_count",
+            "default": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_status_current_hour"
+          },
+          "=",
+          {
+            "time_since_cataclysm": "hours"
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_status_current_minute"
+          },
+          "=",
+          {
+            "time_since_cataclysm": "minutes"
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_status_remaining_hours"
+          },
+          "=",
+          {
+            "arithmetic": [
+              {
+                "camp_value": "travel_raid_next_hour",
+                "default": 0
+              },
+              "-",
+              {
+                "time_since_cataclysm": "hours"
+              }
+            ]
+          }
+        ],
+        "min": 0
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_status_remaining_minutes"
+          },
+          "=",
+          {
+            "arithmetic": [
+              {
+                "camp_value": "travel_raid_warning_deadline_minute",
+                "default": 0
+              },
+              "-",
+              {
+                "time_since_cataclysm": "minutes"
+              }
+            ]
+          }
+        ],
+        "min": 0
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_status_extra_pending"
+          },
+          "=",
+          {
+            "arithmetic": [
+              {
+                "camp_value": "travel_raid_pending_waves",
+                "default": 0
+              },
+              "-",
+              {
+                "const": 1
+              }
+            ]
+          }
+        ],
+        "min": 0
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_status_threat"
+          },
+          "=",
+          {
+            "arithmetic": [
+              {
+                "arithmetic": [
+                  {
+                    "arithmetic": [
+                      {
+                        "camp_metric": "development"
+                      },
+                      "+",
+                      {
+                        "arithmetic": [
+                          {
+                            "camp_metric": "survivors"
+                          },
+                          "*",
+                          {
+                            "const": 10
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "+",
+                  {
+                    "arithmetic": [
+                      {
+                        "world_option": "TRAVEL_CAMP_RAID_DIFFICULTY"
+                      },
+                      "*",
+                      {
+                        "const": 30
+                      }
+                    ]
+                  }
+                ]
+              },
+              "+",
+              {
+                "arithmetic": [
+                  {
+                    "global_val": "var",
+                    "var_name": "travel_status_extra_pending",
+                    "default": 0
+                  },
+                  "*",
+                  {
+                    "const": 80
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_status_bonus"
+          },
+          "=",
+          {
+            "arithmetic": [
+              {
+                "global_val": "var",
+                "var_name": "travel_status_threat",
+                "default": 0
+              },
+              "/",
+              {
+                "const": 100
+              }
+            ]
+          }
+        ],
+        "min": 0,
+        "max": 4
+      },
+      {
+        "u_message": "营地发展度，<global_val:travel_status_development>，幸存者，<global_val:travel_status_survivors>，工作者，<global_val:travel_status_workers>，距离，<global_val:travel_status_distance>。",
+        "type": "info"
+      },
+      {
+        "u_message": "袭击间隔，<global_val:travel_status_interval>天，检查半径，<global_val:travel_status_radius>，逾期合并上限，<global_val:travel_status_merge_cap>波，预警时间，<global_val:travel_status_warning>分钟。",
+        "type": "info"
+      },
+      {
+        "run_eocs": "EOC_TRAVEL_CAMP_STATUS_DIFFICULTY_0"
+      },
+      {
+        "run_eocs": "EOC_TRAVEL_CAMP_STATUS_DIFFICULTY_1"
+      },
+      {
+        "run_eocs": "EOC_TRAVEL_CAMP_STATUS_DIFFICULTY_2"
+      },
+      {
+        "run_eocs": "EOC_TRAVEL_CAMP_STATUS_DIFFICULTY_3"
+      },
+      {
+        "run_eocs": "EOC_TRAVEL_CAMP_STATUS_CLOCK"
+      },
+      {
+        "run_eocs": "EOC_TRAVEL_CAMP_STATUS_LAST_0"
+      },
+      {
+        "run_eocs": "EOC_TRAVEL_CAMP_STATUS_LAST_1"
+      },
+      {
+        "run_eocs": "EOC_TRAVEL_CAMP_STATUS_LAST_2"
+      },
+      {
+        "run_eocs": "EOC_TRAVEL_CAMP_STATUS_LAST_3"
+      },
+      {
+        "run_eocs": "EOC_TRAVEL_CAMP_STATUS_LAST_4"
+      },
+      {
+        "run_eocs": "EOC_TRAVEL_CAMP_STATUS_PENDING"
+      }
+    ],
+    "false_effect": {
+      "u_message": "当前世界没有启用营地袭击模式。",
+      "type": "info"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_STATUS_CLOCK",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_status_initialized",
+          "default": 0
+        },
+        ">=",
+        {
+          "const": 1
+        }
+      ]
+    },
+    "effect": [
+      {
+        "u_message": "当前时刻，自灾变起第<global_val:travel_status_current_hour>小时，下一场袭击，自灾变起第<global_val:travel_status_next_hour>小时，还剩<global_val:travel_status_remaining_hours>小时，已经结算<global_val:travel_status_count>场，阵营轮次<global_val:travel_status_sequence>。",
+        "type": "info"
+      }
+    ],
+    "false_effect": {
+      "u_message": "这个营地还没有建立袭击时钟，靠近营地移动一次，或使用重置操作。",
+      "type": "info"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_STATUS_PENDING",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_status_pending",
+          "default": 0
+        },
+        ">",
+        {
+          "const": 0
+        }
+      ]
+    },
+    "effect": [
+      {
+        "u_message": "待处理波次，<global_val:travel_status_pending>，预计<global_val:travel_status_remaining_minutes>分钟后抵达，预计额外增援，<global_val:travel_status_bonus>。",
+        "type": "warning"
+      },
+      {
+        "run_eocs": "EOC_TRAVEL_CAMP_STATUS_SELECTED_0"
+      },
+      {
+        "run_eocs": "EOC_TRAVEL_CAMP_STATUS_SELECTED_1"
+      },
+      {
+        "run_eocs": "EOC_TRAVEL_CAMP_STATUS_SELECTED_2"
+      },
+      {
+        "run_eocs": "EOC_TRAVEL_CAMP_STATUS_SELECTED_3"
+      },
+      {
+        "run_eocs": "EOC_TRAVEL_CAMP_STATUS_SELECTED_4"
+      }
+    ],
+    "false_effect": {
+      "u_message": "当前没有待处理袭击，按现有营地规模计算，下一场额外增援约为<global_val:travel_status_bonus>。",
+      "type": "info"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_STATUS_DIFFICULTY_0",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_status_difficulty",
+          "default": 1
+        },
+        "==",
+        {
+          "const": 0
+        }
+      ]
+    },
+    "effect": {
+      "u_message": "袭击强度，故事。",
+      "type": "info"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_STATUS_DIFFICULTY_1",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_status_difficulty",
+          "default": 1
+        },
+        "==",
+        {
+          "const": 1
+        }
+      ]
+    },
+    "effect": {
+      "u_message": "袭击强度，平衡。",
+      "type": "info"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_STATUS_DIFFICULTY_2",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_status_difficulty",
+          "default": 1
+        },
+        "==",
+        {
+          "const": 2
+        }
+      ]
+    },
+    "effect": {
+      "u_message": "袭击强度，硬核。",
+      "type": "info"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_STATUS_DIFFICULTY_3",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_status_difficulty",
+          "default": 1
+        },
+        "==",
+        {
+          "const": 3
+        }
+      ]
+    },
+    "effect": {
+      "u_message": "袭击强度，荣誉。",
+      "type": "info"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_STATUS_LAST_0",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_status_last",
+          "default": 0
+        },
+        "==",
+        {
+          "const": 0
+        }
+      ]
+    },
+    "effect": {
+      "u_message": "上一场阵营，尚未决定。",
+      "type": "info"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_STATUS_LAST_1",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_status_last",
+          "default": 0
+        },
+        "==",
+        {
+          "const": 1
+        }
+      ]
+    },
+    "effect": {
+      "u_message": "上一场阵营，尸群。",
+      "type": "info"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_STATUS_LAST_2",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_status_last",
+          "default": 0
+        },
+        "==",
+        {
+          "const": 2
+        }
+      ]
+    },
+    "effect": {
+      "u_message": "上一场阵营，三尖树。",
+      "type": "info"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_STATUS_LAST_3",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_status_last",
+          "default": 0
+        },
+        "==",
+        {
+          "const": 3
+        }
+      ]
+    },
+    "effect": {
+      "u_message": "上一场阵营，米戈。",
+      "type": "info"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_STATUS_LAST_4",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_status_last",
+          "default": 0
+        },
+        "==",
+        {
+          "const": 4
+        }
+      ]
+    },
+    "effect": {
+      "u_message": "上一场阵营，强盗。",
+      "type": "info"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_STATUS_SELECTED_0",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_status_selected",
+          "default": 0
+        },
+        "==",
+        {
+          "const": 0
+        }
+      ]
+    },
+    "effect": {
+      "u_message": "预计阵营，尚未决定。",
+      "type": "info"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_STATUS_SELECTED_1",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_status_selected",
+          "default": 0
+        },
+        "==",
+        {
+          "const": 1
+        }
+      ]
+    },
+    "effect": {
+      "u_message": "预计阵营，尸群。",
+      "type": "warning"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_STATUS_SELECTED_2",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_status_selected",
+          "default": 0
+        },
+        "==",
+        {
+          "const": 2
+        }
+      ]
+    },
+    "effect": {
+      "u_message": "预计阵营，三尖树。",
+      "type": "warning"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_STATUS_SELECTED_3",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_status_selected",
+          "default": 0
+        },
+        "==",
+        {
+          "const": 3
+        }
+      ]
+    },
+    "effect": {
+      "u_message": "预计阵营，米戈。",
+      "type": "warning"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_CAMP_STATUS_SELECTED_4",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_status_selected",
+          "default": 0
+        },
+        "==",
+        {
+          "const": 4
+        }
+      ]
+    },
+    "effect": {
+      "u_message": "预计阵营，强盗。",
+      "type": "warning"
+    }
+  }
+]

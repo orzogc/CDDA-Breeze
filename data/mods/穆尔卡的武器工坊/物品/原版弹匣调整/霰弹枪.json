@@ -1,0 +1,78 @@
+[
+  {
+    "id": "shot_speedloader6",
+    "copy-from": "shot_speedloader6",
+    "looks_like": "shotbelt_20",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "6发快速装弹器（霰弹）"
+    },
+    "description": "一根带滑动手柄的塑料管，能够比手工装填更快地将 6 发霰弹装入霰弹枪中。它需要与枪上的滑槽接口对接，才能快速使用。",
+    "weight": "80 g",
+    "volume": "350 ml",
+    "longest_side": "45 cm",
+    "price": 3200,
+    "price_postapoc": 50,
+    "material": [
+      "plastic"
+    ],
+    "symbol": "/",
+    "color": "light_gray",
+    "ammo_type": [
+      "shot"
+    ],
+    "capacity": 6,
+    "flags": [
+      "SPEEDLOADER",
+      "BELT_CLIP",
+      "霰弹快速装弹器"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "shot": 6
+        }
+      }
+    ]
+  },
+  {
+    "id": "shot_speedloader8",
+    "copy-from": "shot_speedloader8",
+    "looks_like": "shotbelt_20",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "8发快速装弹器（霰弹）"
+    },
+    "description": "一根带滑动手柄的塑料管，能够比手工装填更快地将 8 发霰弹装入霰弹枪中。它需要与枪上的滑槽接口对接，才能快速使用。",
+    "weight": "100 g",
+    "volume": "400 ml",
+    "longest_side": "55 cm",
+    "price": 3250,
+    "price_postapoc": 50,
+    "material": [
+      "plastic"
+    ],
+    "symbol": "/",
+    "color": "light_gray",
+    "ammo_type": [
+      "shot"
+    ],
+    "capacity": 8,
+    "flags": [
+      "SPEEDLOADER",
+      "BELT_CLIP",
+      "霰弹快速装弹器"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "shot": 8
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,66 @@
+[
+  {
+    "type": "mutation",
+    "id": "the_potato",
+    "name": {
+      "str": "“土豆”"
+    },
+    "points": 0,
+    "description": "没准是出于好玩，亦或是真的把自己当做是一个土豆，要么就是对土豆的狂热爱好，你总是经常在别人面前称之为自己是个土豆，或许对别人来说，这其实更像是昵称……",
+    "valid": false,
+    "purifiable": false,
+    "profession": true
+  },
+  {
+    "type": "mutation",
+    "id": "murka_hair",
+    "name": {
+      "str": "穆尔卡的发型"
+    },
+    "points": 20,
+    "description": "你不记得发生了什么，貌似梦中你梦见了一个什么土豆精灵……然后你就喝了那家伙给的东西，醒过来后你就变成了这样,这是个好事吗？",
+    "starting_trait": false,
+    "valid": false,
+    "player_display": true,
+    "vanity": true,
+    "flags": [
+      "hair_gray",
+      "hair_long"
+    ],
+    "types": [
+      "hair_style"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "murka_eye",
+    "name": {
+      "str": "穆尔卡的眼睛"
+    },
+    "points": 20,
+    "description": "你不记得发生了什么，貌似梦中你梦见了一个什么土豆精灵……然后你就喝了那家伙给的东西，醒过来后你就变成了这样,这是个好事吗？",
+    "starting_trait": false,
+    "valid": false,
+    "player_display": true,
+    "vanity": true,
+    "types": [
+      "eye_color"
+    ]
+  },
+  {
+    "id": "murka_skin",
+    "type": "mutation",
+    "name": {
+      "str": "穆尔卡的皮肤"
+    },
+    "description": "你不记得发生了什么，貌似梦中你梦见了一个什么土豆精灵……然后你就喝了那家伙给的东西，醒过来后你就变成了这样,这是个好事吗？",
+    "points": 20,
+    "starting_trait": false,
+    "valid": false,
+    "player_display": true,
+    "vanity": true,
+    "types": [
+      "skin_tone"
+    ]
+  }
+]

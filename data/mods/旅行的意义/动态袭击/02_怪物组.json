@@ -1,0 +1,505 @@
+[
+  {
+    "type": "monstergroup",
+    "name": "GROUP_TRAVEL_DYNAMIC_ZOMBIE_RAID_BASE",
+    "default": "mon_zombie",
+    "monsters": [
+      {
+        "monster": "mon_zombie",
+        "weight": 520
+      },
+      {
+        "monster": "mon_zombie_fat",
+        "weight": 100
+      },
+      {
+        "monster": "mon_zombie_tough",
+        "weight": 85
+      },
+      {
+        "monster": "mon_zombie_child",
+        "weight": 70
+      },
+      {
+        "monster": "mon_zombie_rot",
+        "weight": 65
+      },
+      {
+        "monster": "mon_zombie_crawler",
+        "weight": 45
+      },
+      {
+        "monster": "mon_zombie_dog",
+        "weight": 35
+      },
+      {
+        "monster": "mon_zombie_runner",
+        "weight": 30
+      },
+      {
+        "monster": "mon_zombie_cop",
+        "weight": 20
+      },
+      {
+        "monster": "mon_zombie_fireman",
+        "weight": 15
+      },
+      {
+        "monster": "mon_zombie_medical",
+        "weight": 15
+      },
+      {
+        "monster": "mon_zombie_thorny",
+        "weight": 25
+      },
+      {
+        "monster": "mon_feral_human_pipe",
+        "weight": 20
+      },
+      {
+        "monster": "mon_feral_human_crowbar",
+        "weight": 10
+      }
+    ]
+  },
+  {
+    "type": "monstergroup",
+    "name": "GROUP_TRAVEL_DYNAMIC_ZOMBIE_RAID_TIER1_POOL",
+    "default": "mon_zombie_grabber",
+    "monsters": [
+      {
+        "monster": "mon_zombie_grabber",
+        "weight": 75
+      },
+      {
+        "monster": "mon_zombie_grappler",
+        "weight": 55
+      },
+      {
+        "monster": "mon_zombie_hunter",
+        "weight": 45
+      },
+      {
+        "monster": "mon_skeleton",
+        "weight": 50
+      },
+      {
+        "monster": "mon_zombie_smoker",
+        "weight": 35
+      },
+      {
+        "monster": "mon_zombie_shady",
+        "weight": 30
+      },
+      {
+        "monster": "mon_zombie_gasbag",
+        "weight": 35
+      },
+      {
+        "monster": "mon_zombie_biter",
+        "weight": 35
+      },
+      {
+        "monster": "mon_zombie_shrieker",
+        "weight": 65
+      },
+      {
+        "monster": "mon_zombie_acidic",
+        "weight": 55
+      },
+      {
+        "monster": "mon_boomer",
+        "weight": 65
+      }
+    ]
+  },
+  {
+    "type": "monstergroup",
+    "name": "GROUP_TRAVEL_DYNAMIC_ZOMBIE_RAID_TIER2_POOL",
+    "default": "mon_zombie_brute",
+    "monsters": [
+      {
+        "monster": "mon_zombie_brute",
+        "weight": 55
+      },
+      {
+        "monster": "mon_zombie_static",
+        "weight": 35
+      },
+      {
+        "monster": "mon_zombie_winged",
+        "weight": 30
+      },
+      {
+        "monster": "mon_zombie_regenerating",
+        "weight": 18
+      }
+    ]
+  },
+  {
+    "type": "monstergroup",
+    "name": "GROUP_TRAVEL_DYNAMIC_ZOMBIE_RAID_TIER3_POOL",
+    "default": "mon_zombie_necro",
+    "monsters": [
+      {
+        "monster": "mon_zombie_necro",
+        "weight": 12
+      },
+      {
+        "monster": "mon_zombie_master",
+        "weight": 3
+      }
+    ]
+  },
+  {
+    "type": "monstergroup",
+    "name": "GROUP_TRAVEL_DYNAMIC_ZOMBIE_RAID_NIGHT_EARLY",
+    "default": "mon_zombie_soldier_blackops_1",
+    "monsters": [
+      {
+        "monster": "mon_zombie_soldier_blackops_1",
+        "weight": 55
+      },
+      {
+        "monster": "mon_zombie_soldier_blackops_2",
+        "weight": 20
+      },
+      {
+        "monster": "mon_zombie_brute_ninja",
+        "weight": 25
+      }
+    ]
+  },
+  {
+    "type": "monstergroup",
+    "name": "GROUP_TRAVEL_DYNAMIC_ZOMBIE_RAID_NIGHT_LATE",
+    "default": "mon_zombie_soldier_blackops_2",
+    "monsters": [
+      {
+        "monster": "mon_zombie_soldier_blackops_1",
+        "weight": 35
+      },
+      {
+        "monster": "mon_zombie_soldier_blackops_2",
+        "weight": 35
+      },
+      {
+        "monster": "mon_zombie_brute_ninja",
+        "weight": 30
+      }
+    ]
+  },
+  {
+    "type": "monstergroup",
+    "name": "GROUP_TRAVEL_DYNAMIC_ZOMBIE_RAID",
+    "default": "mon_zombie",
+    "replace_monster_group": true,
+    "new_monster_group_id": "GROUP_TRAVEL_DYNAMIC_ZOMBIE_RAID_EVOLVED_1",
+    "replacement_time": "7 days",
+    "monsters": [
+      {
+        "group": "GROUP_TRAVEL_DYNAMIC_ZOMBIE_RAID_BASE",
+        "weight": 750
+      },
+      {
+        "group": "GROUP_TRAVEL_DYNAMIC_ZOMBIE_RAID_NIGHT_EARLY",
+        "weight": 250
+      }
+    ]
+  },
+  {
+    "type": "monstergroup",
+    "name": "GROUP_TRAVEL_DYNAMIC_ZOMBIE_RAID_EVOLVED_1",
+    "default": "mon_zombie",
+    "replace_monster_group": true,
+    "new_monster_group_id": "GROUP_TRAVEL_DYNAMIC_ZOMBIE_RAID_EVOLVED_2",
+    "replacement_time": "15 days",
+    "monsters": [
+      {
+        "group": "GROUP_TRAVEL_DYNAMIC_ZOMBIE_RAID_BASE",
+        "weight": 540
+      },
+      {
+        "group": "GROUP_TRAVEL_DYNAMIC_ZOMBIE_RAID_TIER1_POOL",
+        "weight": 190
+      },
+      {
+        "group": "GROUP_TRAVEL_DYNAMIC_ZOMBIE_RAID_NIGHT_EARLY",
+        "weight": 270
+      }
+    ]
+  },
+  {
+    "type": "monstergroup",
+    "name": "GROUP_TRAVEL_DYNAMIC_ZOMBIE_RAID_EVOLVED_2",
+    "default": "mon_zombie_tough",
+    "replace_monster_group": true,
+    "new_monster_group_id": "GROUP_TRAVEL_DYNAMIC_ZOMBIE_RAID_EVOLVED_3",
+    "replacement_time": "30 days",
+    "monsters": [
+      {
+        "group": "GROUP_TRAVEL_DYNAMIC_ZOMBIE_RAID_BASE",
+        "weight": 380
+      },
+      {
+        "group": "GROUP_TRAVEL_DYNAMIC_ZOMBIE_RAID_TIER1_POOL",
+        "weight": 240
+      },
+      {
+        "group": "GROUP_TRAVEL_DYNAMIC_ZOMBIE_RAID_TIER2_POOL",
+        "weight": 100
+      },
+      {
+        "group": "GROUP_TRAVEL_DYNAMIC_ZOMBIE_RAID_NIGHT_LATE",
+        "weight": 280
+      }
+    ]
+  },
+  {
+    "type": "monstergroup",
+    "name": "GROUP_TRAVEL_DYNAMIC_ZOMBIE_RAID_EVOLVED_3",
+    "default": "mon_zombie_brute",
+    "monsters": [
+      {
+        "group": "GROUP_TRAVEL_DYNAMIC_ZOMBIE_RAID_BASE",
+        "weight": 230
+      },
+      {
+        "group": "GROUP_TRAVEL_DYNAMIC_ZOMBIE_RAID_TIER1_POOL",
+        "weight": 260
+      },
+      {
+        "group": "GROUP_TRAVEL_DYNAMIC_ZOMBIE_RAID_TIER2_POOL",
+        "weight": 170
+      },
+      {
+        "group": "GROUP_TRAVEL_DYNAMIC_ZOMBIE_RAID_TIER3_POOL",
+        "weight": 40
+      },
+      {
+        "group": "GROUP_TRAVEL_DYNAMIC_ZOMBIE_RAID_NIGHT_LATE",
+        "weight": 300
+      }
+    ]
+  },
+  {
+    "type": "monstergroup",
+    "name": "GROUP_TRAVEL_DYNAMIC_MIGO_RAID",
+    "default": "mon_mi_go",
+    "replace_monster_group": true,
+    "new_monster_group_id": "GROUP_TRAVEL_DYNAMIC_MIGO_RAID_1",
+    "replacement_time": "84 hours",
+    "monsters": [
+      {
+        "monster": "mon_mi_go",
+        "weight": 100
+      }
+    ]
+  },
+  {
+    "type": "monstergroup",
+    "name": "GROUP_TRAVEL_DYNAMIC_MIGO_RAID_1",
+    "default": "mon_mi_go",
+    "replace_monster_group": true,
+    "new_monster_group_id": "GROUP_TRAVEL_DYNAMIC_MIGO_RAID_2",
+    "replacement_time": "180 hours",
+    "monsters": [
+      {
+        "monster": "mon_mi_go",
+        "weight": 65
+      },
+      {
+        "monster": "mon_mi_go_scout",
+        "weight": 35
+      }
+    ]
+  },
+  {
+    "type": "monstergroup",
+    "name": "GROUP_TRAVEL_DYNAMIC_MIGO_RAID_2",
+    "default": "mon_mi_go",
+    "replace_monster_group": true,
+    "new_monster_group_id": "GROUP_TRAVEL_DYNAMIC_MIGO_RAID_3",
+    "replacement_time": "15 days",
+    "monsters": [
+      {
+        "monster": "mon_mi_go",
+        "weight": 52
+      },
+      {
+        "monster": "mon_mi_go_scout",
+        "weight": 28
+      },
+      {
+        "monster": "mon_mi_go_slaver",
+        "weight": 13
+      },
+      {
+        "monster": "mon_mi_go_surgeon",
+        "weight": 7
+      }
+    ]
+  },
+  {
+    "type": "monstergroup",
+    "name": "GROUP_TRAVEL_DYNAMIC_MIGO_RAID_3",
+    "default": "mon_mi_go",
+    "replace_monster_group": true,
+    "new_monster_group_id": "GROUP_TRAVEL_DYNAMIC_MIGO_RAID_4",
+    "replacement_time": "540 hours",
+    "monsters": [
+      {
+        "monster": "mon_mi_go",
+        "weight": 46
+      },
+      {
+        "monster": "mon_mi_go_scout",
+        "weight": 25
+      },
+      {
+        "monster": "mon_mi_go_slaver",
+        "weight": 13
+      },
+      {
+        "monster": "mon_mi_go_surgeon",
+        "weight": 7
+      },
+      {
+        "monster": "mon_mi_go_guard",
+        "weight": 9
+      }
+    ]
+  },
+  {
+    "type": "monstergroup",
+    "name": "GROUP_TRAVEL_DYNAMIC_MIGO_RAID_4",
+    "default": "mon_mi_go_guard",
+    "monsters": [
+      {
+        "monster": "mon_mi_go",
+        "weight": 42
+      },
+      {
+        "monster": "mon_mi_go_scout",
+        "weight": 23
+      },
+      {
+        "monster": "mon_mi_go_slaver",
+        "weight": 13
+      },
+      {
+        "monster": "mon_mi_go_surgeon",
+        "weight": 7
+      },
+      {
+        "monster": "mon_mi_go_guard",
+        "weight": 12
+      },
+      {
+        "monster": "mon_mi_go_myrmidon",
+        "weight": 3
+      }
+    ]
+  },
+  {
+    "type": "monstergroup",
+    "name": "GROUP_TRAVEL_DYNAMIC_AIR_RAID",
+    "default": "mon_spawn_raptor",
+    "replace_monster_group": true,
+    "new_monster_group_id": "GROUP_TRAVEL_DYNAMIC_AIR_RAID_1",
+    "replacement_time": "180 hours",
+    "monsters": [
+      {
+        "monster": "mon_spawn_raptor",
+        "weight": 100
+      }
+    ]
+  },
+  {
+    "type": "monstergroup",
+    "name": "GROUP_TRAVEL_DYNAMIC_AIR_RAID_1",
+    "default": "mon_spawn_raptor",
+    "replace_monster_group": true,
+    "new_monster_group_id": "GROUP_TRAVEL_DYNAMIC_AIR_RAID_2",
+    "replacement_time": "270 hours",
+    "monsters": [
+      {
+        "monster": "mon_spawn_raptor",
+        "weight": 78
+      },
+      {
+        "monster": "mon_spawn_raptor_shady",
+        "weight": 22
+      }
+    ]
+  },
+  {
+    "type": "monstergroup",
+    "name": "GROUP_TRAVEL_DYNAMIC_AIR_RAID_2",
+    "default": "mon_spawn_raptor",
+    "replace_monster_group": true,
+    "new_monster_group_id": "GROUP_TRAVEL_DYNAMIC_AIR_RAID_3",
+    "replacement_time": "15 days",
+    "monsters": [
+      {
+        "monster": "mon_spawn_raptor",
+        "weight": 68
+      },
+      {
+        "monster": "mon_spawn_raptor_shady",
+        "weight": 20
+      },
+      {
+        "monster": "mon_spawn_raptor_unstable",
+        "weight": 12
+      }
+    ]
+  },
+  {
+    "type": "monstergroup",
+    "name": "GROUP_TRAVEL_DYNAMIC_AIR_RAID_3",
+    "default": "mon_spawn_raptor",
+    "monsters": [
+      {
+        "monster": "mon_spawn_raptor",
+        "weight": 60
+      },
+      {
+        "monster": "mon_spawn_raptor_shady",
+        "weight": 20
+      },
+      {
+        "monster": "mon_spawn_raptor_unstable",
+        "weight": 12
+      },
+      {
+        "monster": "mon_spawn_raptor_electric",
+        "weight": 8
+      }
+    ]
+  },
+  {
+    "type": "monstergroup",
+    "name": "GROUP_TRAVEL_DYNAMIC_TRIFFID_INTRO",
+    "default": "mon_travel_raid_triffid",
+    "monsters": [
+      {
+        "monster": "mon_travel_raid_triffid",
+        "weight": 650
+      },
+      {
+        "monster": "mon_travel_raid_triffid_young",
+        "weight": 160
+      },
+      {
+        "monster": "mon_travel_raid_vinebeast",
+        "weight": 120
+      },
+      {
+        "monster": "mon_travel_raid_fungal_fighter",
+        "weight": 70
+      }
+    ],
+    "//": "袭击只使用四种移动型三尖树变体。固定植物和女王不进入普通袭击池，避免额外繁殖与强度失控。"
+  }
+]

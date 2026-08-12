@@ -1,0 +1,120 @@
+[
+  {
+    "id": "762_25",
+    "copy-from": "762_25",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "7.62x25mm 空尖弹"
+    },
+    "description": "为苏俄军方制造的 7.62x25mm 弹药的民用版本，它衍生自 C96 手枪所使用的 7.63x25mm 弹药。",
+    "weight": "10 g",
+    "volume": "107 ml",
+    "longest_side": "35 mm",
+    "price": 100,
+    "price_postapoc": 800,
+    "flags": [
+      "IRREPLACEABLE_CONSUMABLE"
+    ],
+    "material": [
+      "brass",
+      "lead",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "light_gray",
+    "count": 40,
+    "stack_size": 40,
+    "ammo_type": "762x25",
+    "casing": "762_25_casing",
+    "range": 20,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 26,
+      "armor_penetration": 4
+    },
+    "dispersion": 120,
+    "recoil": 540,
+    "effects": [
+      "COOKOFF"
+    ]
+  },
+  {
+    "id": "762_25hot",
+    "copy-from": "762_25hot",
+    "type": "AMMO",
+    "name": {
+      "str": "7.62x25mm 被甲增压弹"
+    },
+    "description": "85格令的7.62x25mm 全金属被甲增压弹的民用版本。相比原版威力更加强大。",
+    "weight": "10 g",
+    "volume": "107 ml",
+    "longest_side": "35 mm",
+    "price": 150,
+    "price_postapoc": 900,
+    "flags": [
+      "IRREPLACEABLE_CONSUMABLE"
+    ],
+    "material": [
+      "brass",
+      "lead",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "light_gray",
+    "count": 40,
+    "stack_size": 40,
+    "ammo_type": "762x25",
+    "casing": "762_25_casing",
+    "range": 20,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 24,
+      "armor_penetration": 6
+    },
+    "dispersion": 110,
+    "recoil": 540,
+    "effects": [
+      "COOKOFF"
+    ]
+  },
+  {
+    "id": "762_25typeP",
+    "copy-from": "762_25typeP",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "7.62x25mm P型弹"
+    },
+    "description": "7.62x25mm 托卡列夫手枪弹的亚音速衍生版本，供微声武器使用。这种子弹通过稍稍降低威力的改进来获得良好的装甲穿彻性能。",
+    "//": "临时按每发1美元定价。大灾变前美国的反华偏见可能使这种弹药更难获得。",
+    "weight": "10 g",
+    "volume": "107 ml",
+    "longest_side": "35 mm",
+    "price": 80,
+    "price_postapoc": 600,
+    "flags": [
+      "IRREPLACEABLE_CONSUMABLE"
+    ],
+    "material": [
+      "brass",
+      "lead",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "light_gray",
+    "count": 40,
+    "stack_size": 40,
+    "ammo_type": "762x25",
+    "casing": "762_25_casing",
+    "range": 18,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 20,
+      "armor_penetration": 8
+    },
+    "dispersion": 120,
+    "recoil": 350,
+    "effects": [
+      "COOKOFF"
+    ]
+  }
+]

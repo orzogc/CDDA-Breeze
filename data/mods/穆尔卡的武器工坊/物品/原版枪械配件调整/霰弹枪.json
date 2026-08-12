@@ -1,0 +1,46 @@
+[
+  {
+    "id": "ksg_aux_shotgun",
+    "copy-from": "ksg_aux_shotgun",
+    "type": "GUNMOD",
+    "name": {
+      "str": "KSG霰弹枪第二弹仓"
+    },
+    "description": "凯尔科技KSG霰弹枪集成的第二弹管，能容纳7发霰弹。无法拆除。",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "shot": 7
+        },
+        "allowed_speedloaders": [
+          "shot_speedloader6",
+          "shot_speedloader8"
+        ]
+      }
+    ],
+    "longest_side": "18 cm"
+  },
+  {
+    "id": "ksg25_aux_shotgun",
+    "copy-from": "ksg25_aux_shotgun",
+    "type": "GUNMOD",
+    "name": {
+      "str": "KSG-25霰弹枪第二弹仓"
+    },
+    "description": "凯尔科技KSG-25霰弹枪集成的第二弹管，能容纳12发霰弹。无法拆除。",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "shot": 12
+        },
+        "allowed_speedloaders": [
+          "shot_speedloader6",
+          "shot_speedloader8"
+        ]
+      }
+    ],
+    "longest_side": "18 cm"
+  }
+]

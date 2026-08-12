@@ -1,0 +1,18 @@
+[
+  {
+    "id": "ptrk_requirement",
+    "type": "requirement",
+    "tools": [
+      [
+        [
+          "ptrk",
+          -1
+        ],
+        [
+          "ptrkvk",
+          -1
+        ]
+      ]
+    ]
+  }
+]

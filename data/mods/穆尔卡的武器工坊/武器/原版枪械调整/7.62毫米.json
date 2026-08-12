@@ -1,0 +1,321 @@
+[
+  {
+    "id": "ak47",
+    "copy-from": "ak47",
+    "looks_like": "ar15",
+    "type": "GUN",
+    "name": {
+      "str": "AKM 步枪"
+    },
+    "description": "AKM于1959年取代早期AK，使用冲压机匣和改进枪口装置，显著降低重量与生产成本。它发射7.62x39mm弹，成为冷战时期苏联及盟国最广泛的步枪之一，并在越南、阿富汗、非洲、中东和巴尔干无数战争中出现。坚固易用，却不以精细人机工效见长。",
+    "weight": "3402 g",
+    "volume": "2167 ml",
+    "longest_side": "87 cm",
+    "price": 290000,
+    "price_postapoc": 4000,
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "color": "brown",
+    "ammo": [
+      "762"
+    ],
+    "dispersion": 180,
+    "durability": 9,
+    "min_cycle_recoil": 1000,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        2
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "akmag30",
+          "akmag10",
+          "akmag20",
+          "akmag40",
+          "akdrum75"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "ak74",
+    "copy-from": "ak74",
+    "looks_like": "ar15",
+    "type": "GUN",
+    "name": {
+      "str": "AK-74M 步枪"
+    },
+    "description": "AK-74M在1990年代初把AK-74系列统一为黑色聚合物护木、侧折叠枪托和标准瞄具安装座，成为俄罗斯军队长期使用的5.45毫米主力步枪。它参加过两次车臣战争、格鲁吉亚战争、叙利亚行动和俄乌战争，可靠耐用，但附件与人机工效后来逐渐落后于新式步枪。",
+    "//": "AK系列在美国同样不常进入商业流通，而且该型号更新。",
+    "weight": "3400 g",
+    "volume": "2418 ml",
+    "longest_side": "94 cm",
+    "price": 390000,
+    "price_postapoc": 4000,
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "color": "brown",
+    "ammo": [
+      "545x39"
+    ],
+    "dispersion": 150,
+    "durability": 8,
+    "min_cycle_recoil": 1000,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        2
+      ]
+    ],
+    "barrel_volume": "250 ml",
+    "flags": [
+      "NEVER_JAMS"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "ak74mag",
+          "rpk74mag",
+          "casket74mag"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "arx160",
+    "copy-from": "arx160",
+    "looks_like": "ar15",
+    "type": "GUN",
+    "name": {
+      "str_sp": "伯莱塔 ARX-160 卡宾枪"
+    },
+    "description": "ARX160是伯莱塔为意大利未来士兵计划研制的模块化5.56毫米步枪，2000年代末开始装备意军。快拆枪管、可转换抛壳方向和双手操作部件便于适应不同射手与任务，曾随意大利部队在阿富汗等地使用。它还参加多国竞标，并衍生出民用ARX100。",
+    "//": "枪械空重3000克；当前折叠枪托重量为200克。",
+    "weight": "3080 g",
+    "volume": "6323 ml",
+    "longest_side": "91 cm",
+    "price": 450000,
+    "price_postapoc": 7500,
+    "to_hit": -1,
+    "material": [
+      "steel"
+    ],
+    "color": "blue",
+    "ammo": [
+      "762"
+    ],
+    "dispersion": 130,
+    "durability": 9,
+    "min_cycle_recoil": 1000,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "barrel_volume": "250 ml",
+    "default_mods": [
+      "folding_stock"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "akmag30",
+          "akmag10",
+          "akmag20",
+          "akmag40"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "mk47",
+    "copy-from": "mk47",
+    "type": "GUN",
+    "name": {
+      "str": "Mk47 \"突变\"步枪"
+    },
+    "description": "CMMG Mk47 Mutant在2010年代进入美国市场，试图把AR式扳机、握把和上机匣布局与AK弹匣、7.62x39mm弹结合起来。加大的枪机和机匣比普通AR-15更适应粗壮弹壳，使用常见AK弹匣也方便后勤。它主要是民用与执法卡宾枪，并没有显著战争服役史。",
+    "weight": "2540 g",
+    "volume": "2300 ml",
+    "longest_side": "930 mm",
+    "price": 170000,
+    "price_postapoc": 4000,
+    "to_hit": {
+      "balance": "neutral",
+      "grip": "solid",
+      "length": "long",
+      "surface": "point"
+    },
+    "material": [
+      "plastic",
+      "steel"
+    ],
+    "looks_like": "modular_ar15",
+    "ammo": [
+      "762"
+    ],
+    "built_in_mods": [
+      "pistol_grip"
+    ],
+    "dispersion": 150,
+    "durability": 7,
+    "loudness": 9,
+    "min_cycle_recoil": 1000,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "reload": 420,
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "akmag10",
+          "akmag20",
+          "akmag30",
+          "akmag40",
+          "akdrum75"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "aksemi",
+    "copy-from": "rifle_semi",
+    "looks_like": "modular_ar15",
+    "type": "GUN",
+    "name": {
+      "str": "PSAK-47 突击步枪"
+    },
+    "description": "PSAK-47是美国棕榈州军械库（Palmetto State Armory）打造的AK风格半自动步枪，以GF3型号为核心代表，凭借对经典AK架构的工艺革新与模块化升级，成为美国民用市场中性价比与实用性兼具的标杆产品。",
+    "weight": "3310 g",
+    "volume": "2167 ml",
+    "longest_side": "71 cm",
+    "price": 79500,
+    "price_postapoc": 2800,
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "color": "brown",
+    "ammo": [
+      "762"
+    ],
+    "dispersion": 180,
+    "durability": 8,
+    "min_cycle_recoil": 1000,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "barrel",
+        1
+      ],
+      [
+        "bore",
+        1
+      ],
+      [
+        "bayonet lug",
+        1
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail mount",
+        1
+      ],
+      [
+        "sights mount",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock mount",
+        1
+      ],
+      [
+        "stock accessory",
+        2
+      ],
+      [
+        "underbarrel mount",
+        1
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "akmag30",
+          "akmag10",
+          "akmag20",
+          "akmag40",
+          "akdrum75"
+        ]
+      }
+    ],
+    "bashing": 12
+  }
+]

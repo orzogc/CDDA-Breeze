@@ -6657,13 +6657,12 @@ std::optional<int> iuse::einktabletpc( Character *p, item *it, bool t, const tri
 
             const int difficulty = std::max( 1, static_cast<int>( mc.get_var(
                                                    "BREEZE_MC_ENCRYPTION_DIFFICULTY", 3.0 ) ) );
-            if( !query_yn( "这张存储卡的加密强度约为%d，建议电脑技能%d。继续尝试破解。",
-                           difficulty, difficulty ) ) {
-                return 1;
-            }
-
             const int skill = std::max( 0, static_cast<int>( std::round(
                                                p->get_skill_level( skill_computer ) ) ) );
+            if( !query_yn( "这张存储卡的加密强度约为%d，建议计算机学技能%d，你当前的计算机学技能为%d。继续尝试破解。",
+                           difficulty, difficulty, skill ) ) {
+                return 1;
+            }
             const int attack = skill * 7 + p->int_cur * 2 + rng( 0, 24 );
             const int defense = difficulty * 9 + rng( 0, 24 );
             p->practice( skill_computer, rng( 3, 7 ) );
@@ -9904,19 +9903,32 @@ std::optional<int> iuse::ebooksave( Character *p, item *it, bool t, const tripoi
         ebooks.insert( ebook->typeId() );
     }
 
-    const item_location book = game_menus::inv::titled_filter_menu(
-    [&ebooks]( const item & itm ) {
-            return itm.is_book() && itm.type->book->is_scannable && !ebooks.count(itm.typeId());
-    },
-    *p->as_avatar(), _( "Scan which book?" ), PICKUP_RANGE );
+    inventory_filter_preset preset( [&ebooks]( const item_location &loc ) {
+        return loc->is_book() && loc->type->book->is_scannable && !ebooks.count( loc->typeId() );
+    } );
+    inventory_multiselector selector( *p, preset );
+    selector.set_title( "选择要扫描的书籍" );
+    selector.set_display_stats( true );
+    selector.set_show_view_category_mode( false );
+    selector.set_column_titles( "随身书籍", "周围书籍" );
+    selector.add_character_items( *p );
+    selector.add_nearby_items( 1 );
+    selector.deduplicate_books_by_source();
 
-    if( !book ) {
+    const std::list<std::pair<item_location, int>> selected = selector.execute();
+    if( selected.empty() ) {
         p->add_msg_if_player( m_info, _( "Nevermind." ) );
         return std::nullopt;
     }
 
+    std::vector<item_location> books;
+    books.reserve( selected.size() );
+    for( const auto &entry : selected ) {
+        books.emplace_back( entry.first );
+    }
+
     p->assign_activity(
-        player_activity( ebooksave_activity_actor( book, item_location( *p, it ) ) ) );
+        player_activity( ebooksave_activity_actor( books, item_location( *p, it ) ) ) );
 
     return std::nullopt;
 }

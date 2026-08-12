@@ -1,0 +1,137 @@
+[
+  {
+    "type": "item_group",
+    "id": "MURKA_0G_LEGACY_WEAPONS",
+    "subtype": "distribution",
+    "entries": [
+      {
+        "item": "MP153_M",
+        "prob": 20
+      },
+      {
+        "item": "ak109c",
+        "prob": 20
+      },
+      {
+        "item": "ash12",
+        "prob": 20
+      },
+      {
+        "item": "fal_308",
+        "prob": 20
+      },
+      {
+        "item": "ks23",
+        "prob": 20
+      },
+      {
+        "item": "qbz",
+        "prob": 20
+      },
+      {
+        "item": "qbz191",
+        "prob": 20
+      },
+      {
+        "item": "rpk16",
+        "prob": 20
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "MURKA_0G_LEGACY_MAGAZINES",
+    "subtype": "distribution",
+    "entries": [
+      {
+        "item": "rpk16_75",
+        "prob": 25
+      },
+      {
+        "item": "9a91_20",
+        "prob": 25
+      },
+      {
+        "item": "ash_20",
+        "prob": 25
+      },
+      {
+        "item": "95_30",
+        "prob": 25
+      },
+      {
+        "item": "191_30",
+        "prob": 25
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "MURKA_0G_LEGACY_AMMO",
+    "subtype": "distribution",
+    "entries": [
+      {
+        "item": "12755",
+        "prob": 25
+      },
+      {
+        "item": "5842",
+        "prob": 25
+      },
+      {
+        "item": "939_fmj",
+        "prob": 25
+      },
+      {
+        "item": "762_fmj",
+        "prob": 25
+      },
+      {
+        "item": "762_sp",
+        "prob": 25
+      },
+      {
+        "item": "545_fmj",
+        "prob": 25
+      },
+      {
+        "item": "762_mai_ap",
+        "prob": 25
+      },
+      {
+        "item": "300blkap",
+        "prob": 25
+      },
+      {
+        "item": "545_bs",
+        "prob": 25
+      },
+      {
+        "item": "9mmpbp",
+        "prob": 25
+      },
+      {
+        "item": "556_995",
+        "prob": 25
+      },
+      {
+        "item": "762_51_bcp",
+        "prob": 25
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "military_standard_grenades",
+    "copy-from": "military_standard_grenades",
+    "subtype": "distribution",
+    "extend": {
+      "entries": [
+        {
+          "item": "rgd5",
+          "prob": 20
+        }
+      ]
+    }
+  }
+]

@@ -1,0 +1,3394 @@
+[
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "9mm_casing",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "copper",
+          10
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "9x18mm_casing",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "copper",
+          10
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "223_casing",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "copper",
+          30
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "308_casing",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "copper",
+          50
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "762_51_casing",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "copper",
+          50
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "300_casing",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "copper",
+          60
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "3006_casing",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "copper",
+          60
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "270win_casing",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "copper",
+          50
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "32_casing",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "copper",
+          10
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "38_casing",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "copper",
+          10
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "38super_casing",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "copper",
+          10
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "40_casing",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "copper",
+          15
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "10mm_casing",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "copper",
+          15
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "44_casing",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "copper",
+          20
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "454_casing",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "copper",
+          20
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "45_casing",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "copper",
+          15
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "45colt_casing",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "copper",
+          15
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "4570_casing",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "copper",
+          70
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "46mm_casing",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "copper",
+          10
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "460_casing",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "copper",
+          15
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "50_casing",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "copper",
+          100
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "545_casing",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "copper",
+          30
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "57mm_casing",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "copper",
+          15
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "762R_casing",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "copper",
+          70
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "762_casing",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "copper",
+          35
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "762_25_casing",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "copper",
+          15
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "357sig_casing",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "copper",
+          15
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "357mag_casing",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "copper",
+          15
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "380_casing",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "copper",
+          10
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "300blk_casing",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "copper",
+          30
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "30carbine_casing",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "copper",
+          25
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "410shot_hull",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "plastic_chunk",
+          3
+        ],
+        [
+          "copper",
+          5
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "shot_hull",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "plastic_chunk",
+          3
+        ],
+        [
+          "copper",
+          10
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "939_casing",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "copper",
+          40
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "127108_casing",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "copper",
+          120
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "145114_casing",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "fabrication",
+    "charges": 30,
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "3 m",
+    "batch_time_factors": [
+      30,
+      3
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          10
+        ],
+        [
+          "oxy_torch",
+          10
+        ],
+        [
+          "fake_arc_furnace",
+          10
+        ]
+      ],
+      [
+        [
+          "swage",
+          -1
+        ]
+      ],
+      [
+        [
+          "crucible",
+          -1
+        ],
+        [
+          "crucible_clay",
+          -1
+        ]
+      ],
+      [
+        [
+          "metal_file",
+          -1
+        ]
+      ],
+      [
+        [
+          "sandpaper",
+          -1
+        ]
+      ],
+      [
+        [
+          "press",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "copper",
+          150
+        ]
+      ]
+    ]
+  }
+]

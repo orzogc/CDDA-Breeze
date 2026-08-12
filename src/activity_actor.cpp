@@ -9,6 +9,7 @@
 #include <list>
 #include <map>
 #include <new>
+#include <set>
 #include <string>
 #include <type_traits>
 #include <utility>
@@ -1470,19 +1471,37 @@ static bool cancel_if_book_invalid(
     return false;
 }
 
+static bool cancel_if_ereader_invalid(
+    player_activity &act, const item_location &ereader, const Character &who )
+{
+    if( !ereader || !ereader->is_ebook_storage() ) {
+        who.add_msg_player_or_npc(
+            _( "You no longer have the e-book reader." ),
+            _( "<npcname> no longer has the e-book reader." ) );
+        act.set_to_null();
+        return true;
+    }
+    if( ereader->is_broken() ) {
+        who.add_msg_player_or_npc(
+            _( "Your %s is broken and won't turn on." ),
+            _( "<npcname>'s %s is broken and won't turn on." ),
+            ereader->tname(), ereader->tname() );
+        act.set_to_null();
+        return true;
+    }
+    return false;
+}
+
 void read_activity_actor::start( player_activity &act, Character &who )
 {
     if( cancel_if_book_invalid( act, book, who ) ) {
         return;
     }
 
-    // book item_location must be of type character
-    // or else there will be item_location errors while loading
-    if( book.where() != item_location::type::character ) {
-        book = item_location( who, book.get_item() );
-    }
-
     using_ereader = !!ereader;
+    if( using_ereader && cancel_if_ereader_invalid( act, ereader, who ) ) {
+        return;
+    }
 
     bktype = book->type->use_methods.count( "MA_MANUAL" ) ?
              book_type::martial_art : book_type::normal;
@@ -1493,6 +1512,11 @@ void read_activity_actor::start( player_activity &act, Character &who )
 
     add_msg_debug( debugmode::DF_ACT_READ, "reading time = %s",
                    to_string_writable( time_duration::from_moves( moves_total ) ) );
+
+    // Starting the activity should cost a charge to boot up the ebook app.
+    if( using_ereader ) {
+        ereader->ammo_consume( ereader->ammo_required(), who.pos(), &who );
+    }
 
     act.moves_total = moves_total;
     act.moves_left = moves_total;
@@ -1532,13 +1556,11 @@ void read_activity_actor::do_turn( player_activity &act, Character &who )
         who.moves = 0;
     }
 
-    if( using_ereader && !ereader ) {
-        who.add_msg_player_or_npc(
-            _( "You no longer have the e-book!" ),
-            _( "<npcname> no longer has the e-book!" ) );
-        who.cancel_activity();
+    if( using_ereader && cancel_if_ereader_invalid( act, ereader, who ) ) {
         return;
-    } else if( using_ereader && !ereader->ammo_sufficient( &who ) ) {
+    }
+
+    if( using_ereader && !ereader->ammo_sufficient( &who, 1, true ) ) {
         add_msg_if_player_sees(
             who,
             _( "%1$s %2$s ran out of batteries." ),
@@ -1546,6 +1568,10 @@ void read_activity_actor::do_turn( player_activity &act, Character &who )
             item::nname( ereader->typeId() ) );
         who.cancel_activity();
         return;
+    }
+
+    if( using_ereader && calendar::once_every( 5_minutes ) ) {
+        ereader->ammo_consume( ereader->ammo_required(), who.pos(), &who );
     }
 }
 
@@ -1852,6 +1878,9 @@ bool read_activity_actor::npc_read( npc &learner )
 void read_activity_actor::finish( player_activity &act, Character &who )
 {
     if( cancel_if_book_invalid( act, book, who ) ) {
+        return;
+    }
+    if( using_ereader && cancel_if_ereader_invalid( act, ereader, who ) ) {
         return;
     }
 
@@ -2601,20 +2630,33 @@ std::unique_ptr<activity_actor> lockpick_activity_actor::deserialize( JsonValue 
 
 void ebooksave_activity_actor::start( player_activity &act, Character &/*who*/ )
 {
-    const int pages = pages_in_book( book->typeId() );
-    const time_duration scanning_time = pages < 1 ? time_per_page : pages * time_per_page;
-    add_msg_debug( debugmode::DF_ACT_EBOOK, "ebooksave pages = %d", pages );
+    int total_pages = 0;
+    for( const item_location &b : books ) {
+        if( b ) {
+            total_pages += pages_in_book( b->typeId() );
+        }
+    }
+    const time_duration scanning_time = total_pages < 1 ? time_per_page : total_pages * time_per_page;
+    add_msg_debug( debugmode::DF_ACT_EBOOK, "ebooksave pages = %d", total_pages );
     add_msg_debug( debugmode::DF_ACT_EBOOK, "scanning_time time = %s",
                    to_string_writable( scanning_time ) );
     act.moves_total = to_moves<int>( scanning_time );
     act.moves_left = act.moves_total;
 }
 
-void ebooksave_activity_actor::do_turn( player_activity &/*act*/, Character &who )
+void ebooksave_activity_actor::do_turn( player_activity &act, Character &who )
 {
+    if( !ereader || !ereader->is_ebook_storage() ) {
+        who.add_msg_player_or_npc(
+            _( "You no longer have the e-book reader." ),
+            _( "<npcname> no longer has the e-book reader." ) );
+        act.set_to_null();
+        return;
+    }
+
     // only consume charges every 25 pages
     if( calendar::once_every( 25 * time_per_page ) ) {
-        if( !ereader->ammo_sufficient( &who ) ) {
+        if( !ereader->ammo_sufficient( &who, 1, true ) ) {
             add_msg_if_player_sees(
                 who,
                 _( "%1$s %2$s ran out of batteries." ),
@@ -2627,18 +2669,45 @@ void ebooksave_activity_actor::do_turn( player_activity &/*act*/, Character &who
         ereader->ammo_consume( ereader->ammo_required(), who.pos(), &who );
     }
 }
-
 void ebooksave_activity_actor::finish( player_activity &act, Character &who )
 {
-    item book_copy = *book;
-    ereader->put_in( book_copy, item_pocket::pocket_type::EBOOK );
-    if( who.is_avatar() ) {
-        if( !who.has_identified( book->typeId() ) ) {
-            who.identify( *book );
+    if( !ereader || !ereader->is_ebook_storage() ) {
+        act.set_to_null();
+        return;
+    }
+
+    std::set<itype_id> device_ebooks;
+    for( const item *ebook : ereader->ebooks() ) {
+        if( ebook->is_book() ) {
+            device_ebooks.insert( ebook->typeId() );
         }
-        add_msg( m_info, _( "You scan the book into your device." ) );
+    }
+
+    int scanned = 0;
+    for( const item_location &b : books ) {
+        if( !b || device_ebooks.count( b->typeId() ) ) {
+            continue;
+        }
+        item book_copy = *b;
+        if( !ereader->put_in( book_copy, item_pocket::pocket_type::EBOOK ).success() ) {
+            continue;
+        }
+        device_ebooks.insert( book_copy.typeId() );
+        scanned++;
+        if( who.is_avatar() && !who.has_identified( book_copy.typeId() ) ) {
+            who.identify( book_copy );
+        }
+    }
+
+    if( who.is_avatar() ) {
+        if( scanned > 0 ) {
+            add_msg( m_info, n_gettext( "You scan %d book into your device.",
+                                        "You scan %d books into your device.", scanned ), scanned );
+        } else {
+            add_msg( m_info, _( "There is no book to scan." ) );
+        }
     } else { // who.is_npc()
-        add_msg_if_player_sees( who, _( "%s scans the book into their device." ),
+        add_msg_if_player_sees( who, _( "%s scans books into their device." ),
                                 who.disp_name( false, true ) );
     }
     act.set_to_null();
@@ -2647,21 +2716,28 @@ void ebooksave_activity_actor::finish( player_activity &act, Character &who )
 void ebooksave_activity_actor::serialize( JsonOut &jsout ) const
 {
     jsout.start_object();
-    jsout.member( "book", book );
+    jsout.member( "books", books );
     jsout.member( "ereader", ereader );
     jsout.end_object();
 }
 
 std::unique_ptr<activity_actor> ebooksave_activity_actor::deserialize( JsonValue &jsin )
 {
-    ebooksave_activity_actor actor = ebooksave_activity_actor( {}, {} );
-
     JsonObject data = jsin.get_object();
-    data.read( "book", actor.book );
-    data.read( "ereader", actor.ereader );
+    std::vector<item_location> books;
+    data.read( "books", books );
+    if( books.empty() && data.has_member( "book" ) ) {
+        item_location legacy_book;
+        data.read( "book", legacy_book );
+        if( legacy_book ) {
+            books.emplace_back( legacy_book );
+        }
+    }
+    item_location ereader;
+    data.read( "ereader", ereader );
+    ebooksave_activity_actor actor( books, ereader );
     return actor.clone();
 }
-
 
 
 void migration_cancel_activity_actor::do_turn( player_activity &act, Character &who )

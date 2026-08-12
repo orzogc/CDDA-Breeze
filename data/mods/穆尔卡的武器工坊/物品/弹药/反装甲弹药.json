@@ -1,0 +1,131 @@
+[
+  {
+    "id": "145114",
+    "type": "AMMO",
+    "name": "14.5x114mm弹",
+    "description": "俄制大口径反器材子弹，用于击穿二战早期的坦克，具有巨大的杀伤力和穿透性。",
+    "weight": "20 g",
+    "volume": "200 ml",
+    "price": 5100,
+    "price_postapoc": 7500,
+    "flags": [
+      "IRREPLACEABLE_CONSUMABLE"
+    ],
+    "material": [
+      "brass",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "yellow",
+    "count": 50,
+    "stack_size": 50,
+    "ammo_type": "145114",
+    "casing": "145114_casing",
+    "range": 150,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 205,
+      "armor_penetration": 100
+    },
+    "dispersion": 110,
+    "recoil": 32850,
+    "effects": [
+      "COOKOFF",
+      "NEVER_MISFIRES"
+    ],
+    "longest_side": "8 cm"
+  },
+  {
+    "id": "127108",
+    "type": "AMMO",
+    "name": "12.7x108mm弹",
+    "description": "俄制大口径反器材子弹，用于俄制反器材狙击步枪和重机枪。",
+    "weight": "15 g",
+    "volume": "120 ml",
+    "price": 4800,
+    "price_postapoc": 5300,
+    "flags": [
+      "IRREPLACEABLE_CONSUMABLE"
+    ],
+    "material": [
+      "brass",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "yellow",
+    "count": 50,
+    "stack_size": 50,
+    "ammo_type": "127108",
+    "casing": "127108_casing",
+    "range": 150,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 145,
+      "armor_penetration": 39
+    },
+    "dispersion": 80,
+    "recoil": 29850,
+    "effects": [
+      "COOKOFF",
+      "NEVER_MISFIRES"
+    ],
+    "longest_side": "8 cm"
+  },
+  {
+    "id": "reloaded_145114",
+    "copy-from": "145114",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "14.5x114mm BS 弹（复装）"
+    },
+    "description": "一发复装的145x114反器材弹，性能稍差。",
+    "proportional": {
+      "price": 0.7,
+      "damage": {
+        "damage_type": "bullet",
+        "amount": 0.9
+      },
+      "dispersion": 1.1
+    },
+    "extend": {
+      "effects": [
+        "RECYCLED"
+      ]
+    },
+    "delete": {
+      "effects": [
+        "NEVER_MISFIRES"
+      ],
+      "flags": [
+        "IRREPLACEABLE_CONSUMABLE"
+      ]
+    },
+    "longest_side": "8 cm"
+  },
+  {
+    "id": "reloaded_127108",
+    "copy-from": "127108",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "12.7x108mm B-30 弹（复装）"
+    },
+    "description": "一发复装的127x108反器材弹，性能稍差。",
+    "proportional": {
+      "price": 0.7,
+      "damage": {
+        "damage_type": "bullet",
+        "amount": 0.9
+      },
+      "dispersion": 1.1
+    },
+    "extend": {
+      "effects": [
+        "RECYCLED"
+      ]
+    },
+    "flags": [
+      "IRREPLACEABLE_CONSUMABLE"
+    ],
+    "longest_side": "8 cm"
+  }
+]

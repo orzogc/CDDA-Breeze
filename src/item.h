@@ -2358,7 +2358,8 @@ class item : public visitable
          * @param qty Number of uses
          * @returns true if ammo sufficient for number of uses is loaded, false otherwise
          */
-        bool ammo_sufficient( const Character *carrier, int qty = 1 ) const;
+        bool ammo_sufficient( const Character *carrier, int qty = 1,
+                              bool include_cable_links = false ) const;
 
         bool ammo_sufficient( const Character *carrier, const std::string &method, int qty = 1 ) const;
 

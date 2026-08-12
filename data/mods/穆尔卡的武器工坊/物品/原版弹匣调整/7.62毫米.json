@@ -1,0 +1,103 @@
+[
+  {
+    "id": "762x39_clip",
+    "copy-from": "762x39_clip",
+    "looks_like": "stanag30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "7.62x39mm 10发弹夹"
+    },
+    "description": "一块体积小巧中有凹槽的金属片，用来让射手为兼容枪械快速装填10发7.62x39mm弹。",
+    "//": "暂定。",
+    "weight": "40 g",
+    "volume": "10ml",
+    "longest_side": "6 cm",
+    "price": 1000,
+    "price_postapoc": 50,
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "762"
+    ],
+    "flags": [
+      "SPEEDLOADER",
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "762": 10
+        }
+      }
+    ]
+  },
+  {
+    "id": "akmag10",
+    "copy-from": "akmag10",
+    "looks_like": "stanag30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "AK 10发弹匣"
+    },
+    "description": "一个紧凑的10发弹匣，可用于7.62x39mm AK型步枪，由冲压金属板制成，为枪械管理严格的州民使用而设计。",
+    "weight": "130 g",
+    "volume": "151 ml",
+    "longest_side": "150 mm"
+  },
+  {
+    "id": "akmag20",
+    "copy-from": "akmag20",
+    "looks_like": "stanag30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "AK 20发弹匣"
+    },
+    "description": "一个紧凑的20发弹匣，可用于7.62x39mm AK型步枪，由冲压金属板制成，最初设计为供坦克乘员使用。",
+    "weight": "283 g",
+    "volume": "265 ml",
+    "longest_side": "180 mm"
+  },
+  {
+    "id": "akmag30",
+    "copy-from": "akmag30",
+    "looks_like": "stanag30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "AK 30发弹匣"
+    },
+    "description": "一个标准的30发弹匣，可用于7.62x39mm AK型步枪，由冲压金属板制成。",
+    "weight": "326 g",
+    "volume": "300 ml",
+    "longest_side": "210 mm"
+  },
+  {
+    "id": "akmag40",
+    "copy-from": "akmag40",
+    "looks_like": "stanag30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "AK 40发弹匣"
+    },
+    "description": "一个扩容的40发弹匣，可用于7.62x39mm AK型步枪，由冲压金属板制成。",
+    "weight": "424 g",
+    "volume": "350 ml",
+    "longest_side": "240 mm"
+  },
+  {
+    "id": "akdrum75",
+    "copy-from": "akdrum75",
+    "looks_like": "stanag30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "AK 75发弹鼓"
+    },
+    "description": "笨重的75发弹鼓，可用于7.62x39mm AK型步枪，由冲压金属板制成。",
+    "weight": "1020 g",
+    "volume": "750 ml",
+    "longest_side": "240 mm"
+  }
+]

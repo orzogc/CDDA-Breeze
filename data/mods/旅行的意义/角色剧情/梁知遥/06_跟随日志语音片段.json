@@ -1,0 +1,104 @@
+[
+  {
+    "type": "snippet",
+    "category": "<travel_liang_monster_warning>",
+    "//": "前缀片段，游戏会在后面自动追加怪物名称，方向和距离。",
+    "text": [
+      "注意，有",
+      "前面出现了",
+      "我看见了",
+      "危险目标，是"
+    ]
+  },
+  {
+    "type": "snippet",
+    "category": "<travel_liang_danger_close_distance>",
+    "//": "怪物距离后缀。",
+    "text": [
+      "已经近在眼前。",
+      "就在身边。",
+      "距离太近了。"
+    ]
+  },
+  {
+    "type": "snippet",
+    "category": "<travel_liang_close_distance>",
+    "//": "怪物距离后缀。",
+    "text": [
+      "距离很近。",
+      "已经进入近距离。",
+      "就在前面不远。"
+    ]
+  },
+  {
+    "type": "snippet",
+    "category": "<travel_liang_medium_distance>",
+    "//": "怪物距离后缀。",
+    "text": [
+      "就在附近。",
+      "距离不算远。",
+      "还在可控距离。"
+    ]
+  },
+  {
+    "type": "snippet",
+    "category": "<travel_liang_far_distance>",
+    "//": "怪物距离后缀。",
+    "text": [
+      "还在远处。",
+      "距离很远。",
+      "暂时离我们很远。"
+    ]
+  },
+  {
+    "type": "snippet",
+    "category": "<travel_liang_movement_noise_warning>",
+    "//": "前缀片段，游戏会在后面自动追加脚步声，拖行声或其他移动声音描述。",
+    "text": [
+      "那边传来了",
+      "我听见了",
+      "附近像是有",
+      "前面传来了"
+    ]
+  },
+  {
+    "type": "snippet",
+    "category": "<travel_liang_speech_warning>",
+    "//": "听见视野外的说话声，警报声或其他类似声音时使用，不会自动追加声音描述。",
+    "text": [
+      "那边传来了陌生的声音，保持警惕。",
+      "我听见了声音，来源不在视野里。",
+      "附近有动静，先确认来源。",
+      "那边有声音，注意周围。"
+    ]
+  },
+  {
+    "type": "snippet",
+    "category": "<travel_liang_combat_noise_warning>",
+    "//": "听见视野外的战斗声音时使用，不会自动追加声音描述。",
+    "text": [
+      "那边有交战声，保持警惕。",
+      "我听见了战斗的声音，先确认位置。",
+      "附近正在发生战斗，准备应对。",
+      "那边的动静像是在交战。"
+    ]
+  },
+  {
+    "type": "snippet",
+    "category": "<travel_liang_general_danger>",
+    "text": [
+      "附近有危险，保持警惕。",
+      "情况不对，准备应对。",
+      "有威胁正在接近，注意周围。"
+    ]
+  },
+  {
+    "type": "snippet",
+    "category": "<travel_liang_its_safe>",
+    "text": [
+      "危险暂时过去了。",
+      "周围暂时安全。",
+      "情况稳定下来了。"
+    ]
+  }
+]

@@ -1,0 +1,107 @@
+[
+  {
+    "id": "mansion_safe",
+    "type": "item_group",
+    "copy-from": "mansion_safe",
+    "extend": {
+      "items": [
+        [
+          "diamond",
+          20
+        ],
+        [
+          "potato_suit",
+          0.1
+        ],
+        {
+          "item": "money_bundle_twenty",
+          "prob": 50,
+          "count": [
+            1,
+            5
+          ]
+        },
+        {
+          "item": "money_bundle_fifty",
+          "prob": 50,
+          "count": [
+            1,
+            5
+          ]
+        },
+        {
+          "item": "money_bundle_hundred",
+          "prob": 20,
+          "count": [
+            1,
+            2
+          ]
+        },
+        {
+          "group": "stash_drugs",
+          "prob": 5
+        },
+        [
+          "file",
+          70
+        ],
+        {
+          "group": "jewelry_front",
+          "prob": 40
+        },
+        {
+          "group": "costume_jewelry_vampire",
+          "prob": 5
+        },
+        {
+          "group": "costume_jewelry_dark",
+          "prob": 5
+        },
+        {
+          "group": "ammo_obscure_collection",
+          "count": 3,
+          "prob": 70
+        },
+        {
+          "group": "guns_rare_display",
+          "prob": 80
+        },
+        {
+          "group": "guns_rifle_obscure_display",
+          "prob": 90
+        },
+        {
+          "group": "guns_smg_rare_display",
+          "prob": 100
+        },
+        {
+          "group": "mags_smg_rare",
+          "count": 15,
+          "prob": 100
+        },
+        {
+          "group": "mags_rifle_rare",
+          "count": 15,
+          "prob": 70
+        },
+        {
+          "group": "MURKA_I_NEW_WEAPONS",
+          "prob": 55
+        },
+        {
+          "group": "MURKA_I_NEW_GUNMODS",
+          "prob": 45
+        },
+        {
+          "group": "MURKA_I_NEW_AMMO",
+          "prob": 55
+        },
+        {
+          "group": "MURKA_I_NEW_GEAR",
+          "prob": 25
+        }
+      ]
+    },
+    "subtype": "collection"
+  }
+]

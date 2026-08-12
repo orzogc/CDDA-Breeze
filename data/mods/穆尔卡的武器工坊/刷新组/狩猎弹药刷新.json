@@ -1,0 +1,120 @@
+[
+  {
+    "type": "item_group",
+    "id": "ammo_rifle_hunting",
+    "//": "狩猎用品商店及相关地点中的猎枪弹药。",
+    "copy-from": "ammo_rifle_hunting",
+    "extend": {
+      "entries": [
+        {
+          "item": "270win_jsp",
+          "prob": 80
+        },
+        {
+          "item": "3006",
+          "prob": 85
+        },
+        {
+          "item": "3006_incendiary",
+          "prob": 70
+        },
+        {
+          "item": "4570_sp",
+          "prob": 70
+        },
+        {
+          "item": "4570_pen",
+          "prob": 70
+        },
+        {
+          "item": "4570_low",
+          "prob": 40
+        },
+        {
+          "item": "300_winmag",
+          "prob": 40
+        },
+        {
+          "item": "3006fmj",
+          "prob": 50
+        },
+        {
+          "item": "79257_ss",
+          "prob": 40
+        },
+        {
+          "item": "79257_jhp",
+          "prob": 55
+        },
+        {
+          "item": "79257_fmj",
+          "prob": 50
+        }
+      ]
+    },
+    "subtype": "distribution"
+  },
+  {
+    "type": "item_group",
+    "id": "ammo_pistol_hunting",
+    "//": "狩猎用品商店及相关地点中的大口径手枪弹药。",
+    "copy-from": "ammo_pistol_hunting",
+    "extend": {
+      "entries": [
+        {
+          "item": "38_super",
+          "prob": 100
+        },
+        {
+          "item": "38_fmj",
+          "prob": 100
+        },
+        {
+          "item": "38super_fmj",
+          "prob": 100
+        },
+        {
+          "item": "38_special",
+          "prob": 100
+        },
+        {
+          "item": "454_Casull",
+          "prob": 40
+        },
+        {
+          "item": "45colt_jhp",
+          "prob": 80
+        },
+        {
+          "item": "500_Magnum",
+          "prob": 20
+        },
+        {
+          "item": "460_rowland",
+          "prob": 45
+        },
+        {
+          "item": "460_fmj",
+          "prob": 45
+        },
+        {
+          "item": "44fmj",
+          "prob": 60
+        },
+        {
+          "item": "44magnum",
+          "prob": 55
+        },
+        {
+          "item": "357mag_fmj",
+          "prob": 75
+        },
+        {
+          "item": "357mag_jhp",
+          "prob": 70
+        }
+      ]
+    },
+    "subtype": "distribution"
+  }
+]

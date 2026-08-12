@@ -1,0 +1,110 @@
+[
+  {
+    "type": "MOD_INFO",
+    "id": "meaning_of_travel",
+    "name": "<color_light_green>旅行的意义</color>",
+    "authors": [
+      "Andy Scarlet",
+      "ChatGPT"
+    ],
+    "description": "《旅行的意义》是一套围绕人物，探索，派系与长期生存展开的大型内容扩展。跟随梁知遥与玛雅·斯卡利特的故事，在灾变后的新英格兰寻找仍值得继续旅行的理由。\n\n探索LIXA实验室，学习叶系咏春与配套兵器，协助HUB建设新的设施，复原康陶G-58应龙并建立长期补给。模组同时扩展HUB，FEMA营地，伊舍伍德农场等派系据点，并调整部分生态，危险地形与尸体处理体验。\n\n尸群，三尖树，米戈与强盗会随着时间威胁幸存者。袭击可以围绕营地独立发生，也可以在旅途中追上玩家，袭击模式，间隔，强度与预警时间都可以在世界设置中调整，也可以完全关闭。\n\n<color_red>本模组包含大量依赖城市条件生成的派系设施，建议尽量保持默认的城市规模与城市间距，过度修改可能导致部分派系营地或任务地点无法正常生成。</color>",
+    "category": "content",
+    "dependencies": [
+      "dda"
+    ],
+    "version": "2.3",
+    "world_options": [
+      {
+        "id": "TRAVEL_RAID_SYSTEM_MODE",
+        "type": "int_map",
+        "name": "袭击模式",
+        "description": "选择关闭袭击，使用围绕营地的独立袭击，或使用围绕玩家随时发动的随行袭击。",
+        "default": 1,
+        "values": [
+          {
+            "value": 0,
+            "name": "关闭"
+          },
+          {
+            "value": 1,
+            "name": "营地袭击"
+          },
+          {
+            "value": 2,
+            "name": "随行袭击"
+          }
+        ]
+      },
+      {
+        "id": "TRAVEL_CAMP_RAID_INTERVAL_DAYS",
+        "type": "int",
+        "name": "袭击间隔",
+        "description": "决定下一场袭击的基础间隔，单位为天。可输入1至365之间的整数。营地模式按营地独立计算，随行模式按玩家共用计算。",
+        "default": 7,
+        "min": 1,
+        "max": 365
+      },
+      {
+        "id": "TRAVEL_CAMP_RAID_DIFFICULTY",
+        "type": "int_map",
+        "name": "袭击强度",
+        "description": "调整袭击规模。故事适合偏剧情体验，平衡为默认强度，硬核与荣誉会进一步增加袭击规模。营地模式会影响发展度换算，随行模式会在原有阶段规模上应用修正。",
+        "default": 1,
+        "values": [
+          {
+            "value": 0,
+            "name": "故事"
+          },
+          {
+            "value": 1,
+            "name": "平衡"
+          },
+          {
+            "value": 2,
+            "name": "硬核"
+          },
+          {
+            "value": 3,
+            "name": "荣誉"
+          }
+        ]
+      },
+      {
+        "id": "TRAVEL_CAMP_RAID_TRIGGER_RADIUS",
+        "type": "int",
+        "name": "检查半径",
+        "description": "仅在营地模式使用。玩家进入这个大地图格半径后，系统才处理最近的营地。",
+        "default": 4,
+        "min": 1,
+        "max": 12
+      },
+      {
+        "id": "TRAVEL_CAMP_RAID_MERGE_CAP",
+        "type": "int",
+        "name": "逾期合并上限",
+        "description": "仅在营地模式使用。玩家长期离开营地时，逾期袭击会合并为更强的一场。可输入1至20之间的整数，数值过高可能产生很大的袭击规模。",
+        "default": 3,
+        "min": 1,
+        "max": 20
+      },
+      {
+        "id": "TRAVEL_CAMP_RAID_WARNING_MINUTES",
+        "type": "int",
+        "name": "袭击预警时间",
+        "description": "营地袭击与随行袭击共用。袭击被发现后，到敌人真正抵达的等待时间，单位为分钟。可输入0至10080之间的整数，默认5分钟，设为0时袭击会立即抵达。每次新的袭击进入预警时读取当前世界设置，已经排队的袭击不会因随后修改而跳变。",
+        "default": 5,
+        "min": 0,
+        "max": 10080
+      },
+      {
+        "id": "TRAVEL_CAMP_RAID_DEBUG",
+        "type": "bool",
+        "name": "测试袭击",
+        "description": "开启后，营地告示牌会允许立即安排一次测试袭击。",
+        "default": false
+      }
+    ],
+    "world_options_after": "BLACK_ROAD",
+    "world_options_separator": false
+  }
+]

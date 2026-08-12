@@ -1,0 +1,421 @@
+[
+  {
+    "id": "cornerstone_armor",
+    "type": "TOOL_ARMOR",
+    "category": "clothing",
+    "symbol": "[",
+    "color": "light_gray",
+    "name": {
+      "str": "EPS-1“基石”外骨骼防护系统"
+    },
+    "description": "这件装备是格科斯勒的新式装备，绰号基石，是目前世界上已经被装备的最优秀的外骨骼之一，目前只配备给了“枢纽”机械化战斗工兵部队和“EOV”异界探索部队，内置了一个新式的“船锚”维度稳定器，确保你不会受到一些来自异空间的伤害，EXC-G外骨骼可以让使用者在携带大量重物时依旧可以保持灵活姿态，其外骨骼上的惯性稳定器和辅助运动的伺服电机可以在节能模式下照常运作，配套的增加额外部件的DA33重型防弹套装可以提供相当好的防护，搭配上头盔与防护服几乎可以让使用者在任何极端环境下作战，外骨骼在运作时也会依靠运动来回收一部分能量，以此来达到节能效果以适应长时间作战。",
+    "weight_capacity_bonus": "60 kg",
+    "price": "25000 USD",
+    "price_postapoc": "2500 USD",
+    "material": [
+      "superalloy",
+      "kevlar_rigid"
+    ],
+    "weight": "35000 g",
+    "volume": "8500 ml",
+    "use_action": {
+      "type": "transform",
+      "msg": "GKSLE系统已启动。",
+      "target": "cornerstone_armor_on",
+      "active": true
+    },
+    "warmth": 30,
+    "environmental_protection": 10,
+    "material_thickness": 10,
+    "flags": [
+      "STURDY",
+      "WATERPROOF",
+      "SUPER_FANCY",
+      "RAINPROOF",
+      "OUTER",
+      "COMBAT_TOGGLEABLE"
+    ],
+    "longest_side": "95 cm",
+    "armor": [
+      {
+        "covers": [
+          "torso"
+        ],
+        "coverage": 95,
+        "encumbrance": 10
+      },
+      {
+        "covers": [
+          "arm_l",
+          "arm_r",
+          "leg_l",
+          "leg_r"
+        ],
+        "coverage": 50,
+        "encumbrance": 5
+      }
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "20 L",
+        "max_contains_weight": "40 kg",
+        "max_item_length": "60 cm",
+        "moves": 100,
+        "volume_encumber_modifier": 0.3
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "holster": true,
+        "max_contains_volume": "1500 ml",
+        "max_contains_weight": "3 kg",
+        "max_item_length": "32 cm",
+        "moves": 60,
+        "volume_encumber_modifier": 0,
+        "flag_restriction": [
+          "MAG_COMPACT",
+          "MAG_BULKY",
+          "MAG_BELT",
+          "SPEEDLOADER"
+        ]
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "holster": true,
+        "max_contains_volume": "1500 ml",
+        "max_contains_weight": "3 kg",
+        "max_item_length": "32 cm",
+        "moves": 60,
+        "volume_encumber_modifier": 0,
+        "flag_restriction": [
+          "MAG_COMPACT",
+          "MAG_BULKY",
+          "MAG_BELT",
+          "SPEEDLOADER"
+        ]
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "holster": true,
+        "max_contains_volume": "1500 ml",
+        "max_contains_weight": "3 kg",
+        "max_item_length": "32 cm",
+        "moves": 60,
+        "volume_encumber_modifier": 0,
+        "flag_restriction": [
+          "MAG_COMPACT",
+          "MAG_BULKY",
+          "MAG_BELT",
+          "SPEEDLOADER"
+        ]
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "holster": true,
+        "max_contains_volume": "1500 ml",
+        "max_contains_weight": "3 kg",
+        "max_item_length": "32 cm",
+        "moves": 60,
+        "volume_encumber_modifier": 0,
+        "flag_restriction": [
+          "MAG_COMPACT",
+          "MAG_BULKY",
+          "MAG_BELT",
+          "SPEEDLOADER"
+        ]
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "holster": true,
+        "max_contains_volume": "1500 ml",
+        "max_contains_weight": "3 kg",
+        "max_item_length": "32 cm",
+        "moves": 60,
+        "volume_encumber_modifier": 0,
+        "flag_restriction": [
+          "MAG_COMPACT",
+          "MAG_BULKY",
+          "MAG_BELT",
+          "SPEEDLOADER"
+        ]
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "holster": true,
+        "max_contains_volume": "1500 ml",
+        "max_contains_weight": "3 kg",
+        "max_item_length": "32 cm",
+        "moves": 60,
+        "volume_encumber_modifier": 0,
+        "flag_restriction": [
+          "MAG_COMPACT",
+          "MAG_BULKY",
+          "MAG_BELT",
+          "SPEEDLOADER"
+        ]
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "holster": true,
+        "max_contains_volume": "1500 ml",
+        "max_contains_weight": "3 kg",
+        "max_item_length": "32 cm",
+        "moves": 60,
+        "volume_encumber_modifier": 0,
+        "flag_restriction": [
+          "MAG_COMPACT",
+          "MAG_BULKY",
+          "MAG_BELT",
+          "SPEEDLOADER"
+        ]
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "holster": true,
+        "max_contains_volume": "1500 ml",
+        "max_contains_weight": "3 kg",
+        "max_item_length": "32 cm",
+        "moves": 60,
+        "volume_encumber_modifier": 0,
+        "flag_restriction": [
+          "MAG_COMPACT",
+          "MAG_BULKY",
+          "MAG_BELT",
+          "SPEEDLOADER"
+        ]
+      }
+    ],
+    "ammo": "battery"
+  },
+  {
+    "id": "cornerstone_armor_on",
+    "copy-from": "cornerstone_armor",
+    "repairs_like": "cornerstone_armor",
+    "type": "TOOL_ARMOR",
+    "name": {
+      "str": "EPS-1“基石”外骨骼防护系统（启动）"
+    },
+    "looks_like": "cornerstone_armor",
+    "description": "这件装备是格科斯勒的新式装备，绰号基石，是目前世界上已经被装备的最优秀的外骨骼之一，目前只配备给了“枢纽”机械化战斗工兵部队和“EOV”异界探索部队，内置了一个新式的“船锚”维度稳定器，确保你不会受到一些来自异空间的伤害，EXC-G外骨骼可以让使用者在携带大量重物时依旧可以保持灵活姿态，其外骨骼上的惯性稳定器和辅助运动的伺服电机可以在节能模式下照常运作，配套的增加额外部件的DA33重型防弹套装可以提供相当好的防护，搭配上头盔与防护服几乎可以让使用者在任何极端环境下作战，外骨骼在运作时也会依靠运动来回收一部分能量，以此来达到节能效果以适应长时间作战。",
+    "weight_capacity_bonus": "180 kg",
+    "revert_to": "cornerstone_armor",
+    "use_action": {
+      "type": "transform",
+      "menu_text": "关闭",
+      "msg": "GKSLE系统已关闭。",
+      "target": "cornerstone_armor"
+    },
+    "power_draw": "1 kW",
+    "extend": {
+      "flags": [
+        "TRADER_AVOID",
+        "PSYSHIELD_PARTIAL",
+        "DIMENSIONAL_ANCHOR",
+        "USE_UPS"
+      ]
+    }
+  },
+  {
+    "id": "cornerstone_helmet",
+    "type": "TOOL_ARMOR",
+    "category": "clothing",
+    "symbol": "[",
+    "color": "light_gray",
+    "name": {
+      "str_sp": "GHH-V 集成式头盔"
+    },
+    "description": "格科斯勒生产的新式战斗头盔，可以在战斗中为用户提供最大的保护，具有多种功能，头盔上装有一台GCIV-K集成显示系统，可以同时提供夜视与热成像两种功能，环境防护系统RBU的过滤装置可以过滤掉几乎所有类型的有害气体，除此之外它还可以抵挡闪光，噪音以及精神攻击，哪怕有着如此多的功能它也不算重，被誉为世界上最好的头盔也不为过，它也因其外观被称呼为独眼恶魔，主流的说法是因为它那独特的深红色主摄像头，也有可能是来自那些与戴着这种头盔的部队交手过并幸存下来的人所描述的经历。",
+    "flags": [
+      "OVERSIZE",
+      "SUN_GLASSES",
+      "PSYSHIELD_PARTIAL",
+      "WATCH",
+      "ALARMCLOCK",
+      "THERMOMETER",
+      "BAROMETER",
+      "HYGROMETER",
+      "WATERPROOF",
+      "STURDY",
+      "COMBAT_TOGGLEABLE"
+    ],
+    "price": "80000 USD",
+    "price_postapoc": "800 USD",
+    "material": [
+      "plastic",
+      "superalloy",
+      "kevlar_rigid"
+    ],
+    "weight": "300 g",
+    "volume": "1 L",
+    "ammo": "battery",
+    "use_action": {
+      "type": "transform",
+      "msg": "集成显示系统与空气过滤系统已启动。",
+      "target": "cornerstone_helmet_on",
+      "active": true
+    },
+    "warmth": 10,
+    "material_thickness": 10,
+    "longest_side": "38 cm",
+    "armor": [
+      {
+        "covers": [
+          "head"
+        ],
+        "coverage": 100,
+        "encumbrance": 10
+      },
+      {
+        "covers": [
+          "eyes",
+          "mouth"
+        ],
+        "coverage": 100,
+        "encumbrance": 5,
+        "rigid_layer_only": true,
+        "layers": [
+          "OUTER"
+        ]
+      }
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "rigid": true,
+        "flag_restriction": [
+          "BATTERY_LIGHT",
+          "BATTERY_ULTRA_LIGHT"
+        ],
+        "default_magazine": "light_battery_cell"
+      }
+    ]
+  },
+  {
+    "id": "cornerstone_helmet_on",
+    "copy-from": "cornerstone_helmet",
+    "type": "TOOL_ARMOR",
+    "name": {
+      "str_sp": "GHH-V 集成式头盔（启动）"
+    },
+    "description": "格科斯勒生产的新式战斗头盔，可以在战斗中为用户提供最大的保护，具有多种功能，头盔上装有一台GCIV-K集成显示系统，可以同时提供夜视与热成像两种功能，环境防护系统RBU的过滤装置可以过滤掉几乎所有类型的有害气体，除此之外它还可以抵挡闪光，噪音以及精神攻击，哪怕有着如此多的功能它也不算重，被誉为世界上最好的头盔也不为过，它也因其外观被称呼为独眼恶魔，主流的说法是因为它那独特的深红色主摄像头，也有可能是来自那些与戴着这种头盔的部队交手过并幸存下来的人所描述的经历。",
+    "power_draw": "150 W",
+    "revert_to": "cornerstone_helmet",
+    "use_action": {
+      "type": "transform",
+      "menu_text": "关闭",
+      "msg": "集成显示系统与空气过滤系统已关闭。",
+      "target": "cornerstone_helmet"
+    },
+    "extend": {
+      "flags": [
+        "TWO_WAY_RADIO",
+        "GNV_EFFECT",
+        "IR_EFFECT",
+        "GAS_PROOF",
+        "PARTIAL_DEAF",
+        "COMBAT_TOGGLEABLE",
+        "TRADER_AVOID"
+      ]
+    }
+  },
+  {
+    "id": "ecu3_suit",
+    "type": "TOOL_ARMOR",
+    "category": "clothing",
+    "name": {
+      "str": " ECU-3 环境作战服"
+    },
+    "description": "格科斯勒的环境作战服，常用于一些特殊单位，包含了一整套的加强型环境作战服与内置的恒温系统，能应对绝大多数极端情况，比如温度和辐射，虽然它不如一些专业的环境防护服那么有效，但它穿起来非常灵活，对使用者的影响非常低，还可以抵挡一部分伤害，如果你需要全方面的防护那么还需要一副防毒面具。",
+    "weight": "8000 g",
+    "volume": "10000 ml",
+    "price": "10000 USD",
+    "price_postapoc": "200 USD",
+    "to_hit": -3,
+    "material": [
+      "plastic",
+      "kevlar"
+    ],
+    "symbol": "[",
+    "color": "brown",
+    "warmth": 20,
+    "material_thickness": 1,
+    "environmental_protection": 10,
+    "flags": [
+      "VARSIZE",
+      "WATERPROOF",
+      "HOOD",
+      "RAINPROOF",
+      "RAD_PROOF",
+      "ELECTRIC_IMMUNE",
+      "COMBAT_TOGGLEABLE"
+    ],
+    "use_action": {
+      "type": "transform",
+      "msg": "你启动了恒温系统。",
+      "target": "ecu3_suit_on",
+      "active": true
+    },
+    "repairs_like": "cleansuit",
+    "longest_side": "85 cm",
+    "armor": [
+      {
+        "covers": [
+          "torso",
+          "arm_l",
+          "arm_r",
+          "hand_l",
+          "hand_r",
+          "leg_l",
+          "leg_r",
+          "foot_l",
+          "foot_r"
+        ],
+        "coverage": 100,
+        "encumbrance": 5
+      }
+    ],
+    "ammo": "battery",
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WORN",
+          "condition": "ACTIVE",
+          "values": [
+            {
+              "value": "CLIMATE_CONTROL_HEAT",
+              "add": 50
+            },
+            {
+              "value": "CLIMATE_CONTROL_CHILL",
+              "add": 50
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "ecu3_suit_on",
+    "copy-from": "ecu3_suit",
+    "type": "TOOL_ARMOR",
+    "category": "clothing",
+    "name": {
+      "str": " ECU-3 环境作战服（启动）"
+    },
+    "description": "格科斯勒的环境作战服，常用于一些特殊单位，包含了一整套的加强型环境作战服与内置的恒温系统，能应对绝大多数极端情况，比如温度和辐射，虽然它不如一些专业的环境防护服那么有效，但它穿起来非常灵活，对使用者的影响非常低，还可以抵挡一部分伤害，如果你需要全方面的防护那么还需要一副防毒面具。",
+    "revert_to": "ecu3_suit",
+    "use_action": {
+      "type": "transform",
+      "menu_text": "关闭",
+      "msg": "你关闭了恒温系统。",
+      "target": "ecu3_suit"
+    },
+    "power_draw": "100 W",
+    "extend": {
+      "flags": [
+        "USE_UPS",
+        "TRADER_AVOID"
+      ]
+    }
+  }
+]

@@ -1,0 +1,99 @@
+[
+  {
+    "id": "79257_fmj",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "7.92x57mm FMJ 毛瑟弹"
+    },
+    "description": "一种由德国在19世纪研发的弹药，属于有缘瓶颈式步枪弹，广泛应用于一战与二战期间，现如今多用于收藏与运动射击。",
+    "weight": "20 g",
+    "volume": "150 ml",
+    "price": 180,
+    "price_postapoc": 300,
+    "flags": [
+      "IRREPLACEABLE_CONSUMABLE"
+    ],
+    "material": [
+      "brass",
+      "lead",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "yellow",
+    "count": 20,
+    "stack_size": 20,
+    "ammo_type": "79257",
+    "casing": "79257_casing",
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 58,
+      "armor_penetration": 10
+    },
+    "range": 50,
+    "dispersion": 20,
+    "recoil": 4000,
+    "effects": [
+      "COOKOFF"
+    ],
+    "longest_side": "8 cm"
+  },
+  {
+    "id": "79257_jhp",
+    "looks_like": "79257_fmj",
+    "type": "AMMO",
+    "copy-from": "79257_fmj",
+    "name": {
+      "str_sp": "7.92x57mm JHP 毛瑟弹"
+    },
+    "description": "一种由德国在19世纪研发的弹药，属于有缘瓶颈式步枪弹，广泛应用于一战与二战期间，现如今多用于收藏与运动射击，这一种属于空尖弹。",
+    "price": 180,
+    "price_postapoc": 300,
+    "relative": {
+      "damage": {
+        "damage_type": "bullet",
+        "amount": 5,
+        "armor_penetration": -5
+      }
+    },
+    "longest_side": "8 cm"
+  },
+  {
+    "id": "79257_ss",
+    "looks_like": "79257_fmj",
+    "type": "AMMO",
+    "copy-from": "79257_fmj",
+    "name": {
+      "str_sp": "7.92x57mm SS 毛瑟弹"
+    },
+    "description": "一种由德国在19世纪研发的弹药，属于有缘瓶颈式步枪弹，广泛应用于一战与二战期间，现如今多用于收藏与运动射击，这一种属于二战时期最常见的重头弹。",
+    "price": 600,
+    "price_postapoc": 1200,
+    "relative": {
+      "damage": {
+        "damage_type": "bullet",
+        "amount": 3,
+        "armor_penetration": 10
+      }
+    },
+    "longest_side": "8 cm"
+  },
+  {
+    "id": "reloaded_79257",
+    "looks_like": "79257_fmj",
+    "copy-from": "79257_fmj",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "7.92x57mm 毛瑟弹（复装）"
+    },
+    "description": "一发手工复装的7.92x57mm毛瑟弹，性能稍差。",
+    "proportional": {
+      "price": 0.7,
+      "damage": {
+        "damage_type": "bullet",
+        "amount": 0.9
+      },
+      "dispersion": 1.1
+    },
+    "longest_side": "8 cm"
+  }
+]

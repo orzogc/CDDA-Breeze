@@ -1,0 +1,66 @@
+[
+  {
+    "type": "item_group",
+    "id": "travel_yinglong_hub_stock",
+    "subtype": "collection",
+    "entries": [
+      {
+        "item": "kt_yinglong_mag",
+        "count": [
+          4,
+          6
+        ],
+        "prob": 100
+      },
+      {
+        "item": "kt_yinglong_drum_100",
+        "count": [
+          1,
+          2
+        ],
+        "prob": 100
+      },
+      {
+        "item": "kt_smart_round",
+        "charges": [
+          480,
+          720
+        ],
+        "prob": 100
+      }
+    ]
+  },
+  {
+    "type": "npc_class",
+    "id": "NC_ROBOFAC_INTERCOM",
+    "copy-from": "NC_ROBOFAC_INTERCOM",
+    "extend": {
+      "shopkeeper_item_group": [
+        {
+          "group": "travel_yinglong_hub_stock",
+          "rigid": true,
+          "strict": true,
+          "condition": {
+            "u_has_var": "completed_hub_yinglong",
+            "type": "dialogue",
+            "context": "hub_rnd",
+            "value": "yes"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "NC_ROBOFAC_gear",
+    "subtype": "collection",
+    "copy-from": "NC_ROBOFAC_gear",
+    "extend": {
+      "entries": [
+        {
+          "group": "travel_yinglong_hub_stock"
+        }
+      ]
+    }
+  }
+]

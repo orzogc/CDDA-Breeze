@@ -1308,6 +1308,25 @@ inventory_entry *inventory_column::add_entry( const inventory_entry &entry )
     return &newent;
 }
 
+void inventory_column::remove_entries(
+    const std::function<bool( const inventory_entry & )> &predicate )
+{
+    const size_t old_entry_count = entries.size() + entries_hidden.size();
+    entries.erase( std::remove_if( entries.begin(), entries.end(), predicate ), entries.end() );
+    entries_hidden.erase( std::remove_if( entries_hidden.begin(), entries_hidden.end(), predicate ),
+                          entries_hidden.end() );
+
+    if( old_entry_count != entries.size() + entries_hidden.size() ) {
+        entries_cell_cache.clear();
+        paging_is_valid = false;
+        if( entries.empty() ) {
+            highlighted_index = std::numeric_limits<size_t>::max();
+        } else if( highlighted_index >= entries.size() ) {
+            highlighted_index = entries.size() - 1;
+        }
+    }
+}
+
 void inventory_column::move_entries_to( inventory_column &dest )
 {
     std::move( entries.begin(), entries.end(), std::back_inserter( dest.entries ) );
@@ -1922,13 +1941,19 @@ bool inventory_selector::add_entry_rec( inventory_column &entry_column,
                                         inventory_column &children_column, item_location &loc,
                                         item_category const *entry_category,
                                         item_category const *children_category,
-                                        item_location const& topmost_parent, int indent)
+                                        item_location const& topmost_parent, int indent,
+                                        bool add_ebooks )
 {
     inventory_column temp_children( preset );
-    bool vis_contents =
-        add_contained_items( loc, temp_children, children_category,
-                             get_topmost_parent( topmost_parent, loc, preset ),
-                             preset.is_shown( loc ) ? indent + 2 : indent );
+    bool vis_contents;
+    if( add_ebooks && loc->is_ebook_storage() ) {
+        vis_contents = add_contained_ebooks( loc, children_column );
+    } else {
+        vis_contents =
+            add_contained_items( loc, temp_children, children_category,
+                                 get_topmost_parent( topmost_parent, loc, preset ),
+                                 preset.is_shown( loc ) ? indent + 2 : indent, add_ebooks );
+    }
     inventory_entry *const nentry = add_entry( entry_column, std::vector<item_location>( 1, loc ),
                                     entry_category, 0, topmost_parent );
     if( nentry != nullptr ) {
@@ -1947,7 +1972,8 @@ bool inventory_selector::add_contained_items( item_location &container )
 }
 
 bool inventory_selector::add_contained_items( item_location &container, inventory_column &column,
-        const item_category *const custom_category, item_location const& topmost_parent, int indent)
+        const item_category *const custom_category, item_location const& topmost_parent, int indent,
+        bool add_ebooks )
 {
     if( container->has_flag( STATIC( flag_id( "NO_UNLOAD" ) ) ) ) {
         return false;
@@ -1968,22 +1994,30 @@ bool inventory_selector::add_contained_items( item_location &container, inventor
             hacked_col = &own_gear_column;
         }
         vis_top |= add_entry_rec( *hacked_col, temp, child, hacked_cat, custom_category,
-                                  topmost_parent, indent );
+                                  topmost_parent, indent, add_ebooks );
     }
     temp.move_entries_to( column );
     return vis_top;
 }
 
-void inventory_selector::add_contained_ebooks( item_location &container )
+bool inventory_selector::add_contained_ebooks( item_location &container )
+{
+    return add_contained_ebooks( container, own_inv_column );
+}
+
+bool inventory_selector::add_contained_ebooks( item_location &container, inventory_column &column )
 {
     if( !container->is_ebook_storage() ) {
-        return;
+        return false;
     }
 
+    bool added = false;
     for( item *it : container->get_contents().ebooks() ) {
         item_location child( container, it );
-        add_entry( own_inv_column, std::vector<item_location>( 1, child ) );
+        add_entry( column, std::vector<item_location>( 1, child ) );
+        added = true;
     }
+    return added;
 }
 
 void inventory_selector::add_character_items( Character &character )
@@ -2005,7 +2039,14 @@ void inventory_selector::add_character_items( Character &character )
     }
 }
 
-void inventory_selector::add_map_items( const tripoint &target )
+void inventory_selector::add_character_ebooks( Character &character )
+{
+    for( item_location &ereader : character.all_items_loc() ) {
+        add_contained_ebooks( ereader );
+    }
+}
+
+void inventory_selector::add_map_items( const tripoint &target, bool add_ebooks )
 {
     map &here = get_map();
     if( here.accessible_items( target ) ) {
@@ -2014,11 +2055,11 @@ void inventory_selector::add_map_items( const tripoint &target )
         const item_category map_cat( name, no_translation( name ), 100 );
         _add_map_items( target, map_cat, items, [target]( item & it ) {
             return item_location( map_cursor( target ), &it );
-        } );
+        }, add_ebooks );
     }
 }
 
-void inventory_selector::add_vehicle_items( const tripoint &target )
+void inventory_selector::add_vehicle_items( const tripoint &target, bool add_ebooks )
 {
     const std::optional<vpart_reference> vp =
         get_map().veh_at( target ).part_with_feature( "CARGO", true );
@@ -2032,11 +2073,11 @@ void inventory_selector::add_vehicle_items( const tripoint &target )
     const item_category vehicle_cat( name, no_translation( name ), 200 );
     _add_map_items( target, vehicle_cat, items, [veh, part]( item & it ) {
         return item_location( vehicle_cursor( *veh, part ), &it );
-    } );
+    }, add_ebooks );
 }
 
 void inventory_selector::_add_map_items( tripoint const &target, item_category const &cat,
-        item_stack &items, std::function<item_location( item & )> const &floc )
+        item_stack &items, std::function<item_location( item & )> const &floc, bool add_ebooks )
 {
     bool const hierarchy = _uimode == uimode::hierarchy;
     item_category const *const custom_cat = hierarchy ? naturalize_category( cat, target ) : nullptr;
@@ -2046,7 +2087,7 @@ void inventory_selector::_add_map_items( tripoint const &target, item_category c
     inventory_column temp_cont( preset );
     for( item &it : items ) {
         item_location loc = floc( it );
-        add_entry_rec( temp, temp_cont, loc, custom_cat, custom_cat );
+        add_entry_rec( temp, temp_cont, loc, custom_cat, custom_cat, {}, 0, add_ebooks );
     }
 
     temp.move_entries_to( *col );
@@ -2057,7 +2098,7 @@ void inventory_selector::_add_map_items( tripoint const &target, item_category c
     }
 }
 
-void inventory_selector::add_nearby_items( int radius )
+void inventory_selector::add_nearby_items( int radius, bool add_ebooks )
 {
     if( radius >= 0 ) {
         map &here = get_map();
@@ -2066,8 +2107,8 @@ void inventory_selector::add_nearby_items( int radius )
             if( u.pos() != pos && !here.clear_path( u.pos(), pos, rl_dist( u.pos(), pos ), 1, 100 ) ) {
                 continue;
             }
-            add_map_items( pos );
-            add_vehicle_items( pos );
+            add_map_items( pos, add_ebooks );
+            add_vehicle_items( pos, add_ebooks );
         }
     }
 }
@@ -2312,6 +2353,77 @@ void inventory_selector::prepare_layout()
     debug_print_timer( tp_prep, "prepare_layout took" );
 }
 
+void inventory_selector::set_column_titles( const std::string &carried_title,
+        const std::string &nearby_title )
+{
+    column_titles.clear();
+    if( !carried_title.empty() || !nearby_title.empty() ) {
+        column_titles = { carried_title, nearby_title };
+    }
+}
+
+void inventory_selector::deduplicate_books_by_source()
+{
+    struct book_choice {
+        const item *item = nullptr;
+        bool electronic = false;
+    };
+
+    const auto is_electronic_book = []( const item_location &loc ) {
+        if( !loc || !loc->is_book() || !loc.has_parent() ) {
+            return false;
+        }
+        const item_location parent = loc.parent_item();
+        return parent && parent->is_ebook_storage();
+    };
+
+    const auto deduplicate_columns = [ &is_electronic_book ](
+                                          const std::vector<inventory_column *> &source_columns ) {
+        std::map<itype_id, book_choice> preferred_books;
+        std::set<const item *> removed_books;
+
+        for( inventory_column * const column : source_columns ) {
+            for( inventory_entry * const entry : column->get_entries( always_yes, true ) ) {
+                if( !entry->is_item() ) {
+                    continue;
+                }
+
+                const item_location &loc = entry->any_item();
+                const item * const candidate = loc.get_item();
+                if( candidate == nullptr || !candidate->is_book() ) {
+                    continue;
+                }
+
+                const itype_id book_id = candidate->typeId();
+                const bool electronic = is_electronic_book( loc );
+                const auto iter = preferred_books.find( book_id );
+                if( iter == preferred_books.end() ) {
+                    preferred_books.emplace( book_id, book_choice{ candidate, electronic } );
+                } else if( iter->second.electronic && !electronic ) {
+                    removed_books.insert( iter->second.item );
+                    iter->second.item = candidate;
+                    iter->second.electronic = false;
+                } else {
+                    removed_books.insert( candidate );
+                }
+            }
+        }
+
+        for( inventory_column * const column : source_columns ) {
+            column->remove_entries( [ &removed_books ]( const inventory_entry &entry ) {
+                if( !entry.is_item() ) {
+                    return false;
+                }
+                const item * const candidate = entry.any_item().get_item();
+                return candidate != nullptr && removed_books.count( candidate ) != 0;
+            } );
+        }
+    };
+
+    deduplicate_columns( { &own_inv_column, &own_gear_column } );
+    deduplicate_columns( { &map_column } );
+}
+
 shared_ptr_fast<ui_adaptor> inventory_selector::create_or_get_ui_adaptor()
 {
     shared_ptr_fast<ui_adaptor> current_ui = ui.lock();
@@ -2353,13 +2465,18 @@ size_t inventory_selector::get_layout_height() const
 
 size_t inventory_selector::get_header_height() const
 {
-    return display_stats || !hint.empty() ? 3 : 1;
+    const size_t base_height = display_stats || !hint.empty() ? 3 : 1;
+    return base_height + ( column_titles.empty() ? 0 : 1 );
 }
 
 size_t inventory_selector::get_header_min_width() const
 {
-    const size_t titles_width = std::max( utf8_width( title, true ),
-                                          utf8_width( hint, true ) );
+    size_t titles_width = std::max( utf8_width( title, true ),
+                                    utf8_width( hint, true ) );
+    for( const std::string &column_title : column_titles ) {
+        titles_width = std::max( titles_width,
+                                 static_cast<size_t>( utf8_width( column_title, true ) ) );
+    }
     if( !display_stats ) {
         return titles_width;
     }
@@ -2399,6 +2516,56 @@ void inventory_selector::draw_header( const catacurses::window &w ) const
         for( const std::string &elem : get_stats() ) {
             right_print( w, y++, border + 1, c_dark_gray, elem );
         }
+    }
+
+    draw_column_titles( w );
+}
+
+void inventory_selector::draw_column_titles( const catacurses::window &w ) const
+{
+    if( column_titles.empty() ) {
+        return;
+    }
+
+    const auto visible_columns = get_visible_columns();
+    if( visible_columns.empty() ) {
+        return;
+    }
+
+    const int screen_width = getmaxx( w ) - 2 * ( border + 1 );
+    const bool centered = are_columns_centered( screen_width );
+    const int free_space = screen_width - get_columns_width( visible_columns );
+    const int max_gap = ( visible_columns.size() > 1 ) ? free_space / ( static_cast<int>(
+                        visible_columns.size() ) - 1 ) : free_space;
+    const int gap = centered ? max_gap : std::min<int>( max_gap, normal_column_gap );
+    const int gap_rounding_error = centered && visible_columns.size() > 1
+                                   ? free_space % ( visible_columns.size() - 1 ) : 0;
+
+    const size_t base_header_height = display_stats || !hint.empty() ? 3 : 1;
+    const int y = border + base_header_height;
+    size_t x = border + 1;
+
+    for( inventory_column * const &column : visible_columns ) {
+        if( &column == &visible_columns.back() ) {
+            x += gap_rounding_error;
+        }
+
+        size_t column_index = 0;
+        if( column == &map_column ) {
+            column_index = 1;
+        } else if( column != &own_inv_column && column != &own_gear_column ) {
+            const auto column_iter = std::find( columns.begin(), columns.end(), column );
+            if( column_iter != columns.end() ) {
+                column_index = std::distance( columns.begin(), column_iter );
+            }
+        }
+
+        if( column_index < column_titles.size() && !column_titles[column_index].empty() ) {
+            trim_and_print( w, point( x, y ), static_cast<int>( column->get_width() ), c_light_gray,
+                            column_titles[column_index] );
+        }
+
+        x += column->get_width() + gap;
     }
 }
 
@@ -2676,9 +2843,11 @@ void inventory_selector::draw_footer( const catacurses::window &w ) const
             wprintz( w, c_light_gray, " >" );
         }
 
-        right_print( w, getmaxy( w ) - border, border + 1, c_light_gray,
-                     string_format( "< [%s] %s >", ctxt.get_desc( "VIEW_CATEGORY_MODE" ),
-                                    io::enum_to_string( _uimode ) ) );
+        if( show_view_category_mode_ ) {
+            right_print( w, getmaxy( w ) - border, border + 1, c_light_gray,
+                         string_format( "< [%s] %s >", ctxt.get_desc( "VIEW_CATEGORY_MODE" ),
+                                        _( io::enum_to_string( _uimode ) ) ) );
+        }
         const auto footer = get_footer( mode );
         if( !footer.first.empty() ) {
             const int string_width = utf8_width( footer.first );
@@ -2808,7 +2977,7 @@ void inventory_selector::on_input( const inventory_input &input )
         toggle_active_column( scroll_direction::BACKWARD );
     } else if( input.action == "NEXT_COLUMN" ) {
         toggle_active_column( scroll_direction::FORWARD );
-    } else if( input.action == "VIEW_CATEGORY_MODE" ) {
+    } else if( input.action == "VIEW_CATEGORY_MODE" && show_view_category_mode_ ) {
         toggle_categorize_contained();
     } else if( input.action == "EXAMINE_CONTENTS" ) {
         const inventory_entry &selected = get_active_column().get_highlighted();
@@ -3569,7 +3738,7 @@ void inventory_multiselector::on_input( const inventory_input &input )
                                 ? count < max ? count + 1 : max
                                 : count > 1 ? count - 1 : 0;
         toggle_entry( entry, newcount );
-    } else if( input.action == "VIEW_CATEGORY_MODE" ) {
+    } else if( input.action == "VIEW_CATEGORY_MODE" && show_view_category_mode() ) {
         toggle_categorize_contained();
     } else {
         inventory_selector::on_input( input );

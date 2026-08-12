@@ -1,0 +1,539 @@
+[
+  {
+    "id": "3006_belt",
+    "looks_like": "belt308",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "M1919 250发弹链"
+    },
+    "description": "一个M1919机枪的250发布制不可散弹链，二战期间常用于步兵部队。",
+    "weight": "1000 g",
+    "volume": "1500 ml",
+    "price": "10 USD",
+    "price_postapoc": "100 cent",
+    "material": [
+      "cotton"
+    ],
+    "symbol": "#",
+    "color": "green",
+    "ammo_type": [
+      "3006"
+    ],
+    "capacity": 250,
+    "reload_time": 300,
+    "flags": [
+      "MAG_BULKY",
+      "MAG_EJECT"
+    ],
+    "longest_side": "38 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": false,
+        "ammo_restriction": {
+          "3006": 250
+        }
+      }
+    ]
+  },
+  {
+    "id": "308_akmag",
+    "looks_like": "svd_10",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "KRBK 20发弹匣"
+    },
+    "description": "一个KRBK步枪的20发弹匣，使用.308子弹。",
+    "weight": "250 g",
+    "volume": "350 ml",
+    "price": "10 USD",
+    "price_postapoc": "200 cent",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "308"
+    ],
+    "capacity": 20,
+    "reload_time": 50,
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "longest_side": "20 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "308": 20
+        }
+      }
+    ]
+  },
+  {
+    "id": "dp28_47",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "DP-28 47发弹盘"
+    },
+    "description": "一个DP-28的47发弹盘，造型奇特，而且携带和装填也不是特别方便。",
+    "weight": "800 g",
+    "volume": "1500 ml",
+    "price": "40 USD",
+    "price_postapoc": "500 cent",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "762R"
+    ],
+    "capacity": 47,
+    "reload_time": 150,
+    "flags": [
+      "MAG_BULKY"
+    ],
+    "longest_side": "31 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "762R": 47
+        }
+      }
+    ]
+  },
+  {
+    "id": "mpx_357_drum",
+    "looks_like": "evo_30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "MPX .357 SIG 50发弹鼓"
+    },
+    "description": "一个MPX的50发弹鼓，使用.357 SIG弹药。",
+    "weight": "300 g",
+    "volume": "500 ml",
+    "price": "40 USD",
+    "price_postapoc": "400 cent",
+    "material": [
+      "plastic"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "357sig"
+    ],
+    "capacity": 50,
+    "reload_time": 100,
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "longest_side": "22 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "357sig": 50
+        }
+      }
+    ]
+  },
+  {
+    "id": "mpx_357_mag",
+    "looks_like": "evo_30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "MPX .357 SIG 30发弹匣"
+    },
+    "description": "一个MPX的30发弹匣，使用.357 SIG弹药。",
+    "weight": "150 g",
+    "volume": "250 ml",
+    "price": "20 USD",
+    "price_postapoc": "200 cent",
+    "material": [
+      "plastic"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "357sig"
+    ],
+    "capacity": 30,
+    "reload_time": 50,
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "longest_side": "22 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "357sig": 30
+        }
+      }
+    ]
+  },
+  {
+    "id": "mpx_40_drum",
+    "looks_like": "evo_30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "MPX .40 S&W 50发弹鼓"
+    },
+    "description": "一个MPX的50发弹鼓，使用.40 S&W弹药。",
+    "weight": "300 g",
+    "volume": "500 ml",
+    "price": "40 USD",
+    "price_postapoc": "400 cent",
+    "material": [
+      "plastic"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "40"
+    ],
+    "capacity": 50,
+    "reload_time": 100,
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "longest_side": "22 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "40": 50
+        }
+      }
+    ]
+  },
+  {
+    "id": "mpx_40_mag",
+    "looks_like": "evo_30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "MPX .40 S&W 30发弹匣"
+    },
+    "description": "一个MPX的30发弹匣，使用.40 S&W弹药。",
+    "weight": "150 g",
+    "volume": "250 ml",
+    "price": "20 USD",
+    "price_postapoc": "200 cent",
+    "material": [
+      "plastic"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "40"
+    ],
+    "capacity": 30,
+    "reload_time": 50,
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "longest_side": "22 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "40": 30
+        }
+      }
+    ]
+  },
+  {
+    "id": "mpx_9_drum",
+    "looks_like": "evo_30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "MPX 9mm 50发弹鼓"
+    },
+    "description": "一个MPX的50发弹鼓，使用9x19mm弹药。",
+    "weight": "300 g",
+    "volume": "500 ml",
+    "price": "40 USD",
+    "price_postapoc": "400 cent",
+    "material": [
+      "plastic"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "9mm"
+    ],
+    "capacity": 50,
+    "reload_time": 100,
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "longest_side": "22 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "9mm": 50
+        }
+      }
+    ]
+  },
+  {
+    "id": "mpx_9_mag",
+    "looks_like": "evo_30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "MPX 9mm 30发弹匣"
+    },
+    "description": "一个MPX的30发弹匣，使用9x19mm弹药。",
+    "weight": "150 g",
+    "volume": "250 ml",
+    "price": "20 USD",
+    "price_postapoc": "200 cent",
+    "material": [
+      "plastic"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "9mm"
+    ],
+    "capacity": 30,
+    "reload_time": 50,
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "longest_side": "22 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "9mm": 30
+        }
+      }
+    ]
+  },
+  {
+    "id": "mss_big_drum",
+    "looks_like": "evo_30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "MSS-R22 100发弹鼓"
+    },
+    "description": "一个MSS-R22的100发弹鼓，使用.22 LR弹药。",
+    "weight": "600 g",
+    "volume": "900 ml",
+    "price": "50 USD",
+    "price_postapoc": "500 cent",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "22"
+    ],
+    "capacity": 100,
+    "reload_time": 200,
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "longest_side": "25 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "22": 100
+        }
+      }
+    ]
+  },
+  {
+    "id": "mss_drum",
+    "looks_like": "evo_30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "MSS-R22 50发弹鼓"
+    },
+    "description": "一个MSS-R22的50发弹匣，使用.22 LR弹药。",
+    "weight": "400 g",
+    "volume": "600 ml",
+    "price": "20 USD",
+    "price_postapoc": "200 cent",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "22"
+    ],
+    "capacity": 50,
+    "reload_time": 100,
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "longest_side": "20 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "22": 50
+        }
+      }
+    ]
+  },
+  {
+    "id": "mss_mag",
+    "looks_like": "evo_30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "MSS-R22 30发弹匣"
+    },
+    "description": "一个MSS-R22的30发弹匣，使用.22 LR弹药。",
+    "weight": "180 g",
+    "volume": "250 ml",
+    "price": "5 USD",
+    "price_postapoc": "100 cent",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "22"
+    ],
+    "capacity": 30,
+    "reload_time": 50,
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "longest_side": "19 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "22": 30
+        }
+      }
+    ]
+  },
+  {
+    "id": "ptrk_drum",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "PTRK 20发弹鼓"
+    },
+    "description": "一个PTRK的20发弹鼓，它看起来像个小铁桶，性能出乎意料的还不错，问题就是给它装弹是个体力活。",
+    "weight": "1200 g",
+    "volume": "1000 ml",
+    "price": "50 USD",
+    "price_postapoc": "800 cent",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "145114"
+    ],
+    "capacity": 20,
+    "reload_time": 300,
+    "flags": [
+      "MAG_BULKY"
+    ],
+    "longest_side": "38 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "145114": 20
+        }
+      }
+    ]
+  },
+  {
+    "id": "ptrk_mag",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "PTRK 10发弹匣"
+    },
+    "description": "一个PTRK的10发弹匣，尺寸不小，是这把枪最常用的弹匣。",
+    "weight": "500 g",
+    "volume": "500 ml",
+    "price": "30 USD",
+    "price_postapoc": "300 cent",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "145114"
+    ],
+    "capacity": 10,
+    "reload_time": 100,
+    "flags": [
+      "MAG_BULKY"
+    ],
+    "longest_side": "34 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "145114": 10
+        }
+      }
+    ]
+  },
+  {
+    "id": "rpd_100",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "RPD 100发弹箱"
+    },
+    "description": "一个RPD机枪的100发弹箱，并且内置不可散弹链。",
+    "weight": "1200 g",
+    "volume": "800 ml",
+    "price": "60 USD",
+    "price_postapoc": "800 cent",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "green",
+    "ammo_type": [
+      "762"
+    ],
+    "capacity": 100,
+    "reload_time": 100,
+    "flags": [
+      "MAG_BULKY"
+    ],
+    "longest_side": "29 cm",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "762": 100
+        }
+      }
+    ]
+  }
+]

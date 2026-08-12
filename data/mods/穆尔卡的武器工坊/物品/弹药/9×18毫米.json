@@ -1,0 +1,24 @@
+[
+  {
+    "id": "918pmm",
+    "copy-from": "9x18mm",
+    "type": "AMMO",
+    "looks_like": "9x18mmP2",
+    "name": {
+      "str_sp": "9x18mm PM PMM 弹"
+    },
+    "description": "俄制9x18mm手枪弹，多用于俄制手枪和冲锋枪。",
+    "relative": {
+      "price": 1.2,
+      "damage": {
+        "damage_type": "bullet",
+        "amount": 6,
+        "armor_penetration": 5
+      }
+    },
+    "proportional": {
+      "recoil": 1.1
+    },
+    "longest_side": "8 cm"
+  }
+]

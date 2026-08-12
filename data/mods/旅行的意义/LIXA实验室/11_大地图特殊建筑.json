@@ -1,0 +1,375 @@
+[
+  {
+    "type": "overmap_special",
+    "id": "physics_lab_LIXA",
+    "locations": [
+      "wilderness"
+    ],
+    "overmaps": [
+      {
+        "point": [
+          0,
+          0,
+          0
+        ],
+        "overmap": "LIXA_surface_1a_north"
+      },
+      {
+        "point": [
+          1,
+          0,
+          0
+        ],
+        "overmap": "LIXA_surface_1b_north"
+      },
+      {
+        "point": [
+          0,
+          1,
+          0
+        ],
+        "overmap": "LIXA_surface_2a_north"
+      },
+      {
+        "point": [
+          1,
+          1,
+          0
+        ],
+        "overmap": "LIXA_surface_2b_north"
+      },
+      {
+        "point": [
+          0,
+          0,
+          1
+        ],
+        "overmap": "LIXA_roof_1a_north"
+      },
+      {
+        "point": [
+          1,
+          0,
+          1
+        ],
+        "overmap": "LIXA_roof_1b_north"
+      },
+      {
+        "point": [
+          0,
+          1,
+          1
+        ],
+        "overmap": "LIXA_roof_2a_north"
+      },
+      {
+        "point": [
+          1,
+          1,
+          1
+        ],
+        "overmap": "LIXA_roof_2b_north"
+      },
+      {
+        "point": [
+          0,
+          0,
+          -1
+        ],
+        "overmap": "LIXA_stairshaft_1a_north"
+      },
+      {
+        "point": [
+          1,
+          0,
+          -1
+        ],
+        "overmap": "LIXA_stairshaft_1b_north"
+      },
+      {
+        "point": [
+          0,
+          1,
+          -1
+        ],
+        "overmap": "LIXA_stairshaft_1c_north"
+      },
+      {
+        "point": [
+          1,
+          1,
+          -1
+        ],
+        "overmap": "LIXA_stairshaft_1d_north"
+      },
+      {
+        "point": [
+          0,
+          0,
+          -2
+        ],
+        "overmap": "LIXA_stairshaft_2a_north"
+      },
+      {
+        "point": [
+          1,
+          0,
+          -2
+        ],
+        "overmap": "LIXA_stairshaft_2b_north"
+      },
+      {
+        "point": [
+          0,
+          1,
+          -2
+        ],
+        "overmap": "LIXA_stairshaft_2c_north"
+      },
+      {
+        "point": [
+          1,
+          1,
+          -2
+        ],
+        "overmap": "LIXA_stairshaft_2d_north"
+      },
+      {
+        "point": [
+          0,
+          0,
+          -3
+        ],
+        "overmap": "LIXA_workfloor_1a_north"
+      },
+      {
+        "point": [
+          1,
+          0,
+          -3
+        ],
+        "overmap": "LIXA_workfloor_1b_north"
+      },
+      {
+        "point": [
+          0,
+          1,
+          -3
+        ],
+        "overmap": "LIXA_workfloor_2a_north"
+      },
+      {
+        "point": [
+          1,
+          1,
+          -3
+        ],
+        "overmap": "LIXA_workfloor_2b_north"
+      },
+      {
+        "point": [
+          1,
+          2,
+          -3
+        ],
+        "overmap": "LIXA_device_2_roof_north"
+      },
+      {
+        "point": [
+          1,
+          3,
+          -3
+        ],
+        "overmap": "LIXA_device_3_roof_north"
+      },
+      {
+        "point": [
+          1,
+          1,
+          -4
+        ],
+        "overmap": "LIXA_device_1_north"
+      },
+      {
+        "point": [
+          1,
+          2,
+          -4
+        ],
+        "overmap": "LIXA_device_2_north"
+      },
+      {
+        "point": [
+          1,
+          3,
+          -4
+        ],
+        "overmap": "LIXA_device_3_north"
+      },
+      {
+        "point": [
+          1,
+          0,
+          -8
+        ],
+        "overmap": "LIXA_device_unfolded_noaccess_north"
+      },
+      {
+        "point": [
+          1,
+          1,
+          -8
+        ],
+        "overmap": "LIXA_device_unfolded_noaccess_north"
+      },
+      {
+        "point": [
+          1,
+          2,
+          -8
+        ],
+        "overmap": "LIXA_device_unfolded_noaccess_north"
+      },
+      {
+        "point": [
+          1,
+          3,
+          -8
+        ],
+        "overmap": "LIXA_device_unfolded_A_north"
+      },
+      {
+        "point": [
+          1,
+          4,
+          -8
+        ],
+        "overmap": "LIXA_device_unfolded_B_north"
+      },
+      {
+        "point": [
+          1,
+          5,
+          -8
+        ],
+        "overmap": "LIXA_device_unfolded_noaccess_north"
+      },
+      {
+        "point": [
+          1,
+          6,
+          -8
+        ],
+        "overmap": "LIXA_device_unfolded_noaccess_north"
+      },
+      {
+        "point": [
+          1,
+          7,
+          -8
+        ],
+        "overmap": "LIXA_device_unfolded_noaccess_north"
+      },
+      {
+        "point": [
+          0,
+          2,
+          0
+        ],
+        "overmap": "LIXA_entry_1_north"
+      },
+      {
+        "point": [
+          1,
+          2,
+          0
+        ],
+        "overmap": "LIXA_entry_2_north"
+      },
+      {
+        "point": [
+          1,
+          3,
+          0
+        ],
+        "overmap": "LIXA_road_north"
+      },
+      {
+        "point": [
+          1,
+          4,
+          0
+        ],
+        "overmap": "LIXA_road_north"
+      },
+      {
+        "point": [
+          1,
+          5,
+          0
+        ],
+        "overmap": "LIXA_road_north"
+      },
+      {
+        "point": [
+          1,
+          6,
+          0
+        ],
+        "overmap": "LIXA_road_north"
+      },
+      {
+        "point": [
+          1,
+          7,
+          0
+        ],
+        "overmap": "LIXA_road_guard_north"
+      },
+      {
+        "point": [
+          1,
+          7,
+          1
+        ],
+        "overmap": "LIXA_road_guard_roof_north"
+      }
+    ],
+    "connections": [
+      {
+        "point": [
+          1,
+          8,
+          0
+        ],
+        "terrain": "road",
+        "connection": "local_road",
+        "existing": true,
+        "from": [
+          1,
+          7,
+          0
+        ]
+      }
+    ],
+    "city_distance": [
+      3,
+      -1
+    ],
+    "city_sizes": [
+      3,
+      -1
+    ],
+    "occurrences": [
+      100,
+      100
+    ],
+    "flags": [
+      "GLOBALLY_UNIQUE",
+      "MAN_MADE",
+      "SAFE_AT_WORLDGEN"
+    ],
+    "//": "道路连接采用CCB的单锚点模型：只让LIXA引道连接正前方既有公路，避免左右额外锚点把附近路口拉成回环、树杈或短岔路。",
+    "rotate": true
+  }
+]

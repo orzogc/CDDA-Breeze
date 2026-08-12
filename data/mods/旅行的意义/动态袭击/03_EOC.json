@@ -1,0 +1,8118 @@
+[
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_RAID_CLOCK",
+    "recurrence": "1 hour",
+    "global": true,
+    "run_for_npcs": false,
+    "//": "随行袭击只在世界设置选择随行袭击时运行。营地袭击模式使用营地独立调度。",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "world_option": "TRAVEL_RAID_SYSTEM_MODE"
+            },
+            "==",
+            {
+              "const": 2
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_active"
+            },
+            "<=",
+            {
+              "const": 0
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_pending"
+            },
+            "<=",
+            {
+              "const": 0
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "time_since_cataclysm": "days"
+            },
+            ">=",
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_next_raid_day",
+              "default": 2
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_next_raid_day"
+          },
+          "=",
+          {
+            "time_since_cataclysm": "days"
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_next_raid_day"
+          },
+          "+=",
+          {
+            "world_option": "TRAVEL_CAMP_RAID_INTERVAL_DAYS"
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_select_step"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_intro_step",
+            "default": 0
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SELECT_BY_STEP"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "world_option": "TRAVEL_CAMP_RAID_DIFFICULTY"
+            },
+            "==",
+            {
+              "const": 0
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_spawn_count"
+            },
+            ">",
+            {
+              "const": 1
+            }
+          ]
+        }
+      ]
+    },
+    "effect": {
+      "arithmetic": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_spawn_count"
+        },
+        "-=",
+        {
+          "const": 1
+        }
+      ]
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+    "condition": {
+      "compare_int": [
+        {
+          "world_option": "TRAVEL_CAMP_RAID_DIFFICULTY"
+        },
+        "==",
+        {
+          "const": 2
+        }
+      ]
+    },
+    "effect": {
+      "arithmetic": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_spawn_count"
+        },
+        "+=",
+        {
+          "const": 1
+        }
+      ]
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL",
+    "condition": {
+      "compare_int": [
+        {
+          "world_option": "TRAVEL_CAMP_RAID_DIFFICULTY"
+        },
+        "==",
+        {
+          "const": 3
+        }
+      ]
+    },
+    "effect": {
+      "arithmetic": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_spawn_count"
+        },
+        "+=",
+        {
+          "const": 2
+        }
+      ]
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_SKIP_EXPIRED_INTRO",
+    "//": "若世界已经进入第8个日历日以后，跳过尚未发生的新手介绍袭击，避免调试跳时或中途安装模组后补发尸群、三尖树与米戈教程。",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "time_since_cataclysm": "days"
+            },
+            ">=",
+            {
+              "const": 7
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_intro_step"
+            },
+            "<",
+            {
+              "const": 3
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_intro_step"
+          },
+          "=",
+          {
+            "const": 3
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_intro_mode"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_SELECT_BY_STEP",
+    "effect": {
+      "run_eocs": [
+        "EOC_TRAVEL_DYNAMIC_SELECT_DAY_1_ZOMBIE",
+        "EOC_TRAVEL_DYNAMIC_SELECT_DAY_3_TRIFFID",
+        "EOC_TRAVEL_DYNAMIC_SELECT_DAY_5_MIGO",
+        "EOC_TRAVEL_DYNAMIC_SELECT_OTHER_RANDOM"
+      ]
+    },
+    "//": "使用袭击开始前保存的引导轮次进行单次选择，避免同一轮中连续修改变量导致尸群，三尖树，米戈和随机分支一起触发。"
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_SELECT_DAY_1_ZOMBIE",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_select_step"
+        },
+        "==",
+        {
+          "const": 0
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_intro_mode"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_intro_step"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_WARN_ZOMBIE"
+        ]
+      }
+    ],
+    "//": "引导轮次0，固定进入EOC_TRAVEL_DYNAMIC_WARN_ZOMBIE。"
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_SELECT_DAY_3_TRIFFID",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_select_step"
+        },
+        "==",
+        {
+          "const": 1
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_intro_mode"
+          },
+          "=",
+          {
+            "const": 2
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_intro_step"
+          },
+          "=",
+          {
+            "const": 2
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_WARN_TRIFFID"
+        ]
+      }
+    ],
+    "//": "引导轮次1，固定进入EOC_TRAVEL_DYNAMIC_WARN_TRIFFID。"
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_SELECT_DAY_5_MIGO",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_select_step"
+        },
+        "==",
+        {
+          "const": 2
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_intro_mode"
+          },
+          "=",
+          {
+            "const": 4
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_intro_step"
+          },
+          "=",
+          {
+            "const": 3
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_WARN_MIGO"
+        ]
+      }
+    ],
+    "//": "引导轮次2，固定进入EOC_TRAVEL_DYNAMIC_WARN_MIGO。"
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_SELECT_OTHER_RANDOM",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_select_step"
+        },
+        ">=",
+        {
+          "const": 3
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_intro_mode"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_intro_step"
+          },
+          "=",
+          {
+            "const": 3
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_RANDOM_AFTER_NONE",
+          "EOC_TRAVEL_DYNAMIC_RANDOM_AFTER_ZOMBIE",
+          "EOC_TRAVEL_DYNAMIC_RANDOM_AFTER_TRIFFID",
+          "EOC_TRAVEL_DYNAMIC_RANDOM_AFTER_MIGO",
+          "EOC_TRAVEL_DYNAMIC_RANDOM_AFTER_BANDIT"
+        ]
+      }
+    ],
+    "//": "进入随机阶段后，根据上一场阵营选择不含该阵营的候选池，避免连续两场出现相同阵营。"
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_RANDOM_AFTER_NONE",
+    "condition": {
+      "not": {
+        "or": [
+          {
+            "compare_int": [
+              {
+                "global_val": "var",
+                "var_name": "travel_dynamic_raid_last_faction"
+              },
+              "==",
+              {
+                "const": 1
+              }
+            ]
+          },
+          {
+            "compare_int": [
+              {
+                "global_val": "var",
+                "var_name": "travel_dynamic_raid_last_faction"
+              },
+              "==",
+              {
+                "const": 2
+              }
+            ]
+          },
+          {
+            "compare_int": [
+              {
+                "global_val": "var",
+                "var_name": "travel_dynamic_raid_last_faction"
+              },
+              "==",
+              {
+                "const": 3
+              }
+            ]
+          },
+          {
+            "compare_int": [
+              {
+                "global_val": "var",
+                "var_name": "travel_dynamic_raid_last_faction"
+              },
+              "==",
+              {
+                "const": 4
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "effect": {
+      "weighted_list_eocs": [
+        [
+          "EOC_TRAVEL_DYNAMIC_WARN_ZOMBIE",
+          {
+            "const": 1
+          }
+        ],
+        [
+          "EOC_TRAVEL_DYNAMIC_WARN_TRIFFID",
+          {
+            "const": 1
+          }
+        ],
+        [
+          "EOC_TRAVEL_DYNAMIC_WARN_MIGO",
+          {
+            "const": 1
+          }
+        ],
+        [
+          "EOC_TRAVEL_DYNAMIC_WARN_BANDIT",
+          {
+            "const": 1
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_RANDOM_AFTER_ZOMBIE",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_last_faction"
+        },
+        "==",
+        {
+          "const": 1
+        }
+      ]
+    },
+    "effect": {
+      "weighted_list_eocs": [
+        [
+          "EOC_TRAVEL_DYNAMIC_WARN_TRIFFID",
+          {
+            "const": 1
+          }
+        ],
+        [
+          "EOC_TRAVEL_DYNAMIC_WARN_MIGO",
+          {
+            "const": 1
+          }
+        ],
+        [
+          "EOC_TRAVEL_DYNAMIC_WARN_BANDIT",
+          {
+            "const": 1
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_RANDOM_AFTER_TRIFFID",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_last_faction"
+        },
+        "==",
+        {
+          "const": 2
+        }
+      ]
+    },
+    "effect": {
+      "weighted_list_eocs": [
+        [
+          "EOC_TRAVEL_DYNAMIC_WARN_ZOMBIE",
+          {
+            "const": 1
+          }
+        ],
+        [
+          "EOC_TRAVEL_DYNAMIC_WARN_MIGO",
+          {
+            "const": 1
+          }
+        ],
+        [
+          "EOC_TRAVEL_DYNAMIC_WARN_BANDIT",
+          {
+            "const": 1
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_RANDOM_AFTER_MIGO",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_last_faction"
+        },
+        "==",
+        {
+          "const": 3
+        }
+      ]
+    },
+    "effect": {
+      "weighted_list_eocs": [
+        [
+          "EOC_TRAVEL_DYNAMIC_WARN_ZOMBIE",
+          {
+            "const": 1
+          }
+        ],
+        [
+          "EOC_TRAVEL_DYNAMIC_WARN_TRIFFID",
+          {
+            "const": 1
+          }
+        ],
+        [
+          "EOC_TRAVEL_DYNAMIC_WARN_BANDIT",
+          {
+            "const": 1
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_RANDOM_AFTER_BANDIT",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_last_faction"
+        },
+        "==",
+        {
+          "const": 4
+        }
+      ]
+    },
+    "effect": {
+      "weighted_list_eocs": [
+        [
+          "EOC_TRAVEL_DYNAMIC_WARN_ZOMBIE",
+          {
+            "const": 1
+          }
+        ],
+        [
+          "EOC_TRAVEL_DYNAMIC_WARN_TRIFFID",
+          {
+            "const": 1
+          }
+        ],
+        [
+          "EOC_TRAVEL_DYNAMIC_WARN_MIGO",
+          {
+            "const": 1
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_WARN_ZOMBIE",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_last_faction"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_pending"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_REFRESH_WARNING_TIME"
+        ]
+      },
+      {
+        "u_message": "远处断断续续的嘶吼忽然变得清晰。它们已经锁定你，会在当前设置的预警时间结束后追上来。",
+        "type": "warning"
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_START_ZOMBIE",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_warning_time",
+          "default": "5 minutes"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_WARN_MIGO",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_last_faction"
+          },
+          "=",
+          {
+            "const": 3
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_pending"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_REFRESH_WARNING_TIME"
+        ]
+      },
+      {
+        "u_message": "无线电底噪骤然出现非人的节律，信号近得令人不安。米戈猎群已经锁定你，会在当前设置的预警时间结束后追上来。",
+        "type": "warning"
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_START_MIGO",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_warning_time",
+          "default": "5 minutes"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_WARN_TRIFFID",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_last_faction"
+          },
+          "=",
+          {
+            "const": 2
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_pending"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_REFRESH_WARNING_TIME"
+        ]
+      },
+      {
+        "u_message": "附近的灌木与野草无风自动，枝叶摩擦声已经逼到近处。三尖树已经锁定你，会在当前设置的预警时间结束后合围。",
+        "type": "warning"
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_START_TRIFFID",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_warning_time",
+          "default": "5 minutes"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_START_TRIFFID",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "u_val": "pos_z"
+            },
+            ">",
+            {
+              "const": 0
+            }
+          ]
+        },
+        {
+          "or": [
+            {
+              "u_is_on_terrain": "t_open_air"
+            },
+            {
+              "u_is_on_terrain": "t_open_air_rooved"
+            },
+            {
+              "u_is_on_terrain": "t_open_air_rooved_outside"
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_pending"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_intro_mode"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "u_message": "植物的骚动被你甩在云层下方；这一次，三尖树无法触及你的飞艇。",
+        "type": "info"
+      }
+    ],
+    "false_effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_pending"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "u_message": "多个方向同时传来枝叶拍地的闷响。第一批三尖树正在合围。",
+        "type": "bad"
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_TRIFFID_WAVE1"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_START_ZOMBIE",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "u_val": "pos_z"
+            },
+            ">",
+            {
+              "const": 0
+            }
+          ]
+        },
+        {
+          "or": [
+            {
+              "u_is_on_terrain": "t_open_air"
+            },
+            {
+              "u_is_on_terrain": "t_open_air_rooved"
+            },
+            {
+              "u_is_on_terrain": "t_open_air_rooved_outside"
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_pending"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_AIR_GATE"
+        ]
+      }
+    ],
+    "false_effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_pending"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "u_message": "尸群的动静从四周压来。第一批感染者开始接近。",
+        "type": "bad"
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_ZOMBIE_WAVE1"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_START_MIGO",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "u_val": "pos_z"
+            },
+            ">",
+            {
+              "const": 0
+            }
+          ]
+        },
+        {
+          "or": [
+            {
+              "u_is_on_terrain": "t_open_air"
+            },
+            {
+              "u_is_on_terrain": "t_open_air_rooved"
+            },
+            {
+              "u_is_on_terrain": "t_open_air_rooved_outside"
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_pending"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_AIR_GATE"
+        ]
+      }
+    ],
+    "false_effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_pending"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "u_message": "尖锐而不自然的鸣叫从远处回应。米戈猎群开始接近。",
+        "type": "bad"
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_MIGO_WAVE1"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_AIR_GATE",
+    "condition": {
+      "one_in_chance": 3
+    },
+    "effect": [
+      {
+        "u_message": "云层下方忽然升起一群拍打肉翼的黑点——血鸷正在追上你的高度。",
+        "type": "bad"
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_AIR_WAVE1"
+        ]
+      }
+    ],
+    "false_effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_intro_mode"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "u_message": "追踪你的动静逐渐被抛在云层下方；这一次，空中没有东西跟上来。",
+        "type": "info"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_active"
+        },
+        "==",
+        {
+          "const": 1
+        }
+      ]
+    },
+    "effect": [
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_RAID_CLEAR_CHECK"
+        ]
+      }
+    ],
+    "//": "仅用于判断最终波是否已全部清理；中间波次按固定四十五秒计时推进。"
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_RAID_CLEAR_CHECK",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_wave_ready"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_distance_lock"
+            },
+            "<=",
+            {
+              "const": 0
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "monsters_nearby",
+              "radius": 70
+            },
+            "<=",
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_hostile_baseline"
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_STAGE_ZOMBIE_3_CLEAR",
+          "EOC_TRAVEL_DYNAMIC_STAGE_MIGO_1_CLEAR",
+          "EOC_TRAVEL_DYNAMIC_STAGE_MIGO_2_CLEAR",
+          "EOC_TRAVEL_DYNAMIC_STAGE_AIR_2_CLEAR",
+          "EOC_TRAVEL_DYNAMIC_STAGE_TRIFFID_2_CLEAR"
+        ]
+      }
+    ],
+    "false_effect": [
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ],
+    "//": "仅在怪物袭击已经持续至少五分钟后检查最终波。跑出七十格范围不会立刻触发清场，强盗袭击仍完全按计时推进。"
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_STAGE_ZOMBIE_3_CLEAR",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_stage"
+        },
+        "==",
+        {
+          "const": 3
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_COMPLETE_ZOMBIE"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_STAGE_MIGO_1_CLEAR",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            "==",
+            {
+              "const": 11
+            }
+          ]
+        },
+        {
+          "or": [
+            {
+              "compare_int": [
+                {
+                  "global_val": "var",
+                  "var_name": "travel_dynamic_raid_intro_mode"
+                },
+                "==",
+                {
+                  "const": 4
+                }
+              ]
+            },
+            {
+              "not": {
+                "days_since_cataclysm": 14
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_COMPLETE_MIGO"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_STAGE_MIGO_2_CLEAR",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_stage"
+        },
+        "==",
+        {
+          "const": 12
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_COMPLETE_MIGO"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_STAGE_AIR_2_CLEAR",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_stage"
+        },
+        "==",
+        {
+          "const": 22
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_COMPLETE_AIR"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_STAGE_TRIFFID_2_CLEAR",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_stage"
+        },
+        "==",
+        {
+          "const": 32
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_COMPLETE_TRIFFID"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_1",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_active"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_wave_ready"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_ABORT_STUCK"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_2",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_active"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            "==",
+            {
+              "const": 2
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_wave_ready"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_ABORT_STUCK"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_3",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_active"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            "==",
+            {
+              "const": 3
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_wave_ready"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_ABORT_STUCK"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_11",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_active"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            "==",
+            {
+              "const": 11
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_wave_ready"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_ABORT_STUCK"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_12",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_active"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            "==",
+            {
+              "const": 12
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_wave_ready"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_ABORT_STUCK"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_21",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_active"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            "==",
+            {
+              "const": 21
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_wave_ready"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_ABORT_STUCK"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_22",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_active"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            "==",
+            {
+              "const": 22
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_wave_ready"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_ABORT_STUCK"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_31",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_active"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            "==",
+            {
+              "const": 31
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_wave_ready"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_ABORT_STUCK"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_32",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_active"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            "==",
+            {
+              "const": 32
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_wave_ready"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_ABORT_STUCK"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_TRIFFID_WAVE1",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_distance_lock"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RELEASE_DISTANCE_CLEAR",
+        "time_in_future": "5 minutes"
+      },
+      {
+        "u_location_variable": {
+          "global_val": "travel_dynamic_raid_ground_target"
+        },
+        "min_radius": 0,
+        "max_radius": 0,
+        "z_adjust": 0,
+        "z_override": true
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_TW1_INTRO",
+          "EOC_TRAVEL_DYNAMIC_TW1_EARLY",
+          "EOC_TRAVEL_DYNAMIC_TW1_GROWING",
+          "EOC_TRAVEL_DYNAMIC_TW1_MATURE",
+          "EOC_TRAVEL_DYNAMIC_TW1_LATE"
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TRIFFID_WAVE2",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_next_wave_delay",
+          "default": "45 seconds"
+        }
+      }
+    ],
+    "//": "第一波以玩家当前坐标为生成中心。袭击专用三尖树始终感知玩家，不依赖声音。四十五秒后第二波会重新读取玩家位置。"
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_TRIFFID_WAVE2",
+    "effect": [
+      {
+        "u_location_variable": {
+          "global_val": "travel_dynamic_raid_ground_target"
+        },
+        "min_radius": 0,
+        "max_radius": 0,
+        "z_adjust": 0,
+        "z_override": true
+      },
+      {
+        "u_message": "四十五秒过去，更多三尖树从其他方向加入合围。上一波是否倒下都不会阻止它们。",
+        "type": "warning"
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_TW2_INTRO",
+          "EOC_TRAVEL_DYNAMIC_TW2_EARLY",
+          "EOC_TRAVEL_DYNAMIC_TW2_GROWING",
+          "EOC_TRAVEL_DYNAMIC_TW2_MATURE",
+          "EOC_TRAVEL_DYNAMIC_TW2_LATE"
+        ]
+      }
+    ],
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_active"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            "==",
+            {
+              "const": 31
+            }
+          ]
+        }
+      ]
+    },
+    "//": "第二波执行时重新保存玩家当前坐标。袭击专用三尖树会持续感知玩家，玩家离开现实泡后仍可脱离追击。"
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_TW1_INTRO",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_intro_mode"
+        },
+        "==",
+        {
+          "const": 2
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 31
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_hostile_baseline"
+          },
+          "=",
+          {
+            "global_val": "monsters_nearby",
+            "radius": 70
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_31",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 1,
+            "var_name": "travel_dynamic_cfg_t_intro_w1"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_TRIFFID_RECURSIVE"
+        ]
+      },
+      {
+        "u_message": "三尖树从周围的植被间逼近这一波锁定的位置。",
+        "type": "warning"
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_TW2_INTRO",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_intro_mode"
+        },
+        "==",
+        {
+          "const": 2
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 32
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_32",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 2,
+            "var_name": "travel_dynamic_cfg_t_intro_w2"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_TRIFFID_RECURSIVE"
+        ]
+      },
+      {
+        "u_message": "更多三尖树从其他方向加入合围。",
+        "type": "warning"
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_TW1_EARLY",
+    "condition": {
+      "and": [
+        {
+          "not": {
+            "days_since_cataclysm": 14
+          }
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_intro_mode"
+            },
+            "!=",
+            {
+              "const": 2
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 31
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_hostile_baseline"
+          },
+          "=",
+          {
+            "global_val": "monsters_nearby",
+            "radius": 70
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_31",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 1,
+            "var_name": "travel_dynamic_cfg_t_early_w1"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_TRIFFID_RECURSIVE"
+        ]
+      },
+      {
+        "u_message": "三尖树从周围的植被间逼近这一波锁定的位置。",
+        "type": "warning"
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_TW2_EARLY",
+    "condition": {
+      "and": [
+        {
+          "not": {
+            "days_since_cataclysm": 14
+          }
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_intro_mode"
+            },
+            "!=",
+            {
+              "const": 2
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 32
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_32",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 2,
+            "var_name": "travel_dynamic_cfg_t_early_w2"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_TRIFFID_RECURSIVE"
+        ]
+      },
+      {
+        "u_message": "更多三尖树从其他方向加入合围。",
+        "type": "warning"
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_TW1_GROWING",
+    "condition": {
+      "and": [
+        {
+          "days_since_cataclysm": 14
+        },
+        {
+          "not": {
+            "days_since_cataclysm": 30
+          }
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_intro_mode"
+            },
+            "!=",
+            {
+              "const": 2
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 31
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_hostile_baseline"
+          },
+          "=",
+          {
+            "global_val": "monsters_nearby",
+            "radius": 70
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_31",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 2,
+            "var_name": "travel_dynamic_cfg_t_growing_w1"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_TRIFFID_RECURSIVE"
+        ]
+      },
+      {
+        "u_message": "三尖树从周围的植被间逼近这一波锁定的位置。",
+        "type": "warning"
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_TW2_GROWING",
+    "condition": {
+      "and": [
+        {
+          "days_since_cataclysm": 14
+        },
+        {
+          "not": {
+            "days_since_cataclysm": 30
+          }
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_intro_mode"
+            },
+            "!=",
+            {
+              "const": 2
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 32
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_32",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 2,
+            "var_name": "travel_dynamic_cfg_t_growing_w2"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_TRIFFID_RECURSIVE"
+        ]
+      },
+      {
+        "u_message": "更多三尖树从其他方向加入合围。",
+        "type": "warning"
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_TW1_MATURE",
+    "condition": {
+      "and": [
+        {
+          "days_since_cataclysm": 30
+        },
+        {
+          "not": {
+            "days_since_cataclysm": 60
+          }
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_intro_mode"
+            },
+            "!=",
+            {
+              "const": 2
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 31
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_hostile_baseline"
+          },
+          "=",
+          {
+            "global_val": "monsters_nearby",
+            "radius": 70
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_31",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 2,
+            "var_name": "travel_dynamic_cfg_t_mature_w1"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_TRIFFID_RECURSIVE"
+        ]
+      },
+      {
+        "u_message": "三尖树从周围的植被间逼近这一波锁定的位置。",
+        "type": "warning"
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_TW2_MATURE",
+    "condition": {
+      "and": [
+        {
+          "days_since_cataclysm": 30
+        },
+        {
+          "not": {
+            "days_since_cataclysm": 60
+          }
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_intro_mode"
+            },
+            "!=",
+            {
+              "const": 2
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 32
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_32",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 3,
+            "var_name": "travel_dynamic_cfg_t_mature_w2"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_TRIFFID_RECURSIVE"
+        ]
+      },
+      {
+        "u_message": "更多三尖树从其他方向加入合围。",
+        "type": "warning"
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_TW1_LATE",
+    "condition": {
+      "and": [
+        {
+          "days_since_cataclysm": 60
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_intro_mode"
+            },
+            "!=",
+            {
+              "const": 2
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 31
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_hostile_baseline"
+          },
+          "=",
+          {
+            "global_val": "monsters_nearby",
+            "radius": 70
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_31",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 3,
+            "var_name": "travel_dynamic_cfg_t_late_w1"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_TRIFFID_RECURSIVE"
+        ]
+      },
+      {
+        "u_message": "三尖树从周围的植被间逼近这一波锁定的位置。",
+        "type": "warning"
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_TW2_LATE",
+    "condition": {
+      "and": [
+        {
+          "days_since_cataclysm": 60
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_intro_mode"
+            },
+            "!=",
+            {
+              "const": 2
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 32
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_32",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 4,
+            "var_name": "travel_dynamic_cfg_t_late_w2"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_TRIFFID_RECURSIVE"
+        ]
+      },
+      {
+        "u_message": "更多三尖树从其他方向加入合围。",
+        "type": "warning"
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_SPAWN_TRIFFID_RECURSIVE",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_spawn_count"
+        },
+        ">",
+        {
+          "const": 0
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "-=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "u_spawn_monster": "GROUP_TRAVEL_DYNAMIC_TRIFFID_INTRO",
+        "real_count": 1,
+        "min_radius": 12,
+        "max_radius": 18,
+        "outdoor_only": true,
+        "target_var": {
+          "global_val": "travel_dynamic_raid_ground_target"
+        },
+        "group": true
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_TRIFFID_RECURSIVE"
+        ]
+      }
+    ],
+    "//": "三尖树围绕本波开始时保存的玩家坐标生成。袭击专用移动型变体拥有ALWAYS_SEES_YOU，能够持续感知玩家，但不会修改世界中的普通三尖树。"
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_SPAWN_ZOMBIE_RECURSIVE",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_spawn_count"
+        },
+        ">",
+        {
+          "const": 0
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "-=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "u_spawn_monster": "GROUP_TRAVEL_DYNAMIC_ZOMBIE_RAID",
+        "group": true,
+        "real_count": 1,
+        "min_radius": 24,
+        "max_radius": 36,
+        "outdoor_only": true,
+        "target_var": {
+          "global_val": "travel_dynamic_raid_ground_target"
+        }
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_ZOMBIE_RECURSIVE"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_SPAWN_MIGO_RECURSIVE",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_spawn_count"
+        },
+        ">",
+        {
+          "const": 0
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "-=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "u_spawn_monster": "GROUP_TRAVEL_DYNAMIC_MIGO_RAID",
+        "group": true,
+        "real_count": 1,
+        "min_radius": 0,
+        "max_radius": 4,
+        "outdoor_only": true,
+        "target_var": {
+          "global_val": "travel_dynamic_raid_migo_rally"
+        }
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_MIGO_RECURSIVE"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_SPAWN_AIR_RECURSIVE",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_spawn_count"
+        },
+        ">",
+        {
+          "const": 0
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "-=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "u_spawn_monster": "GROUP_TRAVEL_DYNAMIC_AIR_RAID",
+        "group": true,
+        "real_count": 1,
+        "min_radius": 20,
+        "max_radius": 34,
+        "outdoor_only": true,
+        "open_air_allowed": true
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_AIR_RECURSIVE"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_ZOMBIE_WAVE1",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_distance_lock"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RELEASE_DISTANCE_CLEAR",
+        "time_in_future": "5 minutes"
+      },
+      {
+        "u_location_variable": {
+          "global_val": "travel_dynamic_raid_ground_target"
+        },
+        "min_radius": 0,
+        "max_radius": 0,
+        "z_adjust": 0,
+        "z_override": true
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_ZW1_TUTORIAL",
+          "EOC_TRAVEL_DYNAMIC_ZW1_EARLY",
+          "EOC_TRAVEL_DYNAMIC_ZW1_GROWING",
+          "EOC_TRAVEL_DYNAMIC_ZW1_MATURE",
+          "EOC_TRAVEL_DYNAMIC_ZW1_LATE"
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_ZOMBIE_WAVE2",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_next_wave_delay",
+          "default": "45 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_ZW1_TUTORIAL",
+    "condition": {
+      "not": {
+        "days_since_cataclysm": 7
+      }
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_hostile_baseline"
+          },
+          "=",
+          {
+            "global_val": "monsters_nearby",
+            "radius": 70
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_1",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 2,
+            "var_name": "travel_dynamic_cfg_z_tutorial_w1"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_ZOMBIE_TUTORIAL_RECURSIVE"
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_ZW1_EARLY",
+    "condition": {
+      "and": [
+        {
+          "days_since_cataclysm": 7
+        },
+        {
+          "not": {
+            "days_since_cataclysm": 14
+          }
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_hostile_baseline"
+          },
+          "=",
+          {
+            "global_val": "monsters_nearby",
+            "radius": 70
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_1",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 2,
+            "var_name": "travel_dynamic_cfg_z_early_w1"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_ZOMBIE_EARLY_RECURSIVE"
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_ZW1_GROWING",
+    "condition": {
+      "and": [
+        {
+          "days_since_cataclysm": 14
+        },
+        {
+          "not": {
+            "days_since_cataclysm": 30
+          }
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_hostile_baseline"
+          },
+          "=",
+          {
+            "global_val": "monsters_nearby",
+            "radius": 70
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_1",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 3,
+            "var_name": "travel_dynamic_cfg_z_growing_w1"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_ZOMBIE_GROWING_RECURSIVE"
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_ZW1_MATURE",
+    "condition": {
+      "and": [
+        {
+          "days_since_cataclysm": 30
+        },
+        {
+          "not": {
+            "days_since_cataclysm": 60
+          }
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_hostile_baseline"
+          },
+          "=",
+          {
+            "global_val": "monsters_nearby",
+            "radius": 70
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_1",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 4,
+            "var_name": "travel_dynamic_cfg_z_mature_w1"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_ZOMBIE_MATURE_RECURSIVE"
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_ZW1_LATE",
+    "condition": {
+      "days_since_cataclysm": 60
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_hostile_baseline"
+          },
+          "=",
+          {
+            "global_val": "monsters_nearby",
+            "radius": 70
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_1",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 5,
+            "var_name": "travel_dynamic_cfg_z_late_w1"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_ZOMBIE_LATE_RECURSIVE"
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_ZOMBIE_WAVE2",
+    "effect": [
+      {
+        "u_message": "四十五秒过去，第二波尸群从新的方向压了上来。",
+        "type": "warning"
+      },
+      {
+        "u_location_variable": {
+          "global_val": "travel_dynamic_raid_ground_target"
+        },
+        "min_radius": 0,
+        "max_radius": 0,
+        "z_adjust": 0,
+        "z_override": true
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_ZW2_TUTORIAL",
+          "EOC_TRAVEL_DYNAMIC_ZW2_EARLY",
+          "EOC_TRAVEL_DYNAMIC_ZW2_GROWING",
+          "EOC_TRAVEL_DYNAMIC_ZW2_MATURE",
+          "EOC_TRAVEL_DYNAMIC_ZW2_LATE"
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_ZOMBIE_WAVE3",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_next_wave_delay",
+          "default": "45 seconds"
+        }
+      }
+    ],
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_active"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_ZW2_TUTORIAL",
+    "condition": {
+      "not": {
+        "days_since_cataclysm": 7
+      }
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 2
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_2",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 2,
+            "var_name": "travel_dynamic_cfg_z_tutorial_w2"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_ZOMBIE_TUTORIAL_RECURSIVE"
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_ZW2_EARLY",
+    "condition": {
+      "and": [
+        {
+          "days_since_cataclysm": 7
+        },
+        {
+          "not": {
+            "days_since_cataclysm": 14
+          }
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 2
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_2",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 3,
+            "var_name": "travel_dynamic_cfg_z_early_w2"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_ZOMBIE_EARLY_RECURSIVE"
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_ZW2_GROWING",
+    "condition": {
+      "and": [
+        {
+          "days_since_cataclysm": 14
+        },
+        {
+          "not": {
+            "days_since_cataclysm": 30
+          }
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 2
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_2",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 4,
+            "var_name": "travel_dynamic_cfg_z_growing_w2"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_ZOMBIE_GROWING_RECURSIVE"
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_ZW2_MATURE",
+    "condition": {
+      "and": [
+        {
+          "days_since_cataclysm": 30
+        },
+        {
+          "not": {
+            "days_since_cataclysm": 60
+          }
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 2
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_2",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 5,
+            "var_name": "travel_dynamic_cfg_z_mature_w2"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_ZOMBIE_MATURE_RECURSIVE"
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_ZW2_LATE",
+    "condition": {
+      "days_since_cataclysm": 60
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 2
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_2",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 7,
+            "var_name": "travel_dynamic_cfg_z_late_w2"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_ZOMBIE_LATE_RECURSIVE"
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_ZOMBIE_WAVE3",
+    "effect": [
+      {
+        "u_message": "又过四十五秒，尸潮的最后一波开始逼近。",
+        "type": "warning"
+      },
+      {
+        "u_location_variable": {
+          "global_val": "travel_dynamic_raid_ground_target"
+        },
+        "min_radius": 0,
+        "max_radius": 0,
+        "z_adjust": 0,
+        "z_override": true
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_ZW3_TUTORIAL",
+          "EOC_TRAVEL_DYNAMIC_ZW3_EARLY",
+          "EOC_TRAVEL_DYNAMIC_ZW3_GROWING",
+          "EOC_TRAVEL_DYNAMIC_ZW3_MATURE",
+          "EOC_TRAVEL_DYNAMIC_ZW3_LATE"
+        ]
+      }
+    ],
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_active"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            "==",
+            {
+              "const": 2
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_ZW3_TUTORIAL",
+    "condition": {
+      "not": {
+        "days_since_cataclysm": 7
+      }
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 3
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_3",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 2,
+            "var_name": "travel_dynamic_cfg_z_tutorial_w3"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_ZOMBIE_TUTORIAL_RECURSIVE"
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_ZW3_EARLY",
+    "condition": {
+      "and": [
+        {
+          "days_since_cataclysm": 7
+        },
+        {
+          "not": {
+            "days_since_cataclysm": 14
+          }
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 3
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_3",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 3,
+            "var_name": "travel_dynamic_cfg_z_early_w3"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_ZOMBIE_EARLY_RECURSIVE"
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_ZW3_GROWING",
+    "condition": {
+      "and": [
+        {
+          "days_since_cataclysm": 14
+        },
+        {
+          "not": {
+            "days_since_cataclysm": 30
+          }
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 3
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_3",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 4,
+            "var_name": "travel_dynamic_cfg_z_growing_w3"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_ZOMBIE_GROWING_RECURSIVE"
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_ZW3_MATURE",
+    "condition": {
+      "and": [
+        {
+          "days_since_cataclysm": 30
+        },
+        {
+          "not": {
+            "days_since_cataclysm": 60
+          }
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 3
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_3",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 6,
+            "var_name": "travel_dynamic_cfg_z_mature_w3"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_ZOMBIE_MATURE_RECURSIVE"
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_ZW3_LATE",
+    "condition": {
+      "days_since_cataclysm": 60
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 3
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_3",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 9,
+            "var_name": "travel_dynamic_cfg_z_late_w3"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_ZOMBIE_LATE_RECURSIVE"
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_MIGO_WAVE1",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_distance_lock"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RELEASE_DISTANCE_CLEAR",
+        "time_in_future": "5 minutes"
+      },
+      {
+        "u_location_variable": {
+          "global_val": "travel_dynamic_raid_ground_target"
+        },
+        "min_radius": 0,
+        "max_radius": 0,
+        "z_adjust": 0,
+        "z_override": true
+      },
+      {
+        "u_location_variable": {
+          "global_val": "travel_dynamic_raid_migo_rally"
+        },
+        "min_radius": 28,
+        "max_radius": 34,
+        "outdoor_only": true,
+        "z_adjust": 0,
+        "z_override": true
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_MW1_INTRO",
+          "EOC_TRAVEL_DYNAMIC_MW1_EARLY",
+          "EOC_TRAVEL_DYNAMIC_MW1_GROWING",
+          "EOC_TRAVEL_DYNAMIC_MW1_MATURE",
+          "EOC_TRAVEL_DYNAMIC_MW1_LATE"
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_MIGO_TIMED_WAVE2",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_next_wave_delay",
+          "default": "45 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_MIGO_TIMED_WAVE2",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_active"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            "==",
+            {
+              "const": 11
+            }
+          ]
+        },
+        {
+          "days_since_cataclysm": 14
+        }
+      ]
+    },
+    "effect": {
+      "run_eocs": [
+        "EOC_TRAVEL_DYNAMIC_MIGO_WAVE2"
+      ]
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_MW1_INTRO",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_intro_mode"
+        },
+        "==",
+        {
+          "const": 4
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 11
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_hostile_baseline"
+          },
+          "=",
+          {
+            "global_val": "monsters_nearby",
+            "radius": 70
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_11",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 1,
+            "var_name": "travel_dynamic_cfg_m_intro_w1"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_MIGO_RECURSIVE"
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_MW1_EARLY",
+    "condition": {
+      "and": [
+        {
+          "not": {
+            "days_since_cataclysm": 14
+          }
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_intro_mode"
+            },
+            "!=",
+            {
+              "const": 4
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 11
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_hostile_baseline"
+          },
+          "=",
+          {
+            "global_val": "monsters_nearby",
+            "radius": 70
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_11",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 1,
+            "var_name": "travel_dynamic_cfg_m_early_w1"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_MIGO_RECURSIVE"
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_MW1_GROWING",
+    "condition": {
+      "and": [
+        {
+          "and": [
+            {
+              "days_since_cataclysm": 14
+            },
+            {
+              "not": {
+                "days_since_cataclysm": 30
+              }
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_intro_mode"
+            },
+            "!=",
+            {
+              "const": 4
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 11
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_hostile_baseline"
+          },
+          "=",
+          {
+            "global_val": "monsters_nearby",
+            "radius": 70
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_11",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 1,
+            "var_name": "travel_dynamic_cfg_m_growing_w1"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_MIGO_RECURSIVE"
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_MW1_MATURE",
+    "condition": {
+      "and": [
+        {
+          "and": [
+            {
+              "days_since_cataclysm": 30
+            },
+            {
+              "not": {
+                "days_since_cataclysm": 60
+              }
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_intro_mode"
+            },
+            "!=",
+            {
+              "const": 4
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 11
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_hostile_baseline"
+          },
+          "=",
+          {
+            "global_val": "monsters_nearby",
+            "radius": 70
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_11",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 1,
+            "var_name": "travel_dynamic_cfg_m_mature_w1"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_MIGO_RECURSIVE"
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_MW1_LATE",
+    "condition": {
+      "and": [
+        {
+          "days_since_cataclysm": 60
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_intro_mode"
+            },
+            "!=",
+            {
+              "const": 4
+            }
+          ]
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 11
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_hostile_baseline"
+          },
+          "=",
+          {
+            "global_val": "monsters_nearby",
+            "radius": 70
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_11",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 2,
+            "var_name": "travel_dynamic_cfg_m_late_w1"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_MIGO_RECURSIVE"
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_MIGO_WAVE2",
+    "effect": [
+      {
+        "u_message": "四十五秒过去，另一组米戈尖啸着从侧翼逼近。",
+        "type": "warning"
+      },
+      {
+        "u_location_variable": {
+          "global_val": "travel_dynamic_raid_ground_target"
+        },
+        "min_radius": 0,
+        "max_radius": 0,
+        "z_adjust": 0,
+        "z_override": true
+      },
+      {
+        "u_location_variable": {
+          "global_val": "travel_dynamic_raid_migo_rally"
+        },
+        "min_radius": 28,
+        "max_radius": 34,
+        "outdoor_only": true,
+        "z_adjust": 0,
+        "z_override": true
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_MW2_GROWING",
+          "EOC_TRAVEL_DYNAMIC_MW2_MATURE",
+          "EOC_TRAVEL_DYNAMIC_MW2_LATE"
+        ]
+      }
+    ],
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_active"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            "==",
+            {
+              "const": 11
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_MW2_GROWING",
+    "condition": {
+      "and": [
+        {
+          "days_since_cataclysm": 14
+        },
+        {
+          "not": {
+            "days_since_cataclysm": 30
+          }
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 12
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_12",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 1,
+            "var_name": "travel_dynamic_cfg_m_growing_w2"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_MIGO_RECURSIVE"
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_MW2_MATURE",
+    "condition": {
+      "and": [
+        {
+          "days_since_cataclysm": 30
+        },
+        {
+          "not": {
+            "days_since_cataclysm": 60
+          }
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 12
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_12",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 2,
+            "var_name": "travel_dynamic_cfg_m_mature_w2"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_MIGO_RECURSIVE"
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_MW2_LATE",
+    "condition": {
+      "days_since_cataclysm": 60
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 12
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_12",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 3,
+            "var_name": "travel_dynamic_cfg_m_late_w2"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_MIGO_RECURSIVE"
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_AIR_WAVE1",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_distance_lock"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RELEASE_DISTANCE_CLEAR",
+        "time_in_future": "5 minutes"
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_AW1_EARLY",
+          "EOC_TRAVEL_DYNAMIC_AW1_MATURE",
+          "EOC_TRAVEL_DYNAMIC_AW1_LATE"
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_AIR_WAVE2",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_next_wave_delay",
+          "default": "45 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_AW1_EARLY",
+    "condition": {
+      "not": {
+        "days_since_cataclysm": 30
+      }
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 21
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_hostile_baseline"
+          },
+          "=",
+          {
+            "global_val": "monsters_nearby",
+            "radius": 70
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_21",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 2,
+            "var_name": "travel_dynamic_cfg_a_early_w1"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_AIR_RECURSIVE"
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_AW1_MATURE",
+    "condition": {
+      "and": [
+        {
+          "days_since_cataclysm": 30
+        },
+        {
+          "not": {
+            "days_since_cataclysm": 60
+          }
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 21
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_hostile_baseline"
+          },
+          "=",
+          {
+            "global_val": "monsters_nearby",
+            "radius": 70
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_21",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 2,
+            "var_name": "travel_dynamic_cfg_a_mature_w1"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_AIR_RECURSIVE"
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_AW1_LATE",
+    "condition": {
+      "days_since_cataclysm": 60
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 21
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_hostile_baseline"
+          },
+          "=",
+          {
+            "global_val": "monsters_nearby",
+            "radius": 70
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_21",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 3,
+            "var_name": "travel_dynamic_cfg_a_late_w1"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_AIR_RECURSIVE"
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_AIR_WAVE2",
+    "effect": [
+      {
+        "u_message": "四十五秒过去，第二群血鸷借着气流从侧上方俯冲下来。",
+        "type": "warning"
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_AW2_EARLY",
+          "EOC_TRAVEL_DYNAMIC_AW2_MATURE",
+          "EOC_TRAVEL_DYNAMIC_AW2_LATE"
+        ]
+      }
+    ],
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_active"
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            "==",
+            {
+              "const": 21
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_AW2_EARLY",
+    "condition": {
+      "not": {
+        "days_since_cataclysm": 30
+      }
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 22
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_22",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 2,
+            "var_name": "travel_dynamic_cfg_a_early_w2"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_AIR_RECURSIVE"
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_AW2_MATURE",
+    "condition": {
+      "and": [
+        {
+          "days_since_cataclysm": 30
+        },
+        {
+          "not": {
+            "days_since_cataclysm": 60
+          }
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 22
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_22",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 3,
+            "var_name": "travel_dynamic_cfg_a_mature_w2"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_AIR_RECURSIVE"
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_AW2_LATE",
+    "condition": {
+      "days_since_cataclysm": 60
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 22
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_TIMEOUT_STAGE_22",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_wave_timeout",
+          "default": "2 hours"
+        }
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "default": 3,
+            "var_name": "travel_dynamic_cfg_a_late_w2"
+          }
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_STORY",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_HARD",
+          "EOC_TRAVEL_DYNAMIC_DIFFICULTY_BRUTAL"
+        ]
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_AIR_RECURSIVE"
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "queue_eocs": "EOC_TRAVEL_DYNAMIC_RAID_WAVE_MANAGER",
+        "time_in_future": {
+          "global_val": "travel_dynamic_cfg_clear_check_delay",
+          "default": "5 seconds"
+        }
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_COMPLETE_ZOMBIE",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_pending"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_victories"
+          },
+          "+=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_hostile_baseline"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_intro_mode"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_distance_lock"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "u_message": "最后一具袭击者倒下，四周的嘶吼终于散去。你守住了这一轮。",
+        "type": "good"
+      },
+      {
+        "u_add_morale": "morale_feeling_good",
+        "bonus": 8,
+        "max_bonus": 20,
+        "duration": "4 hours",
+        "decay_start": "1 hour",
+        "capped": true
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_COMPLETE_MIGO",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_pending"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_victories"
+          },
+          "+=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_hostile_baseline"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_intro_mode"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_distance_lock"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "u_message": "米戈之间的呼应彻底中断。至少在下一次追猎前，你暂时安全了。",
+        "type": "good"
+      },
+      {
+        "u_add_morale": "morale_feeling_good",
+        "bonus": 12,
+        "max_bonus": 20,
+        "duration": "4 hours",
+        "decay_start": "1 hour",
+        "capped": true
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_COMPLETE_AIR",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_pending"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_victories"
+          },
+          "+=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_hostile_baseline"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_intro_mode"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_distance_lock"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "u_message": "最后一只血鸷从空中坠落，飞艇重新获得了安静的航路。",
+        "type": "good"
+      },
+      {
+        "u_add_morale": "morale_feeling_good",
+        "bonus": 8,
+        "max_bonus": 20,
+        "duration": "4 hours",
+        "decay_start": "1 hour",
+        "capped": true
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_COMPLETE_TRIFFID",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_pending"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_victories"
+          },
+          "+=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_hostile_baseline"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_intro_mode"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_distance_lock"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "u_message": "最后一株三尖树倒下，附近的草木重新安静下来。你挡住了这次植物突袭。",
+        "type": "good"
+      },
+      {
+        "u_add_morale": "morale_feeling_good",
+        "bonus": 5,
+        "max_bonus": 15,
+        "duration": "3 hours",
+        "decay_start": "1 hour",
+        "capped": true
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_ABORT_STUCK",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_pending"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_active"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_stage"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_wave_ready"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_hostile_baseline"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_intro_mode"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_distance_lock"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "u_message": "本轮袭击调度已经结束，仍留在世界中的袭击者不会被删除。",
+        "type": "info"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_SPAWN_ZOMBIE_TUTORIAL_RECURSIVE",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_spawn_count"
+        },
+        ">",
+        {
+          "const": 0
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "-=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "u_spawn_monster": "GROUP_TRAVEL_DYNAMIC_ZOMBIE_RAID",
+        "group": true,
+        "real_count": 1,
+        "min_radius": 27,
+        "max_radius": 36,
+        "outdoor_only": true,
+        "target_var": {
+          "global_val": "travel_dynamic_raid_ground_target"
+        }
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_ZOMBIE_TUTORIAL_RECURSIVE"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_SPAWN_ZOMBIE_EARLY_RECURSIVE",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_spawn_count"
+        },
+        ">",
+        {
+          "const": 0
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "-=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "u_spawn_monster": "GROUP_TRAVEL_DYNAMIC_ZOMBIE_RAID",
+        "group": true,
+        "real_count": 1,
+        "min_radius": 27,
+        "max_radius": 36,
+        "outdoor_only": true,
+        "target_var": {
+          "global_val": "travel_dynamic_raid_ground_target"
+        }
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_ZOMBIE_EARLY_RECURSIVE"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_SPAWN_ZOMBIE_GROWING_RECURSIVE",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_spawn_count"
+        },
+        ">",
+        {
+          "const": 0
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "-=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "u_spawn_monster": "GROUP_TRAVEL_DYNAMIC_ZOMBIE_RAID",
+        "group": true,
+        "real_count": 1,
+        "min_radius": 27,
+        "max_radius": 36,
+        "outdoor_only": true,
+        "target_var": {
+          "global_val": "travel_dynamic_raid_ground_target"
+        }
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_ZOMBIE_GROWING_RECURSIVE"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_SPAWN_ZOMBIE_MATURE_RECURSIVE",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_spawn_count"
+        },
+        ">",
+        {
+          "const": 0
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "-=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "u_spawn_monster": "GROUP_TRAVEL_DYNAMIC_ZOMBIE_RAID",
+        "group": true,
+        "real_count": 1,
+        "min_radius": 27,
+        "max_radius": 36,
+        "outdoor_only": true,
+        "target_var": {
+          "global_val": "travel_dynamic_raid_ground_target"
+        }
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_ZOMBIE_MATURE_RECURSIVE"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_SPAWN_ZOMBIE_LATE_RECURSIVE",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_spawn_count"
+        },
+        ">",
+        {
+          "const": 0
+        }
+      ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "travel_dynamic_raid_spawn_count"
+          },
+          "-=",
+          {
+            "const": 1
+          }
+        ]
+      },
+      {
+        "u_spawn_monster": "GROUP_TRAVEL_DYNAMIC_ZOMBIE_RAID",
+        "group": true,
+        "real_count": 1,
+        "min_radius": 27,
+        "max_radius": 36,
+        "outdoor_only": true,
+        "target_var": {
+          "global_val": "travel_dynamic_raid_ground_target"
+        }
+      },
+      {
+        "run_eocs": [
+          "EOC_TRAVEL_DYNAMIC_SPAWN_ZOMBIE_LATE_RECURSIVE"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_RELEASE_DISTANCE_CLEAR",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_active"
+        },
+        "==",
+        {
+          "const": 1
+        }
+      ]
+    },
+    "effect": {
+      "arithmetic": [
+        {
+          "global_val": "var",
+          "var_name": "travel_dynamic_raid_distance_lock"
+        },
+        "=",
+        {
+          "const": 0
+        }
+      ]
+    },
+    "//": "怪物袭击至少维持五分钟追击窗口。此前即使玩家跑出七十格统计范围，也不会被误判为已经清场。"
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_GUIDE_PLAYER",
+    "recurrence": "20 seconds",
+    "global": true,
+    "run_for_npcs": false,
+    "//": "怪物袭击开始后的五分钟内，每二十秒以较低音量刷新一次玩家方位。只对能调查声音的尸群，米戈和空中猎群有效。三尖树与强盗不使用此引导。",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_active",
+              "default": 0
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_distance_lock",
+              "default": 0
+            },
+            ">=",
+            {
+              "const": 1
+            }
+          ]
+        }
+      ]
+    },
+    "effect": {
+      "run_eocs": [
+        "EOC_TRAVEL_DYNAMIC_GUIDE_PLAYER_ZOMBIE",
+        "EOC_TRAVEL_DYNAMIC_GUIDE_PLAYER_MIGO",
+        "EOC_TRAVEL_DYNAMIC_GUIDE_PLAYER_AIR"
+      ]
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_GUIDE_PLAYER_ZOMBIE",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            ">=",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            "<=",
+            {
+              "const": 3
+            }
+          ]
+        }
+      ]
+    },
+    "effect": {
+      "u_make_sound": "模糊的脚步声",
+      "volume": 48,
+      "type": "movement"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_GUIDE_PLAYER_MIGO",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            ">=",
+            {
+              "const": 11
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            "<=",
+            {
+              "const": 12
+            }
+          ]
+        }
+      ]
+    },
+    "effect": {
+      "u_make_sound": "模糊的脚步声",
+      "volume": 60,
+      "type": "movement"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_GUIDE_PLAYER_AIR",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            ">=",
+            {
+              "const": 21
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            "<=",
+            {
+              "const": 22
+            }
+          ]
+        }
+      ]
+    },
+    "effect": {
+      "u_make_sound": "模糊的脚步声",
+      "volume": 55,
+      "type": "movement"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_GUIDE_FOLLOWERS",
+    "recurrence": "30 seconds",
+    "global": true,
+    "run_for_npcs": true,
+    "//": "跟随者在袭击开始后的五分钟内提供较弱声源。营地居民不自动成为声源，避免整座营地持续制造高音量定位声。",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_active",
+              "default": 0
+            },
+            "==",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_distance_lock",
+              "default": 0
+            },
+            ">=",
+            {
+              "const": 1
+            }
+          ]
+        },
+        "u_following"
+      ]
+    },
+    "effect": {
+      "run_eocs": [
+        "EOC_TRAVEL_DYNAMIC_GUIDE_FOLLOWER_ZOMBIE",
+        "EOC_TRAVEL_DYNAMIC_GUIDE_FOLLOWER_MIGO",
+        "EOC_TRAVEL_DYNAMIC_GUIDE_FOLLOWER_AIR"
+      ]
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_GUIDE_FOLLOWER_ZOMBIE",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            ">=",
+            {
+              "const": 1
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            "<=",
+            {
+              "const": 3
+            }
+          ]
+        }
+      ]
+    },
+    "effect": {
+      "u_make_sound": "零散的脚步声",
+      "volume": 28,
+      "type": "movement"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_GUIDE_FOLLOWER_MIGO",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            ">=",
+            {
+              "const": 11
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            "<=",
+            {
+              "const": 12
+            }
+          ]
+        }
+      ]
+    },
+    "effect": {
+      "u_make_sound": "零散的脚步声",
+      "volume": 36,
+      "type": "movement"
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_DYNAMIC_GUIDE_FOLLOWER_AIR",
+    "condition": {
+      "and": [
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            ">=",
+            {
+              "const": 21
+            }
+          ]
+        },
+        {
+          "compare_int": [
+            {
+              "global_val": "var",
+              "var_name": "travel_dynamic_raid_stage"
+            },
+            "<=",
+            {
+              "const": 22
+            }
+          ]
+        }
+      ]
+    },
+    "effect": {
+      "u_make_sound": "零散的脚步声",
+      "volume": 32,
+      "type": "movement"
+    }
+  }
+]

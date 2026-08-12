@@ -1,0 +1,208 @@
+[
+  {
+    "id": "227_fury_ammo_box_100",
+    "type": "GENERIC",
+    "category": "container",
+    "name": {
+      "str": "6.8x51mm弹药盒（100发）"
+    },
+    "description": "一只较大的弹药纸盒，可容纳100发6.8x51mm弹药。",
+    "material": [
+      "cardboard"
+    ],
+    "weight": "100 g",
+    "volume": "1050 ml",
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "1000 ml",
+        "max_contains_weight": "3 kg",
+        "rigid": true
+      }
+    ],
+    "symbol": "#",
+    "color": "brown",
+    "looks_like": "box_small",
+    "longest_side": "20 cm"
+  },
+  {
+    "id": "227_fury_ammo_box_20",
+    "type": "GENERIC",
+    "category": "container",
+    "name": {
+      "str": "6.8x51mm弹药盒（20发）"
+    },
+    "description": "一只印有厂商标志的薄纸盒，可容纳20发6.8x51mm弹药。",
+    "material": [
+      "cardboard"
+    ],
+    "weight": "20 g",
+    "volume": "200 ml",
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "158 ml",
+        "max_contains_weight": "600 g",
+        "max_item_length": "14 cm",
+        "rigid": true
+      }
+    ],
+    "symbol": "#",
+    "color": "brown",
+    "looks_like": "box_small",
+    "longest_side": "20 cm"
+  },
+  {
+    "type": "ammunition_type",
+    "id": "68_51",
+    "name": "6.8x51mm弹",
+    "default": "68_51_fmj"
+  },
+  {
+    "id": "68_51_casing",
+    "copy-from": "casing",
+    "type": "GENERIC",
+    "name": {
+      "str": "6.8x51mm弹壳"
+    },
+    "description": "一枚已经击发的6.8x51mm混合材料弹壳。",
+    "weight": "7 g",
+    "volume": "10 ml",
+    "longest_side": "20 cm"
+  },
+  {
+    "id": "68_51_fmj",
+    "type": "AMMO",
+    "name": {
+      "str": "6.8x51mm混合壳全被甲弹"
+    },
+    "description": "为M7与MCX-SPEAR配套的6.8x51mm高压步枪弹，采用混合材料弹壳，在较短枪管中也能保持较高初速。",
+    "weight": "16 g",
+    "volume": "150 ml",
+    "longest_side": "71 mm",
+    "price": "3 USD 60 cent",
+    "price_postapoc": "6 USD",
+    "flags": [
+      "IRREPLACEABLE_CONSUMABLE"
+    ],
+    "material": [
+      "brass",
+      "lead",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "yellow",
+    "count": 20,
+    "stack_size": 20,
+    "ammo_type": "68_51",
+    "casing": "68_51_casing",
+    "range": 65,
+    "//": "SIG SAUER HYBRID BALL .277 FURY 113 GR COPPER 920RDS",
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 59,
+      "armor_penetration": 6
+    },
+    "dispersion": 15,
+    "recoil": 3000,
+    "effects": [
+      "COOKOFF"
+    ]
+  },
+  {
+    "id": "79257_smk",
+    "looks_like": "79257_fmj",
+    "type": "AMMO",
+    "copy-from": "79257_fmj",
+    "weight": "25 g",
+    "name": {
+      "str": "7.92x57mm钢芯弹"
+    },
+    "description": "一种由德国在19世纪研发的弹药，属于有缘瓶颈式步枪弹，广泛应用于一战与二战期间，现如今多用于收藏与运动射击，这一种属于二战时期的钢芯穿甲弹。",
+    "price": "9 USD",
+    "price_postapoc": "18 USD",
+    "relative": {
+      "damage": {
+        "damage_type": "bullet",
+        "amount": 3,
+        "armor_penetration": 5
+      }
+    },
+    "longest_side": "8 cm"
+  },
+  {
+    "id": "79257_smkh",
+    "looks_like": "79257_fmj",
+    "type": "AMMO",
+    "copy-from": "79257_fmj",
+    "weight": "27 g",
+    "name": {
+      "str": "7.92x57mm硬钢芯穿甲弹"
+    },
+    "description": "一种由德国在19世纪研发的弹药，属于有缘瓶颈式步枪弹，广泛应用于一战与二战期间，现如今多用于收藏与运动射击，这一种属于二战时期的钨芯穿甲弹。",
+    "price": "12 USD",
+    "recoil": 4800,
+    "price_postapoc": "24 USD",
+    "relative": {
+      "damage": {
+        "damage_type": "bullet",
+        "amount": 5,
+        "armor_penetration": 15
+      }
+    },
+    "longest_side": "8 cm"
+  },
+  {
+    "id": "8mm_mauser_ammo_box_100",
+    "type": "GENERIC",
+    "category": "container",
+    "name": {
+      "str": "7.92mm毛瑟弹药盒（100发）"
+    },
+    "description": "一只可容纳100发7.92x57mm毛瑟弹的大纸盒。",
+    "material": [
+      "cardboard"
+    ],
+    "weight": "100 g",
+    "volume": "1050 ml",
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "1000 ml",
+        "max_contains_weight": "3 kg",
+        "rigid": true
+      }
+    ],
+    "symbol": "#",
+    "color": "brown",
+    "looks_like": "box_small",
+    "longest_side": "20 cm"
+  },
+  {
+    "id": "8mm_mauser_ammo_box_20",
+    "type": "GENERIC",
+    "category": "container",
+    "name": {
+      "str": "7.92mm毛瑟弹药盒（20发）"
+    },
+    "description": "一只可容纳20发7.92x57mm毛瑟弹的纸盒。",
+    "material": [
+      "cardboard"
+    ],
+    "weight": "20 g",
+    "volume": "230 ml",
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "158 ml",
+        "max_contains_weight": "600 g",
+        "max_item_length": "14 cm",
+        "rigid": true
+      }
+    ],
+    "symbol": "#",
+    "color": "brown",
+    "looks_like": "box_small",
+    "longest_side": "20 cm"
+  }
+]

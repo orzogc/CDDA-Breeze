@@ -129,13 +129,19 @@ static item_location inv_internal( Character &u, const inventory_selector_preset
                                    const std::string &title, int radius,
                                    const std::string &none_message,
                                    const std::string &hint = std::string(),
-                                   item_location container = item_location() )
+                                   item_location container = item_location(),
+                                   bool add_ebooks = false,
+                                   bool show_view_category_mode = true )
 {
     inventory_pick_selector inv_s( u, preset );
 
     inv_s.set_title( title );
     inv_s.set_hint( hint );
     inv_s.set_display_stats( false );
+    inv_s.set_show_view_category_mode( show_view_category_mode );
+    if( add_ebooks ) {
+        inv_s.set_column_titles( "随身书籍", "周围书籍" );
+    }
 
     const std::vector<activity_id> consuming {
         ACT_EAT_MENU,
@@ -153,7 +159,11 @@ static item_location inv_internal( Character &u, const inventory_selector_preset
     } else {
         // Default behavior.
         inv_s.add_character_items( u );
-        inv_s.add_nearby_items( radius );
+        inv_s.add_nearby_items( radius, add_ebooks );
+        if( add_ebooks ) {
+            inv_s.add_character_ebooks( u );
+            inv_s.deduplicate_books_by_source();
+        }
     }
 
     if( u.has_activity( consuming ) ) {
@@ -1296,6 +1306,14 @@ class read_inventory_preset: public pickup_inventory_preset
                 !loc->type->can_use( "learn_spell" ) ) {
                 return denials.front();
             }
+            if( loc.has_parent() ) {
+                const item_location parent = loc.parent_item();
+                if( parent && parent->is_ebook_storage() ) {
+                    // The book stays in the reader; reading it does not require
+                    // an additional character inventory pocket.
+                    return std::string();
+                }
+            }
             return pickup_inventory_preset::get_denial( loc );
         }
 
@@ -1323,6 +1341,22 @@ class read_inventory_preset: public pickup_inventory_preset
 
         bool sort_compare( const inventory_entry &lhs, const inventory_entry &rhs ) const override {
             const bool base_sort = inventory_selector_preset::sort_compare( lhs, rhs );
+
+            if( lhs.any_item()->typeId() == rhs.any_item()->typeId() ) {
+                const auto is_ebook = []( const inventory_entry &entry ) {
+                    const item_location loc = entry.any_item();
+                    if( !loc.has_parent() ) {
+                        return false;
+                    }
+                    const item_location parent = loc.parent_item();
+                    return parent && parent->is_ebook_storage();
+                };
+                const bool lhs_ebook = is_ebook( lhs );
+                const bool rhs_ebook = is_ebook( rhs );
+                if( lhs_ebook != rhs_ebook ) {
+                    return !lhs_ebook;
+                }
+            }
 
             const bool known_a = is_known( lhs.any_item() );
             const bool known_b = is_known( rhs.any_item() );
@@ -1398,7 +1432,8 @@ item_location game_menus::inv::read( Character &you )
 {
     const std::string msg = you.is_avatar() ? _( "You have nothing to read." ) :
                             string_format( _( "%s has nothing to read." ), you.disp_name() );
-    return inv_internal( you, read_inventory_preset( you ), _( "Read" ), 1, msg );
+    return inv_internal( you, read_inventory_preset( you ), _( "Read" ), 1, msg, "", item_location(),
+                         true, false );
 }
 
 item_location game_menus::inv::ebookread( Character &you, item_location &ereader )
@@ -1413,6 +1448,7 @@ item_location game_menus::inv::ebookread( Character &you, item_location &ereader
 
     inv_s.set_title( _( "Read" ) );
     inv_s.set_display_stats( false );
+    inv_s.set_show_view_category_mode( false );
 
     inv_s.clear_items();
     inv_s.add_contained_ebooks( ereader );

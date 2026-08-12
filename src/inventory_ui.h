@@ -392,6 +392,8 @@ class inventory_column
                    std::vector< std::pair<inclusive_rectangle<point>, inventory_entry *>> &rect_entry_map );
 
         inventory_entry *add_entry( const inventory_entry &entry );
+        /** Remove entries matching the predicate from this column. */
+        void remove_entries( const std::function<bool( const inventory_entry & )> &predicate );
         void move_entries_to( inventory_column &dest );
         void clear();
         void set_stack_favorite( std::vector<item_location> &locations, bool favorite );
@@ -615,12 +617,14 @@ class inventory_selector
         bool add_contained_items( item_location &container );
         bool add_contained_items( item_location &container, inventory_column &column,
             const item_category* custom_category = nullptr, item_location const& topmost_parent = {},
-                                  int indent = 0 );
-        void add_contained_ebooks( item_location &container );
+                                  int indent = 0, bool add_ebooks = false );
+        bool add_contained_ebooks( item_location &container );
+        bool add_contained_ebooks( item_location &container, inventory_column &column );
         void add_character_items( Character &character );
-        void add_map_items( const tripoint &target );
-        void add_vehicle_items( const tripoint &target );
-        void add_nearby_items( int radius = 1 );
+        void add_character_ebooks( Character &character );
+        void add_map_items( const tripoint &target, bool add_ebooks = false );
+        void add_vehicle_items( const tripoint &target, bool add_ebooks = false );
+        void add_nearby_items( int radius = 1, bool add_ebooks = false );
         void add_remote_map_items( tinymap *remote_map, const tripoint &target );
         /** Remove all items */
         void clear_items();
@@ -628,6 +632,11 @@ class inventory_selector
         void set_title( const std::string &title ) {
             this->title = title;
         }
+        /** Assign titles to the carried-item and nearby-item columns. */
+        void set_column_titles( const std::string &carried_title,
+                                const std::string &nearby_title );
+        /** Keep one book per type in each source, preferring paper copies. */
+        void deduplicate_books_by_source();
         /** Assigns a hint. */
         void set_hint( const std::string &hint ) {
             this->hint = hint;
@@ -635,6 +644,13 @@ class inventory_selector
         /** Specify whether the header should show stats (weight and volume). */
         void set_display_stats( bool display_stats ) {
             this->display_stats = display_stats;
+        }
+        /** Hide the view-mode switch when it is not useful for a selector. */
+        void set_show_view_category_mode( bool show ) {
+            this->show_view_category_mode_ = show;
+        }
+        bool show_view_category_mode() const {
+            return show_view_category_mode_;
         }
         /** @return true when the selector is empty. */
         bool empty() const;
@@ -694,7 +710,8 @@ class inventory_selector
         bool add_entry_rec( inventory_column &entry_column, inventory_column &children_column,
                             item_location &loc, item_category const *entry_category = nullptr,
                             item_category const *children_category = nullptr,
-                            item_location const& topmost_parent = {}, int indent = 0);
+                            item_location const& topmost_parent = {}, int indent = 0,
+                            bool add_ebooks = false );
 
         inventory_input get_input();
         inventory_input process_input( const std::string &action, int ch );
@@ -784,11 +801,13 @@ class inventory_selector
         void refresh_window();
 
         void draw_header( const catacurses::window &w ) const;
+        void draw_column_titles( const catacurses::window &w ) const;
         void draw_footer( const catacurses::window &w ) const;
         void draw_columns( const catacurses::window &w );
         void draw_frame( const catacurses::window &w ) const;
         void _add_map_items( tripoint const &target, item_category const &cat, item_stack &items,
-                             std::function<item_location( item & )> const &floc );
+                             std::function<item_location( item & )> const &floc,
+                             bool add_ebooks = false );
 
     public:
         /**
@@ -873,6 +892,7 @@ class inventory_selector
 
         std::string title;
         std::string hint;
+        std::vector<std::string> column_titles;
         size_t active_column_index;
         std::list<item_category> categories;
         navigation_mode mode;
@@ -887,6 +907,7 @@ class inventory_selector
         bool is_empty = true;
         bool display_stats = true;
         bool use_invlet = true;
+        bool show_view_category_mode_ = true;
         selector_invlet_type invlet_type_ = SELECTOR_INVLET_DEFAULT;
         size_t entry_generation_number = 0;
 

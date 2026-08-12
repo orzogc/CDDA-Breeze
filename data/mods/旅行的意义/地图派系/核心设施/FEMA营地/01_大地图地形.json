@@ -1,0 +1,143 @@
+[
+  {
+    "type": "overmap_terrain",
+    "id": "travel_fema_road",
+    "name": "FEMA营地内部道路",
+    "sym": "#",
+    "color": "dark_gray",
+    "see_cost": 0,
+    "extras": "road",
+    "travel_cost_type": "road",
+    "looks_like": "road",
+    "spawns": {
+      "group": "GROUP_ZOMBIE",
+      "population": [
+        4,
+        10
+      ],
+      "chance": 100
+    },
+    "flags": [
+      "NO_ROTATE"
+    ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "travel_fema_housing",
+    "name": "FEMA营地住宿区",
+    "sym": "H",
+    "color": "blue",
+    "see_cost": 5,
+    "extras": "build",
+    "looks_like": "fema",
+    "spawns": {
+      "group": "GROUP_ZOMBIE",
+      "population": [
+        6,
+        12
+      ],
+      "chance": 100
+    },
+    "flags": [
+      "NO_ROTATE",
+      "SOURCE_FOOD",
+      "RISK_HIGH",
+      "GENERIC_LOOT",
+      "SOURCE_COOKING"
+    ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "travel_fema_military",
+    "name": "FEMA营地军方哨所",
+    "sym": "M",
+    "color": "red",
+    "see_cost": 5,
+    "extras": "build",
+    "looks_like": "fema",
+    "spawns": {
+      "group": "GROUP_MIL_BASE",
+      "population": [
+        8,
+        14
+      ],
+      "chance": 100
+    },
+    "flags": [
+      "NO_ROTATE",
+      "RISK_HIGH",
+      "SOURCE_GUN",
+      "SOURCE_AMMO",
+      "SOURCE_FOOD"
+    ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "travel_fema_storage",
+    "name": "FEMA营地物资仓库",
+    "sym": "S",
+    "color": "light_blue",
+    "see_cost": 5,
+    "extras": "build",
+    "looks_like": "fema",
+    "spawns": {
+      "group": "GROUP_ZOMBIE",
+      "population": [
+        3,
+        8
+      ],
+      "chance": 100
+    },
+    "flags": [
+      "NO_ROTATE",
+      "RISK_HIGH",
+      "GENERIC_LOOT",
+      "SOURCE_COOKING",
+      "SOURCE_FOOD"
+    ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "travel_fema_entrance",
+    "name": "FEMA营地入口检查站",
+    "sym": "+",
+    "color": "light_blue",
+    "see_cost": 5,
+    "extras": "build",
+    "looks_like": "fema_entrance",
+    "spawns": {
+      "group": "GROUP_MIL_BASE",
+      "population": [
+        6,
+        16
+      ],
+      "chance": 100
+    },
+    "flags": [
+      "NO_ROTATE",
+      "RISK_HIGH"
+    ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "travel_fema_bus",
+    "name": "FEMA营地公交停靠区",
+    "sym": "B",
+    "color": "dark_gray",
+    "see_cost": 2,
+    "extras": "road",
+    "looks_like": "s_lot",
+    "spawns": {
+      "group": "GROUP_ZOMBIE",
+      "population": [
+        6,
+        16
+      ],
+      "chance": 100
+    },
+    "flags": [
+      "NO_ROTATE",
+      "RISK_HIGH"
+    ]
+  }
+]

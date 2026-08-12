@@ -1,0 +1,23 @@
+[
+  {
+    "id": "22fmj_p",
+    "looks_like": "22_fmj",
+    "copy-from": "22_lr",
+    "type": "AMMO",
+    "name": {
+      "str_sp": ".22 +P 弹"
+    },
+    "description": "30格令的.22全金属被甲弹，为那些觉得.22威力和穿透性不足的用户而设计，更高的初速意味着更高的伤害和穿透性，额外的装药导致后座略有提升——不过这对于.22子弹来说不是问题。",
+    "relative": {
+      "damage": {
+        "damage_type": "bullet",
+        "amount": 4,
+        "armor_penetration": 4
+      }
+    },
+    "proportional": {
+      "recoil": 1.1
+    },
+    "longest_side": "8 cm"
+  }
+]

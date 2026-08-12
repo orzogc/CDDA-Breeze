@@ -1,0 +1,285 @@
+[
+  {
+    "id": "hk_g36",
+    "copy-from": "hk_g36",
+    "looks_like": "ar15",
+    "type": "GUN",
+    "name": {
+      "str": "G36 突击步枪"
+    },
+    "description": "G36是黑克勒-科赫为统一后的德国联邦国防军研制的5.56毫米步枪，1990年代后期开始列装。它大量采用聚合物部件，以短行程活塞和旋转枪机工作，重量较轻且维护方便，曾随德军参加科索沃与阿富汗行动。长期高温射击引发的精度争议后来促使德国寻求后继枪型。",
+    "weight": "3630 g",
+    "volume": "4640 ml",
+    "longest_side": "1004 mm",
+    "price": 210000,
+    "price_postapoc": 6000,
+    "variant_type": "gun",
+    "variants": [
+      {
+        "id": "hk_g36",
+        "name": {
+          "str": "黑克勒-科赫 G36 步枪"
+        },
+        "description": "黑克勒-科赫 G36 步枪最初的设计目标是用来作为 G3 步枪的替代品，与前作相比 G36 步枪的命中率更高，而且由于使用了更轻型的 .223 口径子弹，所以大大增加了装弹量。",
+        "weight": 1
+      }
+    ],
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "223"
+    ],
+    "dispersion": 150,
+    "durability": 8,
+    "min_cycle_recoil": 1350,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "g36mag_30rd",
+          "g36mag_100rd"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "m249",
+    "copy-from": "m249",
+    "looks_like": "ar15",
+    "type": "GUN",
+    "name": {
+      "str": "M249 机枪"
+    },
+    "description": "M249机枪是一款广泛应用于美军及特警部队的轻机枪。由于设计用于快速倾泻大量弹药，因此射击时很难控制，M249可装备对应弹链及STANAG弹匣供弹，机枪手在缺乏弹药等紧急情况时可向其他装备M16或M4等武器的士兵借用弹匣来射击。",
+    "ascii_picture": "m249_saw",
+    "weight": "7500 g",
+    "volume": "10610 ml",
+    "longest_side": "1035 mm",
+    "price": 750000,
+    "price_postapoc": 8000,
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "ammo": [
+      "223"
+    ],
+    "dispersion": 200,
+    "durability": 7,
+    "min_cycle_recoil": 1350,
+    "reload": 400,
+    "modes": [
+      [
+        "DEFAULT",
+        "短点射",
+        2
+      ],
+      [
+        "AUTO",
+        "auto",
+        4
+      ]
+    ],
+    "built_in_mods": [
+      "bipod"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "belt223",
+          "stanag30",
+          "stanag5",
+          "stanag5ranger",
+          "stanag10",
+          "stanag10ranger",
+          "stanag20",
+          "stanag20ranger",
+          "stanag30ranger",
+          "stanag40",
+          "stanag40ranger",
+          "stanag50",
+          "stanag60",
+          "stanag60drum",
+          "stanag90",
+          "stanag100",
+          "stanag100drum",
+          "stanag150",
+          "survivor223mag"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "//": "名称改为与无品牌版本一致，并改用SIG 553；552已经停产，而553仍在生产，且结构与552基本相同。",
+    "id": "sig_assault_rifle",
+    "copy-from": "sig_assault_rifle",
+    "looks_like": "ar15",
+    "type": "GUN",
+    "name": {
+      "str": "西格&绍尔突击步枪"
+    },
+    "description": "这实际上是一支SIG SG553式紧凑步枪，而不是由MP40直接发展而来。SG553继承瑞士SG550家族的长行程活塞和旋转枪机，以短枪管、折叠枪托及现代导轨服务警务、特种行动和贴身护卫。它通常使用5.56x45mm弹，尺寸小巧，但短枪管会牺牲初速和远射性能。",
+    "weight": "3200 g",
+    "volume": "2950 ml",
+    "longest_side": "741 mm",
+    "price": 320000,
+    "price_postapoc": 6000,
+    "variant_type": "gun",
+    "variants": [
+      {
+        "id": "sig553",
+        "name": {
+          "str": "西格&绍尔 553 突击步枪"
+        },
+        "description": "SIG SG553是SG550家族的紧凑型，使用短枪管和折叠枪托，面向特种、警务与车辆环境。它保留瑞士步枪的活塞导气与可靠结构，但枪口焰、噪声和远射性能不如全长型号。",
+        "weight": 1
+      }
+    ],
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "ammo": [
+      "223"
+    ],
+    "dispersion": 180,
+    "durability": 9,
+    "min_cycle_recoil": 1350,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "BURST",
+        "3 rd.",
+        3
+      ],
+      [
+        "AUTO",
+        "auto",
+        4
+      ]
+    ],
+    "built_in_mods": [
+      "folding_stock"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "stanag30",
+          "stanag5",
+          "stanag5ranger",
+          "stanag10",
+          "stanag10ranger",
+          "stanag20",
+          "stanag20ranger",
+          "stanag30ranger",
+          "stanag40",
+          "stanag40ranger",
+          "stanag50",
+          "stanag60",
+          "stanag60drum",
+          "stanag90",
+          "stanag100",
+          "stanag100drum",
+          "stanag150",
+          "survivor223mag"
+        ]
+      }
+    ],
+    "bashing": 12
+  },
+  {
+    "id": "steyr_aug",
+    "copy-from": "steyr_aug",
+    "looks_like": "ar15",
+    "type": "GUN",
+    "name": {
+      "str": "AUG 突击步枪"
+    },
+    "description": "斯太尔AUG于1970年代为奥地利军队研制，并在1977年以StG 77之名列装。无托布局让它在较短全长下保留标准枪管，快拆枪管和模块化机匣在当时十分前卫。AUG后来被澳大利亚、爱尔兰等多国采用，参加过中东、东帝汶和阿富汗等行动。",
+    "weight": "3500 g",
+    "volume": "3520 ml",
+    "longest_side": "715 mm",
+    "price": 490000,
+    "price_postapoc": 6000,
+    "variant_type": "gun",
+    "variants": [
+      {
+        "id": "steyr_aug",
+        "name": {
+          "str": "斯泰尔 AUG 步枪"
+        },
+        "description": "斯泰尔 AUG 步枪是一种导气式、弹匣供弹、射击方式可选的无托结构步枪，曾被多个国家用于军队及警察武装。在保证较高命中率的同时也抑制了后坐力。",
+        "weight": 1
+      }
+    ],
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "light_gray",
+    "ammo": [
+      "223"
+    ],
+    "dispersion": 140,
+    "durability": 8,
+    "min_cycle_recoil": 1350,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "built_in_mods": [
+      "grip"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "augmag_30rd",
+          "augmag_10rd",
+          "augmag_42rd",
+          "augmag_100rd"
+        ]
+      }
+    ],
+    "bashing": 12
+  }
+]
