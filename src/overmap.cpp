@@ -5948,6 +5948,34 @@ pf::directed_path<point_om_omt> overmap::lay_out_connection(
 
         const bool existing_connection = connection.has( id );
 
+        // Keep overmap-wide local-road connections from creating a second road directly
+        // alongside an existing one.  City streets already have this guard in lay_out_street,
+        // but connections between cities and overmap exits use lay_out_connection instead.
+        // Without the same guard here, those connections can form long, parallel double roads
+        // through otherwise empty terrain.
+        if( &connection == &*overmap_connection_local_road && !existing_connection &&
+            cur.dir != om_direction::type::invalid ) {
+            const tripoint_om_omt current_pos( cur.pos, z );
+            const tripoint_om_omt forward_pos = current_pos + om_direction::displace( cur.dir, 1 );
+            const tripoint_om_omt backward_pos = current_pos +
+                    om_direction::displace( om_direction::opposite( cur.dir ), 1 );
+            int parallel_road_neighbors = 0;
+            for( int i = -1; i <= 1; i++ ) {
+                for( int j = -1; j <= 1; j++ ) {
+                    const tripoint_om_omt check_pos = current_pos + tripoint( i, j, 0 );
+                    if( check_pos == current_pos || check_pos == forward_pos || check_pos == backward_pos ) {
+                        continue;
+                    }
+                    if( ter( check_pos )->get_type_id() == oter_type_road ) {
+                        parallel_road_neighbors++;
+                    }
+                }
+            }
+            if( parallel_road_neighbors >= 3 ) {
+                return pf::node_score::rejected;
+            }
+        }
+
         // Only do this check if it needs to be unexplored and there isn't already a connection.
         if( must_be_unexplored && !existing_connection ) {
             // If this must be unexplored, check if we've already got a submap generated.
