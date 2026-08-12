@@ -100,7 +100,7 @@
         ]
       }
     ],
-    "bashing": 12
+    "handling": 16
   },
   {
     "id": "ak74n",
@@ -202,8 +202,7 @@
           "casket74mag"
         ]
       }
-    ],
-    "bashing": 12
+    ]
   },
   {
     "id": "ak74uf",
@@ -405,7 +404,7 @@
         ]
       }
     ],
-    "bashing": 12
+    "handling": 23
   },
   {
     "id": "akms",
@@ -504,7 +503,7 @@
         ]
       }
     ],
-    "bashing": 12
+    "handling": 17
   },
   {
     "id": "an94",
@@ -607,7 +606,7 @@
         ]
       }
     ],
-    "bashing": 12
+    "handling": 40
   },
   {
     "id": "aek",
@@ -707,7 +706,7 @@
         ]
       }
     ],
-    "bashing": 12
+    "handling": 60
   },
   {
     "id": "pp1901",
@@ -806,8 +805,7 @@
           "1901_30"
         ]
       }
-    ],
-    "bashing": 12
+    ]
   },
   {
     "id": "pp91",
@@ -863,8 +861,7 @@
           "pp91_30"
         ]
       }
-    ],
-    "bashing": 12
+    ]
   },
   {
     "id": "ak12",
@@ -960,7 +957,7 @@
         ]
       }
     ],
-    "bashing": 12
+    "handling": 23
   },
   {
     "id": "am17",
@@ -1075,7 +1072,7 @@
         ]
       }
     ],
-    "bashing": 12
+    "handling": 23
   },
   {
     "id": "whitefang",
@@ -1191,7 +1188,7 @@
         ]
       }
     ],
-    "bashing": 12
+    "handling": 25
   },
   {
     "id": "pkm",
@@ -1283,8 +1280,7 @@
           "pk_200"
         ]
       }
-    ],
-    "bashing": 12
+    ]
   },
   {
     "id": "pkp",
@@ -1377,7 +1373,7 @@
         ]
       }
     ],
-    "bashing": 12
+    "handling": 32
   },
   {
     "id": "pp19",
@@ -1471,8 +1467,7 @@
           "pp19_64"
         ]
       }
-    ],
-    "bashing": 12
+    ]
   },
   {
     "id": "rpk74",
@@ -1574,7 +1569,7 @@
         ]
       }
     ],
-    "bashing": 12
+    "handling": 34
   },
   {
     "id": "fnc",
@@ -1719,7 +1714,7 @@
       "damage_type": "bullet",
       "amount": -1
     },
-    "dispersion": 45,
+    "dispersion": 100,
     "durability": 8,
     "modes": [
       [
@@ -1792,8 +1787,7 @@
           "939_magazine_30"
         ]
       }
-    ],
-    "bashing": 12
+    ]
   },
   {
     "id": "nsv",
@@ -1853,8 +1847,7 @@
           "nsv_100"
         ]
       }
-    ],
-    "bashing": 12
+    ]
   },
   {
     "id": "vector_9mm",
@@ -2106,7 +2099,7 @@
         ]
       }
     ],
-    "bashing": 12
+    "handling": 40
   },
   {
     "id": "aks74n",
@@ -2210,7 +2203,7 @@
         ]
       }
     ],
-    "bashing": 12
+    "handling": 18
   },
   {
     "id": "m3_grease_c",
@@ -2375,7 +2368,7 @@
         ]
       }
     ],
-    "bashing": 12
+    "handling": 22
   },
   {
     "id": "ak103c",
@@ -2481,7 +2474,7 @@
         ]
       }
     ],
-    "bashing": 12
+    "handling": 60
   },
   {
     "id": "vss47",
@@ -2654,7 +2647,7 @@
         ]
       }
     ],
-    "bashing": 12
+    "handling": 60
   },
   {
     "id": "honey_badger",
@@ -2771,8 +2764,7 @@
           "survivor223mag"
         ]
       }
-    ],
-    "bashing": 12
+    ]
   },
   {
     "id": "amb17",
@@ -2801,7 +2793,7 @@
       "damage_type": "bullet",
       "amount": -1
     },
-    "dispersion": 200,
+    "dispersion": 150,
     "durability": 8,
     "modes": [
       [
@@ -2876,7 +2868,7 @@
         ]
       }
     ],
-    "bashing": 12
+    "handling": 22
   },
   {
     "id": "ar57",
@@ -2972,8 +2964,7 @@
           "fnp90mag"
         ]
       }
-    ],
-    "bashing": 12
+    ]
   },
   {
     "id": "ak102",
@@ -3074,7 +3065,7 @@
         ]
       }
     ],
-    "bashing": 12
+    "handling": 18
   },
   {
     "id": "ak108",
@@ -3181,7 +3172,7 @@
         ]
       }
     ],
-    "bashing": 12
+    "handling": 60
   },
   {
     "id": "ak101",
@@ -3282,7 +3273,7 @@
         ]
       }
     ],
-    "bashing": 12
+    "handling": 22
   },
   {
     "id": "mp5_10",
@@ -3393,8 +3384,7 @@
           "mp5_10_mag"
         ]
       }
-    ],
-    "bashing": 12
+    ]
   },
   {
     "id": "pringles_launcher",
@@ -3526,8 +3516,7 @@
           "zovk_30"
         ]
       }
-    ],
-    "bashing": 12
+    ]
   },
   {
     "id": "zona_9pb",
@@ -3613,8 +3602,7 @@
           "glock_drum_100rd"
         ]
       }
-    ],
-    "bashing": 8
+    ]
   },
   {
     "id": "pps43",
@@ -3719,7 +3707,8 @@
         ]
       }
     ],
-    "bashing": 10
+    "bashing": 10,
+    "handling": 33
   },
   {
     "id": "type_81_1",
@@ -3822,7 +3811,7 @@
         ]
       }
     ],
-    "bashing": 12
+    "handling": 24
   },
   {
     "id": "qbz97",
@@ -3831,7 +3820,7 @@
     "name": {
       "str": "QBZ-97式 突击步枪"
     },
-    "description": "97式突击步枪是基于95式5.8毫米突击步枪发展而来的一款自动步枪，由中国北方工业总公司研制生产。出口型97式枪族使用的不是中国军队制式采用的DBP87式5.8mm小口径高速枪弹，而是北约制式的5.56mm枪弹。进一步细看，可以发现出口型97式枪族上省略了中国军队制式武器上原有的枪口制退器的减音功能，弹匣也采用了北约制式的M16突击步枪用的金属制30发弹匣，不同于中国军队制式采用的塑料制弹匣。",
+    "description": "97式突击步枪是基于95式5.8毫米突击步枪发展而来的一款自动步枪，由中国北方工业总公司研制生产。出口型97式枪族使用的不是中国军队制式采用的DBP87式5.8mm小口径高速枪弹，而是北约制式的5.56mm枪弹。进一步细看，可以发现出口型97式枪族上省略了中国军队制式武器上原有的枪口制退器的减音功能，弹匣也采用了北约制式的M16突击步枪用的金属制30发弹匣。",
     "weight": "3320 g",
     "volume": "2100 ml",
     "longest_side": "750 mm",
@@ -3927,7 +3916,7 @@
         ]
       }
     ],
-    "bashing": 12
+    "handling": 26
   },
   {
     "id": "znar223",
@@ -4044,7 +4033,7 @@
         ]
       }
     ],
-    "bashing": 15
+    "handling": 35
   },
   {
     "id": "zlar223",
@@ -4162,7 +4151,7 @@
         ]
       }
     ],
-    "bashing": 15
+    "handling": 32
   },
   {
     "id": "star15",
@@ -4281,7 +4270,7 @@
       "amount": -2
     },
     "dispersion": 180,
-    "durability": 8,
+    "durability": 6,
     "modes": [
       [
         "DEFAULT",
@@ -4338,7 +4327,7 @@
         ]
       }
     ],
-    "bashing": 15
+    "handling": 80
   },
   {
     "id": "ultimax100",
@@ -4450,7 +4439,7 @@
         ]
       }
     ],
-    "bashing": 15
+    "handling": 60
   },
   {
     "id": "gmtr1t",
@@ -4528,8 +4517,7 @@
         "rigid": true
       }
     ],
-    "ups_charges": 1,
-    "bashing": 10
+    "ups_charges": 1
   },
   {
     "id": "jlz68",
@@ -4731,7 +4719,7 @@
       "damage_type": "bullet",
       "amount": -3
     },
-    "dispersion": 160,
+    "dispersion": 200,
     "durability": 6,
     "modes": [
       [
@@ -4785,7 +4773,6 @@
           "kc14_20"
         ]
       }
-    ],
-    "bashing": 12
+    ]
   }
 ]

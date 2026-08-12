@@ -24,7 +24,6 @@
       "damage_type": "bullet",
       "amount": -3
     },
-    "bashing": 10,
     "dispersion": 220,
     "durability": 8,
     "modes": [
@@ -220,7 +219,6 @@
       "223"
     ],
     "dispersion": 300,
-    "bashing": 10,
     "durability": 7,
     "skill": "rifle",
     "ranged_damage": {
@@ -332,7 +330,6 @@
       "9mm"
     ],
     "dispersion": 400,
-    "bashing": 10,
     "durability": 7,
     "skill": "smg",
     "default_mods": [
@@ -474,7 +471,6 @@
     "price": "50000 USD",
     "price_postapoc": "500 USD",
     "to_hit": -1,
-    "bashing": 10,
     "material": [
       "steel",
       "plastic"
@@ -557,7 +553,6 @@
     "price": "30000 USD",
     "price_postapoc": "300 USD",
     "to_hit": -1,
-    "bashing": 10,
     "material": [
       "steel",
       "plastic"
@@ -649,7 +644,6 @@
     "ammo": [
       "762R"
     ],
-    "bashing": 15,
     "dispersion": 310,
     "durability": 8,
     "skill": "rifle",
@@ -718,7 +712,6 @@
         1
       ]
     ],
-    "bashing": 10,
     "dispersion": 150,
     "durability": 8,
     "valid_mod_locations": [
@@ -778,9 +771,9 @@
     "copy-from": "rifle_semi",
     "type": "GUN",
     "name": {
-      "str": "GASC “巨人克星” 反器材炮"
+      "str": "GASC“巨人克星”反器材炮"
     },
-    "description": "一款产自格科斯勒作为班组支援武器使用，针对装甲单位而设计的单兵反器材炮，只需要一发就可以在极远距离精准报废所有型号的机甲以及动力甲，使用半自动管退式原理和五发容量的弹仓供弹，配有脚架，瞄准镜和托腮板，为了削弱它巨大的后坐力所以在枪口加装了拳头那么大的制退器，可以根据作战环境更换部件来兼容其他口径的主流机炮弹药，但你现在恐怕只能用的上25x137mm，整枪大量使用了新式材料，重量属于可以接受的范围，体格好点的勉强能端着打，但这也让它变得更加昂贵，在特定环境下它会很有用。",
+    "description": "一款产自格科斯勒的单兵反器材炮，常作为班组支援武器使用，为针对轻装甲单位而设计，只需要一发就可以在极远距离精准报废所有型号的机甲以及动力甲，使用半自动管退式原理和五发容量的弹仓供弹，配有脚架，瞄准镜和托腮板，为了削弱它巨大的后坐力所以在枪口加装了一个尺寸超大的制退器，可以根据作战环境更换部件来兼容其他口径的主流机炮弹药，但你现在恐怕只能用的上25x137mm，整枪大量使用了新式材料，重量属于可以接受的范围，体格好点的勉强能端着打，但这也让它变得更加昂贵，在特定环境下它会很有用。\n\n“穿套动力甲就想跟兰博一样开无双？没门！”",
     "weight": "20000 g",
     "volume": "10000 ml",
     "price": "85000 USD",
@@ -808,10 +801,9 @@
       "damage_type": "bullet",
       "amount": -15
     },
-    "bashing": 30,
     "dispersion": 0,
     "durability": 10,
-    "handling": 35,
+    "handling": 50,
     "reload": 200,
     "default_mods": [
       "ga_stock_h",
@@ -954,9 +946,8 @@
       "223"
     ],
     "dispersion": 120,
-    "bashing": 10,
     "durability": 9,
-    "handling": 5,
+    "handling": 32,
     "skill": "rifle",
     "modes": [
       [
@@ -1062,7 +1053,6 @@
     "ammo": [
       "762R"
     ],
-    "bashing": 15,
     "dispersion": 130,
     "durability": 8,
     "clip_size": 25,
@@ -1123,7 +1113,6 @@
       "308"
     ],
     "dispersion": 80,
-    "bashing": 10,
     "durability": 8,
     "blackpowder_tolerance": 24,
     "modes": [
@@ -1269,13 +1258,12 @@
     "name": {
       "str_sp": "MSS-R22 微声冲锋枪"
     },
-    "description": "MSS-R22 微声冲锋枪是德尔梅维森枪械一款使用.22 LR弹药的枪械，这把枪的定位非常模糊，谁也不好说它究竟是冲锋枪还是突击步枪，这种武器射击时的噪音和后座非常小，自带的钢架枪托可以进一步缩小体积。",
+    "description": "MSS-R22 微声冲锋枪是德尔梅维森枪械一款使用.22 LR弹药的枪械，这把枪的定位非常模糊，谁也不好说它究竟是冲锋枪还是突击步枪，这种武器射击时的噪音和后座非常小，自带的钢架枪托可以进一步缩小体积，超适合拿来进行渗透作战，或者让你邻居家的小屁孩停止哭闹。",
     "weight": "2250 g",
     "volume": "1100 ml",
     "price": "1000 USD",
     "price_postapoc": "40 USD",
     "to_hit": -1,
-    "bashing": 10,
     "material": [
       "steel"
     ],
@@ -1287,7 +1275,7 @@
     ],
     "dispersion": 250,
     "durability": 8,
-    "handling": 10,
+    "handling": 38,
     "ranged_damage": {
       "damage_type": "bullet",
       "amount": 1
@@ -1378,10 +1366,9 @@
     "ammo": [
       "50"
     ],
-    "bashing": 20,
     "dispersion": 350,
-    "durability": 8,
-    "handling": 30,
+    "durability": 10,
+    "handling": 60,
     "modes": [
       [
         "DEFAULT",
@@ -1440,7 +1427,7 @@
     "name": {
       "str": "PTRK 反器材步枪"
     },
-    "description": "苏联在解体的几年之前就开始秘密研究动力装甲了，不过他们那时候管这东西叫特殊作战服，在过程中设计师们发现常规武器对于穿戴这种护甲的士兵来说威力太小了，所以他们就将目光放到了14.5x114mm弹药上，PTRK这把疯狂的武器便由此诞生。\nPTRK算是PTRS-41的超级重制版，结构上非常相似，不同的是它使用弹匣或弹鼓供弹，还有全自动射击功能，重量尚可，测试者对这种武器的评价相当好。\n不幸的是这种武器只生产了一小部分便停产了，已经生产的那一部分成品随着苏联的解体流向了其他国家。",
+    "description": "早在二十世纪八十年代苏联就已经开始秘密研究动力装甲了，不过他们那时候管这东西叫特殊作战服，在设计途中他们发现常规轻武器对于穿戴这种护甲的士兵来说威力太小了，所以他们就将目光放到了14.5x114mm弹药上，PTRK这把疯狂的武器便由此诞生。\nPTRK算是PTRS-41的超级重制版，结构上非常相似，不同的是它使用弹匣或弹鼓供弹，还有全自动射击功能，重量尚可，测试者对这种武器的评价相当好。\n不幸的是这种武器刚投入生产后不久苏联就解体了，这把武器还没来得及生产多少就停产了，已经生产的那一部分成品随着苏联的解体流向了其他国家。",
     "weight": "23000 g",
     "volume": "8000 ml",
     "price": "20000 USD",
@@ -1455,10 +1442,9 @@
     ],
     "range": 100,
     "skill": "rifle",
-    "bashing": 30,
     "dispersion": 200,
     "durability": 8,
-    "handling": 10,
+    "handling": 30,
     "ranged_damage": {
       "damage_type": "bullet",
       "amount": -10
@@ -1513,7 +1499,7 @@
     "name": {
       "str": "PTRK-VK 反器材狙击步枪"
     },
-    "description": "作为格科斯勒对PTRK的仿制品，PTRK-VK算得上是青出于蓝而胜于蓝，它在几乎所有方面的性能都要远超前辈，PTRK有的功能它也有，在现代化改进后它的改装度更高，新式材料减轻了重量，重新设计的制退器比原版性能更好，这是一把非常优秀的武器，一些部队喜欢把它当反器材狙击步枪使用——或者临时的重机枪。",
+    "description": "作为格科斯勒对PTRK的仿制品，PTRK-VK可以说是青出于蓝而胜于蓝，它在所有方面的性能都要远超前辈，PTRK有的功能它都有，在现代化改进后它的改装度更高，新式材料减轻了重量，重新设计的制退器比原版性能更好，这是一把非常优秀的武器，一些部队喜欢把它当反器材狙击步枪使用——或者临时的重机枪。",
     "weight": "15000 g",
     "volume": "4000 ml",
     "price": "30000 USD",
@@ -1528,10 +1514,9 @@
     ],
     "range": 140,
     "skill": "rifle",
-    "bashing": 30,
     "dispersion": 50,
     "durability": 10,
-    "handling": 25,
+    "handling": 45,
     "default_mods": [
       "bipod",
       "muzzle_brake"
@@ -1621,9 +1606,8 @@
     "ammo": [
       "762"
     ],
-    "bashing": 15,
     "dispersion": 300,
-    "handling": 5,
+    "handling": 35,
     "durability": 9,
     "skill": "rifle",
     "modes": [
@@ -1716,9 +1700,8 @@
       "9mm"
     ],
     "dispersion": 220,
-    "bashing": 10,
     "durability": 9,
-    "handling": 15,
+    "handling": 40,
     "default_mods": [
       "folding_stock"
     ],
@@ -1897,7 +1880,6 @@
     "price": "600 USD",
     "price_postapoc": "35 USD",
     "to_hit": -1,
-    "bashing": 10,
     "material": [
       "steel",
       "wood"
@@ -1974,7 +1956,6 @@
     "price": "20000 USD",
     "price_postapoc": "200 USD",
     "to_hit": -1,
-    "bashing": 14,
     "material": "steel",
     "ammo": "40x53mm",
     "range": 30,
@@ -2212,9 +2193,8 @@
       "762"
     ],
     "dispersion": 120,
-    "bashing": 10,
     "durability": 10,
-    "handling": 50,
+    "handling": 60,
     "reload": 300,
     "ranged_damage": {
       "damage_type": "bullet",
