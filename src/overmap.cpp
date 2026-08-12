@@ -5932,10 +5932,6 @@ pf::directed_path<point_om_omt> overmap::lay_out_connection(
     const overmap_connection &connection, const point_om_omt &source, const point_om_omt &dest,
     int z, const bool must_be_unexplored ) const
 {
-    // Existing roads are normally preferred so new connections merge into the road network.
-    // If that preference produces a very large detour, retry without the strong bias.  The
-    // terrain basic_cost still makes an existing road slightly preferable at equal distance.
-    bool prefer_existing_connections = true;
     const pf::two_node_scoring_fn<point_om_omt> estimate =
     [&]( pf::directed_node<point_om_omt> cur, std::optional<pf::directed_node<point_om_omt>> prev ) {
         const oter_id id = ter( tripoint_om_omt( cur.pos, z ) );
@@ -5984,37 +5980,12 @@ pf::directed_path<point_om_omt> overmap::lay_out_connection(
         const int dist = subtype->is_orthogonal() ?
                          manhattan_dist( dest, cur.pos ) :
                          trig_dist( dest, cur.pos );
-        const int existency_mult =
-            existing_connection && prefer_existing_connections ? 1 : 5;
+        const int existency_mult = existing_connection ? 1 : 5; // Prefer existing connections.
 
         return pf::node_score( subtype->basic_cost, existency_mult * dist );
     };
 
-    pf::directed_path<point_om_omt> preferred_path =
-        pf::greedy_path( source, dest, point_om_omt( OMAPX, OMAPY ), estimate );
-
-    // Only local roads get the geometric detour guard.  Sewer, subway, forest trail and other
-    // connection types retain their historical pathing behavior.
-    if( &connection != &*overmap_connection_local_road || preferred_path.nodes.empty() ) {
-        return preferred_path;
-    }
-
-    const size_t straight_nodes = static_cast<size_t>( manhattan_dist( source, dest ) ) + 1;
-    const size_t detour_limit = straight_nodes + straight_nodes / 2 + 4;
-    if( preferred_path.nodes.size() <= detour_limit ) {
-        return preferred_path;
-    }
-
-    // The first pass can follow a zero-cost existing road a long way because the historical
-    // greedy scorer gives existing roads a 5:1 distance advantage.  Retry with equal distance
-    // weighting and keep it only when it actually shortens the connection.
-    prefer_existing_connections = false;
-    pf::directed_path<point_om_omt> direct_path =
-        pf::greedy_path( source, dest, point_om_omt( OMAPX, OMAPY ), estimate );
-    if( !direct_path.nodes.empty() && direct_path.nodes.size() < preferred_path.nodes.size() ) {
-        return direct_path;
-    }
-    return preferred_path;
+    return pf::greedy_path( source, dest, point_om_omt( OMAPX, OMAPY ), estimate );
 }
 
 static pf::directed_path<point_om_omt> straight_path( const point_om_omt &source,
