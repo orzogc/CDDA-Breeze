@@ -596,6 +596,8 @@ struct vehicle_prototype {
     std::vector<part_def> parts;
     std::vector<vehicle_item_spawn> item_spawns;
     std::vector<zone_def> zone_defs;
+    vpalette_id color_palette;
+    std::map<std::string, int> color_match;
 
     std::unique_ptr<vehicle> blueprint;
 

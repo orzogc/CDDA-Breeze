@@ -47,6 +47,7 @@
 #include "monster.h"
 #include "monstergenerator.h"
 #include "mtype.h"
+#include "mutation.h"
 #include "npc.h"
 #include <optional>
 #include "output.h"
@@ -293,6 +294,7 @@ void tileset::clear()
     overexposed_tile_values.clear();
     z_overlay_values.clear();
     memory_tile_values.clear();
+    tinted_tile_values.clear();
     duplicate_ids.clear();
     tile_ids.clear();
     for( std::unordered_map<std::string, season_tile_value> &m : tile_ids_by_season ) {
@@ -2735,6 +2737,13 @@ bool cata_tiles::draw_sprite_at(
         }
     }
 
+    if( pending_part_tint_ ) {
+        if( const texture *tinted = tileset_ptr->get_tinted_tile( renderer, sprite_index,
+                *pending_part_tint_, sprite_tex ) ) {
+            sprite_tex = tinted;
+        }
+    }
+
     const texture *z_overlay_tex = nullptr;
     if( z_overlay_depth > 0 ) {
         z_overlay_tex = tileset_ptr->get_z_overlay( sprite_index );
@@ -3747,9 +3756,11 @@ bool cata_tiles::draw_vpart( const tripoint &p, lit_level ll, int &height_3d,
                                             !veh.get_items( cargopart->part_index() ).empty();
 
                 int height_3d_temp = 0;
+                pending_part_tint_ = get_vpart_tint( veh, vp->mount(), roof );
                 const bool ret =
                     draw_from_id_string( vpname, TILE_CATEGORY::VEHICLE_PART, empty_string, p,
                                          subtile, rotation, ll, nv_goggles_activated, height_3d_temp );
+                pending_part_tint_.reset();
                 
                 
                 if (veh.conveyor_belt_direction!="") {
@@ -4188,6 +4199,31 @@ void cata_tiles::draw_zlevel_overlay(const tripoint& p, const lit_level ll, int&
 void cata_tiles::draw_entity_with_overlays( const Character &ch, const tripoint &p, lit_level ll,
         int &height_3d )
 {
+    // A mutation may replace the complete character sprite with any tile id.  This is a
+    // rendering-only hook intended for transformations and mod content; gameplay properties remain unchanged.
+    for( const trait_id &mut_id : ch.get_mutations() ) {
+        const mutation_branch &mut = mut_id.obj();
+        if( !mut.override_look ) {
+            continue;
+        }
+
+        const auto category_it = std::find( TILE_CATEGORY_IDS.begin(), TILE_CATEGORY_IDS.end(),
+                                            mut.override_look->tile_category );
+        if( category_it == TILE_CATEGORY_IDS.end() ) {
+            debugmsg( "Invalid override_look tile category '%s' for mutation %s",
+                      mut.override_look->tile_category.c_str(), mut_id.str().c_str() );
+            break;
+        }
+        const TILE_CATEGORY category = static_cast<TILE_CATEGORY>(
+                                           std::distance( TILE_CATEGORY_IDS.begin(), category_it ) );
+        const int rotation = ch.facing == FacingDirection::LEFT ? -1 : 0;
+        draw_from_id_string( mut.override_look->id, category, "", p, corner, rotation, ll, false,
+                             height_3d );
+        // override_look intentionally suppresses the normal body, worn, wielded, bionic and mutation
+        // overlays.  Status overlays can be restored later if Breeze wants exact current-DDA behavior.
+        return;
+    }
+
     std::string ent_name;
 
     if( ch.is_npc() ) {

@@ -131,6 +131,22 @@
       {
         "item": "csls7",
         "prob": 15
+      },
+      {
+        "item": "claw223a",
+        "prob": 15
+      },
+      {
+        "item": "claw223e",
+        "prob": 12
+      },
+      {
+        "item": "claw308h",
+        "prob": 10
+      },
+      {
+        "item": "ga290r",
+        "prob": 8
       }
     ]
   },

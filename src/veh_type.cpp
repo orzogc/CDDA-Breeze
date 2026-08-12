@@ -34,6 +34,7 @@
 #include "units_utility.h"
 #include "value_ptr.h"
 #include "vehicle.h"
+#include "vehicle_palette.h"
 #include "vehicle_group.h"
 #include "wcwidth.h"
 
@@ -1430,6 +1431,9 @@ void vehicle_prototype::load( const JsonObject &jo )
     if( vproto.parts.empty() ) {
         jo.get_member( "name" ).read( vproto.name );
     }
+    if( jo.has_member( "color_palette" ) ) {
+        vproto.color_palette = vpalette_id( jo.get_string( "color_palette" ) );
+    }
 
     vgroups[ vgroup_id( vid.str() ) ].add_vehicle( vid, 100 );
 
@@ -1560,6 +1564,12 @@ void vehicle_prototype::finalize()
         blueprint.suspend_refresh();
         for( part_def &pt : proto.parts ) {
             pt.part = vpart_migration::migrate( pt.part );
+            if( proto.color_palette.is_valid() && proto.color_match.count( pt.part.str() ) == 0 ) {
+                const int color_index = proto.color_palette->fuzzy_to_index( pt.part );
+                if( color_index != -1 ) {
+                    proto.color_match[pt.part.str()] = color_index;
+                }
+            }
             const itype *base = item::find_type( pt.part->base_item );
 
             if( !pt.part.is_valid() ) {

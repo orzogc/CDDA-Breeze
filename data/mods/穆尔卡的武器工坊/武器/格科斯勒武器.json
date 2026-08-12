@@ -111,7 +111,7 @@
         ]
       }
     ],
-    "bashing": 12
+    "handling": 30
   },
   {
     "id": "ga290c",
@@ -228,7 +228,7 @@
         ]
       }
     ],
-    "bashing": 12
+    "handling": 25
   },
   {
     "id": "ga290dmr",
@@ -337,8 +337,7 @@
           "737_cta_100"
         ]
       }
-    ],
-    "bashing": 12
+    ]
   },
   {
     "id": "ga290lmg",
@@ -453,7 +452,7 @@
         ]
       }
     ],
-    "bashing": 12
+    "handling": 40
   },
   {
     "id": "ga290k",
@@ -479,10 +478,6 @@
     "reload_noise_volume": 10,
     "dispersion": 150,
     "durability": 10,
-    "ranged_damage": {
-      "damage_type": "bullet",
-      "amount": 5
-    },
     "default_mods": [
       "ga_stock_h"
     ],
@@ -558,8 +553,7 @@
           "737_cta_100"
         ]
       }
-    ],
-    "bashing": 12
+    ]
   },
   {
     "id": "gelx_2n",
@@ -631,8 +625,7 @@
         "rigid": true
       }
     ],
-    "ups_charges": 10,
-    "bashing": 10
+    "ups_charges": 10
   },
   {
     "id": "gelx_3l",
@@ -705,7 +698,6 @@
         "rigid": true
       }
     ],
-    "ups_charges": 100,
-    "bashing": 30
+    "ups_charges": 100
   }
 ]

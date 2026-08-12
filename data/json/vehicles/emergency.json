@@ -1,6 +1,7 @@
 [
   {
     "id": "ambulance",
+    "color_palette": "ems_standard",
     "type": "vehicle",
     "name": "Ambulance",
     "blueprint": [
@@ -75,6 +76,7 @@
   },
   {
     "id": "car_fbi",
+    "color_palette": "swat_standard",
     "type": "vehicle",
     "name": "FBI, Emergency",
     "blueprint": [
@@ -124,6 +126,7 @@
   },
   {
     "id": "fire_engine",
+    "color_palette": "firetruck_standard",
     "type": "vehicle",
     "name": "Fire Engine",
     "blueprint": [
@@ -254,6 +257,7 @@
   },
   {
     "id": "fire_truck",
+    "color_palette": "firetruck_standard",
     "type": "vehicle",
     "name": "Fire Truck",
     "blueprint": [
@@ -383,6 +387,7 @@
   },
   {
     "id": "policecar",
+    "color_palette": "police_standard",
     "type": "vehicle",
     "name": "Police Car",
     "blueprint": [
@@ -434,6 +439,7 @@
   },
   {
     "id": "policecar_k9",
+    "color_palette": "police_standard",
     "type": "vehicle",
     "name": "Police K9 Unit",
     "blueprint": [
@@ -484,6 +490,7 @@
   },
   {
     "id": "policesuv",
+    "color_palette": "police_standard",
     "type": "vehicle",
     "name": "Police SUV",
     "blueprint": [
@@ -541,6 +548,7 @@
   },
   {
     "id": "policesuv_k9",
+    "color_palette": "police_standard",
     "type": "vehicle",
     "name": "Police K9 Unit",
     "blueprint": [
@@ -600,6 +608,7 @@
   },
   {
     "id": "police_k9tpt",
+    "color_palette": "police_standard",
     "type": "vehicle",
     "name": "Police K9 Transport",
     "blueprint": [
@@ -659,6 +668,7 @@
   },
   {
     "id": "truck_swat",
+    "color_palette": "swat_standard",
     "type": "vehicle",
     "name": "SWAT Truck",
     "blueprint": [

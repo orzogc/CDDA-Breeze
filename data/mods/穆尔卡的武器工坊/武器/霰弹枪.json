@@ -70,8 +70,7 @@
         ],
         "rigid": true
       }
-    ],
-    "bashing": 12
+    ]
   },
   {
     "id": "MP153",
@@ -174,8 +173,7 @@
         ],
         "rigid": true
       }
-    ],
-    "bashing": 12
+    ]
   },
   {
     "id": "vper",
@@ -265,8 +263,7 @@
           "vper_8"
         ]
       }
-    ],
-    "bashing": 12
+    ]
   },
   {
     "id": "horus",
@@ -367,8 +364,7 @@
           "shot_speedloader8"
         ]
       }
-    ],
-    "bashing": 12
+    ]
   },
   {
     "id": "toz",
@@ -429,8 +425,7 @@
           "toz_5"
         ]
       }
-    ],
-    "bashing": 12
+    ]
   },
   {
     "id": "MP156_M",
@@ -505,7 +500,7 @@
         "rigid": true
       }
     ],
-    "bashing": 25
+    "handling": 30
   },
   {
     "id": "saigak",
@@ -590,8 +585,7 @@
           "saiga30mag"
         ]
       }
-    ],
-    "bashing": 12
+    ]
   },
   {
     "id": "uts_15",
@@ -684,8 +678,7 @@
         ],
         "rigid": true
       }
-    ],
-    "bashing": 9
+    ]
   },
   {
     "id": "aa_12",
@@ -770,7 +763,7 @@
         ]
       }
     ],
-    "bashing": 12
+    "handling": 60
   },
   {
     "id": "ga12sg",
@@ -874,8 +867,7 @@
         ],
         "rigid": true
       }
-    ],
-    "bashing": 12
+    ]
   },
   {
     "id": "ga12sgs",
@@ -972,8 +964,7 @@
         ],
         "rigid": true
       }
-    ],
-    "bashing": 12
+    ]
   },
   {
     "id": "brs23",
@@ -1029,7 +1020,6 @@
         },
         "rigid": true
       }
-    ],
-    "bashing": 15
+    ]
   }
 ]

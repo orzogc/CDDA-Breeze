@@ -3,8 +3,10 @@
 #define CATA_SRC_CATA_TILES_H
 
 #include <cstddef>
+#include <cstdint>
 #include <map>
 #include <memory>
+#include <optional>
 #include <string>
 #include <tuple>
 #include <unordered_map>
@@ -16,6 +18,7 @@
 #include "creature.h"
 #include "clzones.h"
 #include "enums.h"
+#include "hsv_color.h"
 #include "lightmap.h"
 #include "line.h"
 #include "map_memory.h"
@@ -170,6 +173,7 @@ class tileset
         std::vector<texture> overexposed_tile_values;
         std::vector<texture> z_overlay_values;
         std::vector<texture> memory_tile_values;
+        mutable std::unordered_map<uint64_t, texture> tinted_tile_values;
 
         std::unordered_set<std::string> duplicate_ids;
 
@@ -233,6 +237,8 @@ class tileset
         const texture *get_z_overlay( const size_t index ) const {
             return get_if_available( index, z_overlay_values );
         }
+        const texture *get_tinted_tile( const SDL_Renderer_Ptr &renderer, size_t index,
+                const RGBColor &color, const texture *source = nullptr ) const;
 
         const std::unordered_set<std::string> &get_duplicate_ids() const {
             return duplicate_ids;
@@ -537,6 +543,7 @@ class cata_tiles
                                  const std::array<bool, 5> &invisible );
         bool draw_vpart( const tripoint &p, lit_level ll, int &height_3d,
                          const std::array<bool, 5> &invisible, bool roof );
+        std::optional<RGBColor> get_vpart_tint( const vehicle &veh, const point &mount, bool roof ) const;
         bool draw_vpart_no_roof( const tripoint &p, lit_level ll, int &height_3d,
                                  const std::array<bool, 5> &invisible );
         bool draw_vpart_roof( const tripoint &p, lit_level ll, int &height_3d,
@@ -810,6 +817,7 @@ class cata_tiles
          * Allows usage of night vision tilesets during sprite rendering.
          */
         bool nv_goggles_activated = false;
+        std::optional<RGBColor> pending_part_tint_;
 
         // Depth of the z-level currently being rendered.  Zero means the viewed level.
         int z_overlay_depth = 0;

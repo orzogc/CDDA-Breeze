@@ -2333,6 +2333,12 @@ void options_manager::add_options_graphics()
          true, COPT_CURSES_HIDE
        );
 
+    add( "VEHICLE_PART_COLOR", "graphics", to_translation( "随机载具涂装" ),
+         to_translation( "启用后，支持车辆原型的随机调色板，并在贴图模式下显示车辆零件颜色。" ),
+         true, COPT_CURSES_HIDE
+       );
+    get_option( "VEHICLE_PART_COLOR" ).setPrerequisite( "USE_TILES" );
+
     add( "USE_CHARACTER_PREVIEW", "graphics", to_translation( "角色创建贴图预览" ),
          to_translation( "在角色创建的场景、职业、背景、属性、特性、技能和描述界面显示角色贴图。"
                          "可用 z、Z 缩放，按 c 显示或隐藏职业服装。" ),
