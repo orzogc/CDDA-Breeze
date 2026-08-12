@@ -6,6 +6,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <cstring>
+#include <map>
 #include <ostream>
 #include <queue>
 #include <string>
@@ -7439,6 +7440,7 @@ static int get_memory_at( const tripoint &p )
     return ' ';
 }
 
+
 void map::draw( const catacurses::window &w, const tripoint &center )
 {
     // We only need to draw anything if we're not in tiles mode.
@@ -7532,11 +7534,10 @@ void map::draw( const catacurses::window &w, const tripoint &center )
             params
             .low_light( lighting == lit_level::LOW )
             .bright_light( lighting == lit_level::BRIGHT );
-            if( draw_maptile( w, p, curr_maptile, params ) ) {
-                continue;
+            if( !draw_maptile( w, p, curr_maptile, params ) ) {
+                const maptile tile_below = maptile_at_internal( p + tripoint_below );
+                draw_from_above( w, tripoint( p.xy(), p.z - 1 ), tile_below, params );
             }
-            const maptile tile_below = maptile_at_internal( p + tripoint_below );
-            draw_from_above( w, tripoint( p.xy(), p.z - 1 ), tile_below, params );
         }
     }
 

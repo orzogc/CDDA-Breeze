@@ -2671,6 +2671,12 @@ void options_manager::add_options_world_default()
          0.0, 100, 4.0, 0.01
        );
 
+    add( "MONSTER_CORPSE_REVIVAL", "world_default",
+         to_translation( "怪物尸体复活" ),
+         to_translation( "允许怪物尸体复活，此选项可在现有世界中随时修改，关闭后所有通过尸体复活机制触发的自然复活和强制复活都会被阻止。" ),
+         false
+       );
+
     add_empty_line();
 
     add( "MONSTER_SPEED", "world_default", to_translation( "Monster speed" ),

@@ -5362,6 +5362,9 @@ bool game::is_sheltered( const tripoint &p )
 
 bool game::revive_corpse( const tripoint &p, item &it )
 {
+    if( !get_option<bool>( "MONSTER_CORPSE_REVIVAL" ) ) {
+        return false;
+    }
     if( !it.is_corpse() ) {
         debugmsg( "Tried to revive a non-corpse." );
         return false;

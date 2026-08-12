@@ -9528,6 +9528,9 @@ bool item::can_revive() const
 
 bool item::ready_to_revive( map &here, const tripoint &pos ) const
 {
+    if( !get_option<bool>( "MONSTER_CORPSE_REVIVAL" ) ) {
+        return false;
+    }
     if( !can_revive() ) {
         return false;
     }

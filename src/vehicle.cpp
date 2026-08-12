@@ -5489,10 +5489,13 @@ void vehicle::idle( bool on_map )
     linked_item_epower_this_turn = 0_W;
     smart_controller_handle_turn();
 
+    // Renewable generation and funnels use elapsed-time catch-up.  Connected vehicles can be
+    // loaded by a cable while outside the reality bubble, so update them before the off-map exit.
+    // update_time itself throttles work to one-minute intervals and advances last_update, which
+    // also prevents double generation when the vehicle returns to the bubble.
+    update_time( calendar::turn );
     if( !on_map ) {
         return;
-    } else {
-        update_time( calendar::turn );
     }
 
     if( has_part( "STEREO", true ) ) {
