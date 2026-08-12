@@ -2665,6 +2665,12 @@ void options_manager::add_options_world_default()
          0.0, 100, 4.0, 0.01
        );
 
+    add( "MONSTER_CORPSE_REVIVAL", "world_default",
+         to_translation( "Monster corpse revival" ),
+         to_translation( "Allow monster corpses to revive.  This can be changed for an existing world.  When disabled, both natural and forced corpse revival are blocked." ),
+         false
+       );
+
     add_empty_line();
 
     add( "MONSTER_SPEED", "world_default", to_translation( "Monster speed" ),

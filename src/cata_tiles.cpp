@@ -50,6 +50,7 @@
 #include "npc.h"
 #include <optional>
 #include "output.h"
+#include "options.h"
 #include "overlay_ordering.h"
 #include "path_info.h"
 #include "pixel_minimap.h"
@@ -4075,6 +4076,9 @@ bool cata_tiles::draw_zone_mark( const tripoint &p, lit_level ll, int &height_3d
 bool cata_tiles::draw_zombie_revival_indicators( const tripoint &pos, const lit_level /*ll*/,
         int &/*height_3d*/, const std::array<bool, 5> &invisible )
 {
+    if( !get_option<bool>( "MONSTER_CORPSE_REVIVAL" ) ) {
+        return false;
+    }
     map &here = get_map();
     if( tileset_ptr->find_tile_type( ZOMBIE_REVIVAL_INDICATOR ) && !invisible[0] &&
         item_override.find( pos ) == item_override.end() &&
