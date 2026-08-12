@@ -224,9 +224,9 @@ void game_menus::inv::common( avatar &you )
 
     inv_s.set_title( _( "Inventory" ) );
     inv_s.set_hint( string_format(
-                        _( "<color_yellow>%s</color> Wield  <color_yellow>%s</color> Wear  Item hotkeys assigned: <color_light_gray>%d</color>/<color_light_gray>%d</color>" ),
-                        inv_s.key_desc( "WIELD" ), inv_s.key_desc( "WEAR" ),
-                        you.allocated_invlets().count(), inv_chars.size() ) );
+                        _( "按 %s 查看，按 %s 手持，按 %s 穿戴。" ),
+                        inv_s.key_desc( "EXAMINE" ), inv_s.key_desc( "WIELD" ),
+                        inv_s.key_desc( "WEAR" ) ) );
 
     int res = 0;
 

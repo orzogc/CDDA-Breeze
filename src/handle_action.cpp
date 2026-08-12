@@ -2715,38 +2715,91 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
                 }
                 dest_delta = dest_next;
             }
+            // Capture the automatic-move state and action cost before stepping.  This lets
+            // follower pacing limit the avatar's effective travel speed instead of only reacting
+            // after a follower has already fallen behind.
+            const bool auto_move_step = player_character.is_auto_moving();
+            const int moves_before_step = player_character.moves;
+            if( !auto_move_step ) {
+                player_character.auto_travel_follower_wait_notified = false;
+            }
+
             if (!avatar_action::move(player_character, m, dest_delta)) {
                 // auto-move should be canceled due to a failed move or obstacle
                 player_character.clear_destination();
             }
 
-            // Pace auto-moving travel to slower followers that are still close enough to catch up.
-            if( player_character.is_auto_moving() && !player_character.in_vehicle ) {
-                npc *slowest_follower = nullptr;
-                int worst_lag = 0;
-                const int player_speed = player_character.get_speed();
+            if( auto_move_step && player_character.is_auto_moving() && !player_character.in_vehicle ) {
+                const int player_speed = std::max( player_character.get_speed(), 1 );
+                int slowest_speed = player_speed;
+                npc *lagging_follower = nullptr;
+                int worst_excess = 0;
+                int lagging_distance = 0;
+
                 for( npc *guy : g->get_npcs_if( []( const npc &n ) {
-                return n.is_following() && !n.in_vehicle && !n.is_stationary( false );
+                return n.is_walking_with() && n.is_following() && !n.in_vehicle &&
+                       !n.is_stationary( false );
                 } ) ) {
-                    if( guy->get_speed() >= player_speed ) {
-                        continue;
-                    }
+                    const int follower_speed = std::max( guy->get_speed(), 1 );
+                    slowest_speed = std::min( slowest_speed, follower_speed );
+
+                    // Distance fallback also watches followers whose raw speed is not lower.
+                    // Doors, corners, terrain and pathfinding can still make those NPCs lose ground.
                     const int lag = rl_dist( guy->pos(), player_character.pos() );
-                    if( lag > worst_lag ) {
-                        worst_lag = lag;
-                        slowest_follower = guy;
-                    }
-                }
-                if( slowest_follower != nullptr ) {
-                    const int desired_radius = slowest_follower->rules.has_flag( ally_rule::follow_close ) ?
-                                               slowest_follower->follow_distance() : 6;
+                    const int desired_radius = guy->rules.has_flag( ally_rule::follow_close ) ?
+                                               guy->follow_distance() : 6;
                     const int threshold = std::max( desired_radius + 1, 4 );
-                    if( worst_lag > threshold && worst_lag < 20 ) {
-                        player_character.moves = 0;
-                        add_msg( m_info, _( "You slow down to let %s catch up." ),
-                                 slowest_follower->get_name() );
+                    const int excess = lag - threshold;
+                    if( excess > worst_excess ) {
+                        worst_excess = excess;
+                        lagging_follower = guy;
+                        lagging_distance = lag;
                     }
                 }
+
+                // Creature::process_turn() grants movement points equal to get_speed().  Scale the
+                // cost of this automatic step by player_speed / slowest_speed so the avatar's
+                // baseline travel rate cannot exceed the slowest active follower's rate.
+                const int move_cost = std::max( 0, moves_before_step - player_character.moves );
+                if( slowest_speed < player_speed && move_cost > 0 ) {
+                    const int paced_cost = static_cast<int>( std::ceil(
+                                               static_cast<double>( move_cost ) * player_speed /
+                                               slowest_speed ) );
+                    const int extra_cost = paced_cost - move_cost;
+                    if( extra_cost > 0 ) {
+                        player_character.mod_moves( -extra_cost );
+                    }
+                }
+
+                if( lagging_follower != nullptr ) {
+                    // Never silently abandon a follower after the old 20-tile safety cutoff.
+                    // If the NPC is this far away, stop auto travel and let the player resolve it.
+                    if( lagging_distance >= 20 ) {
+                        if( player_character.moves > 0 ) {
+                            player_character.moves = 0;
+                        }
+                        player_character.clear_destination();
+                        add_msg( m_warning, _( "%s已经掉队，自动旅行已停止。" ),
+                                 lagging_follower->get_name() );
+                        player_character.auto_travel_follower_wait_notified = false;
+                    } else {
+                        // Spend only the remaining positive moves.  Keep negative move debt intact,
+                        // otherwise the speed limiter above would be partially refunded.
+                        if( player_character.moves > 0 ) {
+                            player_character.moves = 0;
+                        }
+                        if( !player_character.auto_travel_follower_wait_notified ) {
+                            add_msg( m_info, _( "你放慢脚步，等待%s跟上。" ),
+                                     lagging_follower->get_name() );
+                            player_character.auto_travel_follower_wait_notified = true;
+                        }
+                    }
+                }
+            }
+
+            // Reaching the destination or canceling the route ends the notification scope.
+            if( auto_move_step && !player_character.is_auto_moving() ) {
+                player_character.auto_travel_follower_wait_notified = false;
             }
 
             if (get_option<bool>("AUTO_FEATURES") && get_option<bool>("AUTO_MOPPING") &&
@@ -4076,6 +4129,9 @@ bool game::handle_action()
     action_id act = ACTION_NULL;
     user_turn current_turn;
     avatar& player_character = get_avatar();
+    if( !player_character.has_destination() ) {
+        player_character.auto_travel_follower_wait_notified = false;
+    }
     // Check if we have an auto-move destination
     if (player_character.has_destination()) {
         act = player_character.get_next_auto_move_direction();

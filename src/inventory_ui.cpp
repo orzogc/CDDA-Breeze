@@ -3303,7 +3303,15 @@ bool inventory_pick_selector::wield_highlighted()
     }
 
     item_location target = selected.any_item();
+    const item_location next_item = get_item_to_highlight_after_use( get_active_column(), target );
+
+    // Pressing w on the currently wielded item should behave like the normal w action.
+    // Character::unwield() opens the existing dispose menu, including store, drop and wear.
     if( u.is_wielding( *target ) ) {
+        if( u.unwield() ) {
+            refresh_after_use( next_item );
+            return true;
+        }
         return false;
     }
 
@@ -3314,7 +3322,6 @@ bool inventory_pick_selector::wield_highlighted()
     }
 
     const std::string item_name = target->display_name();
-    const item_location next_item = get_item_to_highlight_after_use( get_active_column(), target );
     item new_item = *target;
 
     contents_change_handler handler;
@@ -3328,7 +3335,7 @@ bool inventory_pick_selector::wield_highlighted()
 
     handler.handle_by( u );
     refresh_after_use( item_location::nowhere );
-    popup_getkey( _( "You can't wield the %s." ), item_name );
+    popup_getkey( _( "无法手持%s。" ), item_name );
     return false;
 }
 
@@ -3361,7 +3368,7 @@ bool inventory_pick_selector::wear_highlighted()
 
     handler.handle_by( u );
     refresh_after_use( item_location::nowhere );
-    popup_getkey( _( "You can't wear the %s." ), item_name );
+    popup_getkey( _( "无法穿戴%s。" ), item_name );
     return false;
 }
 
