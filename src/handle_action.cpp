@@ -68,6 +68,7 @@
 #include "monster.h"
 #include "move_mode.h"
 #include "mtype.h"
+#include "npc.h"
 #include "mutation.h"
 #include "options.h"
 #include "output.h"
@@ -2717,6 +2718,35 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
             if (!avatar_action::move(player_character, m, dest_delta)) {
                 // auto-move should be canceled due to a failed move or obstacle
                 player_character.clear_destination();
+            }
+
+            // Pace auto-moving travel to slower followers that are still close enough to catch up.
+            if( player_character.is_auto_moving() && !player_character.in_vehicle ) {
+                npc *slowest_follower = nullptr;
+                int worst_lag = 0;
+                const int player_speed = player_character.get_speed();
+                for( npc *guy : g->get_npcs_if( []( const npc &n ) {
+                return n.is_following() && !n.in_vehicle && !n.is_stationary( false );
+                } ) ) {
+                    if( guy->get_speed() >= player_speed ) {
+                        continue;
+                    }
+                    const int lag = rl_dist( guy->pos(), player_character.pos() );
+                    if( lag > worst_lag ) {
+                        worst_lag = lag;
+                        slowest_follower = guy;
+                    }
+                }
+                if( slowest_follower != nullptr ) {
+                    const int desired_radius = slowest_follower->rules.has_flag( ally_rule::follow_close ) ?
+                                               slowest_follower->follow_distance() : 6;
+                    const int threshold = std::max( desired_radius + 1, 4 );
+                    if( worst_lag > threshold && worst_lag < 20 ) {
+                        player_character.moves = 0;
+                        add_msg( m_info, _( "You slow down to let %s catch up." ),
+                                 slowest_follower->get_name() );
+                    }
+                }
             }
 
             if (get_option<bool>("AUTO_FEATURES") && get_option<bool>("AUTO_MOPPING") &&

@@ -8,6 +8,7 @@
 #include "catacharset.h"
 #include "character.h"
 #include "colony.h"
+#include "contents_change_handler.h"
 #include "cuboid_rectangle.h"
 #include "debug.h"
 #include "enums.h"
@@ -3257,6 +3258,113 @@ std::string inventory_selector::action_bound_to_key( char key ) const
     return ctxt.input_to_action( input_event( key, input_event_t::keyboard_char ) );
 }
 
+std::string inventory_selector::key_desc( const std::string &action ) const
+{
+    return ctxt.get_desc( action );
+}
+
+static item_location get_item_to_highlight_after_use( inventory_column &column,
+        const item_location &loc )
+{
+    bool found = false;
+    for( const inventory_entry *entry : column.get_entries( return_item ) ) {
+        for( const item_location &candidate : entry->locations ) {
+            if( found ) {
+                return candidate;
+            }
+            if( candidate == loc ) {
+                found = true;
+            }
+        }
+    }
+    return item_location::nowhere;
+}
+
+void inventory_pick_selector::enable_direct_equip()
+{
+    ctxt.register_action( "WEAR" );
+    ctxt.register_action( "WIELD" );
+}
+
+void inventory_pick_selector::refresh_after_use( const item_location &next_item )
+{
+    clear_items();
+    add_character_items( u );
+    if( next_item ) {
+        highlight_one_of( { next_item } );
+    }
+}
+
+bool inventory_pick_selector::wield_highlighted()
+{
+    inventory_entry &selected = get_active_column().get_highlighted();
+    if( !selected.is_item() ) {
+        return false;
+    }
+
+    item_location target = selected.any_item();
+    if( u.is_wielding( *target ) ) {
+        return false;
+    }
+
+    const ret_val<void> check = u.can_wield( *target );
+    if( !check.success() ) {
+        popup_getkey( "%s", check.c_str() );
+        return false;
+    }
+
+    const std::string item_name = target->display_name();
+    const item_location next_item = get_item_to_highlight_after_use( get_active_column(), target );
+    item new_item = *target;
+
+    contents_change_handler handler;
+    handler.unseal_pocket_containing( target );
+    if( u.wield( new_item ) ) {
+        target.remove_item();
+        handler.handle_by( u );
+        refresh_after_use( next_item );
+        return true;
+    }
+
+    handler.handle_by( u );
+    refresh_after_use( item_location::nowhere );
+    popup_getkey( _( "You can't wield the %s." ), item_name );
+    return false;
+}
+
+bool inventory_pick_selector::wear_highlighted()
+{
+    inventory_entry &selected = get_active_column().get_highlighted();
+    if( !selected.is_item() ) {
+        return false;
+    }
+
+    item_location target = selected.any_item();
+    const ret_val<void> check = u.can_wear( *target );
+    if( !check.success() ) {
+        popup_getkey( "%s", check.c_str() );
+        return false;
+    }
+
+    const std::string item_name = target->display_name();
+    const item_location next_item = get_item_to_highlight_after_use( get_active_column(), target );
+    item new_item = *target;
+
+    contents_change_handler handler;
+    handler.unseal_pocket_containing( target );
+    if( u.wear_item( new_item ) ) {
+        target.remove_item();
+        handler.handle_by( u );
+        refresh_after_use( next_item );
+        return true;
+    }
+
+    handler.handle_by( u );
+    refresh_after_use( item_location::nowhere );
+    popup_getkey( _( "You can't wear the %s." ), item_name );
+    return false;
+}
+
 item_location inventory_pick_selector::execute()
 {
     shared_ptr_fast<ui_adaptor> ui = create_or_get_ui_adaptor();
@@ -3265,7 +3373,13 @@ item_location inventory_pick_selector::execute()
         ui_manager::redraw();
         const inventory_input input = get_input();
 
-        if( input.entry != nullptr ) {
+        if( input.action == "WIELD" ) {
+            wield_highlighted();
+            continue;
+        } else if( input.action == "WEAR" ) {
+            wear_highlighted();
+            continue;
+        } else if( input.entry != nullptr ) {
             if( highlight( input.entry->any_item() ) ) {
                 ui_manager::redraw();
             }
