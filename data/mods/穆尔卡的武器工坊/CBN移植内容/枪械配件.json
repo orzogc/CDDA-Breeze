@@ -3,9 +3,9 @@
     "id": "bcrf_sp",
     "type": "GUNMOD",
     "name": {
-      "str": "步枪一体式消音器"
+      "str": "集成式步枪消音器"
     },
-    "description": "步枪的一体式消音器，不可被拆卸。",
+    "description": "枪械内置的消音器，不可被拆卸。",
     "weight": "5 g",
     "volume": "10 ml",
     "integral_volume": "0 ml",
