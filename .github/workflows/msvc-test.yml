@@ -87,6 +87,7 @@ jobs:
         with:
           name: CDDA-Breeze-windows-msvc-test-${{ github.run_number }}
           path: windows-test-build
+          include-hidden-files: true
           if-no-files-found: error
           retention-days: 7
   android:
