@@ -169,6 +169,61 @@ pixel_minimap_mode pixel_minimap_mode_from_string( const std::string &mode )
     return pixel_minimap_mode::solid;
 }
 
+std::string vehicle_work_operation_name_for_overlay( const char operation )
+{
+    switch( operation ) {
+        case 'i':
+            return pgettext( "veh_interact", "install" );
+        case 'r':
+        case 'm':
+            return pgettext( "veh_interact", "repair" );
+        case 'o':
+        case 'O':
+            return pgettext( "veh_interact", "remove" );
+        default:
+            return std::string();
+    }
+}
+
+int vehicle_work_percentage_for_overlay( const vehicle_work_progress &work )
+{
+    return std::clamp( static_cast<int>( std::lround( 100.0 * work.work_done / 10000000.0 ) ),
+                       0, 99 );
+}
+
+bool vehicle_work_matches_part_for_overlay( const vehicle_work_progress &work,
+        const vehicle_part &part )
+{
+    if( work.operation == 'i' || part.removed || work.mount != part.mount ||
+        work.part_id != part.info().get_id().str() || work.variant != part.variant ) {
+        return false;
+    }
+    return work.operation != 'r' || work.initial_damage < 0 ||
+           work.initial_damage == part.damage();
+}
+
+int find_vehicle_work_part_for_overlay( const vehicle &veh, const vehicle_work_progress &work )
+{
+    if( work.part_index >= 0 && work.part_index < veh.part_count() &&
+        vehicle_work_matches_part_for_overlay( work, veh.part( work.part_index ) ) ) {
+        return work.part_index;
+    }
+
+    // A part index can change when another part is removed.  Fall back to the
+    // mount/id/variant identity, but only if it still identifies one part.
+    int found = -1;
+    for( int index = 0; index < veh.part_count(); ++index ) {
+        if( !vehicle_work_matches_part_for_overlay( work, veh.part( index ) ) ) {
+            continue;
+        }
+        if( found >= 0 ) {
+            return -1;
+        }
+        found = index;
+    }
+    return found;
+}
+
 } // namespace
 
 static int msgtype_to_tilecolor( const game_message_type type, const bool bOldMsg )
@@ -1728,6 +1783,68 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
                 if (!p.invisible[0]) {
                     here.check_and_set_seen_cache(p.pos);
                 }
+            }
+        }
+
+        // Show the identity of every interrupted vehicle operation directly on
+        // the corresponding map tile.  Brackets alone are ambiguous when a
+        // vehicle has several parts at one mount (for example a wheel and a
+        // fender), while pending installations do not have a real tile yet.
+        for( const wrapped_vehicle &wrapped : here.get_vehicles() ) {
+            if( wrapped.v == nullptr ) {
+                continue;
+            }
+            const vehicle &veh = *wrapped.v;
+            for( const vehicle_work_progress &work : veh.get_work_progress() ) {
+                if( work.work_done >= 10000000 || work.part_id.empty() ) {
+                    continue;
+                }
+
+                tripoint map_pos;
+                std::string part_name;
+                if( work.operation == 'i' ) {
+                    const vpart_id pending_id( work.part_id );
+                    if( !pending_id.is_valid() ) {
+                        continue;
+                    }
+                    map_pos = veh.mount_to_tripoint( work.mount );
+                    part_name = pending_id.obj().name();
+                } else {
+                    const int part_index = find_vehicle_work_part_for_overlay( veh, work );
+                    if( part_index < 0 ) {
+                        continue;
+                    }
+                    const vehicle_part &part = veh.part( part_index );
+                    map_pos = veh.global_part_pos3( part_index );
+                    part_name = part.name( false );
+                }
+
+                if( map_pos.z != center.z || !here.inbounds( map_pos ) ||
+                    map_pos.x < min_visible.x || map_pos.x > max_visible.x ||
+                    map_pos.y < min_visible.y || map_pos.y > max_visible.y ) {
+                    continue;
+                }
+
+                // Do not reveal a work record through darkness or walls.  The
+                // tile pass has already calculated the same visibility cache;
+                // this check only decides whether the text overlay is allowed.
+                const visibility_type visibility = here.get_visibility(
+                        ch.visibility_cache[map_pos.x][map_pos.y], cache );
+                if( would_apply_vision_effects( visibility ) ) {
+                    continue;
+                }
+
+                const std::string operation = vehicle_work_operation_name_for_overlay(
+                                                   work.operation );
+                if( operation.empty() || part_name.empty() ) {
+                    continue;
+                }
+                const std::string label = string_format(
+                    pgettext( "veh_interact", "%1$s: %2$s %3$d%%" ), operation, part_name,
+                    vehicle_work_percentage_for_overlay( work ) );
+                overlay_strings.emplace( player_to_screen( map_pos.xy() ) - half_tile_height_point,
+                                         formatted_text( label, catacurses::yellow + 8,
+                                                 direction::NORTH ) );
             }
         }
 
