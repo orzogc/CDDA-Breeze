@@ -5704,15 +5704,19 @@ bool Character::pour_into( item_location &container, item &liquid, bool ignore_s
 
     std::string character_name = is_avatar() ? "你" : get_name();
     add_msg( "%1s 把 %2s 灌进 %3s 。",character_name,liquid.tname(), container->tname() );
-    
-    liquid.charges -= container->fill_with( liquid_copy, amount, false, false, ignore_settings );
+
+    // The capacity check above can still overestimate what the nested pockets accept.
+    // Use the actual transfer count so callers do not retry an unchanged liquid forever.
+    const int transferred_charges = container->fill_with( liquid_copy, amount, false, false,
+                                                          ignore_settings );
+    liquid.charges -= transferred_charges;
     inv->unsort();
 
     if( liquid.charges > 0 ) {
         add_msg_if_player( _( "There's some left over!" ) );
     }
 
-    return true;
+    return transferred_charges > 0;
 }
 
 bool Character::pour_into( const vpart_reference &vp, item &liquid ) const
