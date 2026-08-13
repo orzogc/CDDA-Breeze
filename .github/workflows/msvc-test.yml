@@ -36,7 +36,7 @@ jobs:
         id: runvcpkg
         with:
           vcpkgDirectory: '${{ runner.workspace }}/b/vcpkg'
-          vcpkgGitCommitId: "9dd12f8d791f6fa4e396adbebc714d51cbee2143"
+          vcpkgGitCommitId: "9624c70bcc649d9ecff24185a72b12e0001de6f7"
 
       - name: Integrate vcpkg
         run: |
@@ -47,7 +47,7 @@ jobs:
         id: cache-vcpkg
         with:
           path: msvc-full-features/vcpkg_installed/
-          key: vcpkg-${{ hashFiles('msvc-full-features/vcpkg.json') }}-${{ hashFiles('.github/vcpkg_triplets/x64-windows-static.cmake') }}-9dd12f8d791f6fa4e396adbebc714d51cbee2143
+          key: vcpkg-${{ hashFiles('msvc-full-features/vcpkg.json') }}-${{ hashFiles('.github/vcpkg_triplets/x64-windows-static.cmake') }}-9624c70bcc649d9ecff24185a72b12e0001de6f7
 
       - name: Install MSYS2
         uses: msys2/setup-msys2@v2
