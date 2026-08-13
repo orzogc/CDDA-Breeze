@@ -74,6 +74,7 @@
         }
       },
       {
+        "response_id": "isherwood_lisa_leave",
         "text": "I'd better get going.",
         "topic": "TALK_DONE",
         "condition": { "not": { "u_is_wearing": "badge_marshal" } }

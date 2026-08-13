@@ -98,6 +98,7 @@
     "id": "TALK_ROBOFAC_INTERCOM_SERVICES",
     "responses": [
       {
+        "response_id": "travel_hub_signal_archive_request",
         "text": "我受人委托查询一名失联者，也需要询问中国方向的公开通信能力。",
         "topic": "TALK_TRAVEL_HUB_SIGNAL_ARCHIVE_REQUEST",
         "condition": {
@@ -131,6 +132,7 @@
         }
       },
       {
+        "response_id": "travel_hub_signal_archive_replacement",
         "text": "我需要补领那份公共信号归档。",
         "topic": "TALK_TRAVEL_HUB_SIGNAL_ARCHIVE_REPLACEMENT",
         "condition": {
@@ -168,6 +170,18 @@
             }
           ]
         }
+      }
+    ],
+    "response_patches": [
+      {
+        "op": "move_before",
+        "target": "travel_hub_signal_archive_request",
+        "anchor": "hub_services_local_map"
+      },
+      {
+        "op": "move_after",
+        "target": "travel_hub_signal_archive_replacement",
+        "anchor": "travel_hub_signal_archive_request"
       }
     ]
   },

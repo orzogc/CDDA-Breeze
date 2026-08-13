@@ -4,6 +4,7 @@
     "id": "TALK_ROBOFAC_INTERCOM_SERVICES",
     "responses": [
       {
+        "response_id": "travel_hub_equipment_projects",
         "text": "关于武器与装备的制造、维护……",
         "condition": {
           "or": [
@@ -54,7 +55,14 @@
         "topic": "TALK_HUB_EQUIPMENT_PROJECTS"
       }
     ],
-    "//": "在HUB主服务菜单追加统一的武器与装备项目入口。应龙的模板提交、复原进度、验收、评价与补给均收纳到子菜单，以后可继续并列加入寻光之旅等枪械、护甲打印与维修项目。"
+    "response_patches": [
+      {
+        "op": "move_after",
+        "target": "travel_hub_equipment_projects",
+        "anchor": "hub_services_prototypes"
+      }
+    ],
+    "//": "在HUB主服务菜单追加统一的武器与装备项目入口，并让它紧邻本体原型项目。应龙的模板提交、复原进度、验收、评价与补给均收纳到子菜单，以后可继续并列加入寻光之旅等枪械、护甲打印与维修项目。"
   },
   {
     "type": "talk_topic",

@@ -66,6 +66,7 @@
         }
       },
       {
+        "response_id": "isherwood_chris_leave",
         "text": "I'd better get going.",
         "topic": "TALK_DONE",
         "condition": { "not": { "u_is_wearing": "badge_marshal" } }
@@ -154,7 +155,7 @@
         "topic": "TALK_CHRIS_THEORIES"
       },
       { "text": "What sort of changes have you seen?", "topic": "TALK_ISHERWOOD_CHRIS_LAND" },
-      { "text": "I'd better get going.", "topic": "TALK_DONE" }
+      { "response_id": "isherwood_chris_leave", "text": "I'd better get going.", "topic": "TALK_DONE" }
     ]
   },
   {
