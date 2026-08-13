@@ -89,18 +89,21 @@ void Character::handle_contents_changed( const std::vector<item_location> &conta
         if( loc.has_parent() ) {
             item_location parent_loc = loc.parent_item();
             item_loc_with_depth parent( parent_loc );
-            item_pocket *const pocket = parent_loc->contained_where( *loc );
-            pocket->unseal();
-            bool exists = false;
-            auto it = sorted_containers.lower_bound( parent );
-            for( ; it != sorted_containers.end() && it->depth() == parent.depth(); ++it ) {
-                if( it->loc() == parent_loc ) {
-                    exists = true;
-                    break;
+            item_pocket *const pocket = loc.parent_pocket();
+            // The item location can retain a parent after the item was moved or removed.
+            if( pocket ) {
+                pocket->unseal();
+                bool exists = false;
+                auto it = sorted_containers.lower_bound( parent );
+                for( ; it != sorted_containers.end() && it->depth() == parent.depth(); ++it ) {
+                    if( it->loc() == parent_loc ) {
+                        exists = true;
+                        break;
+                    }
                 }
-            }
-            if( !exists ) {
-                sorted_containers.emplace_hint( it, parent );
+                if( !exists ) {
+                    sorted_containers.emplace_hint( it, parent );
+                }
             }
         }
 

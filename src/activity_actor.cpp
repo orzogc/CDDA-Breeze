@@ -3169,6 +3169,9 @@ void unload_activity_actor::unload( Character &who, item_location &target )
                 it.on_contents_changed();
                 who.invalidate_weight_carried_cache();
                 handler.handle_by( who );
+                // handle_by can spill, restack, or drop the container and invalidate
+                // target, it, and their item locations.  Do not use them again here.
+                break;
             }
         }
 

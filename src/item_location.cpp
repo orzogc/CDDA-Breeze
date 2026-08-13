@@ -104,6 +104,9 @@ class item_location::impl
         virtual item_location parent_item() const {
             return item_location();
         }
+        virtual item_pocket *parent_pocket() const {
+            return nullptr;
+        }
         virtual tripoint position() const = 0;
         virtual std::string describe( const Character * ) const = 0;
         virtual item_location obtain( Character &, int ) = 0;
@@ -596,6 +599,7 @@ class item_location::impl::item_in_container : public item_location::impl
 {
     private:
         item_location container;
+        mutable item_pocket *container_pkt = nullptr; // NOLINT(cata-serialize)
 
         // figures out the index for the item, which is where it is in the total list of contents
         // note: could be a better way of handling this?
@@ -615,6 +619,18 @@ class item_location::impl::item_in_container : public item_location::impl
     public:
         item_location parent_item() const override {
             return container;
+        }
+
+        item_pocket *parent_pocket() const override {
+            if( container_pkt == nullptr ) {
+                const std::vector<item_pocket *> pockets = parent_item()->get_all_standard_pockets();
+                if( pockets.size() == 1 ) {
+                    container_pkt = pockets.front();
+                } else if( target() ) {
+                    container_pkt = parent_item()->contained_where( *target() );
+                }
+            }
+            return container_pkt;
         }
 
         item_in_container( const item_location &container, item *which ) :
@@ -864,6 +880,15 @@ item_location item_location::parent_item() const
     }
 
     return item_location::nowhere;
+}
+
+item_pocket *item_location::parent_pocket() const
+{
+    if( where() == type::container ) {
+        return ptr->parent_pocket();
+    }
+
+    return nullptr;
 }
 
 bool item_location::has_parent() const
