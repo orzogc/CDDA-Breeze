@@ -628,7 +628,7 @@ class item_location::impl::item_in_container : public item_location::impl
             // A child can be restacked or moved while its item_location remains
             // alive.  Resolve the pocket from current membership instead of
             // caching a raw pointer or guessing from the pocket count.
-            return container->contained_where( *child );
+            return const_cast<item *>( container.get_item() )->contained_where( *child );
         }
 
         item_in_container( const item_location &container, item *which ) :
