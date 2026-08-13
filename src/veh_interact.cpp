@@ -132,20 +132,50 @@ static std::string vehicle_work_operation_name( const char operation )
     }
 }
 
+static const vehicle_work_progress *vehicle_work_progress_for_part( const vehicle &veh,
+        const vehicle_part &part, const char operation )
+{
+    const std::string part_id = part.info().get_id().str();
+    const int part_index = veh.index_of_part( &part );
+
+    // The index is the most precise identity for an existing part.  It avoids
+    // collapsing two identical parts installed at the same mount into one row.
+    if( part_index >= 0 ) {
+        for( const vehicle_work_progress &work : veh.get_work_progress() ) {
+            if( work.operation == operation && work.part_index == part_index &&
+                work.part_id == part_id && work.variant == part.variant ) {
+                return &work;
+            }
+        }
+    }
+
+    // Older saves and activities created before the part index was recorded use
+    // the stable mount/id/variant tuple instead.
+    const vehicle_work_progress *const fallback = veh.find_work_progress( operation, part.mount,
+            part_id, part.variant );
+    if( fallback != nullptr && ( fallback->part_index < 0 || fallback->part_index == part_index ) ) {
+        return fallback;
+    }
+    return nullptr;
+}
+
+static int vehicle_work_percentage( const vehicle_work_progress &work )
+{
+    return std::clamp( static_cast<int>( std::lround( 100.0 * work.work_done / 10000000.0 ) ),
+                       0, 99 );
+}
+
 static std::string vehicle_part_work_progress( const vehicle &veh, const vehicle_part &part )
 {
     std::vector<std::string> entries;
-    const std::string part_id = part.info().get_id().str();
     for( const char operation : { 'i', 'r', 'o', 'O' } ) {
-        const vehicle_work_progress *const work = veh.find_work_progress( operation, part.mount,
-                part_id, part.variant );
-        if( work == nullptr || work->work_done <= 0 || work->work_done >= 10000000 ||
+        const vehicle_work_progress *const work = vehicle_work_progress_for_part( veh, part, operation );
+        if( work == nullptr || work->work_done >= 10000000 ||
             ( operation == 'r' && work->initial_damage >= 0 &&
               part.damage() != work->initial_damage ) ) {
             continue;
         }
-        const int percentage = std::clamp( static_cast<int>( std::lround(
-                                       100.0 * work->work_done / 10000000.0 ) ), 1, 99 );
+        const int percentage = vehicle_work_percentage( *work );
         entries.push_back( string_format( pgettext( "veh_interact", "[%1$s %2$d%%]" ),
                                            vehicle_work_operation_name( operation ), percentage ) );
     }
@@ -1766,6 +1796,33 @@ void veh_interact::display_overview()
         }
     }
 
+    // Installations do not have a real vehicle_part until they finish, so they
+    // cannot appear in overview_opts.  Keep them visible in the same vehicle
+    // screen instead of hiding their durable progress in the save data.
+    std::vector<const vehicle_work_progress *> pending_installs;
+    for( const vehicle_work_progress &work : veh->get_work_progress() ) {
+        if( work.operation == 'i' && work.work_done < 10000000 ) {
+            pending_installs.push_back( &work );
+        }
+    }
+    if( !pending_installs.empty() && y < getmaxy( w_list ) - 1 ) {
+        y += last.empty() ? 0 : 1;
+        trim_and_print( w_list, point( 1, y ), getmaxx( w_list ) - 1, c_light_gray,
+                        pgettext( "veh_interact", "Interrupted work" ) );
+        ++y;
+        for( const vehicle_work_progress *const work : pending_installs ) {
+            if( y >= getmaxy( w_list ) - 1 ) {
+                break;
+            }
+            const vpart_info &info = vpart_id( work->part_id ).obj();
+            trim_and_print( w_list, point( 1, y ), getmaxx( w_list ) - 1, c_yellow,
+                            pgettext( "veh_interact", "%1$s: %2$s %3$d%% @ (%4$d,%5$d)" ),
+                            vehicle_work_operation_name( work->operation ), info.name(),
+                            vehicle_work_percentage( *work ), work->mount.x, work->mount.y );
+            ++y;
+        }
+    }
+
     wnoutrefresh( w_list );
 }
 
@@ -2618,6 +2675,22 @@ void veh_interact::display_veh()
         if (!vp_id_str2.empty() && vp_id_str2 != vp_id_str1) {
             draw_vpart_tile( *veh, mount, true, vp_id_str2, rel, part_mod, rotation );
         }
+    }
+
+    // Draw durable work records on top of the actual vehicle preview.  Repair
+    // and removal highlight the existing part; installation has no real part
+    // yet, so draw a dim/broken-looking ghost at the target mount.  This keeps
+    // progress visible for every vehicle tile, not just the tile selected when
+    // the activity was started.
+    for( const vehicle_work_progress &work : veh->get_work_progress() ) {
+        if( work.work_done >= 10000000 || work.part_id.empty() ) {
+            continue;
+        }
+        const point rel = ( work.mount + dd ).rotate( 3 ) + offset;
+        if( work.operation == 'i' ) {
+            draw_vpart_tile( *veh, work.mount, false, work.part_id, rel, 2, rotation );
+        }
+        tilecontext->draw_item_highlight( tripoint( rel, 0 ) );
     }
 
     int height_3d = 0;

@@ -2026,6 +2026,16 @@ class vehicle
                 const std::string &part_id, const std::string &variant );
         const vehicle_work_progress *find_work_progress( char operation, const point &mount,
                 const std::string &part_id, const std::string &variant ) const;
+        /**
+         * Returns all durable interrupted-work records attached to this vehicle.
+         *
+         * The records are intentionally exposed read-only so the map and vehicle
+         * interaction renderers can show work which has no real part yet (for
+         * example an interrupted installation at an empty mount point).
+         */
+        const std::vector<vehicle_work_progress> &get_work_progress() const {
+            return work_progress;
+        }
         void erase_work_progress( char operation, const point &mount,
                                   const std::string &part_id, const std::string &variant );
         vehicle_work_progress &get_or_create_work_progress( char operation, const point &mount,

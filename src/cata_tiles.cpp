@@ -3795,6 +3795,19 @@ bool cata_tiles::draw_vpart( const tripoint &p, lit_level ll, int &height_3d,
 
                 if( !roof ) {
                     height_3d = height_3d_temp;
+
+                    // Show interrupted installation, repair, and removal on
+                    // the real vehicle tile as well as in the vehicle menu.
+                    // The durable record is keyed by the local mount, so the
+                    // marker follows a moving or rotating vehicle.
+                    const bool has_interrupted_work = std::any_of(
+                            veh.get_work_progress().begin(), veh.get_work_progress().end(),
+                            [&vp]( const vehicle_work_progress &work ) {
+                                return work.work_done < 10000000 && work.mount == vp->mount();
+                            } );
+                    if( has_interrupted_work ) {
+                        draw_item_highlight( p );
+                    }
                 }
                 if( ret && draw_highlight ) {
 
