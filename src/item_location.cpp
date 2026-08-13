@@ -104,6 +104,9 @@ class item_location::impl
         virtual item_location parent_item() const {
             return item_location();
         }
+        virtual item_pocket *parent_pocket() const {
+            return nullptr;
+        }
         virtual tripoint position() const = 0;
         virtual std::string describe( const Character * ) const = 0;
         virtual item_location obtain( Character &, int ) = 0;
@@ -617,6 +620,17 @@ class item_location::impl::item_in_container : public item_location::impl
             return container;
         }
 
+        item_pocket *parent_pocket() const override {
+            item *const child = target();
+            if( !container || child == nullptr ) {
+                return nullptr;
+            }
+            // A child can be restacked or moved while its item_location remains
+            // alive.  Resolve the pocket from current membership instead of
+            // caching a raw pointer or guessing from the pocket count.
+            return const_cast<item *>( container.get_item() )->contained_where( *child );
+        }
+
         item_in_container( const item_location &container, item *which ) :
             impl( which ), container( container ) {}
 
@@ -864,6 +878,15 @@ item_location item_location::parent_item() const
     }
 
     return item_location::nowhere;
+}
+
+item_pocket *item_location::parent_pocket() const
+{
+    if( where() == type::container ) {
+        return ptr->parent_pocket();
+    }
+
+    return nullptr;
 }
 
 bool item_location::has_parent() const
