@@ -250,6 +250,8 @@ void player_activity::start_or_resume( Character &who, bool resuming )
 {
     if( actor && !resuming ) {
         actor->start( *this, who );
+    } else if( !actor && !resuming && type == ACT_VEHICLE ) {
+        activity_handlers::vehicle_start( this, &who );
     }
     if( !type.is_null() && rooted() ) {
         who.rooted_message();
@@ -414,6 +416,8 @@ void player_activity::canceled( Character &who )
     }
     if( actor ) {
         actor->canceled( *this, who );
+    } else if( id() == ACT_VEHICLE ) {
+        activity_handlers::vehicle_canceled( this, &who );
     } else {
         activity_handlers::butcher_canceled( this, &who );
     }

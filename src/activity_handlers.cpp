@@ -94,6 +94,7 @@
 #include "units.h"
 #include "value_ptr.h"
 #include "veh_interact.h"
+#include "veh_type.h"
 #include "vehicle.h"
 #include "vpart_position.h"
 #include "weather.h"
@@ -242,6 +243,7 @@ activity_handlers::do_turn_functions = {
     { ACT_EAT_MENU, eat_menu_do_turn },
     { ACT_VEHICLE_DECONSTRUCTION, vehicle_deconstruction_do_turn },
     { ACT_VEHICLE_REPAIR, vehicle_repair_do_turn },
+    { ACT_VEHICLE, vehicle_do_turn },
     { ACT_MULTIPLE_CHOP_TREES, chop_trees_do_turn },
     { ACT_CONSUME_FOOD_MENU, consume_food_menu_do_turn },
     { ACT_CONSUME_DRINK_MENU, consume_drink_menu_do_turn },
@@ -2012,6 +2014,314 @@ void activity_handlers::vehicle_finish( player_activity *act, Character *you )
                 dbg( D_ERROR ) << "game:process_activity: ACT_VEHICLE: vehicle not found";
                 debugmsg( "process_activity ACT_VEHICLE: vehicle not found" );
             }
+        }
+    }
+}
+
+namespace {
+
+static bool is_persistent_vehicle_operation( const char operation )
+{
+    return operation == 'i' || operation == 'r' || operation == 'o' || operation == 'O';
+}
+
+static vehicle *vehicle_for_activity( const player_activity &act, const Character &you )
+{
+    map &here = get_map();
+    if( act.values.size() >= 2 ) {
+        optional_vpart_position vp = here.veh_at( here.getlocal( tripoint( act.values[0], act.values[1],
+                                               you.posz() ) ) );
+        if( vp ) {
+            return &vp->vehicle();
+        }
+    }
+    for( const tripoint &pt : act.coord_set ) {
+        optional_vpart_position vp = here.veh_at( here.getlocal( pt ) );
+        if( vp ) {
+            return &vp->vehicle();
+        }
+    }
+    return nullptr;
+}
+
+static point vehicle_work_mount( const player_activity &act, const vehicle &veh, const char operation )
+{
+    point mount( act.values[4], act.values[5] );
+    // Zone/NPC vehicle activities historically stored zero in values[4/5]
+    // and relied on the part index instead.  Keep those activities resumable
+    // while using the local mount as the durable key.
+    if( operation != 'i' && mount == point_zero && act.values[6] >= 0 &&
+        act.values[6] < veh.part_count() ) {
+        mount = veh.part( act.values[6] ).mount;
+    }
+    return mount;
+}
+
+static int find_vehicle_work_part( const vehicle &veh, const vehicle_work_progress &work )
+{
+    if( work.part_index >= 0 && work.part_index < veh.part_count() ) {
+        const vehicle_part &indexed = veh.part( work.part_index );
+        if( !indexed.removed && indexed.mount == work.mount &&
+            indexed.info().get_id().str() == work.part_id && indexed.variant == work.variant ) {
+            return work.part_index;
+        }
+    }
+
+    int found = -1;
+    for( int index = 0; index < veh.part_count(); ++index ) {
+        const vehicle_part &pt = veh.part( index );
+        if( pt.removed || pt.mount != work.mount || pt.info().get_id().str() != work.part_id ||
+            pt.variant != work.variant ) {
+            continue;
+        }
+        if( found != -1 ) {
+            // The mount/id/variant tuple is ambiguous.  Do not let an old
+            // progress record repair or remove an arbitrary part.
+            return -1;
+        }
+        found = index;
+    }
+    return found;
+}
+
+static requirement_data vehicle_work_requirements( const vehicle_work_progress &work,
+        const vehicle *veh, const int part_index )
+{
+    const vpart_info &vpinfo = vpart_id( work.part_id ).obj();
+    if( work.operation == 'i' ) {
+        return vpinfo.install_requirements();
+    }
+    if( veh == nullptr || part_index < 0 || part_index >= veh->part_count() ) {
+        return requirement_data();
+    }
+    const vehicle_part &pt = veh->part( part_index );
+    if( work.operation == 'r' ) {
+        return pt.is_broken() ? vpinfo.install_requirements() :
+               vpinfo.repair_requirements() * pt.repairable_levels();
+    }
+    return vpinfo.removal_requirements();
+}
+
+static void vehicle_work_requirement_message( Character &you, const vehicle_work_progress &work,
+        const std::string &part_name )
+{
+    if( work.operation == 'i' ) {
+        you.add_msg_if_player( m_info, _( "You don't meet the requirements to install the %s." ),
+                               part_name );
+    } else if( work.operation == 'r' ) {
+        you.add_msg_if_player( m_info, _( "You don't meet the requirements to repair the %s." ),
+                               part_name );
+    } else {
+        you.add_msg_if_player( m_info, _( "You don't meet the requirements to remove the %s." ),
+                               part_name );
+    }
+}
+
+static int moves_left_for_vehicle_work( const vehicle_work_progress &work )
+{
+    if( work.work_total <= 0 ) {
+        return 0;
+    }
+    const double remaining = 1.0 - static_cast<double>( std::clamp( work.work_done, 0,
+                                   10000000 ) ) / 10000000.0;
+    return std::max( 0, static_cast<int>( std::lround( work.work_total * remaining ) ) );
+}
+
+static void save_vehicle_work_progress( player_activity &act, vehicle_work_progress &work )
+{
+    if( act.moves_total <= 0 ) {
+        return;
+    }
+    const int completed = std::clamp( static_cast<int>( std::lround( 10000000.0 *
+                                    static_cast<double>( act.moves_total - act.moves_left ) /
+                                    act.moves_total ) ), 0, 10000000 );
+    work.work_done = std::max( work.work_done, completed );
+    work.work_done = std::clamp( work.work_done, 0, 10000000 );
+}
+
+} // namespace
+
+void activity_handlers::vehicle_start( player_activity *act, Character *you )
+{
+    if( act == nullptr || you == nullptr || act->values.size() < 7 || act->str_values.empty() ) {
+        return;
+    }
+
+    const char operation = static_cast<char>( act->index );
+    if( !is_persistent_vehicle_operation( operation ) ) {
+        return;
+    }
+
+    vehicle *const veh = vehicle_for_activity( *act, *you );
+    if( veh == nullptr ) {
+        act->set_to_null();
+        return;
+    }
+
+    const std::string part_id = act->str_values[0];
+    const std::string variant = act->str_values.size() > 1 ? act->str_values[1] : std::string();
+    const point mount = vehicle_work_mount( *act, *veh, operation );
+    vehicle_work_progress *work = veh->find_work_progress( operation, mount, part_id, variant );
+    int part_index = -1;
+    if( operation != 'i' ) {
+        if( work != nullptr ) {
+            part_index = find_vehicle_work_part( *veh, *work );
+        }
+        if( part_index < 0 && act->values[6] >= 0 && act->values[6] < veh->part_count() ) {
+            const vehicle_part &pt = veh->part( act->values[6] );
+            if( !pt.removed && pt.mount == mount && pt.info().get_id().str() == part_id &&
+                pt.variant == variant ) {
+                part_index = act->values[6];
+            }
+        }
+        if( part_index < 0 ) {
+            if( work != nullptr ) {
+                veh->erase_work_progress( operation, mount, part_id, variant );
+            }
+            act->set_to_null();
+            return;
+        }
+    } else if( !veh->can_mount( mount, vpart_id( part_id ) ) ) {
+        if( work != nullptr ) {
+            veh->erase_work_progress( operation, mount, part_id, variant );
+        }
+        act->set_to_null();
+        return;
+    }
+
+    if( work != nullptr && operation == 'r' && work->initial_damage >= 0 &&
+        veh->part( part_index ).damage() != work->initial_damage ) {
+        // Damage is part of the repair target's identity.  A damaged part
+        // must start a fresh repair rather than applying an old timer to its
+        // new state.
+        veh->erase_work_progress( operation, mount, part_id, variant );
+        work = nullptr;
+        act->moves_left = act->moves_total;
+    }
+
+    if( work == nullptr ) {
+        work = &veh->get_or_create_work_progress( operation, mount, part_id, variant );
+        work->part_index = part_index;
+        work->initial_damage = operation == 'r' ? veh->part( part_index ).damage() : -1;
+        work->work_total = std::max( act->moves_total, 1 );
+        // If this is an old saved activity, retain the fraction already held
+        // by its legacy timer when creating the new vehicle-side record.
+        work->work_done = act->moves_total > 0 ? std::clamp( static_cast<int>( std::lround(
+                            10000000.0 * ( act->moves_total - act->moves_left ) /
+                            act->moves_total ) ), 0, 10000000 ) : 0;
+    } else {
+        work->part_index = part_index >= 0 ? part_index : work->part_index;
+        if( work->work_total <= 0 ) {
+            work->work_total = std::max( act->moves_total, 1 );
+        }
+    }
+
+    const int current_part = operation == 'i' ? -1 : find_vehicle_work_part( *veh, *work );
+    const requirement_data reqs = vehicle_work_requirements( *work, veh, current_part );
+    you->invalidate_crafting_inventory();
+    if( !reqs.can_make_with_inventory( you->crafting_inventory(), is_crafting_component ) ) {
+        const std::string name = operation == 'i' ? vpart_id( part_id ).obj().name() :
+                                 veh->part( current_part ).name();
+        vehicle_work_requirement_message( *you, *work, name );
+        if( work->work_done == 0 ) {
+            veh->erase_work_progress( operation, mount, part_id, variant );
+        }
+        act->set_to_null();
+        return;
+    }
+
+    act->moves_total = work->work_total;
+    act->moves_left = moves_left_for_vehicle_work( *work );
+    if( part_index >= 0 && act->values.size() >= 7 ) {
+        act->values[6] = part_index;
+    }
+}
+
+void activity_handlers::vehicle_do_turn( player_activity *act, Character *you )
+{
+    if( act == nullptr || you == nullptr ) {
+        return;
+    }
+    const char operation = static_cast<char>( act->index );
+    if( !is_persistent_vehicle_operation( operation ) ) {
+        return;
+    }
+
+    vehicle *const veh = vehicle_for_activity( *act, *you );
+    if( veh == nullptr || act->values.size() < 7 || act->str_values.empty() ) {
+        you->cancel_activity();
+        return;
+    }
+    const std::string part_id = act->str_values[0];
+    const std::string variant = act->str_values.size() > 1 ? act->str_values[1] : std::string();
+    const point mount = vehicle_work_mount( *act, *veh, operation );
+    vehicle_work_progress *work = veh->find_work_progress( operation, mount, part_id, variant );
+    if( work == nullptr ) {
+        vehicle_start( act, you );
+        if( act->is_null() ) {
+            return;
+        }
+        work = veh->find_work_progress( operation, mount, part_id, variant );
+    }
+    if( work == nullptr ) {
+        you->cancel_activity();
+        return;
+    }
+
+    const int part_index = operation == 'i' ? -1 : find_vehicle_work_part( *veh, *work );
+    if( ( operation != 'i' && part_index < 0 ) ||
+        ( operation == 'i' && !veh->can_mount( mount, vpart_id( part_id ) ) ) ||
+        ( operation == 'r' && work->initial_damage >= 0 &&
+          veh->part( part_index ).damage() != work->initial_damage ) ) {
+        veh->erase_work_progress( operation, mount, part_id, variant );
+        you->cancel_activity();
+        return;
+    }
+
+    const requirement_data reqs = vehicle_work_requirements( *work, veh, part_index );
+    you->invalidate_crafting_inventory();
+    if( !reqs.can_make_with_inventory( you->crafting_inventory(), is_crafting_component ) ) {
+        act->moves_left = moves_left_for_vehicle_work( *work );
+        const std::string name = operation == 'i' ? vpart_id( part_id ).obj().name() :
+                                 veh->part( part_index ).name();
+        vehicle_work_requirement_message( *you, *work, name );
+        you->cancel_activity();
+        return;
+    }
+
+    if( part_index >= 0 ) {
+        act->values[6] = part_index;
+    }
+    save_vehicle_work_progress( *act, *work );
+}
+
+void activity_handlers::vehicle_canceled( player_activity *act, Character *you )
+{
+    if( act == nullptr || you == nullptr ) {
+        return;
+    }
+    const char operation = static_cast<char>( act->index );
+    if( !is_persistent_vehicle_operation( operation ) || act->values.size() < 7 ||
+        act->str_values.empty() ) {
+        return;
+    }
+    vehicle *const veh = vehicle_for_activity( *act, *you );
+    if( veh == nullptr ) {
+        return;
+    }
+    const std::string part_id = act->str_values[0];
+    const std::string variant = act->str_values.size() > 1 ? act->str_values[1] : std::string();
+    const point mount = vehicle_work_mount( *act, *veh, operation );
+    vehicle_work_progress *const work = veh->find_work_progress( operation, mount, part_id, variant );
+    if( work != nullptr ) {
+        const int part_index = operation == 'i' ? -1 : find_vehicle_work_part( *veh, *work );
+        if( ( operation != 'i' && part_index < 0 ) ||
+            ( operation == 'i' && !veh->can_mount( mount, vpart_id( part_id ) ) ) ||
+            ( operation == 'r' && work->initial_damage >= 0 &&
+              veh->part( part_index ).damage() != work->initial_damage ) ) {
+            veh->erase_work_progress( operation, mount, part_id, variant );
+        } else {
+            save_vehicle_work_progress( *act, *work );
         }
     }
 }

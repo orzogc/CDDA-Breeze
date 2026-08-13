@@ -107,6 +107,16 @@ static const trait_id trait_STRONGBACK( "STRONGBACK" );
 
 static const vpart_id vpart_ap_wall_wiring( "ap_wall_wiring" );
 
+static bool is_persistent_vehicle_operation( const char operation )
+{
+    return operation == 'i' || operation == 'r' || operation == 'o' || operation == 'O';
+}
+
+static bool valid_vehicle_part_index( const vehicle &veh, const int index )
+{
+    return index >= 0 && index < veh.part_count();
+}
+
 static std::string status_color( bool status )
 {
     return status ? "<color_green>" : "<color_red>";
@@ -3302,8 +3312,28 @@ void veh_interact::complete_vehicle( Character &you )
     int vehicle_part = you.activity.values[6];
     cata_assert( !you.activity.str_values.empty() );
     const vpart_id part_id( you.activity.str_values[0] );
+    const std::string variant_id = you.activity.str_values.size() > 1 ?
+                                   you.activity.str_values[1] : std::string();
+
+    const char operation = static_cast<char>( you.activity.index );
+    if( is_persistent_vehicle_operation( operation ) ) {
+        const point work_mount = operation == 'i' || !valid_vehicle_part_index( *veh,
+                                 vehicle_part ) ? d :
+                                 veh->part( vehicle_part ).mount;
+        if( const vehicle_work_progress *work = veh->find_work_progress( operation, work_mount,
+                part_id.str(), variant_id ) ) {
+            if( work->work_done < 10000000 ) {
+                // The legacy timer may have reached its end without a final
+                // turn callback (for example while loading an old save).  Do
+                // not apply the vehicle mutation until the durable record is
+                // complete.
+                return;
+            }
+        }
+    }
 
     const vpart_info &vpinfo = part_id.obj();
+    you.invalidate_crafting_inventory();
 
     // cmd = Install Repair reFill remOve Siphon Unload reName relAbel
     switch( static_cast<char>( you.activity.index ) ) {
@@ -3313,6 +3343,11 @@ void veh_interact::complete_vehicle( Character &you )
             const requirement_data reqs = vpinfo.install_requirements();
             if( !reqs.can_make_with_inventory( inv, is_crafting_component ) ) {
                 add_msg( m_info, _( "You don't meet the requirements to install the %s." ),
+                         vpinfo.name() );
+                break;
+            }
+            if( !you.has_trait( trait_DEBUG_HS ) && inv.count_item( vpinfo.base_item ) <= 0 ) {
+                add_msg( m_info, _( "Could not find base part in requirements for %s." ),
                          vpinfo.name() );
                 break;
             }
@@ -3343,8 +3378,6 @@ void veh_interact::complete_vehicle( Character &you )
             }
 
             you.invalidate_crafting_inventory();
-            cata_assert( you.activity.str_values.size() >= 2 );
-            const std::string &variant_id = you.activity.str_values[1];
             int partnum = !base.is_null() ? veh->install_part( d, part_id,
                           std::move( base ), variant_id ) : -1;
             if( partnum < 0 ) {
@@ -3401,13 +3434,20 @@ void veh_interact::complete_vehicle( Character &you )
                 you.practice( sk.first, veh_utils::calc_xp_gain( vpinfo, sk.first, you ) );
             }
             here.add_vehicle_to_cache( veh );
+            veh->erase_work_progress( 'i', d, part_id.str(), variant_id );
             break;
         }
 
         case 'r': {
-            cata_assert( you.activity.str_values.size() >= 2 );
-            const std::string &variant_id = you.activity.str_values[1];
-            veh_utils::repair_part( *veh, veh->part( vehicle_part ), you, variant_id );
+            if( !valid_vehicle_part_index( *veh, vehicle_part ) ) {
+                break;
+            }
+            const point work_mount = veh->part( vehicle_part ).mount;
+            const bool repaired = veh_utils::repair_part( *veh, veh->part( vehicle_part ), you,
+                                  variant_id );
+            if( repaired ) {
+                veh->erase_work_progress( 'r', work_mount, part_id.str(), variant_id );
+            }
             break;
         }
 
@@ -3483,6 +3523,10 @@ void veh_interact::complete_vehicle( Character &you )
                     return;
                 }
             }
+            if( !valid_vehicle_part_index( *veh, vehicle_part ) ) {
+                break;
+            }
+            const point work_mount = veh->part( vehicle_part ).mount;
             const requirement_data reqs = vpinfo.removal_requirements();
             if( !reqs.can_make_with_inventory( inv, is_crafting_component ) ) {
                 //~  1$s is the vehicle part name
@@ -3557,13 +3601,19 @@ void veh_interact::complete_vehicle( Character &you )
 
             if( veh->part_count( true ) < 2 ) {
                 you.add_msg_if_player( _( "You completely dismantle the %s." ), veh->name );
+                veh->erase_work_progress( appliance_removal ? 'O' : 'o', work_mount, part_id.str(),
+                                          variant_id );
                 you.activity.set_to_null();
                 // destroy vehicle clears the cache
                 here.destroy_vehicle( veh );
             } else {
                 point mount = veh->part( vehicle_part ).mount;
                 const tripoint part_pos = veh->global_part_pos3( vehicle_part );
-                veh->remove_part( vehicle_part );
+                const bool removed = veh->remove_part( vehicle_part );
+                if( removed ) {
+                    veh->erase_work_progress( appliance_removal ? 'O' : 'o', work_mount,
+                                              part_id.str(), variant_id );
+                }
                 // part_removal_cleanup calls refresh, so parts_at_relative is valid
                 veh->part_removal_cleanup();
                 if( veh->parts_at_relative( mount, true ).empty() ) {
