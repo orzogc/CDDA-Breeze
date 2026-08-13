@@ -610,9 +610,12 @@ std::vector<tripoint> map::route( const tripoint &f, const tripoint &t,
             }
 
             ret.push_back( cur );
-            // 在Z轴高度变化时，跳跃是可以接受的
-            // 这是因为楼梯、载具的绳梯，同样会使玩家/NPC发生传送
-            if( rl_dist( cur, par ) > 1 && !connected_by_vehicle_rope( cur, par ) ) {
+            // 楼梯等跨层连接可能在上下层使用不同的水平坐标，因此单层跨层
+            // 路径即使水平距离较大也可能是有效的。载具绳梯则可能跨越多层，
+            // 只有在缓存确认绳梯覆盖整个高度区间时才允许这种跳跃。
+            const bool single_z_level_transition = std::abs( cur.z - par.z ) == 1;
+            if( rl_dist( cur, par ) > 1 && !single_z_level_transition &&
+                !connected_by_vehicle_rope( cur, par ) ) {
                 debugmsg( "Jump in our route!  %d:%d:%d->%d:%d:%d",
                           cur.x, cur.y, cur.z, par.x, par.y, par.z );
                 return ret;
