@@ -599,7 +599,6 @@ class item_location::impl::item_in_container : public item_location::impl
 {
     private:
         item_location container;
-        mutable item_pocket *container_pkt = nullptr; // NOLINT(cata-serialize)
 
         // figures out the index for the item, which is where it is in the total list of contents
         // note: could be a better way of handling this?
@@ -622,15 +621,14 @@ class item_location::impl::item_in_container : public item_location::impl
         }
 
         item_pocket *parent_pocket() const override {
-            if( container_pkt == nullptr ) {
-                const std::vector<item_pocket *> pockets = parent_item()->get_all_standard_pockets();
-                if( pockets.size() == 1 ) {
-                    container_pkt = pockets.front();
-                } else if( target() ) {
-                    container_pkt = parent_item()->contained_where( *target() );
-                }
+            item *const child = target();
+            if( !container || child == nullptr ) {
+                return nullptr;
             }
-            return container_pkt;
+            // A child can be restacked or moved while its item_location remains
+            // alive.  Resolve the pocket from current membership instead of
+            // caching a raw pointer or guessing from the pocket count.
+            return container->contained_where( *child );
         }
 
         item_in_container( const item_location &container, item *which ) :
