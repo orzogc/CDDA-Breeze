@@ -250,8 +250,8 @@ void player_activity::start_or_resume( Character &who, bool resuming )
 {
     if( actor && !resuming ) {
         actor->start( *this, who );
-    } else if( !actor && !resuming && type == ACT_VEHICLE ) {
-        activity_handlers::vehicle_start( this, &who );
+    } else if( !actor && type == ACT_VEHICLE ) {
+        activity_handlers::vehicle_start( this, &who, resuming );
     }
     if( !type.is_null() && rooted() ) {
         who.rooted_message();

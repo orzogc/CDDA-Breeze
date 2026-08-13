@@ -2678,10 +2678,10 @@ void veh_interact::display_veh()
     }
 
     // Draw durable work records on top of the actual vehicle preview.  Repair
-    // and removal highlight the existing part; installation has no real part
-    // yet, so draw a dim/broken-looking ghost at the target mount.  This keeps
-    // progress visible for every vehicle tile, not just the tile selected when
-    // the activity was started.
+    // and removal highlight the exact existing part; installation has no real
+    // part yet, so draw a dim/broken-looking ghost at the target mount.  This
+    // keeps progress visible for every vehicle tile, not just the tile selected
+    // when the activity was started.
     for( const vehicle_work_progress &work : veh->get_work_progress() ) {
         if( work.work_done >= 10000000 || work.part_id.empty() ) {
             continue;
@@ -2689,8 +2689,42 @@ void veh_interact::display_veh()
         const point rel = ( work.mount + dd ).rotate( 3 ) + offset;
         if( work.operation == 'i' ) {
             draw_vpart_tile( *veh, work.mount, false, work.part_id, rel, 2, rotation );
+            tilecontext->draw_vehicle_work_highlight_public( tripoint( rel, 0 ) );
+            continue;
         }
-        tilecontext->draw_item_highlight_public( tripoint( rel, 0 ) );
+
+        const int part_index = work.part_index >= 0 && work.part_index < veh->part_count() ?
+                               work.part_index : -1;
+        bool matches_part = false;
+        if( part_index >= 0 ) {
+            const vehicle_part &part = veh->part( part_index );
+            matches_part = !part.removed && part.mount == work.mount &&
+                           part.info().get_id().str() == work.part_id &&
+                           part.variant == work.variant &&
+                           ( work.operation != 'r' || work.initial_damage < 0 ||
+                             part.damage() == work.initial_damage );
+        } else {
+            // Old saves may not have a part index.  Only use this fallback
+            // when the mount/id/variant tuple identifies exactly one part.
+            int found = -1;
+            for( int i = 0; i < veh->part_count(); ++i ) {
+                const vehicle_part &part = veh->part( i );
+                if( !part.removed && part.mount == work.mount &&
+                    part.info().get_id().str() == work.part_id && part.variant == work.variant &&
+                    ( work.operation != 'r' || work.initial_damage < 0 ||
+                      part.damage() == work.initial_damage ) ) {
+                    if( found != -1 ) {
+                        found = -2;
+                        break;
+                    }
+                    found = i;
+                }
+            }
+            matches_part = found >= 0;
+        }
+        if( matches_part ) {
+            tilecontext->draw_vehicle_work_highlight_public( tripoint( rel, 0 ) );
+        }
     }
 
     int height_3d = 0;
@@ -3550,6 +3584,12 @@ void veh_interact::complete_vehicle( Character &you )
             }
             here.add_vehicle_to_cache( veh );
             veh->erase_work_progress( 'i', d, part_id.str(), variant_id );
+            // Installing a new part creates a new target instance.  Any stale
+            // completed remove/repair record for the old part at this mount
+            // must not be inherited by the newly installed part.
+            veh->erase_work_progress( 'r', d, part_id.str(), variant_id );
+            veh->erase_work_progress( 'o', d, part_id.str(), variant_id );
+            veh->erase_work_progress( 'O', d, part_id.str(), variant_id );
             break;
         }
 

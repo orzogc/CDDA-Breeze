@@ -2130,7 +2130,11 @@ static int moves_left_for_vehicle_work( const vehicle_work_progress &work )
     }
     const double remaining = 1.0 - static_cast<double>( std::clamp( work.work_done, 0,
                                    10000000 ) ) / 10000000.0;
-    return std::max( 0, static_cast<int>( std::lround( work.work_total * remaining ) ) );
+    const int remaining_moves = static_cast<int>( std::lround( work.work_total * remaining ) );
+    // Never turn a non-complete durable record into a zero-move activity.
+    // Rounding a tiny remaining fraction to zero would make a subsequent
+    // remove/repair/install finish before the final progress turn is saved.
+    return work.work_done < 10000000 ? std::max( 1, remaining_moves ) : 0;
 }
 
 static void save_vehicle_work_progress( player_activity &act, vehicle_work_progress &work )
@@ -2147,7 +2151,7 @@ static void save_vehicle_work_progress( player_activity &act, vehicle_work_progr
 
 } // namespace
 
-void activity_handlers::vehicle_start( player_activity *act, Character *you )
+void activity_handlers::vehicle_start( player_activity *act, Character *you, const bool resuming )
 {
     if( act == nullptr || you == nullptr || act->values.size() < 7 || act->str_values.empty() ) {
         return;
@@ -2168,6 +2172,15 @@ void activity_handlers::vehicle_start( player_activity *act, Character *you )
     const std::string variant = act->str_values.size() > 1 ? act->str_values[1] : std::string();
     const point mount = vehicle_work_mount( *act, *veh, operation );
     vehicle_work_progress *work = veh->find_work_progress( operation, mount, part_id, variant );
+    if( work != nullptr && work->work_done >= 10000000 && !resuming ) {
+        // A completed record belongs to an activity which was about to finish,
+        // not to a newly selected job.  If it survived completion (for example
+        // because an old save was interrupted between the final turn and the
+        // finish callback), never let a new remove/install/repair resume it at
+        // 100% and complete in a single turn.
+        veh->erase_work_progress( operation, mount, part_id, variant );
+        work = nullptr;
+    }
     int part_index = -1;
     if( operation != 'i' ) {
         if( work != nullptr ) {
@@ -2263,7 +2276,7 @@ void activity_handlers::vehicle_do_turn( player_activity *act, Character *you )
     const point mount = vehicle_work_mount( *act, *veh, operation );
     vehicle_work_progress *work = veh->find_work_progress( operation, mount, part_id, variant );
     if( work == nullptr ) {
-        vehicle_start( act, you );
+        vehicle_start( act, you, true );
         if( act->is_null() ) {
             return;
         }

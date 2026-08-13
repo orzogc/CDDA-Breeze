@@ -3798,15 +3798,37 @@ bool cata_tiles::draw_vpart( const tripoint &p, lit_level ll, int &height_3d,
 
                     // Show interrupted installation, repair, and removal on
                     // the real vehicle tile as well as in the vehicle menu.
-                    // The durable record is keyed by the local mount, so the
-                    // marker follows a moving or rotating vehicle.
+                    // The durable record is keyed by the local mount and, for
+                    // existing parts, the part identity, so the marker follows
+                    // a moving or rotating vehicle without marking a different
+                    // part at the same mount.
+                    const vehicle_part &visible_part = veh.part( veh_part );
                     const bool has_interrupted_work = std::any_of(
                             veh.get_work_progress().begin(), veh.get_work_progress().end(),
-                            [&vp]( const vehicle_work_progress &work ) {
-                                return work.work_done < 10000000 && work.mount == vp->mount();
+                            [&visible_part, veh_part]( const vehicle_work_progress &work ) {
+                                if( work.work_done >= 10000000 ) {
+                                    return false;
+                                }
+                                if( work.operation == 'r' && work.initial_damage >= 0 &&
+                                    visible_part.damage() != work.initial_damage ) {
+                                    return false;
+                                }
+                                if( work.operation == 'i' ) {
+                                    return work.mount == visible_part.mount;
+                                }
+                                // Existing-part work is tied to the part index
+                                // when available.  Keep the mount/id fallback
+                                // for saves created before part_index was added.
+                                return ( work.part_index == veh_part &&
+                                         work.mount == visible_part.mount &&
+                                         work.part_id == visible_part.info().get_id().str() &&
+                                         work.variant == visible_part.variant ) ||
+                                       ( work.part_index < 0 && work.mount == visible_part.mount &&
+                                         work.part_id == visible_part.info().get_id().str() &&
+                                         work.variant == visible_part.variant );
                             } );
                     if( has_interrupted_work ) {
-                        draw_item_highlight( p );
+                        draw_vehicle_work_highlight_public( p );
                     }
                 }
                 if( ret && draw_highlight ) {

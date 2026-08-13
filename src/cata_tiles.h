@@ -671,6 +671,15 @@ class cata_tiles
             return draw_item_highlight( pos );
         }
 
+        // Vehicle work uses the regular tile highlight instead of the item
+        // highlight.  The latter is intentionally shaped like an item marker
+        // and makes interrupted vehicle work look as if there were an item on
+        // the part.
+        bool draw_vehicle_work_highlight_public( const tripoint &pos ) {
+            return draw_from_id_string( "highlight", TILE_CATEGORY::NONE, "", pos, 0, 0,
+                                        lit_level::LIT, false );
+        }
+
         void init_draw_below_override( const tripoint &p, bool draw );
         void void_draw_below_override();
 
