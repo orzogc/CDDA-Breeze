@@ -2829,8 +2829,12 @@ void consume_activity_actor::start( player_activity &act, Character &guy )
             moves = to_moves<int>( guy.get_consume_time( consume_item ) );
         }
     } else {
-        debugmsg( "Item/location to be consumed should not be null." );
+        add_msg_debug( debugmode::DF_ACTIVITY,
+                       "consume activity target is no longer available at start" );
         canceled = true;
+        consume_menu_selections.clear();
+        consume_menu_selected_items.clear();
+        consume_menu_filter.clear();
     }
 
     act.moves_total = moves;
@@ -2859,7 +2863,12 @@ void consume_activity_actor::finish( player_activity &act, Character & )
         } else if( !consume_item.is_null() ) {
             player_character.consume( consume_item, /*force=*/true );
         } else {
-            debugmsg( "Item location/name to be consumed should not be null." );
+            add_msg_debug( debugmode::DF_ACTIVITY,
+                           "consume activity target is no longer available at finish" );
+            canceled = true;
+            consume_menu_selections.clear();
+            consume_menu_selected_items.clear();
+            consume_menu_filter.clear();
         }
         if( player_character.get_value( "THIEF_MODE_KEEP" ) != "YES" ) {
             player_character.set_value( "THIEF_MODE", "THIEF_ASK" );
@@ -3133,8 +3142,12 @@ void unload_activity_actor::start( player_activity &act, Character & )
 
 void unload_activity_actor::finish( player_activity &act, Character &who )
 {
+    // Liquid handling can assign a new activity while unloading.  Copy the
+    // location before nullifying this activity, because replacing the actor
+    // can destroy the object that owns `target` before unload() returns.
+    item_location target_copy = target;
     act.set_to_null();
-    unload( who, target );
+    unload( who, target_copy );
 }
 
 void unload_activity_actor::unload( Character &who, item_location &target )

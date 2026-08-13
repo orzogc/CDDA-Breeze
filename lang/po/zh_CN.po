@@ -435385,6 +435385,10 @@ msgstr "载具部件类别"
 msgid "Vehicle parts"
 msgstr "载具部件"
 
+#: src/init.cpp
+msgid "Vehicle color palettes"
+msgstr "载具颜色调色板"
+
 #: src/init.cpp:695 src/init.cpp:811
 msgid "Traps"
 msgstr "陷阱"
