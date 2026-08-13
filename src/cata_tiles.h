@@ -654,6 +654,19 @@ class cata_tiles
             return draw_from_id_string(id, category, subcategory, pos, subtile, rota, ll, apply_night_vision_goggles, height_3d);
         }
 
+        bool draw_from_id_string_public( const std::string &id, TILE_CATEGORY category,
+                                         const std::string &subcategory, const tripoint &pos,
+                                         int subtile, int rota, lit_level ll,
+                                         bool apply_night_vision_goggles, int &height_3d,
+                                         const vehicle &veh, const point &mount, bool roof )
+        {
+            pending_part_tint_ = get_vpart_tint( veh, mount, roof );
+            const bool ret = draw_from_id_string( id, category, subcategory, pos, subtile, rota,
+                               ll, apply_night_vision_goggles, height_3d );
+            pending_part_tint_.reset();
+            return ret;
+        }
+
         void init_draw_below_override( const tripoint &p, bool draw );
         void void_draw_below_override();
 

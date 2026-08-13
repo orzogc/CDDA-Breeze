@@ -462042,6 +462042,12 @@ msgctxt "veh_interact"
 msgid "remove"
 msgstr "拆卸"
 
+#: src/veh_interact.cpp:147
+#, c-format
+msgctxt "veh_interact"
+msgid "[%1$s %2$d%%]"
+msgstr "[%1$s %2$d%%]"
+
 #: src/veh_interact.cpp:2844
 msgctxt "veh_interact"
 msgid "siphon"

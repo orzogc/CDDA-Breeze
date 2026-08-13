@@ -117,6 +117,41 @@ static bool valid_vehicle_part_index( const vehicle &veh, const int index )
     return index >= 0 && index < veh.part_count();
 }
 
+static std::string vehicle_work_operation_name( const char operation )
+{
+    switch( operation ) {
+        case 'i':
+            return pgettext( "veh_interact", "install" );
+        case 'r':
+            return pgettext( "veh_interact", "repair" );
+        case 'o':
+        case 'O':
+            return pgettext( "veh_interact", "remove" );
+        default:
+            return std::string();
+    }
+}
+
+static std::string vehicle_part_work_progress( const vehicle &veh, const vehicle_part &part )
+{
+    std::vector<std::string> entries;
+    const std::string part_id = part.info().get_id().str();
+    for( const char operation : { 'i', 'r', 'o', 'O' } ) {
+        const vehicle_work_progress *const work = veh.find_work_progress( operation, part.mount,
+                part_id, part.variant );
+        if( work == nullptr || work->work_done <= 0 || work->work_done >= 10000000 ||
+            ( operation == 'r' && work->initial_damage >= 0 &&
+              part.damage() != work->initial_damage ) ) {
+            continue;
+        }
+        const int percentage = std::clamp( static_cast<int>( std::lround(
+                                       100.0 * work->work_done / 10000000.0 ) ), 1, 99 );
+        entries.push_back( string_format( pgettext( "veh_interact", "[%1$s %2$d%%]" ),
+                                           vehicle_work_operation_name( operation ), percentage ) );
+    }
+    return entries.empty() ? std::string() : " " + enumerate_as_string( entries );
+}
+
 static std::string status_color( bool status )
 {
     return status ? "<color_green>" : "<color_red>";
@@ -1708,12 +1743,15 @@ void veh_interact::display_overview()
             highlighted = true;
         }
 
-        // print part name
+        // Print the part name and any durable interrupted-work progress.  The
+        // activity itself may be in the backlog or belong to another worker,
+        // so the vehicle-side record is the authoritative source here.
         nc_color col = overview_opts[idx].selectable ? c_white : c_dark_gray;
+        const std::string part_name = pt.name() + vehicle_part_work_progress( *veh, pt );
         trim_and_print( w_list, point( 1, y ), getmaxx( w_list ) - 1,
                         highlighted ? hilite( col ) : col,
                         "<color_dark_gray>%s </color>%s",
-                        right_justify( overview_opts[idx].hotkey.short_description(), 2 ), pt.name() );
+                        right_justify( overview_opts[idx].hotkey.short_description(), 2 ), part_name );
 
         // print extra columns (if any)
         overview_opts[idx].details( pt, w_list, y );
@@ -2477,7 +2515,9 @@ void veh_interact::display_grid()
 }
 
 
-void draw_vpart_tile(const std::string& vp_id_str, const point& rel_pos, int part_mod, int rotation_degrees) {
+void draw_vpart_tile( const vehicle &veh, const point &mount, const bool roof,
+                      const std::string &vp_id_str, const point &rel_pos, const int part_mod,
+                      const int rotation_degrees ) {
     if (vp_id_str.empty()) {
         return;
     }
@@ -2497,8 +2537,9 @@ void draw_vpart_tile(const std::string& vp_id_str, const point& rel_pos, int par
     
     // Use relative position as map coordinates instead of pixel coordinates
     // Use lit_level::LIT instead of BRIGHT to ensure consistent lighting
-    tilecontext->draw_from_id_string_public(vpname, TILE_CATEGORY::VEHICLE_PART, "", tripoint(rel_pos,0),
-        subtile, rotation_degrees, lit_level::LIT, false, height_3d);
+    tilecontext->draw_from_id_string_public( vpname, TILE_CATEGORY::VEHICLE_PART, "",
+            tripoint( rel_pos, 0 ), subtile, rotation_degrees, lit_level::LIT, false, height_3d,
+            veh, mount, roof );
 }
 
 
@@ -2567,15 +2608,15 @@ void veh_interact::display_veh()
         
         const std::string& vp_id_str1 = veh->part_id_string(i, part_mod, true, false);
         if (!vp_id_str1.empty()) {
-            draw_vpart_tile(vp_id_str1, rel, part_mod, rotation);
+            draw_vpart_tile( *veh, mount, false, vp_id_str1, rel, part_mod, rotation );
         } else {
-            draw_vpart_tile(part.id.str(), rel, 0, rotation);
+            draw_vpart_tile( *veh, mount, false, part.id.str(), rel, 0, rotation );
         }
         
         part_mod = 0;
         const std::string& vp_id_str2 = veh->part_id_string(i, part_mod, false, true);
         if (!vp_id_str2.empty() && vp_id_str2 != vp_id_str1) {
-            draw_vpart_tile(vp_id_str2, rel, part_mod, rotation);
+            draw_vpart_tile( *veh, mount, true, vp_id_str2, rel, part_mod, rotation );
         }
     }
 
@@ -3423,7 +3464,8 @@ void veh_interact::complete_vehicle( Character &you )
             const tripoint vehp = veh->global_pos3() + tripoint( q, 0 );
             // TODO: allow boarding for non-players as well.
             Character *const pl = get_creature_tracker().creature_at<Character>( vehp );
-            if( vpinfo.has_flag( VPFLAG_BOARDABLE ) && pl ) {
+            if( vpinfo.has_flag( VPFLAG_BOARDABLE ) && pl &&
+                here.veh_at( vehp ).part_with_feature( VPFLAG_BOARDABLE, true ) ) {
                 here.board_vehicle( vehp, pl );
             }
 
