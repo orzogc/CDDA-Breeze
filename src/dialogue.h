@@ -329,6 +329,7 @@ class json_talk_response
         bool has_condition_ = false;
         bool is_switch = false;
         bool is_default = false;
+        std::string response_id;
 
         void load_condition( const JsonObject &jo );
         bool test_condition( const dialogue &d ) const;
@@ -340,6 +341,12 @@ class json_talk_response
         const talk_response &get_actual_response() const;
         bool has_condition() const {
             return has_condition_;
+        }
+        const std::string &get_response_id() const {
+            return response_id;
+        }
+        void set_response_id( const std::string &id ) {
+            response_id = id;
         }
 
         /**

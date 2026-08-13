@@ -51,6 +51,7 @@
 #include "npc.h"
 #include <optional>
 #include "output.h"
+#include "options.h"
 #include "overlay_ordering.h"
 #include "path_info.h"
 #include "pixel_minimap.h"
@@ -1330,9 +1331,11 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
     o = is_isometric() ? center.xy() : center.xy() - point( POSX, POSY );
 
     op = dest;
+
     // Rounding up to include incomplete tiles at the bottom/right edges
     screentile_width = divide_round_up( width, tile_width );
     screentile_height = divide_round_up( height, tile_height );
+
 
     const int min_col = 0;
     const int max_col = s.x;
@@ -1735,6 +1738,10 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
                     formatted_text(temp_str, catacurses::white + 8, direction::NORTHEAST));
         }
 
+
+    if( do_draw_appliance_connections ) {
+        draw_appliance_connections_frame();
+    }
 
     // tile overrides are already drawn in the previous code
     void_radiation_override();
@@ -4076,9 +4083,68 @@ bool cata_tiles::draw_zone_mark( const tripoint &p, lit_level ll, int &height_3d
     return false;
 }
 
+
+static void draw_appliance_grid_line( SDL_Renderer *renderer, point start, point end,
+                                      Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha,
+                                      int radius )
+{
+    SDL_SetRenderDrawColor( renderer, red, green, blue, alpha );
+    for( int dx = -radius; dx <= radius; ++dx ) {
+        for( int dy = -radius; dy <= radius; ++dy ) {
+            if( std::abs( dx ) + std::abs( dy ) > radius ) {
+                continue;
+            }
+            SDL_RenderDrawLine( renderer, start.x + dx, start.y + dy, end.x + dx, end.y + dy );
+        }
+    }
+}
+
+void cata_tiles::draw_appliance_connections_frame()
+{
+    if( !do_draw_appliance_connections || appliance_connection_source == nullptr ) {
+        return;
+    }
+
+    map &here = get_map();
+    vehicle *source_vehicle = appliance_connection_source;
+    const tripoint source = source_vehicle->global_pos3();
+    const point middle( tile_width / 2, tile_height / 2 );
+    const point start = player_to_screen( source.xy() ) + middle;
+
+    const phmap::flat_hash_map<vehicle *, bool> connected =
+        vehicle::enumerate_vehicles( { source_vehicle } );
+
+    SetRenderDrawBlendMode( renderer, SDL_BLENDMODE_BLEND );
+    for( const std::pair<vehicle *const, bool> &entry : connected ) {
+        vehicle *target_vehicle = entry.first;
+        if( target_vehicle == nullptr || target_vehicle == source_vehicle ) {
+            continue;
+        }
+        const tripoint target = target_vehicle->global_pos3();
+        if( target.z != source.z ) {
+            continue;
+        }
+
+        // Skip stale/off-bubble endpoints.  enumerate_vehicles can know about cable-linked objects
+        // that are not currently drawable, and player_to_screen should only receive local map points.
+        if( !here.inbounds( target ) ) {
+            continue;
+        }
+        const point end = player_to_screen( target.xy() ) + middle;
+
+        // CBN-style visual language: opaque black border with a bright yellow inner line.
+        draw_appliance_grid_line( renderer.get(), start, end, 0, 0, 0, 230, 3 );
+        draw_appliance_grid_line( renderer.get(), start, end, 245, 255, 55, 220, 1 );
+    }
+    SetRenderDrawBlendMode( renderer, SDL_BLENDMODE_NONE );
+}
+
 bool cata_tiles::draw_zombie_revival_indicators( const tripoint &pos, const lit_level /*ll*/,
         int &/*height_3d*/, const std::array<bool, 5> &invisible )
 {
+    if( !get_option<bool>( "MONSTER_CORPSE_REVIVAL" ) ) {
+        return false;
+    }
     map &here = get_map();
     if( tileset_ptr->find_tile_type( ZOMBIE_REVIVAL_INDICATOR ) && !invisible[0] &&
         item_override.find( pos ) == item_override.end() &&
@@ -4309,6 +4375,18 @@ void cata_tiles::init_draw_highlight( const tripoint &p )
 {
     do_draw_highlight = true;
     highlights.emplace_back( p );
+}
+
+void cata_tiles::init_draw_appliance_connections( vehicle *veh )
+{
+    appliance_connection_source = veh;
+    do_draw_appliance_connections = veh != nullptr;
+}
+
+void cata_tiles::void_appliance_connections()
+{
+    do_draw_appliance_connections = false;
+    appliance_connection_source = nullptr;
 }
 void cata_tiles::init_draw_weather( weather_printable weather, std::string name )
 {

@@ -433,6 +433,11 @@ class cata_tiles
 
         void draw_creature_view_line();
 
+        // Temporary diagnostic overlay used only while an appliance interaction menu is open.
+        // It visualizes logical power-grid membership without pretending that cables occupy map tiles.
+        void init_draw_appliance_connections( vehicle *veh );
+        void void_appliance_connections();
+
     protected:
         /** How many rows and columns of tiles fit into given dimensions **/
         void get_window_tile_counts( int width, int height, int &columns, int &rows ) const;
@@ -556,6 +561,7 @@ class cata_tiles
                              const std::array<bool, 5> &invisible );
         bool draw_zombie_revival_indicators( const tripoint &pos, lit_level ll, int &height_3d,
                                              const std::array<bool, 5> &invisible );
+        void draw_appliance_connections_frame();
         
 
         void draw_zlevel_overlay(const tripoint& p, lit_level ll, int& height_3d);
@@ -755,6 +761,8 @@ class cata_tiles
         bool do_draw_weather = false;
         bool do_draw_sct = false;
         bool do_draw_zones = false;
+        bool do_draw_appliance_connections = false;
+        vehicle *appliance_connection_source = nullptr;
         std::vector<zone_manager::ref_zone_data> zones;
 
         tripoint exp_pos;
