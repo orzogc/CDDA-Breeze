@@ -667,6 +667,10 @@ class cata_tiles
             return ret;
         }
 
+        bool draw_item_highlight_public( const tripoint &pos ) {
+            return draw_item_highlight( pos );
+        }
+
         void init_draw_below_override( const tripoint &p, bool draw );
         void void_draw_below_override();
 

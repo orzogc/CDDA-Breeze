@@ -2690,7 +2690,7 @@ void veh_interact::display_veh()
         if( work.operation == 'i' ) {
             draw_vpart_tile( *veh, work.mount, false, work.part_id, rel, 2, rotation );
         }
-        tilecontext->draw_item_highlight( tripoint( rel, 0 ) );
+        tilecontext->draw_item_highlight_public( tripoint( rel, 0 ) );
     }
 
     int height_3d = 0;
