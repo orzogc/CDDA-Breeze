@@ -1790,62 +1790,6 @@ void monster::move()
         return can_bash && here.bash_rating( current_bash_estimate, step ) > 0;
     };
 
-    auto has_non_bash_progress = [&]( const tripoint &goal ) {
-        if( goal.z != posz() || goal == pos() ) {
-            return false;
-        }
-        const float current_distance = trig_dist( pos(), goal );
-        for( const tripoint &candidate : squares_closer_to( pos(), goal ) ) {
-            if( !here.inbounds( candidate ) ||
-                trig_dist( candidate, goal ) >= current_distance ) {
-                continue;
-            }
-
-            const Creature *occupant =
-                creatures.creature_at( candidate, is_hallucination() );
-            if( occupant != nullptr ) {
-                if( is_hallucination() != occupant->is_hallucination() &&
-                    !occupant->is_avatar() ) {
-                    continue;
-                }
-                if( attitude_to( *occupant ) == Attitude::HOSTILE ) {
-                    return true;
-                }
-                continue;
-            }
-
-            if( can_move_to( candidate ) ) {
-                return true;
-            }
-            if( can_open_doors &&
-                here.open_door( *this, candidate, !here.is_outside( pos() ), true ) ) {
-                return true;
-            }
-        }
-        return false;
-    };
-
-    auto step_requires_bash = [&]( const tripoint &step ) {
-        if( !here.inbounds( step ) || step.z != posz() ) {
-            return false;
-        }
-        const Creature *occupant =
-            creatures.creature_at( step, is_hallucination() );
-        if( occupant != nullptr &&
-            attitude_to( *occupant ) == Attitude::HOSTILE ) {
-            return false;
-        }
-        if( can_move_to( step ) ) {
-            return false;
-        }
-        if( can_open_doors &&
-            here.open_door( *this, step, !here.is_outside( pos() ), true ) ) {
-            return false;
-        }
-        return can_bash &&
-               here.bash_rating( current_bash_estimate, step ) > 0;
-    };
-
     auto cross_z_route_is_sane = [&]( const std::vector<tripoint> &candidate_path,
                                      const tripoint &route_dest ) {
         if( route_dest.z == posz() ) {
@@ -2077,6 +2021,7 @@ void monster::move()
                         }
                     }
 
+                    constexpr int cbn_path_cost_scale = 50;
                     int result_cost = impassable_cost;
                     if( will_move_to( to ) ) {
                         const int base_move_cost =
@@ -2084,24 +2029,27 @@ void monster::move()
                         const bool diagonal_step =
                             from.x != to.x && from.y != to.y;
 
-                        // Breeze's calc_movecost() contains terrain cost but not
-                        // diagonal geometry. Actual movement applies that later
-                        // through get_stagger_adjust(). The reverse field must
-                        // price diagonals itself or a straight pursuit has many
-                        // equally-cheap sideways detours. CBN's destination
-                        // Dijkstra uses a 1.5x diagonal/cardinal ratio.
+                        // Flat Breeze movement is normally about 100 moves,
+                        // corresponding to CBN's ordinary path cost 2 at this
+                        // scale. Preserve real terrain speed and diagonal
+                        // geometry rather than flattening walkable tiles.
                         result_cost = diagonal_step ?
                                       ( base_move_cost * 3 + 1 ) / 2 :
                                       base_move_cost;
                     } else if( can_open_doors &&
                                here.open_door( *this, to, !here.is_outside( from ), true ) ) {
-                        result_cost = 100;
+                        result_cost = here.veh_at( to ) ?
+                                      10 * cbn_path_cost_scale :
+                                      4 * cbn_path_cost_scale;
                     } else if( can_bash ) {
-                        const int rating = here.bash_rating( current_bash_estimate, to );
+                        const int rating =
+                            here.bash_rating( current_bash_estimate, to );
                         if( rating == 1 ) {
-                            result_cost = 2400;
+                            result_cost = 500 * cbn_path_cost_scale;
                         } else if( rating > 1 ) {
-                            result_cost = 100 + std::max( 1, 10 / rating ) * 100;
+                            result_cost =
+                                ( ( 20 / rating ) + 2 + 10 ) *
+                                cbn_path_cost_scale;
                         }
                     }
 
@@ -2393,24 +2341,6 @@ void monster::move()
         moved = destination != pos();
     }
 
-    const tripoint local_pressure_goal =
-        same_z_fallback_destination( movement_goal );
-    const bool mobility_first_pursuit =
-        improved_pathfinding && hostile_pursuit_active &&
-        movement_goal.z == posz() &&
-        has_non_bash_progress( local_pressure_goal );
-    if( path_step_is_authoritative && mobility_first_pursuit &&
-        destination.z == posz() && step_requires_bash( destination ) ) {
-        // A wall may be a mathematically short route, but it should not steal
-        // a chase turn while a real movement/door/attack step still advances
-        // toward a directly pursued hostile.
-        path_step_is_authoritative = false;
-        pathed = false;
-        path.clear();
-        destination = local_pressure_goal;
-        moved = destination != pos();
-    }
-
     point new_d( destination.xy() - pos().xy() );
 
     // toggle facing direction for sdl flip
@@ -2560,12 +2490,6 @@ void monster::move()
                     continue;
                 }
 
-                if( mobility_first_pursuit ) {
-                    // While another local step can still close on the hostile,
-                    // destruction is secondary.  Bash only when movement,
-                    // attacking and opening doors cannot make progress.
-                    continue;
-                }
                 if( estimate < 5 ) {
                     bad_choice = true;
                 }
