@@ -3874,6 +3874,7 @@ void monster::hear_sound( const tripoint &source, const int vol, const int dist,
             priority_sound = true;
             last_hostile_target_position.reset();
             hostile_memory_origin_position.reset();
+            hostile_memory_search_origin_position.reset();
             previous_hostile_sighting_position.reset();
             witnessed_hostile_transition_origin.reset();
             witnessed_hostile_transition_destination.reset();
@@ -3897,6 +3898,7 @@ void monster::hear_sound( const tripoint &source, const int vol, const int dist,
             if( priority_sound ) {
                 last_hostile_target_position.reset();
                 hostile_memory_origin_position.reset();
+                hostile_memory_search_origin_position.reset();
                 previous_hostile_sighting_position.reset();
                 witnessed_hostile_transition_origin.reset();
                 witnessed_hostile_transition_destination.reset();

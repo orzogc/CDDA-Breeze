@@ -492,6 +492,46 @@ std::optional<monster_z_route_plan> infer_hostile_memory_transition(
     return best_plan;
 }
 
+bool hostile_disappearance_portal_is_plausible(
+    map &here, const tripoint_abs_ms &memory_origin,
+    const std::optional<tripoint_abs_ms> &previous_sighting )
+{
+    const tripoint local_origin = here.getlocal( memory_origin );
+    if( !here.inbounds( local_origin ) ) {
+        return false;
+    }
+
+    const auto is_vertical_portal = [&]( const tripoint &p ) {
+        return here.has_flag( ter_furn_flag::TFLAG_GOES_UP, p ) ||
+               here.has_flag( ter_furn_flag::TFLAG_GOES_DOWN, p ) ||
+               here.has_flag( ter_furn_flag::TFLAG_RAMP_UP, p ) ||
+               here.has_flag( ter_furn_flag::TFLAG_RAMP_DOWN, p );
+    };
+
+    if( is_vertical_portal( local_origin ) ) {
+        return true;
+    }
+
+    if( !previous_sighting || previous_sighting->z() != memory_origin.z() ) {
+        return false;
+    }
+
+    const tripoint local_previous = here.getlocal( *previous_sighting );
+    if( !here.inbounds( local_previous ) ) {
+        return false;
+    }
+
+    const point heading(
+        std::clamp( local_origin.x - local_previous.x, -1, 1 ),
+        std::clamp( local_origin.y - local_previous.y, -1, 1 ) );
+    if( heading == point_zero ) {
+        return false;
+    }
+
+    const tripoint ahead = local_origin + heading;
+    return here.inbounds( ahead ) && is_vertical_portal( ahead );
+}
+
 std::optional<time_point> monster_path_cache_turn;
 std::map<monster_route_cache_key, monster_route_cache_entry> monster_route_cache;
 std::map<monster_z_route_cache_key, monster_z_route_plan> monster_z_route_cache;
@@ -1004,6 +1044,7 @@ void monster::plan()
         witnessed_hostile_transition_destination.reset();
         witnessed_hostile_transition_memory_turns = 0;
         hostile_memory_origin_position.reset();
+        hostile_memory_search_origin_position.reset();
         previous_hostile_sighting_position.reset();
         if( last_hostile_target_position ) {
             unset_dest();
@@ -1042,6 +1083,7 @@ void monster::plan()
             }
             last_hostile_target_position.reset();
             hostile_memory_origin_position.reset();
+            hostile_memory_search_origin_position.reset();
             previous_hostile_sighting_position.reset();
             hostile_target_memory_turns = 0;
             hostile_search_turns = 0;
@@ -1421,6 +1463,7 @@ void monster::plan()
                 }
 
                 hostile_memory_origin_position = dest;
+                hostile_memory_search_origin_position = dest;
                 last_hostile_target_position = dest;
                 hostile_target_memory_turns = smart_planning ? 150 : 60;
                 hostile_search_turns = 0;
@@ -1467,10 +1510,14 @@ void monster::plan()
     } else if( improved_pathfinding && friendly == 0 &&
                last_hostile_target_position && hostile_target_memory_turns > 0 ) {
         hostile_pursuit_active = true;
-        const tripoint_abs_ms memory_origin =
+        const tripoint_abs_ms real_memory_origin =
             hostile_memory_origin_position ?
             *hostile_memory_origin_position :
             *last_hostile_target_position;
+        const tripoint_abs_ms memory_origin =
+            hostile_memory_search_origin_position ?
+            *hostile_memory_search_origin_position :
+            real_memory_origin;
         const tripoint_abs_ms pursuit_clue = *last_hostile_target_position;
         if( hostile_search_step == 0 &&
             rl_dist( get_location(), pursuit_clue ) > 1 ) {
@@ -1480,29 +1527,58 @@ void monster::plan()
         } else {
             bool followed_transition = false;
             if( hostile_search_step == 0 && hostile_transition_attempts == 0 &&
-                memory_origin.z() != posz() &&
                 get_pathfinding_settings().allow_climb_stairs ) {
-                const int wanted_z_direction =
-                    memory_origin.z() > posz() ? 1 : -1;
-                const std::optional<monster_z_route_plan> transition =
-                    infer_hostile_memory_transition( *this, here, memory_origin,
-                                                     hostile_search_lane,
-                                                     wanted_z_direction );
-                if( transition ) {
-                    hostile_transition_attempts = 1;
-                    const tripoint_abs_ms transition_destination =
-                        here.getglobal( transition->transition );
-                    last_hostile_target_position = transition_destination;
-                    hostile_target_memory_turns = std::max(
-                        hostile_target_memory_turns,
-                        smart_planning ? 90 : 45 );
-                    hostile_search_turns = 0;
-                    hostile_search_step = 0;
-                    hostile_search_waypoint_turns = 0;
-                    hostile_search_deadline.reset();
-                    wandf = 0;
-                    set_dest( transition_destination );
-                    followed_transition = true;
+                int wanted_z_direction = 0;
+                int transition_hint_radius = hostile_transition_hint_radius;
+                bool transition_has_evidence = false;
+
+                if( memory_origin.z() != posz() ) {
+                    // We really saw the hostile on another floor.
+                    wanted_z_direction = memory_origin.z() > posz() ? 1 : -1;
+                    transition_has_evidence = true;
+                } else {
+                    // The common stair chase loses LOS on the source stair:
+                    // the hostile was last seen on our floor and is gone one
+                    // turn later. Accept that only at the exact disappearance
+                    // portal or one observed movement step ahead.
+                    const bool recent_disappearance = last_hostile_sighting_turn &&
+                        calendar::turn <= *last_hostile_sighting_turn +
+                        time_duration::from_turns( 2 );
+                    const bool searching_real_sighting =
+                        memory_origin == real_memory_origin;
+                    transition_has_evidence = recent_disappearance &&
+                        searching_real_sighting &&
+                        hostile_disappearance_portal_is_plausible(
+                            here, real_memory_origin,
+                            previous_hostile_sighting_position );
+                    if( transition_has_evidence ) {
+                        transition_hint_radius = 1;
+                    }
+                }
+
+                if( transition_has_evidence ) {
+                    const std::optional<monster_z_route_plan> transition =
+                        infer_hostile_memory_transition(
+                            *this, here, memory_origin, hostile_search_lane,
+                            wanted_z_direction, transition_hint_radius );
+                    if( transition ) {
+                        hostile_transition_attempts = 1;
+                        const tripoint_abs_ms transition_destination =
+                            here.getglobal( transition->transition );
+                        last_hostile_target_position = transition_destination;
+                        hostile_memory_search_origin_position =
+                            transition_destination;
+                        hostile_target_memory_turns = std::max(
+                            hostile_target_memory_turns,
+                            smart_planning ? 90 : 45 );
+                        hostile_search_turns = 0;
+                        hostile_search_step = 0;
+                        hostile_search_waypoint_turns = 0;
+                        hostile_search_deadline.reset();
+                        wandf = 0;
+                        set_dest( transition_destination );
+                        followed_transition = true;
+                    }
                 }
             }
 
@@ -1544,6 +1620,7 @@ void monster::plan()
                     unset_dest();
                     last_hostile_target_position.reset();
                     hostile_memory_origin_position.reset();
+                    hostile_memory_search_origin_position.reset();
                     previous_hostile_sighting_position.reset();
                     hostile_target_memory_turns = 0;
                     hostile_search_turns = 0;

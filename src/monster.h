@@ -631,6 +631,9 @@ class monster : public Creature
         // Stair hints may redirect last_hostile_target_position, but they must
         // not erase where the hostile actually disappeared.
         std::optional<tripoint_abs_ms> hostile_memory_origin_position;
+        // Search origin follows a strongly evidenced portal landing while the
+        // immutable memory origin keeps the last place the hostile was seen.
+        std::optional<tripoint_abs_ms> hostile_memory_search_origin_position;
         std::optional<tripoint_abs_ms> previous_hostile_sighting_position;
         // A direct sighting that changes Z is stronger evidence than a generic
         // last-known position: the target probably used a nearby stair/ramp.
