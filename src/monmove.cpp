@@ -390,6 +390,11 @@ std::optional<std::pair<int, tripoint_abs_ms>> next_hostile_search_waypoint(
 constexpr int hostile_transition_hint_radius = 2;
 constexpr int witnessed_hostile_transition_hint_radius = 12;
 
+bool is_monster_stair_transition( const map &here, const tripoint &approach,
+                                  const tripoint &transition );
+bool is_monster_stair_transition_usable( const monster &critter, const map &here,
+        const tripoint &approach, const tripoint &transition );
+
 std::optional<monster_z_route_plan> infer_hostile_memory_transition(
     monster &critter, map &here, const tripoint_abs_ms &memory_origin,
     int search_lane, int wanted_z_direction = 0,
@@ -467,6 +472,11 @@ std::optional<monster_z_route_plan> infer_hostile_memory_transition(
             }
 
             if( !destination ) {
+                continue;
+            }
+
+            if( !is_monster_stair_transition_usable( critter, here, candidate,
+                    *destination ) ) {
                 continue;
             }
 
@@ -681,6 +691,28 @@ bool is_monster_stair_transition( const map &here, const tripoint &approach,
     return false;
 }
 
+bool is_monster_stair_transition_usable( const monster &critter, const map &here,
+        const tripoint &approach, const tripoint &transition )
+{
+    if( !is_monster_stair_transition( here, approach, transition ) ) {
+        return false;
+    }
+
+    const int dz = transition.z - approach.z;
+    const bool via_ramp = dz > 0 ?
+                          here.has_flag( ter_furn_flag::TFLAG_RAMP_UP, approach ) :
+                          here.has_flag( ter_furn_flag::TFLAG_RAMP_DOWN, approach );
+    if( via_ramp ) {
+        return true;
+    }
+
+    // CBN/CCB treat ordinary paired stairs as usable by every monster.  Only
+    // a difficult ladder/vertical transition needs the monster's climbing
+    // ability; do not let a cached route accidentally grant wall climbing.
+    return !here.has_flag( ter_furn_flag::TFLAG_DIFFICULT_Z, approach ) ||
+           critter.can_climb();
+}
+
 void remember_monster_stair_route( map &here, const tripoint_abs_ms &target,
                                    const tripoint &approach, const tripoint &transition )
 {
@@ -706,7 +738,7 @@ void remember_monster_stair_route( map &here, const tripoint_abs_ms &target,
 }
 
 std::optional<monster_z_route_plan> get_remembered_monster_stair_route(
-    map &here, const tripoint_abs_ms &target, int source_z )
+    const monster &critter, map &here, const tripoint_abs_ms &target, int source_z )
 {
     const monster_stair_route_cache_key key = make_monster_stair_route_cache_key(
             target, source_z );
@@ -728,7 +760,7 @@ std::optional<monster_z_route_plan> get_remembered_monster_stair_route(
     const tripoint transition = here.getlocal( iter->second.transition );
     if( approach.z != source_z || transition.z != target.z() ||
         !here.inbounds( approach ) || !here.inbounds( transition ) ||
-        !is_monster_stair_transition( here, approach, transition ) ) {
+        !is_monster_stair_transition_usable( critter, here, approach, transition ) ) {
         monster_stair_route_cache.erase( iter );
         return std::nullopt;
     }
@@ -975,12 +1007,21 @@ bool monster::can_reach_to( const tripoint &p ) const
         if( here.has_flag( ter_furn_flag::TFLAG_RAMP_UP, tripoint( p.xy(), p.z - 1 ) ) ) {
             return true;
         }
+        if( here.has_flag( ter_furn_flag::TFLAG_DIFFICULT_Z, pos() ) && !can_climb() ) {
+            return false;
+        }
         if( !here.has_flag( ter_furn_flag::TFLAG_GOES_UP, pos() ) &&
             !here.has_flag( ter_furn_flag::TFLAG_NO_FLOOR, p ) ) {
             // can't go through the roof
             return false;
         }
     } else if( p.z < pos().z && z_is_valid( pos().z ) ) {
+        if( here.has_flag( ter_furn_flag::TFLAG_RAMP_DOWN, pos() ) ) {
+            return true;
+        }
+        if( here.has_flag( ter_furn_flag::TFLAG_DIFFICULT_Z, pos() ) && !can_climb() ) {
+            return false;
+        }
         if( !here.has_flag( ter_furn_flag::TFLAG_GOES_DOWN, pos() ) ) {
             // can't go through the floor
             // you would fall anyway if there was no floor, so no need to check for that here
@@ -2281,7 +2322,8 @@ void monster::move()
                     here.inbounds( remembered_transition ) &&
                     remembered_approach.z == posz() &&
                     remembered_transition.z == route_dest.z &&
-                    is_monster_stair_transition(
+                    is_monster_stair_transition_usable(
+                        *this,
                         here, remembered_approach,
                         remembered_transition ) ) {
                     z_plan = monster_z_route_plan {
@@ -2320,7 +2362,7 @@ void monster::move()
                 }
             }
             if( !z_plan ) {
-                z_plan = get_remembered_monster_stair_route( here,
+                z_plan = get_remembered_monster_stair_route( *this, here,
                          absolute_route_dest, posz() );
                 if( z_plan ) {
                     // Promote the remembered portal to the exact target key
@@ -2332,7 +2374,9 @@ void monster::move()
             if( z_plan && ( z_plan->approach.z != posz() ||
                             z_plan->transition.z != route_dest.z ||
                             !here.inbounds( z_plan->approach ) ||
-                            !here.inbounds( z_plan->transition ) ) ) {
+                            !here.inbounds( z_plan->transition ) ||
+                            !is_monster_stair_transition_usable(
+                                *this, here, z_plan->approach, z_plan->transition ) ) ) {
                 z_plan.reset();
             }
         }
@@ -2344,8 +2388,8 @@ void monster::move()
         // Execute it directly after validating the tile; the movement code
         // below still performs the final can_reach_to()/can_move_to() checks.
         if( has_z_plan && pos() == z_plan->approach &&
-            is_monster_stair_transition( here, z_plan->approach,
-                                         z_plan->transition ) ) {
+            is_monster_stair_transition_usable( *this, here, z_plan->approach,
+                                                z_plan->transition ) ) {
             path.clear();
             destination = z_plan->transition;
             moved = true;
@@ -2660,9 +2704,11 @@ void monster::move()
                   ( pathfinding_budget_exhausted && local_dest.z == posz() ) ) ) {
                 // Exact route failure must not turn a confirmed chase into a
                 // 1-in-10 stumble. Cross-Z movement itself still requires a
-                // validated stair/ramp route, so fallback only presses XY here.
+                // validated stair/ramp route; the fallback also keeps the
+                // later direct stair handoff alive when the XY projection is
+                // exactly our current tile.
                 destination = same_z_fallback_destination( local_dest );
-                moved = destination != pos();
+                moved = destination != pos() || movement_goal.z != posz();
             }
         } else {
             while( !path.empty() && path.front() == pos() ) {
@@ -2723,7 +2769,7 @@ void monster::move()
                     // Only provocative sounds gain the aggressive in-radius
                     // fallback. Ordinary noises retain the previous semantics.
                     destination = same_z_fallback_destination( sound_dest );
-                    moved = destination != pos();
+                    moved = destination != pos() || movement_goal.z != posz();
                 }
             }
         } else {
@@ -2744,7 +2790,7 @@ void monster::move()
         pathed = false;
         path.clear();
         destination = same_z_fallback_destination( movement_goal );
-        moved = destination != pos();
+        moved = destination != pos() || movement_goal.z != posz();
     }
 
     point new_d( destination.xy() - pos().xy() );
@@ -2775,6 +2821,7 @@ void monster::move()
         // in both circular and roguelike distance modes.
         const float distance_to_target = trig_dist( pos(), destination );
         std::vector<tripoint> movement_candidates;
+        std::optional<tripoint> forced_stair_destination;
         if( path_step_is_authoritative ) {
             // Match CBN's pathed_to_goal behavior first. A valid route's
             // immediate next step must win whenever it is usable; retain the
@@ -2811,7 +2858,10 @@ void monster::move()
                             ter_furn_flag::TFLAG_GOES_DOWN :
                             ter_furn_flag::TFLAG_GOES_UP;
                         if( here.has_flag(
-                                paired_portal, *stair_destination ) ) {
+                                paired_portal, *stair_destination ) &&
+                            is_monster_stair_transition_usable(
+                                *this, here, pos(), *stair_destination ) ) {
+                            forced_stair_destination = *stair_destination;
                             movement_candidates.insert(
                                 movement_candidates.begin(),
                                 *stair_destination );
@@ -2824,11 +2874,14 @@ void monster::move()
                 const tripoint directly_below(
                     posx(), posy(), posz() - 1 );
                 movement_candidates.insert(
+                    forced_stair_destination ? movement_candidates.begin() + 1 :
                     movement_candidates.begin(), directly_below );
             }
         }
 
         for( tripoint &candidate : movement_candidates ) {
+            const bool forced_z_candidate = forced_stair_destination.has_value() &&
+                                            candidate == *forced_stair_destination;
             // rare scenario when monster is on the border of the map and it's goal is outside of the map
             if( !here.inbounds( candidate ) ) {
                 continue;
@@ -2851,9 +2904,14 @@ void monster::move()
                     can_z_move = false;
                 }
 
-                // If we're trying to go up but can't fly, check if we can climb. If we can't, then don't
-                // This prevents non-climb/fly enemies running up walls
-                if( candidate.z > posz() && !( via_ramp || flies() ) ) {
+                // CBN/CCB allow ordinary paired stairs without a climbing
+                // ability.  Reserve the wall-climbing guard for difficult
+                // vertical moves and unsupported jumps.
+                const bool ordinary_stair =
+                    here.has_flag( ter_furn_flag::TFLAG_GOES_UP, pos() ) &&
+                    !here.has_flag( ter_furn_flag::TFLAG_DIFFICULT_Z, pos() );
+                if( candidate.z > posz() && !( via_ramp || flies() ) &&
+                    !ordinary_stair ) {
                     if( !can_climb() || !here.has_floor_or_support( candidate ) ) {
                         // Can't "jump" up a whole z-level
                         can_z_move = false;
@@ -2865,10 +2923,8 @@ void monster::move()
                 if( !can_z_move &&
                     posx() / ( SEEX * 2 ) == candidate.x / ( SEEX * 2 ) &&
                     posy() / ( SEEY * 2 ) == candidate.y / ( SEEY * 2 ) ) {
-                    const tripoint upper = candidate.z > posz() ? candidate : pos();
-                    const tripoint lower = candidate.z > posz() ? pos() : candidate;
-                    if( here.has_flag( ter_furn_flag::TFLAG_GOES_DOWN, upper ) &&
-                        here.has_flag( ter_furn_flag::TFLAG_GOES_UP, lower ) ) {
+                    if( is_monster_stair_transition_usable( *this, here, pos(),
+                            candidate ) ) {
                         can_z_move = true;
                     }
                 }
@@ -2906,6 +2962,11 @@ void monster::move()
                 }
                 // Friendly fire and pushing are always bad choices - they take a lot of time
                 bad_choice = true;
+                if( forced_z_candidate ) {
+                    // Do not reserve a stair landing occupied by a friendly
+                    // monster; let ordinary local pushing/queueing handle it.
+                    continue;
+                }
             }
 
             // is there an openable door?
@@ -2927,6 +2988,9 @@ void monster::move()
                     continue;
                 }
                 // Don't bash if we're just tracking a noise.
+                if( forced_z_candidate ) {
+                    continue;
+                }
                 if( !provocative_sound && is_wandering() && destination == here.getlocal( wander_pos ) ) {
                     continue;
                 }
@@ -2938,6 +3002,17 @@ void monster::move()
                 if( estimate < 5 ) {
                     bad_choice = true;
                 }
+            }
+
+            // A validated paired stair is an authoritative cross-Z action.  A
+            // same-level fallback destination can have zero or negative XY
+            // progress even though this is exactly the move needed to reach
+            // the remembered target floor, so the ordinary progress gate must
+            // not discard it.
+            if( forced_z_candidate ) {
+                moved = true;
+                next_step = candidate_abs;
+                break;
             }
 
             const float progress = distance_to_target - trig_dist( candidate, destination );
