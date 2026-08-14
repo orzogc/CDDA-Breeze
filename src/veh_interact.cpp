@@ -224,19 +224,23 @@ static bool confirm_vehicle_work_prompt( const std::string &prompt, const char o
     const auto &allow_key = force_uc ? input_context::disallow_lower_case_or_non_modified_letters :
                             input_context::allow_all_keys;
 
+    query_popup popup;
+    popup.preferred_keyboard_mode( keyboard_mode::keycode )
+    .context( "YESNO" )
+    .message( "%s", prompt )
+    .option( "YES" )
+    .option( "NO" )
+    // The operation key is not part of the YESNO context.  Accept it as an
+    // explicit confirmation below.
+    .allow_anykey( true )
+    .cursor( 1 )
+    .default_color( c_light_red );
+
     while( true ) {
-        const query_popup::result result = query_popup()
-                                           .preferred_keyboard_mode( keyboard_mode::keycode )
-                                           .context( "YESNO" )
-                                           .message( "%s", prompt )
-                                           .option( "YES" )
-                                           .option( "NO" )
-                                           // The operation key is not part of the YESNO context.
-                                           // Accept it as an explicit confirmation below.
-                                           .allow_anykey( true )
-                                           .cursor( 1 )
-                                           .default_color( c_light_red )
-                                           .query();
+        // Keep one popup instance alive while processing navigation.  Calling
+        // query() on a freshly-built popup for every key resets its cursor to
+        // the default NO button, making arrows and Enter appear ineffective.
+        const query_popup::result result = popup.query_once();
 
         if( result.action == "ERROR" ) {
             return false;
@@ -249,7 +253,10 @@ static bool confirm_vehicle_work_prompt( const std::string &prompt, const char o
             }
             continue;
         }
-        if( ( result.action == "ANY_INPUT" || result.action == action ) &&
+        if( result.action == action ) {
+            return true;
+        }
+        if( result.action == "ANY_INPUT" &&
             std::find( operation_events.begin(), operation_events.end(), result.evt ) !=
             operation_events.end() ) {
             return true;
@@ -3704,15 +3711,36 @@ void veh_interact::complete_vehicle( Character &you )
         const point work_mount = operation == 'i' || !valid_vehicle_part_index( *veh,
                                  vehicle_part ) ? d :
                                  veh->part( vehicle_part ).mount;
-        if( const vehicle_work_progress *work = veh->find_work_progress( operation, work_mount,
-                part_id.str(), variant_id ) ) {
-            if( work->work_done < 10000000 ) {
-                // The legacy timer may have reached its end without a final
-                // turn callback (for example while loading an old save).  Do
-                // not apply the vehicle mutation until the durable record is
-                // complete.
+        const vehicle_work_progress *work = veh->find_work_progress( operation, work_mount,
+                part_id.str(), variant_id );
+
+        // A different part may have been removed while this legacy activity
+        // was suspended, shifting the vector index.  Resolve the target from
+        // the durable mount/id identity before applying the mutation.
+        if( work != nullptr && operation != 'i' ) {
+            if( const vehicle_part *const target = vehicle_work_part_for_display( *veh, *work ) ) {
+                vehicle_part = veh->index_of_part( target );
+                d = target->mount;
+            } else {
+                // The target no longer exists or is ambiguous.  Discard the
+                // orphaned record instead of applying an instant change to a
+                // different part at the same index.
+                veh->erase_work_progress( operation, work_mount, part_id.str(), variant_id );
+                you.activity.set_to_null();
                 return;
             }
+        }
+
+        if( work != nullptr && work->work_done < 10000000 ) {
+            // The legacy timer may have reached its end without a final turn
+            // callback (for example while loading an old save).  Do not apply
+            // the vehicle mutation until the durable record is complete.
+            you.activity.moves_total = std::max( work->work_total, 1 );
+            const double remaining = 1.0 - static_cast<double>( std::clamp( work->work_done,
+                                           0, 10000000 ) ) / 10000000.0;
+            you.activity.moves_left = std::max( 1, static_cast<int>( std::lround(
+                                              you.activity.moves_total * remaining ) ) );
+            return;
         }
     }
 
@@ -4000,11 +4028,14 @@ void veh_interact::complete_vehicle( Character &you )
             } else {
                 point mount = veh->part( vehicle_part ).mount;
                 const tripoint part_pos = veh->global_part_pos3( vehicle_part );
-                const bool removed = veh->remove_part( vehicle_part );
-                if( removed ) {
-                    veh->erase_work_progress( appliance_removal ? 'O' : 'o', work_mount,
-                                              part_id.str(), variant_id );
-                }
+                // remove_part() returns whether the vehicle's origin shifted,
+                // not whether the part was removed.  Always clear the durable
+                // work record after this successful mutation; keeping it when
+                // the origin did not shift leaves a stale removal record that
+                // can block later work on the same mount.
+                veh->remove_part( vehicle_part );
+                veh->erase_work_progress( appliance_removal ? 'O' : 'o', work_mount,
+                                          part_id.str(), variant_id );
                 // part_removal_cleanup calls refresh, so parts_at_relative is valid
                 veh->part_removal_cleanup();
                 if( veh->parts_at_relative( mount, true ).empty() ) {

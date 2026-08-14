@@ -1985,6 +1985,13 @@ void activity_handlers::vehicle_finish( player_activity *act, Character *you )
                                        act->values[1],
                                        you->posz() ) ) );
     veh_interact::complete_vehicle( *you );
+    // A durable vehicle record can outlive the legacy timer.  If the final
+    // turn reached this callback before the record was marked complete, the
+    // completion handler restores the remaining moves instead of mutating the
+    // vehicle.  Keep that activity alive so the next turn can finish it.
+    if( !act->is_null() && act->moves_left > 0 ) {
+        return;
+    }
     // complete_vehicle set activity type to NULL if the vehicle
     // was completely dismantled, otherwise the vehicle still exist and
     // is to be examined again.

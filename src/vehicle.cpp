@@ -1328,7 +1328,7 @@ bool vehicle::can_unmount( const int p ) const
 
 bool vehicle::can_unmount( const int p, std::string &reason ) const
 {
-    if( p < 0 || p > static_cast<int>( parts.size() ) ) {
+    if( p < 0 || p >= static_cast<int>( parts.size() ) ) {
         return false;
     }
 
