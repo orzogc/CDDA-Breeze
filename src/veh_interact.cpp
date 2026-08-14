@@ -459,7 +459,13 @@ player_activity veh_interact::serialize_activity()
     res.values.push_back( -dd.y );   // values[5]
     res.values.push_back( veh->index_of_part( vpt ) ); // values[6]
     res.str_values.push_back( vp->get_id().str() );
-    res.str_values.push_back( sel_vpart_variant );
+    // Existing vehicle parts carry their orientation in vehicle_part::variant.
+    // The interaction state may still contain the variant chosen for a prior
+    // install, so never use that stale value when serializing repair/removal.
+    const bool existing_part_operation = sel_cmd == 'r' || sel_cmd == 'o' || sel_cmd == 'O';
+    const std::string activity_variant = existing_part_operation && pt != nullptr ?
+                                         pt->variant : sel_vpart_variant;
+    res.str_values.push_back( activity_variant );
     res.targets.emplace_back( std::move( target ) );
 
     return res;
@@ -2325,6 +2331,13 @@ void veh_interact::do_remove()
             for( const npc *np : helpers ) {
                 add_msg( m_info, _( "%s helps with this task…" ), np->get_name() );
             }
+            // Keep the selected part's orientation with the activity.  SUV
+            // quarter panels are stored as oriented variants (for example
+            // `halfboard_nw`), and an empty/stale variant cannot be resolved
+            // when the activity starts.
+            sel_vehicle_part = &veh->part( part );
+            sel_vpart_info = &sel_vehicle_part->info();
+            sel_vpart_variant = sel_vehicle_part->variant;
             sel_cmd = 'o';
             break;
         } else if( action == "QUIT" ) {
