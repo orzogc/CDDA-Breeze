@@ -388,7 +388,7 @@ std::optional<std::pair<int, tripoint_abs_ms>> next_hostile_search_waypoint(
 }
 
 constexpr int hostile_transition_hint_radius = 2;
-constexpr int witnessed_hostile_transition_hint_radius = 6;
+constexpr int witnessed_hostile_transition_hint_radius = 12;
 
 std::optional<monster_z_route_plan> infer_hostile_memory_transition(
     monster &critter, map &here, const tripoint_abs_ms &memory_origin,
@@ -1528,6 +1528,10 @@ void monster::plan()
         if( att_to_target == Attitude::HOSTILE && !fleeing ) {
             if( improved_pathfinding ) {
                 hostile_pursuit_active = true;
+                const std::optional<tripoint_abs_ms> prior_real_sighting =
+                    hostile_memory_origin_position;
+                const std::optional<tripoint_abs_ms> prior_previous_sighting =
+                    previous_hostile_sighting_position;
                 const bool recent_direct_sighting =
                     hostile_memory_origin_position && last_hostile_sighting_turn &&
                     calendar::turn <= *last_hostile_sighting_turn +
@@ -1552,10 +1556,52 @@ void monster::plan()
                         smart_planning ? 60 : 30;
                 }
 
+                bool keep_exact_portal = false;
+                if( hostile_memory_portal_approach &&
+                    hostile_memory_portal_transition ) {
+                    const int portal_dz =
+                        hostile_memory_portal_transition->z() -
+                        hostile_memory_portal_approach->z();
+                    const int target_dz = dest.z() - posz();
+                    keep_exact_portal =
+                        hostile_memory_portal_approach->z() == posz() &&
+                        target_dz != 0 && portal_dz * target_dz > 0;
+                }
+
+                if( !keep_exact_portal && recent_direct_sighting &&
+                    prior_real_sighting &&
+                    prior_real_sighting->z() == posz() &&
+                    std::abs( dest.z() - posz() ) == 1 &&
+                    get_pathfinding_settings().allow_climb_stairs ) {
+                    const int wanted_z_direction =
+                        dest.z() > posz() ? 1 : -1;
+                    const std::optional<monster_z_route_plan> direct_transition =
+                        infer_recent_hostile_escape_transition(
+                            *this, here, *prior_real_sighting,
+                            prior_previous_sighting, hostile_search_lane,
+                            wanted_z_direction,
+                            smart_planning ? 12 : 6 );
+                    if( direct_transition ) {
+                        hostile_memory_portal_approach =
+                            here.getglobal( direct_transition->approach );
+                        hostile_memory_portal_transition =
+                            here.getglobal( direct_transition->transition );
+                        keep_exact_portal = true;
+                        add_msg_debug(
+                            debugmode::DF_MONSTER,
+                            "%s keeps a directly witnessed hostile stair from %s to %s",
+                            name(), direct_transition->approach.to_string(),
+                            direct_transition->transition.to_string() );
+                    }
+                }
+
+                if( !keep_exact_portal ) {
+                    hostile_memory_portal_approach.reset();
+                    hostile_memory_portal_transition.reset();
+                }
+
                 hostile_memory_origin_position = dest;
                 hostile_memory_search_origin_position = dest;
-                hostile_memory_portal_approach.reset();
-                hostile_memory_portal_transition.reset();
                 hostile_memory_target_is_avatar = target->is_avatar();
                 last_hostile_target_position = dest;
                 hostile_target_memory_turns = smart_planning ? 150 : 60;
@@ -1659,7 +1705,7 @@ void monster::plan()
                             *this, here, real_memory_origin,
                             previous_hostile_sighting_position,
                             hostile_search_lane, witnessed_z_direction,
-                            smart_planning ? 8 : 5 );
+                            smart_planning ? 12 : 6 );
                     }
 
                     if( !transition && recent_disappearance &&
@@ -2741,7 +2787,40 @@ void monster::move()
                                         fallback_candidates.begin(), fallback_candidates.end() );
         } else {
             movement_candidates = squares_closer_to( pos(), destination );
-            if( destination.z < posz() ) {
+
+            const int wanted_z_direction =
+                movement_goal.z == posz() ? 0 :
+                ( movement_goal.z > posz() ? 1 : -1 );
+            if( wanted_z_direction != 0 &&
+                get_pathfinding_settings().allow_climb_stairs ) {
+                const ter_furn_flag wanted_portal =
+                    wanted_z_direction > 0 ?
+                    ter_furn_flag::TFLAG_GOES_UP :
+                    ter_furn_flag::TFLAG_GOES_DOWN;
+
+                if( here.has_flag( wanted_portal, pos() ) ) {
+                    bool rope_ladder = false;
+                    const std::optional<tripoint> stair_destination =
+                        g->find_or_make_stairs(
+                            here, posz() + wanted_z_direction,
+                            rope_ladder, false, pos() );
+                    if( stair_destination &&
+                        here.inbounds( *stair_destination ) ) {
+                        const ter_furn_flag paired_portal =
+                            wanted_z_direction > 0 ?
+                            ter_furn_flag::TFLAG_GOES_DOWN :
+                            ter_furn_flag::TFLAG_GOES_UP;
+                        if( here.has_flag(
+                                paired_portal, *stair_destination ) ) {
+                            movement_candidates.insert(
+                                movement_candidates.begin(),
+                                *stair_destination );
+                        }
+                    }
+                }
+            }
+
+            if( movement_goal.z < posz() ) {
                 const tripoint directly_below(
                     posx(), posy(), posz() - 1 );
                 movement_candidates.insert(
