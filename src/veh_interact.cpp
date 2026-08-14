@@ -54,6 +54,7 @@
 #include "output.h"
 #include "overmapbuffer.h"
 #include "pimpl.h"
+#include "popup.h"
 #include "point.h"
 #include "requirements.h"
 #include "skill.h"
@@ -214,6 +215,48 @@ static bool vehicle_work_conflicts_with_target( const vehicle &veh,
     return part != nullptr && vehicle_work_matches_part( veh, work, *part );
 }
 
+static bool confirm_vehicle_work_prompt( const std::string &prompt, const char operation )
+{
+    const std::string action = operation == 'i' ? "INSTALL" :
+                               operation == 'r' ? "REPAIR" : "REMOVE";
+    const auto &operation_events = inp_mngr.get_input_for_action( action, "VEH_INTERACT" );
+    const bool force_uc = get_option<bool>( "FORCE_CAPITAL_YN" );
+    const auto &allow_key = force_uc ? input_context::disallow_lower_case_or_non_modified_letters :
+                            input_context::allow_all_keys;
+
+    while( true ) {
+        const query_popup::result result = query_popup()
+                                           .preferred_keyboard_mode( keyboard_mode::keycode )
+                                           .context( "YESNO" )
+                                           .message( "%s", prompt )
+                                           .option( "YES" )
+                                           .option( "NO" )
+                                           // The operation key is not part of the YESNO context.
+                                           // Accept it as an explicit confirmation below.
+                                           .allow_anykey( true )
+                                           .cursor( 1 )
+                                           .default_color( c_light_red )
+                                           .query();
+
+        if( result.action == "ERROR" ) {
+            return false;
+        }
+        if( result.action == "YES" || result.action == "NO" ) {
+            // Preserve FORCE_CAPITAL_YN for the ordinary Y/N choices.  The
+            // current vehicle operation key is deliberately accepted as-is.
+            if( allow_key( result.evt ) ) {
+                return result.action == "YES";
+            }
+            continue;
+        }
+        if( ( result.action == "ANY_INPUT" || result.action == action ) &&
+            std::find( operation_events.begin(), operation_events.end(), result.evt ) !=
+            operation_events.end() ) {
+            return true;
+        }
+    }
+}
+
 static bool confirm_vehicle_work_conflicts( vehicle &veh, const char operation,
         const vehicle_part *part, const point &mount, const std::string &part_id,
         const std::string &variant )
@@ -234,11 +277,11 @@ static bool confirm_vehicle_work_conflicts( vehicle &veh, const char operation,
     const std::string target_name = part != nullptr ? part->name() : vpart_id( part_id ).obj().name();
     const std::string prompt = string_format(
         pgettext( "veh_interact",
-                  "%1$s has interrupted %2$s work at %3$d%%. Starting %4$s will discard that progress. Continue?" ),
+                  "%1$s has interrupted %2$s work at %3$d%%. Starting %4$s will discard that progress. Continue (Y/N or the current operation key)?" ),
         target_name, vehicle_work_operation_name( conflict.operation ),
         conflict.percentage,
         vehicle_work_operation_name( operation ) );
-    if( !query_yn( prompt ) ) {
+    if( !confirm_vehicle_work_prompt( prompt, operation ) ) {
         return false;
     }
 
@@ -291,6 +334,26 @@ static int vehicle_work_percentage( const vehicle_work_progress &work )
 {
     return std::clamp( static_cast<int>( std::lround( 100.0 * work.work_done / 10000000.0 ) ),
                        0, 99 );
+}
+
+static int vehicle_work_remaining_moves( const vehicle_work_progress *work,
+        const int fallback_moves )
+{
+    if( work == nullptr || work->work_done >= 10000000 ) {
+        return fallback_moves;
+    }
+
+    const int total_moves = work->work_total > 0 ? work->work_total : fallback_moves;
+    if( total_moves <= 0 ) {
+        return 0;
+    }
+
+    const double remaining = 1.0 - static_cast<double>( std::clamp( work->work_done, 0,
+                                   10000000 ) ) / 10000000.0;
+    // Keep an incomplete record from turning into a zero-move activity due to
+    // rounding.  The final turn is responsible for applying the vehicle change.
+    return work->work_done < 10000000 ?
+           std::max( 1, static_cast<int>( std::lround( total_moves * remaining ) ) ) : 0;
 }
 
 static std::string vehicle_part_work_progress( const vehicle &veh, const vehicle_part &part )
@@ -530,13 +593,15 @@ void veh_interact::allocate_windows()
 }
 
 bool veh_interact::format_reqs( std::string &msg, const requirement_data &reqs,
-                                const std::map<skill_id, int> &skills, int moves ) const
+                                const std::map<skill_id, int> &skills, int moves,
+                                const bool time_remaining ) const
 {
     Character &player_character = get_player_character();
     const inventory &inv = player_character.crafting_inventory();
     bool ok = reqs.can_make_with_inventory( inv, is_crafting_component );
 
-    msg += _( "<color_white>Time required:</color>\n" );
+    msg += time_remaining ? _( "<color_white>Time remaining:</color>\n" ) :
+           _( "<color_white>Time required:</color>\n" );
     msg += "> " + to_string_approx( time_duration::from_moves( moves ) ) + "\n";
 
     msg += _( "<color_white>Skills required:</color>\n" );
@@ -1070,8 +1135,15 @@ bool veh_interact::update_part_requirements()
 
     avatar &player_character = get_avatar();
     std::string nmsg;
+    const int install_moves = sel_vpart_info->install_time( player_character );
+    const point install_mount( -dd.x, -dd.y );
+    const vehicle_work_progress *const install_work = veh->find_work_progress(
+            'i', install_mount, sel_vpart_info->get_id().str(), sel_vpart_variant );
+    const bool install_time_remaining = install_work != nullptr &&
+                                        install_work->work_done < 10000000;
     bool ok = format_reqs( nmsg, reqs, sel_vpart_info->install_skills,
-                           sel_vpart_info->install_time( player_character ) );
+                           vehicle_work_remaining_moves( install_work, install_moves ),
+                           install_time_remaining );
 
     nmsg += _( "<color_white>Additional requirements:</color>\n" );
 
@@ -1481,8 +1553,12 @@ void veh_interact::do_repair()
         // this will always be set, but the gcc thinks that sometimes it won't be
         bool ok = true;
         if( pt.is_broken() ) {
+            const int repair_moves = vp.install_time( player_character );
+            const vehicle_work_progress *const repair_work = vehicle_work_progress_for_part(
+                    *veh, pt, 'r' );
             ok = format_reqs( nmsg, vp.install_requirements(), vp.install_skills,
-                              vp.install_time( player_character ) );
+                              vehicle_work_remaining_moves( repair_work, repair_moves ),
+                              repair_work != nullptr && repair_work->work_done < 10000000 );
 
             if( pt.info().has_flag( "NEEDS_JACKING" ) ) {
 
@@ -1502,8 +1578,12 @@ void veh_interact::do_repair()
                 nmsg += colorize( _( "This vehicle cannot be repaired.\n" ), c_light_red );
                 ok = false;
             } else {
+                const int repair_moves = vp.repair_time( player_character ) * pt.repairable_levels();
+                const vehicle_work_progress *const repair_work = vehicle_work_progress_for_part(
+                        *veh, pt, 'r' );
                 ok = format_reqs( nmsg, vp.repair_requirements() * pt.repairable_levels(), vp.repair_skills,
-                                  vp.repair_time( player_character ) * pt.repairable_levels() );
+                                  vehicle_work_remaining_moves( repair_work, repair_moves ),
+                                  repair_work != nullptr && repair_work->work_done < 10000000 );
             }
         }
 
@@ -2123,8 +2203,12 @@ bool veh_interact::can_remove_part( int idx, const Character &you )
     }
 
     const requirement_data reqs = sel_vpart_info->removal_requirements();
+    const int removal_moves = sel_vpart_info->removal_time( you );
+    const vehicle_work_progress *const removal_work = vehicle_work_progress_for_part(
+            *veh, *sel_vehicle_part, 'o' );
     bool ok = format_reqs( nmsg, reqs, sel_vpart_info->removal_skills,
-                           sel_vpart_info->removal_time( you ) );
+                           vehicle_work_remaining_moves( removal_work, removal_moves ),
+                           removal_work != nullptr && removal_work->work_done < 10000000 );
 
     nmsg += _( "<color_white>Additional requirements:</color>\n" );
 
