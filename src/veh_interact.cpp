@@ -3718,7 +3718,7 @@ void veh_interact::complete_vehicle( Character &you )
         // was suspended, shifting the vector index.  Resolve the target from
         // the durable mount/id identity before applying the mutation.
         if( work != nullptr && operation != 'i' ) {
-            if( const vehicle_part *const target = vehicle_work_part_for_display( *veh, *work ) ) {
+            if( const struct vehicle_part *const target = vehicle_work_part_for_display( *veh, *work ) ) {
                 vehicle_part = veh->index_of_part( target );
                 d = target->mount;
             } else {
