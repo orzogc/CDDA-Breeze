@@ -462057,7 +462057,7 @@ msgctxt "veh_interact"
 msgid "Interrupted work"
 msgstr "中断工作"
 
-#: src/cata_tiles.cpp
+#: src/vehicle_display.cpp
 #, c-format
 msgctxt "veh_interact"
 msgid "%1$s: %2$s %3$d%%"
