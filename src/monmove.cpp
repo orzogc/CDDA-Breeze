@@ -849,6 +849,9 @@ void monster::plan()
     bool smart_planning = has_flag( MF_PRIORITIZE_TARGETS );
     const bool improved_pathfinding =
         get_option<std::string>( "MONSTER_PATHFINDING" ) != "classic";
+    // plan() owns this transient bit. Ordinary patrol, pet, leash and
+    // work destinations must never inherit aggressive route-failure fallback.
+    hostile_pursuit_active = false;
     if( !improved_pathfinding ) {
         if( last_hostile_target_position ) {
             unset_dest();
@@ -1230,6 +1233,7 @@ void monster::plan()
         Creature::Attitude att_to_target = attitude_to( *target );
         if( att_to_target == Attitude::HOSTILE && !fleeing ) {
             if( improved_pathfinding ) {
+                hostile_pursuit_active = true;
                 last_hostile_target_position = dest;
                 hostile_target_memory_turns = smart_planning ? 150 : 60;
                 hostile_search_turns = 0;
@@ -1275,6 +1279,7 @@ void monster::plan()
         }
     } else if( improved_pathfinding && friendly == 0 &&
                last_hostile_target_position && hostile_target_memory_turns > 0 ) {
+        hostile_pursuit_active = true;
         const tripoint_abs_ms memory_origin = *last_hostile_target_position;
         if( hostile_search_step == 0 &&
             rl_dist( get_location(), memory_origin ) > 1 ) {
@@ -1336,6 +1341,7 @@ void monster::plan()
                 if( !waypoint ) {
                     // Every safe local clue was exhausted.  End the search now
                     // instead of wrapping around the same offsets indefinitely.
+                    hostile_pursuit_active = false;
                     unset_dest();
                     last_hostile_target_position.reset();
                     hostile_target_memory_turns = 0;
@@ -1650,6 +1656,10 @@ void monster::move()
     bool pathed = false;
     bool pathfinding_budget_exhausted = false;
     const tripoint local_dest = here.getlocal( get_dest() );
+    // Keep the ultimate goal separate from destination. A successful route
+    // stores its immediate next step in destination, while dynamic decongestion
+    // needs the original target to steer around a temporary creature blocker.
+    tripoint movement_goal = local_dest;
 
     pathfinding_settings pf_settings = get_pathfinding_settings();
     if( improved_pathfinding ) {
@@ -1663,8 +1673,40 @@ void monster::move()
         }
     }
 
+    auto same_z_fallback_destination = [&]( const tripoint &goal ) {
+        return goal.z == posz() ? goal : tripoint( goal.xy(), posz() );
+    };
+
+    auto cached_step_is_dynamically_blocked = [&]( const tripoint &step ) {
+        const Creature *blocking = creatures.creature_at( step, true );
+        if( blocking == nullptr || blocking == this ) {
+            return false;
+        }
+        if( is_hallucination() != blocking->is_hallucination() &&
+            !blocking->is_avatar() ) {
+            return true;
+        }
+
+        const Attitude blocker_attitude = attitude_to( *blocking );
+        if( blocker_attitude == Attitude::HOSTILE ) {
+            return false;
+        }
+        if( blocker_attitude == Attitude::FRIENDLY &&
+            ( blocking->is_avatar() || blocking->is_npc() ||
+              blocking->has_flag( MF_QUEEN ) ) ) {
+            return true;
+        }
+
+        // A terrain route is not a reservation. Non-pushy monsters must be
+        // allowed to locally steer around temporary same-faction congestion.
+        return !has_flag( MF_ATTACKMON ) && !has_flag( MF_PUSH_MON );
+    };
+
     auto cached_step_is_usable = [&]( const tripoint &step ) {
         if( !here.inbounds( step ) || rl_dist( pos(), step ) >= 2 ) {
+            return false;
+        }
+        if( cached_step_is_dynamically_blocked( step ) ) {
             return false;
         }
         if( can_move_to( step ) ) {
@@ -2044,11 +2086,16 @@ void monster::move()
                                            std::max( pf_settings.max_dist,
                                                      cross_z_monster_path_radius ) :
                                            pf_settings.max_dist;
+            movement_goal = local_dest;
             if( !try_route_to( local_dest ) &&
-                ( target_distance > target_path_radius ||
+                ( hostile_pursuit_active ||
+                  target_distance > target_path_radius ||
                   ( pathfinding_budget_exhausted && local_dest.z == posz() ) ) ) {
-                destination = local_dest;
-                moved = true;
+                // Exact route failure must not turn a confirmed chase into a
+                // 1-in-10 stumble. Cross-Z movement itself still requires a
+                // validated stair/ramp route, so fallback only presses XY here.
+                destination = same_z_fallback_destination( local_dest );
+                moved = destination != pos();
             }
         } else {
             while( !path.empty() && path.front() == pos() ) {
@@ -2087,8 +2134,8 @@ void monster::move()
             }
         }
     }
-    const bool pursuing_confirmed_hostile = improved_pathfinding &&
-            last_hostile_target_position && hostile_target_memory_turns > 0;
+    const bool pursuing_confirmed_hostile =
+        improved_pathfinding && hostile_pursuit_active;
     if( wandf > 0 && !moved && friendly == 0 &&
         !pursuing_confirmed_hostile ) { // Sound is below confirmed hostile memory
         if( improved_pathfinding ) {
@@ -2100,12 +2147,16 @@ void monster::move()
                                                         cross_z_monster_path_radius ) :
                                               pf_settings.max_dist;
                 unset_dest();
+                movement_goal = sound_dest;
 
                 if( !try_route_to( sound_dest ) &&
-                    ( sound_distance > sound_path_radius ||
+                    ( provocative_sound ||
+                      sound_distance > sound_path_radius ||
                       ( pathfinding_budget_exhausted && sound_dest.z == posz() ) ) ) {
-                    destination = sound_dest;
-                    moved = true;
+                    // Only provocative sounds gain the aggressive in-radius
+                    // fallback. Ordinary noises retain the previous semantics.
+                    destination = same_z_fallback_destination( sound_dest );
+                    moved = destination != pos();
                 }
             }
         } else {
@@ -2116,6 +2167,19 @@ void monster::move()
             }
         }
     }
+    // Current CBN treats a valid terrain path step as authoritative, but
+    // creature occupancy is temporary. Do not let a cached immediate step
+    // become a reservation that serializes an entire horde behind one monster.
+    bool path_step_is_authoritative = improved_pathfinding && pathed;
+    if( path_step_is_authoritative && destination.z == posz() &&
+        cached_step_is_dynamically_blocked( destination ) ) {
+        path_step_is_authoritative = false;
+        pathed = false;
+        path.clear();
+        destination = same_z_fallback_destination( movement_goal );
+        moved = destination != pos();
+    }
+
     point new_d( destination.xy() - pos().xy() );
 
     // toggle facing direction for sdl flip
@@ -2136,11 +2200,6 @@ void monster::move()
 
     tripoint_abs_ms next_step;
     const bool staggers = has_flag( MF_STUMBLES );
-    // Current CBN treats a valid path step as authoritative: STUMBLES only
-    // randomizes greedy movement when no path step is available.  Keep Breeze's
-    // old loop as a fallback if that immediate step is dynamically blocked.
-    // phase seven reverse-field geometry also makes a valid path step exact.
-    const bool path_step_is_authoritative = improved_pathfinding && pathed;
     if( moved ) {
         // Implement both avoiding obstacles and staggering.
         moved = false;

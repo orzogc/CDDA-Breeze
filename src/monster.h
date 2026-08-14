@@ -624,6 +624,9 @@ class monster : public Creature
         // loading a game must not grant monsters knowledge they did not reacquire.
         std::optional<tripoint_abs_ms> last_hostile_target_position;
         int hostile_target_memory_turns = 0;
+        // True only for the destination selected by this turn's confirmed
+        // hostile chase or hostile-memory search. Transient by design.
+        bool hostile_pursuit_active = false;
         int hostile_search_turns = 0;
         int hostile_search_step = 0;
         int hostile_search_waypoint_turns = 0;
