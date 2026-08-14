@@ -3873,6 +3873,15 @@ void monster::hear_sound( const tripoint &source, const int vol, const int dist,
         if( relevant_search_lead ) {
             priority_sound = true;
             last_hostile_target_position.reset();
+            hostile_memory_origin_position.reset();
+            hostile_memory_search_origin_position.reset();
+            hostile_memory_portal_approach.reset();
+            hostile_memory_portal_transition.reset();
+            hostile_memory_target_is_avatar = false;
+            previous_hostile_sighting_position.reset();
+            witnessed_hostile_transition_origin.reset();
+            witnessed_hostile_transition_destination.reset();
+            witnessed_hostile_transition_memory_turns = 0;
             hostile_target_memory_turns = 0;
             hostile_search_turns = 0;
             hostile_search_step = 0;
@@ -3891,6 +3900,15 @@ void monster::hear_sound( const tripoint &source, const int vol, const int dist,
                              volume >= 10;
             if( priority_sound ) {
                 last_hostile_target_position.reset();
+                hostile_memory_origin_position.reset();
+                hostile_memory_search_origin_position.reset();
+                hostile_memory_portal_approach.reset();
+                hostile_memory_portal_transition.reset();
+                hostile_memory_target_is_avatar = false;
+                previous_hostile_sighting_position.reset();
+                witnessed_hostile_transition_origin.reset();
+                witnessed_hostile_transition_destination.reset();
+                witnessed_hostile_transition_memory_turns = 0;
                 hostile_target_memory_turns = 0;
                 hostile_search_turns = 0;
                 hostile_search_step = 0;
