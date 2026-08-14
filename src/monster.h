@@ -634,6 +634,12 @@ class monster : public Creature
         // Search origin follows a strongly evidenced portal landing while the
         // immutable memory origin keeps the last place the hostile was seen.
         std::optional<tripoint_abs_ms> hostile_memory_search_origin_position;
+        // Preserve an inferred portal as an exact approach/landing pair.
+        // plan() and move() run in separate phases, so throwing away the
+        // approach would force move() to rediscover the stair through A*.
+        std::optional<tripoint_abs_ms> hostile_memory_portal_approach;
+        std::optional<tripoint_abs_ms> hostile_memory_portal_transition;
+        bool hostile_memory_target_is_avatar = false;
         std::optional<tripoint_abs_ms> previous_hostile_sighting_position;
         // A direct sighting that changes Z is stronger evidence than a generic
         // last-known position: the target probably used a nearby stair/ramp.
