@@ -184,20 +184,19 @@ struct monster_stair_route_cache_entry {
     time_point last_confirmed;
 };
 
-struct monster_tripoint_hash {
-    std::size_t operator()( const tripoint &p ) const
-    {
-        std::size_t seed = 0x9e3779b97f4a7c15ULL;
-        const auto mix = [&]( int value ) {
-            seed ^= std::hash<int>()( value ) + 0x9e3779b97f4a7c15ULL +
-                    ( seed << 6 ) + ( seed >> 2 );
-        };
-        mix( p.x );
-        mix( p.y );
-        mix( p.z );
-        return seed;
-    }
-};
+constexpr std::size_t monster_reverse_field_cell_count =
+    static_cast<std::size_t>( MAPSIZE_X ) * static_cast<std::size_t>( MAPSIZE_Y );
+
+std::size_t monster_reverse_field_index( const tripoint &p )
+{
+    return static_cast<std::size_t>( p.x ) * static_cast<std::size_t>( MAPSIZE_Y ) +
+           static_cast<std::size_t>( p.y );
+}
+
+tripoint monster_reverse_field_point( int index, int z )
+{
+    return tripoint( index / MAPSIZE_Y, index % MAPSIZE_Y, z );
+}
 
 struct monster_reverse_field_node {
     int cost = 0;
@@ -217,26 +216,96 @@ struct monster_reverse_field_entry {
     std::priority_queue<monster_reverse_field_node,
         std::vector<monster_reverse_field_node>,
         monster_reverse_field_node_greater> frontier;
-    std::unordered_map<tripoint, int, monster_tripoint_hash> costs;
-    std::unordered_map<tripoint, tripoint, monster_tripoint_hash> next_steps;
-    std::unordered_set<tripoint, monster_tripoint_hash> settled;
+
+    // Reverse fields are same-Z and use bounded local map coordinates. Dense
+    // arrays avoid hashing a tripoint for every Dijkstra lookup. Generation
+    // stamps also make reset O(1) instead of clearing three hash containers.
+    std::vector<int> costs;
+    std::vector<int> next_indices;
+    std::vector<int> generations;
+    std::vector<unsigned char> settled;
+    int generation = 0;
 
     monster_reverse_field_entry()
+        : costs( monster_reverse_field_cell_count, 0 ),
+          next_indices( monster_reverse_field_cell_count, -1 ),
+          generations( monster_reverse_field_cell_count, 0 ),
+          settled( monster_reverse_field_cell_count, 0 )
     {
-        costs.reserve( 4096 );
-        next_steps.reserve( 4096 );
-        settled.reserve( 4096 );
     }
 
     void reset( const tripoint &new_target )
     {
         target = new_target;
         frontier = decltype( frontier )();
-        costs.clear();
-        next_steps.clear();
-        settled.clear();
-        costs.emplace( target, 0 );
+
+        if( generation == std::numeric_limits<int>::max() ) {
+            std::fill( generations.begin(), generations.end(), 0 );
+            generation = 1;
+        } else {
+            ++generation;
+        }
+
+        const std::size_t target_index = monster_reverse_field_index( target );
+        generations[target_index] = generation;
+        settled[target_index] = 0;
+        costs[target_index] = 0;
+        next_indices[target_index] = static_cast<int>( target_index );
         frontier.push( { 0, target } );
+    }
+
+    bool is_settled( const tripoint &p ) const
+    {
+        const std::size_t index = monster_reverse_field_index( p );
+        return generations[index] == generation && settled[index] != 0;
+    }
+
+    bool settle_node( const tripoint &p, int expected_cost )
+    {
+        const std::size_t index = monster_reverse_field_index( p );
+        if( generations[index] != generation || settled[index] != 0 ||
+            costs[index] != expected_cost ) {
+            return false;
+        }
+        settled[index] = 1;
+        return true;
+    }
+
+    bool relax( const tripoint &p, int new_cost, const tripoint &next )
+    {
+        const std::size_t index = monster_reverse_field_index( p );
+        const int next_index = static_cast<int>( monster_reverse_field_index( next ) );
+
+        if( generations[index] != generation ) {
+            generations[index] = generation;
+            settled[index] = 0;
+            costs[index] = new_cost;
+            next_indices[index] = next_index;
+            return true;
+        }
+        if( settled[index] != 0 || new_cost >= costs[index] ) {
+            return false;
+        }
+
+        costs[index] = new_cost;
+        next_indices[index] = next_index;
+        return true;
+    }
+
+    bool next_step( const tripoint &from, tripoint &to ) const
+    {
+        const std::size_t index = monster_reverse_field_index( from );
+        if( generations[index] != generation ) {
+            return false;
+        }
+
+        const int next_index = next_indices[index];
+        if( next_index < 0 || next_index == static_cast<int>( index ) ) {
+            return false;
+        }
+
+        to = monster_reverse_field_point( next_index, from.z );
+        return true;
     }
 };
 
@@ -256,7 +325,8 @@ const std::array<point, 16> hostile_search_offsets = {{
 // the open area visible from the last confirmed point.  Closed doors and walls
 // require a new sound or sighting instead of being opened by a blind spiral.
 std::optional<std::pair<int, tripoint_abs_ms>> next_hostile_search_waypoint(
-    map &here, const tripoint_abs_ms &memory_origin, int lane,
+    map &here, const tripoint_abs_ms &memory_origin,
+    const std::optional<tripoint_abs_ms> &previous_sighting, int lane,
     int first_step, int search_count )
 {
     const tripoint local_origin = here.getlocal( memory_origin );
@@ -264,17 +334,52 @@ std::optional<std::pair<int, tripoint_abs_ms>> next_hostile_search_waypoint(
         return std::nullopt;
     }
 
+    point heading = point_zero;
+    bool has_heading = false;
+    if( previous_sighting && previous_sighting->z() == memory_origin.z() ) {
+        const tripoint local_previous = here.getlocal( *previous_sighting );
+        if( here.inbounds( local_previous ) ) {
+            heading.x = std::clamp( local_origin.x - local_previous.x, -1, 1 );
+            heading.y = std::clamp( local_origin.y - local_previous.y, -1, 1 );
+            has_heading = heading != point_zero;
+        }
+    }
+
     for( int step = std::max( 1, first_step ); step <= search_count; ++step ) {
-        const int index = ( step - 1 + lane * 2 ) % search_count;
-        const tripoint candidate = local_origin + hostile_search_offsets[index];
+        point offset;
+        bool projected_from_sighting = false;
+
+        if( has_heading && step <= 4 ) {
+            const point side( -heading.y, heading.x );
+            if( step == 1 ) {
+                offset = point( heading.x * 2, heading.y * 2 );
+            } else if( step == 2 ) {
+                offset = point( heading.x * 4, heading.y * 4 );
+            } else {
+                const int side_sign = ( ( lane + step ) & 1 ) == 0 ? 1 : -1;
+                offset = point( heading.x * 3 + side.x * 2 * side_sign,
+                                heading.y * 3 + side.y * 2 * side_sign );
+            }
+            projected_from_sighting = true;
+        } else {
+            const int generic_step = has_heading ? step - 4 : step;
+            const int index = ( std::max( 1, generic_step ) - 1 + lane * 2 ) %
+                              search_count;
+            offset = hostile_search_offsets[index];
+        }
+
+        const tripoint candidate = local_origin + offset;
         if( candidate.z != local_origin.z || !here.inbounds( candidate ) ||
             here.impassable( candidate ) ) {
             continue;
         }
 
-        const int range = std::max( 1, rl_dist( local_origin, candidate ) + 1 );
-        if( !here.clear_path( local_origin, candidate, range, 1, 100 ) ) {
-            continue;
+        if( !projected_from_sighting ) {
+            const int range =
+                std::max( 1, rl_dist( local_origin, candidate ) + 1 );
+            if( !here.clear_path( local_origin, candidate, range, 1, 100 ) ) {
+                continue;
+            }
         }
 
         return std::make_pair( step, here.getglobal( candidate ) );
@@ -898,6 +1003,8 @@ void monster::plan()
         witnessed_hostile_transition_origin.reset();
         witnessed_hostile_transition_destination.reset();
         witnessed_hostile_transition_memory_turns = 0;
+        hostile_memory_origin_position.reset();
+        previous_hostile_sighting_position.reset();
         if( last_hostile_target_position ) {
             unset_dest();
         }
@@ -934,6 +1041,8 @@ void monster::plan()
                 unset_dest();
             }
             last_hostile_target_position.reset();
+            hostile_memory_origin_position.reset();
+            previous_hostile_sighting_position.reset();
             hostile_target_memory_turns = 0;
             hostile_search_turns = 0;
             hostile_search_step = 0;
@@ -1288,17 +1397,30 @@ void monster::plan()
             if( improved_pathfinding ) {
                 hostile_pursuit_active = true;
                 const bool recent_direct_sighting =
-                    last_hostile_target_position && last_hostile_sighting_turn &&
+                    hostile_memory_origin_position && last_hostile_sighting_turn &&
                     calendar::turn <= *last_hostile_sighting_turn +
                     time_duration::from_turns( 2 );
+
                 if( recent_direct_sighting &&
-                    std::abs( dest.z() - last_hostile_target_position->z() ) == 1 &&
-                    rl_dist( dest, *last_hostile_target_position ) <= 8 ) {
-                    witnessed_hostile_transition_origin = *last_hostile_target_position;
+                    dest != *hostile_memory_origin_position ) {
+                    previous_hostile_sighting_position =
+                        *hostile_memory_origin_position;
+                } else if( !recent_direct_sighting ||
+                           dest == *hostile_memory_origin_position ) {
+                    previous_hostile_sighting_position.reset();
+                }
+
+                if( recent_direct_sighting &&
+                    std::abs( dest.z() - hostile_memory_origin_position->z() ) == 1 &&
+                    rl_dist( dest, *hostile_memory_origin_position ) <= 8 ) {
+                    witnessed_hostile_transition_origin =
+                        *hostile_memory_origin_position;
                     witnessed_hostile_transition_destination = dest;
                     witnessed_hostile_transition_memory_turns =
                         smart_planning ? 60 : 30;
                 }
+
+                hostile_memory_origin_position = dest;
                 last_hostile_target_position = dest;
                 hostile_target_memory_turns = smart_planning ? 150 : 60;
                 hostile_search_turns = 0;
@@ -1345,18 +1467,23 @@ void monster::plan()
     } else if( improved_pathfinding && friendly == 0 &&
                last_hostile_target_position && hostile_target_memory_turns > 0 ) {
         hostile_pursuit_active = true;
-        const tripoint_abs_ms memory_origin = *last_hostile_target_position;
+        const tripoint_abs_ms memory_origin =
+            hostile_memory_origin_position ?
+            *hostile_memory_origin_position :
+            *last_hostile_target_position;
+        const tripoint_abs_ms pursuit_clue = *last_hostile_target_position;
         if( hostile_search_step == 0 &&
-            rl_dist( get_location(), memory_origin ) > 1 ) {
-            // First honour the exact last-known position, including its Z level.
-            set_dest( memory_origin );
+            rl_dist( get_location(), pursuit_clue ) > 1 ) {
+            // Honour the current clue first. Usually this is the real last
+            // sighting; after a confirmed stair hint it can be the landing.
+            set_dest( pursuit_clue );
         } else {
             bool followed_transition = false;
             if( hostile_search_step == 0 && hostile_transition_attempts == 0 &&
+                memory_origin.z() != posz() &&
                 get_pathfinding_settings().allow_climb_stairs ) {
                 const int wanted_z_direction =
-                    memory_origin.z() == posz() ? 0 :
-                    ( memory_origin.z() > posz() ? 1 : -1 );
+                    memory_origin.z() > posz() ? 1 : -1;
                 const std::optional<monster_z_route_plan> transition =
                     infer_hostile_memory_transition( *this, here, memory_origin,
                                                      hostile_search_lane,
@@ -1405,8 +1532,9 @@ void monster::plan()
                 std::optional<std::pair<int, tripoint_abs_ms>> waypoint;
                 if( hostile_search_step <= search_count ) {
                     waypoint = next_hostile_search_waypoint(
-                        here, memory_origin, lane, hostile_search_step,
-                        search_count );
+                        here, memory_origin,
+                        previous_hostile_sighting_position, lane,
+                        hostile_search_step, search_count );
                 }
 
                 if( !waypoint ) {
@@ -1415,6 +1543,8 @@ void monster::plan()
                     hostile_pursuit_active = false;
                     unset_dest();
                     last_hostile_target_position.reset();
+                    hostile_memory_origin_position.reset();
+                    previous_hostile_sighting_position.reset();
                     hostile_target_memory_turns = 0;
                     hostile_search_turns = 0;
                     hostile_search_step = 0;
@@ -1992,6 +2122,7 @@ void monster::move()
                                                   int field_max_radius ) {
                 std::vector<tripoint> result;
                 if( field_target.z != posz() || pos() == field_target ||
+                    !here.inbounds( field_target ) ||
                     rl_dist( pos(), field_target ) > field_max_radius ) {
                     return result;
                 }
@@ -2060,14 +2191,12 @@ void monster::move()
                 };
 
                 std::size_t expanded_this_request = 0;
-                while( field->settled.count( pos() ) == 0 && !field->frontier.empty() &&
+                while( !field->is_settled( pos() ) && !field->frontier.empty() &&
                        expanded_this_request < monster_reverse_field_request_budget &&
                        monster_reverse_field_nodes < monster_reverse_field_turn_budget ) {
                     const monster_reverse_field_node current = field->frontier.top();
                     field->frontier.pop();
-                    const auto known_cost = field->costs.find( current.position );
-                    if( known_cost == field->costs.end() || known_cost->second != current.cost ||
-                        !field->settled.insert( current.position ).second ) {
+                    if( !field->settle_node( current.position, current.cost ) ) {
                         continue;
                     }
 
@@ -2095,33 +2224,28 @@ void monster::move()
                                 continue;
                             }
                             const int new_cost = current.cost + edge_cost;
-                            const auto previous_cost = field->costs.find( previous );
-                            if( previous_cost == field->costs.end() || new_cost < previous_cost->second ) {
-                                field->costs[previous] = new_cost;
-                                field->next_steps[previous] = current.position;
+                            if( field->relax( previous, new_cost, current.position ) ) {
                                 field->frontier.push( { new_cost, previous } );
                             }
                         }
                     }
                 }
 
-                if( field->settled.count( pos() ) == 0 ) {
+                if( !field->is_settled( pos() ) ) {
                     return result;
                 }
 
-                std::set<tripoint> visited;
                 tripoint cursor = pos();
                 const std::size_t max_steps = static_cast<std::size_t>(
                             std::max( 1, pf_settings.max_length ) );
-                while( cursor != field_target && result.size() < max_steps &&
-                       visited.insert( cursor ).second ) {
-                    const auto next_iter = field->next_steps.find( cursor );
-                    if( next_iter == field->next_steps.end() || next_iter->second == cursor ) {
+                while( cursor != field_target && result.size() < max_steps ) {
+                    tripoint next;
+                    if( !field->next_step( cursor, next ) ) {
                         result.clear();
                         return result;
                     }
-                    result.push_back( next_iter->second );
-                    cursor = next_iter->second;
+                    result.push_back( next );
+                    cursor = next;
                 }
                 if( result.empty() || result.back() != field_target ||
                     !cached_step_is_usable( result.front() ) ) {
