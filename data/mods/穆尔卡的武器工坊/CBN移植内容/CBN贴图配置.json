@@ -280,6 +280,50 @@
         "file": "tiles_cbn_heavy.png",
         "tiles": [
           {
+            "id": "overlay_wielded_gasc",
+            "fg": 70
+          },
+          {
+            "id": "overlay_wielded_dp_28",
+            "fg": 72
+          },
+          {
+            "id": "overlay_wielded_hout_mosin",
+            "fg": 74
+          },
+          {
+            "id": "overlay_wielded_rpd",
+            "fg": 76
+          },
+          {
+            "id": "overlay_wielded_phzg50",
+            "fg": 78
+          },
+          {
+            "id": "overlay_wielded_zagl40",
+            "fg": 80
+          },
+          {
+            "id": "overlay_wielded_ptrk",
+            "fg": 82
+          },
+          {
+            "id": "overlay_wielded_ptrkvk",
+            "fg": 84
+          },
+          {
+            "id": "overlay_wielded_m1919",
+            "fg": 88
+          },
+          {
+            "id": "overlay_wielded_scgs_chimera_on",
+            "fg": 90
+          },
+          {
+            "id": "scgs_chimera_on",
+            "fg": 91
+          },
+          {
             "id": "gasc",
             "fg": 71
           },
@@ -359,6 +403,180 @@
       {
         "file": "tiles_cbn117_weapons.png",
         "tiles": [
+          {
+            "id": "overlay_wielded_krbk308",
+            "fg": 10
+          },
+          {
+            "id": "overlay_wielded_ar_pistol",
+            "fg": 18
+          },
+          {
+            "id": "ar_pistol",
+            "fg": 19
+          },
+          {
+            "id": "overlay_wielded_ac556",
+            "fg": 40
+          },
+          {
+            "id": "overlay_wielded_sig_mpx",
+            "fg": 42
+          },
+          {
+            "id": "overlay_wielded_trk_ar",
+            "fg": 44
+          },
+          {
+            "id": "overlay_wielded_tnks_hr",
+            "fg": 62
+          },
+          {
+            "id": "overlay_wielded_mss_r22",
+            "fg": 66
+          },
+          {
+            "id": [
+              "overlay_wielded_m27_assault_rifle_var_h&k416a5",
+              "overlay_wielded_m27_assault_rifle_var_m27iar"
+            ],
+            "fg": 78
+          },
+          {
+            "id": [
+              "m27_assault_rifle_var_h&k416a5",
+              "m27_assault_rifle_var_m27iar"
+            ],
+            "fg": 79
+          },
+          {
+            "id": [
+              "overlay_wielded_sig_assault_rifle_var_sig552",
+              "overlay_wielded_sig552"
+            ],
+            "fg": 124
+          },
+          {
+            "id": [
+              "sig_assault_rifle_var_sig552",
+              "sig552"
+            ],
+            "fg": 125
+          },
+          {
+            "id": "overlay_wielded_marlin_1894c",
+            "fg": 146
+          },
+          {
+            "id": "marlin_1894c",
+            "fg": 147
+          },
+          {
+            "id": "overlay_wielded_winchester_1897",
+            "fg": 160
+          },
+          {
+            "id": "winchester_1897",
+            "fg": 161
+          },
+          {
+            "id": "overlay_wielded_shotgun_410",
+            "fg": 324
+          },
+          {
+            "id": "shotgun_410",
+            "fg": 325
+          },
+          {
+            "id": "overlay_wielded_bulldog_smg",
+            "fg": 346
+          },
+          {
+            "id": "overlay_wielded_bulldog_sar",
+            "fg": 348
+          },
+          {
+            "id": [
+              "overlay_wielded_cluster_grenade",
+              "overlay_wielded_cluster_grenade_act"
+            ],
+            "fg": 354
+          },
+          {
+            "id": "overlay_wielded_carbon_rifle",
+            "fg": 356
+          },
+          {
+            "id": "overlay_wielded_mkg_guard",
+            "fg": 358
+          },
+          {
+            "id": [
+              "mkg_banshee",
+              "mkg_guard"
+            ],
+            "fg": 359
+          },
+          {
+            "id": "overlay_wielded_USAS_12",
+            "fg": 360
+          },
+          {
+            "id": "USAS_12",
+            "fg": 361
+          },
+          {
+            "id": "overlay_wielded_sharps",
+            "fg": 362
+          },
+          {
+            "id": "sharps",
+            "fg": 363
+          },
+          {
+            "id": "overlay_wielded_winchester_1887",
+            "fg": 364
+          },
+          {
+            "id": "winchester_1887",
+            "fg": 365
+          },
+          {
+            "id": "overlay_wielded_tavor_12",
+            "fg": 366
+          },
+          {
+            "id": "tavor_12",
+            "fg": 367
+          },
+          {
+            "id": "overlay_wielded_hk_xm8",
+            "fg": 368
+          },
+          {
+            "id": "overlay_wielded_dp-12",
+            "fg": 370
+          },
+          {
+            "id": "dp-12",
+            "fg": 371
+          },
+          {
+            "id": "overlay_wielded_ga23sg",
+            "fg": 372
+          },
+          {
+            "id": "overlay_wielded_gaspgl",
+            "fg": 374
+          },
+          {
+            "id": "overlay_wielded_cews_28",
+            "fg": 376
+          },
+          {
+            "id": "overlay_wielded_cews_29",
+            "fg": 378
+          },
           {
             "id": "overlay_wielded_arek_pdr",
             "fg": 384
@@ -452,6 +670,29 @@
         "file": "tiles_cbn117_armor.png",
         "tiles": [
           {
+            "id": "overlay_worn_cu2_suit",
+            "fg": 54
+          },
+          {
+            "id": "overlay_worn_da30l_vest",
+            "fg": 56
+          },
+          {
+            "id": "overlay_worn_da32_vest",
+            "fg": 60
+          },
+          {
+            "id": "overlay_worn_ecu3_suit",
+            "fg": 64
+          },
+          {
+            "id": [
+              "overlay_worn_cornerstone_armor",
+              "overlay_worn_cornerstone_armor_on"
+            ],
+            "fg": 70
+          },
+          {
             "id": "da68sh_vest",
             "fg": 71
           },
@@ -492,6 +733,22 @@
         "file": "tiles_cbn117_helmets.png",
         "tiles": [
           {
+            "id": "overlay_worn_ch1_helmet",
+            "fg": 13
+          },
+          {
+            "id": "overlay_worn_ch2_helmet",
+            "fg": 15
+          },
+          {
+            "id": "overlay_worn_cornerstone_helmet",
+            "fg": 17
+          },
+          {
+            "id": "overlay_worn_cornerstone_helmet_on",
+            "fg": 19
+          },
+          {
             "id": "chsh",
             "fg": 20
           },
@@ -520,6 +777,38 @@
         "sprite_height": 64,
         "sprite_offset_x": -16,
         "sprite_offset_y": -16
+      }
+    ]
+  },
+  {
+    "type": "mod_tileset",
+    "compatibility": [
+      "Chibi_Ultica",
+      "MshockRealXotto",
+      "UltimateCataclysm",
+      "MshockXottoplus",
+      "UNDEAD_PEOPLE",
+      "UNDEAD_PEOPLE_BASE",
+      "UNDEAD_PEOPLE_LEGACY",
+      "UlticaShell",
+      "MshockXottoplus12",
+      "MSX++DEAD_PEOPLE",
+      "MXplus12_for_cosmetics",
+      "MSXotto+"
+    ],
+    "tiles-new": [
+      {
+        "file": "CBN变异贴图.png",
+        "tiles": [
+          {
+            "id": "overlay_mutation_murka_haircolor",
+            "fg": 1
+          }
+        ],
+        "sprite_width": 32,
+        "sprite_height": 32,
+        "sprite_offset_x": 0,
+        "sprite_offset_y": 0
       }
     ]
   }
