@@ -101,6 +101,7 @@ constexpr int monster_stair_route_bucket_size = 24;
 constexpr int monster_stair_route_memory_turns = 60;
 constexpr int monster_stair_route_target_tolerance = 4;
 constexpr std::size_t monster_cross_z_route_default_turn_budget = 8;
+constexpr std::size_t monster_priority_cross_z_route_default_turn_budget = 4;
 constexpr std::size_t monster_reverse_field_default_turn_budget = 24576;
 constexpr std::size_t monster_reverse_field_min_turn_budget = 2048;
 constexpr std::size_t monster_route_search_default_turn_budget = 32;
@@ -282,75 +283,108 @@ std::optional<std::pair<int, tripoint_abs_ms>> next_hostile_search_waypoint(
 }
 
 constexpr int hostile_transition_hint_radius = 2;
+constexpr int witnessed_hostile_transition_hint_radius = 6;
 
-std::optional<tripoint_abs_ms> infer_hostile_memory_transition(
+std::optional<monster_z_route_plan> infer_hostile_memory_transition(
     monster &critter, map &here, const tripoint_abs_ms &memory_origin,
-    int search_lane )
+    int search_lane, int wanted_z_direction = 0,
+    int hint_radius = hostile_transition_hint_radius )
 {
-    const tripoint local_origin = here.getlocal( memory_origin );
-    if( !here.inbounds( local_origin ) ) {
+    const tripoint local_memory = here.getlocal( memory_origin );
+    if( !here.inbounds( local_memory ) ) {
         return std::nullopt;
     }
 
-    std::optional<tripoint> best_destination;
-    std::tuple<int, int, int, int> best_score(
-        std::numeric_limits<int>::max(), 0, 0, 0 );
+    // If the target is remembered on another floor, the useful stair approach
+    // is on our current floor.  The old code searched memory_origin.z instead,
+    // which could literally select a stair leading away from the target.
+    const tripoint search_origin( local_memory.xy(), critter.posz() );
+    if( !here.inbounds( search_origin ) ) {
+        return std::nullopt;
+    }
+
+    if( wanted_z_direction == 0 && local_memory.z != search_origin.z ) {
+        wanted_z_direction = local_memory.z > search_origin.z ? 1 : -1;
+    }
+
+    std::optional<monster_z_route_plan> best_plan;
+    std::tuple<int, int, int, int, int> best_score(
+        std::numeric_limits<int>::max(), 0, 0, 0, 0 );
     const bool can_bash = critter.bash_estimate() > 0;
 
     for( const tripoint &candidate :
-         here.points_in_radius( local_origin, hostile_transition_hint_radius ) ) {
-        if( candidate.z != local_origin.z ) {
+         here.points_in_radius( search_origin, hint_radius ) ) {
+        if( candidate.z != search_origin.z ) {
             continue;
         }
 
-        const bool can_go_down =
-            here.has_flag( ter_furn_flag::TFLAG_GOES_DOWN, candidate ) ||
+        const bool has_stair_down =
+            here.has_flag( ter_furn_flag::TFLAG_GOES_DOWN, candidate );
+        const bool has_stair_up =
+            here.has_flag( ter_furn_flag::TFLAG_GOES_UP, candidate );
+        const bool has_ramp_down =
             here.has_flag( ter_furn_flag::TFLAG_RAMP_DOWN, candidate );
-        const bool can_go_up =
-            here.has_flag( ter_furn_flag::TFLAG_GOES_UP, candidate ) ||
+        const bool has_ramp_up =
             here.has_flag( ter_furn_flag::TFLAG_RAMP_UP, candidate );
 
         for( const int dz : { -1, 1 } ) {
-            if( ( dz < 0 && !can_go_down ) || ( dz > 0 && !can_go_up ) ) {
+            if( wanted_z_direction != 0 && dz != wanted_z_direction ) {
+                continue;
+            }
+            if( dz < 0 && !has_stair_down && !has_ramp_down ) {
+                continue;
+            }
+            if( dz > 0 && !has_stair_up && !has_ramp_up ) {
                 continue;
             }
 
-            const tripoint destination( candidate.x, candidate.y,
-                                        candidate.z + dz );
-            if( !here.inbounds( destination ) ) {
+            std::optional<tripoint> destination;
+            const bool via_ramp = dz < 0 ? has_ramp_down : has_ramp_up;
+            if( via_ramp ) {
+                const tripoint ramp_destination( candidate.xy(), candidate.z + dz );
+                if( here.inbounds( ramp_destination ) &&
+                    here.valid_move( candidate, ramp_destination, can_bash, true, true ) ) {
+                    destination = ramp_destination;
+                }
+            } else {
+                bool rope_ladder = false;
+                const std::optional<tripoint> stair_destination =
+                    g->find_or_make_stairs( here, candidate.z + dz, rope_ladder,
+                                            false, candidate );
+                if( stair_destination && here.inbounds( *stair_destination ) ) {
+                    const bool paired_stair = dz < 0 ?
+                        here.has_flag( ter_furn_flag::TFLAG_GOES_UP, *stair_destination ) :
+                        here.has_flag( ter_furn_flag::TFLAG_GOES_DOWN, *stair_destination );
+                    if( paired_stair ) {
+                        destination = *stair_destination;
+                    }
+                }
+            }
+
+            if( !destination ) {
                 continue;
             }
 
-            const bool paired_stair = dz < 0 ?
-                here.has_flag( ter_furn_flag::TFLAG_GOES_UP, destination ) :
-                here.has_flag( ter_furn_flag::TFLAG_GOES_DOWN, destination );
-            const bool explicit_landing = paired_stair ||
-                                          !here.impassable( destination );
-            if( !explicit_landing &&
-                !here.valid_move( candidate, destination, can_bash, true ) ) {
-                continue;
-            }
-
-            // Exact last-seen tile wins.  In a rare stairwell which goes both
-            // ways, stable lanes split a horde instead of making every monster
-            // choose the same speculative floor.
-            const int distance = rl_dist( local_origin, candidate );
-            const int direction_bias = ( search_lane & 1 ) == 0 ?
-                                       ( dz < 0 ? 0 : 1 ) :
-                                       ( dz > 0 ? 0 : 1 );
-            const std::tuple<int, int, int, int> score(
-                distance, direction_bias, candidate.x, candidate.y );
+            // Nearest witnessed approach wins.  Direction bias remains useful
+            // only when no direction was requested, such as speculative search
+            // after reaching a same-Z last-known position.
+            const int distance = rl_dist( search_origin, candidate );
+            const int direction_bias = wanted_z_direction != 0 ? 0 :
+                                       ( ( search_lane & 1 ) == 0 ?
+                                         ( dz < 0 ? 0 : 1 ) :
+                                         ( dz > 0 ? 0 : 1 ) );
+            const int landing_distance = rl_dist( destination->xy(), local_memory.xy() );
+            const std::tuple<int, int, int, int, int> score(
+                distance, direction_bias, landing_distance,
+                candidate.x, candidate.y );
             if( score < best_score ) {
                 best_score = score;
-                best_destination = destination;
+                best_plan = monster_z_route_plan { candidate, *destination };
             }
         }
     }
 
-    if( !best_destination ) {
-        return std::nullopt;
-    }
-    return here.getglobal( *best_destination );
+    return best_plan;
 }
 
 std::optional<time_point> monster_path_cache_turn;
@@ -365,6 +399,7 @@ std::size_t monster_route_cache_edges = 0;
 std::size_t monster_reverse_field_nodes = 0;
 std::size_t monster_cross_z_route_search_turn_budget = monster_cross_z_route_default_turn_budget;
 std::size_t monster_cross_z_route_searches = 0;
+std::size_t monster_priority_cross_z_route_searches = 0;
 std::size_t monster_reverse_field_turn_budget = monster_reverse_field_default_turn_budget;
 std::size_t monster_route_search_turn_budget = monster_route_search_default_turn_budget;
 std::size_t monster_route_searches = 0;
@@ -378,6 +413,7 @@ void clear_monster_path_caches()
     monster_route_cache_edges = 0;
     monster_reverse_field_nodes = 0;
     monster_cross_z_route_searches = 0;
+    monster_priority_cross_z_route_searches = 0;
     monster_route_searches = 0;
 
     for( auto &field_pair : monster_reverse_fields ) {
@@ -859,6 +895,9 @@ void monster::plan()
     // work destinations must never inherit aggressive route-failure fallback.
     hostile_pursuit_active = false;
     if( !improved_pathfinding ) {
+        witnessed_hostile_transition_origin.reset();
+        witnessed_hostile_transition_destination.reset();
+        witnessed_hostile_transition_memory_turns = 0;
         if( last_hostile_target_position ) {
             unset_dest();
         }
@@ -874,6 +913,14 @@ void monster::plan()
     } else {
         if( hostile_target_memory_turns > 0 ) {
             --hostile_target_memory_turns;
+        }
+        if( witnessed_hostile_transition_memory_turns > 0 ) {
+            --witnessed_hostile_transition_memory_turns;
+        }
+        if( witnessed_hostile_transition_memory_turns <= 0 ) {
+            witnessed_hostile_transition_origin.reset();
+            witnessed_hostile_transition_destination.reset();
+            witnessed_hostile_transition_memory_turns = 0;
         }
         if( hostile_search_turns > 0 ) {
             --hostile_search_turns;
@@ -1240,6 +1287,18 @@ void monster::plan()
         if( att_to_target == Attitude::HOSTILE && !fleeing ) {
             if( improved_pathfinding ) {
                 hostile_pursuit_active = true;
+                const bool recent_direct_sighting =
+                    last_hostile_target_position && last_hostile_sighting_turn &&
+                    calendar::turn <= *last_hostile_sighting_turn +
+                    time_duration::from_turns( 2 );
+                if( recent_direct_sighting &&
+                    std::abs( dest.z() - last_hostile_target_position->z() ) == 1 &&
+                    rl_dist( dest, *last_hostile_target_position ) <= 8 ) {
+                    witnessed_hostile_transition_origin = *last_hostile_target_position;
+                    witnessed_hostile_transition_destination = dest;
+                    witnessed_hostile_transition_memory_turns =
+                        smart_planning ? 60 : 30;
+                }
                 last_hostile_target_position = dest;
                 hostile_target_memory_turns = smart_planning ? 150 : 60;
                 hostile_search_turns = 0;
@@ -1295,12 +1354,18 @@ void monster::plan()
             bool followed_transition = false;
             if( hostile_search_step == 0 && hostile_transition_attempts == 0 &&
                 get_pathfinding_settings().allow_climb_stairs ) {
-                const std::optional<tripoint_abs_ms> transition =
+                const int wanted_z_direction =
+                    memory_origin.z() == posz() ? 0 :
+                    ( memory_origin.z() > posz() ? 1 : -1 );
+                const std::optional<monster_z_route_plan> transition =
                     infer_hostile_memory_transition( *this, here, memory_origin,
-                                                     hostile_search_lane );
+                                                     hostile_search_lane,
+                                                     wanted_z_direction );
                 if( transition ) {
                     hostile_transition_attempts = 1;
-                    last_hostile_target_position = *transition;
+                    const tripoint_abs_ms transition_destination =
+                        here.getglobal( transition->transition );
+                    last_hostile_target_position = transition_destination;
                     hostile_target_memory_turns = std::max(
                         hostile_target_memory_turns,
                         smart_planning ? 90 : 45 );
@@ -1309,7 +1374,7 @@ void monster::plan()
                     hostile_search_waypoint_turns = 0;
                     hostile_search_deadline.reset();
                     wandf = 0;
-                    set_dest( *transition );
+                    set_dest( transition_destination );
                     followed_transition = true;
                 }
             }
@@ -1725,6 +1790,62 @@ void monster::move()
         return can_bash && here.bash_rating( current_bash_estimate, step ) > 0;
     };
 
+    auto has_non_bash_progress = [&]( const tripoint &goal ) {
+        if( goal.z != posz() || goal == pos() ) {
+            return false;
+        }
+        const float current_distance = trig_dist( pos(), goal );
+        for( const tripoint &candidate : squares_closer_to( pos(), goal ) ) {
+            if( !here.inbounds( candidate ) ||
+                trig_dist( candidate, goal ) >= current_distance ) {
+                continue;
+            }
+
+            const Creature *occupant =
+                creatures.creature_at( candidate, is_hallucination() );
+            if( occupant != nullptr ) {
+                if( is_hallucination() != occupant->is_hallucination() &&
+                    !occupant->is_avatar() ) {
+                    continue;
+                }
+                if( attitude_to( *occupant ) == Attitude::HOSTILE ) {
+                    return true;
+                }
+                continue;
+            }
+
+            if( can_move_to( candidate ) ) {
+                return true;
+            }
+            if( can_open_doors &&
+                here.open_door( *this, candidate, !here.is_outside( pos() ), true ) ) {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    auto step_requires_bash = [&]( const tripoint &step ) {
+        if( !here.inbounds( step ) || step.z != posz() ) {
+            return false;
+        }
+        const Creature *occupant =
+            creatures.creature_at( step, is_hallucination() );
+        if( occupant != nullptr &&
+            attitude_to( *occupant ) == Attitude::HOSTILE ) {
+            return false;
+        }
+        if( can_move_to( step ) ) {
+            return false;
+        }
+        if( can_open_doors &&
+            here.open_door( *this, step, !here.is_outside( pos() ), true ) ) {
+            return false;
+        }
+        return can_bash &&
+               here.bash_rating( current_bash_estimate, step ) > 0;
+    };
+
     auto cross_z_route_is_sane = [&]( const std::vector<tripoint> &candidate_path,
                                      const tripoint &route_dest ) {
         if( route_dest.z == posz() ) {
@@ -1823,6 +1944,31 @@ void monster::move()
             if( z_plan_iter != monster_z_route_cache.end() ) {
                 z_plan = z_plan_iter->second;
             }
+            if( !z_plan && hostile_pursuit_active &&
+                witnessed_hostile_transition_origin &&
+                witnessed_hostile_transition_destination &&
+                witnessed_hostile_transition_memory_turns > 0 &&
+                witnessed_hostile_transition_origin->z() == posz() ) {
+                const int wanted_z_direction = route_dest.z > posz() ? 1 : -1;
+                const int witnessed_z_direction =
+                    witnessed_hostile_transition_destination->z() -
+                    witnessed_hostile_transition_origin->z();
+                if( witnessed_z_direction * wanted_z_direction > 0 ) {
+                    const int hint_radius = has_flag( MF_PRIORITIZE_TARGETS ) ?
+                                            witnessed_hostile_transition_hint_radius : 4;
+                    z_plan = infer_hostile_memory_transition(
+                                 *this, here,
+                                 *witnessed_hostile_transition_origin,
+                                 hostile_search_lane, wanted_z_direction,
+                                 hint_radius );
+                    if( z_plan ) {
+                        monster_z_route_cache[z_cache_key] = *z_plan;
+                        remember_monster_stair_route( here, absolute_route_dest,
+                                                      z_plan->approach,
+                                                      z_plan->transition );
+                    }
+                }
+            }
             if( !z_plan ) {
                 z_plan = get_remembered_monster_stair_route( here,
                          absolute_route_dest, posz() );
@@ -1864,8 +2010,10 @@ void monster::move()
                                    !existing_path_matches;
         if( need_new_path ) {
             path.clear();
-            if( failed_pathfinding_target && *failed_pathfinding_target == absolute_route_dest &&
-                failed_pathfinding_cooldown > 0 ) {
+            if( failed_pathfinding_target &&
+                *failed_pathfinding_target == absolute_route_dest &&
+                failed_pathfinding_cooldown > 0 &&
+                !( has_z_plan && segment_dest != route_dest ) ) {
                 return false;
             }
 
@@ -2050,14 +2198,24 @@ void monster::move()
                                                          route_radius * 8 );
                 }
                 if( cross_z ) {
-                    if( monster_cross_z_route_searches >= monster_cross_z_route_search_turn_budget ) {
-                        pathfinding_budget_exhausted = true;
-                        failed_pathfinding_target = absolute_route_dest;
-                        failed_pathfinding_cooldown = 2 +
-                                                       ( std::abs( posx() + posy() + posz() ) % 3 );
-                        return false;
+                    if( monster_cross_z_route_searches >=
+                        monster_cross_z_route_search_turn_budget ) {
+                        const bool priority_hostile_cross_z =
+                            hostile_pursuit_active &&
+                            has_flag( MF_PRIORITIZE_TARGETS ) &&
+                            monster_priority_cross_z_route_searches <
+                            monster_priority_cross_z_route_default_turn_budget;
+                        if( !priority_hostile_cross_z ) {
+                            pathfinding_budget_exhausted = true;
+                            failed_pathfinding_target = absolute_route_dest;
+                            failed_pathfinding_cooldown = 2 +
+                                ( std::abs( posx() + posy() + posz() ) % 3 );
+                            return false;
+                        }
+                        ++monster_priority_cross_z_route_searches;
+                    } else {
+                        ++monster_cross_z_route_searches;
                     }
-                    ++monster_cross_z_route_searches;
                 } else {
                     if( monster_route_searches >= monster_route_search_turn_budget ) {
                         pathfinding_budget_exhausted = true;
@@ -2235,6 +2393,24 @@ void monster::move()
         moved = destination != pos();
     }
 
+    const tripoint local_pressure_goal =
+        same_z_fallback_destination( movement_goal );
+    const bool mobility_first_pursuit =
+        improved_pathfinding && hostile_pursuit_active &&
+        movement_goal.z == posz() &&
+        has_non_bash_progress( local_pressure_goal );
+    if( path_step_is_authoritative && mobility_first_pursuit &&
+        destination.z == posz() && step_requires_bash( destination ) ) {
+        // A wall may be a mathematically short route, but it should not steal
+        // a chase turn while a real movement/door/attack step still advances
+        // toward a directly pursued hostile.
+        path_step_is_authoritative = false;
+        pathed = false;
+        path.clear();
+        destination = local_pressure_goal;
+        moved = destination != pos();
+    }
+
     point new_d( destination.xy() - pos().xy() );
 
     // toggle facing direction for sdl flip
@@ -2384,6 +2560,12 @@ void monster::move()
                     continue;
                 }
 
+                if( mobility_first_pursuit ) {
+                    // While another local step can still close on the hostile,
+                    // destruction is secondary.  Bash only when movement,
+                    // attacking and opening doors cannot make progress.
+                    continue;
+                }
                 if( estimate < 5 ) {
                     bad_choice = true;
                 }

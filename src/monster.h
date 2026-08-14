@@ -627,6 +627,11 @@ class monster : public Creature
         // True only for the destination selected by this turn's confirmed
         // hostile chase or hostile-memory search. Transient by design.
         bool hostile_pursuit_active = false;
+        // A direct sighting that changes Z is stronger evidence than a generic
+        // last-known position: the target probably used a nearby stair/ramp.
+        std::optional<tripoint_abs_ms> witnessed_hostile_transition_origin;
+        std::optional<tripoint_abs_ms> witnessed_hostile_transition_destination;
+        int witnessed_hostile_transition_memory_turns = 0;
         int hostile_search_turns = 0;
         int hostile_search_step = 0;
         int hostile_search_waypoint_turns = 0;
