@@ -96,17 +96,18 @@ constexpr int reverse_field_radius = 64;
 constexpr int reverse_field_cross_z_radius = 72;
 constexpr std::size_t monster_route_cache_max_edges = 8192;
 constexpr std::size_t monster_reverse_field_max_count = 24;
-constexpr std::size_t monster_reverse_field_request_budget = 4096;
+constexpr std::size_t monster_reverse_field_request_budget = 1024;
 constexpr int monster_stair_route_bucket_size = 24;
 constexpr int monster_stair_route_memory_turns = 60;
+constexpr int monster_stair_route_target_tolerance = 4;
 constexpr std::size_t monster_cross_z_route_default_turn_budget = 8;
-constexpr std::size_t monster_reverse_field_default_turn_budget = 49152;
-constexpr std::size_t monster_reverse_field_min_turn_budget = 8192;
-constexpr std::size_t monster_route_search_default_turn_budget = 64;
-constexpr std::size_t monster_route_search_min_turn_budget = 16;
-// Once a loaded horde reaches this size, tighten the shared per-turn budgets
-// instead of allowing every monster to spend the normal solo-search allowance.
-constexpr std::size_t monster_pathfinding_horde_size_step = 64;
+constexpr std::size_t monster_reverse_field_default_turn_budget = 24576;
+constexpr std::size_t monster_reverse_field_min_turn_budget = 2048;
+constexpr std::size_t monster_route_search_default_turn_budget = 32;
+constexpr std::size_t monster_route_search_min_turn_budget = 4;
+// Tighten expensive planning earlier.  Once the budget is spent, confirmed
+// hostile pursuit degrades to cheap local pressure instead of losing turns.
+constexpr std::size_t monster_pathfinding_horde_size_step = 32;
 
 int quantize_monster_bash_strength( int strength )
 {
@@ -176,6 +177,7 @@ struct monster_stair_route_cache_key {
 };
 
 struct monster_stair_route_cache_entry {
+    tripoint_abs_ms target;
     tripoint_abs_ms approach;
     tripoint_abs_ms transition;
     time_point last_confirmed;
@@ -434,7 +436,7 @@ void remember_monster_stair_route( map &here, const tripoint_abs_ms &target,
     }
 
     monster_stair_route_cache[key] = {
-        here.getglobal( approach ), here.getglobal( transition ), calendar::turn
+        target, here.getglobal( approach ), here.getglobal( transition ), calendar::turn
     };
 }
 
@@ -450,6 +452,10 @@ std::optional<monster_z_route_plan> get_remembered_monster_stair_route(
     if( calendar::turn > iter->second.last_confirmed +
         time_duration::from_turns( monster_stair_route_memory_turns ) ) {
         monster_stair_route_cache.erase( iter );
+        return std::nullopt;
+    }
+    if( rl_dist( target, iter->second.target ) >
+        monster_stair_route_target_tolerance ) {
         return std::nullopt;
     }
 
@@ -1719,6 +1725,50 @@ void monster::move()
         return can_bash && here.bash_rating( current_bash_estimate, step ) > 0;
     };
 
+    auto cross_z_route_is_sane = [&]( const std::vector<tripoint> &candidate_path,
+                                     const tripoint &route_dest ) {
+        if( route_dest.z == posz() ) {
+            return true;
+        }
+        if( candidate_path.empty() || candidate_path.back() != route_dest ) {
+            return false;
+        }
+
+        const int wanted_z_direction = route_dest.z > posz() ? 1 : -1;
+        int previous_z = posz();
+        bool reached_target_z = false;
+
+        for( const tripoint &step : candidate_path ) {
+            const int dz = step.z - previous_z;
+            if( std::abs( dz ) > 1 ||
+                ( dz != 0 && dz * wanted_z_direction < 0 ) ) {
+                return false;
+            }
+
+            if( step.z == route_dest.z ) {
+                reached_target_z = true;
+            }
+            if( reached_target_z ) {
+                // Once a route reaches the target floor, do not accept a plan
+                // that immediately leaves it again.  This rejects the common
+                // "climb another house, then jump back down" false route.
+                if( step.z != route_dest.z ) {
+                    return false;
+                }
+                // A cross-Z route should not deliberately traverse unsupported
+                // target-floor tiles.  Same-Z hostile fallback can still make
+                // ordinary zombies crowd edges and fall naturally.
+                if( !flies() && step != route_dest &&
+                    !here.has_floor_or_support( step ) ) {
+                    return false;
+                }
+            }
+            previous_z = step.z;
+        }
+
+        return reached_target_z;
+    };
+
     auto try_route_to = [&]( const tripoint &route_dest ) {
         if( !improved_pathfinding || route_dest == pos() ) {
             return false;
@@ -1907,11 +1957,9 @@ void monster::move()
                         }
                     }
 
-                    const Creature *blocking = creatures.creature_at( to, true );
-                    if( result_cost < impassable_cost && blocking != nullptr &&
-                        blocking != this && to != field_target ) {
-                        result_cost += 150;
-                    }
+                    // Dynamic creature occupancy does not belong in the
+                    // shared terrain field. Immediate movement validates the
+                    // current blocker and locally steers around it.
                     return result_cost;
                 };
 
@@ -2021,6 +2069,13 @@ void monster::move()
                     ++monster_route_searches;
                 }
                 path = here.route( pos(), route_dest, route_settings, get_path_avoid() );
+            }
+
+            // A path ending at segment_dest is only the same-Z approach to a
+            // remembered stair; validate the complete cross-Z route only.
+            if( cross_z && !path.empty() && path.back() == route_dest &&
+                !cross_z_route_is_sane( path, route_dest ) ) {
+                path.clear();
             }
 
             if( !path.empty() && path.back() == route_dest ) {
