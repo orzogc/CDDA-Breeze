@@ -462053,6 +462053,12 @@ msgid "[%1$s %2$d%%]"
 msgstr "[%1$s %2$d%%]"
 
 #: src/veh_interact.cpp
+#, c-format
+msgctxt "veh_interact"
+msgid "%1$s has interrupted %2$s work at %3$d%%. Starting %4$s will discard that progress. Continue?"
+msgstr "%1$s 已有中断的%2$s工作（%3$d%%）。开始%4$s将放弃这部分进度。继续吗？"
+
+#: src/veh_interact.cpp
 msgctxt "veh_interact"
 msgid "Interrupted work"
 msgstr "中断工作"

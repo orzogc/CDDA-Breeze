@@ -132,31 +132,159 @@ static std::string vehicle_work_operation_name( const char operation )
     }
 }
 
-static const vehicle_work_progress *vehicle_work_progress_for_part( const vehicle &veh,
-        const vehicle_part &part, const char operation )
-{
-    const std::string part_id = part.info().get_id().str();
-    const int part_index = veh.index_of_part( &part );
+static int vehicle_work_percentage( const vehicle_work_progress &work );
 
-    // The index is the most precise identity for an existing part.  It avoids
-    // collapsing two identical parts installed at the same mount into one row.
-    if( part_index >= 0 ) {
-        for( const vehicle_work_progress &work : veh.get_work_progress() ) {
-            if( work.operation == operation && work.part_index == part_index &&
-                work.part_id == part_id && work.variant == part.variant ) {
-                return &work;
-            }
+struct vehicle_work_identity {
+    char operation = 0;
+    point mount = point_zero;
+    std::string part_id;
+    std::string variant;
+    int percentage = 0;
+};
+
+static bool vehicle_work_matches_part( const vehicle &veh, const vehicle_work_progress &work,
+                                       const vehicle_part &part )
+{
+    if( work.operation == 'i' || part.removed || work.mount != part.mount ||
+        work.part_id != part.info().get_id().str() || work.variant != part.variant ) {
+        return false;
+    }
+
+    const int part_index = veh.index_of_part( &part );
+    if( work.part_index >= 0 && work.part_index == part_index ) {
+        return work.operation != 'r' || work.initial_damage < 0 ||
+               work.initial_damage == part.damage();
+    }
+
+    // If the recorded index still points at another identical part, it is a
+    // precise identity and must not be reassigned to this one.  If it now
+    // points at a different kind of part, the index was shifted by a removal
+    // and the stable tuple fallback below is still useful.
+    if( valid_vehicle_part_index( veh, work.part_index ) ) {
+        const vehicle_part &indexed = veh.part( work.part_index );
+        if( !indexed.removed && indexed.mount == work.mount &&
+            indexed.info().get_id().str() == work.part_id &&
+            indexed.variant == work.variant ) {
+            return false;
         }
     }
 
-    // Older saves and activities created before the part index was recorded use
-    // the stable mount/id/variant tuple instead.
-    const vehicle_work_progress *const fallback = veh.find_work_progress( operation, part.mount,
-            part_id, part.variant );
-    if( fallback != nullptr && ( fallback->part_index < 0 || fallback->part_index == part_index ) ) {
-        return fallback;
+    // Part indices can change after a different part is removed.  Fall back
+    // to the stable tuple only when it identifies this part uniquely; do not
+    // guess when identical parts share a mount.
+    int found = -1;
+    for( int index = 0; index < veh.part_count(); ++index ) {
+        const vehicle_part &candidate = veh.part( index );
+        if( candidate.removed || candidate.mount != work.mount ||
+            candidate.info().get_id().str() != work.part_id ||
+            candidate.variant != work.variant ) {
+            continue;
+        }
+        if( found != -1 ) {
+            return false;
+        }
+        found = index;
+    }
+    return found == part_index && ( work.operation != 'r' || work.initial_damage < 0 ||
+                                    work.initial_damage == part.damage() );
+}
+
+static bool vehicle_work_conflicts_with_target( const vehicle &veh,
+        const vehicle_work_progress &work, const char operation, const vehicle_part *part,
+        const point &mount, const std::string &part_id, const std::string &variant )
+{
+    if( !is_persistent_vehicle_operation( work.operation ) || work.work_done >= 10000000 ||
+        ( operation == work.operation &&
+          ( operation == 'i' ? ( work.mount == mount && work.part_id == part_id &&
+                                 work.variant == variant ) :
+            ( part != nullptr && vehicle_work_matches_part( veh, work, *part ) ) ) ) ) {
+        return false;
+    }
+
+    if( operation == 'i' ) {
+        // An install has no real part yet.  Any other unfinished operation at
+        // the destination mount would compete for the same vehicle tile.
+        return work.mount == mount;
+    }
+    if( work.operation == 'i' ) {
+        // Do not let a repair/removal start where an interrupted installation
+        // is waiting to create the part.
+        return part != nullptr && work.mount == part->mount;
+    }
+    return part != nullptr && vehicle_work_matches_part( veh, work, *part );
+}
+
+static bool confirm_vehicle_work_conflicts( vehicle &veh, const char operation,
+        const vehicle_part *part, const point &mount, const std::string &part_id,
+        const std::string &variant )
+{
+    std::vector<vehicle_work_identity> conflicts;
+    for( const vehicle_work_progress &work : veh.get_work_progress() ) {
+        if( vehicle_work_conflicts_with_target( veh, work, operation, part, mount, part_id,
+                                                variant ) ) {
+            conflicts.push_back( { work.operation, work.mount, work.part_id, work.variant,
+                                   vehicle_work_percentage( work ) } );
+        }
+    }
+    if( conflicts.empty() ) {
+        return true;
+    }
+
+    const vehicle_work_identity &conflict = conflicts.front();
+    const std::string target_name = part != nullptr ? part->name() : vpart_id( part_id ).obj().name();
+    const std::string prompt = string_format(
+        pgettext( "veh_interact",
+                  "%1$s has interrupted %2$s work at %3$d%%. Starting %4$s will discard that progress. Continue?" ),
+        target_name, vehicle_work_operation_name( conflict.operation ),
+        conflict.percentage,
+        vehicle_work_operation_name( operation ) );
+    if( !query_yn( prompt ) ) {
+        return false;
+    }
+
+    for( const vehicle_work_identity &identity : conflicts ) {
+        veh.erase_work_progress( identity.operation, identity.mount, identity.part_id,
+                                 identity.variant );
+    }
+    return true;
+}
+
+static const vehicle_work_progress *vehicle_work_progress_for_part( const vehicle &veh,
+        const vehicle_part &part, const char operation )
+{
+    for( const vehicle_work_progress &work : veh.get_work_progress() ) {
+        if( work.operation == operation && vehicle_work_matches_part( veh, work, part ) ) {
+            return &work;
+        }
     }
     return nullptr;
+}
+
+static const vehicle_part *vehicle_work_part_for_display( const vehicle &veh,
+        const vehicle_work_progress &work )
+{
+    if( work.operation == 'i' ) {
+        return nullptr;
+    }
+    if( valid_vehicle_part_index( veh, work.part_index ) &&
+        vehicle_work_matches_part( veh, work, veh.part( work.part_index ) ) ) {
+        return &veh.part( work.part_index );
+    }
+
+    // Part indices can change after a different part is removed.  Only use
+    // the stable identity fallback when it identifies exactly one part.
+    const vehicle_part *found = nullptr;
+    for( int index = 0; index < veh.part_count(); ++index ) {
+        const vehicle_part &part = veh.part( index );
+        if( !vehicle_work_matches_part( veh, work, part ) ) {
+            continue;
+        }
+        if( found != nullptr ) {
+            return nullptr;
+        }
+        found = &part;
+    }
+    return found;
 }
 
 static int vehicle_work_percentage( const vehicle_work_progress &work )
@@ -1244,6 +1372,13 @@ void veh_interact::do_install()
                         }
                     }
                     sel_cmd = 'i';
+                    if( !confirm_vehicle_work_conflicts( *veh, 'i', nullptr,
+                                                          point( -dd.x, -dd.y ),
+                                                          sel_vpart_info->get_id().str(),
+                                                          sel_vpart_variant ) ) {
+                        sel_cmd = ' ';
+                        continue;
+                    }
                     return;
                 }
             }
@@ -1392,6 +1527,10 @@ void veh_interact::do_repair()
         const std::string action = main_context.handle_input();
         msg.reset();
         if( ( action == "REPAIR" || action == "CONFIRM" ) && ok ) {
+            if( !confirm_vehicle_work_conflicts( *veh, 'r', &pt, pt.mount,
+                                                  vp.get_id().str(), pt.variant ) ) {
+                continue;
+            }
             // Modifying a vehicle with rotors will make in not flightworthy (until we've got a better model)
             if( would_prevent_flying ) {
                 // It can only be the player doing this - an npc won't work well with query_yn
@@ -1797,27 +1936,34 @@ void veh_interact::display_overview()
     }
 
     // Installations do not have a real vehicle_part until they finish, so they
-    // cannot appear in overview_opts.  Keep them visible in the same vehicle
-    // screen instead of hiding their durable progress in the save data.
-    std::vector<const vehicle_work_progress *> pending_installs;
+    // cannot appear in overview_opts.  Keep every durable operation visible in
+    // the same vehicle screen instead of hiding its progress in save data.
+    std::vector<const vehicle_work_progress *> pending_work;
     for( const vehicle_work_progress &work : veh->get_work_progress() ) {
-        if( work.operation == 'i' && work.work_done < 10000000 ) {
-            pending_installs.push_back( &work );
+        if( !is_persistent_vehicle_operation( work.operation ) || work.work_done >= 10000000 ) {
+            continue;
+        }
+        if( work.operation == 'i' ) {
+            pending_work.push_back( &work );
+        } else if( vehicle_work_part_for_display( *veh, work ) != nullptr ) {
+            pending_work.push_back( &work );
         }
     }
-    if( !pending_installs.empty() && y < getmaxy( w_list ) - 1 ) {
+    if( !pending_work.empty() && y < getmaxy( w_list ) - 1 ) {
         y += last.empty() ? 0 : 1;
         trim_and_print( w_list, point( 1, y ), getmaxx( w_list ) - 1, c_light_gray,
                         pgettext( "veh_interact", "Interrupted work" ) );
         ++y;
-        for( const vehicle_work_progress *const work : pending_installs ) {
+        for( const vehicle_work_progress *const work : pending_work ) {
             if( y >= getmaxy( w_list ) - 1 ) {
                 break;
             }
-            const vpart_info &info = vpart_id( work->part_id ).obj();
+            const vehicle_part *const part = vehicle_work_part_for_display( *veh, *work );
+            const std::string part_name = part != nullptr ? part->name() :
+                                          vpart_id( work->part_id ).obj().name();
             trim_and_print( w_list, point( 1, y ), getmaxx( w_list ) - 1, c_yellow,
                             pgettext( "veh_interact", "%1$s: %2$s %3$d%% @ (%4$d,%5$d)" ),
-                            vehicle_work_operation_name( work->operation ), info.name(),
+                            vehicle_work_operation_name( work->operation ), part_name,
                             vehicle_work_percentage( *work ), work->mount.x, work->mount.y );
             ++y;
         }
@@ -2068,6 +2214,12 @@ void veh_interact::do_remove()
                     break;
             }
 
+            if( !confirm_vehicle_work_conflicts( *veh, 'o', &veh->part( part ),
+                                                  veh->part( part ).mount,
+                                                  veh->part( part ).info().get_id().str(),
+                                                  veh->part( part ).variant ) ) {
+                continue;
+            }
             // Modifying a vehicle with rotors will make in not flightworthy (until we've got a better model)
             // It can only be the player doing this - an npc won't work well with query_yn
             if( veh->would_removal_prevent_flyable( veh->part( part ), player_character ) ) {
