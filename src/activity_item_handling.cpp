@@ -870,9 +870,9 @@ static bool vehicle_activity( Character &you, const tripoint_bub_ms &src_loc, in
             }
         }
     }
-    const vpart_info &vp = veh->part_info( vpindex );
+    const vehicle_part &part = veh->part( vpindex );
+    const vpart_info &vp = part.info();
     if( type == 'r' ) {
-        const vehicle_part part = veh->part( vpindex );
         const int repair_floor = part.damage_floor( false );
         time_to_take = vp.repair_time( you ) * std::max( part.damage() - repair_floor, 0 ) /
                        std::max( part.max_damage() - repair_floor, 1 );
@@ -899,11 +899,12 @@ static bool vehicle_activity( Character &you, const tripoint_bub_ms &src_loc, in
     // values[5]
     you.activity.values.push_back( -point_zero.y );
     // values[6]
-    you.activity.values.push_back( veh->index_of_part( &veh->part( vpindex ) ) );
+    you.activity.values.push_back( veh->index_of_part( &part ) );
     you.activity.str_values.push_back( vp.get_id().str() );
-    std::pair<vpart_id, std::string> vp_v = get_vpart_id_variant( vp.get_id() );
-    const std::string &variant_id = vp_v.second;
-    you.activity.str_values.push_back( variant_id );
+    // The vpart_info stores the base ID; orientation/shape is stored on the
+    // actual vehicle_part.  Re-parsing the base ID loses variants such as
+    // halfboard_nw and makes the persistent activity unable to find its part.
+    you.activity.str_values.push_back( part.variant );
     // this would only be used for refilling tasks
     item_location target;
     you.activity.targets.emplace_back( std::move( target ) );

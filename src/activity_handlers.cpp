@@ -2176,9 +2176,40 @@ void activity_handlers::vehicle_start( player_activity *act, Character *you, con
     }
 
     const std::string part_id = act->str_values[0];
-    const std::string variant = act->str_values.size() > 1 ? act->str_values[1] : std::string();
+    std::string variant = act->str_values.size() > 1 ? act->str_values[1] : std::string();
     const point mount = vehicle_work_mount( *act, *veh, operation );
+    bool inferred_variant = false;
+    if( operation != 'i' && variant.empty() && act->values[6] >= 0 &&
+        act->values[6] < veh->part_count() ) {
+        const vehicle_part &indexed = veh->part( act->values[6] );
+        // Activities saved by older callers did not always serialize the
+        // actual vehicle_part::variant.  Recover it only from the recorded
+        // index and base identity; never guess between identical parts.
+        if( !indexed.removed && indexed.mount == mount &&
+            indexed.info().get_id().str() == part_id && !indexed.variant.empty() ) {
+            variant = indexed.variant;
+            inferred_variant = true;
+            if( act->str_values.size() > 1 ) {
+                act->str_values[1] = variant;
+            } else {
+                act->str_values.push_back( variant );
+            }
+        }
+    }
     vehicle_work_progress *work = veh->find_work_progress( operation, mount, part_id, variant );
+    if( work == nullptr && inferred_variant ) {
+        // Migrate a durable record written before variants were serialized.
+        // This keeps an interrupted old activity's progress instead of
+        // silently starting the oriented part from 0%.
+        work = veh->find_work_progress( operation, mount, part_id, std::string() );
+        if( work != nullptr && work->part_index == act->values[6] ) {
+            work->variant = variant;
+        } else {
+            // An old record without a part index cannot be safely associated
+            // with an oriented target when identical parts share a mount.
+            work = nullptr;
+        }
+    }
     if( work != nullptr && work->work_done >= 10000000 && !resuming ) {
         // A completed record belongs to an activity which was about to finish,
         // not to a newly selected job.  If it survived completion (for example

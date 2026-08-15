@@ -2185,6 +2185,10 @@ bool veh_interact::can_remove_part( int idx, const Character &you )
 {
     sel_vehicle_part = &veh->part( idx );
     sel_vpart_info = &sel_vehicle_part->info();
+    // Keep all existing-part selection state synchronized.  This is used by
+    // removal activities and prevents a variant selected for a prior install
+    // from leaking into the current target.
+    sel_vpart_variant = sel_vehicle_part->variant;
     std::string nmsg;
     bool smash_remove = sel_vpart_info->has_flag( "SMASH_REMOVE" );
 
@@ -2331,10 +2335,9 @@ void veh_interact::do_remove()
             for( const npc *np : helpers ) {
                 add_msg( m_info, _( "%s helps with this task…" ), np->get_name() );
             }
-            // Keep the selected part's orientation with the activity.  SUV
-            // quarter panels are stored as oriented variants (for example
-            // `halfboard_nw`), and an empty/stale variant cannot be resolved
-            // when the activity starts.
+            // Keep the selected part's orientation with the activity.  The
+            // selection helper also synchronizes this state for future
+            // removal paths.
             sel_vehicle_part = &veh->part( part );
             sel_vpart_info = &sel_vehicle_part->info();
             sel_vpart_variant = sel_vehicle_part->variant;
