@@ -54,6 +54,7 @@
 #include "output.h"
 #include "overmapbuffer.h"
 #include "pimpl.h"
+#include "popup.h"
 #include "point.h"
 #include "requirements.h"
 #include "skill.h"
@@ -106,6 +107,278 @@ static const trait_id trait_DEBUG_HS( "DEBUG_HS" );
 static const trait_id trait_STRONGBACK( "STRONGBACK" );
 
 static const vpart_id vpart_ap_wall_wiring( "ap_wall_wiring" );
+
+static bool is_persistent_vehicle_operation( const char operation )
+{
+    return operation == 'i' || operation == 'r' || operation == 'o' || operation == 'O';
+}
+
+static bool valid_vehicle_part_index( const vehicle &veh, const int index )
+{
+    return index >= 0 && index < veh.part_count();
+}
+
+static std::string vehicle_work_operation_name( const char operation )
+{
+    switch( operation ) {
+        case 'i':
+            return pgettext( "veh_interact", "install" );
+        case 'r':
+            return pgettext( "veh_interact", "repair" );
+        case 'o':
+        case 'O':
+            return pgettext( "veh_interact", "remove" );
+        default:
+            return std::string();
+    }
+}
+
+static int vehicle_work_percentage( const vehicle_work_progress &work );
+
+struct vehicle_work_identity {
+    char operation = 0;
+    point mount = point_zero;
+    std::string part_id;
+    std::string variant;
+    int percentage = 0;
+};
+
+static bool vehicle_work_matches_part( const vehicle &veh, const vehicle_work_progress &work,
+                                       const vehicle_part &part )
+{
+    if( work.operation == 'i' || part.removed || work.mount != part.mount ||
+        work.part_id != part.info().get_id().str() || work.variant != part.variant ) {
+        return false;
+    }
+
+    const int part_index = veh.index_of_part( &part );
+    if( work.part_index >= 0 && work.part_index == part_index ) {
+        return work.operation != 'r' || work.initial_damage < 0 ||
+               work.initial_damage == part.damage();
+    }
+
+    // If the recorded index still points at another identical part, it is a
+    // precise identity and must not be reassigned to this one.  If it now
+    // points at a different kind of part, the index was shifted by a removal
+    // and the stable tuple fallback below is still useful.
+    if( valid_vehicle_part_index( veh, work.part_index ) ) {
+        const vehicle_part &indexed = veh.part( work.part_index );
+        if( !indexed.removed && indexed.mount == work.mount &&
+            indexed.info().get_id().str() == work.part_id &&
+            indexed.variant == work.variant ) {
+            return false;
+        }
+    }
+
+    // Part indices can change after a different part is removed.  Fall back
+    // to the stable tuple only when it identifies this part uniquely; do not
+    // guess when identical parts share a mount.
+    int found = -1;
+    for( int index = 0; index < veh.part_count(); ++index ) {
+        const vehicle_part &candidate = veh.part( index );
+        if( candidate.removed || candidate.mount != work.mount ||
+            candidate.info().get_id().str() != work.part_id ||
+            candidate.variant != work.variant ) {
+            continue;
+        }
+        if( found != -1 ) {
+            return false;
+        }
+        found = index;
+    }
+    return found == part_index && ( work.operation != 'r' || work.initial_damage < 0 ||
+                                    work.initial_damage == part.damage() );
+}
+
+static bool vehicle_work_conflicts_with_target( const vehicle &veh,
+        const vehicle_work_progress &work, const char operation, const vehicle_part *part,
+        const point &mount, const std::string &part_id, const std::string &variant )
+{
+    if( !is_persistent_vehicle_operation( work.operation ) || work.work_done >= 10000000 ||
+        ( operation == work.operation &&
+          ( operation == 'i' ? ( work.mount == mount && work.part_id == part_id &&
+                                 work.variant == variant ) :
+            ( part != nullptr && vehicle_work_matches_part( veh, work, *part ) ) ) ) ) {
+        return false;
+    }
+
+    if( operation == 'i' ) {
+        // An install has no real part yet.  Any other unfinished operation at
+        // the destination mount would compete for the same vehicle tile.
+        return work.mount == mount;
+    }
+    if( work.operation == 'i' ) {
+        // Do not let a repair/removal start where an interrupted installation
+        // is waiting to create the part.
+        return part != nullptr && work.mount == part->mount;
+    }
+    return part != nullptr && vehicle_work_matches_part( veh, work, *part );
+}
+
+static bool confirm_vehicle_work_prompt( const std::string &prompt, const char operation )
+{
+    const std::string action = operation == 'i' ? "INSTALL" :
+                               operation == 'r' ? "REPAIR" : "REMOVE";
+    const auto &operation_events = inp_mngr.get_input_for_action( action, "VEH_INTERACT" );
+    const bool force_uc = get_option<bool>( "FORCE_CAPITAL_YN" );
+    const auto &allow_key = force_uc ? input_context::disallow_lower_case_or_non_modified_letters :
+                            input_context::allow_all_keys;
+
+    query_popup popup;
+    popup.preferred_keyboard_mode( keyboard_mode::keycode )
+    .context( "YESNO" )
+    .message( "%s", prompt )
+    .option( "YES" )
+    .option( "NO" )
+    // The operation key is not part of the YESNO context.  Accept it as an
+    // explicit confirmation below.
+    .allow_anykey( true )
+    .cursor( 1 )
+    .default_color( c_light_red );
+
+    while( true ) {
+        // Keep one popup instance alive while processing navigation.  Calling
+        // query() on a freshly-built popup for every key resets its cursor to
+        // the default NO button, making arrows and Enter appear ineffective.
+        const query_popup::result result = popup.query_once();
+
+        if( result.action == "ERROR" ) {
+            return false;
+        }
+        if( result.action == "YES" || result.action == "NO" ) {
+            // Preserve FORCE_CAPITAL_YN for the ordinary Y/N choices.  The
+            // current vehicle operation key is deliberately accepted as-is.
+            if( allow_key( result.evt ) ) {
+                return result.action == "YES";
+            }
+            continue;
+        }
+        if( result.action == action ) {
+            return true;
+        }
+        if( result.action == "ANY_INPUT" &&
+            std::find( operation_events.begin(), operation_events.end(), result.evt ) !=
+            operation_events.end() ) {
+            return true;
+        }
+    }
+}
+
+static bool confirm_vehicle_work_conflicts( vehicle &veh, const char operation,
+        const vehicle_part *part, const point &mount, const std::string &part_id,
+        const std::string &variant )
+{
+    std::vector<vehicle_work_identity> conflicts;
+    for( const vehicle_work_progress &work : veh.get_work_progress() ) {
+        if( vehicle_work_conflicts_with_target( veh, work, operation, part, mount, part_id,
+                                                variant ) ) {
+            conflicts.push_back( { work.operation, work.mount, work.part_id, work.variant,
+                                   vehicle_work_percentage( work ) } );
+        }
+    }
+    if( conflicts.empty() ) {
+        return true;
+    }
+
+    const vehicle_work_identity &conflict = conflicts.front();
+    const std::string target_name = part != nullptr ? part->name() : vpart_id( part_id ).obj().name();
+    const std::string prompt = string_format(
+        pgettext( "veh_interact",
+                  "%1$s has interrupted %2$s work at %3$d%%. Starting %4$s will discard that progress. Continue (Y/N or the current operation key)?" ),
+        target_name, vehicle_work_operation_name( conflict.operation ),
+        conflict.percentage,
+        vehicle_work_operation_name( operation ) );
+    if( !confirm_vehicle_work_prompt( prompt, operation ) ) {
+        return false;
+    }
+
+    for( const vehicle_work_identity &identity : conflicts ) {
+        veh.erase_work_progress( identity.operation, identity.mount, identity.part_id,
+                                 identity.variant );
+    }
+    return true;
+}
+
+static const vehicle_work_progress *vehicle_work_progress_for_part( const vehicle &veh,
+        const vehicle_part &part, const char operation )
+{
+    for( const vehicle_work_progress &work : veh.get_work_progress() ) {
+        if( work.operation == operation && vehicle_work_matches_part( veh, work, part ) ) {
+            return &work;
+        }
+    }
+    return nullptr;
+}
+
+static const vehicle_part *vehicle_work_part_for_display( const vehicle &veh,
+        const vehicle_work_progress &work )
+{
+    if( work.operation == 'i' ) {
+        return nullptr;
+    }
+    if( valid_vehicle_part_index( veh, work.part_index ) &&
+        vehicle_work_matches_part( veh, work, veh.part( work.part_index ) ) ) {
+        return &veh.part( work.part_index );
+    }
+
+    // Part indices can change after a different part is removed.  Only use
+    // the stable identity fallback when it identifies exactly one part.
+    const vehicle_part *found = nullptr;
+    for( int index = 0; index < veh.part_count(); ++index ) {
+        const vehicle_part &part = veh.part( index );
+        if( !vehicle_work_matches_part( veh, work, part ) ) {
+            continue;
+        }
+        if( found != nullptr ) {
+            return nullptr;
+        }
+        found = &part;
+    }
+    return found;
+}
+
+static int vehicle_work_percentage( const vehicle_work_progress &work )
+{
+    return std::clamp( static_cast<int>( std::lround( 100.0 * work.work_done / 10000000.0 ) ),
+                       0, 99 );
+}
+
+static int vehicle_work_remaining_moves( const vehicle_work_progress *work,
+        const int fallback_moves )
+{
+    if( work == nullptr || work->work_done >= 10000000 ) {
+        return fallback_moves;
+    }
+
+    const int total_moves = work->work_total > 0 ? work->work_total : fallback_moves;
+    if( total_moves <= 0 ) {
+        return 0;
+    }
+
+    const double remaining = 1.0 - static_cast<double>( std::clamp( work->work_done, 0,
+                                   10000000 ) ) / 10000000.0;
+    // Keep an incomplete record from turning into a zero-move activity due to
+    // rounding.  The final turn is responsible for applying the vehicle change.
+    return work->work_done < 10000000 ?
+           std::max( 1, static_cast<int>( std::lround( total_moves * remaining ) ) ) : 0;
+}
+
+static std::string vehicle_part_work_progress( const vehicle &veh, const vehicle_part &part )
+{
+    std::vector<std::string> entries;
+    for( const char operation : { 'i', 'r', 'o', 'O' } ) {
+        const vehicle_work_progress *const work = vehicle_work_progress_for_part( veh, part, operation );
+        if( work == nullptr || work->work_done >= 10000000 ||
+            ( operation == 'r' && work->initial_damage >= 0 &&
+              part.damage() != work->initial_damage ) ) {
+            continue;
+        }
+        const int percentage = vehicle_work_percentage( *work );
+        entries.push_back( string_format( pgettext( "veh_interact", "[%1$s %2$d%%]" ),
+                                           vehicle_work_operation_name( operation ), percentage ) );
+    }
+    return entries.empty() ? std::string() : " " + enumerate_as_string( entries );
+}
 
 static std::string status_color( bool status )
 {
@@ -186,7 +459,13 @@ player_activity veh_interact::serialize_activity()
     res.values.push_back( -dd.y );   // values[5]
     res.values.push_back( veh->index_of_part( vpt ) ); // values[6]
     res.str_values.push_back( vp->get_id().str() );
-    res.str_values.push_back( sel_vpart_variant );
+    // Existing vehicle parts carry their orientation in vehicle_part::variant.
+    // The interaction state may still contain the variant chosen for a prior
+    // install, so never use that stale value when serializing repair/removal.
+    const bool existing_part_operation = sel_cmd == 'r' || sel_cmd == 'o' || sel_cmd == 'O';
+    const std::string activity_variant = existing_part_operation && pt != nullptr ?
+                                         pt->variant : sel_vpart_variant;
+    res.str_values.push_back( activity_variant );
     res.targets.emplace_back( std::move( target ) );
 
     return res;
@@ -327,13 +606,15 @@ void veh_interact::allocate_windows()
 }
 
 bool veh_interact::format_reqs( std::string &msg, const requirement_data &reqs,
-                                const std::map<skill_id, int> &skills, int moves ) const
+                                const std::map<skill_id, int> &skills, int moves,
+                                const bool time_remaining ) const
 {
     Character &player_character = get_player_character();
     const inventory &inv = player_character.crafting_inventory();
     bool ok = reqs.can_make_with_inventory( inv, is_crafting_component );
 
-    msg += _( "<color_white>Time required:</color>\n" );
+    msg += time_remaining ? _( "<color_white>Time remaining:</color>\n" ) :
+           _( "<color_white>Time required:</color>\n" );
     msg += "> " + to_string_approx( time_duration::from_moves( moves ) ) + "\n";
 
     msg += _( "<color_white>Skills required:</color>\n" );
@@ -867,8 +1148,15 @@ bool veh_interact::update_part_requirements()
 
     avatar &player_character = get_avatar();
     std::string nmsg;
+    const int install_moves = sel_vpart_info->install_time( player_character );
+    const point install_mount( -dd.x, -dd.y );
+    const vehicle_work_progress *const install_work = veh->find_work_progress(
+            'i', install_mount, sel_vpart_info->get_id().str(), sel_vpart_variant );
+    const bool install_time_remaining = install_work != nullptr &&
+                                        install_work->work_done < 10000000;
     bool ok = format_reqs( nmsg, reqs, sel_vpart_info->install_skills,
-                           sel_vpart_info->install_time( player_character ) );
+                           vehicle_work_remaining_moves( install_work, install_moves ),
+                           install_time_remaining );
 
     nmsg += _( "<color_white>Additional requirements:</color>\n" );
 
@@ -1169,6 +1457,13 @@ void veh_interact::do_install()
                         }
                     }
                     sel_cmd = 'i';
+                    if( !confirm_vehicle_work_conflicts( *veh, 'i', nullptr,
+                                                          point( -dd.x, -dd.y ),
+                                                          sel_vpart_info->get_id().str(),
+                                                          sel_vpart_variant ) ) {
+                        sel_cmd = ' ';
+                        continue;
+                    }
                     return;
                 }
             }
@@ -1271,8 +1566,12 @@ void veh_interact::do_repair()
         // this will always be set, but the gcc thinks that sometimes it won't be
         bool ok = true;
         if( pt.is_broken() ) {
+            const int repair_moves = vp.install_time( player_character );
+            const vehicle_work_progress *const repair_work = vehicle_work_progress_for_part(
+                    *veh, pt, 'r' );
             ok = format_reqs( nmsg, vp.install_requirements(), vp.install_skills,
-                              vp.install_time( player_character ) );
+                              vehicle_work_remaining_moves( repair_work, repair_moves ),
+                              repair_work != nullptr && repair_work->work_done < 10000000 );
 
             if( pt.info().has_flag( "NEEDS_JACKING" ) ) {
 
@@ -1292,8 +1591,12 @@ void veh_interact::do_repair()
                 nmsg += colorize( _( "This vehicle cannot be repaired.\n" ), c_light_red );
                 ok = false;
             } else {
+                const int repair_moves = vp.repair_time( player_character ) * pt.repairable_levels();
+                const vehicle_work_progress *const repair_work = vehicle_work_progress_for_part(
+                        *veh, pt, 'r' );
                 ok = format_reqs( nmsg, vp.repair_requirements() * pt.repairable_levels(), vp.repair_skills,
-                                  vp.repair_time( player_character ) * pt.repairable_levels() );
+                                  vehicle_work_remaining_moves( repair_work, repair_moves ),
+                                  repair_work != nullptr && repair_work->work_done < 10000000 );
             }
         }
 
@@ -1317,6 +1620,10 @@ void veh_interact::do_repair()
         const std::string action = main_context.handle_input();
         msg.reset();
         if( ( action == "REPAIR" || action == "CONFIRM" ) && ok ) {
+            if( !confirm_vehicle_work_conflicts( *veh, 'r', &pt, pt.mount,
+                                                  vp.get_id().str(), pt.variant ) ) {
+                continue;
+            }
             // Modifying a vehicle with rotors will make in not flightworthy (until we've got a better model)
             if( would_prevent_flying ) {
                 // It can only be the player doing this - an npc won't work well with query_yn
@@ -1698,12 +2005,15 @@ void veh_interact::display_overview()
             highlighted = true;
         }
 
-        // print part name
+        // Print the part name and any durable interrupted-work progress.  The
+        // activity itself may be in the backlog or belong to another worker,
+        // so the vehicle-side record is the authoritative source here.
         nc_color col = overview_opts[idx].selectable ? c_white : c_dark_gray;
+        const std::string part_name = pt.name() + vehicle_part_work_progress( *veh, pt );
         trim_and_print( w_list, point( 1, y ), getmaxx( w_list ) - 1,
                         highlighted ? hilite( col ) : col,
                         "<color_dark_gray>%s </color>%s",
-                        right_justify( overview_opts[idx].hotkey.short_description(), 2 ), pt.name() );
+                        right_justify( overview_opts[idx].hotkey.short_description(), 2 ), part_name );
 
         // print extra columns (if any)
         overview_opts[idx].details( pt, w_list, y );
@@ -1715,6 +2025,40 @@ void veh_interact::display_overview()
             trim_and_print( w_list, point( 1, y ), getmaxx( w_list ) - 1,
                             c_yellow, _( "'}' to scroll down" ) );
             break;
+        }
+    }
+
+    // Installations do not have a real vehicle_part until they finish, so they
+    // cannot appear in overview_opts.  Keep every durable operation visible in
+    // the same vehicle screen instead of hiding its progress in save data.
+    std::vector<const vehicle_work_progress *> pending_work;
+    for( const vehicle_work_progress &work : veh->get_work_progress() ) {
+        if( !is_persistent_vehicle_operation( work.operation ) || work.work_done >= 10000000 ) {
+            continue;
+        }
+        if( work.operation == 'i' ) {
+            pending_work.push_back( &work );
+        } else if( vehicle_work_part_for_display( *veh, work ) != nullptr ) {
+            pending_work.push_back( &work );
+        }
+    }
+    if( !pending_work.empty() && y < getmaxy( w_list ) - 1 ) {
+        y += last.empty() ? 0 : 1;
+        trim_and_print( w_list, point( 1, y ), getmaxx( w_list ) - 1, c_light_gray,
+                        pgettext( "veh_interact", "Interrupted work" ) );
+        ++y;
+        for( const vehicle_work_progress *const work : pending_work ) {
+            if( y >= getmaxy( w_list ) - 1 ) {
+                break;
+            }
+            const vehicle_part *const part = vehicle_work_part_for_display( *veh, *work );
+            const std::string part_name = part != nullptr ? part->name() :
+                                          vpart_id( work->part_id ).obj().name();
+            trim_and_print( w_list, point( 1, y ), getmaxx( w_list ) - 1, c_yellow,
+                            pgettext( "veh_interact", "%1$s: %2$s %3$d%% @ (%4$d,%5$d)" ),
+                            vehicle_work_operation_name( work->operation ), part_name,
+                            vehicle_work_percentage( *work ), work->mount.x, work->mount.y );
+            ++y;
         }
     }
 
@@ -1841,6 +2185,10 @@ bool veh_interact::can_remove_part( int idx, const Character &you )
 {
     sel_vehicle_part = &veh->part( idx );
     sel_vpart_info = &sel_vehicle_part->info();
+    // Keep all existing-part selection state synchronized.  This is used by
+    // removal activities and prevents a variant selected for a prior install
+    // from leaking into the current target.
+    sel_vpart_variant = sel_vehicle_part->variant;
     std::string nmsg;
     bool smash_remove = sel_vpart_info->has_flag( "SMASH_REMOVE" );
 
@@ -1872,8 +2220,12 @@ bool veh_interact::can_remove_part( int idx, const Character &you )
     }
 
     const requirement_data reqs = sel_vpart_info->removal_requirements();
+    const int removal_moves = sel_vpart_info->removal_time( you );
+    const vehicle_work_progress *const removal_work = vehicle_work_progress_for_part(
+            *veh, *sel_vehicle_part, 'o' );
     bool ok = format_reqs( nmsg, reqs, sel_vpart_info->removal_skills,
-                           sel_vpart_info->removal_time( you ) );
+                           vehicle_work_remaining_moves( removal_work, removal_moves ),
+                           removal_work != nullptr && removal_work->work_done < 10000000 );
 
     nmsg += _( "<color_white>Additional requirements:</color>\n" );
 
@@ -1963,6 +2315,12 @@ void veh_interact::do_remove()
                     break;
             }
 
+            if( !confirm_vehicle_work_conflicts( *veh, 'o', &veh->part( part ),
+                                                  veh->part( part ).mount,
+                                                  veh->part( part ).info().get_id().str(),
+                                                  veh->part( part ).variant ) ) {
+                continue;
+            }
             // Modifying a vehicle with rotors will make in not flightworthy (until we've got a better model)
             // It can only be the player doing this - an npc won't work well with query_yn
             if( veh->would_removal_prevent_flyable( veh->part( part ), player_character ) ) {
@@ -1977,6 +2335,12 @@ void veh_interact::do_remove()
             for( const npc *np : helpers ) {
                 add_msg( m_info, _( "%s helps with this task…" ), np->get_name() );
             }
+            // Keep the selected part's orientation with the activity.  The
+            // selection helper also synchronizes this state for future
+            // removal paths.
+            sel_vehicle_part = &veh->part( part );
+            sel_vpart_info = &sel_vehicle_part->info();
+            sel_vpart_variant = sel_vehicle_part->variant;
             sel_cmd = 'o';
             break;
         } else if( action == "QUIT" ) {
@@ -2467,7 +2831,9 @@ void veh_interact::display_grid()
 }
 
 
-void draw_vpart_tile(const std::string& vp_id_str, const point& rel_pos, int part_mod, int rotation_degrees) {
+void draw_vpart_tile( const vehicle &veh, const point &mount, const bool roof,
+                      const std::string &vp_id_str, const point &rel_pos, const int part_mod,
+                      const int rotation_degrees ) {
     if (vp_id_str.empty()) {
         return;
     }
@@ -2487,8 +2853,9 @@ void draw_vpart_tile(const std::string& vp_id_str, const point& rel_pos, int par
     
     // Use relative position as map coordinates instead of pixel coordinates
     // Use lit_level::LIT instead of BRIGHT to ensure consistent lighting
-    tilecontext->draw_from_id_string_public(vpname, TILE_CATEGORY::VEHICLE_PART, "", tripoint(rel_pos,0),
-        subtile, rotation_degrees, lit_level::LIT, false, height_3d);
+    tilecontext->draw_from_id_string_public( vpname, TILE_CATEGORY::VEHICLE_PART, "",
+            tripoint( rel_pos, 0 ), subtile, rotation_degrees, lit_level::LIT, false, height_3d,
+            veh, mount, roof );
 }
 
 
@@ -2557,15 +2924,65 @@ void veh_interact::display_veh()
         
         const std::string& vp_id_str1 = veh->part_id_string(i, part_mod, true, false);
         if (!vp_id_str1.empty()) {
-            draw_vpart_tile(vp_id_str1, rel, part_mod, rotation);
+            draw_vpart_tile( *veh, mount, false, vp_id_str1, rel, part_mod, rotation );
         } else {
-            draw_vpart_tile(part.id.str(), rel, 0, rotation);
+            draw_vpart_tile( *veh, mount, false, part.id.str(), rel, 0, rotation );
         }
         
         part_mod = 0;
         const std::string& vp_id_str2 = veh->part_id_string(i, part_mod, false, true);
         if (!vp_id_str2.empty() && vp_id_str2 != vp_id_str1) {
-            draw_vpart_tile(vp_id_str2, rel, part_mod, rotation);
+            draw_vpart_tile( *veh, mount, true, vp_id_str2, rel, part_mod, rotation );
+        }
+    }
+
+    // Draw durable work records on top of the actual vehicle preview.  Repair
+    // and removal highlight the exact existing part; installation has no real
+    // part yet, so draw a dim/broken-looking ghost at the target mount.  This
+    // keeps progress visible for every vehicle tile, not just the tile selected
+    // when the activity was started.
+    for( const vehicle_work_progress &work : veh->get_work_progress() ) {
+        if( work.work_done >= 10000000 || work.part_id.empty() ) {
+            continue;
+        }
+        const point rel = ( work.mount + dd ).rotate( 3 ) + offset;
+        if( work.operation == 'i' ) {
+            draw_vpart_tile( *veh, work.mount, false, work.part_id, rel, 2, rotation );
+            tilecontext->draw_vehicle_work_highlight_public( tripoint( rel, 0 ) );
+            continue;
+        }
+
+        const int part_index = work.part_index >= 0 && work.part_index < veh->part_count() ?
+                               work.part_index : -1;
+        bool matches_part = false;
+        if( part_index >= 0 ) {
+            const vehicle_part &part = veh->part( part_index );
+            matches_part = !part.removed && part.mount == work.mount &&
+                           part.info().get_id().str() == work.part_id &&
+                           part.variant == work.variant &&
+                           ( work.operation != 'r' || work.initial_damage < 0 ||
+                             part.damage() == work.initial_damage );
+        } else {
+            // Old saves may not have a part index.  Only use this fallback
+            // when the mount/id/variant tuple identifies exactly one part.
+            int found = -1;
+            for( int i = 0; i < veh->part_count(); ++i ) {
+                const vehicle_part &part = veh->part( i );
+                if( !part.removed && part.mount == work.mount &&
+                    part.info().get_id().str() == work.part_id && part.variant == work.variant &&
+                    ( work.operation != 'r' || work.initial_damage < 0 ||
+                      part.damage() == work.initial_damage ) ) {
+                    if( found != -1 ) {
+                        found = -2;
+                        break;
+                    }
+                    found = i;
+                }
+            }
+            matches_part = found >= 0;
+        }
+        if( matches_part ) {
+            tilecontext->draw_vehicle_work_highlight_public( tripoint( rel, 0 ) );
         }
     }
 
@@ -3302,8 +3719,49 @@ void veh_interact::complete_vehicle( Character &you )
     int vehicle_part = you.activity.values[6];
     cata_assert( !you.activity.str_values.empty() );
     const vpart_id part_id( you.activity.str_values[0] );
+    const std::string variant_id = you.activity.str_values.size() > 1 ?
+                                   you.activity.str_values[1] : std::string();
+
+    const char operation = static_cast<char>( you.activity.index );
+    if( is_persistent_vehicle_operation( operation ) ) {
+        const point work_mount = operation == 'i' || !valid_vehicle_part_index( *veh,
+                                 vehicle_part ) ? d :
+                                 veh->part( vehicle_part ).mount;
+        const vehicle_work_progress *work = veh->find_work_progress( operation, work_mount,
+                part_id.str(), variant_id );
+
+        // A different part may have been removed while this legacy activity
+        // was suspended, shifting the vector index.  Resolve the target from
+        // the durable mount/id identity before applying the mutation.
+        if( work != nullptr && operation != 'i' ) {
+            if( const struct vehicle_part *const target = vehicle_work_part_for_display( *veh, *work ) ) {
+                vehicle_part = veh->index_of_part( target );
+                d = target->mount;
+            } else {
+                // The target no longer exists or is ambiguous.  Discard the
+                // orphaned record instead of applying an instant change to a
+                // different part at the same index.
+                veh->erase_work_progress( operation, work_mount, part_id.str(), variant_id );
+                you.activity.set_to_null();
+                return;
+            }
+        }
+
+        if( work != nullptr && work->work_done < 10000000 ) {
+            // The legacy timer may have reached its end without a final turn
+            // callback (for example while loading an old save).  Do not apply
+            // the vehicle mutation until the durable record is complete.
+            you.activity.moves_total = std::max( work->work_total, 1 );
+            const double remaining = 1.0 - static_cast<double>( std::clamp( work->work_done,
+                                           0, 10000000 ) ) / 10000000.0;
+            you.activity.moves_left = std::max( 1, static_cast<int>( std::lround(
+                                              you.activity.moves_total * remaining ) ) );
+            return;
+        }
+    }
 
     const vpart_info &vpinfo = part_id.obj();
+    you.invalidate_crafting_inventory();
 
     // cmd = Install Repair reFill remOve Siphon Unload reName relAbel
     switch( static_cast<char>( you.activity.index ) ) {
@@ -3313,6 +3771,11 @@ void veh_interact::complete_vehicle( Character &you )
             const requirement_data reqs = vpinfo.install_requirements();
             if( !reqs.can_make_with_inventory( inv, is_crafting_component ) ) {
                 add_msg( m_info, _( "You don't meet the requirements to install the %s." ),
+                         vpinfo.name() );
+                break;
+            }
+            if( !you.has_trait( trait_DEBUG_HS ) && inv.count_item( vpinfo.base_item ) <= 0 ) {
+                add_msg( m_info, _( "Could not find base part in requirements for %s." ),
                          vpinfo.name() );
                 break;
             }
@@ -3343,8 +3806,6 @@ void veh_interact::complete_vehicle( Character &you )
             }
 
             you.invalidate_crafting_inventory();
-            cata_assert( you.activity.str_values.size() >= 2 );
-            const std::string &variant_id = you.activity.str_values[1];
             int partnum = !base.is_null() ? veh->install_part( d, part_id,
                           std::move( base ), variant_id ) : -1;
             if( partnum < 0 ) {
@@ -3390,7 +3851,8 @@ void veh_interact::complete_vehicle( Character &you )
             const tripoint vehp = veh->global_pos3() + tripoint( q, 0 );
             // TODO: allow boarding for non-players as well.
             Character *const pl = get_creature_tracker().creature_at<Character>( vehp );
-            if( vpinfo.has_flag( VPFLAG_BOARDABLE ) && pl ) {
+            if( vpinfo.has_flag( VPFLAG_BOARDABLE ) && pl &&
+                here.veh_at( vehp ).part_with_feature( VPFLAG_BOARDABLE, true ) ) {
                 here.board_vehicle( vehp, pl );
             }
 
@@ -3401,13 +3863,26 @@ void veh_interact::complete_vehicle( Character &you )
                 you.practice( sk.first, veh_utils::calc_xp_gain( vpinfo, sk.first, you ) );
             }
             here.add_vehicle_to_cache( veh );
+            veh->erase_work_progress( 'i', d, part_id.str(), variant_id );
+            // Installing a new part creates a new target instance.  Any stale
+            // completed remove/repair record for the old part at this mount
+            // must not be inherited by the newly installed part.
+            veh->erase_work_progress( 'r', d, part_id.str(), variant_id );
+            veh->erase_work_progress( 'o', d, part_id.str(), variant_id );
+            veh->erase_work_progress( 'O', d, part_id.str(), variant_id );
             break;
         }
 
         case 'r': {
-            cata_assert( you.activity.str_values.size() >= 2 );
-            const std::string &variant_id = you.activity.str_values[1];
-            veh_utils::repair_part( *veh, veh->part( vehicle_part ), you, variant_id );
+            if( !valid_vehicle_part_index( *veh, vehicle_part ) ) {
+                break;
+            }
+            const point work_mount = veh->part( vehicle_part ).mount;
+            const bool repaired = veh_utils::repair_part( *veh, veh->part( vehicle_part ), you,
+                                  variant_id );
+            if( repaired ) {
+                veh->erase_work_progress( 'r', work_mount, part_id.str(), variant_id );
+            }
             break;
         }
 
@@ -3483,6 +3958,10 @@ void veh_interact::complete_vehicle( Character &you )
                     return;
                 }
             }
+            if( !valid_vehicle_part_index( *veh, vehicle_part ) ) {
+                break;
+            }
+            const point work_mount = veh->part( vehicle_part ).mount;
             const requirement_data reqs = vpinfo.removal_requirements();
             if( !reqs.can_make_with_inventory( inv, is_crafting_component ) ) {
                 //~  1$s is the vehicle part name
@@ -3557,13 +4036,22 @@ void veh_interact::complete_vehicle( Character &you )
 
             if( veh->part_count( true ) < 2 ) {
                 you.add_msg_if_player( _( "You completely dismantle the %s." ), veh->name );
+                veh->erase_work_progress( appliance_removal ? 'O' : 'o', work_mount, part_id.str(),
+                                          variant_id );
                 you.activity.set_to_null();
                 // destroy vehicle clears the cache
                 here.destroy_vehicle( veh );
             } else {
                 point mount = veh->part( vehicle_part ).mount;
                 const tripoint part_pos = veh->global_part_pos3( vehicle_part );
+                // remove_part() returns whether the vehicle's origin shifted,
+                // not whether the part was removed.  Always clear the durable
+                // work record after this successful mutation; keeping it when
+                // the origin did not shift leaves a stale removal record that
+                // can block later work on the same mount.
                 veh->remove_part( vehicle_part );
+                veh->erase_work_progress( appliance_removal ? 'O' : 'o', work_mount,
+                                          part_id.str(), variant_id );
                 // part_removal_cleanup calls refresh, so parts_at_relative is valid
                 veh->part_removal_cleanup();
                 if( veh->parts_at_relative( mount, true ).empty() ) {

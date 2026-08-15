@@ -165,6 +165,28 @@ struct vpart_edge_info {
     }
 };
 
+/**
+ * Persistent state for an interrupted vehicle interaction.
+ *
+ * The legacy ACT_VEHICLE activity is intentionally short lived: its target
+ * coordinates and part index are not a reliable place to keep progress after
+ * an interruption.  This record belongs to the vehicle instead, so it moves
+ * and is saved with the vehicle just like the part being worked on.
+ */
+struct vehicle_work_progress {
+    char operation = 0;
+    point mount = point_zero;
+    std::string part_id;
+    std::string variant;
+    int part_index = -1;
+    int initial_damage = -1;
+    int work_total = 0;
+    int work_done = 0; // canonical fraction in [0, 10000000]
+
+    void serialize( JsonOut &json ) const;
+    void deserialize( const JsonObject &data );
+};
+
 class vehicle_stack : public item_stack
 {
     private:
@@ -1986,6 +2008,7 @@ class vehicle
 
         // Master list of parts installed in the vehicle.
         std::vector<vehicle_part> parts; // NOLINT(cata-serialize)
+        std::vector<vehicle_work_progress> work_progress; // NOLINT(cata-serialize)
         // Used in savegame.cpp to only save real parts to json
         std::vector<vehicle_part> real_parts() const;
         // Map of edge parts and their adjacency information
@@ -1999,6 +2022,25 @@ class vehicle
         bool should_enable_fake( const tripoint &fake_precalc, const tripoint &parent_precalc,
                                  const tripoint &neighbor_precalc ) const;
     public:
+        vehicle_work_progress *find_work_progress( char operation, const point &mount,
+                const std::string &part_id, const std::string &variant );
+        const vehicle_work_progress *find_work_progress( char operation, const point &mount,
+                const std::string &part_id, const std::string &variant ) const;
+        /**
+         * Returns all durable interrupted-work records attached to this vehicle.
+         *
+         * The records are intentionally exposed read-only so the map and vehicle
+         * interaction renderers can show work which has no real part yet (for
+         * example an interrupted installation at an empty mount point).
+         */
+        const std::vector<vehicle_work_progress> &get_work_progress() const {
+            return work_progress;
+        }
+        void erase_work_progress( char operation, const point &mount,
+                                  const std::string &part_id, const std::string &variant );
+        vehicle_work_progress &get_or_create_work_progress( char operation, const point &mount,
+                const std::string &part_id, const std::string &variant );
+
         // Number of parts contained in this vehicle
         int part_count( bool no_fake = false ) const;
         // Returns the vehicle_part with the given part number

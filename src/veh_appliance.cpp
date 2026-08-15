@@ -740,6 +740,10 @@ void veh_app_interact::remove()
     } else if( query_yn( _( "Are you sure you want to take down the %s?" ), veh->name ) ) {
         act = player_activity( ACT_VEHICLE, time, static_cast<int>( 'O' ) );
         act.str_values.push_back( vpinfo.get_id().str() );
+        // Appliance parts can also have an orientation/shape variant.  Keep
+        // the actual part variant so ACT_VEHICLE resolves the same target
+        // when the activity starts or resumes.
+        act.str_values.push_back( vp.variant );
         const point q = veh->coord_translate( vp.mount );
         map &here = get_map();
         for( const tripoint &p : veh->get_points( true ) ) {
