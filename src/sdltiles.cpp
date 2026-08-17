@@ -2155,8 +2155,29 @@ bool handle_resize( int w, int h )
     return true;
 }
 
+static void restore_windowed_for_resize()
+{
+    const Uint32 flags = SDL_GetWindowFlags( window.get() );
+    const bool is_fullscreen = ( flags & SDL_WINDOW_FULLSCREEN ) != 0;
+    const bool is_maximized = ( flags & SDL_WINDOW_MAXIMIZED ) != 0;
+    if( !is_fullscreen && !is_maximized ) {
+        return;
+    }
+
+    if( is_fullscreen && printErrorIf( SDL_SetWindowFullscreen( window.get(), 0 ) != 0,
+                                       "SDL_SetWindowFullscreen failed" ) ) {
+        return;
+    }
+
+    // SDL_SetWindowSize cannot resize a fullscreen or maximized window.  Restore
+    // the normal window state first so the terminal-size option has an effect.
+    SDL_RestoreWindow( window.get() );
+    fullscreen = false;
+}
+
 void resize_term( const int cell_w, const int cell_h )
 {
+    restore_windowed_for_resize();
     int w = cell_w * fontwidth * scaling_factor;
     int h = cell_h * fontheight * scaling_factor;
     SDL_SetWindowSize( window.get(), w, h );
@@ -2166,8 +2187,8 @@ void resize_term( const int cell_w, const int cell_h )
 
 void toggle_fullscreen_window()
 {
-    static int restore_win_w = get_option<int>( "TERMINAL_X" ) * fontwidth * scaling_factor;
-    static int restore_win_h = get_option<int>( "TERMINAL_Y" ) * fontheight * scaling_factor;
+    static int restore_win_w = get_option<int>( "TERMINAL_X" ) * fontwidth;
+    static int restore_win_h = get_option<int>( "TERMINAL_Y" ) * fontheight;
 
     if( fullscreen ) {
         if( printErrorIf( SDL_SetWindowFullscreen( window.get(), 0 ) != 0,
