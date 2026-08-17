@@ -21,6 +21,7 @@
 #include "color.h"
 #include "debug.h"
 #include "enums.h"
+#include "flag.h"
 #include "game.h"
 #include "game_inventory.h"
 #include "iexamine.h"
@@ -504,7 +505,7 @@ bool handle_liquid( item &liquid, const item *const source, const int radius,
     if( liquid.has_var( "crafter_id" ) ) {
         try {
             const character_id crafter_id( std::stoi( liquid.get_var( "crafter_id" ) ) );
-            if( npc *const crafter = overmap_buffer.find_npc( crafter_id ) ) {
+            if( const auto crafter = overmap_buffer.find_npc( crafter_id ) ) {
                 character = crafter->as_character();
             }
         } catch( const std::exception & ) {
