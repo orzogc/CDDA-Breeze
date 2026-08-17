@@ -3334,8 +3334,16 @@ void craft_activity_actor::start( player_activity &act, Character &crafter )
 {
     if( !check_if_craft_okay( craft_item, crafter ) ) {
         act.set_to_null();
+        return;
     }
-    activity_override = craft_item.get_item()->get_making().exertion_level();
+    item *const craft = craft_item.get_item();
+    if( craft == nullptr ) {
+        add_msg_debug( debugmode::DF_ACTIVITY,
+                       "craft activity target disappeared after validation" );
+        act.set_to_null();
+        return;
+    }
+    activity_override = craft->get_making().exertion_level();
     cached_crafting_speed = 0;
 
   
@@ -6216,6 +6224,13 @@ void firstaid_activity_actor::finish( player_activity &act, Character &who )
 {
     static const std::string iuse_name_string( "heal" );
 
+    if( act.targets.empty() || !act.targets.front() ) {
+        add_msg_debug( debugmode::DF_ACTIVITY,
+                       "first aid activity target is no longer available" );
+        act.set_to_null();
+        return;
+    }
+
     item_location it = act.targets.front();
     item *used_tool = it->get_usable_item( iuse_name_string );
     if( used_tool == nullptr ) {
@@ -6225,6 +6240,11 @@ void firstaid_activity_actor::finish( player_activity &act, Character &who )
     }
 
     const use_function *use_fun = used_tool->get_use( iuse_name_string );
+    if( use_fun == nullptr || use_fun->get_actor_ptr() == nullptr ) {
+        debugmsg( "Lost heal use function" );
+        act.set_to_null();
+        return;
+    }
     const heal_actor *actor = dynamic_cast<const heal_actor *>( use_fun->get_actor_ptr() );
     if( actor == nullptr ) {
         debugmsg( "iuse_actor type descriptor and actual type mismatch" );
@@ -6240,12 +6260,26 @@ void firstaid_activity_actor::finish( player_activity &act, Character &who )
         act.values.clear();
         return;
     }
+    if( act.str_values.empty() ) {
+        add_msg_debug( debugmode::DF_ACTIVITY,
+                       "first aid activity has no body part target" );
+        act.set_to_null();
+        return;
+    }
     const bodypart_id healed = bodypart_id( act.str_values[0] );
     int charges_consumed = actor->finish_using( who, *patient,
                            *used_tool, healed );
+    if( !it ) {
+        add_msg_debug( debugmode::DF_ACTIVITY,
+                       "first aid item disappeared while applying treatment" );
+        act.set_to_null();
+        return;
+    }
     std::list<item>used;
     if( it->use_charges( it->typeId(), charges_consumed, used, it.position() ) ) {
-        it.remove_item();
+        if( it ) {
+            it.remove_item();
+        }
     }
 
     // Erase activity and values.

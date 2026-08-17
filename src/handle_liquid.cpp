@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cstddef>
+#include <exception>
 #include <functional>
 #include <iterator>
 #include <list>
@@ -195,9 +196,9 @@ static bool get_liquid_target(Character& character, item &liquid, const item *co
         std::vector<item_location> containers_locations;
 
         for (item_location &loc : character.get_eligible_containers_locations_for_crafting()) {
-            item *i = loc.get_item();
-            if (i->get_remaining_capacity_for_liquid(liquid_copy,true)>0) {
-                containers_locations.push_back(loc);
+            item *const i = loc.get_item();
+            if( i != nullptr && i->get_remaining_capacity_for_liquid( liquid_copy, true ) > 0 ) {
+                containers_locations.push_back( loc );
             }
         }
 
@@ -229,8 +230,12 @@ static bool get_liquid_target(Character& character, item &liquid, const item *co
         menu.text = string_format( pgettext( "liquid", "What to do with the %s?" ), liquid_name );
     }
     std::vector<std::function<void()>> actions;
-    // Allow consuming freshly crafted liquids while still excluding monster-source liquids.
-    if( character.can_consume_as_is( liquid ) && !source_mon ) {
+    // Allow consuming freshly crafted liquids while still excluding monster-source and
+    // explicitly non-ingestible liquids (such as antiseptic).  Non-ingestible liquids
+    // may have use actions that require a persistent item location; passing a temporary
+    // liquid copy to consume_activity_actor would leave those activities with a dangling
+    // target and could crash when they finish.
+    if( character.can_consume_as_is( liquid ) && !liquid.has_flag( flag_NO_INGEST ) && !source_mon ) {
         menu.addentry( -1, true, 'e', _( "Consume it" ) );
         actions.emplace_back( [&]() {
             target.dest_opt = LD_CONSUME;
@@ -495,21 +500,34 @@ bool handle_liquid( item &liquid, const item *const source, const int radius,
     }
     struct liquid_dest_opt liquid_target;
 
-    Character* character = nullptr;
-    if (liquid.has_var("crafter_id")) {
-        character = overmap_buffer.find_npc(character_id(std::stoi(liquid.get_var("crafter_id"))))->as_character();
-    }
-    else {
+    Character *character = nullptr;
+    if( liquid.has_var( "crafter_id" ) ) {
+        try {
+            const character_id crafter_id( std::stoi( liquid.get_var( "crafter_id" ) ) );
+            if( npc *const crafter = overmap_buffer.find_npc( crafter_id ) ) {
+                character = crafter->as_character();
+            }
+        } catch( const std::exception & ) {
+            add_msg_debug( debugmode::DF_ACTIVITY,
+                           "liquid has an invalid crafter id" );
+        }
+    } else {
         character = &get_player_character();
     }
-        
 
-    if( get_liquid_target(*character,liquid, source, radius, source_pos, source_veh, source_mon,
-                           liquid_target) ) {
-        success = perform_liquid_transfer(*character, liquid, source_pos, source_veh, part_num, source_mon,
-                                           liquid_target );
-        if( success && ( ( liquid_target.dest_opt == LD_ITEM &&
-                           liquid_target.item_loc->is_watertight_container() ) || liquid_target.dest_opt == LD_KEG ) ) {
+    if( character == nullptr ) {
+        add_msg_debug( debugmode::DF_ACTIVITY,
+                       "liquid crafter is no longer available" );
+        return false;
+    }
+
+    if( get_liquid_target( *character, liquid, source, radius, source_pos, source_veh, source_mon,
+                           liquid_target ) ) {
+        success = perform_liquid_transfer( *character, liquid, source_pos, source_veh, part_num,
+                                           source_mon, liquid_target );
+        if( success && ( ( liquid_target.dest_opt == LD_ITEM && liquid_target.item_loc &&
+                           liquid_target.item_loc->is_watertight_container() ) ||
+                         liquid_target.dest_opt == LD_KEG ) ) {
             liquid.unset_flag( flag_id( json_flag_FROM_FROZEN_LIQUID ) );
         }
         return success;
