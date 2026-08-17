@@ -3843,6 +3843,9 @@ std::string options_manager::show( bool ingame, const bool world_options_only, b
                               std::max( EVEN_MINIMUM_TERM_HEIGHT * scaling_factor, TERM.y ) );
         get_option( "TERMINAL_X" ).setValue( set_term.x );
         get_option( "TERMINAL_Y" ).setValue( set_term.y );
+        // A custom terminal size needs a normal window.  Persist this choice so
+        // the next launch does not restore fullscreen and overwrite the size.
+        get_option( "FULLSCREEN" ).setValue( "no" );
         save();
 
         resize_term( ::get_option<int>( "TERMINAL_X" ) / scaling_factor,
