@@ -1,4 +1,5 @@
 PO_DIR := ./po
+PO_OVERRIDE_DIR := ./po_overrides
 MO_DIR := ./mo
 
 ifndef LANGUAGES
@@ -14,6 +15,10 @@ endif
 MO := $(patsubst %,$(MO_DIR)/%/LC_MESSAGES/cataclysm-dda.mo,$(PO))
 
 all: $(MO)
+
+$(MO_DIR)/zh_CN/LC_MESSAGES/cataclysm-dda.mo: $(PO_DIR)/zh_CN.po $(PO_OVERRIDE_DIR)/zh_CN.po
+	mkdir -p $$(dirname $@)
+	msgcat --use-first $(PO_OVERRIDE_DIR)/zh_CN.po $(PO_DIR)/zh_CN.po | msgfmt -f -o $@ -
 
 $(MO_DIR)/%/LC_MESSAGES/cataclysm-dda.mo: $(PO_DIR)/%.po
 	mkdir -p $$(dirname $@)

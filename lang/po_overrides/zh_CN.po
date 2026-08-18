@@ -1,0 +1,396 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: CDDA-Breeze zh_CN manual overrides\n"
+"Language: zh_CN\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+# NPC training UI
+msgid "What skill do you want to teach?"
+msgstr "你想教什么技能？"
+
+msgid "What skill do you want to learn?"
+msgstr "你想学习什么技能？"
+
+msgid "What style do you want to teach?"
+msgstr "你想教授哪种武术？"
+
+msgid "What style do you want to learn?"
+msgstr "你想学习哪种武术？"
+
+msgid "driving"
+msgstr "驾驶"
+
+msgid "speech"
+msgstr "交涉"
+
+msgid "swimming"
+msgstr "运动"
+
+msgid "electronics"
+msgstr "电子学"
+
+msgid "computer"
+msgstr "计算机"
+
+msgid "computers"
+msgstr "计算机"
+
+msgid "mechanics"
+msgstr "机械学"
+
+msgid "fabrication"
+msgstr "制造"
+
+msgid "cooking"
+msgstr "烹饪"
+
+msgid "tailoring"
+msgstr "裁缝"
+
+msgid "survival"
+msgstr "生存"
+
+msgid "first aid"
+msgstr "急救"
+
+msgid "health care"
+msgstr "医疗"
+
+msgid "devices"
+msgstr "装置"
+
+msgid "vehicles"
+msgstr "驾驶"
+
+msgid "athletics"
+msgstr "运动"
+
+msgid "social"
+msgstr "交涉"
+
+msgid "food handling"
+msgstr "食品处理"
+
+msgid "marksmanship"
+msgstr "射击"
+
+msgid "handguns"
+msgstr "手枪"
+
+msgid "rifles"
+msgstr "步枪"
+
+msgid "shotguns"
+msgstr "霰弹枪"
+
+msgid "submachine guns"
+msgstr "冲锋枪"
+
+msgid "launchers"
+msgstr "发射器"
+
+msgid "archery"
+msgstr "弓术"
+
+msgid "melee"
+msgstr "近战"
+
+msgid "bashing weapons"
+msgstr "钝击武器"
+
+msgid "cutting weapons"
+msgstr "斩击武器"
+
+msgid "stabbing weapons"
+msgstr "刺击武器"
+
+msgid "unarmed combat"
+msgstr "徒手格斗"
+
+msgid "dodge"
+msgstr "闪避"
+
+msgid "throwing"
+msgstr "投掷"
+
+# Gun modification slots and attachment UI
+msgid "accessories"
+msgstr "附件"
+
+msgid "accessory"
+msgstr "附件"
+
+msgid "barrel"
+msgstr "枪管"
+
+msgid "barrel extension"
+msgstr "枪管延长件"
+
+msgid "bore"
+msgstr "膛口"
+
+msgid "brass catcher"
+msgstr "弹壳收集器"
+
+msgid "grip"
+msgstr "握把"
+
+msgid "handguard"
+msgstr "护木"
+
+msgid "magazine"
+msgstr "弹匣"
+
+msgid "magazine well"
+msgstr "弹匣井"
+
+msgid "mechanism"
+msgstr "机匣机构"
+
+msgid "muzzle"
+msgstr "枪口"
+
+msgid "rail"
+msgstr "导轨"
+
+msgid "sights"
+msgstr "瞄具"
+
+msgid "sight"
+msgstr "瞄具"
+
+msgid "stock"
+msgstr "枪托"
+
+msgid "underbarrel"
+msgstr "下挂"
+
+msgid "underbarrel mount"
+msgstr "下挂接口"
+
+msgid "top rail"
+msgstr "顶部导轨"
+
+msgid "side rail"
+msgstr "侧面导轨"
+
+msgid "bottom rail"
+msgstr "底部导轨"
+
+msgid "optic"
+msgstr "光学瞄具"
+
+msgid "optics"
+msgstr "光学瞄具"
+
+msgid "scope"
+msgstr "瞄准镜"
+
+msgid "suppressor"
+msgstr "消音器"
+
+msgid "sling"
+msgstr "枪带"
+
+msgid "bayonet"
+msgstr "刺刀"
+
+msgid "bipod"
+msgstr "两脚架"
+
+msgid "foregrip"
+msgstr "前握把"
+
+msgid "laser sight"
+msgstr "激光瞄具"
+
+msgid "flashlight"
+msgstr "战术灯"
+
+msgid "choke"
+msgstr "喉缩"
+
+msgid "conversion"
+msgstr "改装套件"
+
+msgid "receiver"
+msgstr "机匣"
+
+msgid "charging handle"
+msgstr "拉机柄"
+
+msgid "trigger"
+msgstr "扳机"
+
+msgid "fire control group"
+msgstr "击发机构"
+
+msgid "mod location"
+msgstr "插件槽位"
+
+msgid "mod locations"
+msgstr "插件槽位"
+
+msgid "Gunmod location"
+msgstr "枪械插件槽位"
+
+msgid "Gunmod locations"
+msgstr "枪械插件槽位"
+
+msgid "Location:"
+msgstr "槽位："
+
+msgid "Install gunmod"
+msgstr "安装枪械插件"
+
+msgid "Remove gunmod"
+msgstr "拆卸枪械插件"
+
+msgid "This gun cannot accept that modification."
+msgstr "这把枪无法安装该插件。"
+
+msgid "This modification cannot be installed on this gun."
+msgstr "该插件无法安装到这把枪上。"
+
+msgid "There is no free slot for this modification."
+msgstr "没有可用于安装该插件的空余槽位。"
+
+msgid "You cannot install any more modifications of this type."
+msgstr "无法继续安装更多此类插件。"
+
+msgid "You install the %s on your %s."
+msgstr "你将%s安装到了%s上。"
+
+msgid "You remove the %s from your %s."
+msgstr "你从%s上拆下了%s。"
+
+# Common gun/item info labels
+msgid "Damage:"
+msgstr "伤害："
+
+msgid "Armor-pierce:"
+msgstr "穿甲："
+
+msgid "Range:"
+msgstr "射程："
+
+msgid "Dispersion:"
+msgstr "散布："
+
+msgid "Recoil:"
+msgstr "后坐力："
+
+msgid "Reload time:"
+msgstr "装填耗时："
+
+msgid "Aim speed:"
+msgstr "瞄准速度："
+
+msgid "Handling:"
+msgstr "操控："
+
+msgid "Capacity:"
+msgstr "容量："
+
+msgid "Ammo:"
+msgstr "弹药："
+
+msgid "Compatible magazines:"
+msgstr "兼容弹匣："
+
+msgid "Compatible ammunition:"
+msgstr "兼容弹药："
+
+msgid "Firing modes:"
+msgstr "射击模式："
+
+msgid "Default mod locations:"
+msgstr "默认插件槽位："
+
+msgid "Mod locations:"
+msgstr "插件槽位："
+
+msgid "Mods:"
+msgstr "插件："
+
+msgid "Requirements:"
+msgstr "需求："
+
+msgid "Skill required:"
+msgstr "所需技能："
+
+msgid "Skills required:"
+msgstr "所需技能："
+
+# Recent branch-visible strings
+msgid "View local files and logs"
+msgstr "查看本地文件与日志"
+
+msgid "You can view local files stored on this laptop."
+msgstr "你可以查看这台笔记本电脑中保存的本地文件。"
+
+msgid "You can view local files stored on this smartphone."
+msgstr "你可以查看这部智能手机中保存的本地文件。"
+
+msgid "The laptop's batteries need more charge."
+msgstr "笔记本电脑的电量不足。"
+
+msgid "The smartphone's charge is too low."
+msgstr "智能手机的电量过低。"
+
+msgid "You found nothing interesting in the local files."
+msgstr "你没有在本地文件里发现什么有趣的内容。"
+
+msgid "Shattered Armor"
+msgstr "护甲碎裂"
+
+msgid "Your armor has been shattered by a heavy attack."
+msgstr "你的护甲被猛烈攻击击碎了。"
+
+msgid "Your armor has been shattered."
+msgstr "你的护甲已经碎裂。"
+
+msgid "The armor is shattered!"
+msgstr "护甲碎裂了！"
+
+msgid "the shattered armor plating"
+msgstr "碎裂的装甲板"
+
+msgid "the body armor"
+msgstr "躯干护甲"
+
+# Frequently exposed UI actions
+msgid "Start training"
+msgstr "开始培训"
+
+msgid "Train"
+msgstr "培训"
+
+msgid "Training"
+msgstr "培训"
+
+msgid "Teach"
+msgstr "教授"
+
+msgid "Learn"
+msgstr "学习"
+
+msgid "Cancel"
+msgstr "取消"
+
+msgid "Back"
+msgstr "返回"
+
+msgid "Confirm"
+msgstr "确认"
+
+msgid "None"
+msgstr "无"
+
+msgid "unknown"
+msgstr "未知"
+
+msgid "Unknown"
+msgstr "未知"
