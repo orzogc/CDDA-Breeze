@@ -607,6 +607,9 @@ class map
         * If there's no obstacle adjacent to the target - no coverage.
         */
         int obstacle_coverage( const tripoint &loc1, const tripoint &loc2 ) const;
+        int ledge_coverage( const Creature &viewer, const tripoint &target_p ) const;
+        int ledge_coverage( const tripoint &viewer_p, const tripoint &target_p,
+                            float eye_level = 1.0f ) const;
         /**
         * Returns coverage value of the tile.
         */
@@ -1961,6 +1964,9 @@ class map
         void build_seen_cache( const tripoint &origin, int target_z, int extension_range = 60,
                                bool cumulative = false,
                                bool camera = false, int penalty = 0 );
+        void seen_cache_process_ledges( array_of_grids_of<float> &seen_caches,
+                                        const array_of_grids_of<const bool> &floor_caches,
+                                        const std::optional<tripoint> &override_p ) const;
         void apply_character_light( Character &p );
 
         int my_MAPSIZE;
@@ -2124,11 +2130,13 @@ class map
         void apply_light_source( const tripoint &p, float luminance );
         // ...this, which will apply the light after at the end of generate_lightmap, and prevent redundant
         // light rays from causing massive slowdowns, if there's a huge amount of light.
-        void add_light_source( const tripoint &p, float luminance );
+        void add_light_source( const tripoint &p, float luminance,
+                               const light_color_rgb &color = {} );
         // Handle just cardinal directions and 45 deg angles.
         void apply_directional_light( const tripoint &p, int direction, float luminance );
         void apply_light_arc( const tripoint &p, const units::angle &angle, float luminance,
-                              const units::angle &wideangle = 30_degrees );
+                              const units::angle &wideangle = 30_degrees,
+                              const light_color_rgb &color = {} );
         void apply_light_ray( cata::mdarray<bool, point_bub_ms, MAPSIZE_X, MAPSIZE_Y> &lit,
                               const tripoint &s, const tripoint &e, float luminance );
         void add_light_from_items( const tripoint &p, const item_stack::iterator &begin,

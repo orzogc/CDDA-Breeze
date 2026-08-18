@@ -464834,3 +464834,53 @@ msgstr "你将当前套装收纳进了收纳包。"
 #: src/iuse.cpp:3003
 msgid "You change outfits."
 msgstr "你换上了另一套衣物。"
+
+#. ~ Effect name
+#: data/json/effects.json
+msgid "Shattered Armor"
+msgstr "护甲碎裂"
+
+#. ~ Effect description
+#: data/json/effects.json
+msgid "Your armor has been shattered by a heavy attack."
+msgstr "你的护甲被重击击碎了。"
+
+#. ~ Effect apply message
+#: data/json/effects.json
+msgid "Your armor has been shattered."
+msgstr "你的护甲碎裂了。"
+
+#. ~ Weakpoint name
+#: data/json/monster_weakpoints/humanoid_weakpoints.json
+msgid "the body armor"
+msgstr "躯干护甲"
+
+#. ~ Weakpoint name
+#: data/json/monster_weakpoints/humanoid_weakpoints.json
+msgid "the shattered armor plating"
+msgstr "碎裂的装甲板"
+
+#. ~ Weakpoint effect message
+#: data/json/monster_weakpoints/humanoid_weakpoints.json
+msgid "The armor is shattered!"
+msgstr "护甲碎裂了！"
+
+#. ~ Local files action menu
+#: data/json/items/tool/electronics.json
+msgid "View local files and logs"
+msgstr "查看本地文件和日志"
+
+#. ~ Local files action description
+#: data/json/items/tool/electronics.json
+msgid "You can view local files stored on this laptop."
+msgstr "你可以查看存储在这台笔记本电脑上的本地文件。"
+
+#. ~ Local files action description
+#: data/json/items/tool/electronics.json
+msgid "You can view local files stored on this smartphone."
+msgstr "你可以查看存储在这部智能手机上的本地文件。"
+
+#. ~ Local files empty result
+#: data/json/effect_on_condition.json
+msgid "You found nothing interesting in the local files."
+msgstr "你没有在本地文件中发现有趣的内容。"
