@@ -30,7 +30,7 @@ CPP_IDS = (
     'explosion', 'explosion_weak', 'explosion_medium',
     'animation_hit', 'player_male', 'player_female', 'npc_male', 'npc_female',
     'animation_line', 'line_target', 'line_trail',
-    'infrared_creature',
+    'infrared_creature', 'shadow',
 )
 VP_STANDARD_SYMBOLS = {
     "cover": "^", "cross": "c", "horizontal": "h", "horizontal_2": "=",

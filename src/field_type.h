@@ -20,6 +20,7 @@
 #include "effect.h"
 #include "effect_source.h"
 #include "enums.h"
+#include "lightmap.h"
 #include "mapdata.h"
 #include "map_field.h"
 #include "translations.h"
@@ -108,6 +109,7 @@ struct field_intensity_level {
     int monster_spawn_radius = 0;
     mongroup_id monster_spawn_group;
     float light_emitted = 0.0f;
+    light_color_rgb light_color;
     float local_light_override = -1.0f;
     float translucency = 0.0f;
     int convection_temperature_mod = 0;
