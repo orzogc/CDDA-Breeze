@@ -4964,6 +4964,7 @@
   {
     "type": "talk_topic",
     "id": "TALK_FRIEND",
+    "insert_before_standard_exits": true,
     "responses": [
       {
         "text": "和梁知遥聊聊她在意的事。",

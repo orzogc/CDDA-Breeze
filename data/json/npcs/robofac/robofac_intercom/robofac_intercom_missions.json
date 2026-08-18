@@ -53,6 +53,7 @@
         "topic": "MISSION_ROBOFAC_INTERCOM_ROBOT_SM_1_COMPLETE"
       },
       {
+        "response_id": "hub_contract_return_iron_safari_failure",
         "text": "I found the robot, but…  [Hand over the trifacet remains.]",
         "condition": { "and": [ { "u_has_mission": "MISSION_ROBOFAC_INTERCOM_ROBOT_SM_1" }, { "u_has_item": "broken_yrax_trifacet" } ] },
         "effect": [
@@ -103,6 +104,7 @@
         "topic": "MISSION_ROBOFAC_INTERCOM_ROBOT_SM_1_OFFER"
       },
       {
+        "response_id": "hub_contract_offer_hazard_meteorology",
         "text": "[Contract: Hazard Meteorology]",
         "condition": {
           "and": [

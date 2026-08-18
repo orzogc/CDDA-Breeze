@@ -12,6 +12,7 @@
     "type": "talk_topic",
     "responses": [
       {
+        "response_id": "travel_hub_lixa_return",
         "text": "我从LIXA实验室那回来了。[交出数据。]",
         "condition": {
           "and": [
@@ -41,6 +42,7 @@
         "topic": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_COMPLETE"
       },
       {
+        "response_id": "travel_hub_lixa_offer",
         "text": "[合约：数据回收]",
         "condition": {
           "and": [
@@ -78,7 +80,19 @@
         "topic": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1_OFFER"
       }
     ],
-    "//LIXA": "只向主合同话题及微风原有的合同别名话题追加LIXA专属响应；加载顺序使其位于本体合同与“谈点其他事情”之后，不复制任何本体响应。"
+    "response_patches": [
+      {
+        "op": "move_after",
+        "target": "travel_hub_lixa_return",
+        "anchor": "hub_contract_return_iron_safari_failure"
+      },
+      {
+        "op": "move_after",
+        "target": "travel_hub_lixa_offer",
+        "anchor": "hub_contract_offer_hazard_meteorology"
+      }
+    ],
+    "//LIXA": "利用微风对话响应补丁接口，将LIXA交付项并入任务交付区，将数据回收合约并入普通合约区，不复制任何本体响应。"
   },
   {
     "id": "MISSION_ROBOFAC_INTERCOM_LIXA_SM_1",

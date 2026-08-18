@@ -1244,6 +1244,7 @@
     "id": "TALK_ISHERWOOD_LISA",
     "responses": [
       {
+        "response_id": "travel_maya_lisa_where",
         "text": "玛雅·斯卡利特在哪里？",
         "topic": "TALK_TRAVEL_LISA_ABOUT_MAYA",
         "condition": {
@@ -1268,6 +1269,13 @@
             }
           ]
         }
+      }
+    ],
+    "response_patches": [
+      {
+        "op": "move_before",
+        "target": "travel_maya_lisa_where",
+        "anchor": "isherwood_lisa_leave"
       }
     ]
   },
@@ -1311,6 +1319,7 @@
     "id": "TALK_ISHERWOOD_CLAIRE",
     "responses": [
       {
+        "response_id": "travel_maya_claire_radio_group",
         "text": "听说最近有一批无线电互助队的人来到农场。",
         "topic": "TALK_TRAVEL_CLAIRE_ABOUT_MAYA",
         "condition": {
@@ -1336,6 +1345,13 @@
           ]
         }
       }
+    ],
+    "response_patches": [
+      {
+        "op": "move_before",
+        "target": "travel_maya_claire_radio_group",
+        "anchor": "isherwood_claire_mission"
+      }
     ]
   },
   {
@@ -1354,6 +1370,7 @@
     "id": "TALK_ISHERWOOD_JACK",
     "responses": [
       {
+        "response_id": "travel_maya_jack_rescue",
         "text": "玛雅那一行人是怎么被接进来的？",
         "topic": "TALK_TRAVEL_JACK_ABOUT_MAYA",
         "condition": {
@@ -1379,6 +1396,13 @@
           ]
         }
       }
+    ],
+    "response_patches": [
+      {
+        "op": "move_before",
+        "target": "travel_maya_jack_rescue",
+        "anchor": "isherwood_jack_mission"
+      }
     ]
   },
   {
@@ -1400,6 +1424,7 @@
     ],
     "responses": [
       {
+        "response_id": "travel_maya_carlos_barry",
         "text": "玛雅说她想替你们做点事，也提到了巴里。",
         "topic": "TALK_TRAVEL_CARLOS_ABOUT_MAYA",
         "condition": {
@@ -1429,6 +1454,18 @@
   },
   {
     "type": "talk_topic",
+    "id": "TALK_ISHERWOOD_CARLOS",
+    "responses": [],
+    "response_patches": [
+      {
+        "op": "move_before",
+        "target": "travel_maya_carlos_barry",
+        "anchor": "isherwood_carlos_mission"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
     "id": "TALK_TRAVEL_CARLOS_ABOUT_MAYA",
     "dynamic_line": "卡洛斯哼了一声。\n\n“我们给她一张床，不是买下一名伤员。那天开车出去，是我们自己作的决定；她没必要把每一发子弹都背成债。”\n\n他把一件缺口的工具扔回桌面。\n\n“不过她做的箭确实有用。练习、打猎、守夜都能省下一些枪弹。她要报答，就安安稳稳把腿养好，别背着弓一瘸一拐去找巴里。”\n\n“你真想帮，先把我缺的铁砧找来。不是因为铁砧比巴里重要——是因为农场的修理全停着，而我不会把克里斯的去向交给一个刚进门的陌生人。”",
     "responses": [
@@ -1446,6 +1483,7 @@
     ],
     "responses": [
       {
+        "response_id": "travel_maya_chris_barry",
         "text": "玛雅在楼上养伤。她也想帮忙找巴里。",
         "topic": "TALK_TRAVEL_CHRIS_ABOUT_MAYA",
         "condition": {
@@ -1470,6 +1508,13 @@
             }
           ]
         }
+      }
+    ],
+    "response_patches": [
+      {
+        "op": "move_before",
+        "target": "travel_maya_chris_barry",
+        "anchor": "isherwood_chris_leave"
       }
     ]
   },

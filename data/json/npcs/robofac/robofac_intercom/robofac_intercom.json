@@ -266,6 +266,7 @@
       { "text": "Let's discuss contracts.", "topic": "TALK_ROBOFAC_INTERCOM_CONTRACTS" },
       { "text": "Let's trade.", "topic": "TALK_ROBOFAC_INTERCOM_SERVICES", "effect": "start_trade" },
       {
+        "response_id": "hub_services_prototypes",
         "text": "Let's discuss prototypes.",
         "condition": { "u_has_var": "u_hub_prototypes", "type": "dialogue", "context": "intercom", "value": "yes" },
         "topic": "TALK_ROBOFAC_INTERCOM_PROTOTYPE_MENU"
@@ -391,6 +392,7 @@
         "topic": "TALK_ROBOFAC_INTERCOM_BUY_PROTECTIVE_GEAR"
       },
       {
+        "response_id": "hub_services_local_map",
         "text": "You mentioned you had a map of the area?",
         "condition": {
           "and": [

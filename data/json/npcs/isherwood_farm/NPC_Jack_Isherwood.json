@@ -149,6 +149,7 @@
         }
       },
       {
+        "response_id": "isherwood_jack_mission",
         "text": "Can I do anything for you?",
         "topic": "TALK_MISSION_LIST",
         "condition": { "not": { "u_is_wearing": "badge_marshal" } }
