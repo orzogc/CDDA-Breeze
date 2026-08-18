@@ -4847,12 +4847,21 @@ static bool check_if_disassemble_okay( item_location target, Character &who )
                "<npcname> stops disassembling." ) );
         return false;
     }
+    if( disassembly->typeId() == itype_disassembly &&
+        ( !disassembly->is_craft() || disassembly->components.empty() ) ) {
+        who.add_msg_if_player( _( "You cannot disassemble this." ) );
+        return false;
+    }
     return true;
 }
 
 void disassemble_activity_actor::start( player_activity &act, Character &who )
 {
     if( act.targets.empty() ) {
+        act.set_to_null();
+        return;
+    }
+    if( !check_if_disassemble_okay( act.targets.back(), who ) ) {
         act.set_to_null();
         return;
     }

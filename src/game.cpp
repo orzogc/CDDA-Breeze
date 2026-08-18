@@ -9251,6 +9251,10 @@ static void add_disassemblables( uilist &menu,
                                                     it.tname(), stack.second );
             recipe uncraft_recipe;
             if( it.typeId() == itype_disassembly ) {
+                // A debug-created bare disassembly has no recipe to display.
+                if( !it.is_craft() ) {
+                    continue;
+                }
                 uncraft_recipe = it.get_making();
             } else {
                 uncraft_recipe = recipe_dictionary::get_uncraft( it.typeId() );
@@ -9680,6 +9684,10 @@ void game::butcher()
             for( const auto &stack : disassembly_stacks ) {
                 recipe uncraft_recipe;
                 if( stack.first->typeId() == itype_disassembly ) {
+                    // Ignore malformed debug-only disassembly items without a recipe.
+                    if( !stack.first->is_craft() ) {
+                        continue;
+                    }
                     uncraft_recipe = stack.first->get_making();
                 } else {
                     uncraft_recipe = recipe_dictionary::get_uncraft( stack.first->typeId() );
