@@ -224,6 +224,26 @@ static const zone_type_id zone_type_LOOT_IGNORE_FAVORITES( "LOOT_IGNORE_FAVORITE
 static const zone_type_id zone_type_zone_strip( "zone_strip" );
 static const zone_type_id zone_type_zone_unload_all( "zone_unload_all" );
 
+// In-progress crafting stores 0-100% as 0-10,000,000 in an int.  Clamp while
+// the value is still floating-point so an extreme move delta can never be
+// converted to an out-of-range int first (which previously could wrap to a
+// large negative progress value such as -21474%).
+static int clamp_craft_progress( const double progress )
+{
+    constexpr int max_progress = 10'000'000;
+
+    if( !std::isfinite( progress ) ) {
+        return progress > 0.0 ? max_progress : 0;
+    }
+    if( progress <= 0.0 ) {
+        return 0;
+    }
+    if( progress >= max_progress ) {
+        return max_progress;
+    }
+    return static_cast<int>( std::round( progress ) );
+}
+
 std::string activity_actor::get_progress_message( const player_activity &act ) const
 {
     if( act.moves_total > 0 ) {
@@ -3406,22 +3426,22 @@ void craft_activity_actor::do_turn( player_activity &act, Character &crafter )
 
     // item_counter represents the percent progress relative to the base batch time
     // stored precise to 5 decimal places ( e.g. 67.32 percent would be stored as 6'732'000 )
-    const int old_counter = craft.item_counter;
+    // Repair persisted out-of-range progress before calculating practice/tool deltas.
+    const int old_counter = clamp_craft_progress( craft.item_counter );
+    craft.item_counter = old_counter;
 
     // Delta progress in moves adjusted for current crafting speed /
     //crafter.exertion_adjusted_move_multiplier( exertion_level() )
-    int spent_moves = crafter.get_moves() * crafter.exertion_adjusted_move_multiplier(
-                          exertion_level() );
+    const double spent_moves = static_cast<double>( crafter.get_moves() ) *
+                               crafter.exertion_adjusted_move_multiplier( exertion_level() );
     const double delta_progress = spent_moves * base_total_moves / cur_total_moves;
     // Current progress in moves
     const double current_progress = craft.item_counter * base_total_moves / 10'000'000.0 +
                                     delta_progress;
     // Current progress as a percent of base_total_moves to 2 decimal places
-    craft.item_counter = std::round( current_progress / base_total_moves * 10'000'000.0 );
+    craft.item_counter = clamp_craft_progress(
+                             current_progress / base_total_moves * 10'000'000.0 );
     crafter.set_moves( 0 );
-
-    // This is to ensure we don't over count skill steps
-    craft.item_counter = std::min( craft.item_counter, 10'000'000 );
 
     // This nominal craft time is also how many practice ticks to perform
     // spread out evenly across the actual duration.
@@ -4902,12 +4922,16 @@ void disassemble_activity_actor::do_turn( player_activity &act, Character &who )
         return;
     }
 
-    if( moves_total == 0 ) {
+    // Zero is an instant disassembly; treat any invalid negative total the same way
+    // instead of leaving the activity stuck with a negative denominator.
+    if( moves_total <= 0 ) {
         craft.item_counter = 10'000'000;
     } else {
-        const int spent_moves = who.get_moves() * who.exertion_adjusted_move_multiplier( exertion_level() );
-        craft.item_counter += std::round( spent_moves * crafting_speed * 10'000'000.0 / moves_total );
-        craft.item_counter = std::min( craft.item_counter, 10'000'000 );
+        const double spent_moves = static_cast<double>( who.get_moves() ) *
+                                   who.exertion_adjusted_move_multiplier( exertion_level() );
+        const double next_progress = static_cast<double>( craft.item_counter ) +
+                                     spent_moves * crafting_speed * 10'000'000.0 / moves_total;
+        craft.item_counter = clamp_craft_progress( next_progress );
         who.set_moves( 0 );
     }
 
