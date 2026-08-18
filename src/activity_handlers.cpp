@@ -2335,15 +2335,20 @@ void activity_handlers::vehicle_do_turn( player_activity *act, Character *you )
         return;
     }
 
-    const requirement_data reqs = vehicle_work_requirements( *work, veh, part_index );
-    you->invalidate_crafting_inventory();
-    if( !reqs.can_make_with_inventory( you->crafting_inventory(), is_crafting_component ) ) {
-        act->moves_left = moves_left_for_vehicle_work( *work );
-        const std::string name = operation == 'i' ? vpart_id( part_id ).obj().name() :
-                                 veh->part( part_index ).name();
-        vehicle_work_requirement_message( *you, *work, name );
-        you->cancel_activity();
-        return;
+    // Re-check requirements at most once per 1000 moves of progress instead of
+    // every turn: rebuilding the crafting inventory is expensive, and the
+    // start/finish checks cover the common cases.  The final check is always
+    // performed so a job cannot complete without its materials.
+    if( ( act->moves_left % 1000 ) < 200 || act->moves_left <= 200 ) {
+        const requirement_data reqs = vehicle_work_requirements( *work, veh, part_index );
+        if( !reqs.can_make_with_inventory( you->crafting_inventory(), is_crafting_component ) ) {
+            act->moves_left = moves_left_for_vehicle_work( *work );
+            const std::string name = operation == 'i' ? vpart_id( part_id ).obj().name() :
+                                     veh->part( part_index ).name();
+            vehicle_work_requirement_message( *you, *work, name );
+            you->cancel_activity();
+            return;
+        }
     }
 
     if( part_index >= 0 ) {
