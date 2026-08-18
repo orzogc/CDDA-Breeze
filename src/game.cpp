@@ -10992,7 +10992,10 @@ point game::place_player( const tripoint &dest_loc, bool quick )
     }
 
     // If the new tile is a boardable part, board it
-    if( !was_in_control_same_pos && vp1.part_with_feature( "BOARDABLE", true ) && !u.is_mounted() ) {
+    // Re-query after update_map(): vp1 was obtained before a possible map
+    // shift and may refer to the old vehicle instance.
+    if( !was_in_control_same_pos && m.veh_at( u.pos() ).part_with_feature( "BOARDABLE", true ) &&
+        !u.is_mounted() ) {
         m.board_vehicle( u.pos(), &u );
     }
 

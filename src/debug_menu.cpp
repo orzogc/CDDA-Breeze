@@ -2502,7 +2502,11 @@ static void debug_menu_spawn_vehicle()
                 // TODO: Allow picking this when add_vehicle has 3d argument
                 vehicle *veh = here.add_vehicle(
                                    selected_opt, dest, -90_degrees, 100, veh_cond_menu.ret - 1 );
-                if( veh != nullptr ) {
+                // The selected vehicle may not have a boardable part at its
+                // center (for example, helicopters).  Only auto-board when
+                // the spawn tile actually has an unbroken boardable part.
+                if( veh != nullptr &&
+                    here.veh_at( dest ).part_with_feature( VPFLAG_BOARDABLE, true ) ) {
                     here.board_vehicle( dest, &player_character );
                 }
             }

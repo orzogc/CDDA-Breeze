@@ -435385,6 +435385,10 @@ msgstr "载具部件类别"
 msgid "Vehicle parts"
 msgstr "载具部件"
 
+#: src/init.cpp
+msgid "Vehicle color palettes"
+msgstr "载具颜色调色板"
+
 #: src/init.cpp:695 src/init.cpp:811
 msgid "Traps"
 msgstr "陷阱"
@@ -461419,6 +461423,10 @@ msgstr "选择部件"
 msgid "<color_white>Time required:</color>\n"
 msgstr "<color_white>耗时：</color>\n"
 
+#: src/veh_interact.cpp
+msgid "<color_white>Time remaining:</color>\n"
+msgstr "<color_white>剩余时间：</color>\n"
+
 #: src/veh_interact.cpp:328
 msgid "<color_white>Skills required:</color>\n"
 msgstr "<color_white>所需技能：</color>\n"
@@ -462041,6 +462049,35 @@ msgstr "补充"
 msgctxt "veh_interact"
 msgid "remove"
 msgstr "拆卸"
+
+#: src/veh_interact.cpp:147
+#, c-format
+msgctxt "veh_interact"
+msgid "[%1$s %2$d%%]"
+msgstr "[%1$s %2$d%%]"
+
+#: src/veh_interact.cpp
+#, c-format
+msgctxt "veh_interact"
+msgid "%1$s has interrupted %2$s work at %3$d%%. Starting %4$s will discard that progress. Continue (Y/N or the current operation key)?"
+msgstr "%1$s 已有中断的%2$s工作（%3$d%%）。开始%4$s将放弃这部分进度。按 Y/N 或当前操作键确认？"
+
+#: src/veh_interact.cpp
+msgctxt "veh_interact"
+msgid "Interrupted work"
+msgstr "中断工作"
+
+#: src/vehicle_display.cpp
+#, c-format
+msgctxt "veh_interact"
+msgid "%1$s: %2$s %3$d%%"
+msgstr "%1$s：%2$s %3$d%%"
+
+#: src/veh_interact.cpp
+#, c-format
+msgctxt "veh_interact"
+msgid "%1$s: %2$s %3$d%% @ (%4$d,%5$d)"
+msgstr "%1$s：%2$s %3$d%% @ (%4$d,%5$d)"
 
 #: src/veh_interact.cpp:2844
 msgctxt "veh_interact"

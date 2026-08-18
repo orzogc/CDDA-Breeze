@@ -29,6 +29,91 @@ static const ammotype ammo_battery( "battery" );
 static const itype_id fuel_type_muscle( "muscle" );
 static const itype_id itype_battery( "battery" );
 
+namespace
+{
+
+bool vehicle_work_matches_part_for_display( const vehicle_work_progress &work,
+        const vehicle_part &part )
+{
+    if( work.operation == 'i' || part.removed || work.mount != part.mount ||
+        work.part_id != part.info().get_id().str() || work.variant != part.variant ) {
+        return false;
+    }
+
+    // A repair record is only still valid while the part has the damage level
+    // that was present when the work started.  This prevents a stale record
+    // from being shown on a newly damaged or already repaired part.
+    return ( work.operation != 'r' && work.operation != 'm' ) || work.initial_damage < 0 ||
+           work.initial_damage == part.damage();
+}
+
+int find_vehicle_work_part_for_display( const vehicle &veh,
+                                        const vehicle_work_progress &work )
+{
+    if( work.part_index >= 0 && work.part_index < veh.part_count() &&
+        vehicle_work_matches_part_for_display( work, veh.part( work.part_index ) ) ) {
+        return work.part_index;
+    }
+
+    // Part indices can change after another part is removed.  Fall back to
+    // the stable mount/id/variant identity when it still identifies exactly
+    // one part.
+    int found = -1;
+    for( int index = 0; index < veh.part_count(); ++index ) {
+        if( !vehicle_work_matches_part_for_display( work, veh.part( index ) ) ) {
+            continue;
+        }
+        if( found >= 0 ) {
+            return -1;
+        }
+        found = index;
+    }
+    return found;
+}
+
+std::string vehicle_work_operation_name_for_display( const char operation )
+{
+    switch( operation ) {
+        case 'i':
+            return pgettext( "veh_interact", "install" );
+        case 'r':
+        case 'm':
+            return pgettext( "veh_interact", "repair" );
+        case 'o':
+        case 'O':
+            return pgettext( "veh_interact", "remove" );
+        default:
+            return std::string();
+    }
+}
+
+int vehicle_work_percentage_for_display( const vehicle_work_progress &work )
+{
+    return std::clamp( static_cast<int>( std::lround( 100.0 * work.work_done / 10000000.0 ) ),
+                       0, 99 );
+}
+
+std::string vehicle_part_work_progress_for_display( const vehicle &veh, const int part_index )
+{
+    std::vector<std::string> entries;
+    for( const vehicle_work_progress &work : veh.get_work_progress() ) {
+        if( work.work_done >= 10000000 || work.operation == 'i' ||
+            find_vehicle_work_part_for_display( veh, work ) != part_index ) {
+            continue;
+        }
+
+        const std::string operation = vehicle_work_operation_name_for_display( work.operation );
+        if( operation.empty() ) {
+            continue;
+        }
+        entries.push_back( string_format( pgettext( "veh_interact", "[%1$s %2$d%%]" ),
+                                           operation, vehicle_work_percentage_for_display( work ) ) );
+    }
+    return entries.empty() ? std::string() : " " + enumerate_as_string( entries );
+}
+
+} // namespace
+
 std::string vehicle::disp_name() const
 {
     return string_format( _( "the %s" ), name );
@@ -183,6 +268,7 @@ int vehicle::print_part_list( const catacurses::window &win, int y1, const int m
         }
 
         std::string partname = vp.name();
+        partname += vehicle_part_work_progress_for_display( *this, pl[i] );
 
         if( vp.is_fuel_store() && !vp.ammo_current().is_null() ) {
             if( detail ) {
@@ -238,6 +324,34 @@ int vehicle::print_part_list( const catacurses::window &win, int y1, const int m
                        _( "Exterior" ) );
         }
         y++;
+    }
+
+    // Installations do not have a vehicle_part until they finish.  If the
+    // selected tile already has other parts, keep the in-progress installation
+    // visible in this list as a separate row as well.
+    for( const vehicle_work_progress &work : work_progress ) {
+        if( work.operation != 'i' || work.work_done >= 10000000 ||
+            work.mount != parts[p].mount ) {
+            continue;
+        }
+        const vpart_id install_id( work.part_id );
+        if( !install_id.is_valid() ) {
+            continue;
+        }
+        if( y >= max_y ) {
+            mvwprintz( win, point( 1, y ), c_yellow, _( "More parts here…" ) );
+            ++y;
+            break;
+        }
+
+        const std::string partname = string_format(
+            pgettext( "veh_interact", "%1$s: %2$s %3$d%%" ),
+            pgettext( "veh_interact", "install" ), install_id.obj().name(),
+            vehicle_work_percentage_for_display( work ) );
+        mvwprintz( win, point( 1, y ), c_yellow, "-" );
+        trim_and_print( win, point( 2, y ), getmaxx( win ) - 4, c_yellow, partname );
+        wprintz( win, c_yellow, "-" );
+        ++y;
     }
 
     // print the label for this location

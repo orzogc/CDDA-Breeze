@@ -2829,8 +2829,12 @@ void consume_activity_actor::start( player_activity &act, Character &guy )
             moves = to_moves<int>( guy.get_consume_time( consume_item ) );
         }
     } else {
-        debugmsg( "Item/location to be consumed should not be null." );
+        add_msg_debug( debugmode::DF_ACTIVITY,
+                       "consume activity target is no longer available at start" );
         canceled = true;
+        consume_menu_selections.clear();
+        consume_menu_selected_items.clear();
+        consume_menu_filter.clear();
     }
 
     act.moves_total = moves;
@@ -2859,7 +2863,12 @@ void consume_activity_actor::finish( player_activity &act, Character & )
         } else if( !consume_item.is_null() ) {
             player_character.consume( consume_item, /*force=*/true );
         } else {
-            debugmsg( "Item location/name to be consumed should not be null." );
+            add_msg_debug( debugmode::DF_ACTIVITY,
+                           "consume activity target is no longer available at finish" );
+            canceled = true;
+            consume_menu_selections.clear();
+            consume_menu_selected_items.clear();
+            consume_menu_filter.clear();
         }
         if( player_character.get_value( "THIEF_MODE_KEEP" ) != "YES" ) {
             player_character.set_value( "THIEF_MODE", "THIEF_ASK" );
@@ -3133,14 +3142,22 @@ void unload_activity_actor::start( player_activity &act, Character & )
 
 void unload_activity_actor::finish( player_activity &act, Character &who )
 {
+    // Liquid handling can assign a new activity while unloading.  Copy the
+    // location before nullifying this activity, because replacing the actor
+    // can destroy the object that owns `target` before unload() returns.
+    item_location target_copy = target;
     act.set_to_null();
-    unload( who, target );
+    unload( who, target_copy );
 }
 
 void unload_activity_actor::unload( Character &who, item_location &target )
 {
     int qty = 0;
-    item &it = *target.get_item();
+    item *const initial_target = target.get_item();
+    if( initial_target == nullptr ) {
+        return;
+    }
+    item &it = *initial_target;
     bool actually_unloaded = false;
 
     if( it.is_container() ) {
@@ -3153,22 +3170,61 @@ void unload_activity_actor::unload( Character &who, item_location &target )
                  item_pocket::pocket_type::MAGAZINE
              } ) {
 
-            for( item *contained : it.all_items_top( ptype, true ) ) {
-                int old_charges = contained->charges;
-                const bool consumed = who.add_or_drop_with_msg( *contained, true, &it, contained );
-                if( consumed || contained->charges != old_charges ) {
-                    changed = true;
-                    handler.unseal_pocket_containing( item_location( target, contained ) );
+            item *const container = target.get_item();
+            if( container == nullptr ) {
+                return;
+            }
+
+            // Liquid handling can start another activity, restack items, or remove
+            // the source item.  Snapshot safe locations before invoking it so no
+            // raw item pointer from the list is used after that callback returns.
+            std::vector<item_location> contained_locations;
+            for( item *contained : container->all_items_top( ptype, true ) ) {
+                contained_locations.emplace_back( target, contained );
+            }
+
+            for( item_location &contained_loc : contained_locations ) {
+                item *const current_container = target.get_item();
+                item *const contained = contained_loc.get_item();
+                if( current_container == nullptr || contained == nullptr ||
+                    current_container->contained_where( *contained ) == nullptr ) {
+                    continue;
                 }
+
+                const int old_charges = contained->charges;
+                const bool consumed = who.add_or_drop_with_msg( *contained, true, current_container,
+                                          contained );
+                const item *const current_contained = contained_loc.get_item();
+                if( consumed || current_contained == nullptr || current_contained->charges != old_charges ) {
+                    changed = true;
+                    handler.unseal_pocket_containing( contained_loc );
+                }
+
                 if( consumed ) {
-                    it.remove_item( *contained );
+                    item *const container_after = target.get_item();
+                    item *const contained_after = contained_loc.get_item();
+                    if( container_after != nullptr && contained_after != nullptr &&
+                        container_after->contained_where( *contained_after ) != nullptr ) {
+                        contained_loc.remove_item();
+                    }
+                }
+
+                // A liquid action may have assigned a consume/fill activity.  Do
+                // not continue walking a snapshot after handing control to it.
+                if( !who.activity.is_null() ) {
+                    break;
                 }
             }
 
-            if( changed ) {
-                it.on_contents_changed();
+            if( changed || !who.activity.is_null() ) {
+                if( item *const current_container = target.get_item() ) {
+                    current_container->on_contents_changed();
+                }
                 who.invalidate_weight_carried_cache();
                 handler.handle_by( who );
+                // handle_by can spill, restack, or drop the container and invalidate
+                // target and all item locations.  Do not use them again here.
+                return;
             }
         }
 
@@ -3278,8 +3334,16 @@ void craft_activity_actor::start( player_activity &act, Character &crafter )
 {
     if( !check_if_craft_okay( craft_item, crafter ) ) {
         act.set_to_null();
+        return;
     }
-    activity_override = craft_item.get_item()->get_making().exertion_level();
+    item *const craft = craft_item.get_item();
+    if( craft == nullptr ) {
+        add_msg_debug( debugmode::DF_ACTIVITY,
+                       "craft activity target disappeared after validation" );
+        act.set_to_null();
+        return;
+    }
+    activity_override = craft->get_making().exertion_level();
     cached_crafting_speed = 0;
 
   
@@ -6160,6 +6224,13 @@ void firstaid_activity_actor::finish( player_activity &act, Character &who )
 {
     static const std::string iuse_name_string( "heal" );
 
+    if( act.targets.empty() || !act.targets.front() ) {
+        add_msg_debug( debugmode::DF_ACTIVITY,
+                       "first aid activity target is no longer available" );
+        act.set_to_null();
+        return;
+    }
+
     item_location it = act.targets.front();
     item *used_tool = it->get_usable_item( iuse_name_string );
     if( used_tool == nullptr ) {
@@ -6169,6 +6240,11 @@ void firstaid_activity_actor::finish( player_activity &act, Character &who )
     }
 
     const use_function *use_fun = used_tool->get_use( iuse_name_string );
+    if( use_fun == nullptr || use_fun->get_actor_ptr() == nullptr ) {
+        debugmsg( "Lost heal use function" );
+        act.set_to_null();
+        return;
+    }
     const heal_actor *actor = dynamic_cast<const heal_actor *>( use_fun->get_actor_ptr() );
     if( actor == nullptr ) {
         debugmsg( "iuse_actor type descriptor and actual type mismatch" );
@@ -6184,12 +6260,26 @@ void firstaid_activity_actor::finish( player_activity &act, Character &who )
         act.values.clear();
         return;
     }
+    if( act.str_values.empty() ) {
+        add_msg_debug( debugmode::DF_ACTIVITY,
+                       "first aid activity has no body part target" );
+        act.set_to_null();
+        return;
+    }
     const bodypart_id healed = bodypart_id( act.str_values[0] );
     int charges_consumed = actor->finish_using( who, *patient,
                            *used_tool, healed );
+    if( !it ) {
+        add_msg_debug( debugmode::DF_ACTIVITY,
+                       "first aid item disappeared while applying treatment" );
+        act.set_to_null();
+        return;
+    }
     std::list<item>used;
     if( it->use_charges( it->typeId(), charges_consumed, used, it.position() ) ) {
-        it.remove_item();
+        if( it ) {
+            it.remove_item();
+        }
     }
 
     // Erase activity and values.

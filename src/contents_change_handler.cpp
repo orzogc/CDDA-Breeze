@@ -12,13 +12,17 @@ void contents_change_handler::unseal_pocket_containing( const item_location &loc
 {
     if( loc.has_parent() ) {
         item_location parent = loc.parent_item();
-        item_pocket *const pocket = parent->contained_where( *loc );
-        if( pocket ) {
+        if( !parent ) {
+            return;
+        }
+
+        // The child may have been consumed or moved since its location was
+        // captured.  In that case there is no pocket to unseal, but the parent
+        // still needs its contents and weight caches refreshed.
+        if( item_pocket *const pocket = loc.parent_pocket() ) {
             // on_contents_changed restacks the pocket and should be called later
             // in Character::handle_contents_changed
             pocket->unseal();
-        } else {
-            debugmsg( "parent container does not contain item" );
         }
         parent.on_contents_changed();
         add_unsealed( parent );

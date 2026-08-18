@@ -654,6 +654,32 @@ class cata_tiles
             return draw_from_id_string(id, category, subcategory, pos, subtile, rota, ll, apply_night_vision_goggles, height_3d);
         }
 
+        bool draw_from_id_string_public( const std::string &id, TILE_CATEGORY category,
+                                         const std::string &subcategory, const tripoint &pos,
+                                         int subtile, int rota, lit_level ll,
+                                         bool apply_night_vision_goggles, int &height_3d,
+                                         const vehicle &veh, const point &mount, bool roof )
+        {
+            pending_part_tint_ = get_vpart_tint( veh, mount, roof );
+            const bool ret = draw_from_id_string( id, category, subcategory, pos, subtile, rota,
+                               ll, apply_night_vision_goggles, height_3d );
+            pending_part_tint_.reset();
+            return ret;
+        }
+
+        bool draw_item_highlight_public( const tripoint &pos ) {
+            return draw_item_highlight( pos );
+        }
+
+        // Vehicle work uses the regular tile highlight instead of the item
+        // highlight.  The latter is intentionally shaped like an item marker
+        // and makes interrupted vehicle work look as if there were an item on
+        // the part.
+        bool draw_vehicle_work_highlight_public( const tripoint &pos ) {
+            return draw_from_id_string( "highlight", TILE_CATEGORY::NONE, "", pos, 0, 0,
+                                        lit_level::LIT, false );
+        }
+
         void init_draw_below_override( const tripoint &p, bool draw );
         void void_draw_below_override();
 

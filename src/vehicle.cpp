@@ -1328,7 +1328,7 @@ bool vehicle::can_unmount( const int p ) const
 
 bool vehicle::can_unmount( const int p, std::string &reason ) const
 {
-    if( p < 0 || p > static_cast<int>( parts.size() ) ) {
+    if( p < 0 || p >= static_cast<int>( parts.size() ) ) {
         return false;
     }
 
@@ -7984,6 +7984,54 @@ vehicle_part &vehicle::part( int part_num )
 const vehicle_part &vehicle::part( int part_num ) const
 {
     return parts[part_num];
+}
+
+vehicle_work_progress *vehicle::find_work_progress( const char operation, const point &mount,
+        const std::string &part_id, const std::string &variant )
+{
+    const auto found = std::find_if( work_progress.begin(), work_progress.end(),
+    [&]( const vehicle_work_progress & progress ) {
+        return progress.operation == operation && progress.mount == mount &&
+               progress.part_id == part_id && progress.variant == variant;
+    } );
+    return found == work_progress.end() ? nullptr : &*found;
+}
+
+const vehicle_work_progress *vehicle::find_work_progress( const char operation,
+        const point &mount, const std::string &part_id, const std::string &variant ) const
+{
+    const auto found = std::find_if( work_progress.begin(), work_progress.end(),
+    [&]( const vehicle_work_progress & progress ) {
+        return progress.operation == operation && progress.mount == mount &&
+               progress.part_id == part_id && progress.variant == variant;
+    } );
+    return found == work_progress.end() ? nullptr : &*found;
+}
+
+void vehicle::erase_work_progress( const char operation, const point &mount,
+                                   const std::string &part_id, const std::string &variant )
+{
+    work_progress.erase( std::remove_if( work_progress.begin(), work_progress.end(),
+    [&]( const vehicle_work_progress & progress ) {
+        return progress.operation == operation && progress.mount == mount &&
+               progress.part_id == part_id && progress.variant == variant;
+    } ), work_progress.end() );
+}
+
+vehicle_work_progress &vehicle::get_or_create_work_progress( const char operation,
+        const point &mount, const std::string &part_id, const std::string &variant )
+{
+    if( vehicle_work_progress *const existing = find_work_progress( operation, mount, part_id,
+            variant ) ) {
+        return *existing;
+    }
+    work_progress.emplace_back();
+    vehicle_work_progress &created = work_progress.back();
+    created.operation = operation;
+    created.mount = mount;
+    created.part_id = part_id;
+    created.variant = variant;
+    return created;
 }
 
 int vehicle::get_non_fake_part( const int part_num )

@@ -2708,7 +2708,7 @@ void options_manager::add_options_world_default()
     add( "VEHICLE_PART_DEGRADATION", "world_default",
          to_translation( "载具部件永久损耗" ),
          to_translation( "开启后，载具部件受损跨越损坏等级时，会永久损失一部分可修复耐久上限。关闭后，已有和新产生的永久损耗都不会参与耐久与维修计算，载具部件可修复至完整耐久；永久损耗数据仍会保留，重新开启后再次生效。" ),
-         true
+         false
        );
 
     add( "DEFAULT_REGION", "world_default", to_translation( "Default region type" ),
@@ -3526,7 +3526,7 @@ std::string options_manager::show( bool ingame, const bool world_options_only, b
             std::stringstream value_conversion( current_opt.getValueName() );
 
             value_conversion >> new_terminal_x;
-            new_window_width = projected_window_width();
+            new_window_width = new_terminal_x * fontwidth;
 
             fold_and_print( w_options_tooltip, point_zero, iMinScreenWidth - 2, c_white,
                             n_gettext( "%s #%s - The window will be %d pixel wide with the selected value.",
@@ -3541,7 +3541,7 @@ std::string options_manager::show( bool ingame, const bool world_options_only, b
             std::stringstream value_conversion( current_opt.getValueName() );
 
             value_conversion >> new_terminal_y;
-            new_window_height = projected_window_height();
+            new_window_height = new_terminal_y * fontheight;
 
             fold_and_print( w_options_tooltip, point_zero, iMinScreenWidth - 2, c_white,
                             n_gettext( "%s #%s -- The window will be %d pixel tall with the selected value.",
@@ -3843,9 +3843,13 @@ std::string options_manager::show( bool ingame, const bool world_options_only, b
                               std::max( EVEN_MINIMUM_TERM_HEIGHT * scaling_factor, TERM.y ) );
         get_option( "TERMINAL_X" ).setValue( set_term.x );
         get_option( "TERMINAL_Y" ).setValue( set_term.y );
+        // A custom terminal size needs a normal window.  Persist this choice so
+        // the next launch does not restore fullscreen and overwrite the size.
+        get_option( "FULLSCREEN" ).setValue( "no" );
         save();
 
-        resize_term( ::get_option<int>( "TERMINAL_X" ), ::get_option<int>( "TERMINAL_Y" ) );
+        resize_term( ::get_option<int>( "TERMINAL_X" ) / scaling_factor,
+                     ::get_option<int>( "TERMINAL_Y" ) / scaling_factor );
     }
 #else
     ( void ) terminal_size_changed;

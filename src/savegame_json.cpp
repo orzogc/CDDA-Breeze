@@ -3583,6 +3583,37 @@ void smart_controller_config::serialize( JsonOut &json ) const
     json.end_object();
 }
 
+void vehicle_work_progress::deserialize( const JsonObject &data )
+{
+    data.allow_omitted_members();
+
+    std::string operation_string;
+    data.read( "operation", operation_string );
+    operation = operation_string.empty() ? 0 : operation_string.front();
+    data.read( "mount", mount );
+    data.read( "part_id", part_id );
+    data.read( "variant", variant );
+    data.read( "part_index", part_index );
+    data.read( "initial_damage", initial_damage );
+    data.read( "work_total", work_total );
+    data.read( "work_done", work_done );
+    work_done = std::clamp( work_done, 0, 10000000 );
+}
+
+void vehicle_work_progress::serialize( JsonOut &json ) const
+{
+    json.start_object();
+    json.member( "operation", std::string( 1, operation ) );
+    json.member( "mount", mount );
+    json.member( "part_id", part_id );
+    json.member( "variant", variant );
+    json.member( "part_index", part_index );
+    json.member( "initial_damage", initial_damage );
+    json.member( "work_total", work_total );
+    json.member( "work_done", work_done );
+    json.end_object();
+}
+
 /*
  * Load vehicle from a json blob that might just exceed player in size.
  */
@@ -3663,6 +3694,7 @@ void vehicle::deserialize( const JsonObject &data )
             debugmsg( err.what() );
         }
     }
+    data.read( "work_progress", work_progress );
 
     // we persist the pivot anchor so that if the rules for finding
     // the pivot change, existing vehicles do not shift around.
@@ -3827,6 +3859,7 @@ void vehicle::serialize( JsonOut &json ) const
     json.member( "old_owner", old_owner );
     json.member( "theft_time", theft_time );
     json.member( "parts", real_parts() );
+    json.member( "work_progress", work_progress );
     json.member( "tags", tags );
     json.member( "fuel_remainder", fuel_remainder );
     json.member( "fuel_used_last_turn", fuel_used_last_turn );

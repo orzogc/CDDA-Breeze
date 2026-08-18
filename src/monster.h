@@ -624,6 +624,28 @@ class monster : public Creature
         // loading a game must not grant monsters knowledge they did not reacquire.
         std::optional<tripoint_abs_ms> last_hostile_target_position;
         int hostile_target_memory_turns = 0;
+        // True only for the destination selected by this turn's confirmed
+        // hostile chase or hostile-memory search. Transient by design.
+        bool hostile_pursuit_active = false;
+        // The real last sighting is kept separate from temporary route clues.
+        // Stair hints may redirect last_hostile_target_position, but they must
+        // not erase where the hostile actually disappeared.
+        std::optional<tripoint_abs_ms> hostile_memory_origin_position;
+        // Search origin follows a strongly evidenced portal landing while the
+        // immutable memory origin keeps the last place the hostile was seen.
+        std::optional<tripoint_abs_ms> hostile_memory_search_origin_position;
+        // Preserve an inferred portal as an exact approach/landing pair.
+        // plan() and move() run in separate phases, so throwing away the
+        // approach would force move() to rediscover the stair through A*.
+        std::optional<tripoint_abs_ms> hostile_memory_portal_approach;
+        std::optional<tripoint_abs_ms> hostile_memory_portal_transition;
+        bool hostile_memory_target_is_avatar = false;
+        std::optional<tripoint_abs_ms> previous_hostile_sighting_position;
+        // A direct sighting that changes Z is stronger evidence than a generic
+        // last-known position: the target probably used a nearby stair/ramp.
+        std::optional<tripoint_abs_ms> witnessed_hostile_transition_origin;
+        std::optional<tripoint_abs_ms> witnessed_hostile_transition_destination;
+        int witnessed_hostile_transition_memory_turns = 0;
         int hostile_search_turns = 0;
         int hostile_search_step = 0;
         int hostile_search_waypoint_turns = 0;
