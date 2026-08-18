@@ -15,7 +15,6 @@
 #include "color.h"
 #include "enum_bitset.h"
 #include "iexamine.h"
-#include "lightmap.h"
 #include "translations.h"
 #include "type_id.h"
 #include "units.h"
@@ -466,7 +465,6 @@ struct map_data_common_t {
 
     public:
         ter_str_id curtain_transform;
-        light_color_rgb light_color;
 
         bool has_curtains() const {
             return !( curtain_transform.is_empty() || curtain_transform.is_null() );

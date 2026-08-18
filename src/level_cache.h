@@ -32,15 +32,9 @@ struct level_cache {
 
         cata::mdarray<four_quadrants, point_bub_ms> lm;
         cata::mdarray<float, point_bub_ms> sm;
-        // Accumulated colored-light energy for each tile. Empty means white light only.
-        cata::mdarray<light_color_rgb, point_bub_ms> light_color_cache;
         // To prevent redundant ray casting into neighbors: precalculate bulk light source positions.
-        // This is only valid for the duration of generate_lightmap.
-        struct buffered_light_source {
-            float luminance = 0.0f;
-            light_color_rgb color;
-        };
-        cata::mdarray<buffered_light_source, point_bub_ms> light_source_buffer;
+        // This is only valid for the duration of generate_lightmap
+        cata::mdarray<float, point_bub_ms> light_source_buffer;
 
         // Cache of natural light level is useful if it needs to be in sync with the light cache.
         float natural_light_level_cache;

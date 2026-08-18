@@ -67,10 +67,6 @@ Sprites can be referenced across tilesheet directories, but they must be stored 
 
 The special ID `unknown` provides a sprite that is displayed when an entity has no other sprite. Other hardcoded IDs also exist, and most of them are referenced in [`src/cata_tiles.cpp`](/src/cata_tiles.cpp). A full list of hardcoded IDs _may_ be present in [`tools/json_tools/generate_overlay_ids.py`](/tools/json_tools/generate_overlay_ids.py) stored as `CPP_IDS` but it's updated manually and may lag behind.
 
-#### Shadow sprite
-
-The optional `shadow` tile is drawn on the lowest visible tile when a visible creature is standing on an upper z-level.
-
 #### Complex IDs
 
 Special prefixes that are used include:

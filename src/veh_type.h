@@ -18,7 +18,6 @@
 #include "color.h"
 #include "compatibility.h"
 #include "damage.h"
-#include "lightmap.h"
 #include <optional>
 #include "point.h"
 #include "requirements.h"
@@ -456,7 +455,6 @@ class vpart_info
         /** Color of part for different states */
         nc_color color = c_light_gray;
         nc_color color_broken = c_light_gray;
-        light_color_rgb light_color;
 
         /* Contains data for terrain transformer parts */
         transform_terrain_data transform_terrain;

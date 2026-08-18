@@ -380,9 +380,8 @@ bool Creature::sees( const Creature &critter ) const
         return false;
     }
     if( ch != nullptr ) {
-        if( ch->is_crouching() || ch->is_prone() || pos().z != critter.pos().z ) {
-            const int coverage = std::max( here.obstacle_coverage( pos(), critter.pos() ),
-                                           here.ledge_coverage( *this, critter.pos() ) );
+        if( ch->is_crouching() || ch->is_prone() ) {
+            const int coverage = here.obstacle_coverage( pos(), critter.pos() );
             if( coverage < 30 ) {
                 return sees( critter.pos(), critter.is_avatar() ) && visible( ch );
             }
@@ -407,16 +406,15 @@ bool Creature::sees( const Creature &critter ) const
                     break;
             }
 
-            float profile = 120.0f / size_modifier;
+            int vision_modifier {0};
+
             if( ch->is_crouching() ) {
-                profile *= 0.5f;
+                vision_modifier = 30 - 0.5 * coverage * size_modifier;
             } else if( ch->is_prone() ) {
-                profile *= 0.275f;
+                vision_modifier = 30 - 0.9 * coverage * size_modifier;
             }
 
-            if( coverage < profile ) {
-                const int vision_modifier = std::max( static_cast<int>( 30.0f *
-                                                 ( 1.0f - coverage / profile ) ), 1 );
+            if( vision_modifier > 1 ) {
                 return sees( critter.pos(), critter.is_avatar(), vision_modifier ) && visible( ch );
             }
             return false;

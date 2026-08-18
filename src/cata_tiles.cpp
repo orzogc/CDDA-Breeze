@@ -1695,72 +1695,6 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
         }
         }
 
-        const bool do_draw_shadow = find_tile_looks_like( "shadow", TILE_CATEGORY::NONE,
-                                       empty_string ).has_value();
-        const float solar_altitude = to_degrees( sun_azimuth_altitude( calendar::turn ).second );
-        const bool warm_twilight = solar_altitude >= -6.0f && solar_altitude <= -1.0f;
-        const float twilight_progress = std::clamp( ( solar_altitude + 6.0f ) / 5.0f,
-                                                     0.0f, 1.0f );
-        const light_color_rgb warm_rgb = light_color_rgb::from_hsv(
-                                              25.0f + 20.0f * twilight_progress, 0.65f, 1.0f );
-        const Uint8 warm_alpha = static_cast<Uint8>( 25.0f *
-                                  std::sin( 3.14159265358979323846f * twilight_progress ) );
-        const auto draw_light_overlays = [&]( const int zlevel ) {
-            const level_cache &cur_cache = here.access_cache( zlevel );
-            for( int overlay_row = min_row; overlay_row < max_row; ++overlay_row ) {
-                for( const tile_render_info &p : draw_points[overlay_row] ) {
-                    if( p.invisible[0] || p.ll == lit_level::DARK ||
-                        p.ll == lit_level::BLANK || p.ll == lit_level::MEMORIZED ) {
-                        continue;
-                    }
-                    const tripoint draw_loc( p.pos.x, p.pos.y, zlevel );
-                    if( !here.inbounds( draw_loc ) ) {
-                        continue;
-                    }
-                    const light_color_rgb &lc = cur_cache.light_color_cache[draw_loc.x][draw_loc.y];
-                    const float min_channel = std::min( { lc.r, lc.g, lc.b } );
-                    const float sat_r = lc.r - min_channel;
-                    const float sat_g = lc.g - min_channel;
-                    const float sat_b = lc.b - min_channel;
-                    const float sat_mag = std::max( { sat_r, sat_g, sat_b } );
-                    if( sat_mag >= 0.01f ) {
-                        const float scalar = cur_cache.lm[draw_loc.x][draw_loc.y].max();
-                        const float ratio = scalar > 0.1f ? std::min( 1.0f, sat_mag / scalar ) : 0.0f;
-                        const Uint8 alpha = static_cast<Uint8>( std::min( 80.0f, ratio * 80.0f ) );
-                        if( alpha > 0 ) {
-                            const SDL_Color tint = {
-                                static_cast<Uint8>( std::clamp( sat_r / sat_mag * 255.0f, 0.0f, 255.0f ) ),
-                                static_cast<Uint8>( std::clamp( sat_g / sat_mag * 255.0f, 0.0f, 255.0f ) ),
-                                static_cast<Uint8>( std::clamp( sat_b / sat_mag * 255.0f, 0.0f, 255.0f ) ),
-                                alpha
-                            };
-                            const point screen = player_to_screen( draw_loc.xy() );
-                            const SDL_Rect draw_rect = { screen.x, screen.y - p.height_3d,
-                                                         tile_width, tile_height };
-                            SetRenderDrawBlendMode( renderer, SDL_BLENDMODE_BLEND );
-                            geometry->rect( renderer, draw_rect, tint );
-                            SetRenderDrawBlendMode( renderer, SDL_BLENDMODE_NONE );
-                        }
-                    }
-                    if( warm_twilight && warm_alpha > 0 && zlevel >= 0 &&
-                        cur_cache.outside_cache[draw_loc.x][draw_loc.y] ) {
-                        const SDL_Color tint = {
-                            static_cast<Uint8>( warm_rgb.r * 255.0f ),
-                            static_cast<Uint8>( warm_rgb.g * 255.0f ),
-                            static_cast<Uint8>( warm_rgb.b * 255.0f ),
-                            warm_alpha
-                        };
-                        const point screen = player_to_screen( draw_loc.xy() );
-                        const SDL_Rect draw_rect = { screen.x, screen.y - p.height_3d,
-                                                     tile_width, tile_height };
-                        SetRenderDrawBlendMode( renderer, SDL_BLENDMODE_BLEND );
-                        geometry->rect( renderer, draw_rect, tint );
-                        SetRenderDrawBlendMode( renderer, SDL_BLENDMODE_NONE );
-                    }
-                }
-            }
-        };
-
         //const int height_3d_mult = is_isometric() ? 10 : 0;
         if (max_draw_depth <= 0) {
             // Legacy draw mode
@@ -1795,32 +1729,15 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
                             }
                             tripoint draw_loc = p.pos;
                             draw_loc.z = cur_zlevel;
-                            // Draw the layer.  If the current z-level has no critter,
-                            // project a visible critter from above onto the lowest tile.
-                            if( f == &cata_tiles::draw_critter_at ) {
-                                const bool drew_critter = ( this->*f )( draw_loc, p.ll, p.height_3d,
-                                                       p.invisible );
-                                if( !drew_critter && do_draw_shadow &&
-                                    cur_zlevel == p.draw_min_z ) {
-                                    draw_critter_above( draw_loc, p.ll, p.height_3d, p.invisible );
-                                }
-                            } else {
-                                ( this->*f )( draw_loc, p.ll, p.height_3d, p.invisible );
-                            }
+                            // Draw
+                            (this->*f)(draw_loc, p.ll, p.height_3d, p.invisible);
                         }
 
                     }
                 }
-
-                // Apply overlays once per visible cell after all z-level layers.
-                draw_light_overlays( cur_zlevel );
                 cur_zlevel += 1;
             } while (cur_zlevel <= center.z);
             z_overlay_depth = 0;
-        }
-
-        if( max_draw_depth <= 0 ) {
-            draw_light_overlays( center.z );
         }
 
         // display number of monsters to spawn in mapgen preview
@@ -4029,62 +3946,6 @@ bool cata_tiles::draw_vpart( const tripoint &p, lit_level ll, int &height_3d,
                    lit_level::MEMORIZED, nv_goggles_activated, height_3d_temp );
     }
     return false;
-}
-
-bool cata_tiles::draw_critter_above( const tripoint &p, lit_level ll, int &height_3d,
-                                      const std::array<bool, 5> &invisible )
-{
-    if( invisible[0] ) {
-        return false;
-    }
-
-    map &here = get_map();
-    const avatar &you = get_avatar();
-    tripoint scan_p = p + tripoint_above;
-    const Creature *pcritter = nullptr;
-    while( here.inbounds( scan_p ) && !here.dont_draw_lower_floor( scan_p ) &&
-           scan_p.z - you.posz() <= fov_3d_z_range ) {
-        pcritter = get_creature_tracker().creature_at( scan_p, true );
-        if( pcritter != nullptr ) {
-            break;
-        }
-        ++scan_p.z;
-    }
-
-    if( pcritter == nullptr || !you.sees( *pcritter ) ) {
-        return false;
-    }
-
-    if( !draw_from_id_string( "shadow", TILE_CATEGORY::NONE, empty_string, p,
-                              0, 0, ll, false, height_3d ) ) {
-        return false;
-    }
-
-    bool is_player = false;
-    bool sees_player = false;
-    Creature::Attitude attitude = Creature::Attitude::ANY;
-    if( const monster *m = dynamic_cast<const monster *>( pcritter ) ) {
-        sees_player = m->sees( you );
-        attitude = m->attitude_to( you );
-    } else if( const Character *ch = dynamic_cast<const Character *>( pcritter ) ) {
-        if( ch->is_avatar() ) {
-            is_player = true;
-        } else {
-            sees_player = ch->sees( you );
-            attitude = ch->attitude_to( you );
-        }
-    }
-
-    if( !is_player ) {
-        const std::string draw_id = "overlay_" + Creature::attitude_raw_string( attitude ) +
-                                    ( sees_player && !you.has_trait( trait_INATTENTIVE ) ?
-                                      "_sees_player" : "" );
-        if( find_tile_looks_like( draw_id, TILE_CATEGORY::NONE, empty_string ) ) {
-            draw_from_id_string( draw_id, TILE_CATEGORY::NONE, empty_string, p, 0, 0,
-                                 lit_level::LIT, false, height_3d );
-        }
-    }
-    return true;
 }
 
 bool cata_tiles::draw_critter_at_below( const tripoint &p, const lit_level, int &,
