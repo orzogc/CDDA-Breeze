@@ -383,6 +383,7 @@ void trade_ui::toggle_vehicle_source()
     }
 
     bool changed = false;
+    int last_selected = 0;
     while( true ) {
         uilist menu;
         menu.text = _( "Select trade vehicles (Esc to finish)" );
@@ -396,7 +397,9 @@ void trade_ui::toggle_vehicle_source()
                 string_format( "%s %s", active ? "[x]" : "[ ]", veh->name ) );
         }
 
+        menu.selected = last_selected;
         menu.query();
+        last_selected = menu.selected;
         if( menu.ret < 0 ) {
             break;
         }
