@@ -248,6 +248,10 @@ msgstr "你想学习哪种武术"
 msgid "bayonet_lug"
 msgstr "刺刀座"
 
+# 穆尔卡枪械模组使用空格形式的英文槽位名
+msgid "bayonet lug"
+msgstr "刺刀座"
+
 # 穆尔卡枪械模组槽位运行时别名，仅补 12.4 未汉化字符串
 msgid "grip_mount"
 msgstr "握把底座"
