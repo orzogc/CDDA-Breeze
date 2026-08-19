@@ -1,6 +1,7 @@
 
 #include "trade_ui.h"
 
+#include <algorithm>
 #include <cmath>
 #include <cstdlib>
 #include <memory>
@@ -12,13 +13,19 @@
 #include "game_constants.h"
 #include "inventory_ui.h"
 #include "item.h"
+#include "map.h"
+#include "map_iterator.h"
+#include "messages.h"
 #include "npc.h"
 #include "npctrade.h"
 #include "npctrade_utils.h"
 #include "output.h"
 #include "point.h"
+#include "safe_reference.h"
 #include "string_formatter.h"
 #include "type_id.h"
+#include "ui.h"
+#include "uistate.h"
 #include "vehicle.h"
 
 static const faction_id faction_your_followers( "your_followers" );
@@ -37,6 +44,57 @@ point _pane_orig( int side )
 point _pane_size()
 {
     return { TERMX / 2, TERMY - _pane_orig( 0 ).y };
+}
+
+struct trade_vehicle_source_state {
+    std::vector<safe_reference<vehicle>> selected;
+};
+
+trade_vehicle_source_state persistent_trade_vehicle_sources;
+
+void prune_invalid_trade_vehicle_sources()
+{
+    persistent_trade_vehicle_sources.selected.erase(
+        std::remove_if(
+            persistent_trade_vehicle_sources.selected.begin(),
+            persistent_trade_vehicle_sources.selected.end(),
+            []( const safe_reference<vehicle> &ref ) {
+                return !ref;
+            } ),
+        persistent_trade_vehicle_sources.selected.end() );
+}
+
+bool persistent_trade_vehicle_selected( const vehicle *veh )
+{
+    return std::any_of(
+               persistent_trade_vehicle_sources.selected.begin(),
+               persistent_trade_vehicle_sources.selected.end(),
+    [veh]( const safe_reference<vehicle> &ref ) {
+        return ref.get() == veh;
+    } );
+}
+
+void set_persistent_trade_vehicle_selected( vehicle *veh, const bool selected )
+{
+    if( veh == nullptr ) {
+        return;
+    }
+
+    prune_invalid_trade_vehicle_sources();
+    auto &sources = persistent_trade_vehicle_sources.selected;
+    const auto found = std::find_if(
+                           sources.begin(), sources.end(),
+    [veh]( const safe_reference<vehicle> &ref ) {
+        return ref.get() == veh;
+    } );
+
+    if( selected ) {
+        if( found == sources.end() ) {
+            sources.emplace_back( veh->get_safe_reference() );
+        }
+    } else if( found != sources.end() ) {
+        sources.erase( found );
+    }
 }
 
 } // namespace
@@ -114,7 +172,9 @@ trade_ui::trade_ui( party_t &you, npc &trader, currency_t cost, std::string titl
 
 {
     _panes[_you]->add_character_items( you );
-    _panes[_you]->add_nearby_items( 1 );
+    _add_nearby_ground_items();
+    _refresh_active_trade_vehicles();
+    _add_active_vehicle_items();
     _panes[_trader]->add_character_items( trader );
     if( trader.is_shopkeeper() ) {
         _panes[_trader]->categorize_map_items( true );
@@ -141,15 +201,6 @@ trade_ui::trade_ui( party_t &you, npc &trader, currency_t cost, std::string titl
         }
     } else if( !trader.is_player_ally() ) {
         _panes[_trader]->add_nearby_items( 1 );
-    }
-
-    map &here = get_map();
-    for( const wrapped_vehicle &wrapped_veh : here.get_vehicles() ) {
-        if( wrapped_veh.v->owner == faction_your_followers ) {
-            for( const tripoint &veh_point : wrapped_veh.v->get_points() ) {
-                _panes[_you]->add_vehicle_items( veh_point );
-            }
-        }
     }
 
     if( trader.will_exchange_items_freely() ) {
@@ -237,6 +288,164 @@ void trade_ui::autobalance()
     }
 }
 
+std::vector<vehicle *> trade_ui::_reality_bubble_trade_vehicles() const
+{
+    std::vector<vehicle *> result;
+    for( const wrapped_vehicle &wrapped : get_map().get_vehicles() ) {
+        vehicle *veh = wrapped.v;
+        if( veh == nullptr || veh->get_owner() != faction_your_followers || veh->is_appliance() ) {
+            continue;
+        }
+        result.push_back( veh );
+    }
+    return result;
+}
+
+void trade_ui::_refresh_active_trade_vehicles()
+{
+    prune_invalid_trade_vehicle_sources();
+    const std::vector<vehicle *> available = _reality_bubble_trade_vehicles();
+
+    _active_trade_vehicles.clear();
+    _active_trade_vehicles.reserve( available.size() );
+
+    if( uistate.trade_all_vehicle_cargo ) {
+        _active_trade_vehicles = available;
+        return;
+    }
+
+    for( vehicle *veh : available ) {
+        if( persistent_trade_vehicle_selected( veh ) ) {
+            _active_trade_vehicles.push_back( veh );
+        }
+    }
+}
+
+void trade_ui::_add_nearby_ground_items()
+{
+    map &here = get_map();
+    const tripoint origin = _parties[_you]->pos();
+    for( const tripoint &pos : closest_points_first( origin, 1 ) ) {
+        if( origin != pos && !here.clear_path( origin, pos, rl_dist( origin, pos ), 1, 100 ) ) {
+            continue;
+        }
+        _panes[_you]->add_map_items( pos );
+    }
+}
+
+void trade_ui::_add_active_vehicle_items()
+{
+    for( vehicle *veh : _active_trade_vehicles ) {
+        if( veh == nullptr ) {
+            continue;
+        }
+        for( const tripoint &veh_point : veh->get_points() ) {
+            _panes[_you]->add_vehicle_items( veh_point );
+        }
+    }
+}
+
+void trade_ui::_rebuild_you_pane()
+{
+    const select_t previous = _panes[_you]->to_trade();
+
+    _refresh_active_trade_vehicles();
+    _panes[_you]->clear_trade_items();
+    _panes[_you]->add_character_items( *_parties[_you] );
+    _add_nearby_ground_items();
+    _add_active_vehicle_items();
+    _panes[_you]->restore_trade_selection( previous );
+
+    _trade_values[_you] = 0;
+    for( const entry_t &it : _panes[_you]->to_trade() ) {
+        _trade_values[_you] +=
+            npc_trading::trading_price( *_parties[_trader], *_parties[_you], it );
+    }
+
+    npc const &np = *_parties[_trader]->as_npc();
+    _balance = np.will_exchange_items_freely()
+               ? 0
+               : _cost + _trade_values[_you] - _trade_values[_trader];
+
+    _panes[_you]->get_ui()->invalidate_ui();
+    _header_ui.invalidate_ui();
+}
+
+void trade_ui::toggle_all_vehicle_sources()
+{
+    uistate.trade_all_vehicle_cargo =
+        !uistate.trade_all_vehicle_cargo;
+    _rebuild_you_pane();
+}
+
+void trade_ui::toggle_vehicle_source()
+{
+    const std::vector<vehicle *> vehicles = _reality_bubble_trade_vehicles();
+    if( vehicles.empty() ) {
+        add_msg( m_info, _( "There are no eligible vehicles in the reality bubble." ) );
+        return;
+    }
+
+    bool changed = false;
+    while( true ) {
+        uilist menu;
+        menu.text = _( "Select trade vehicles (Esc to finish)" );
+
+        for( size_t i = 0; i < vehicles.size(); ++i ) {
+            vehicle *veh = vehicles[i];
+            const bool active = uistate.trade_all_vehicle_cargo ||
+                                persistent_trade_vehicle_selected( veh );
+            menu.addentry(
+                static_cast<int>( i ), true, MENU_AUTOASSIGN,
+                string_format( "%s %s", active ? "[x]" : "[ ]", veh->name ) );
+        }
+
+        menu.query();
+        if( menu.ret < 0 ) {
+            break;
+        }
+
+        const size_t selected_index = static_cast<size_t>( menu.ret );
+        if( selected_index >= vehicles.size() ) {
+            continue;
+        }
+
+        // Editing C while c-all mode is active means "customize the current all set".
+        // Materialize the current reality-bubble vehicles as manual selections first,
+        // then toggle the chosen vehicle off.  The list stays open so several
+        // noisy cargo vehicles can be excluded in one visit.
+        if( uistate.trade_all_vehicle_cargo ) {
+            persistent_trade_vehicle_sources.selected.clear();
+            for( vehicle *veh : vehicles ) {
+                set_persistent_trade_vehicle_selected( veh, true );
+            }
+            uistate.trade_all_vehicle_cargo = false;
+        }
+
+        vehicle *selected_vehicle = vehicles[selected_index];
+        set_persistent_trade_vehicle_selected(
+            selected_vehicle,
+            !persistent_trade_vehicle_selected( selected_vehicle ) );
+        changed = true;
+    }
+
+    if( changed ) {
+        _rebuild_you_pane();
+    }
+}
+
+std::string trade_ui::_you_source_name() const
+{
+    if( _active_trade_vehicles.empty() ) {
+        return _( "You" );
+    }
+    if( _active_trade_vehicles.size() == 1 && _active_trade_vehicles.front() != nullptr ) {
+        return string_format( _( "You, %s" ), _active_trade_vehicles.front()->name );
+    }
+    return string_format( _( "You, %d vehicles" ),
+                          static_cast<int>( _active_trade_vehicles.size() ) );
+}
+
 void trade_ui::resize()
 {
     _panes[_you]->resize( _pane_size(), _pane_orig( 1 ) );
@@ -313,11 +522,15 @@ void trade_ui::_draw_header()
     }
     center_print( _header_w, 2, trade_color, cost_str );
     mvwprintz( _header_w, { 1, 3 }, c_white, _parties[_trader]->get_name() );
-    right_print( _header_w, 3, 1, c_white, _( "You" ) );
+    right_print( _header_w, 3, 1, c_white, _you_source_name() );
     center_print( _header_w, header_size - 1, c_white,
-                  string_format( _( "%s to switch panes" ),
+                  string_format( _( "%1$s to switch panes, %2$s all vehicles, %3$s select vehicles" ),
                                  colorize( _panes[_you]->get_ctxt()->get_desc(
-                                         trade_selector::ACTION_SWITCH_PANES ),
+                                         trade_selector::ACTION_SWITCH_PANES ), c_yellow ),
+                                 colorize( _panes[_you]->get_ctxt()->get_desc(
+                                         trade_selector::ACTION_TRADE_ALL_VEHICLES ), c_yellow ),
+                                 colorize( _panes[_you]->get_ctxt()->get_desc(
+                                         trade_selector::ACTION_SELECT_TRADE_VEHICLE ),
                                            c_yellow ) ) );
     center_print( _header_w, header_size - 2, c_white,
                   string_format( _( "%s to auto balance with highlighted item" ),

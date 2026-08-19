@@ -2334,10 +2334,40 @@ static bool query_pick( Character &who, const tripoint &target )
     return true;
 }
 
+static bool auto_forage_matches( const tripoint &examp )
+{
+    if( !get_option<bool>( "AUTO_FEATURES" ) ) {
+        return false;
+    }
+
+    const std::string mode = get_option<std::string>( "AUTO_FORAGING" );
+    if( mode == "off" ) {
+        return false;
+    }
+    if( mode == "all" ) {
+        return true;
+    }
+
+    map &here = get_map();
+    if( here.has_flag( ter_furn_flag::TFLAG_TREE, examp ) ) {
+        return mode == "trees";
+    }
+    if( here.has_flag( ter_furn_flag::TFLAG_SHRUB, examp ) ) {
+        return mode == "bushes";
+    }
+    if( here.has_flag( ter_furn_flag::TFLAG_PLANT, examp ) ) {
+        return mode == "crops";
+    }
+    if( here.has_flag( ter_furn_flag::TFLAG_FLOWER, examp ) ) {
+        return mode == "flowers";
+    }
+
+    return mode == "flowers";
+}
+
 void iexamine::harvest_furn_nectar( Character &you, const tripoint &examp )
 {
-    bool auto_forage = get_option<bool>( "AUTO_FEATURES" ) &&
-                       get_option<std::string>( "AUTO_FORAGING" ) == "both";
+    const bool auto_forage = auto_forage_matches( examp );
     if( !auto_forage && !query_pick( you, examp ) ) {
         return;
     }
@@ -2346,8 +2376,7 @@ void iexamine::harvest_furn_nectar( Character &you, const tripoint &examp )
 
 void iexamine::harvest_furn( Character &you, const tripoint &examp )
 {
-    bool auto_forage = get_option<bool>( "AUTO_FEATURES" ) &&
-                       get_option<std::string>( "AUTO_FORAGING" ) == "all";
+    const bool auto_forage = auto_forage_matches( examp );
     if( !auto_forage && !query_pick( you, examp ) ) {
         return;
     }
@@ -2356,10 +2385,7 @@ void iexamine::harvest_furn( Character &you, const tripoint &examp )
 
 void iexamine::harvest_ter_nectar( Character &you, const tripoint &examp )
 {
-    bool auto_forage = get_option<bool>( "AUTO_FEATURES" ) &&
-                       ( get_option<std::string>( "AUTO_FORAGING" ) == "all" ||
-                         get_option<std::string>( "AUTO_FORAGING" ) == "bushes" ||
-                         get_option<std::string>( "AUTO_FORAGING" ) == "trees" );
+    const bool auto_forage = auto_forage_matches( examp );
     if( !auto_forage && !query_pick( you, examp ) ) {
         return;
     }
@@ -2368,9 +2394,7 @@ void iexamine::harvest_ter_nectar( Character &you, const tripoint &examp )
 
 void iexamine::harvest_ter( Character &you, const tripoint &examp )
 {
-    bool auto_forage = get_option<bool>( "AUTO_FEATURES" ) &&
-                       ( get_option<std::string>( "AUTO_FORAGING" ) == "all" ||
-                         get_option<std::string>( "AUTO_FORAGING" ) == "trees" );
+    const bool auto_forage = auto_forage_matches( examp );
     if( !auto_forage && !query_pick( you, examp ) ) {
         return;
     }
@@ -3826,8 +3850,7 @@ static void pick_plant( Character &you, const tripoint &examp,
                         const itype_id &itemType, ter_id new_ter, bool seeds = false )
 {
     map &here = get_map();
-    bool auto_forage = get_option<bool>( "AUTO_FEATURES" ) &&
-                       get_option<std::string>( "AUTO_FORAGING" ) != "off";
+    const bool auto_forage = auto_forage_matches( examp );
     if( you.is_avatar() && !auto_forage &&
         !query_yn( _( "Harvest the %s?" ), here.tername( examp ) ) ) {
         iexamine::none( you, examp );

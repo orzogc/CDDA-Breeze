@@ -412639,6 +412639,16 @@ msgstr "用高亮物品自动平衡交易"
 
 #. ~ Key binding name
 #: data/raw/keybindings.json
+msgid "Toggle all reality bubble vehicle cargo in trade"
+msgstr "切换交易中的现实气泡全部载具货物"
+
+#. ~ Key binding name
+#: data/raw/keybindings.json
+msgid "Toggle selected vehicle cargo sources in trade"
+msgstr "切换交易中的指定载具货物来源"
+
+#. ~ Key binding name
+#: data/raw/keybindings.json
 msgid "Decrease selected amount for the highlighted item"
 msgstr "减少高亮物品选择数量"
 
@@ -450477,6 +450487,25 @@ msgstr "并且把它扔在地上！"
 msgid "but you break its grip!"
 msgstr "但你挣脱了它的束缚！"
 
+#: src/monattack.cpp:5690
+msgid "under your feet"
+msgstr "脚下"
+
+#: src/monattack.cpp:5690
+#, c-format
+msgid "at %1$s, %2$d squares away"
+msgstr "%1$s方向%2$d格处"
+
+#: src/monattack.cpp:5690
+#, c-format
+msgid "The %1$s tore away your %2$s; it landed %3$s on %4$s."
+msgstr "%1$s扯掉了你的%2$s，物品掉在%4$s的%3$s。"
+
+#: src/monattack.cpp:5697
+#, c-format
+msgid "The %1$s grabbed your %2$s, but you broke free."
+msgstr "%1$s抓住了你的%2$s，但你挣脱了它的抓扯。"
+
 #: src/monattack.cpp:5847
 #, c-format
 msgid "The %s lights up menacingly."
@@ -454513,12 +454542,12 @@ msgstr "自动采集"
 #: src/options.cpp:1449
 msgid ""
 "Action to perform when 'Auto foraging' is enabled.  Bushes: Only forage "
-"bushes.  - Trees: Only forage trees.  - Crops: Only forage crops.  - "
-"Everything: Forage bushes, trees, crops, and everything else including "
-"flowers, cattails etc."
+"bushes.  - Trees: Only forage trees.  - Crops: Only forage planted crops.  - "
+"Flowers and herbs: Only forage flowers, herbs, cattails and other wild "
+"harvestables.  - Everything: Forage every category."
 msgstr ""
-"启用\"自动采集\"时进行的操作。灌木：只搜寻并采集灌木。- 树木：只搜寻并采集树木。- 作物：只搜寻并采集作物。- "
-"所有：搜寻并采集一切可采集的物品，例如灌木和树木、作物、花朵、香蒲草等。"
+"启用\"自动采集\"时进行的操作。灌木：只搜寻并采集灌木。- 树木：只搜寻并采集树木。- 作物：只搜寻并采集种植的作物。- "
+"花卉与药草：只搜寻并采集花卉、药草、香蒲和其他野生可采集物。- 所有：搜寻并采集所有类别。"
 
 #: src/options.cpp:1450
 msgid "Bushes"
@@ -454535,6 +454564,10 @@ msgstr "所有"
 #: src/options.cpp:1450
 msgid "Trees"
 msgstr "树木"
+
+#: src/options.cpp:1450
+msgid "Flowers and herbs"
+msgstr "花卉与药草"
 
 #: src/options.cpp:1458
 msgid "Dangerous pickups"
@@ -460623,6 +460656,33 @@ msgstr "%s 切换面板"
 #, c-format
 msgid "%s to auto balance with highlighted item"
 msgstr "按 %s 用高亮物品自动平衡交易"
+
+#: src/trade_ui.cpp:391
+msgid "There are no eligible vehicles in the reality bubble."
+msgstr "现实气泡内没有可用于交易的载具。"
+
+#: src/trade_ui.cpp:398
+msgid "Select trade vehicles (Esc to finish)"
+msgstr "选择交易载具（按 Esc 完成）"
+
+#: src/trade_ui.cpp:445
+msgid "You"
+msgstr "你"
+
+#: src/trade_ui.cpp:449
+#, c-format
+msgid "You, %s"
+msgstr "你，%s"
+
+#: src/trade_ui.cpp:451
+#, c-format
+msgid "You, %d vehicles"
+msgstr "你，%d辆载具"
+
+#: src/trade_ui.cpp:533
+#, c-format
+msgid "%1$s to switch panes, %2$s all vehicles, %3$s select vehicles"
+msgstr "%1$s 切换面板，%2$s 全部载具，%3$s 选择载具"
 
 #: src/trade_ui.h:29
 msgid "TRADE OFFER"

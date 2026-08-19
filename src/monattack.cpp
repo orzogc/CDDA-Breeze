@@ -5678,15 +5678,25 @@ bool mattack::bio_op_disarm( monster *z )
     their_roll *= foe->get_limb_score( limb_score_reaction );
 
     item_location it = foe->get_wielded_item();
-
-    target->add_msg_if_player( m_bad, _( "The zombie grabs your %s…" ), it->tname() );
+    const std::string grabbed_item_name = it->tname();
 
     if( my_roll >= their_roll && !it->has_flag( flag_NO_UNWIELD ) ) {
-        target->add_msg_if_player( m_bad, _( "and throws it to the ground!" ) );
         const tripoint tp = foe->pos() + tripoint( rng( -1, 1 ), rng( -1, 1 ), 0 );
+        const int drop_distance = rl_dist( foe->pos(), tp );
+        const std::string drop_where = drop_distance == 0
+                                       ? _( "under your feet" )
+                                       : string_format( _( "at %1$s, %2$d squares away" ),
+                                               direction_name_short( direction_from( foe->pos(), tp ) ),
+                                               drop_distance );
+        const std::string drop_terrain = get_map().name( tp );
         get_map().add_item_or_charges( tp, foe->i_rem( &*it ) );
+        target->add_msg_if_player(
+            m_bad, _( "The %1$s tore away your %2$s; it landed %3$s on %4$s." ),
+            z->name(), grabbed_item_name, drop_where, drop_terrain );
     } else {
-        target->add_msg_if_player( m_good, _( "but you break its grip!" ) );
+        target->add_msg_if_player(
+            m_good, _( "The %1$s grabbed your %2$s, but you broke free." ),
+            z->name(), grabbed_item_name );
     }
 
     return true;

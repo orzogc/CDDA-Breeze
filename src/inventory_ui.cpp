@@ -359,6 +359,7 @@ void uistatedata::serialize( JsonOut &json ) const
     json.member( "list_item_filter_active", list_item_filter_active );
     json.member( "list_item_downvote_active", list_item_downvote_active );
     json.member( "list_item_priority_active", list_item_priority_active );
+    json.member( "trade_all_vehicle_cargo", trade_all_vehicle_cargo );
     json.member( "construction_filter", construction_filter );
     json.member( "last_construction", last_construction );
     json.member( "construction_tab", construction_tab );
@@ -429,6 +430,7 @@ void uistatedata::deserialize( const JsonObject &jo )
     jo.read( "overmap_show_city_labels", overmap_show_city_labels );
     jo.read( "overmap_show_hordes", overmap_show_hordes );
     jo.read( "overmap_show_forest_trails", overmap_show_forest_trails );
+    jo.read( "trade_all_vehicle_cargo", trade_all_vehicle_cargo );
     jo.read( "hidden_recipes", hidden_recipes );
     jo.read( "favorite_recipes", favorite_recipes );
     jo.read( "expanded_recipes", expanded_recipes );
@@ -4222,11 +4224,15 @@ trade_selector::trade_selector( trade_ui *parent, Character &u,
     _ctxt_trade.register_action( ACTION_TRADE_CANCEL );
     _ctxt_trade.register_action( ACTION_TRADE_OK );
     _ctxt_trade.register_action( ACTION_AUTOBALANCE );
+    _ctxt_trade.register_action( ACTION_TRADE_ALL_VEHICLES );
+    _ctxt_trade.register_action( ACTION_SELECT_TRADE_VEHICLE );
     _ctxt_trade.register_action( "ANY_INPUT" );
     // duplicate this action in the parent ctxt so it shows up in the keybindings menu
     // CANCEL and OK are already set in inventory_selector
     ctxt.register_action( ACTION_SWITCH_PANES );
     ctxt.register_action( ACTION_AUTOBALANCE );
+    ctxt.register_action( ACTION_TRADE_ALL_VEHICLES );
+    ctxt.register_action( ACTION_SELECT_TRADE_VEHICLE );
     resize( size, origin );
     _ui = create_or_get_ui_adaptor();
     set_invlet_type( inventory_selector::SELECTOR_INVLET_ALPHA );
@@ -4235,6 +4241,27 @@ trade_selector::trade_selector( trade_ui *parent, Character &u,
 trade_selector::select_t trade_selector::to_trade() const
 {
     return to_use;
+}
+
+void trade_selector::clear_trade_items()
+{
+    to_use.clear();
+    clear_items();
+}
+
+void trade_selector::restore_trade_selection( const select_t &selection )
+{
+    std::map<inventory_entry *, size_t> restored_counts;
+    for( const entry_t &previous : selection ) {
+        item_location loc = previous.first;
+        if( inventory_entry *entry = find_entry_by_location( loc ) ) {
+            restored_counts[entry] += static_cast<size_t>( previous.second );
+        }
+    }
+    for( const auto &restored : restored_counts ) {
+        set_chosen_count( *restored.first,
+                          std::min( restored.second, restored.first->get_available_count() ) );
+    }
 }
 
 void trade_selector::execute()
@@ -4260,6 +4287,10 @@ void trade_selector::execute()
             exit = true;
         } else if( action == ACTION_AUTOBALANCE ) {
             _parent->autobalance();
+        } else if( action == ACTION_TRADE_ALL_VEHICLES ) {
+            _parent->toggle_all_vehicle_sources();
+        } else if( action == ACTION_SELECT_TRADE_VEHICLE ) {
+            _parent->toggle_vehicle_source();
         } else {
             input_event const iev = _ctxt_trade.get_raw_input();
             inventory_input const input =

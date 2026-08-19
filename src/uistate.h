@@ -162,6 +162,10 @@ class uistatedata
         bool list_item_priority_active = false;
         bool list_item_init = false; // NOLINT(cata-serialize)
 
+        // Trade UI.  Lowercase c keeps the legacy "all reality-bubble vehicles"
+        // behavior enabled until the player toggles it off again.
+        bool trade_all_vehicle_cargo = false;
+
         // construction menu selections
         std::string construction_filter;
         construction_group_str_id last_construction = construction_group_str_id::NULL_ID();

@@ -19,6 +19,7 @@
 
 class npc;
 class trade_ui;
+class vehicle;
 struct point;
 
 class trade_selector : public inventory_drop_selector
@@ -34,11 +35,15 @@ class trade_selector : public inventory_drop_selector
         void execute();
         void on_toggle() override;
         select_t to_trade() const;
+        void clear_trade_items();
+        void restore_trade_selection( const select_t &selection );
         void resize( point const &size, point const &origin );
         shared_ptr_fast<ui_adaptor> get_ui() const;
         input_context const *get_ctxt() const;
 
         static constexpr char const *ACTION_AUTOBALANCE = "AUTO_BALANCE";
+        static constexpr char const *ACTION_TRADE_ALL_VEHICLES = "TRADE_ALL_VEHICLES";
+        static constexpr char const *ACTION_SELECT_TRADE_VEHICLE = "SELECT_TRADE_VEHICLE";
         static constexpr char const *ACTION_SWITCH_PANES = "SWITCH_LISTS";
         static constexpr char const *ACTION_TRADE_OK = "CONFIRM";
         static constexpr char const *ACTION_TRADE_CANCEL = "QUIT";
@@ -88,6 +93,8 @@ class trade_ui
         trade_result_t perform_trade();
         void recalc_values_cpane();
         void autobalance();
+        void toggle_all_vehicle_sources();
+        void toggle_vehicle_source();
         void resize();
 
         constexpr static int header_size = 5;
@@ -112,11 +119,18 @@ class trade_ui
         currency_t _cost = 0;
         currency_t _balance = 0;
         std::string const _title;
+        std::vector<vehicle *> _active_trade_vehicles;
         catacurses::window _header_w;
         ui_adaptor _header_ui;
 
         void _process( event const &ev );
         bool _confirm_trade() const;
+        std::vector<vehicle *> _reality_bubble_trade_vehicles() const;
+        void _refresh_active_trade_vehicles();
+        void _add_nearby_ground_items();
+        void _add_active_vehicle_items();
+        void _rebuild_you_pane();
+        std::string _you_source_name() const;
         void _draw_header();
 };
 
