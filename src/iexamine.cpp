@@ -2334,7 +2334,7 @@ static bool query_pick( Character &who, const tripoint &target )
     return true;
 }
 
-static bool auto_forage_matches( const tripoint &examp )
+bool iexamine::auto_forage_matches( const tripoint &examp )
 {
     if( !get_option<bool>( "AUTO_FEATURES" ) ) {
         return false;

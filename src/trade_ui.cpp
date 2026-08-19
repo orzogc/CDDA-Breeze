@@ -81,8 +81,8 @@ void set_persistent_trade_vehicle_selected( vehicle *veh, const bool selected )
     }
 
     prune_invalid_trade_vehicle_sources();
-    auto &sources = persistent_trade_vehicle_sources.selected;
-    const auto found = std::find_if(
+    std::vector<safe_reference<vehicle>> &sources = persistent_trade_vehicle_sources.selected;
+    std::vector<safe_reference<vehicle>>::iterator const found = std::find_if(
                            sources.begin(), sources.end(),
     [veh]( const safe_reference<vehicle> &ref ) {
         return ref.get() == veh;
@@ -323,12 +323,8 @@ void trade_ui::_refresh_active_trade_vehicles()
 
 void trade_ui::_add_nearby_ground_items()
 {
-    map &here = get_map();
     const tripoint origin = _parties[_you]->pos();
     for( const tripoint &pos : closest_points_first( origin, 1 ) ) {
-        if( origin != pos && !here.clear_path( origin, pos, rl_dist( origin, pos ), 1, 100 ) ) {
-            continue;
-        }
         _panes[_you]->add_map_items( pos );
     }
 }
@@ -391,7 +387,7 @@ void trade_ui::toggle_vehicle_source()
         uilist menu;
         menu.text = _( "Select trade vehicles (Esc to finish)" );
 
-        for( size_t i = 0; i < vehicles.size(); ++i ) {
+        for( int i = 0; i < static_cast<int>( vehicles.size() ); ++i ) {
             vehicle *veh = vehicles[i];
             const bool active = uistate.trade_all_vehicle_cargo ||
                                 persistent_trade_vehicle_selected( veh );
@@ -405,8 +401,8 @@ void trade_ui::toggle_vehicle_source()
             break;
         }
 
-        const size_t selected_index = static_cast<size_t>( menu.ret );
-        if( selected_index >= vehicles.size() ) {
+        const int selected_index = menu.ret;
+        if( selected_index >= static_cast<int>( vehicles.size() ) ) {
             continue;
         }
 
