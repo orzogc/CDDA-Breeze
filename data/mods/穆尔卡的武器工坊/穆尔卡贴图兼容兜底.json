@@ -1,0 +1,567 @@
+[
+  {
+    "type": "mod_tileset",
+    "compatibility": [
+      "MshockXottoplus",
+      "MshockXotto+",
+      "MSXotto+",
+      "MshockRealXotto",
+      "MshockXottoplus12",
+      "MSX++DEAD_PEOPLE",
+      "MXplus12_for_cosmetics",
+      "UltimateCataclysm",
+      "UltimateCataclysmDemo",
+      "Ultica",
+      "UlticaShell",
+      "Chibi_Ultica",
+      "UNDEAD_PEOPLE",
+      "UNDEAD_PEOPLE_BASE",
+      "UNDEAD_PEOPLE_LEGACY"
+    ],
+    "tiles-new": [
+      {
+        "file": "tiles_ammo.png",
+        "sprite_width": 32,
+        "sprite_height": 32,
+        "sprite_offset_x": 0,
+        "sprite_offset_y": 0,
+        "tiles": [
+          {
+            "id": "103_stock",
+            "fg": 7
+          },
+          {
+            "id": "103stock_folded",
+            "fg": 7
+          },
+          {
+            "id": "109_stock",
+            "fg": 7
+          },
+          {
+            "id": "109stock_folded",
+            "fg": 7
+          },
+          {
+            "id": "153c_sp",
+            "fg": 7
+          },
+          {
+            "id": "153c_stock",
+            "fg": 7
+          },
+          {
+            "id": "153m_scope",
+            "fg": 7
+          },
+          {
+            "id": "153m_sp",
+            "fg": 7
+          },
+          {
+            "id": "153m_stock",
+            "fg": 7
+          },
+          {
+            "id": "156m_scope",
+            "fg": 7
+          },
+          {
+            "id": "156m_sp",
+            "fg": 7
+          },
+          {
+            "id": "156m_stock",
+            "fg": 7
+          },
+          {
+            "id": "20x66_shot",
+            "fg": 3
+          },
+          {
+            "id": "20x66_slug",
+            "fg": 3
+          },
+          {
+            "id": "25mm_apds",
+            "fg": 3
+          },
+          {
+            "id": "25mm_hei",
+            "fg": 3
+          },
+          {
+            "id": "25mm_slug",
+            "fg": 3
+          },
+          {
+            "id": "38_speedloader",
+            "fg": 2
+          },
+          {
+            "id": "408_ct_ap",
+            "fg": 15
+          },
+          {
+            "id": "410shot_000",
+            "fg": 3
+          },
+          {
+            "id": "410shot_bird",
+            "fg": 3
+          },
+          {
+            "id": "454_speedloader6",
+            "fg": 2
+          },
+          {
+            "id": "45_ap",
+            "fg": 3
+          },
+          {
+            "id": "545",
+            "fg": 3
+          },
+          {
+            "id": "545_7n6",
+            "fg": 3
+          },
+          {
+            "id": "545_ap",
+            "fg": 3
+          },
+          {
+            "id": "556_m193",
+            "fg": 3
+          },
+          {
+            "id": "5C1R",
+            "fg": 11
+          },
+          {
+            "id": "5C2SB",
+            "fg": 11
+          },
+          {
+            "id": "5C3T",
+            "fg": 11
+          },
+          {
+            "id": "6C6TC",
+            "fg": 11
+          },
+          {
+            "id": "6C7DU",
+            "fg": 11
+          },
+          {
+            "id": "737_cta_10",
+            "fg": 2
+          },
+          {
+            "id": "76254_lps",
+            "fg": 3
+          },
+          {
+            "id": "762_25",
+            "fg": 3
+          },
+          {
+            "id": "762_25hot",
+            "fg": 3
+          },
+          {
+            "id": "762_25typeP",
+            "fg": 3
+          },
+          {
+            "id": "762_51_m61",
+            "fg": 3
+          },
+          {
+            "id": "762_m43",
+            "fg": 3
+          },
+          {
+            "id": "762_m87",
+            "fg": 3
+          },
+          {
+            "id": "7x50_binocular",
+            "fg": 7
+          },
+          {
+            "id": "9mm_m39b",
+            "fg": 3
+          },
+          {
+            "id": "9x18mm",
+            "fg": 3
+          },
+          {
+            "id": "9x18mmP2",
+            "fg": 3
+          },
+          {
+            "id": "9x18mmfmj",
+            "fg": 3
+          },
+          {
+            "id": "Leupold",
+            "fg": 7
+          },
+          {
+            "id": "TANGO6T",
+            "fg": 7
+          },
+          {
+            "id": "amb_sp",
+            "fg": 7
+          },
+          {
+            "id": "ar_autopart",
+            "fg": 7
+          },
+          {
+            "id": "bars",
+            "fg": 7
+          },
+          {
+            "id": "bcrf_sp",
+            "fg": 7
+          },
+          {
+            "id": "choke",
+            "fg": 7
+          },
+          {
+            "id": "cmr_scope",
+            "fg": 7
+          },
+          {
+            "id": "cr_part",
+            "fg": 7
+          },
+          {
+            "id": "dhzr_mz",
+            "fg": 7
+          },
+          {
+            "id": "dp28_47",
+            "fg": 2
+          },
+          {
+            "id": "fg422bipod",
+            "fg": 7
+          },
+          {
+            "id": "fg422mag",
+            "fg": 2
+          },
+          {
+            "id": "fsds12",
+            "fg": 3
+          },
+          {
+            "id": "ga_basic",
+            "fg": 7
+          },
+          {
+            "id": "gewscope",
+            "fg": 7
+          },
+          {
+            "id": "grv24_stock",
+            "fg": 7
+          },
+          {
+            "id": "hb_15",
+            "fg": 2
+          },
+          {
+            "id": "honey_badger_sp",
+            "fg": 7
+          },
+          {
+            "id": "jsls_mz",
+            "fg": 7
+          },
+          {
+            "id": "ksg25_aux_shotgun",
+            "fg": 7
+          },
+          {
+            "id": "ksg_aux_shotgun",
+            "fg": 7
+          },
+          {
+            "id": "m1911bigmag",
+            "fg": 2
+          },
+          {
+            "id": "m3_scope",
+            "fg": 7
+          },
+          {
+            "id": "m3c_sp",
+            "fg": 7
+          },
+          {
+            "id": "m3c_stock",
+            "fg": 7
+          },
+          {
+            "id": "match_trigger",
+            "fg": 7
+          },
+          {
+            "id": "mg42mag_250",
+            "fg": 2
+          },
+          {
+            "id": "mg42mag_50",
+            "fg": 2
+          },
+          {
+            "id": "mg42semi",
+            "fg": 7
+          },
+          {
+            "id": "mgbipod",
+            "fg": 7
+          },
+          {
+            "id": "mp5_10_30",
+            "fg": 2
+          },
+          {
+            "id": "mp5mag",
+            "fg": 2
+          },
+          {
+            "id": "pkbipod",
+            "fg": 7
+          },
+          {
+            "id": "recoil_a",
+            "fg": 7
+          },
+          {
+            "id": "recoil_b",
+            "fg": 7
+          },
+          {
+            "id": "reloaded_127108",
+            "fg": 10
+          },
+          {
+            "id": "reloaded_145114",
+            "fg": 9
+          },
+          {
+            "id": "reloaded_939",
+            "fg": 0
+          },
+          {
+            "id": "retool_ar10_308_medium",
+            "fg": 7
+          },
+          {
+            "id": "retool_hk417_308_long",
+            "fg": 7
+          },
+          {
+            "id": "retool_hk417_308_medium",
+            "fg": 7
+          },
+          {
+            "id": "retool_hk417_308_short",
+            "fg": 7
+          },
+          {
+            "id": "retool_scar_h_308_17s",
+            "fg": 7
+          },
+          {
+            "id": "retool_scar_h_308_cqb_gen3",
+            "fg": 7
+          },
+          {
+            "id": "retool_scar_h_308_cqb_mk2",
+            "fg": 7
+          },
+          {
+            "id": "retool_scar_h_308_long_gen3",
+            "fg": 7
+          },
+          {
+            "id": "retool_scar_h_308_long_mk20",
+            "fg": 7
+          },
+          {
+            "id": "retool_scar_h_308_short_gen3",
+            "fg": 7
+          },
+          {
+            "id": "retool_scar_h_308_short_mk2",
+            "fg": 7
+          },
+          {
+            "id": "retool_scar_l_223_cqc_gen3",
+            "fg": 7
+          },
+          {
+            "id": "retool_scar_l_223_cqc_mk2",
+            "fg": 7
+          },
+          {
+            "id": "retool_scar_l_223_long_16s",
+            "fg": 7
+          },
+          {
+            "id": "retool_scar_l_223_long_gen3",
+            "fg": 7
+          },
+          {
+            "id": "retool_scar_l_223_medium_gen3",
+            "fg": 7
+          },
+          {
+            "id": "retool_scar_l_223_medium_mk2",
+            "fg": 7
+          },
+          {
+            "id": "retool_sr25_308_long",
+            "fg": 7
+          },
+          {
+            "id": "retool_sr25_308_medium",
+            "fg": 7
+          },
+          {
+            "id": "retool_sr25_308_short",
+            "fg": 7
+          },
+          {
+            "id": "retool_xm7_227_medium",
+            "fg": 7
+          },
+          {
+            "id": "sgs_sp",
+            "fg": 7
+          },
+          {
+            "id": "shot_00",
+            "fg": 3
+          },
+          {
+            "id": "shot_85mag",
+            "fg": 3
+          },
+          {
+            "id": "shot_bird",
+            "fg": 3
+          },
+          {
+            "id": "shot_flechette",
+            "fg": 3
+          },
+          {
+            "id": "shot_slug",
+            "fg": 3
+          },
+          {
+            "id": "sigsuppressor",
+            "fg": 7
+          },
+          {
+            "id": "svch_20",
+            "fg": 2
+          },
+          {
+            "id": "svt_10",
+            "fg": 2
+          },
+          {
+            "id": "tac_balance",
+            "fg": 7
+          },
+          {
+            "id": "ub_makarov",
+            "fg": 7
+          },
+          {
+            "id": "vss_sp",
+            "fg": 7
+          },
+          {
+            "id": "xm157",
+            "fg": 7
+          },
+          {
+            "id": "zf42",
+            "fg": 7
+          },
+          {
+            "id": "znt2stock_folded",
+            "fg": 7
+          }
+        ]
+      },
+      {
+        "file": "tiles_legacy_g_weapons.png",
+        "sprite_width": 32,
+        "sprite_height": 32,
+        "sprite_offset_x": 0,
+        "sprite_offset_y": 0,
+        "tiles": [
+          {
+            "id": "overlay_wielded_m134",
+            "fg": 106
+          },
+          {
+            "id": "overlay_wielded_m2browning",
+            "fg": 106
+          }
+        ]
+      },
+      {
+        "file": "tiles_weapons.png",
+        "sprite_width": 32,
+        "sprite_height": 32,
+        "sprite_offset_x": 0,
+        "sprite_offset_y": 0,
+        "tiles": [
+          {
+            "id": "overlay_wielded_de_inf",
+            "fg": 50
+          },
+          {
+            "id": "glock_18c",
+            "fg": 51
+          },
+          {
+            "id": "overlay_wielded_glock_18c",
+            "fg": 50
+          },
+          {
+            "id": "overlay_wielded_ksg-25",
+            "fg": 148
+          },
+          {
+            "id": "pringles_launcher",
+            "fg": 51
+          },
+          {
+            "id": "overlay_wielded_pringles_launcher",
+            "fg": 50
+          },
+          {
+            "id": "overlay_wielded_smg_9mm",
+            "fg": 80
+          }
+        ]
+      }
+    ]
+  }
+]

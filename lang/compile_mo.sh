@@ -20,23 +20,32 @@ then
     LOCALE_DIR="lang/mo"
 fi
 
-os="$(uname -s)"
+compile_lang()
+{
+    n="$1"
+    f="lang/po/${n}.po"
+    override="lang/po_overrides/${n}.po"
+    mkdir -p "$LOCALE_DIR/${n}/LC_MESSAGES"
+    if [ -f "$override" ]
+    then
+        msgcat --use-first "$override" "$f" | msgfmt -f -o "$LOCALE_DIR/${n}/LC_MESSAGES/cataclysm-dda.mo" -
+    else
+        msgfmt -f -o "$LOCALE_DIR/${n}/LC_MESSAGES/cataclysm-dda.mo" "$f"
+    fi
+}
 
 # compile .mo file for each specified language
 if [ $# -gt 0 ] && [ $1 != "all" ]
 then
     for n in $@
     do
-        f="lang/po/${n}.po"
-        mkdir -p $LOCALE_DIR/${n}/LC_MESSAGES
-        msgfmt -f -o $LOCALE_DIR/${n}/LC_MESSAGES/cataclysm-dda.mo ${f}
+        compile_lang "$n"
     done
 else
     # if nothing specified, compile .mo file for every .po file in lang/po
     for f in lang/po/*.po
     do
         n=`basename $f .po`
-        mkdir -p $LOCALE_DIR/${n}/LC_MESSAGES
-        msgfmt -f -o $LOCALE_DIR/${n}/LC_MESSAGES/cataclysm-dda.mo ${f}
+        compile_lang "$n"
     done
 fi

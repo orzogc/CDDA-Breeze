@@ -2719,6 +2719,13 @@ ret_val<void> Character::can_disassemble( const item &obj, const read_only_visit
         return ret_val<void>::make_failure( _( "You cannot disassemble this." ) );
     }
 
+    // Debug-created `disassembly` items may have no original item or recipe.
+    // They are not valid resumable disassemblies and must not reach front() or
+    // get_making() below.
+    if( obj.typeId() == itype_disassembly && ( !obj.is_craft() || obj.components.empty() ) ) {
+        return ret_val<void>::make_failure( _( "You cannot disassemble this." ) );
+    }
+
     const recipe &r = recipe_dictionary::get_uncraft( ( obj.typeId() == itype_disassembly ) ?
                       obj.components.front().typeId() : obj.typeId() );
 
