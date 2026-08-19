@@ -9607,6 +9607,13 @@ void game::butcher()
         }
     }
 
+    // A debug-created bare disassembly can pass can_disassemble even though it
+    // has no recipe and cannot be shown or selected in the disassembly menu.
+    disassembles.erase( std::remove_if( disassembles.begin(), disassembles.end(),
+    []( const map_stack::iterator &it ) {
+        return it->typeId() == itype_disassembly && !it->is_craft();
+    } ), disassembles.end() );
+
     // Clear corpses if butcher and dissect factors are INT_MIN
     if( factor == INT_MIN && factorD == INT_MIN ) {
         corpses.clear();
