@@ -670,12 +670,18 @@ bool melee_actor::call( monster &z ) const
                     add_msg( m_bad, _( "As you hit the ground something comes loose and is knocked away from you!" ) );
                     if( !grab_dropped_items.empty() ) {
                         if( drop_pos == target->pos() ) {
+                            popup( _( "Dropped items: %1$s, at your feet on the %2$s." ),
+                                   grab_dropped_items, drop_terrain );
                             add_msg( m_bad, _( "Dropped items: %1$s, at your feet on the %2$s." ),
                                      grab_dropped_items, drop_terrain );
                         } else {
+                            popup( _( "Dropped items: %1$s, on the %2$s side of the %3$s." ),
+                                   grab_dropped_items,
+                                   direction_name( direction_from( target->pos(), drop_pos ) ),
+                                   drop_terrain );
                             add_msg( m_bad, _( "Dropped items: %1$s, on the %2$s side of the %3$s." ),
                                      grab_dropped_items,
-                                     direction_name_short( direction_from( target->pos(), drop_pos ) ),
+                                     direction_name( direction_from( target->pos(), drop_pos ) ),
                                      drop_terrain );
                         }
                     }
