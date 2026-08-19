@@ -80,6 +80,7 @@ void pit_covered( Character &you, const tripoint &examp );
 void slot_machine( Character &you, const tripoint &examp );
 void safe( Character &you, const tripoint &examp );
 void gunsafe_el( Character &you, const tripoint &examp );
+bool auto_forage_matches( const tripoint &examp );
 void harvest_furn_nectar( Character &you, const tripoint &examp );
 void harvest_furn( Character &you, const tripoint &examp );
 void harvest_ter_nectar( Character &you, const tripoint &examp );

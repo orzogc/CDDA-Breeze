@@ -1,3 +1,5 @@
+#include <string>
+
 #include "character.h"
 #include "creature_tracker.h"
 #include "flag.h"
@@ -231,12 +233,42 @@ bool Character::try_remove_grab()
                 int sturdiness = rng( 0, pd[index]->get_pocket_data()->ripoff );
                 // the item is ripped off your character
                 if( sturdiness < chance ) {
-                    pd[index]->spill_contents( adjacent_tile() );
-                    add_msg_player_or_npc( m_bad,
-                                           _( "As you escape the grab something comes loose and falls to the ground!" ),
-                                           _( "<npcname> escapes the grab something comes loose and falls to the ground!" ) );
-                    if( is_avatar() ) {
-                        popup( _( "As you escape the grab something comes loose and falls to the ground!" ) );
+                    std::string grab_dropped_items;
+                    for( const item *drop : pd[index]->all_items_top() ) {
+                        if( drop == nullptr ) {
+                            continue;
+                        }
+                        if( !grab_dropped_items.empty() ) {
+                            grab_dropped_items += "，";
+                        }
+                        grab_dropped_items += drop->tname();
+                    }
+
+                    const tripoint drop_pos = adjacent_tile();
+                    const std::string drop_terrain = here.name( drop_pos );
+                    pd[index]->spill_contents( drop_pos );
+
+                    add_msg_player_or_npc(
+                        m_bad,
+                        _( "As you escape the grab something comes loose and falls to the ground!" ),
+                        _( "<npcname> escapes the grab something comes loose and falls to the ground!" ) );
+
+                    if( is_avatar() && !grab_dropped_items.empty() ) {
+                        if( drop_pos == pos() ) {
+                            popup( _( "Dropped items: %1$s, at your feet on the %2$s." ),
+                                   grab_dropped_items, drop_terrain );
+                            add_msg( m_bad, _( "Dropped items: %1$s, at your feet on the %2$s." ),
+                                     grab_dropped_items, drop_terrain );
+                        } else {
+                            popup( _( "Dropped items: %1$s, on the %2$s side of the %3$s." ),
+                                   grab_dropped_items,
+                                   direction_name( direction_from( pos(), drop_pos ) ),
+                                   drop_terrain );
+                            add_msg( m_bad, _( "Dropped items: %1$s, on the %2$s side of the %3$s." ),
+                                     grab_dropped_items,
+                                     direction_name( direction_from( pos(), drop_pos ) ),
+                                     drop_terrain );
+                        }
                     }
                 }
             }

@@ -3592,6 +3592,23 @@
   },
   {
     "type": "keybinding",
+    "id": "TRADE_ALL_VEHICLES",
+    "category": "INVENTORY",
+    "name": "Toggle all reality bubble vehicle cargo in trade",
+    "bindings": [ { "input_method": "keyboard_any", "key": "c" } ]
+  },
+  {
+    "type": "keybinding",
+    "id": "SELECT_TRADE_VEHICLE",
+    "category": "INVENTORY",
+    "name": "Toggle selected vehicle cargo sources in trade",
+    "bindings": [
+      { "input_method": "keyboard_char", "key": "C" },
+      { "input_method": "keyboard_code", "key": "c", "mod": [ "shift" ] }
+    ]
+  },
+  {
+    "type": "keybinding",
     "id": "DECREASE_COUNT",
     "category": "INVENTORY",
     "name": "Decrease selected amount for the highlighted item",

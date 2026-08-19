@@ -634,8 +634,6 @@ bool melee_actor::call( monster &z ) const
         g->fling_creature(target, coord_to_angle(z.pos(), target->pos()),
             throw_strength);
         
-        target->add_msg_player_or_npc( m_bad, throw_msg_u, throw_msg_npc, mon_name );
-
         // Items strapped to you may fall off as you hit the ground
         // when you break out of a grab you have a chance to lose some things from your pockets
         // that are hanging off your character
@@ -654,12 +652,44 @@ bool melee_actor::call( monster &z ) const
                     float path_distance = rng_float( 0, 1.0 );
                     tripoint vector = target->pos() - z.pos();
                     vector = tripoint( vector.x * path_distance, vector.y * path_distance, vector.z * path_distance );
-                    pd[index]->spill_contents( z.pos() + vector );
+                    std::string grab_dropped_items;
+                    for( const item *drop : pd[index]->all_items_top() ) {
+                        if( drop == nullptr ) {
+                            continue;
+                        }
+                        if( !grab_dropped_items.empty() ) {
+                            grab_dropped_items += "，";
+                        }
+                        grab_dropped_items += drop->tname();
+                    }
+
+                    const tripoint drop_pos = z.pos() + vector;
+                    const std::string drop_terrain = get_map().name( drop_pos );
+                    pd[index]->spill_contents( drop_pos );
+
                     add_msg( m_bad, _( "As you hit the ground something comes loose and is knocked away from you!" ) );
-                    popup( _( "As you hit the ground something comes loose and is knocked away from you!" ) );
+                    if( !grab_dropped_items.empty() ) {
+                        if( drop_pos == target->pos() ) {
+                            popup( _( "Dropped items: %1$s, at your feet on the %2$s." ),
+                                   grab_dropped_items, drop_terrain );
+                            add_msg( m_bad, _( "Dropped items: %1$s, at your feet on the %2$s." ),
+                                     grab_dropped_items, drop_terrain );
+                        } else {
+                            popup( _( "Dropped items: %1$s, on the %2$s side of the %3$s." ),
+                                   grab_dropped_items,
+                                   direction_name( direction_from( target->pos(), drop_pos ) ),
+                                   drop_terrain );
+                            add_msg( m_bad, _( "Dropped items: %1$s, on the %2$s side of the %3$s." ),
+                                     grab_dropped_items,
+                                     direction_name( direction_from( target->pos(), drop_pos ) ),
+                                     drop_terrain );
+                        }
+                    }
                 }
             }
         }
+
+        target->add_msg_player_or_npc( m_bad, throw_msg_u, throw_msg_npc, mon_name );
     }
 
     return true;
