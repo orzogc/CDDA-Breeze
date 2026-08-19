@@ -231,7 +231,20 @@ bool Character::try_remove_grab()
                 int sturdiness = rng( 0, pd[index]->get_pocket_data()->ripoff );
                 // the item is ripped off your character
                 if( sturdiness < chance ) {
+                    std::string grab_dropped_items;
+                    for( const item *drop : pd[index]->all_items_top() ) {
+                        if( drop == nullptr ) {
+                            continue;
+                        }
+                        if( !grab_dropped_items.empty() ) {
+                            grab_dropped_items += "，";
+                        }
+                        grab_dropped_items += drop->tname();
+                    }
                     pd[index]->spill_contents( adjacent_tile() );
+                    if( !grab_dropped_items.empty() ) {
+                        add_msg_if_player( m_bad, _( "掉落物，%s。" ), grab_dropped_items );
+                    }
                     add_msg_player_or_npc( m_bad,
                                            _( "As you escape the grab something comes loose and falls to the ground!" ),
                                            _( "<npcname> escapes the grab something comes loose and falls to the ground!" ) );

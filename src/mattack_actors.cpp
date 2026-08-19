@@ -654,7 +654,20 @@ bool melee_actor::call( monster &z ) const
                     float path_distance = rng_float( 0, 1.0 );
                     tripoint vector = target->pos() - z.pos();
                     vector = tripoint( vector.x * path_distance, vector.y * path_distance, vector.z * path_distance );
+                    std::string grab_dropped_items;
+                    for( const item *drop : pd[index]->all_items_top() ) {
+                        if( drop == nullptr ) {
+                            continue;
+                        }
+                        if( !grab_dropped_items.empty() ) {
+                            grab_dropped_items += "，";
+                        }
+                        grab_dropped_items += drop->tname();
+                    }
                     pd[index]->spill_contents( z.pos() + vector );
+                    if( !grab_dropped_items.empty() ) {
+                        add_msg( m_bad, _( "掉落物，%s。" ), grab_dropped_items );
+                    }
                     add_msg( m_bad, _( "As you hit the ground something comes loose and is knocked away from you!" ) );
                     popup( _( "As you hit the ground something comes loose and is knocked away from you!" ) );
                 }
