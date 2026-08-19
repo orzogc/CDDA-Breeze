@@ -43,8 +43,8 @@ static const activity_id ACT_OPERATION( "ACT_OPERATION" );
 
 static const bionic_id bio_alarm( "bio_alarm" );
 
-static const bodytype_id bodytype_cat( "cat" );
-static const bodytype_id bodytype_dog( "dog" );
+static const mfaction_str_id monfaction_cat( "cat" );
+static const mfaction_str_id monfaction_dog( "dog" );
 
 static const efftype_id effect_controlled( "controlled" );
 static const efftype_id effect_npc_suspend( "npc_suspend" );
@@ -87,9 +87,11 @@ static void update_pet_companionship_morale( avatar &u )
             continue;
         }
 
-        if( critter.type->bodytype == bodytype_cat ) {
+        const mtype &type = *critter.type;
+        if( type.default_faction == monfaction_cat && type.petfood.food.count( "CATFOOD" ) > 0 ) {
             has_pet_cat = true;
-        } else if( critter.type->bodytype == bodytype_dog ) {
+        } else if( type.default_faction == monfaction_dog &&
+                   type.petfood.food.count( "DOGFOOD" ) > 0 ) {
             has_pet_dog = true;
         }
 
