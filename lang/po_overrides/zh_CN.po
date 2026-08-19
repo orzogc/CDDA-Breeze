@@ -186,29 +186,17 @@ msgid "Skills required:"
 msgstr "所需技能："
 
 # Recent branch-visible strings
-msgid "View local files and logs"
-msgstr "查看本地文件与日志"
-
-msgid "You can view local files stored on this laptop."
-msgstr "你可以查看这台笔记本电脑中保存的本地文件。"
-
-msgid "You can view local files stored on this smartphone."
-msgstr "你可以查看这部智能手机中保存的本地文件。"
-
-msgid "You found nothing interesting in the local files."
-msgstr "你没有在本地文件里发现什么有趣的内容。"
-
 msgid "Shattered Armor"
 msgstr "护甲碎裂"
 
 msgid "Your armor has been shattered by a heavy attack."
-msgstr "你的护甲被猛烈攻击击碎了。"
+msgstr "你的护甲被重击击碎了。"
 
 msgid "Your armor has been shattered."
-msgstr "你的护甲已经碎裂。"
+msgstr "你的护甲碎裂了。"
 
 msgid "The armor is shattered!"
-msgstr "护甲碎裂了！"
+msgstr "护甲碎裂了。"
 
 msgid "the shattered armor plating"
 msgstr "碎裂的装甲板"

@@ -133,6 +133,8 @@ struct weakpoint {
     std::array<float, static_cast<int>( damage_type::NUM )>crit_mult;
     // A list of required effects.
     std::vector<efftype_id> required_effects;
+    // A list of effects that prevent this weak point from being selected.
+    std::vector<efftype_id> forbidden_effects;
     // A list of effects that may trigger by hitting this weak point.
     std::vector<weakpoint_effect> effects;
     // Constant coverage multipliers, depending on the attack type.

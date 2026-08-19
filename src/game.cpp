@@ -3869,6 +3869,12 @@ void game::draw_critter( const Creature &critter, const tripoint &center )
     }
     if( critter.posz() != center.z ) {
         static constexpr tripoint up_tripoint( tripoint_above );
+        static constexpr tripoint down_tripoint( tripoint_below );
+        if( critter.posz() == center.z + 1 &&
+            ( debug_mode || u.sees( critter ) ) &&
+            m.valid_move( critter.pos(), critter.pos() + down_tripoint, false, true ) ) {
+            mvwputch( w_terrain, point( mx, my ), c_green_cyan, '^' );
+        }
         if( critter.posz() == center.z - 1 &&
             ( debug_mode || u.sees( critter ) ) &&
             m.valid_move( critter.pos(), critter.pos() + up_tripoint, false, true ) ) {

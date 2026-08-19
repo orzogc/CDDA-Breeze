@@ -218,6 +218,23 @@ void field_type::load( const JsonObject &jo, const std::string & )
                   fallback_intensity_level.monster_spawn_group );
         optional( jao, was_loaded, "light_emitted", intensity_level.light_emitted,
                   fallback_intensity_level.light_emitted );
+        if( jao.has_array( "light_color" ) ) {
+            const JsonArray color = jao.get_array( "light_color" );
+            if( color.size() != 3 ) {
+                color.throw_error( "light_color must contain exactly 3 values" );
+            }
+            const int r = color.get_int( 0 );
+            const int g = color.get_int( 1 );
+            const int b = color.get_int( 2 );
+            if( r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255 ) {
+                color.throw_error( "light_color values must be between 0 and 255" );
+            }
+            intensity_level.light_color.r = r / 255.0f;
+            intensity_level.light_color.g = g / 255.0f;
+            intensity_level.light_color.b = b / 255.0f;
+        } else {
+            intensity_level.light_color = fallback_intensity_level.light_color;
+        }
         optional( jao, was_loaded, "light_override", intensity_level.local_light_override,
                   fallback_intensity_level.local_light_override );
         optional( jao, was_loaded, "translucency", intensity_level.translucency,
