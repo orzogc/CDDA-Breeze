@@ -460665,10 +460665,6 @@ msgstr "现实气泡内没有可用于交易的载具。"
 msgid "Select trade vehicles (Esc to finish)"
 msgstr "选择交易载具（按 Esc 完成）"
 
-#: src/trade_ui.cpp:445
-msgid "You"
-msgstr "你"
-
 #: src/trade_ui.cpp:449
 #, c-format
 msgid "You, %s"
