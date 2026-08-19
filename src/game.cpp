@@ -9276,6 +9276,10 @@ static void add_disassemblables( uilist &menu,
                                                     it.tname(), stack.second );
             recipe uncraft_recipe;
             if( it.typeId() == itype_disassembly ) {
+                // A debug-created bare disassembly has no recipe to display.
+                if( !it.is_craft() ) {
+                    continue;
+                }
                 uncraft_recipe = it.get_making();
             } else {
                 uncraft_recipe = recipe_dictionary::get_uncraft( it.typeId() );
@@ -9628,6 +9632,13 @@ void game::butcher()
         }
     }
 
+    // A debug-created bare disassembly can pass can_disassemble even though it
+    // has no recipe and cannot be shown or selected in the disassembly menu.
+    disassembles.erase( std::remove_if( disassembles.begin(), disassembles.end(),
+    []( const map_stack::iterator &it ) {
+        return it->typeId() == itype_disassembly && !it->is_craft();
+    } ), disassembles.end() );
+
     // Clear corpses if butcher and dissect factors are INT_MIN
     if( factor == INT_MIN && factorD == INT_MIN ) {
         corpses.clear();
@@ -9705,6 +9716,10 @@ void game::butcher()
             for( const auto &stack : disassembly_stacks ) {
                 recipe uncraft_recipe;
                 if( stack.first->typeId() == itype_disassembly ) {
+                    // Ignore malformed debug-only disassembly items without a recipe.
+                    if( !stack.first->is_craft() ) {
+                        continue;
+                    }
                     uncraft_recipe = stack.first->get_making();
                 } else {
                     uncraft_recipe = recipe_dictionary::get_uncraft( stack.first->typeId() );

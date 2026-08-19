@@ -1020,7 +1020,7 @@ static skill_id skill_select_menu( const Character &c, const std::string &prompt
     nmenu.text = prompt;
     for( const std::pair<const skill_id, SkillLevel> &s : *c._skills ) {
         bool enabled = s.second.level() > 0;
-        std::string entry = string_format( "%s (%d)", s.first.str(), s.second.level() );
+        std::string entry = string_format( "%s (%d)", s.first->name(), s.second.level() );
         nmenu.addentry( i, enabled, MENU_AUTOASSIGN, entry );
         i++;
     }

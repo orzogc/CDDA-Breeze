@@ -6107,6 +6107,12 @@ void item::disassembly_info( std::vector<iteminfo> &info, const iteminfo_query *
         return;
     }
 
+    // A bare `disassembly` item can be spawned by debug tools without the
+    // recipe data normally attached to an in-progress disassembly.  It still
+    // has the disassembly item type, so do not call get_making() on it.
+    if( typeId() == itype_disassembly && ( !craft_data_ || !craft_data_->making ) ) {
+        return;
+    }
     const recipe &dis = ( typeId() == itype_disassembly ) ? get_making() :
                         recipe_dictionary::get_uncraft( typeId() );
     const requirement_data &req = dis.disassembly_requirements();
@@ -11524,7 +11530,9 @@ bool item::is_disassemblable() const
 
 bool item::is_craft() const
 {
-    return craft_data_ != nullptr;
+    // A craft_data object without its recipe is malformed and cannot be used
+    // as an in-progress craft or disassembly.
+    return craft_data_ != nullptr && craft_data_->making != nullptr;
 }
 
 bool item::is_funnel_container( units::volume &bigger_than ) const
