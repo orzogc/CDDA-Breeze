@@ -346,6 +346,31 @@ static const efftype_id effect_just_trade("just_trade");
 
 #define dbg(x) DebugLog((x),D_GAME) << __FILE__ << ":" << __LINE__ << ": "
 
+static void auto_forage_position( map &here, Character &you, const tripoint &pos )
+{
+    const ter_t &terrain = *here.ter( pos );
+    const furn_t &furniture = *here.furn( pos );
+    if( !terrain.can_examine( pos ) && !furniture.can_examine( pos ) ) {
+        return;
+    }
+    if( !iexamine::auto_forage_matches( pos ) ) {
+        return;
+    }
+    if( terrain.has_examine( iexamine::shrub_marloss ) ||
+        terrain.has_examine( iexamine::shrub_wildveggies ) ||
+        terrain.has_examine( iexamine::harvest_ter_nectar ) ||
+        terrain.has_examine( iexamine::tree_marloss ) ||
+        terrain.has_examine( iexamine::harvest_ter ) ||
+        terrain.has_examine( iexamine::harvest_ter_nectar ) ||
+        terrain.has_examine( iexamine::harvest_plant_ex ) ) {
+        terrain.examine( you, pos );
+    } else if( furniture.has_examine( iexamine::harvest_furn ) ||
+               furniture.has_examine( iexamine::harvest_furn_nectar ) ||
+               furniture.has_examine( iexamine::harvest_plant_ex ) ) {
+        furniture.examine( you, pos );
+    }
+}
+
 static constexpr int DANGEROUS_PROXIMITY = 5;
 
 
@@ -10903,33 +10928,10 @@ point game::place_player( const tripoint &dest_loc, bool quick )
             direction::SOUTH, direction::SOUTHWEST, direction::WEST, direction::NORTHWEST
         };
 
-        const auto forage = [&]( const tripoint & pos ) {
-            const ter_t &xter_t = *m.ter( pos );
-            const furn_t &xfurn_t = *m.furn( pos );
 
-            if( !xter_t.can_examine( pos ) && !xfurn_t.can_examine( pos ) ) {
-                return;
-            }
-            if( !iexamine::auto_forage_matches( pos ) ) {
-                return;
-            }
-            if( xter_t.has_examine( iexamine::shrub_marloss ) ||
-                xter_t.has_examine( iexamine::shrub_wildveggies ) ||
-                xter_t.has_examine( iexamine::harvest_ter_nectar ) ||
-                xter_t.has_examine( iexamine::tree_marloss ) ||
-                xter_t.has_examine( iexamine::harvest_ter ) ||
-                xter_t.has_examine( iexamine::harvest_ter_nectar ) ||
-                xter_t.has_examine( iexamine::harvest_plant_ex ) ) {
-                xter_t.examine( u, pos );
-            } else if( xfurn_t.has_examine( iexamine::harvest_furn ) ||
-                       xfurn_t.has_examine( iexamine::harvest_furn_nectar ) ||
-                       xfurn_t.has_examine( iexamine::harvest_plant_ex ) ) {
-                xfurn_t.examine( u, pos );
-            }
-        };
 
         for( const direction &elem : adjacentDir ) {
-            forage( u.pos() + displace_XY( elem ) );
+            auto_forage_position( m, u, u.pos() + displace_XY( elem ) );
         }
 
         const std::string pulp_butcher = get_option<std::string>( "AUTO_PULP_BUTCHER" );

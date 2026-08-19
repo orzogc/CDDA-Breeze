@@ -4251,16 +4251,17 @@ void trade_selector::clear_trade_items()
 
 void trade_selector::restore_trade_selection( const select_t &selection )
 {
-    std::map<inventory_entry *, size_t> restored_counts;
+    std::map<inventory_entry *, int> restored_counts;
     for( const entry_t &previous : selection ) {
         item_location loc = previous.first;
         if( inventory_entry *entry = find_entry_by_location( loc ) ) {
-            restored_counts[entry] += static_cast<size_t>( previous.second );
+            restored_counts[entry] += previous.second;
         }
     }
-    for( const auto &restored : restored_counts ) {
+    for( std::map<inventory_entry *, int>::const_reference restored : restored_counts ) {
+        const int available_count = static_cast<int>( restored.first->get_available_count() );
         set_chosen_count( *restored.first,
-                          std::min( restored.second, restored.first->get_available_count() ) );
+                          static_cast<size_t>( std::min( restored.second, available_count ) ) );
     }
 }
 
