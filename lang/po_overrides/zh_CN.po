@@ -394,3 +394,41 @@ msgstr "未知"
 
 msgid "Unknown"
 msgstr "未知"
+
+# Exact skill names used by data/json/skills.json
+msgid "dodging"
+msgstr "闪避"
+
+msgid "piercing weapons"
+msgstr "刺击武器"
+
+msgid "applied science"
+msgstr "应用科学"
+
+msgid "weapon"
+msgstr "武器"
+
+# NPC seminar UI and selection prompts
+msgid "Which skill would you like to teach?"
+msgstr "你想教授哪项技能"
+
+msgid "Which skill would you like to learn?"
+msgstr "你想学习哪项技能"
+
+msgid "Which style would you like to teach?"
+msgstr "你想教授哪种武术"
+
+msgid "Which style would you like to learn?"
+msgstr "你想学习哪种武术"
+
+msgid "Who should participate in the training seminar?"
+msgstr "谁来参加这次训练"
+
+msgid "Finish selection"
+msgstr "完成选择"
+
+msgid "Start a training seminar"
+msgstr "开始集体训练"
+
+msgid "Start a training seminar (You've already taught enough for now)"
+msgstr "开始集体训练，当前已经教得够多了"
