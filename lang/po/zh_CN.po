@@ -464834,3 +464834,28 @@ msgstr "你将当前套装收纳进了收纳包。"
 #: src/iuse.cpp:3003
 msgid "You change outfits."
 msgstr "你换上了另一套衣物。"
+
+#. ~ Clause text of UI widget "bodypart_status_indicator_template"
+#: data/json/ui/bodypart_status.json
+msgid "bitten"
+msgstr "咬伤"
+
+#. ~ Clause text of UI widget "bodypart_status_indicator_template"
+#: data/json/ui/bodypart_status.json
+msgid "infected"
+msgstr "感染"
+
+#. ~ Clause text of UI widget "bodypart_status_indicator_template"
+#: data/json/ui/bodypart_status.json
+msgid "splinted"
+msgstr "夹板固定"
+
+#. ~ Clause text of UI widget "bodypart_status_indicator_template"
+#: data/json/ui/bodypart_status.json
+msgid "bandaged"
+msgstr "已包扎"
+
+#. ~ Clause text of UI widget "bodypart_status_indicator_template"
+#: data/json/ui/bodypart_status.json
+msgid "disinfected"
+msgstr "已消毒"
