@@ -3850,7 +3850,7 @@ static void pick_plant( Character &you, const tripoint &examp,
                         const itype_id &itemType, ter_id new_ter, bool seeds = false )
 {
     map &here = get_map();
-    const bool auto_forage = auto_forage_matches( examp );
+    const bool auto_forage = iexamine::auto_forage_matches( examp );
     if( you.is_avatar() && !auto_forage &&
         !query_yn( _( "Harvest the %s?" ), here.tername( examp ) ) ) {
         iexamine::none( you, examp );
