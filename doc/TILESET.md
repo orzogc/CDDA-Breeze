@@ -63,6 +63,10 @@ Sprites can be referenced across tilesheet directories, but they must be stored 
 
 `id` can be an array of multiple game entity IDs sharing the same sprite configuration, like `"id": ["vp_door", "vp_hddoor"]`.  `id` game values that are used as-is include terrain, furniture, items (except corpses), monsters, fields, traps.
 
+#### Shadow sprite
+
+The optional `shadow` tile is drawn on the lowest visible tile when a visible creature is standing on an upper z-level.
+
 #### Hardcoded IDs
 
 The special ID `unknown` provides a sprite that is displayed when an entity has no other sprite. Other hardcoded IDs also exist, and most of them are referenced in [`src/cata_tiles.cpp`](/src/cata_tiles.cpp). A full list of hardcoded IDs _may_ be present in [`tools/json_tools/generate_overlay_ids.py`](/tools/json_tools/generate_overlay_ids.py) stored as `CPP_IDS` but it's updated manually and may lag behind.

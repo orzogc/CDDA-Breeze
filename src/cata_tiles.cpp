@@ -1695,16 +1695,27 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
         }
         }
 
+        const bool do_draw_shadow = find_tile_looks_like( "shadow", TILE_CATEGORY::NONE,
+                                       empty_string ).has_value();
         //const int height_3d_mult = is_isometric() ? 10 : 0;
         if (max_draw_depth <= 0) {
             // Legacy draw mode
             for (int row = min_row; row < max_row; row++) {
                 for (auto f : drawing_layers_legacy) {
                     for (tile_render_info& p : draw_points[row]) {
-                        (this->*f)(p.pos, p.ll, p.height_3d, p.invisible);
+                        if( f == &cata_tiles::draw_critter_at ) {
+                            const bool drew_critter = ( this->*f )( p.pos, p.ll, p.height_3d,
+                                                  p.invisible );
+                            if( !drew_critter && do_draw_shadow && !p.invisible[0] &&
+                                here.dont_draw_lower_floor( p.pos ) ) {
+                                draw_critter_above( p.pos, p.ll, p.height_3d, p.invisible );
+                            }
+                        } else {
+                            ( this->*f )( p.pos, p.ll, p.height_3d, p.invisible );
+                        }
                     }
+                }
             }
-        }
         }
         else {
             // Multi z-level draw mode
@@ -1729,8 +1740,16 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
                             }
                             tripoint draw_loc = p.pos;
                             draw_loc.z = cur_zlevel;
-                            // Draw
-                            (this->*f)(draw_loc, p.ll, p.height_3d, p.invisible);
+                            if( f == &cata_tiles::draw_critter_at ) {
+                                const bool drew_critter = ( this->*f )( draw_loc, p.ll, p.height_3d,
+                                                      p.invisible );
+                                if( !drew_critter && do_draw_shadow && !p.invisible[0] &&
+                                    here.dont_draw_lower_floor( draw_loc ) ) {
+                                    draw_critter_above( draw_loc, p.ll, p.height_3d, p.invisible );
+                                }
+                            } else {
+                                ( this->*f )( draw_loc, p.ll, p.height_3d, p.invisible );
+                            }
                         }
 
                     }
@@ -3946,6 +3965,62 @@ bool cata_tiles::draw_vpart( const tripoint &p, lit_level ll, int &height_3d,
                    lit_level::MEMORIZED, nv_goggles_activated, height_3d_temp );
     }
     return false;
+}
+
+bool cata_tiles::draw_critter_above( const tripoint &p, lit_level ll, int &height_3d,
+                                      const std::array<bool, 5> &invisible )
+{
+    if( invisible[0] ) {
+        return false;
+    }
+
+    map &here = get_map();
+    const avatar &you = get_avatar();
+    tripoint scan_p = p + tripoint_above;
+    const Creature *pcritter = nullptr;
+    while( here.inbounds( scan_p ) && !here.dont_draw_lower_floor( scan_p ) &&
+           scan_p.z - you.posz() <= fov_3d_z_range ) {
+        pcritter = get_creature_tracker().creature_at( scan_p, true );
+        if( pcritter != nullptr ) {
+            break;
+        }
+        ++scan_p.z;
+    }
+
+    if( pcritter == nullptr || !you.sees( *pcritter ) ) {
+        return false;
+    }
+
+    if( !draw_from_id_string( "shadow", TILE_CATEGORY::NONE, empty_string, p,
+                              0, 0, ll, false, height_3d ) ) {
+        return false;
+    }
+
+    bool is_player = false;
+    bool sees_player = false;
+    Creature::Attitude attitude = Creature::Attitude::ANY;
+    if( const monster *m = dynamic_cast<const monster *>( pcritter ) ) {
+        sees_player = m->sees( you );
+        attitude = m->attitude_to( you );
+    } else if( const Character *ch = dynamic_cast<const Character *>( pcritter ) ) {
+        if( ch->is_avatar() ) {
+            is_player = true;
+        } else {
+            sees_player = ch->sees( you );
+            attitude = ch->attitude_to( you );
+        }
+    }
+
+    if( !is_player ) {
+        const std::string draw_id = "overlay_" + Creature::attitude_raw_string( attitude ) +
+                                    ( sees_player && !you.has_trait( trait_INATTENTIVE ) ?
+                                      "_sees_player" : "" );
+        if( find_tile_looks_like( draw_id, TILE_CATEGORY::NONE, empty_string ) ) {
+            draw_from_id_string( draw_id, TILE_CATEGORY::NONE, empty_string, p, 0, 0,
+                                 lit_level::LIT, false, height_3d );
+        }
+    }
+    return true;
 }
 
 bool cata_tiles::draw_critter_at_below( const tripoint &p, const lit_level, int &,
