@@ -464901,6 +464901,36 @@ msgstr "你将当前套装收纳进了收纳包。"
 msgid "You change outfits."
 msgstr "你换上了另一套衣物。"
 
+#. ~ Effect name
+#: data/json/effects.json
+msgid "Shattered Armor"
+msgstr "护甲碎裂"
+
+#. ~ Effect description
+#: data/json/effects.json
+msgid "Your armor has been shattered by a heavy attack."
+msgstr "你的护甲被重击击碎了。"
+
+#. ~ Effect apply message
+#: data/json/effects.json
+msgid "Your armor has been shattered."
+msgstr "你的护甲碎裂了。"
+
+#. ~ Weakpoint name
+#: data/json/monster_weakpoints/humanoid_weakpoints.json
+msgid "the body armor"
+msgstr "躯干护甲"
+
+#. ~ Weakpoint name
+#: data/json/monster_weakpoints/humanoid_weakpoints.json
+msgid "the shattered armor plating"
+msgstr "碎裂的装甲板"
+
+#. ~ Weakpoint effect message
+#: data/json/monster_weakpoints/humanoid_weakpoints.json
+msgid "The armor is shattered!"
+msgstr "护甲碎裂了。"
+
 #. ~ Clause text of UI widget "bodypart_status_indicator_template"
 #: data/json/ui/bodypart_status.json
 msgid "bitten"

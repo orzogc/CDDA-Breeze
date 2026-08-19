@@ -2124,11 +2124,13 @@ class map
         void apply_light_source( const tripoint &p, float luminance );
         // ...this, which will apply the light after at the end of generate_lightmap, and prevent redundant
         // light rays from causing massive slowdowns, if there's a huge amount of light.
-        void add_light_source( const tripoint &p, float luminance );
+        void add_light_source( const tripoint &p, float luminance,
+                               const light_color_rgb &color = {} );
         // Handle just cardinal directions and 45 deg angles.
         void apply_directional_light( const tripoint &p, int direction, float luminance );
         void apply_light_arc( const tripoint &p, const units::angle &angle, float luminance,
-                              const units::angle &wideangle = 30_degrees );
+                              const units::angle &wideangle = 30_degrees,
+                              const light_color_rgb &color = {} );
         void apply_light_ray( cata::mdarray<bool, point_bub_ms, MAPSIZE_X, MAPSIZE_Y> &lit,
                               const tripoint &s, const tripoint &e, float luminance );
         void add_light_from_items( const tripoint &p, const item_stack::iterator &begin,
