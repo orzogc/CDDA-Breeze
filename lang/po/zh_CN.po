@@ -420414,20 +420414,30 @@ msgstr "你试着挣脱，但是失败了！"
 msgid "<npcname> tries to break out of the grab, but fails!"
 msgstr "<npcname> 试着挣脱但是失败了！"
 
-#: src/character_escape.cpp:228 src/character_escape.cpp:231
+#: src/character_escape.cpp:253
 msgid "As you escape the grab something comes loose and falls to the ground!"
 msgstr "你没被抓住，但有个东西被抓掉在了地上！"
 
-#: src/character_escape.cpp:229
+#: src/character_escape.cpp:254
 msgid ""
 "<npcname> escapes the grab something comes loose and falls to the ground!"
 msgstr "<npcname> 没被抓住，但有个东西被抓掉在了地上！"
 
-#: src/character_escape.cpp:236
+#: src/character_escape.cpp:258 src/mattack_actors.cpp:673
+#, c-format
+msgid "Dropped items: %1$s, at your feet on the %2$s."
+msgstr "掉落物，%1$s，脚下的%2$s。"
+
+#: src/character_escape.cpp:261 src/mattack_actors.cpp:676
+#, c-format
+msgid "Dropped items: %1$s, on the %2$s side of the %3$s."
+msgstr "掉落物，%1$s，%2$s侧%3$s。"
+
+#: src/character_escape.cpp:270
 msgid "You break out of the grab!"
 msgstr "你挣脱了！"
 
-#: src/character_escape.cpp:237
+#: src/character_escape.cpp:271
 msgid "<npcname> breaks out of the grab!"
 msgstr "<npcname> 挣脱了！"
 
@@ -445926,7 +445936,7 @@ msgstr "%s 的强力一击击飞了 <npcname>！"
 msgid "Something"
 msgstr "某物"
 
-#: src/mattack_actors.cpp:658 src/mattack_actors.cpp:659
+#: src/mattack_actors.cpp:670
 msgid ""
 "As you hit the ground something comes loose and is knocked away from you!"
 msgstr "当你落地时，有些物品松动了，从你身上掉下来了！"

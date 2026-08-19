@@ -634,8 +634,6 @@ bool melee_actor::call( monster &z ) const
         g->fling_creature(target, coord_to_angle(z.pos(), target->pos()),
             throw_strength);
         
-        target->add_msg_player_or_npc( m_bad, throw_msg_u, throw_msg_npc, mon_name );
-
         // Items strapped to you may fall off as you hit the ground
         // when you break out of a grab you have a chance to lose some things from your pockets
         // that are hanging off your character
@@ -664,15 +662,28 @@ bool melee_actor::call( monster &z ) const
                         }
                         grab_dropped_items += drop->tname();
                     }
-                    pd[index]->spill_contents( z.pos() + vector );
-                    if( !grab_dropped_items.empty() ) {
-                        add_msg( m_bad, _( "掉落物，%s。" ), grab_dropped_items );
-                    }
+
+                    const tripoint drop_pos = z.pos() + vector;
+                    const std::string drop_terrain = get_map().name( drop_pos );
+                    pd[index]->spill_contents( drop_pos );
+
                     add_msg( m_bad, _( "As you hit the ground something comes loose and is knocked away from you!" ) );
-                    popup( _( "As you hit the ground something comes loose and is knocked away from you!" ) );
+                    if( !grab_dropped_items.empty() ) {
+                        if( drop_pos == target->pos() ) {
+                            add_msg( m_bad, _( "Dropped items: %1$s, at your feet on the %2$s." ),
+                                     grab_dropped_items, drop_terrain );
+                        } else {
+                            add_msg( m_bad, _( "Dropped items: %1$s, on the %2$s side of the %3$s." ),
+                                     grab_dropped_items,
+                                     direction_name_short( direction_from( target->pos(), drop_pos ) ),
+                                     drop_terrain );
+                        }
+                    }
                 }
             }
         }
+
+        target->add_msg_player_or_npc( m_bad, throw_msg_u, throw_msg_npc, mon_name );
     }
 
     return true;
