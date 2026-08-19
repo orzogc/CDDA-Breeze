@@ -27426,6 +27426,11 @@ msgstr "逗过宠物"
 
 #. ~ Morale text
 #: data/json/morale_types.json
+msgid "宠物在身边"
+msgstr "宠物在身边"
+
+#. ~ Morale text
+#: data/json/morale_types.json
 msgid "Lit a fire"
 msgstr "点了把火"
 
@@ -414231,6 +414236,11 @@ msgstr "改变发型"
 #: src/activity_actor.cpp:5193
 msgid "Change facial hairstyle"
 msgstr "改变胡须风格"
+
+#: src/activity_actor.cpp:5314
+#, c-format
+msgid "你陪%s玩了一会儿，它看起来很开心，你的心情也轻松了一些。"
+msgstr "你陪%s玩了一会儿，它看起来很开心，你的心情也轻松了一些。"
 
 #. ~ Sound of a wood chopping tool at work!
 #: src/activity_actor.cpp:5400

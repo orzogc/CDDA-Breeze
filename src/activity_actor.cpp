@@ -5309,13 +5309,9 @@ void play_with_pet_activity_actor::start( player_activity &act, Character & )
 
 void play_with_pet_activity_actor::finish( player_activity &act, Character &who )
 {
-    who.add_morale( MORALE_PLAY_WITH_PET, rng( 3, 10 ), 10, 5_hours, 25_minutes );
+    who.add_morale( MORALE_PLAY_WITH_PET, 5, 5, 5_hours, 1_hours, true );
 
-    if( !playstr.empty() ) {
-        who.add_msg_if_player( m_good, playstr, pet_name );
-    }
-
-    who.add_msg_if_player( m_good, _( "Playing with your %s has lifted your spirits a bit." ),
+    who.add_msg_if_player( m_good, _( "你陪%s玩了一会儿，它看起来很开心，你的心情也轻松了一些。" ),
                            pet_name );
     act.set_to_null();
 }

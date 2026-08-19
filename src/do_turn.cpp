@@ -43,6 +43,9 @@ static const activity_id ACT_OPERATION( "ACT_OPERATION" );
 
 static const bionic_id bio_alarm( "bio_alarm" );
 
+static const mfaction_str_id monfaction_cat( "cat" );
+static const mfaction_str_id monfaction_dog( "dog" );
+
 static const efftype_id effect_controlled( "controlled" );
 static const efftype_id effect_npc_suspend( "npc_suspend" );
 static const efftype_id effect_ridden( "ridden" );
@@ -69,6 +72,42 @@ static const efftype_id effect_npc_run_away("npc_run_away");
 static const efftype_id effect_npc_flee_player("npc_flee_player");
 static const efftype_id effect_hallucination_npc_die_no_message("hallucination_npc_die_no_message");
 static const zone_type_id zone_type_trade_area("trade_area");
+
+static const morale_type morale_pet_companionship( "morale_pet_companionship" );
+
+static void update_pet_companionship_morale( avatar &u )
+{
+    bool has_pet_cat = false;
+    bool has_pet_dog = false;
+
+    // This runs only once per in-game hour. Scan the already-loaded monster list once,
+    // skip non-pets immediately, and stop as soon as both companion types are found.
+    for( monster &critter : g->all_monsters() ) {
+        if( !critter.is_pet() ) {
+            continue;
+        }
+
+        const mtype &type = *critter.type;
+        if( type.default_faction == monfaction_cat && type.petfood.food.count( "CATFOOD" ) > 0 ) {
+            has_pet_cat = true;
+        } else if( type.default_faction == monfaction_dog &&
+                   type.petfood.food.count( "DOGFOOD" ) > 0 ) {
+            has_pet_dog = true;
+        }
+
+        if( has_pet_cat && has_pet_dog ) {
+            break;
+        }
+    }
+
+    const int companionship_bonus = ( has_pet_cat ? 5 : 0 ) + ( has_pet_dog ? 5 : 0 );
+    if( companionship_bonus > 0 ) {
+        // Use the desired current value as both bonus and cap. This lets the hourly refresh
+        // move cleanly between +5 and +10 instead of leaving the previous larger value behind.
+        u.add_morale( morale_pet_companionship, companionship_bonus, companionship_bonus,
+                      90_minutes, 75_minutes, true );
+    }
+}
 
 #if defined(__ANDROID__)
 extern phmap::btree_map<std::string, std::list<input_event>> quick_shortcuts_map;
@@ -1238,6 +1277,10 @@ bool do_turn()
     u.update_bodytemp();
     u.update_body_wetness( *weather.weather_precise );
     u.apply_wetness_morale( weather.temperature );
+
+    if( calendar::once_every( 1_hours ) ) {
+        update_pet_companionship_morale( u );
+    }
 
     if( calendar::once_every( 1_minutes ) ) {
         u.update_morale();
