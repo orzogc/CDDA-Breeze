@@ -335,6 +335,11 @@
     "text": "Spent time playing with a pet"
   },
   {
+    "id": "morale_pet_companionship",
+    "type": "morale_type",
+    "text": "宠物在身边"
+  },
+  {
     "id": "morale_pyromania_startfire",
     "type": "morale_type",
     "text": "Lit a fire"
