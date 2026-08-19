@@ -243,3 +243,31 @@ msgstr "你想教授哪种武术"
 
 msgid "Which style would you like to learn?"
 msgstr "你想学习哪种武术"
+
+# 穆尔卡枪械模组槽位运行时别名，仅补 12.4 未汉化字符串
+msgid "bayonet_lug"
+msgstr "刺刀座"
+
+# 穆尔卡枪械模组槽位运行时别名，仅补 12.4 未汉化字符串
+msgid "grip_mount"
+msgstr "握把底座"
+
+# 穆尔卡枪械模组槽位运行时别名，仅补 12.4 未汉化字符串
+msgid "loading_port"
+msgstr "装弹口"
+
+# 穆尔卡枪械模组槽位运行时别名，仅补 12.4 未汉化字符串
+msgid "rail_mount"
+msgstr "导轨底座"
+
+# 穆尔卡枪械模组槽位运行时别名，仅补 12.4 未汉化字符串
+msgid "stock_accessory"
+msgstr "枪托配件"
+
+# 穆尔卡枪械模组槽位运行时别名，仅补 12.4 未汉化字符串
+msgid "stock_mount"
+msgstr "枪托底座"
+
+# 穆尔卡枪械模组槽位运行时别名，仅补 12.4 未汉化字符串
+msgid "underbarrel_mount"
+msgstr "管下底座"
