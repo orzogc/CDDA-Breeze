@@ -1425,6 +1425,22 @@ void map_data_common_t::load( const JsonObject &jo, const std::string & )
     mandatory( jo, was_loaded, "description", description );
     optional( jo, was_loaded, "curtain_transform", curtain_transform );
 
+    if( jo.has_array( "light_color" ) ) {
+        const JsonArray color = jo.get_array( "light_color" );
+        if( color.size() != 3 ) {
+            color.throw_error( "light_color must contain exactly 3 values" );
+        }
+        const int r = color.get_int( 0 );
+        const int g = color.get_int( 1 );
+        const int b = color.get_int( 2 );
+        if( r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255 ) {
+            color.throw_error( "light_color values must be between 0 and 255" );
+        }
+        light_color.r = r / 255.0f;
+        light_color.g = g / 255.0f;
+        light_color.b = b / 255.0f;
+    }
+
     if( jo.has_object( "shoot" ) ) {
         shoot = cata::make_value<map_shoot_info>();
         shoot->load( jo, "shoot", was_loaded );

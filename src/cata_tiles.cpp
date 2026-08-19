@@ -38,6 +38,7 @@
 #include "itype.h"
 #include "json.h"
 #include "json_loader.h"
+#include "lightmap.h"
 #include "map.h"
 #include "map_extras.h"
 #include "map_memory.h"
@@ -1697,6 +1698,60 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
 
         const bool do_draw_shadow = find_tile_looks_like( "shadow", TILE_CATEGORY::NONE,
                                        empty_string ).has_value();
+        const auto draw_light_overlays = [&]( const int zlevel ) {
+            const level_cache &light_cache = here.access_cache( zlevel );
+            SDL_BlendMode previous_blend_mode;
+            GetRenderDrawBlendMode( renderer, previous_blend_mode );
+            bool drew_light_tint = false;
+            for( int overlay_row = min_row; overlay_row < max_row; ++overlay_row ) {
+                for( const tile_render_info &p : draw_points[overlay_row] ) {
+                    if( p.invisible[0] || zlevel < p.draw_min_z ||
+                        p.ll == lit_level::DARK || p.ll == lit_level::BLANK ||
+                        p.ll == lit_level::MEMORIZED ) {
+                        continue;
+                    }
+                    const tripoint draw_loc( p.pos.xy(), zlevel );
+                    if( !here.inbounds( draw_loc ) ) {
+                        continue;
+                    }
+                    const light_color_rgb &lc = light_cache.light_color_cache[draw_loc.x][draw_loc.y];
+                    const float min_channel = std::min( { lc.r, lc.g, lc.b } );
+                    const float sat_r = lc.r - min_channel;
+                    const float sat_g = lc.g - min_channel;
+                    const float sat_b = lc.b - min_channel;
+                    const float sat_mag = std::max( { sat_r, sat_g, sat_b } );
+                    if( sat_mag < 0.01f ) {
+                        continue;
+                    }
+                    const float scalar = light_cache.lm[draw_loc.x][draw_loc.y].max();
+                    const float ratio = scalar > 0.1f ? std::min( 1.0f, sat_mag / scalar ) : 0.0f;
+                    const float color_strength = std::clamp(
+                                                     sat_mag / LIGHT_SOURCE_BRIGHT, 0.0f, 1.0f );
+                    const Uint8 alpha = static_cast<Uint8>( std::clamp(
+                                                 ratio * color_strength * 80.0f, 0.0f, 80.0f ) );
+                    if( alpha == 0 ) {
+                        continue;
+                    }
+                    const SDL_Color tint = {
+                        static_cast<Uint8>( std::clamp( sat_r / sat_mag * 255.0f, 0.0f, 255.0f ) ),
+                        static_cast<Uint8>( std::clamp( sat_g / sat_mag * 255.0f, 0.0f, 255.0f ) ),
+                        static_cast<Uint8>( std::clamp( sat_b / sat_mag * 255.0f, 0.0f, 255.0f ) ),
+                        alpha
+                    };
+                    const point screen = player_to_screen( draw_loc.xy() );
+                    const SDL_Rect draw_rect = { screen.x, screen.y - p.height_3d,
+                                                 tile_width, tile_height };
+                    if( !drew_light_tint ) {
+                        SetRenderDrawBlendMode( renderer, SDL_BLENDMODE_BLEND );
+                        drew_light_tint = true;
+                    }
+                    geometry->rect( renderer, draw_rect, tint );
+                }
+            }
+            if( drew_light_tint ) {
+                SetRenderDrawBlendMode( renderer, previous_blend_mode );
+            }
+        };
         //const int height_3d_mult = is_isometric() ? 10 : 0;
         if (max_draw_depth <= 0) {
             // Legacy draw mode
@@ -1716,6 +1771,7 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
                     }
                 }
             }
+            draw_light_overlays( center.z );
         }
         else {
             // Multi z-level draw mode
@@ -1754,6 +1810,7 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
 
                     }
                 }
+                draw_light_overlays( cur_zlevel );
                 cur_zlevel += 1;
             } while (cur_zlevel <= center.z);
             z_overlay_depth = 0;
