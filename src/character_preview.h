@@ -10,6 +10,17 @@
 #include "point.h"
 
 class avatar;
+class Character;
+
+/** 当前贴图环境是否可以实时绘制人物。 */
+bool character_preview_available();
+
+/**
+ * 在给定窗口内部实时绘制一个 Character 的当前贴图外观。
+ * NPC 使用真实穿戴、手持物与变异 overlay，不创建任何截图文件。
+ */
+void display_character_preview_in_window( const Character &character,
+        const catacurses::window &window );
 
 /** 角色创建界面中的贴图角色预览窗口。 */
 struct character_preview_window {

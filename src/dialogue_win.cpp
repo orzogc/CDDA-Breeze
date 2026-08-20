@@ -6,6 +6,9 @@
 #include <vector>
 
 #include "catacharset.h"
+#if defined( TILES )
+#include "character_preview.h"
+#endif
 #include "input.h"
 #include "messages.h"
 #include "output.h"
@@ -69,48 +72,40 @@ void dialogue_window::resize( ui_adaptor &ui )
                                     6, max_portrait_rows );
 
         const point portrait_begin( win_beginx + 1, win_beginy + 2 );
-        if( image ) {
-            const int inner_height_px = std::max( 1, ( portrait_height_cells - 2 ) * fontheight );
-            int texture_width = 3;
-            int texture_height = 4;
-            if( SDL_QueryTexture( image, nullptr, nullptr, &texture_width, &texture_height ) != 0 ||
-                texture_width <= 0 || texture_height <= 0 ) {
-                texture_width = 3;
-                texture_height = 4;
-            }
-
-            const double scale = std::min(
-                                     static_cast<double>( inner_width_px ) / texture_width,
-                                     static_cast<double>( inner_height_px ) / texture_height );
-            image_width = std::max( 1, static_cast<int>( std::lround( texture_width * scale ) ) );
-            image_height = std::max( 1, static_cast<int>( std::lround( texture_height * scale ) ) );
-
-            const int inner_x = ( portrait_begin.x + 1 ) * fontwidth;
-            const int inner_y = ( portrait_begin.y + 1 ) * fontheight;
-            rect_2.x = inner_x + ( inner_width_px - image_width ) / 2;
-            rect_2.y = inner_y + ( inner_height_px - image_height ) / 2;
-            rect_2.w = image_width;
-            rect_2.h = image_height;
-
-            portrait_win = catacurses::newwin( portrait_height_cells, portrait_cols, portrait_begin,
-                                               image, image_width, image_height, rect_2 );
-        } else {
-            image_width = 0;
-            image_height = 0;
-            portrait_win = catacurses::newwin( portrait_height_cells, portrait_cols, portrait_begin );
-        }
+        const int inner_height_px = std::max( 1, ( portrait_height_cells - 2 ) * fontheight );
+        portrait_inner_rect = {
+            ( portrait_begin.x + 1 ) * fontwidth,
+            ( portrait_begin.y + 1 ) * fontheight,
+            inner_width_px,
+            inner_height_px
+        };
+        portrait_win = catacurses::newwin( portrait_height_cells, portrait_cols, portrait_begin );
     }
 
-    history_win = catacurses::newwin( maxy - 1 - RESPONSES_LINES - 2 - 1, content_width,
-                                      point( win_beginx + content_left, win_beginy + 2 ) );
-
-    // Ordinary NPC dialogue keeps the entire right pane for dialogue choices.  Fixed utility
-    // actions are shown inside the character card on the left.
     response_width = has_character_sidebar() ? std::max( 1, content_width ) :
                      std::max( 1, maxx / 2 );
-    resp_win = catacurses::newwin( RESPONSES_LINES - 1, response_width,
-                                   point( win_beginx + content_left,
-                                          win_beginy + maxy - RESPONSES_LINES ) );
+
+    if( has_character_sidebar() ) {
+        const int usable_rows = std::max( 10, maxy - 3 );
+        const int response_rows = std::clamp( ( usable_rows * 3 + 5 ) / 10, 7,
+                                  std::max( 7, usable_rows - 6 ) );
+        separator_y = maxy - response_rows - 2;
+
+        history_win = catacurses::newwin( std::max( 1, separator_y - 1 ), content_width,
+                                          point( win_beginx + content_left, win_beginy + 1 ) );
+        resp_win = catacurses::newwin( std::max( 1, maxy - separator_y - 3 ),
+                                       response_width,
+                                       point( win_beginx + content_left,
+                                              win_beginy + separator_y + 2 ) );
+    } else {
+        separator_y = maxy - 1 - RESPONSES_LINES - 1;
+        history_win = catacurses::newwin( maxy - 1 - RESPONSES_LINES - 2 - 1,
+                                          content_width,
+                                          point( win_beginx + content_left, win_beginy + 2 ) );
+        resp_win = catacurses::newwin( RESPONSES_LINES - 1, response_width,
+                                       point( win_beginx + content_left,
+                                              win_beginy + maxy - RESPONSES_LINES ) );
+    }
 
     // Reset size-dependant state
     update_history_view = true;
@@ -126,7 +121,11 @@ void dialogue_window::draw_character_sidebar( const std::string &npc_name )
     if( portrait_win ) {
         werase( portrait_win );
         draw_border( portrait_win );
-        if( !image ) {
+
+        const bool portrait_visible = display_mode == character_display_mode::portrait && image;
+        const bool preview_visible = display_mode == character_display_mode::preview &&
+                                     preview_is_available();
+        if( !portrait_visible && !preview_visible ) {
             center_print( portrait_win, getmaxy( portrait_win ) / 2, c_dark_gray, _( "暂无立绘" ) );
         }
     }
@@ -135,11 +134,6 @@ void dialogue_window::draw_character_sidebar( const std::string &npc_name )
     const int text_width = std::max( 1, sidebar_width - 4 );
     if( text_y < getmaxy( d_win ) - 1 ) {
         trim_and_print( d_win, point( 2, text_y ), text_width, c_white, npc_name );
-        ++text_y;
-    }
-    if( !character_profession.empty() && text_y < getmaxy( d_win ) - 1 ) {
-        trim_and_print( d_win, point( 2, text_y ), text_width, c_light_gray,
-                        character_profession );
         ++text_y;
     }
     if( !relationship_text.empty() && text_y < getmaxy( d_win ) - 1 ) {
@@ -180,6 +174,11 @@ void dialogue_window::draw_character_sidebar( const std::string &npc_name )
         formatted_text = formatted_hotkey( ctxt.get_desc( "CHECK_OPINION", 1 ), cur_color )
                          .append( _( "Check opinion" ) );
         print_colored_text( d_win, point( 2, text_y ), cur_color, c_magenta, formatted_text );
+        ++text_y;
+    }
+    if( available_display_modes() > 1 && text_y < getmaxy( d_win ) - 1 ) {
+        mvwprintz( d_win, point( 2, text_y ), c_yellow, "C" );
+        mvwprintz( d_win, point( 3, text_y ), c_magenta, _( "：切换显示" ) );
     }
 }
 
@@ -209,6 +208,14 @@ void dialogue_window::draw( const std::string &npc_name )
         history_view->set_text( assembled, false );
     }
     history_view->draw( c_light_gray );
+
+#if defined( TILES )
+    if( display_mode == character_display_mode::preview && preview_is_available() ) {
+        display_character_preview_in_window( *preview_character, portrait_win );
+    } else if( display_mode == character_display_mode::portrait && image ) {
+        draw_static_portrait();
+    }
+#endif
 }
 
 void dialogue_window::handle_scrolling( std::string &action, input_context &ctxt )
@@ -253,6 +260,9 @@ void dialogue_window::add_to_history( const std::string &text, nc_color color )
 
 void dialogue_window::add_history_separator()
 {
+    if( history.empty() || history.back().text.empty() ) {
+        return;
+    }
     add_to_history( "", default_color() );
 }
 
@@ -280,18 +290,17 @@ void dialogue_window::print_header( const std::string &name ) const
         mvwprintz( d_win, point( header_x, 1 ), default_color(), _( "Dialogue: %s" ), name );
     }
     const int xmax = getmaxx( d_win );
-    const int ymax = getmaxy( d_win );
-    const int ybar = ymax - 1 - RESPONSES_LINES - 1;
+    const int ybar = separator_y;
     // Horizontal bar dividing history and responses.  Keep the character card continuous.
     if( sidebar_width > 0 ) {
         mvwputch( d_win, point( sidebar_width, ybar ), BORDER_COLOR, LINE_XXXX );
         mvwhline( d_win, point( sidebar_width + 1, ybar ), LINE_OXOX,
-                   xmax - sidebar_width - 2 );
+                   std::max( 0, xmax - sidebar_width - 3 ) );
     } else {
         mvwputch( d_win, point( 0, ybar ), BORDER_COLOR, LINE_XXXO );
         mvwhline( d_win, point( 1, ybar ), LINE_OXOX, xmax - 1 );
+        mvwputch( d_win, point( xmax - 1, ybar ), BORDER_COLOR, LINE_XOXX );
     }
-    mvwputch( d_win, point( xmax - 1, ybar ), BORDER_COLOR, LINE_XOXX );
     if( is_computer ) {
         // NOLINTNEXTLINE(cata-use-named-point-constants)
         mvwprintz( d_win, point( content_left + 2, ybar + 1 ), default_color(), _( "Your input:" ) );
@@ -323,9 +332,107 @@ catacurses::window *dialogue_window::get_resp_win()
     return &resp_win;
 }
 
+bool dialogue_window::preview_is_available() const
+{
+#if defined( TILES )
+    return preview_character != nullptr && character_preview_available();
+#else
+    return false;
+#endif
+}
+
+int dialogue_window::available_display_modes() const
+{
+    int count = 1;
+    if( image ) {
+        ++count;
+    }
+    if( preview_is_available() ) {
+        ++count;
+    }
+    return count;
+}
+
+void dialogue_window::draw_static_portrait() const
+{
+#if defined( TILES )
+    if( !image || portrait_inner_rect.w <= 0 || portrait_inner_rect.h <= 0 ) {
+        return;
+    }
+
+    const SDL_Renderer_Ptr &renderer = get_sdl_renderer();
+    if( !renderer ) {
+        return;
+    }
+
+    int texture_width = 0;
+    int texture_height = 0;
+    if( SDL_QueryTexture( image, nullptr, nullptr, &texture_width, &texture_height ) != 0 ||
+        texture_width <= 0 || texture_height <= 0 ) {
+        return;
+    }
+
+    SDL_Rect source = { 0, 0, texture_width, texture_height };
+
+    const long long lhs = static_cast<long long>( texture_width ) * portrait_inner_rect.h;
+    const long long rhs = static_cast<long long>( texture_height ) * portrait_inner_rect.w;
+    if( lhs > rhs ) {
+        source.w = std::max( 1, texture_height * portrait_inner_rect.w /
+                            portrait_inner_rect.h );
+        source.x = ( texture_width - source.w ) / 2;
+    } else if( lhs < rhs ) {
+        source.h = std::max( 1, texture_width * portrait_inner_rect.h /
+                            portrait_inner_rect.w );
+        source.y = ( texture_height - source.h ) / 3;
+    }
+
+    SDL_RenderCopy( renderer.get(), image, &source, &portrait_inner_rect );
+#endif
+}
+
 void dialogue_window::set_image( SDL_Texture *image )
 {
     this->image = image;
+    if( image ) {
+        display_mode = character_display_mode::portrait;
+    } else if( preview_is_available() ) {
+        display_mode = character_display_mode::preview;
+    } else {
+        display_mode = character_display_mode::hidden;
+    }
+}
+
+void dialogue_window::set_preview_character( const Character *character )
+{
+    preview_character = character;
+    if( !image ) {
+        display_mode = preview_is_available() ? character_display_mode::preview :
+                       character_display_mode::hidden;
+    }
+}
+
+bool dialogue_window::cycle_character_display()
+{
+    std::vector<character_display_mode> modes;
+    if( image ) {
+        modes.push_back( character_display_mode::portrait );
+    }
+    if( preview_is_available() ) {
+        modes.push_back( character_display_mode::preview );
+    }
+    modes.push_back( character_display_mode::hidden );
+
+    if( modes.size() <= 1 ) {
+        return false;
+    }
+
+    auto iter = std::find( modes.begin(), modes.end(), display_mode );
+    if( iter == modes.end() || ++iter == modes.end() ) {
+        display_mode = modes.front();
+    } else {
+        display_mode = *iter;
+    }
+    return true;
 }
 
 void dialogue_window::set_character_profession( const std::string &profession )

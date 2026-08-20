@@ -464981,3 +464981,11 @@ msgstr "关系，%s"
 #: src/dialogue_win.cpp
 msgid "关系：%s"
 msgstr "关系：%s"
+
+#: src/dialogue_win.cpp
+msgid "：切换显示"
+msgstr "：切换显示"
+
+#: src/npctalk.cpp
+msgid "切换显示"
+msgstr "切换显示"

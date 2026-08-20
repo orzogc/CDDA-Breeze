@@ -1890,11 +1890,10 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
 
     if( who != nullptr ) {
         d_win.set_character_profession( who->myclass->get_name() );
+        d_win.set_preview_character( who );
     }
 
-    if (image != nullptr) {
-        d_win.set_image(image);
-    }
+    d_win.set_image( image );
 
 
     // Main dialogue loop
@@ -2840,10 +2839,13 @@ talk_topic dialogue::opt( dialogue_window &d_win, const talk_topic &topic )
     ctxt.register_action( "CONFIRM" );
     ctxt.register_action( "ANY_INPUT" );
     ctxt.register_action( "QUIT" );
+#if defined( __ANDROID__ )
+    ctxt.register_manual_key( 'C', _( "切换显示" ) );
+#endif
     std::vector<talk_data> response_lines;
     std::vector<input_event> response_hotkeys;
     const auto generate_response_lines = [&]() {
-#if defined(__ANDROID__)
+#if defined( __ANDROID__ )
         ctxt.get_registered_manual_keys().clear();
 #endif
         const hotkey_queue &queue = hotkey_queue::alphabets();
@@ -2854,12 +2856,15 @@ talk_topic dialogue::opt( dialogue_window &d_win, const talk_topic &topic )
             const talk_data &td = response.create_option_line( *this, evt, d_win.is_computer );
             response_lines.emplace_back( td );
             response_hotkeys.emplace_back( evt );
-#if defined(__ANDROID__)
+#if defined( __ANDROID__ )
             ctxt.register_manual_key( evt.get_first_input(), td.text );
 #endif
             evt = ctxt.next_unassigned_hotkey( queue, evt );
         }
         d_win.set_responses( response_lines );
+#if defined( __ANDROID__ )
+        ctxt.register_manual_key( 'C', _( "切换显示" ) );
+#endif
     };
     generate_response_lines();
 
@@ -2876,6 +2881,14 @@ talk_topic dialogue::opt( dialogue_window &d_win, const talk_topic &topic )
             input_event evt;
             action = ctxt.handle_input();
             evt = ctxt.get_raw_input();
+
+            if( evt.get_first_input() == 'C' ) {
+                if( d_win.cycle_character_display() ) {
+                    ui_manager::redraw();
+                }
+                continue;
+            }
+
             d_win.handle_scrolling( action, ctxt );
             talk_topic st = special_talk( action );
             if( st.id != "TALK_NONE" ) {
