@@ -5,6 +5,7 @@
 #include <chrono>
 #include <cstddef>
 #include <iosfwd>
+#include <string>
 #include <vector>
 
 #include "color.h"
@@ -55,21 +56,31 @@ class dialogue_window
         bool is_not_conversation = false;
         int sel_response = 0;
 
-        catacurses::window* get_d_win();
-        catacurses::window* get_history_win();
-        catacurses::window* get_resp_win();
+        catacurses::window *get_d_win();
+        catacurses::window *get_history_win();
+        catacurses::window *get_resp_win();
 
-        void set_image(SDL_Texture* image);
+        void set_image( SDL_Texture *image );
+        void set_character_profession( const std::string &profession );
+        void set_relationship( const std::string &relationship );
 
     private:
         catacurses::window d_win;
         catacurses::window history_win;
         catacurses::window resp_win;
+        catacurses::window portrait_win;
 
-        SDL_Texture* image = nullptr;
+        SDL_Texture *image = nullptr;
         int image_width = 0;
         int image_height = 0;
         SDL_Rect rect_2;
+        int sidebar_width = 0;
+        int content_left = 0;
+        int content_width = 0;
+        int response_width = 0;
+        int portrait_height_cells = 0;
+        std::string character_profession;
+        std::string relationship_text;
 
         struct history_message {
             inline history_message( nc_color c, const std::string &t ) : color( c ), text( t ) {}
@@ -79,6 +90,8 @@ class dialogue_window
         };
 
         void add_to_history( const std::string &text, nc_color color );
+        bool has_character_sidebar() const;
+        void draw_character_sidebar( const std::string &npc_name );
 
         /**
          * This contains the exchanged words, it is basically like the global message log.

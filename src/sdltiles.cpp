@@ -58,6 +58,7 @@
 #include "map_extras.h"
 #include "mapbuffer.h"
 #include "mission.h"
+#include "mod_manager.h"
 #include "npc.h"
 #include <optional>
 #include "options.h"
@@ -595,14 +596,39 @@ SDL_Rect& get_visible_display_frame() {
 
 #endif
 
-SDL_Texture* get_character_picture(std::string &name) {
+static SDL_Texture *load_character_picture( const cata_path &path )
+{
+    if( !file_exist( path ) ) {
+        return nullptr;
+    }
+    const std::string image_path = path.get_unrelative_path().u8string();
+    return IMG_LoadTexture( renderer.get(), image_path.c_str() );
+}
 
-    std::string gfx_string = PATH_INFO::gfxdir().get_unrelative_path().u8string();
-    std::string gfx_p_t = gfx_string + "/character_picture/" + name + ".png";
-    SDL_Texture* image = IMG_LoadTexture(renderer.get(), gfx_p_t.c_str());
+SDL_Texture *get_character_picture( std::string &name )
+{
+    const std::string filename = name + ".png";
 
-    return image;
+    // Active mods may provide character_picture/<display name>.png.  Search in reverse load
+    // order so a later-loaded compatibility or portrait pack can intentionally override an
+    // earlier mod.  Only mods enabled in the current world participate.
+    if( world_generator && world_generator->active_world ) {
+        const auto &active_mod_list = world_generator->active_world->active_mod_order;
+        for( auto iter = active_mod_list.rbegin(); iter != active_mod_list.rend(); ++iter ) {
+            const mod_id &some_mod = *iter;
+            if( !some_mod.is_valid() ) {
+                continue;
+            }
+            const MOD_INFORMATION &mod = *some_mod;
+            if( SDL_Texture *image = load_character_picture(
+                    mod.path / "character_picture" / filename ) ) {
+                return image;
+            }
+        }
+    }
 
+    // Preserve the original built-in portrait location as the fallback.
+    return load_character_picture( PATH_INFO::gfxdir() / "character_picture" / filename );
 }
 
 std::string get_npc_dynamic_picture_path( int npc_id ) {
