@@ -464965,3 +464965,15 @@ msgstr "已包扎"
 #: data/json/ui/bodypart_status.json
 msgid "disinfected"
 msgstr "已消毒"
+
+#: src/dialogue_win.cpp
+msgid "暂无立绘"
+msgstr "暂无立绘"
+
+#: src/dialogue_win.cpp
+msgid "身份，%s"
+msgstr "身份，%s"
+
+#: src/dialogue_win.cpp
+msgid "关系，%s"
+msgstr "关系，%s"
