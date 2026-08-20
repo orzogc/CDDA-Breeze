@@ -2852,7 +2852,13 @@ talk_topic dialogue::opt( dialogue_window &d_win, const talk_topic &topic )
         response_lines.clear();
         response_hotkeys.clear();
         input_event evt = ctxt.first_unassigned_hotkey( queue );
+        const auto skip_display_toggle_hotkey = [&]() {
+            while( evt.type != input_event_t::error && evt.get_first_input() == 'C' ) {
+                evt = ctxt.next_unassigned_hotkey( queue, evt );
+            }
+        };
         for( talk_response &response : responses ) {
+            skip_display_toggle_hotkey();
             const talk_data &td = response.create_option_line( *this, evt, d_win.is_computer );
             response_lines.emplace_back( td );
             response_hotkeys.emplace_back( evt );
