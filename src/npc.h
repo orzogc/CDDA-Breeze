@@ -1386,6 +1386,7 @@ class npc : public Character
         // Dummy point that indicates that the goal is invalid.
         static constexpr tripoint_abs_omt no_goal_point{ tripoint_min };
         job_data job;
+        std::string portrait_id; // 模组立绘标识，对应 character_picture/<portrait_id>.png
         std::string ai_prompt; // 自定义AI提示词
         std::string ai_prompt_for_image;
         std::string BUILT_ai_prompt_for_image; // 构建好的真实提示词，用于判断是否需要重新生成图片

@@ -1764,8 +1764,16 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
     if (who != nullptr && get_option<bool>("显示特殊NPC的图片")) {
         character_name = who->get_name();
         npc_id = who->getID().get_value();
-        
-        image = get_character_picture(character_name);
+
+        // 新接口优先：NPC JSON 可通过 "portrait" 指定稳定立绘标识。
+        // 若指定图片不存在，继续回退到旧的“显示姓名.png”规则，保持现有模组兼容。
+        if( !who->portrait_id.empty() ) {
+            std::string portrait_key = who->portrait_id;
+            image = get_character_picture( portrait_key );
+        }
+        if( image == nullptr ) {
+            image = get_character_picture( character_name );
+        }
         // 预设图优先 
         if (image == nullptr) {
             // 首先构建当前提示词
