@@ -1766,6 +1766,7 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
         npc_id = who->getID().get_value();
 
         // 新接口优先：NPC JSON 可通过 "portrait" 指定稳定立绘标识。
+        // 这样立绘不再受“名字后缀”“翻译文本”或“显示称呼”的影响。
         // 若指定图片不存在，继续回退到旧的“显示姓名.png”规则，保持现有模组兼容。
         if( !who->portrait_id.empty() ) {
             std::string portrait_key = who->portrait_id;

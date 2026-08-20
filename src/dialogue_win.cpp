@@ -57,13 +57,13 @@ void dialogue_window::resize( ui_adaptor &ui )
         // small terminals for the actual conversation to remain readable.
         sidebar_width = std::max( 20, maxx * 3 / 10 );
         sidebar_width = std::min( sidebar_width, std::max( 0, maxx - 40 ) );
-        content_left = sidebar_width + 1;
+        content_left = sidebar_width;
         content_width = std::max( 1, maxx - content_left - 1 );
 
         const int portrait_cols = std::max( 8, sidebar_width - 2 );
         const int inner_width_px = std::max( 1, ( portrait_cols - 2 ) * fontwidth );
         const int desired_inner_height_px = inner_width_px * 4 / 3;
-        const int max_portrait_rows = std::max( 6, maxy - 14 );
+        const int max_portrait_rows = std::max( 6, maxy - 12 );
         portrait_height_cells = std::clamp(
                                     ( desired_inner_height_px + fontheight - 1 ) / fontheight + 2,
                                     6, max_portrait_rows );
@@ -139,12 +139,12 @@ void dialogue_window::draw_character_sidebar( const std::string &npc_name )
     }
     if( !character_profession.empty() && text_y < getmaxy( d_win ) - 1 ) {
         trim_and_print( d_win, point( 2, text_y ), text_width, c_light_gray,
-                        string_format( _( "身份，%s" ), character_profession ) );
+                        character_profession );
         ++text_y;
     }
     if( !relationship_text.empty() && text_y < getmaxy( d_win ) - 1 ) {
         trim_and_print( d_win, point( 2, text_y ), text_width, c_light_cyan,
-                        string_format( _( "关系，%s" ), relationship_text ) );
+                        string_format( _( "关系：%s" ), relationship_text ) );
         ++text_y;
     }
 
