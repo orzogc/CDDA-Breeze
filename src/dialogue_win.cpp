@@ -105,9 +105,12 @@ void dialogue_window::resize( ui_adaptor &ui )
         // dialogue no longer renders a doubled vertical line.
         history_win = catacurses::newwin( std::max( 1, separator_y - 2 ), content_width + 1,
                                           point( win_beginx + content_left, win_beginy + 2 ) );
+        // multiline_list also owns its first column for its left edge / scrollbar.  Overlay
+        // that column on the character-card divider just like history_win, otherwise the
+        // response area gets a second vertical line one cell to the right of the divider.
         resp_win = catacurses::newwin( std::max( 1, maxy - separator_y - 3 ),
-                                       response_width,
-                                       point( win_beginx + content_left + 1,
+                                       response_width + 1,
+                                       point( win_beginx + content_left,
                                               win_beginy + separator_y + 2 ) );
     } else {
         separator_y = maxy - 1 - RESPONSES_LINES - 1;
