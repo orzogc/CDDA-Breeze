@@ -17,6 +17,7 @@
 #include "string_formatter.h"
 #include "translations.h"
 #include "ui_manager.h"
+#include "uistate.h"
 
 // Height of the response section
 static const int RESPONSES_LINES = 15;
@@ -177,8 +178,9 @@ void dialogue_window::draw_character_sidebar( const std::string &npc_name )
         ++text_y;
     }
     if( available_display_modes() > 1 && text_y < getmaxy( d_win ) - 1 ) {
-        mvwprintz( d_win, point( 2, text_y ), c_yellow, "C" );
-        mvwprintz( d_win, point( 3, text_y ), c_magenta, _( "：切换显示" ) );
+        formatted_text = formatted_hotkey( ctxt.get_desc( "CYCLE_NPC_DISPLAY", 1 ), cur_color )
+                         .append( _( "切换显示" ) );
+        print_colored_text( d_win, point( 2, text_y ), cur_color, c_magenta, formatted_text );
     }
 }
 
@@ -234,6 +236,7 @@ void dialogue_window::set_up_scrolling( input_context &ctxt ) const
         ctxt.register_action( "SIZE_UP_STATS" );
         ctxt.register_action( "YELL" );
         ctxt.register_action( "CHECK_OPINION" );
+        ctxt.register_action( "CYCLE_NPC_DISPLAY" );
     }
     history_view->set_up_navigation( ctxt, scrolling_key_scheme::angle_bracket_scroll );
     responses_list->set_up_navigation( ctxt );
@@ -390,25 +393,44 @@ void dialogue_window::draw_static_portrait() const
 #endif
 }
 
+void dialogue_window::apply_saved_display_preference()
+{
+    switch( uistate.npc_dialogue_display_mode ) {
+        case 1:
+            if( preview_is_available() ) {
+                display_mode = character_display_mode::preview;
+            } else if( image ) {
+                display_mode = character_display_mode::portrait;
+            } else {
+                display_mode = character_display_mode::hidden;
+            }
+            break;
+        case 2:
+            display_mode = character_display_mode::hidden;
+            break;
+        case 0:
+        default:
+            if( image ) {
+                display_mode = character_display_mode::portrait;
+            } else if( preview_is_available() ) {
+                display_mode = character_display_mode::preview;
+            } else {
+                display_mode = character_display_mode::hidden;
+            }
+            break;
+    }
+}
+
 void dialogue_window::set_image( SDL_Texture *image )
 {
     this->image = image;
-    if( image ) {
-        display_mode = character_display_mode::portrait;
-    } else if( preview_is_available() ) {
-        display_mode = character_display_mode::preview;
-    } else {
-        display_mode = character_display_mode::hidden;
-    }
+    apply_saved_display_preference();
 }
 
 void dialogue_window::set_preview_character( const Character *character )
 {
     preview_character = character;
-    if( !image ) {
-        display_mode = preview_is_available() ? character_display_mode::preview :
-                       character_display_mode::hidden;
-    }
+    apply_saved_display_preference();
 }
 
 bool dialogue_window::cycle_character_display()
@@ -431,6 +453,18 @@ bool dialogue_window::cycle_character_display()
         display_mode = modes.front();
     } else {
         display_mode = *iter;
+    }
+
+    switch( display_mode ) {
+        case character_display_mode::portrait:
+            uistate.npc_dialogue_display_mode = 0;
+            break;
+        case character_display_mode::preview:
+            uistate.npc_dialogue_display_mode = 1;
+            break;
+        case character_display_mode::hidden:
+            uistate.npc_dialogue_display_mode = 2;
+            break;
     }
     return true;
 }

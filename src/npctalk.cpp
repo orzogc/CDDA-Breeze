@@ -2839,9 +2839,6 @@ talk_topic dialogue::opt( dialogue_window &d_win, const talk_topic &topic )
     ctxt.register_action( "CONFIRM" );
     ctxt.register_action( "ANY_INPUT" );
     ctxt.register_action( "QUIT" );
-#if defined( __ANDROID__ )
-    ctxt.register_manual_key( 'C', _( "切换显示" ) );
-#endif
     std::vector<talk_data> response_lines;
     std::vector<input_event> response_hotkeys;
     const auto generate_response_lines = [&]() {
@@ -2852,13 +2849,7 @@ talk_topic dialogue::opt( dialogue_window &d_win, const talk_topic &topic )
         response_lines.clear();
         response_hotkeys.clear();
         input_event evt = ctxt.first_unassigned_hotkey( queue );
-        const auto skip_display_toggle_hotkey = [&]() {
-            while( evt.type != input_event_t::error && evt.get_first_input() == 'C' ) {
-                evt = ctxt.next_unassigned_hotkey( queue, evt );
-            }
-        };
         for( talk_response &response : responses ) {
-            skip_display_toggle_hotkey();
             const talk_data &td = response.create_option_line( *this, evt, d_win.is_computer );
             response_lines.emplace_back( td );
             response_hotkeys.emplace_back( evt );
@@ -2868,9 +2859,6 @@ talk_topic dialogue::opt( dialogue_window &d_win, const talk_topic &topic )
             evt = ctxt.next_unassigned_hotkey( queue, evt );
         }
         d_win.set_responses( response_lines );
-#if defined( __ANDROID__ )
-        ctxt.register_manual_key( 'C', _( "切换显示" ) );
-#endif
     };
     generate_response_lines();
 
@@ -2888,7 +2876,7 @@ talk_topic dialogue::opt( dialogue_window &d_win, const talk_topic &topic )
             action = ctxt.handle_input();
             evt = ctxt.get_raw_input();
 
-            if( evt.get_first_input() == 'C' ) {
+            if( action == "CYCLE_NPC_DISPLAY" ) {
                 if( d_win.cycle_character_display() ) {
                     ui_manager::redraw();
                 }

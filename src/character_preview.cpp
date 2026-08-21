@@ -74,6 +74,30 @@ class char_preview_adapter : public cata_tiles
         return static_cast<char_preview_adapter *>( tiles );
     }
 
+    struct draw_state {
+        int tile_width;
+        int tile_height;
+        int screentile_width;
+        int screentile_height;
+        point origin;
+        point pixel_origin;
+    };
+
+    static draw_state capture_draw_state()
+    {
+        return { tile_width, tile_height, screentile_width, screentile_height, o, op };
+    }
+
+    static void restore_draw_state( const draw_state &state )
+    {
+        tile_width = state.tile_width;
+        tile_height = state.tile_height;
+        screentile_width = state.screentile_width;
+        screentile_height = state.screentile_height;
+        o = state.origin;
+        op = state.pixel_origin;
+    }
+
     void display_avatar_preview_with_overlays( const avatar &ch, const tripoint &p,
             const bool with_clothing )
     {
@@ -174,6 +198,20 @@ void display_character_preview_in_window( const Character &character,
         return;
     }
 
+    const SDL_Renderer_Ptr &renderer = get_sdl_renderer();
+    if( !renderer ) {
+        return;
+    }
+
+    const char_preview_adapter::draw_state old_draw_state =
+        char_preview_adapter::capture_draw_state();
+
+    const bool had_clip = SDL_RenderIsClipEnabled( renderer.get() ) == SDL_TRUE;
+    SDL_Rect previous_clip = {};
+    if( had_clip ) {
+        SDL_RenderGetClipRect( renderer.get(), &previous_clip );
+    }
+
     const int cell_width = termx_to_pixel_value();
     const int cell_height = termy_to_pixel_value();
     const int inner_left = ( getbegx( window ) + 1 ) * cell_width;
@@ -183,36 +221,21 @@ void display_character_preview_in_window( const Character &character,
 
     int preview_zoom = 128;
     tilecontext->set_draw_scale( preview_zoom );
-    int tile_width = tilecontext->get_tile_width();
-    int tile_height = tilecontext->get_tile_height();
-    while( preview_zoom > 32 && ( tile_width > inner_width || tile_height > inner_height ) ) {
+    int preview_tile_width = tilecontext->get_tile_width();
+    int preview_tile_height = tilecontext->get_tile_height();
+    while( preview_zoom > 32 &&
+           ( preview_tile_width > inner_width || preview_tile_height > inner_height ) ) {
         preview_zoom /= 2;
         tilecontext->set_draw_scale( preview_zoom );
-        tile_width = tilecontext->get_tile_width();
-        tile_height = tilecontext->get_tile_height();
+        preview_tile_width = tilecontext->get_tile_width();
+        preview_tile_height = tilecontext->get_tile_height();
     }
 
-    const point draw_origin( inner_left + ( inner_width - tile_width ) / 2,
-                             inner_top + ( inner_height - tile_height ) / 2 );
+    const point draw_origin( inner_left + ( inner_width - preview_tile_width ) / 2,
+                             inner_top + ( inner_height - preview_tile_height ) / 2 );
 
-    const SDL_Renderer_Ptr &renderer = get_sdl_renderer();
-    if( !renderer ) {
-        tilecontext->set_draw_scale( DEFAULT_TILESET_ZOOM );
-        return;
-    }
-
-    const bool had_clip = SDL_RenderIsClipEnabled( renderer.get() ) == SDL_TRUE;
-    SDL_Rect previous_clip = {};
-    if( had_clip ) {
-        SDL_RenderGetClipRect( renderer.get(), &previous_clip );
-    }
     const SDL_Rect clip_rect = { inner_left, inner_top, inner_width, inner_height };
     SDL_RenderSetClipRect( renderer.get(), &clip_rect );
-
-    const point old_o = cata_tiles::get_o();
-    const point old_op = cata_tiles::get_op();
-    const int old_width = cata_tiles::get_screentile_wdith();
-    const int old_height = cata_tiles::get_screentile_height();
 
     cata_tiles::get_o() = point_zero;
     cata_tiles::get_op() = draw_origin;
@@ -222,18 +245,13 @@ void display_character_preview_in_window( const Character &character,
     char_preview_adapter::convert( tilecontext.get() )->display_character_preview_with_overlays(
         character, tripoint_zero );
 
-    cata_tiles::get_o() = old_o;
-    cata_tiles::get_op() = old_op;
-    cata_tiles::get_screentile_wdith() = old_width;
-    cata_tiles::get_screentile_height() = old_height;
+    char_preview_adapter::restore_draw_state( old_draw_state );
 
     if( had_clip ) {
         SDL_RenderSetClipRect( renderer.get(), &previous_clip );
     } else {
         SDL_RenderSetClipRect( renderer.get(), nullptr );
     }
-
-    tilecontext->set_draw_scale( DEFAULT_TILESET_ZOOM );
 }
 
 character_preview_window::~character_preview_window()

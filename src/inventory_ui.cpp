@@ -360,6 +360,7 @@ void uistatedata::serialize( JsonOut &json ) const
     json.member( "list_item_downvote_active", list_item_downvote_active );
     json.member( "list_item_priority_active", list_item_priority_active );
     json.member( "trade_all_vehicle_cargo", trade_all_vehicle_cargo );
+    json.member( "npc_dialogue_display_mode", npc_dialogue_display_mode );
     json.member( "construction_filter", construction_filter );
     json.member( "last_construction", last_construction );
     json.member( "construction_tab", construction_tab );
@@ -431,6 +432,7 @@ void uistatedata::deserialize( const JsonObject &jo )
     jo.read( "overmap_show_hordes", overmap_show_hordes );
     jo.read( "overmap_show_forest_trails", overmap_show_forest_trails );
     jo.read( "trade_all_vehicle_cargo", trade_all_vehicle_cargo );
+    jo.read( "npc_dialogue_display_mode", npc_dialogue_display_mode );
     jo.read( "hidden_recipes", hidden_recipes );
     jo.read( "favorite_recipes", favorite_recipes );
     jo.read( "expanded_recipes", expanded_recipes );

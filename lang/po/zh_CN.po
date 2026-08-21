@@ -464989,3 +464989,7 @@ msgstr "：切换显示"
 #: src/npctalk.cpp
 msgid "切换显示"
 msgstr "切换显示"
+
+#: data/raw/keybindings.json
+msgid "切换NPC角色显示"
+msgstr "切换NPC角色显示"

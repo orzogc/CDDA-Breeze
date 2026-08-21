@@ -166,6 +166,9 @@ class uistatedata
         // behavior enabled until the player toggles it off again.
         bool trade_all_vehicle_cargo = false;
 
+        // NPC 对话角色卡显示偏好：0 专属立绘优先，1 实时预览优先，2 隐藏。
+        int npc_dialogue_display_mode = 0;
+
         // construction menu selections
         std::string construction_filter;
         construction_group_str_id last_construction = construction_group_str_id::NULL_ID();

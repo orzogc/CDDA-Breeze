@@ -104,6 +104,7 @@ class dialogue_window
         bool has_character_sidebar() const;
         bool preview_is_available() const;
         int available_display_modes() const;
+        void apply_saved_display_preference();
         void draw_character_sidebar( const std::string &npc_name );
         void draw_static_portrait() const;
 
