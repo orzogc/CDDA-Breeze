@@ -464967,29 +464967,56 @@ msgid "disinfected"
 msgstr "已消毒"
 
 #: src/dialogue_win.cpp
-msgid "暂无立绘"
+msgid "No portrait"
 msgstr "暂无立绘"
 
 #: src/dialogue_win.cpp
-msgid "身份，%s"
-msgstr "身份，%s"
+#, c-format
+msgid "Affection: %d"
+msgstr "好感度：%d"
+
+#: src/dialogue_win.cpp data/raw/keybindings.json
+msgid "View affection"
+msgstr "查看好感"
 
 #: src/dialogue_win.cpp
-msgid "关系，%s"
-msgstr "关系，%s"
-
-#: src/dialogue_win.cpp
-msgid "关系：%s"
-msgstr "关系：%s"
-
-#: src/dialogue_win.cpp
-msgid "：切换显示"
-msgstr "：切换显示"
-
-#: src/npctalk.cpp
-msgid "切换显示"
+msgid "Switch display"
 msgstr "切换显示"
 
 #: data/raw/keybindings.json
-msgid "切换NPC角色显示"
+msgid "Switch NPC character display"
 msgstr "切换NPC角色显示"
+
+#: src/npc.cpp
+msgid "Affection calculation:\n"
+msgstr "好感度计算：\n"
+
+#: src/npc.cpp
+#, c-format
+msgid "Trust: %d * 2 = %d\n"
+msgstr "信任：%d × 2 = %d\n"
+
+#: src/npc.cpp
+#, c-format
+msgid "Value: %d * 1 = %d\n"
+msgstr "价值：%d × 1 = %d\n"
+
+#: src/npc.cpp
+#, c-format
+msgid "Fear: %d * -2 = %d\n"
+msgstr "恐惧：%d × -2 = %d\n"
+
+#: src/npc.cpp
+#, c-format
+msgid "Anger: %d * -5 = %d\n"
+msgstr "愤怒：%d × -5 = %d\n"
+
+#: src/npc.cpp
+#, c-format
+msgid "Affection: %d (range -100 to 100)."
+msgstr "好感度：%d（范围 -100 到 100）。"
+
+#: src/npc.cpp
+#, c-format
+msgid "\nRaw result: %d; limited to -100 to 100."
+msgstr "\n原始结果：%d；限制在 -100 到 100。"

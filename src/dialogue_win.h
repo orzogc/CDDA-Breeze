@@ -66,7 +66,7 @@ class dialogue_window
         void set_preview_character( const Character *character );
         bool cycle_character_display();
         void set_character_profession( const std::string &profession );
-        void set_relationship( const std::string &relationship );
+        void set_affection_score( int score );
 
     private:
         catacurses::window d_win;
@@ -84,6 +84,7 @@ class dialogue_window
         const Character *preview_character = nullptr;
         character_display_mode display_mode = character_display_mode::hidden;
         SDL_Rect portrait_inner_rect = {};
+        bool sidebar_enabled = false;
         int sidebar_width = 0;
         int content_left = 0;
         int content_width = 0;
@@ -91,7 +92,8 @@ class dialogue_window
         int portrait_height_cells = 0;
         int separator_y = 0;
         std::string character_profession;
-        std::string relationship_text;
+        int affection_score_value = 0;
+        bool has_affection_score = false;
 
         struct history_message {
             inline history_message( nc_color c, const std::string &t ) : color( c ), text( t ) {}
@@ -101,6 +103,7 @@ class dialogue_window
         };
 
         void add_to_history( const std::string &text, nc_color color );
+        bool wants_character_sidebar() const;
         bool has_character_sidebar() const;
         bool preview_is_available() const;
         int available_display_modes() const;

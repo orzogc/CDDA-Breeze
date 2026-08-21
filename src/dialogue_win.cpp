@@ -36,9 +36,14 @@ dialogue_window::dialogue_window()
     history_view = std::make_unique<scrolling_text_view>( history_win );
 }
 
-bool dialogue_window::has_character_sidebar() const
+bool dialogue_window::wants_character_sidebar() const
 {
     return !is_computer && !is_not_conversation;
+}
+
+bool dialogue_window::has_character_sidebar() const
+{
+    return sidebar_enabled;
 }
 
 void dialogue_window::resize( ui_adaptor &ui )
@@ -50,19 +55,22 @@ void dialogue_window::resize( ui_adaptor &ui )
     d_win = catacurses::newwin( maxy, maxx, point( win_beginx, win_beginy ) );
     ui.position_from_window( d_win );
 
+    sidebar_enabled = false;
     sidebar_width = 0;
     content_left = 0;
-    content_width = maxx - 1;
+    content_width = std::max( 1, maxx - 2 );
     portrait_height_cells = 0;
     portrait_win = catacurses::window();
 
-    if( has_character_sidebar() ) {
+    // A character card needs at least 20 columns of its own and 20 columns for dialogue.
+    if( wants_character_sidebar() && maxx >= 60 ) {
+        sidebar_enabled = true;
         // The character card owns roughly one fifth of the dialogue width.  Keep enough room on
         // small terminals for the actual conversation to remain readable.
         sidebar_width = std::max( 20, maxx * 3 / 10 );
         sidebar_width = std::min( sidebar_width, std::max( 0, maxx - 40 ) );
         content_left = sidebar_width;
-        content_width = std::max( 1, maxx - content_left - 1 );
+        content_width = std::max( 1, maxx - content_left - 2 );
 
         const int portrait_cols = std::max( 8, sidebar_width - 2 );
         const int inner_width_px = std::max( 1, ( portrait_cols - 2 ) * fontwidth );
@@ -92,19 +100,19 @@ void dialogue_window::resize( ui_adaptor &ui )
                                   std::max( 7, usable_rows - 6 ) );
         separator_y = maxy - response_rows - 2;
 
-        history_win = catacurses::newwin( std::max( 1, separator_y - 1 ), content_width,
-                                          point( win_beginx + content_left, win_beginy + 1 ) );
+        history_win = catacurses::newwin( std::max( 1, separator_y - 2 ), content_width,
+                                          point( win_beginx + content_left + 1, win_beginy + 2 ) );
         resp_win = catacurses::newwin( std::max( 1, maxy - separator_y - 3 ),
                                        response_width,
-                                       point( win_beginx + content_left,
+                                       point( win_beginx + content_left + 1,
                                               win_beginy + separator_y + 2 ) );
     } else {
         separator_y = maxy - 1 - RESPONSES_LINES - 1;
         history_win = catacurses::newwin( maxy - 1 - RESPONSES_LINES - 2 - 1,
                                           content_width,
-                                          point( win_beginx + content_left, win_beginy + 2 ) );
+                                          point( win_beginx + content_left + 1, win_beginy + 2 ) );
         resp_win = catacurses::newwin( RESPONSES_LINES - 1, response_width,
-                                       point( win_beginx + content_left,
+                                       point( win_beginx + content_left + 1,
                                               win_beginy + maxy - RESPONSES_LINES ) );
     }
 
@@ -127,7 +135,7 @@ void dialogue_window::draw_character_sidebar( const std::string &npc_name )
         const bool preview_visible = display_mode == character_display_mode::preview &&
                                      preview_is_available();
         if( !portrait_visible && !preview_visible ) {
-            center_print( portrait_win, getmaxy( portrait_win ) / 2, c_dark_gray, _( "暂无立绘" ) );
+            center_print( portrait_win, getmaxy( portrait_win ) / 2, c_dark_gray, _( "No portrait" ) );
         }
     }
 
@@ -137,13 +145,19 @@ void dialogue_window::draw_character_sidebar( const std::string &npc_name )
         trim_and_print( d_win, point( 2, text_y ), text_width, c_white, npc_name );
         ++text_y;
     }
-    if( !relationship_text.empty() && text_y < getmaxy( d_win ) - 1 ) {
-        trim_and_print( d_win, point( 2, text_y ), text_width, c_light_cyan,
-                        string_format( _( "关系：%s" ), relationship_text ) );
+    if( !character_profession.empty() && text_y < getmaxy( d_win ) - 1 ) {
+        trim_and_print( d_win, point( 2, text_y ), text_width, c_light_gray, character_profession );
+        ++text_y;
+    }
+    if( has_affection_score && text_y < getmaxy( d_win ) - 1 ) {
+        const nc_color affection_color = affection_score_value < 0 ? c_red :
+                                         affection_score_value > 0 ? c_green : c_white;
+        trim_and_print( d_win, point( 2, text_y ), text_width, affection_color,
+                        string_format( _( "Affection: %d" ), affection_score_value ) );
         ++text_y;
     }
 
-    // Keep the four fixed dialogue utilities with the character card instead of consuming
+    // Keep the fixed dialogue utilities with the character card instead of consuming
     // dialogue-choice width on the right.
     if( text_y < getmaxy( d_win ) - 1 ) {
         ++text_y;
@@ -166,20 +180,14 @@ void dialogue_window::draw_character_sidebar( const std::string &npc_name )
         ++text_y;
     }
     if( text_y < getmaxy( d_win ) - 1 ) {
-        formatted_text = formatted_hotkey( ctxt.get_desc( "YELL", 1 ), cur_color )
-                         .append( _( "Yell" ) );
-        print_colored_text( d_win, point( 2, text_y ), cur_color, c_magenta, formatted_text );
-        ++text_y;
-    }
-    if( text_y < getmaxy( d_win ) - 1 ) {
         formatted_text = formatted_hotkey( ctxt.get_desc( "CHECK_OPINION", 1 ), cur_color )
-                         .append( _( "Check opinion" ) );
+                         .append( _( "View affection" ) );
         print_colored_text( d_win, point( 2, text_y ), cur_color, c_magenta, formatted_text );
         ++text_y;
     }
     if( available_display_modes() > 1 && text_y < getmaxy( d_win ) - 1 ) {
         formatted_text = formatted_hotkey( ctxt.get_desc( "CYCLE_NPC_DISPLAY", 1 ), cur_color )
-                         .append( _( "切换显示" ) );
+                         .append( _( "Switch display" ) );
         print_colored_text( d_win, point( 2, text_y ), cur_color, c_magenta, formatted_text );
     }
 }
@@ -294,14 +302,17 @@ void dialogue_window::print_header( const std::string &name ) const
     }
     const int xmax = getmaxx( d_win );
     const int ybar = separator_y;
-    // Horizontal bar dividing history and responses.  Keep the character card continuous.
+    // Horizontal bar dividing history and responses.  Keep every segment inside the
+    // same interior right edge so it meets the outer border without overwriting it.
+    const int line_end = xmax - 2;
     if( sidebar_width > 0 ) {
         mvwputch( d_win, point( sidebar_width, ybar ), BORDER_COLOR, LINE_XXXX );
         mvwhline( d_win, point( sidebar_width + 1, ybar ), LINE_OXOX,
-                   std::max( 0, xmax - sidebar_width - 3 ) );
+                   std::max( 0, line_end - sidebar_width ) );
+        mvwputch( d_win, point( xmax - 1, ybar ), BORDER_COLOR, LINE_XOXX );
     } else {
         mvwputch( d_win, point( 0, ybar ), BORDER_COLOR, LINE_XXXO );
-        mvwhline( d_win, point( 1, ybar ), LINE_OXOX, xmax - 1 );
+        mvwhline( d_win, point( 1, ybar ), LINE_OXOX, std::max( 0, line_end ) );
         mvwputch( d_win, point( xmax - 1, ybar ), BORDER_COLOR, LINE_XOXX );
     }
     if( is_computer ) {
@@ -474,7 +485,8 @@ void dialogue_window::set_character_profession( const std::string &profession )
     character_profession = profession;
 }
 
-void dialogue_window::set_relationship( const std::string &relationship )
+void dialogue_window::set_affection_score( const int score )
 {
-    relationship_text = relationship;
+    affection_score_value = std::clamp( score, -100, 100 );
+    has_affection_score = true;
 }

@@ -4304,14 +4304,14 @@
     "type": "keybinding",
     "category": "DIALOGUE_CHOOSE_RESPONSE",
     "id": "CHECK_OPINION",
-    "name": "Check opinion",
+    "name": "View affection",
     "bindings": [ { "input_method": "keyboard_char", "key": "O" }, { "input_method": "keyboard_code", "key": "o", "mod": [ "shift" ] } ]
   },
   {
     "type": "keybinding",
     "category": "DIALOGUE_CHOOSE_RESPONSE",
     "id": "CYCLE_NPC_DISPLAY",
-    "name": "切换NPC角色显示",
+    "name": "Switch NPC character display",
     "bindings": [ { "input_method": "keyboard_char", "key": "C" }, { "input_method": "keyboard_code", "key": "c", "mod": [ "shift" ] } ]
   },
   {

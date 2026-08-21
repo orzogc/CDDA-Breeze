@@ -1889,7 +1889,9 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
     d_win.is_not_conversation = is_not_conversation;
 
     if( who != nullptr ) {
-        d_win.set_character_profession( who->myclass->get_name() );
+        if( who->myclass.is_valid() ) {
+            d_win.set_character_profession( who->myclass->get_name() );
+        }
         d_win.set_preview_character( who );
     }
 
@@ -2729,38 +2731,12 @@ const talk_topic &special_talk( const std::string &action )
     return no_topic;
 }
 
-static std::string npc_relationship_description( const npc &guy )
-{
-    if( guy.is_enemy() ) {
-        return _( "仇恨" );
-    }
-
-    // Trust is the clearest long-term affection signal.  Value contributes, but less strongly,
-    // while anger quickly pushes the description toward dislike.  Fear is intentionally not
-    // folded into affection because being afraid of someone is not the same thing as hating them.
-    const int relationship_score = guy.op_of_u.trust * 2 + guy.op_of_u.value -
-                                   guy.op_of_u.anger * 2;
-
-    if( relationship_score >= 18 ) {
-        return _( "喜爱" );
-    } else if( relationship_score >= 10 ) {
-        return _( "信赖" );
-    } else if( relationship_score >= 4 ) {
-        return _( "友善" );
-    } else if( relationship_score <= -12 ) {
-        return _( "厌恶" );
-    } else if( relationship_score <= -5 ) {
-        return _( "反感" );
-    }
-    return _( "冷漠" );
-}
-
 talk_topic dialogue::opt( dialogue_window &d_win, const talk_topic &topic )
 {
     d_win.add_history_separator();
 
     if( npc *npc_actor = actor( true )->get_npc() ) {
-        d_win.set_relationship( npc_relationship_description( *npc_actor ) );
+        d_win.set_affection_score( npc_actor->affection_score() );
     }
 
     ui_adaptor ui;
