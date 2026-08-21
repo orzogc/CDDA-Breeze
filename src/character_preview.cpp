@@ -74,30 +74,6 @@ class char_preview_adapter : public cata_tiles
         return static_cast<char_preview_adapter *>( tiles );
     }
 
-    struct draw_state {
-        int tile_width;
-        int tile_height;
-        int screentile_width;
-        int screentile_height;
-        point origin;
-        point pixel_origin;
-    };
-
-    static draw_state capture_draw_state()
-    {
-        return { tile_width, tile_height, screentile_width, screentile_height, o, op };
-    }
-
-    static void restore_draw_state( const draw_state &state )
-    {
-        tile_width = state.tile_width;
-        tile_height = state.tile_height;
-        screentile_width = state.screentile_width;
-        screentile_height = state.screentile_height;
-        o = state.origin;
-        op = state.pixel_origin;
-    }
-
     void display_avatar_preview_with_overlays( const avatar &ch, const tripoint &p,
             const bool with_clothing )
     {
@@ -203,8 +179,7 @@ void display_character_preview_in_window( const Character &character,
         return;
     }
 
-    const char_preview_adapter::draw_state old_draw_state =
-        char_preview_adapter::capture_draw_state();
+    const cata_tiles::draw_state old_draw_state = tilecontext->capture_draw_state();
 
     const bool had_clip = SDL_RenderIsClipEnabled( renderer.get() ) == SDL_TRUE;
     SDL_Rect previous_clip = {};
@@ -245,7 +220,7 @@ void display_character_preview_in_window( const Character &character,
     char_preview_adapter::convert( tilecontext.get() )->display_character_preview_with_overlays(
         character, tripoint_zero );
 
-    char_preview_adapter::restore_draw_state( old_draw_state );
+    tilecontext->restore_draw_state( old_draw_state );
 
     if( had_clip ) {
         SDL_RenderSetClipRect( renderer.get(), &previous_clip );
