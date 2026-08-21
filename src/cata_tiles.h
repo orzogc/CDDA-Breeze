@@ -413,6 +413,40 @@ class cata_tiles
          *  float inaccuracies. */
         void set_draw_scale( int scale );
 
+        struct draw_state {
+            int tile_width;
+            int tile_height;
+            int screentile_width;
+            int screentile_height;
+            float tile_ratiox;
+            float tile_ratioy;
+            point half_tile_width_point;
+            point half_tile_height_point;
+            point quarter_tile_point;
+            point origin;
+            point pixel_origin;
+        };
+
+        draw_state capture_draw_state() const {
+            return { tile_width, tile_height, screentile_width, screentile_height,
+                     tile_ratiox, tile_ratioy, half_tile_width_point, half_tile_height_point,
+                     quarter_tile_point, o, op };
+        }
+
+        void restore_draw_state( const draw_state &state ) {
+            tile_width = state.tile_width;
+            tile_height = state.tile_height;
+            screentile_width = state.screentile_width;
+            screentile_height = state.screentile_height;
+            tile_ratiox = state.tile_ratiox;
+            tile_ratioy = state.tile_ratioy;
+            half_tile_width_point = state.half_tile_width_point;
+            half_tile_height_point = state.half_tile_height_point;
+            quarter_tile_point = state.quarter_tile_point;
+            o = state.origin;
+            op = state.pixel_origin;
+        }
+
         void on_options_changed();
 
         // checks if the tileset_ptr is valid

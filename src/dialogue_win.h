@@ -4,13 +4,16 @@
 
 #include <chrono>
 #include <cstddef>
+#include <cstdint>
 #include <iosfwd>
+#include <string>
 #include <vector>
 
 #include "color.h"
 #include "cuboid_rectangle.h"
 #include "cursesdef.h"
 
+class Character;
 class input_context;
 class multiline_list;
 class scrolling_text_view;
@@ -55,21 +58,42 @@ class dialogue_window
         bool is_not_conversation = false;
         int sel_response = 0;
 
-        catacurses::window* get_d_win();
-        catacurses::window* get_history_win();
-        catacurses::window* get_resp_win();
+        catacurses::window *get_d_win();
+        catacurses::window *get_history_win();
+        catacurses::window *get_resp_win();
 
-        void set_image(SDL_Texture* image);
+        void set_image( SDL_Texture *image );
+        void set_preview_character( const Character *character );
+        bool cycle_character_display();
+        void set_character_profession( const std::string &profession );
+        void set_affection_score( int score );
 
     private:
         catacurses::window d_win;
         catacurses::window history_win;
         catacurses::window resp_win;
+        catacurses::window portrait_win;
 
-        SDL_Texture* image = nullptr;
-        int image_width = 0;
-        int image_height = 0;
-        SDL_Rect rect_2;
+        enum class character_display_mode : std::uint8_t {
+            portrait,
+            preview,
+            hidden
+        };
+
+        SDL_Texture *image = nullptr;
+        const Character *preview_character = nullptr;
+        character_display_mode display_mode = character_display_mode::hidden;
+        SDL_Rect portrait_inner_rect = {};
+        bool sidebar_enabled = false;
+        int sidebar_width = 0;
+        int content_left = 0;
+        int content_width = 0;
+        int response_width = 0;
+        int portrait_height_cells = 0;
+        int separator_y = 0;
+        std::string character_profession;
+        int affection_score_value = 0;
+        bool has_affection_score = false;
 
         struct history_message {
             inline history_message( nc_color c, const std::string &t ) : color( c ), text( t ) {}
@@ -79,6 +103,13 @@ class dialogue_window
         };
 
         void add_to_history( const std::string &text, nc_color color );
+        bool wants_character_sidebar() const;
+        bool has_character_sidebar() const;
+        bool preview_is_available() const;
+        int available_display_modes() const;
+        void apply_saved_display_preference();
+        void draw_character_sidebar( const std::string &npc_name );
+        void draw_static_portrait() const;
 
         /**
          * This contains the exchanged words, it is basically like the global message log.

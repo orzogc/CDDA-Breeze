@@ -13,6 +13,7 @@
 #include <vector>
 
 #include "avatar.h"
+#include "character.h"
 #include "bionics.h"
 #include "cata_tiles.h"
 #include "cata_utility.h"
@@ -135,9 +136,98 @@ class char_preview_adapter : public cata_tiles
             height_3d = std::max( height_3d, overlay_height_3d );
         }
     }
+
+    void display_character_preview_with_overlays( const Character &ch, const tripoint &p )
+    {
+        int height_3d = 0;
+        const int rotation = ch.facing == FacingDirection::LEFT ? -1 : 0;
+        const std::string entity_id = ch.male ? "player_male" : "player_female";
+
+        draw_from_id_string( entity_id, TILE_CATEGORY::NONE, "", p, corner, rotation,
+                             lit_level::LIT, false, height_3d );
+
+        const std::vector<std::pair<std::string, std::string>> overlays = ch.get_overlay_ids();
+        for( const std::pair<std::string, std::string> &overlay : overlays ) {
+            std::string draw_id = overlay.first;
+            if( !find_overlay_looks_like( ch.male, overlay.first, overlay.second, draw_id ) ) {
+                continue;
+            }
+            int overlay_height_3d = 0;
+            draw_from_id_string( draw_id, TILE_CATEGORY::NONE, "", p, corner, rotation,
+                                 lit_level::LIT, false, overlay_height_3d );
+            height_3d = std::max( height_3d, overlay_height_3d );
+        }
+    }
 };
 
 } // namespace
+
+bool character_preview_available()
+{
+    return tilecontext && tilecontext->is_valid() && get_sdl_renderer();
+}
+
+void display_character_preview_in_window( const Character &character,
+        const catacurses::window &window )
+{
+    if( !window || !character_preview_available() ) {
+        return;
+    }
+
+    const SDL_Renderer_Ptr &renderer = get_sdl_renderer();
+    if( !renderer ) {
+        return;
+    }
+
+    const cata_tiles::draw_state old_draw_state = tilecontext->capture_draw_state();
+
+    const bool had_clip = SDL_RenderIsClipEnabled( renderer.get() ) == SDL_TRUE;
+    SDL_Rect previous_clip = {};
+    if( had_clip ) {
+        SDL_RenderGetClipRect( renderer.get(), &previous_clip );
+    }
+
+    const int cell_width = termx_to_pixel_value();
+    const int cell_height = termy_to_pixel_value();
+    const int inner_left = ( getbegx( window ) + 1 ) * cell_width;
+    const int inner_top = ( getbegy( window ) + 1 ) * cell_height;
+    const int inner_width = std::max( 1, ( getmaxx( window ) - 2 ) * cell_width );
+    const int inner_height = std::max( 1, ( getmaxy( window ) - 2 ) * cell_height );
+
+    int preview_zoom = 128;
+    tilecontext->set_draw_scale( preview_zoom );
+    int preview_tile_width = tilecontext->get_tile_width();
+    int preview_tile_height = tilecontext->get_tile_height();
+    while( preview_zoom > 32 &&
+           ( preview_tile_width > inner_width || preview_tile_height > inner_height ) ) {
+        preview_zoom /= 2;
+        tilecontext->set_draw_scale( preview_zoom );
+        preview_tile_width = tilecontext->get_tile_width();
+        preview_tile_height = tilecontext->get_tile_height();
+    }
+
+    const point draw_origin( inner_left + ( inner_width - preview_tile_width ) / 2,
+                             inner_top + ( inner_height - preview_tile_height ) / 2 );
+
+    const SDL_Rect clip_rect = { inner_left, inner_top, inner_width, inner_height };
+    SDL_RenderSetClipRect( renderer.get(), &clip_rect );
+
+    cata_tiles::get_o() = point_zero;
+    cata_tiles::get_op() = draw_origin;
+    cata_tiles::get_screentile_wdith() = 1;
+    cata_tiles::get_screentile_height() = 1;
+
+    char_preview_adapter::convert( tilecontext.get() )->display_character_preview_with_overlays(
+        character, tripoint_zero );
+
+    tilecontext->restore_draw_state( old_draw_state );
+
+    if( had_clip ) {
+        SDL_RenderSetClipRect( renderer.get(), &previous_clip );
+    } else {
+        SDL_RenderSetClipRect( renderer.get(), nullptr );
+    }
+}
 
 character_preview_window::~character_preview_window()
 {

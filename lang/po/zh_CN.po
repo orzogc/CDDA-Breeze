@@ -412980,7 +412980,7 @@ msgstr "叫喊"
 #. ~ Key binding name
 #: data/raw/keybindings.json
 msgid "Check opinion"
-msgstr "观察态度"
+msgstr "查看态度"
 
 #. ~ Key binding name
 #: data/raw/keybindings.json
@@ -464965,3 +464965,51 @@ msgstr "已包扎"
 #: data/json/ui/bodypart_status.json
 msgid "disinfected"
 msgstr "已消毒"
+
+#: src/dialogue_win.cpp
+msgid "Switch display"
+msgstr "切换显示"
+
+#: data/raw/keybindings.json
+msgid "Switch NPC character display"
+msgstr "切换NPC角色显示"
+
+#: src/dialogue_win.cpp
+#, c-format
+msgid "Relationship: %s"
+msgstr "关系：%s"
+
+#: src/dialogue_win.cpp
+msgctxt "NPC relationship"
+msgid "Hatred"
+msgstr "仇恨"
+
+#: src/dialogue_win.cpp
+msgctxt "NPC relationship"
+msgid "Repulsed"
+msgstr "厌恶"
+
+#: src/dialogue_win.cpp
+msgctxt "NPC relationship"
+msgid "Averse"
+msgstr "反感"
+
+#: src/dialogue_win.cpp
+msgctxt "NPC relationship"
+msgid "Indifferent"
+msgstr "冷漠"
+
+#: src/dialogue_win.cpp
+msgctxt "NPC relationship"
+msgid "Friendly"
+msgstr "友善"
+
+#: src/dialogue_win.cpp
+msgctxt "NPC relationship"
+msgid "Trusting"
+msgstr "信赖"
+
+#: src/dialogue_win.cpp
+msgctxt "NPC relationship"
+msgid "Affectionate"
+msgstr "喜爱"

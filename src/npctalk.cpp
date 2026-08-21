@@ -131,7 +131,7 @@ const std::string basic_prompt =
 
 const std::string basic_prompt_for_image =
 "# 风格 \n"
-"- 二次元手游风格的角色上半身立绘，图片背景色为黑色 \n"
+"- 二次元手游风格的角色胸像肖像，画面固定为3比4竖幅，建议尺寸768乘1024像素，完整显示头发和双肩，头部位于画面上三分之一，背景使用低细节暗色环境，不包含文字和边框。 \n"
 "# 角色数据 \n"
 "- 性别：%s \n"
 "- 职业：%s \n"
@@ -1764,8 +1764,17 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
     if (who != nullptr && get_option<bool>("显示特殊NPC的图片")) {
         character_name = who->get_name();
         npc_id = who->getID().get_value();
-        
-        image = get_character_picture(character_name);
+
+        // 新接口优先：NPC JSON 可通过 "portrait" 指定稳定立绘标识。
+        // 这样立绘不再受“名字后缀”“翻译文本”或“显示称呼”的影响。
+        // 若指定图片不存在，继续回退到旧的“显示姓名.png”规则，保持现有模组兼容。
+        if( !who->portrait_id.empty() ) {
+            std::string portrait_key = who->portrait_id;
+            image = get_character_picture( portrait_key );
+        }
+        if( image == nullptr ) {
+            image = get_character_picture( character_name );
+        }
         // 预设图优先 
         if (image == nullptr) {
             // 首先构建当前提示词
@@ -1879,9 +1888,14 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
     d_win.is_computer = is_computer;
     d_win.is_not_conversation = is_not_conversation;
 
-    if (image != nullptr) {
-        d_win.set_image(image);
+    if( who != nullptr ) {
+        if( who->myclass.is_valid() ) {
+            d_win.set_character_profession( who->myclass->get_name() );
+        }
+        d_win.set_preview_character( who );
     }
+
+    d_win.set_image( image );
 
 
     // Main dialogue loop
@@ -2721,6 +2735,10 @@ talk_topic dialogue::opt( dialogue_window &d_win, const talk_topic &topic )
 {
     d_win.add_history_separator();
 
+    if( npc *npc_actor = actor( true )->get_npc() ) {
+        d_win.set_affection_score( npc_actor->affection_score() );
+    }
+
     ui_adaptor ui;
     const auto resize_cb = [&]( ui_adaptor & ui ) {
         d_win.resize( ui );
@@ -2800,7 +2818,7 @@ talk_topic dialogue::opt( dialogue_window &d_win, const talk_topic &topic )
     std::vector<talk_data> response_lines;
     std::vector<input_event> response_hotkeys;
     const auto generate_response_lines = [&]() {
-#if defined(__ANDROID__)
+#if defined( __ANDROID__ )
         ctxt.get_registered_manual_keys().clear();
 #endif
         const hotkey_queue &queue = hotkey_queue::alphabets();
@@ -2811,7 +2829,7 @@ talk_topic dialogue::opt( dialogue_window &d_win, const talk_topic &topic )
             const talk_data &td = response.create_option_line( *this, evt, d_win.is_computer );
             response_lines.emplace_back( td );
             response_hotkeys.emplace_back( evt );
-#if defined(__ANDROID__)
+#if defined( __ANDROID__ )
             ctxt.register_manual_key( evt.get_first_input(), td.text );
 #endif
             evt = ctxt.next_unassigned_hotkey( queue, evt );
@@ -2833,6 +2851,14 @@ talk_topic dialogue::opt( dialogue_window &d_win, const talk_topic &topic )
             input_event evt;
             action = ctxt.handle_input();
             evt = ctxt.get_raw_input();
+
+            if( action == "CYCLE_NPC_DISPLAY" ) {
+                if( d_win.cycle_character_display() ) {
+                    ui_manager::redraw();
+                }
+                continue;
+            }
+
             d_win.handle_scrolling( action, ctxt );
             talk_topic st = special_talk( action );
             if( st.id != "TALK_NONE" ) {

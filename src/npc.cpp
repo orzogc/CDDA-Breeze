@@ -650,6 +650,10 @@ void npc_template::load( const JsonObject &jsobj )
         guy.ai_prompt_for_image_from_npc_json = jsobj.get_string("ai_prompt_for_image");
     }
 
+    if( jsobj.has_string( "portrait" ) ) {
+        guy.portrait_id = jsobj.get_string( "portrait" );
+    }
+
     npc_templates.emplace( string_id<npc_template>( guy.idz.str() ), std::move( tem ) );
 }
 
@@ -852,6 +856,7 @@ void npc::load_npc_template( const string_id<npc_template> &ident )
     // 从模板复制 ai_prompt_from_npc_json
     ai_prompt_from_npc_json = tguy.ai_prompt_from_npc_json;
     ai_prompt_for_image_from_npc_json = tguy.ai_prompt_for_image_from_npc_json;
+    portrait_id = tguy.portrait_id;
     
     // 从 npc_class 读取 ai_prompt
     if( myclass.is_valid() ) {
@@ -3052,6 +3057,12 @@ int npc::print_info( const catacurses::window &w, int line, int vLines, int colu
     return line;
 }
 
+int npc::affection_score() const
+{
+    const int score = op_of_u.trust * 2 + op_of_u.value - op_of_u.fear * 2 - op_of_u.anger * 5;
+    return std::clamp( score, -100, 100 );
+}
+
 std::string npc::opinion_text() const
 {
     std::string ret;
@@ -3129,6 +3140,8 @@ std::string npc::opinion_text() const
 
     ret += string_format( _( "Anger: %d (%s)." ), op_of_u.anger, desc );
 
+    // Keep the composite relationship score internal.  CHECK_OPINION remains the original
+    // detailed attitude view, without exposing the formula or a single numeric affection value.
     return ret;
 }
 
