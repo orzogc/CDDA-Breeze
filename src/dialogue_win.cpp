@@ -100,8 +100,11 @@ void dialogue_window::resize( ui_adaptor &ui )
                                   std::max( 7, usable_rows - 6 ) );
         separator_y = maxy - response_rows - 2;
 
-        history_win = catacurses::newwin( std::max( 1, separator_y - 2 ), content_width,
-                                          point( win_beginx + content_left + 1, win_beginy + 2 ) );
+        // scrolling_text_view owns its first column as a scrollbar / vertical edge.  Put that
+        // column directly on the character-card divider instead of one cell to its right, so the
+        // dialogue no longer renders a doubled vertical line.
+        history_win = catacurses::newwin( std::max( 1, separator_y - 2 ), content_width + 1,
+                                          point( win_beginx + content_left, win_beginy + 2 ) );
         resp_win = catacurses::newwin( std::max( 1, maxy - separator_y - 3 ),
                                        response_width,
                                        point( win_beginx + content_left + 1,
@@ -130,13 +133,6 @@ void dialogue_window::draw_character_sidebar( const std::string &npc_name )
     if( portrait_win ) {
         werase( portrait_win );
         draw_border( portrait_win );
-
-        const bool portrait_visible = display_mode == character_display_mode::portrait && image;
-        const bool preview_visible = display_mode == character_display_mode::preview &&
-                                     preview_is_available();
-        if( !portrait_visible && !preview_visible ) {
-            center_print( portrait_win, getmaxy( portrait_win ) / 2, c_dark_gray, _( "No portrait" ) );
-        }
     }
 
     int text_y = 2 + portrait_height_cells + 1;
@@ -145,15 +141,30 @@ void dialogue_window::draw_character_sidebar( const std::string &npc_name )
         trim_and_print( d_win, point( 2, text_y ), text_width, c_white, npc_name );
         ++text_y;
     }
-    if( !character_profession.empty() && text_y < getmaxy( d_win ) - 1 ) {
-        trim_and_print( d_win, point( 2, text_y ), text_width, c_light_gray, character_profession );
-        ++text_y;
-    }
     if( has_affection_score && text_y < getmaxy( d_win ) - 1 ) {
-        const nc_color affection_color = affection_score_value < 0 ? c_red :
-                                         affection_score_value > 0 ? c_green : c_white;
-        trim_and_print( d_win, point( 2, text_y ), text_width, affection_color,
-                        string_format( _( "Affection: %d" ), affection_score_value ) );
+        std::string relationship = pgettext( "NPC relationship", "Indifferent" );
+        nc_color relationship_color = c_light_gray;
+        if( affection_score_value <= -60 ) {
+            relationship = pgettext( "NPC relationship", "Hatred" );
+            relationship_color = c_red;
+        } else if( affection_score_value <= -40 ) {
+            relationship = pgettext( "NPC relationship", "Repulsed" );
+            relationship_color = c_light_red;
+        } else if( affection_score_value <= -20 ) {
+            relationship = pgettext( "NPC relationship", "Averse" );
+            relationship_color = c_yellow;
+        } else if( affection_score_value >= 60 ) {
+            relationship = pgettext( "NPC relationship", "Affectionate" );
+            relationship_color = c_pink;
+        } else if( affection_score_value >= 40 ) {
+            relationship = pgettext( "NPC relationship", "Trusting" );
+            relationship_color = c_cyan;
+        } else if( affection_score_value >= 20 ) {
+            relationship = pgettext( "NPC relationship", "Friendly" );
+            relationship_color = c_light_green;
+        }
+        trim_and_print( d_win, point( 2, text_y ), text_width, relationship_color,
+                        string_format( _( "Relationship: %s" ), relationship ) );
         ++text_y;
     }
 
@@ -181,7 +192,7 @@ void dialogue_window::draw_character_sidebar( const std::string &npc_name )
     }
     if( text_y < getmaxy( d_win ) - 1 ) {
         formatted_text = formatted_hotkey( ctxt.get_desc( "CHECK_OPINION", 1 ), cur_color )
-                         .append( _( "View affection" ) );
+                         .append( _( "Check opinion" ) );
         print_colored_text( d_win, point( 2, text_y ), cur_color, c_magenta, formatted_text );
         ++text_y;
     }
@@ -244,7 +255,9 @@ void dialogue_window::set_up_scrolling( input_context &ctxt ) const
         ctxt.register_action( "SIZE_UP_STATS" );
         ctxt.register_action( "YELL" );
         ctxt.register_action( "CHECK_OPINION" );
-        ctxt.register_action( "CYCLE_NPC_DISPLAY" );
+        if( available_display_modes() > 1 ) {
+            ctxt.register_action( "CYCLE_NPC_DISPLAY" );
+        }
     }
     history_view->set_up_navigation( ctxt, scrolling_key_scheme::angle_bracket_scroll );
     responses_list->set_up_navigation( ctxt );
@@ -290,8 +303,12 @@ nc_color dialogue_window::default_color() const
 void dialogue_window::print_header( const std::string &name ) const
 {
     draw_border( d_win );
+    const int ymax = getmaxy( d_win );
     if( sidebar_width > 0 ) {
-        mvwvline( d_win, point( sidebar_width, 1 ), LINE_XOXO, getmaxy( d_win ) - 2 );
+        mvwvline( d_win, point( sidebar_width, 1 ), LINE_XOXO, ymax - 2 );
+        // Join the single sidebar divider to the outer frame instead of leaving one-cell gaps.
+        mvwputch( d_win, point( sidebar_width, 0 ), BORDER_COLOR, LINE_OXXX );
+        mvwputch( d_win, point( sidebar_width, ymax - 1 ), BORDER_COLOR, LINE_XXOX );
     }
 
     const int header_x = content_left + 2;
@@ -302,17 +319,16 @@ void dialogue_window::print_header( const std::string &name ) const
     }
     const int xmax = getmaxx( d_win );
     const int ybar = separator_y;
-    // Horizontal bar dividing history and responses.  Keep every segment inside the
-    // same interior right edge so it meets the outer border without overwriting it.
-    const int line_end = xmax - 2;
+    // Horizontal bar dividing history and responses.  The length excludes both the divider cell
+    // and the outer right border so neither side can overrun or stop one cell short.
     if( sidebar_width > 0 ) {
         mvwputch( d_win, point( sidebar_width, ybar ), BORDER_COLOR, LINE_XXXX );
         mvwhline( d_win, point( sidebar_width + 1, ybar ), LINE_OXOX,
-                   std::max( 0, line_end - sidebar_width ) );
+                   std::max( 0, xmax - sidebar_width - 2 ) );
         mvwputch( d_win, point( xmax - 1, ybar ), BORDER_COLOR, LINE_XOXX );
     } else {
         mvwputch( d_win, point( 0, ybar ), BORDER_COLOR, LINE_XXXO );
-        mvwhline( d_win, point( 1, ybar ), LINE_OXOX, std::max( 0, line_end ) );
+        mvwhline( d_win, point( 1, ybar ), LINE_OXOX, std::max( 0, xmax - 2 ) );
         mvwputch( d_win, point( xmax - 1, ybar ), BORDER_COLOR, LINE_XOXX );
     }
     if( is_computer ) {
@@ -357,7 +373,7 @@ bool dialogue_window::preview_is_available() const
 
 int dialogue_window::available_display_modes() const
 {
-    int count = 1;
+    int count = 0;
     if( image ) {
         ++count;
     }
@@ -406,29 +422,16 @@ void dialogue_window::draw_static_portrait() const
 
 void dialogue_window::apply_saved_display_preference()
 {
-    switch( uistate.npc_dialogue_display_mode ) {
-        case 1:
-            if( preview_is_available() ) {
-                display_mode = character_display_mode::preview;
-            } else if( image ) {
-                display_mode = character_display_mode::portrait;
-            } else {
-                display_mode = character_display_mode::hidden;
-            }
-            break;
-        case 2:
-            display_mode = character_display_mode::hidden;
-            break;
-        case 0:
-        default:
-            if( image ) {
-                display_mode = character_display_mode::portrait;
-            } else if( preview_is_available() ) {
-                display_mode = character_display_mode::preview;
-            } else {
-                display_mode = character_display_mode::hidden;
-            }
-            break;
+    // "Hidden" remains an internal fallback only.  A saved old hidden preference is migrated to
+    // the best visible representation so opening dialogue never requires an extra key press.
+    if( uistate.npc_dialogue_display_mode == 1 && preview_is_available() ) {
+        display_mode = character_display_mode::preview;
+    } else if( image ) {
+        display_mode = character_display_mode::portrait;
+    } else if( preview_is_available() ) {
+        display_mode = character_display_mode::preview;
+    } else {
+        display_mode = character_display_mode::hidden;
     }
 }
 
@@ -446,36 +449,18 @@ void dialogue_window::set_preview_character( const Character *character )
 
 bool dialogue_window::cycle_character_display()
 {
-    std::vector<character_display_mode> modes;
-    if( image ) {
-        modes.push_back( character_display_mode::portrait );
-    }
-    if( preview_is_available() ) {
-        modes.push_back( character_display_mode::preview );
-    }
-    modes.push_back( character_display_mode::hidden );
-
-    if( modes.size() <= 1 ) {
+    // C is useful only when the NPC has both a fixed portrait and a generated character preview.
+    // With only one representation available, keep it visible and do not create a no-op cycle.
+    if( !image || !preview_is_available() ) {
         return false;
     }
 
-    auto iter = std::find( modes.begin(), modes.end(), display_mode );
-    if( iter == modes.end() || ++iter == modes.end() ) {
-        display_mode = modes.front();
+    if( display_mode == character_display_mode::portrait ) {
+        display_mode = character_display_mode::preview;
+        uistate.npc_dialogue_display_mode = 1;
     } else {
-        display_mode = *iter;
-    }
-
-    switch( display_mode ) {
-        case character_display_mode::portrait:
-            uistate.npc_dialogue_display_mode = 0;
-            break;
-        case character_display_mode::preview:
-            uistate.npc_dialogue_display_mode = 1;
-            break;
-        case character_display_mode::hidden:
-            uistate.npc_dialogue_display_mode = 2;
-            break;
+        display_mode = character_display_mode::portrait;
+        uistate.npc_dialogue_display_mode = 0;
     }
     return true;
 }

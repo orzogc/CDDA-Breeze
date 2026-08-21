@@ -4304,7 +4304,7 @@
     "type": "keybinding",
     "category": "DIALOGUE_CHOOSE_RESPONSE",
     "id": "CHECK_OPINION",
-    "name": "View affection",
+    "name": "Check opinion",
     "bindings": [ { "input_method": "keyboard_char", "key": "O" }, { "input_method": "keyboard_code", "key": "o", "mod": [ "shift" ] } ]
   },
   {

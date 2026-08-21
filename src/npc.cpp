@@ -3140,19 +3140,8 @@ std::string npc::opinion_text() const
 
     ret += string_format( _( "Anger: %d (%s)." ), op_of_u.anger, desc );
 
-    const int raw_affection = op_of_u.trust * 2 + op_of_u.value - op_of_u.fear * 2 -
-                              op_of_u.anger * 5;
-    const int score = affection_score();
-    ret += _( "\nAffection calculation:\n" );
-    ret += string_format( _( "Trust: %d * 2 = %d\n" ), op_of_u.trust, op_of_u.trust * 2 );
-    ret += string_format( _( "Value: %d * 1 = %d\n" ), op_of_u.value, op_of_u.value );
-    ret += string_format( _( "Fear: %d * -2 = %d\n" ), op_of_u.fear, -op_of_u.fear * 2 );
-    ret += string_format( _( "Anger: %d * -5 = %d\n" ), op_of_u.anger, -op_of_u.anger * 5 );
-    ret += string_format( _( "Affection: %d (range -100 to 100)." ), score );
-    if( raw_affection != score ) {
-        ret += string_format( _( "\nRaw result: %d; limited to -100 to 100." ), raw_affection );
-    }
-
+    // Keep the composite relationship score internal.  CHECK_OPINION remains the original
+    // detailed attitude view, without exposing the formula or a single numeric affection value.
     return ret;
 }
 

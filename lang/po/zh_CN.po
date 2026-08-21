@@ -412980,7 +412980,7 @@ msgstr "叫喊"
 #. ~ Key binding name
 #: data/raw/keybindings.json
 msgid "Check opinion"
-msgstr "观察态度"
+msgstr "查看态度"
 
 #. ~ Key binding name
 #: data/raw/keybindings.json
@@ -464967,19 +464967,6 @@ msgid "disinfected"
 msgstr "已消毒"
 
 #: src/dialogue_win.cpp
-msgid "No portrait"
-msgstr "暂无立绘"
-
-#: src/dialogue_win.cpp
-#, c-format
-msgid "Affection: %d"
-msgstr "好感度：%d"
-
-#: src/dialogue_win.cpp data/raw/keybindings.json
-msgid "View affection"
-msgstr "查看好感"
-
-#: src/dialogue_win.cpp
 msgid "Switch display"
 msgstr "切换显示"
 
@@ -464987,36 +464974,42 @@ msgstr "切换显示"
 msgid "Switch NPC character display"
 msgstr "切换NPC角色显示"
 
-#: src/npc.cpp
-msgid "Affection calculation:\n"
-msgstr "好感度计算：\n"
-
-#: src/npc.cpp
+#: src/dialogue_win.cpp
 #, c-format
-msgid "Trust: %d * 2 = %d\n"
-msgstr "信任：%d × 2 = %d\n"
+msgid "Relationship: %s"
+msgstr "关系：%s"
 
-#: src/npc.cpp
-#, c-format
-msgid "Value: %d * 1 = %d\n"
-msgstr "价值：%d × 1 = %d\n"
+#: src/dialogue_win.cpp
+msgctxt "NPC relationship"
+msgid "Hatred"
+msgstr "仇恨"
 
-#: src/npc.cpp
-#, c-format
-msgid "Fear: %d * -2 = %d\n"
-msgstr "恐惧：%d × -2 = %d\n"
+#: src/dialogue_win.cpp
+msgctxt "NPC relationship"
+msgid "Repulsed"
+msgstr "厌恶"
 
-#: src/npc.cpp
-#, c-format
-msgid "Anger: %d * -5 = %d\n"
-msgstr "愤怒：%d × -5 = %d\n"
+#: src/dialogue_win.cpp
+msgctxt "NPC relationship"
+msgid "Averse"
+msgstr "反感"
 
-#: src/npc.cpp
-#, c-format
-msgid "Affection: %d (range -100 to 100)."
-msgstr "好感度：%d（范围 -100 到 100）。"
+#: src/dialogue_win.cpp
+msgctxt "NPC relationship"
+msgid "Indifferent"
+msgstr "冷漠"
 
-#: src/npc.cpp
-#, c-format
-msgid "\nRaw result: %d; limited to -100 to 100."
-msgstr "\n原始结果：%d；限制在 -100 到 100。"
+#: src/dialogue_win.cpp
+msgctxt "NPC relationship"
+msgid "Friendly"
+msgstr "友善"
+
+#: src/dialogue_win.cpp
+msgctxt "NPC relationship"
+msgid "Trusting"
+msgstr "信赖"
+
+#: src/dialogue_win.cpp
+msgctxt "NPC relationship"
+msgid "Affectionate"
+msgstr "喜爱"
