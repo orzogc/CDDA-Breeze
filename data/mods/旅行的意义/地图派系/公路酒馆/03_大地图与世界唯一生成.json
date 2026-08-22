@@ -1,0 +1,113 @@
+[
+  {
+    "type": "overmap_terrain",
+    "id": "travel_afterlife_dealership_west",
+    "name": "来生酒吧",
+    "looks_like": "bar",
+    "sym": "T",
+    "color": "light_blue",
+    "see_cost": 5,
+    "mondensity": 1,
+    "extras": "build",
+    "flags": [
+      "SOURCE_SAFETY"
+    ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "travel_roadside_tavern",
+    "name": "来生酒吧",
+    "looks_like": "bar",
+    "sym": "T",
+    "color": "light_blue",
+    "see_cost": 5,
+    "mondensity": 1,
+    "extras": "build",
+    "flags": [
+      "SOURCE_SAFETY"
+    ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "travel_afterlife_dealership_roof_west",
+    "name": "来生酒吧屋顶停机坪",
+    "looks_like": "bar_roof",
+    "sym": "T",
+    "color": "light_blue",
+    "see_cost": 5,
+    "mondensity": 0,
+    "flags": [
+      "SOURCE_SAFETY"
+    ]
+  },
+  {
+    "type": "overmap_special",
+    "id": "travel_roadside_tavern_special",
+    "overmaps": [
+      {
+        "point": [
+          0,
+          0,
+          0
+        ],
+        "overmap": "travel_afterlife_dealership_west_north"
+      },
+      {
+        "point": [
+          1,
+          0,
+          0
+        ],
+        "overmap": "travel_roadside_tavern_north"
+      },
+      {
+        "point": [
+          0,
+          0,
+          1
+        ],
+        "overmap": "travel_afterlife_dealership_roof_west_north"
+      }
+    ],
+    "connections": [
+      {
+        "point": [
+          0,
+          -1,
+          0
+        ],
+        "from": [
+          0,
+          0,
+          0
+        ],
+        "terrain": "road",
+        "connection": "local_road",
+        "existing": false
+      }
+    ],
+    "locations": [
+      "field",
+      "forest_without_trail"
+    ],
+    "city_distance": [
+      10,
+      40
+    ],
+    "city_sizes": [
+      2,
+      -1
+    ],
+    "occurrences": [
+      100,
+      100
+    ],
+    "priority": 1,
+    "flags": [
+      "MAN_MADE",
+      "GLOBALLY_UNIQUE",
+      "SAFE_AT_WORLDGEN"
+    ],
+    "rotate": false
+  }
+]

@@ -1,0 +1,24 @@
+[
+  {
+    "type": "start_location",
+    "id": "sloc_travel_roadside_tavern",
+    "name": "来生酒吧",
+    "terrain": [
+      "travel_roadside_tavern"
+    ]
+  },
+  {
+    "type": "scenario",
+    "id": "scenario_travel_afterlife_bar",
+    "name": "来生酒吧",
+    "points": 0,
+    "description": "你在来生酒吧里醒来。这里原本是一座旧车行，如今东侧的酒吧刚开始在这个陌生世界站稳脚跟，克莱尔守着吧台，朱迪和瓦莱莉占了靠墙的位置，西侧车库由阿德卡多机械师米奇照看。这里有酒，有技术货，有成排的车辆零件，也有价格离谱但确实能开的整车。至于你为什么会在这里，今天可以慢慢想。",
+    "start_name": "来生酒吧",
+    "allowed_locs": [
+      "sloc_travel_roadside_tavern"
+    ],
+    "flags": [
+      "LONE_START"
+    ]
+  }
+]

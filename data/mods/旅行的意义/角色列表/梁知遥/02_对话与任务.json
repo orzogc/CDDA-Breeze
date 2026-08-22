@@ -33,6 +33,7 @@
     "type": "npc",
     "id": "TRAVEL_LIANG_ZHIYAO",
     "name_unique": "梁知遥",
+    "portrait": "梁知遥, 留学生",
     "gender": "female",
     "mission_offered": "MISSION_TRAVEL_WITH_LIANG_TO_REFUGEE",
     "class": "NC_TRAVEL_LIANG_ZHIYAO",
@@ -154,6 +155,7 @@
     "type": "npc",
     "id": "TRAVEL_LIANG_ZHIYAO_REFUGEE",
     "name_unique": "梁知遥",
+    "portrait": "梁知遥, 留学生",
     "gender": "female",
     "class": "NC_TRAVEL_LIANG_ZHIYAO_CENTER",
     "martial_arts": [

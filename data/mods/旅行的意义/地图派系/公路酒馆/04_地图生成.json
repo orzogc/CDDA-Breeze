@@ -1,0 +1,1022 @@
+[
+  {
+    "type": "mapgen",
+    "method": "json",
+    "om_terrain": "travel_afterlife_dealership_west",
+    "object": {
+      "fill_ter": "t_pavement",
+      "flags": [
+        "ERASE_ALL_BEFORE_PLACING_TERRAIN"
+      ],
+      "faction_owner": [
+        {
+          "id": "travel_roadside_tavern",
+          "x": [
+            0,
+            23
+          ],
+          "y": [
+            0,
+            23
+          ]
+        }
+      ],
+      "rows": [
+        "aaaaaaaaaaaaaaaaaaaaaaaa",
+        "aaaaaaaaaaaaaaaaaaaaaaaa",
+        "aaabaaaaaaaaaaaaaaaaaaaa",
+        "cdeeffffffffffeegeeeeeee",
+        "cdebhhihhhihhhejjjjjjjke",
+        "cdehhlihhlihhlejmjjjmjje",
+        "cdenhhihhhihhhejjooooooe",
+        "cdenhhihhhihhhejjjjjpjqe",
+        "cdenhhihhhihhhejmjrrrrre",
+        "cdenhhihhhihhheeeseeeeee",
+        "cdenhlihhlihhlettuvwxwye",
+        "cdenhhihhhihhhezzuAABAAC",
+        "cdenhhihhhihhheuuDEDFuuC",
+        "cdenhhihhhihhhsuuuFuuuue",
+        "cdenhlihhlihhlGuuuHuIJIe",
+        "cdehhhihhhihhhGjjjjjIBye",
+        "cdehnnnnnnnnnnGKLjjjIMNe",
+        "cdeeeeeeeeeeeeeeeeCCeeCe",
+        "cddddddddddddddddddddddd",
+        "cddddddddddddddddddddddd",
+        "cddddddddddddddddddddddd",
+        "cddddddddddddddddddddddd",
+        "cddddddddddddddddddddddd",
+        "cccccccccccccccccccccccc"
+      ],
+      "terrain": {
+        "a": "t_sidewalk",
+        "b": "t_gates_mech_control",
+        "c": "t_pavement",
+        "d": "t_concrete",
+        "e": "t_concrete_wall",
+        "f": "t_door_metal_locked",
+        "g": "t_door_glass_c",
+        "h": "t_metal_floor",
+        "i": "t_grate",
+        "j": "t_floor",
+        "k": "t_stairs_up",
+        "l": "t_metal_floor_olight",
+        "m": "t_floor_olight",
+        "n": "t_metal_floor",
+        "o": "t_floor",
+        "p": "t_floor",
+        "q": "t_floor",
+        "r": "t_floor",
+        "s": "t_door_metal_c",
+        "t": "t_carpet_green",
+        "u": "t_carpet_green",
+        "v": "t_linoleum_gray",
+        "w": "t_linoleum_gray",
+        "x": "t_linoleum_gray",
+        "y": "t_linoleum_gray",
+        "z": "t_carpet_green",
+        "A": "t_linoleum_gray",
+        "B": "t_linoleum_gray_floor_olight",
+        "C": "t_curtains",
+        "D": "t_carpet_green",
+        "E": "t_carpet_green",
+        "F": "t_carpet_concrete_green_olight",
+        "G": "t_window_bars",
+        "H": "t_carpet_green",
+        "I": "t_wall",
+        "J": "t_door_c",
+        "K": "t_floor",
+        "L": "t_floor",
+        "M": "t_linoleum_gray",
+        "N": "t_linoleum_gray"
+      },
+      "furniture": {
+        "n": "f_rack",
+        "o": "f_counter",
+        "p": "f_chair",
+        "q": "f_safe_c",
+        "r": "f_warehouse_shelf",
+        "t": "f_locker",
+        "v": "f_fridge",
+        "w": "f_counter",
+        "x": "f_oven",
+        "y": "f_sink",
+        "z": "f_bunkbed",
+        "D": "f_stool",
+        "E": "f_table",
+        "H": "f_sofa",
+        "K": "f_dresser",
+        "L": "f_bed",
+        "M": "f_shower",
+        "N": "f_toilet"
+      },
+      "place_signs": [
+        {
+          "signage": "来生酒吧与车库。整车交易，飞船交付请上屋顶。",
+          "x": 14,
+          "y": 2
+        },
+        {
+          "signage": "来生车库零件展架。取货前请先找米奇结账。",
+          "x": 16,
+          "y": 8
+        }
+      ],
+      "place_item": [
+        {
+          "item": "welder",
+          "x": 3,
+          "y": 6
+        },
+        {
+          "item": "cordless_drill",
+          "x": 3,
+          "y": 7
+        },
+        {
+          "item": "hand_drill",
+          "x": 3,
+          "y": 8
+        },
+        {
+          "item": "wrench",
+          "x": 3,
+          "y": 9
+        },
+        {
+          "item": "wrench_large",
+          "x": 3,
+          "y": 10
+        },
+        {
+          "item": "lug_wrench",
+          "x": 3,
+          "y": 12
+        },
+        {
+          "item": "jack",
+          "x": 3,
+          "y": 13
+        },
+        {
+          "item": "hacksaw",
+          "x": 3,
+          "y": 14
+        },
+        {
+          "item": "angle_grinder",
+          "x": 5,
+          "y": 16
+        },
+        {
+          "item": "reciprocating_saw",
+          "x": 6,
+          "y": 16
+        },
+        {
+          "item": "screwdriver_set",
+          "x": 7,
+          "y": 16
+        },
+        {
+          "item": "socket_screwdriver_set",
+          "x": 9,
+          "y": 16
+        },
+        {
+          "item": "pliers",
+          "x": 10,
+          "y": 16
+        },
+        {
+          "item": "welding_wire_steel",
+          "x": 12,
+          "y": 16,
+          "amount": 1000
+        },
+        {
+          "item": "welding_rod_steel",
+          "x": 13,
+          "y": 16,
+          "amount": 1000
+        },
+        {
+          "item": "pillow",
+          "x": 15,
+          "y": 11,
+          "amount": 2
+        },
+        {
+          "item": "sheet",
+          "x": 16,
+          "y": 11,
+          "amount": 2
+        },
+        {
+          "item": "blanket",
+          "x": 16,
+          "y": 11,
+          "amount": 2
+        },
+        {
+          "item": "pillow",
+          "x": 16,
+          "y": 16
+        },
+        {
+          "item": "sheet",
+          "x": 16,
+          "y": 16
+        },
+        {
+          "item": "blanket",
+          "x": 16,
+          "y": 16
+        },
+        {
+          "item": "pillow",
+          "x": 18,
+          "y": 14
+        },
+        {
+          "item": "blanket",
+          "x": 18,
+          "y": 14
+        },
+        {
+          "item": "sleeping_bag",
+          "x": 18,
+          "y": 14
+        },
+        {
+          "item": "towel",
+          "x": 21,
+          "y": 16,
+          "amount": 2
+        },
+        {
+          "item": "towel",
+          "x": 22,
+          "y": 15
+        }
+      ],
+      "place_items": [
+        {
+          "item": "SUS_fridge_breakroom",
+          "x": 18,
+          "y": 10,
+          "chance": 90,
+          "repeat": [
+            2,
+            4
+          ]
+        },
+        {
+          "item": "SUS_utensils",
+          "x": 19,
+          "y": 10,
+          "chance": 80
+        },
+        {
+          "item": "SUS_knife_drawer",
+          "x": 19,
+          "y": 10,
+          "chance": 60
+        },
+        {
+          "item": "kitchen_counters",
+          "x": [
+            19,
+            21
+          ],
+          "y": 10,
+          "chance": 30,
+          "repeat": [
+            1,
+            2
+          ]
+        },
+        {
+          "item": "SUS_oven",
+          "x": 20,
+          "y": 10,
+          "chance": 100
+        },
+        {
+          "item": "SUS_cookware",
+          "x": 21,
+          "y": 10,
+          "chance": 100
+        },
+        {
+          "item": "SUS_dishes",
+          "x": 21,
+          "y": 10,
+          "chance": 100
+        },
+        {
+          "item": "SUS_silverware",
+          "x": 21,
+          "y": 10,
+          "chance": 100
+        },
+        {
+          "item": "SUS_kitchen_sink",
+          "x": 22,
+          "y": 10,
+          "chance": 100
+        },
+        {
+          "item": "dining",
+          "x": 18,
+          "y": 12,
+          "chance": 40,
+          "repeat": [
+            1,
+            2
+          ]
+        },
+        {
+          "item": "groce_softdrink",
+          "x": 18,
+          "y": 12,
+          "chance": 70,
+          "repeat": [
+            1,
+            3
+          ]
+        },
+        {
+          "item": "cannedfood",
+          "x": 18,
+          "y": 12,
+          "chance": 80,
+          "repeat": [
+            2,
+            5
+          ]
+        },
+        {
+          "item": "dresser",
+          "x": [
+            15,
+            16
+          ],
+          "y": 10,
+          "chance": 75,
+          "repeat": [
+            1,
+            3
+          ]
+        },
+        {
+          "item": "clothing_work_set",
+          "x": [
+            15,
+            16
+          ],
+          "y": 10,
+          "chance": 70,
+          "repeat": [
+            1,
+            2
+          ]
+        },
+        {
+          "item": "dresser",
+          "x": 15,
+          "y": 16,
+          "chance": 80,
+          "repeat": [
+            2,
+            4
+          ]
+        }
+      ],
+      "place_zones": [
+        {
+          "type": "NPC_INVESTIGATE_ONLY",
+          "faction": "travel_roadside_tavern",
+          "x": [
+            0,
+            23
+          ],
+          "y": [
+            0,
+            23
+          ]
+        },
+        {
+          "type": "LOOT_ITEM_GROUP",
+          "filter": "travel_afterlife_vehicle_parts_shop",
+          "faction": "travel_roadside_tavern",
+          "x": [
+            18,
+            22
+          ],
+          "y": [
+            8,
+            8
+          ]
+        },
+        {
+          "type": "LOOT_UNSORTED",
+          "faction": "travel_roadside_tavern",
+          "x": [
+            18,
+            22
+          ],
+          "y": [
+            8,
+            8
+          ]
+        }
+      ],
+      "place_npcs": [
+        {
+          "class": "travel_afterlife_mitch",
+          "x": 13,
+          "y": 8
+        },
+        {
+          "class": "travel_afterlife_garage_guard",
+          "x": 15,
+          "y": 4
+        }
+      ]
+    }
+  },
+  {
+    "type": "mapgen",
+    "method": "json",
+    "om_terrain": "travel_roadside_tavern",
+    "object": {
+      "fill_ter": "t_pavement",
+      "flags": [
+        "ERASE_ALL_BEFORE_PLACING_TERRAIN"
+      ],
+      "faction_owner": [
+        {
+          "id": "travel_roadside_tavern",
+          "x": [
+            0,
+            23
+          ],
+          "y": [
+            0,
+            23
+          ]
+        }
+      ],
+      "rows": [
+        "aaaaaaaaaaaaaaaaaaaaaaaa",
+        "aaaaaaaaaaaaaaaaaaaaaaaa",
+        "abbbbbbbbbbbbbbbbbbbbbbb",
+        "cbbddddeeeedffddeeeddddd",
+        "cbbdghhhhhhhhhhhhhhhiiid",
+        "cbbdghhhjhhhhjhhhhhhjkjd",
+        "cbbdgjkjljhhjljhhhlhhhmd",
+        "cbbdhhhhhhhhhjhhhhjhhhgd",
+        "cbbdihhhhhhhhhhhhhhhhhgd",
+        "cbbdihhhjhhhhjhhhhjhhhgd",
+        "cbbdihhjljhhjljhhjljhhnd",
+        "cbbdhhhhjhhhhjhhhhjhhhnd",
+        "cbbdooooooooooopppppppqd",
+        "cbbdroooooooooopsssssspd",
+        "cbbdroootoooooopuuuuuuud",
+        "cbbdroooltooovopuwvppppd",
+        "cbbdooxtooooooopuppppppy",
+        "cbbzooooooAAAAApuBpCCCpd",
+        "cbbdDDDzDDDDDDDzDDDDDDzd",
+        "cbbdEzppzEDoooooDFFFFGpd",
+        "cbbdDDHpDDDtIIItDppppppd",
+        "cbbdEzppzEDoIIIoDHpppppd",
+        "cbbdpDwwDpDooooJDpBBBBBd",
+        "cbbdddeeddddeeeddddddddd"
+      ],
+      "terrain": {
+        "a": "t_sidewalk",
+        "b": "t_concrete",
+        "c": "t_grass",
+        "d": "t_concrete_wall",
+        "e": "t_window",
+        "f": "t_door_glass_c",
+        "g": "t_carpet_red",
+        "h": "t_carpet_red",
+        "i": "t_carpet_red",
+        "j": "t_carpet_red",
+        "k": "t_carpet_red",
+        "l": "t_floor_olight",
+        "m": "t_carpet_red",
+        "n": "t_carpet_red",
+        "o": "t_floor",
+        "p": "t_linoleum_gray",
+        "q": "t_linoleum_gray",
+        "r": "t_floor",
+        "s": "t_linoleum_gray",
+        "t": "t_floor",
+        "u": "t_linoleum_gray",
+        "v": "t_floor_olight",
+        "w": "t_linoleum_gray",
+        "x": "t_floor",
+        "y": "t_door_metal_c",
+        "z": "t_door_c",
+        "A": "t_floor",
+        "B": "t_linoleum_gray",
+        "C": "t_linoleum_gray",
+        "D": "t_wall",
+        "E": "t_linoleum_gray",
+        "F": "t_linoleum_gray",
+        "G": "t_linoleum_gray",
+        "H": "t_linoleum_gray",
+        "I": "t_floor",
+        "J": "t_floor"
+      },
+      "furniture": {
+        "g": "f_rack",
+        "i": "f_sofa",
+        "j": "f_chair",
+        "k": "f_table",
+        "l": "f_table",
+        "m": "f_trashcan",
+        "n": "f_locker",
+        "q": "f_locker",
+        "r": "f_sofa",
+        "s": "f_stool",
+        "t": "f_chair",
+        "u": "f_counter",
+        "w": "f_sink",
+        "x": "f_table",
+        "A": "f_bookcase",
+        "B": "f_rack",
+        "C": "f_glass_fridge",
+        "E": "f_toilet",
+        "F": "f_wood_keg",
+        "G": "f_fridge",
+        "H": "f_trashcan",
+        "I": "f_pool_table",
+        "J": "f_trashcan"
+      },
+      "place_items": [
+        {
+          "item": "travel_afterlife_storeroom_alcohol",
+          "x": [
+            17,
+            22
+          ],
+          "y": 14,
+          "chance": 85,
+          "repeat": [
+            1,
+            3
+          ]
+        },
+        {
+          "item": "travel_afterlife_storeroom_alcohol",
+          "x": 16,
+          "y": [
+            15,
+            17
+          ],
+          "chance": 80,
+          "repeat": [
+            1,
+            2
+          ]
+        },
+        {
+          "item": "travel_afterlife_storeroom_alcohol",
+          "x": [
+            19,
+            21
+          ],
+          "y": 17,
+          "chance": 85,
+          "repeat": [
+            1,
+            3
+          ]
+        },
+        {
+          "item": "travel_afterlife_storeroom_alcohol",
+          "x": 17,
+          "y": 17,
+          "chance": 85,
+          "repeat": [
+            1,
+            3
+          ]
+        },
+        {
+          "item": "salty_snacks",
+          "x": 16,
+          "y": 14,
+          "chance": 75,
+          "repeat": [
+            1,
+            4
+          ]
+        },
+        {
+          "item": "cash_register_random",
+          "x": 16,
+          "y": 14,
+          "chance": 100
+        },
+        {
+          "item": "keg_beer",
+          "x": 17,
+          "y": 17,
+          "chance": 70
+        },
+        {
+          "item": "misc_smoking",
+          "x": 21,
+          "y": 5,
+          "chance": 60,
+          "repeat": [
+            1,
+            2
+          ]
+        },
+        {
+          "item": "travel_afterlife_storeroom_alcohol",
+          "x": [
+            20,
+            22
+          ],
+          "y": [
+            4,
+            5
+          ],
+          "chance": 45,
+          "repeat": [
+            1,
+            3
+          ]
+        },
+        {
+          "item": "bar_bathroom",
+          "x": [
+            4,
+            9
+          ],
+          "y": [
+            19,
+            22
+          ],
+          "chance": 35,
+          "repeat": [
+            1,
+            2
+          ]
+        },
+        {
+          "item": "SUS_toilet",
+          "x": 4,
+          "y": 19,
+          "chance": 80
+        },
+        {
+          "item": "SUS_toilet",
+          "x": 9,
+          "y": 19,
+          "chance": 80
+        },
+        {
+          "item": "SUS_toilet",
+          "x": 4,
+          "y": 21,
+          "chance": 80
+        },
+        {
+          "item": "SUS_toilet",
+          "x": 9,
+          "y": 21,
+          "chance": 80
+        },
+        {
+          "item": "pool_table",
+          "x": [
+            12,
+            14
+          ],
+          "y": [
+            20,
+            21
+          ],
+          "chance": 30,
+          "repeat": [
+            1,
+            2
+          ]
+        },
+        {
+          "item": "bar_fridge",
+          "x": 21,
+          "y": 19,
+          "chance": 70,
+          "repeat": [
+            1,
+            4
+          ]
+        },
+        {
+          "item": "travel_afterlife_storeroom_alcohol",
+          "x": 18,
+          "y": 22,
+          "chance": 100,
+          "repeat": [
+            2,
+            4
+          ]
+        },
+        {
+          "item": "travel_afterlife_storeroom_alcohol",
+          "x": 19,
+          "y": 22,
+          "chance": 100,
+          "repeat": [
+            2,
+            4
+          ]
+        },
+        {
+          "item": "travel_afterlife_storeroom_alcohol",
+          "x": 20,
+          "y": 22,
+          "chance": 100,
+          "repeat": [
+            2,
+            4
+          ]
+        },
+        {
+          "item": "travel_afterlife_storeroom_alcohol",
+          "x": 21,
+          "y": 22,
+          "chance": 100,
+          "repeat": [
+            2,
+            4
+          ]
+        },
+        {
+          "item": "travel_afterlife_storeroom_alcohol",
+          "x": 22,
+          "y": 22,
+          "chance": 100,
+          "repeat": [
+            2,
+            4
+          ]
+        },
+        {
+          "item": "travel_afterlife_bar_books",
+          "x": [
+            10,
+            14
+          ],
+          "y": 17,
+          "chance": 100,
+          "repeat": [
+            2,
+            4
+          ]
+        }
+      ],
+      "place_signs": [
+        {
+          "signage": "来生酒吧。东侧营业，西侧车库和整车交付区。",
+          "x": 15,
+          "y": 2
+        }
+      ],
+      "place_zones": [
+        {
+          "type": "NPC_INVESTIGATE_ONLY",
+          "faction": "travel_roadside_tavern",
+          "x": [
+            0,
+            23
+          ],
+          "y": [
+            0,
+            23
+          ]
+        },
+        {
+          "type": "ZONE_START_POINT",
+          "faction": "your_followers",
+          "x": 12,
+          "y": 15
+        },
+        {
+          "type": "LOOT_ITEM_GROUP",
+          "filter": "travel_afterlife_claire_shop",
+          "faction": "travel_roadside_tavern",
+          "x": [
+            16,
+            22
+          ],
+          "y": 14
+        },
+        {
+          "type": "LOOT_UNSORTED",
+          "faction": "travel_roadside_tavern",
+          "x": [
+            16,
+            22
+          ],
+          "y": 14
+        },
+        {
+          "type": "LOOT_ITEM_GROUP",
+          "filter": "travel_afterlife_claire_shop",
+          "faction": "travel_roadside_tavern",
+          "x": 16,
+          "y": [
+            15,
+            17
+          ]
+        },
+        {
+          "type": "LOOT_UNSORTED",
+          "faction": "travel_roadside_tavern",
+          "x": 16,
+          "y": [
+            15,
+            17
+          ]
+        },
+        {
+          "type": "LOOT_ITEM_GROUP",
+          "filter": "travel_afterlife_claire_shop",
+          "faction": "travel_roadside_tavern",
+          "x": [
+            19,
+            21
+          ],
+          "y": 17
+        },
+        {
+          "type": "LOOT_UNSORTED",
+          "faction": "travel_roadside_tavern",
+          "x": [
+            19,
+            21
+          ],
+          "y": 17
+        },
+        {
+          "type": "LOOT_ITEM_GROUP",
+          "filter": "travel_afterlife_claire_shop",
+          "faction": "travel_roadside_tavern",
+          "x": 17,
+          "y": 17
+        },
+        {
+          "type": "LOOT_UNSORTED",
+          "faction": "travel_roadside_tavern",
+          "x": 17,
+          "y": 17
+        },
+        {
+          "type": "LOOT_ITEM_GROUP",
+          "filter": "travel_afterlife_judy_shop",
+          "faction": "travel_roadside_tavern",
+          "x": 22,
+          "y": [
+            7,
+            9
+          ]
+        },
+        {
+          "type": "LOOT_UNSORTED",
+          "faction": "travel_roadside_tavern",
+          "x": 22,
+          "y": [
+            7,
+            9
+          ]
+        }
+      ],
+      "place_npcs": [
+        {
+          "class": "travel_afterlife_claire",
+          "x": 18,
+          "y": 15
+        },
+        {
+          "class": "travel_afterlife_judy",
+          "x": 20,
+          "y": 4
+        },
+        {
+          "class": "travel_afterlife_v",
+          "x": 21,
+          "y": 4
+        }
+      ],
+      "toilets": {
+        "E": {}
+      },
+      "place_liquids": [
+        {
+          "liquid": "wine_marsala",
+          "x": 17,
+          "y": 19,
+          "amount": 2500
+        },
+        {
+          "liquid": "wine_cabernet",
+          "x": 18,
+          "y": 19,
+          "amount": 2500
+        },
+        {
+          "liquid": "wine_chardonnay",
+          "x": 19,
+          "y": 19,
+          "amount": 2500
+        },
+        {
+          "liquid": "wine_riesling",
+          "x": 20,
+          "y": 19,
+          "amount": 2500
+        }
+      ]
+    }
+  },
+  {
+    "type": "mapgen",
+    "method": "json",
+    "om_terrain": "travel_afterlife_dealership_roof_west",
+    "object": {
+      "fill_ter": "t_open_air",
+      "flags": [
+        "ERASE_ALL_BEFORE_PLACING_TERRAIN"
+      ],
+      "faction_owner": [
+        {
+          "id": "travel_roadside_tavern",
+          "x": [
+            0,
+            23
+          ],
+          "y": [
+            0,
+            23
+          ]
+        }
+      ],
+      "rows": [
+        "aaaaaaaaaaaaaaaaaaaaaaaa",
+        "aaaaaaaaaaaaaaaaaaaaaaaa",
+        "aaaaaaaaaaaaaaaaaaaaaaaa",
+        "abbbbbbbbbbbbbbbbbbbbbbb",
+        "acccccccccccccccccccccdb",
+        "acceeeeeeeeeeeeeeeeeeccb",
+        "accccccccccccccccccccccb",
+        "accccecccccccccccceccccb",
+        "accccecccccccccccceccccb",
+        "accccecccccccccccceccccb",
+        "acccceeeeeeeeeeeeeeccccb",
+        "accccecccccccccccceccccb",
+        "accccecccccccccccceccccb",
+        "accccecccccccccccceccccb",
+        "accccccccccccccccccccccb",
+        "acceeeeeeeeeeeeeeeeeeccb",
+        "accccccccccccccccccccccb",
+        "abbbbbbbbbbbbbbbbbbbbbbb",
+        "aaaaaaaaaaaaaaaaaaaaaaaa",
+        "aaaaaaaaaaaaaaaaaaaaaaaa",
+        "aaaaaaaaaaaaaaaaaaaaaaaa",
+        "aaaaaaaaaaaaaaaaaaaaaaaa",
+        "aaaaaaaaaaaaaaaaaaaaaaaa",
+        "aaaaaaaaaaaaaaaaaaaaaaaa"
+      ],
+      "terrain": {
+        "a": "t_open_air",
+        "b": "t_railing",
+        "c": "t_concrete",
+        "d": "t_stairs_down",
+        "e": "t_concrete_y"
+      },
+      "place_zones": [
+        {
+          "type": "NPC_INVESTIGATE_ONLY",
+          "faction": "travel_roadside_tavern",
+          "x": [
+            0,
+            23
+          ],
+          "y": [
+            0,
+            23
+          ]
+        }
+      ]
+    }
+  }
+]

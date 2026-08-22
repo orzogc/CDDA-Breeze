@@ -1,0 +1,97 @@
+[
+  {
+    "type": "mapgen",
+    "method": "json",
+    "update_mapgen_id": "travel_afterlife_deliver_mini_rv",
+    "object": {
+      "place_vehicles": [
+        {
+          "vehicle": "van_motorhome",
+          "x": 9,
+          "y": 10,
+          "chance": 100,
+          "rotation": 90,
+          "fuel": 25,
+          "status": 0,
+          "faction": "your_followers"
+        }
+      ]
+    }
+  },
+  {
+    "type": "mapgen",
+    "method": "json",
+    "update_mapgen_id": "travel_afterlife_deliver_rv",
+    "object": {
+      "place_vehicles": [
+        {
+          "vehicle": "rv",
+          "x": 9,
+          "y": 10,
+          "chance": 100,
+          "rotation": 90,
+          "fuel": 25,
+          "status": 0,
+          "faction": "your_followers"
+        }
+      ]
+    }
+  },
+  {
+    "type": "mapgen",
+    "method": "json",
+    "update_mapgen_id": "travel_afterlife_deliver_sports",
+    "object": {
+      "place_vehicles": [
+        {
+          "vehicle": "car_sports",
+          "x": 9,
+          "y": 10,
+          "chance": 100,
+          "rotation": 90,
+          "fuel": 35,
+          "status": 0,
+          "faction": "your_followers"
+        }
+      ]
+    }
+  },
+  {
+    "type": "mapgen",
+    "method": "json",
+    "update_mapgen_id": "travel_afterlife_deliver_lux_rv",
+    "object": {
+      "place_vehicles": [
+        {
+          "vehicle": "lux_rv",
+          "x": 9,
+          "y": 13,
+          "chance": 100,
+          "rotation": 90,
+          "fuel": 30,
+          "status": 0,
+          "faction": "your_followers"
+        }
+      ]
+    }
+  },
+  {
+    "type": "mapgen",
+    "method": "json",
+    "update_mapgen_id": "travel_afterlife_deliver_airship",
+    "object": {
+      "place_vehicles": [
+        {
+          "vehicle": "airship",
+          "x": 14,
+          "y": 10,
+          "chance": 100,
+          "rotation": 0,
+          "fuel": 35,
+          "status": 0,
+          "faction": "your_followers"
+        }
+      ]
+    }
+  }
+]
