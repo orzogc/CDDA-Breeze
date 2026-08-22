@@ -1,0 +1,767 @@
+[
+  {
+    "type": "ammo_effect",
+    "id": "TRAVEL_BA_XING_MICROBLAST",
+    "explosion": {
+      "power": 5,
+      "distance_factor": 2.0,
+      "fire": false
+    }
+  },
+  {
+    "type": "ammunition_type",
+    "id": "travel_ba_xing",
+    "name": "八星铳智能微弹",
+    "default": "travel_ba_xing_micro_rocket"
+  },
+  {
+    "id": "travel_ba_xing_micro_rocket",
+    "copy-from": "shotshell_abstract",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "八星铳智能微弹"
+    },
+    "description": "八星铳使用的智能微型爆炸弹。每发外壳释放四枚高速子弹头，双发齐射会形成八枚低散布弹幕。朱迪重新削弱了近距离爆压，把主要杀伤重新交给高速弹芯，因此仍然凶狠，但不再轻易把射手自己卷进爆炸。",
+    "price": 50000,
+    "price_postapoc": 40000,
+    "count": 12,
+    "stack_size": 12,
+    "ammo_type": "travel_ba_xing",
+    "range": 28,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 40,
+      "armor_penetration": 10
+    },
+    "shot_damage": {
+      "damage_type": "bullet",
+      "amount": 12,
+      "armor_penetration": 15
+    },
+    "projectile_count": 4,
+    "shot_spread": 70,
+    "recoil": 1600,
+    "loudness": 175,
+    "effects": [
+      "COOKOFF",
+      "SHOT",
+      "TRAVEL_BA_XING_MICROBLAST"
+    ]
+  },
+  {
+    "id": "travel_ba_xing_chong",
+    "copy-from": "shotgun_base",
+    "type": "GUN",
+    "name": {
+      "str": "八星铳"
+    },
+    "description": "一把由亚当重锤留下的极端改装型智能霰弹枪。V在重锤败亡后取得了相关制造资料，并最终把八星铳带离夜之城。它仍保留原本极端的两发双射结构，一次扣扳机会释放八枚智能微弹。朱迪重新压低了微弹爆压，让杀伤更集中在目标而不是射手自己身上。",
+    "weight": "9600 g",
+    "volume": "4200 ml",
+    "longest_side": "100 cm",
+    "price": 2500000,
+    "price_postapoc": 600000,
+    "to_hit": 2,
+    "bashing": 20,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "red",
+    "skill": "shotgun",
+    "ammo": [
+      "travel_ba_xing"
+    ],
+    "modes": [
+      [
+        "DEFAULT",
+        "八星齐射",
+        2
+      ]
+    ],
+    "dispersion": 55,
+    "sight_dispersion": 55,
+    "durability": 10,
+    "clip_size": 2,
+    "valid_mod_locations": [
+      [
+        "accessories",
+        1
+      ],
+      [
+        "sling",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "travel_ba_xing": 2
+        }
+      }
+    ],
+    "looks_like": "horus"
+  },
+  {
+    "id": "travel_arasaka_tki20_shingen_v",
+    "copy-from": "smg_base",
+    "looks_like": "vector_9mm",
+    "type": "GUN",
+    "name": {
+      "str": "荒坂 TKI-20“信玄V型”"
+    },
+    "description": "荒坂 TKI-20 信玄系列的标志性原型智能冲锋枪。朱迪把它从夜之城一路带到了新英格兰，并重新校准供弹和数据接口，使其使用9x19毫米智能弹，以及标准化的45发智能弹匣与100发智能弹鼓。它没有额外的电击过载模块，优势是短小，稳定，能够在近中距离快速切换和压制多个目标。",
+    "weight": "2150 g",
+    "volume": "1400 ml",
+    "longest_side": "61 cm",
+    "price": 850000,
+    "price_postapoc": 45000,
+    "to_hit": 1,
+    "bashing": 10,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "light_cyan",
+    "ammo": [
+      "kt_smart_9mm"
+    ],
+    "skill": "smg",
+    "ranged_damage": {
+      "damage_type": "electric",
+      "amount": 6,
+      "armor_penetration": 2
+    },
+    "dispersion": 60,
+    "sight_dispersion": 55,
+    "durability": 10,
+    "min_cycle_recoil": 100,
+    "modes": [
+      [
+        "DEFAULT",
+        "智能单发",
+        1
+      ],
+      [
+        "BURST",
+        "三目标点射",
+        3
+      ],
+      [
+        "AUTO",
+        "智能连射",
+        5
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        2
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "mechanism",
+        2
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock accessory",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "faults": [
+      "fault_gun_dirt",
+      "fault_gun_chamber_spent"
+    ],
+    "flags": [
+      "NO_TURRET"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "kt_yinglong_mag",
+          "kt_yinglong_drum_100"
+        ]
+      }
+    ],
+    "handling": 28,
+    "reload": 55
+  },
+  {
+    "type": "effect_type",
+    "id": "travel_afterlife_boost_jackie",
+    "name": [
+      "杰克·威尔斯"
+    ],
+    "desc": [
+      "酒精和刺激成分让你的身体发热，力量提高，行动也稍微加快。"
+    ],
+    "rating": "good",
+    "max_intensity": 1,
+    "max_duration": "90 minutes",
+    "base_mods": {
+      "str_mod": [
+        2
+      ],
+      "speed_mod": [
+        5
+      ]
+    },
+    "show_in_info": true
+  },
+  {
+    "type": "effect_type",
+    "id": "travel_afterlife_boost_star",
+    "name": [
+      "星星"
+    ],
+    "desc": [
+      "清醒和微醺奇怪地同时存在，你的反应，观察和行动都轻快了一截。"
+    ],
+    "rating": "good",
+    "max_intensity": 1,
+    "max_duration": "90 minutes",
+    "base_mods": {
+      "dex_mod": [
+        1
+      ],
+      "per_mod": [
+        1
+      ],
+      "speed_mod": [
+        10
+      ]
+    },
+    "show_in_info": true
+  },
+  {
+    "type": "effect_type",
+    "id": "travel_afterlife_boost_silverhand",
+    "name": [
+      "银手余响"
+    ],
+    "desc": [
+      "强烈刺激让你的感官变得尖锐，反应也明显加快。"
+    ],
+    "rating": "good",
+    "max_intensity": 1,
+    "max_duration": "75 minutes",
+    "base_mods": {
+      "dex_mod": [
+        1
+      ],
+      "per_mod": [
+        2
+      ],
+      "speed_mod": [
+        8
+      ]
+    },
+    "show_in_info": true
+  },
+  {
+    "type": "effect_type",
+    "id": "travel_afterlife_boost_afterlife",
+    "name": [
+      "来生特调"
+    ],
+    "desc": [
+      "你的神经反应像被强行调快了一档，整个世界似乎都慢了一点。"
+    ],
+    "rating": "good",
+    "max_intensity": 1,
+    "max_duration": "60 minutes",
+    "base_mods": {
+      "dex_mod": [
+        2
+      ],
+      "per_mod": [
+        2
+      ],
+      "speed_mod": [
+        20
+      ]
+    },
+    "show_in_info": true
+  },
+  {
+    "type": "effect_type",
+    "id": "travel_afterlife_boost_zhang_xuefeng",
+    "name": [
+      "张雪峰"
+    ],
+    "desc": [
+      "一股完全不讲道理的兴奋感把你的行动节奏推到平时的两倍。"
+    ],
+    "rating": "good",
+    "max_intensity": 1,
+    "max_duration": "60 minutes",
+    "base_mods": {
+      "speed_mod": [
+        100
+      ]
+    },
+    "show_in_info": true
+  },
+  {
+    "type": "COMESTIBLE",
+    "id": "travel_afterlife_drink_jackie",
+    "name": {
+      "str": "杰克·威尔斯"
+    },
+    "description": "一杯厚重辛辣的烈性特调，入口先是灼热，随后才浮出一点甜味。名字来自杰克·威尔斯，V早年的搭档，也是个把家人和朋友看得比佣兵名声更重的人。夜之城的来生里一直有人用他的名字点酒，克莱尔也把这个习惯带到了这里。",
+    "weight": "250 g",
+    "color": "light_red",
+    "addiction_type": "alcohol",
+    "use_action": {
+      "type": "consume_drug",
+      "activation_message": "你喝下了一份特调。",
+      "effects": [
+        {
+          "id": "travel_afterlife_boost_jackie",
+          "duration": "90 minutes"
+        },
+        {
+          "id": "drunk",
+          "duration": "10 minutes"
+        }
+      ]
+    },
+    "stim": -5,
+    "container": "bottle_glass",
+    "comestible_type": "DRINK",
+    "symbol": "~",
+    "quench": 4,
+    "addiction_potential": 5,
+    "calories": 150,
+    "price": 2500,
+    "price_postapoc": 1000,
+    "material": [
+      "alcohol",
+      "water"
+    ],
+    "primary_material": "alcohol",
+    "volume": "250 ml",
+    "phase": "liquid",
+    "charges": 3,
+    "flags": [
+      "EATEN_COLD",
+      "NO_AUTO_CONSUME"
+    ],
+    "fun": 24,
+    "freezing_point": -10
+  },
+  {
+    "type": "COMESTIBLE",
+    "id": "travel_afterlife_drink_star",
+    "name": {
+      "str": "星星"
+    },
+    "description": "一杯清亮偏甜的特调，入口轻快，尾味带着一点微苦和气泡感。星星不是人名，而是V与朱迪跟随阿德卡多离开夜之城那段旅途的纪念。离开霓虹以后，她们终于重新看见了真正的星空。",
+    "weight": "250 g",
+    "color": "light_cyan",
+    "addiction_type": "alcohol",
+    "use_action": {
+      "type": "consume_drug",
+      "activation_message": "你喝下了一份特调。",
+      "effects": [
+        {
+          "id": "travel_afterlife_boost_star",
+          "duration": "90 minutes"
+        },
+        {
+          "id": "drunk",
+          "duration": "10 minutes"
+        }
+      ]
+    },
+    "stim": -2,
+    "container": "bottle_glass",
+    "comestible_type": "DRINK",
+    "symbol": "~",
+    "quench": 4,
+    "addiction_potential": 5,
+    "calories": 150,
+    "price": 3000,
+    "price_postapoc": 1200,
+    "material": [
+      "alcohol",
+      "water"
+    ],
+    "primary_material": "alcohol",
+    "volume": "250 ml",
+    "phase": "liquid",
+    "charges": 3,
+    "flags": [
+      "EATEN_COLD",
+      "NO_AUTO_CONSUME"
+    ],
+    "fun": 28,
+    "freezing_point": -10
+  },
+  {
+    "type": "COMESTIBLE",
+    "id": "travel_afterlife_drink_silverhand",
+    "name": {
+      "str": "银手余响"
+    },
+    "description": "一杯辛辣而刺激的烈性特调，几乎不给人慢慢适应的余地。名字来自强尼·银手，那个把反抗荒坂活成传奇的摇滚客。后来他的命运与V纠缠得太深，就算人已经不在，有些声音也像余响一样甩不掉。",
+    "weight": "250 g",
+    "color": "dark_gray",
+    "addiction_type": "alcohol",
+    "use_action": {
+      "type": "consume_drug",
+      "activation_message": "你喝下了一份特调。",
+      "effects": [
+        {
+          "id": "travel_afterlife_boost_silverhand",
+          "duration": "75 minutes"
+        },
+        {
+          "id": "drunk",
+          "duration": "10 minutes"
+        }
+      ]
+    },
+    "stim": 8,
+    "container": "bottle_glass",
+    "comestible_type": "DRINK",
+    "symbol": "~",
+    "quench": 4,
+    "addiction_potential": 5,
+    "calories": 150,
+    "price": 4000,
+    "price_postapoc": 1500,
+    "material": [
+      "alcohol",
+      "water"
+    ],
+    "primary_material": "alcohol",
+    "volume": "250 ml",
+    "phase": "liquid",
+    "charges": 3,
+    "flags": [
+      "EATEN_COLD",
+      "NO_AUTO_CONSUME"
+    ],
+    "fun": 22,
+    "freezing_point": -10
+  },
+  {
+    "type": "COMESTIBLE",
+    "id": "travel_afterlife_drink_afterlife",
+    "name": {
+      "str": "来生特调"
+    },
+    "description": "一杯以烈酒为骨架的招牌特调，入口干净直接，随后才浮出辛辣和微甜。来生原本是夜之城最有名的佣兵酒吧之一，中间人，佣兵和想成为传奇的人都曾在那里谈生意。克莱尔来到这个世界后重新用了这个名字，也重新调出了这杯酒。",
+    "weight": "250 g",
+    "color": "magenta",
+    "addiction_type": "alcohol",
+    "use_action": {
+      "type": "consume_drug",
+      "activation_message": "你喝下了一份特调。",
+      "effects": [
+        {
+          "id": "travel_afterlife_boost_afterlife",
+          "duration": "60 minutes"
+        },
+        {
+          "id": "drunk",
+          "duration": "10 minutes"
+        }
+      ]
+    },
+    "stim": 12,
+    "container": "bottle_glass",
+    "comestible_type": "DRINK",
+    "symbol": "~",
+    "quench": 4,
+    "addiction_potential": 5,
+    "calories": 150,
+    "price": 5500,
+    "price_postapoc": 2000,
+    "material": [
+      "alcohol",
+      "water"
+    ],
+    "primary_material": "alcohol",
+    "volume": "250 ml",
+    "phase": "liquid",
+    "charges": 3,
+    "flags": [
+      "EATEN_COLD",
+      "NO_AUTO_CONSUME"
+    ],
+    "fun": 32,
+    "freezing_point": -10
+  },
+  {
+    "type": "COMESTIBLE",
+    "id": "travel_afterlife_drink_zhang_xuefeng",
+    "name": {
+      "str": "张雪峰"
+    },
+    "description": "一杯完全不讲究血统的甜味特调，雪碧，巧乐兹和一点来生特调混在一起，喝起来像饮料，后劲却一点也不含糊。喝下它之后，周围的一切仿佛都会慢上半拍，而你最好别在移动时低头看路。效果持续1小时。名字来自已经故去的中国升学规划师张雪峰，他以直白谈论升学和教育选择出名。克莱尔听完他的故事后觉得，那股恨不得把人当场推去下一站的急迫劲，正适合这杯酒。有人把它的气质概括成一句话。\n“你跑不过我，你信吗。”",
+    "weight": "250 g",
+    "color": "light_green",
+    "addiction_type": "alcohol",
+    "use_action": {
+      "type": "consume_drug",
+      "activation_message": "你喝下了一份张雪峰。周围的一切仿佛突然慢了半拍。",
+      "effects": [
+        {
+          "id": "travel_afterlife_boost_zhang_xuefeng",
+          "duration": "60 minutes"
+        },
+        {
+          "id": "drunk",
+          "duration": "8 minutes"
+        }
+      ]
+    },
+    "stim": 10,
+    "container": "bottle_glass",
+    "comestible_type": "DRINK",
+    "symbol": "~",
+    "quench": 6,
+    "addiction_potential": 4,
+    "calories": 210,
+    "price": "100 USD",
+    "price_postapoc": "100 USD",
+    "material": [
+      "alcohol",
+      "water"
+    ],
+    "primary_material": "alcohol",
+    "volume": "250 ml",
+    "phase": "liquid",
+    "charges": 1,
+    "flags": [
+      "EATEN_COLD",
+      "NO_AUTO_CONSUME"
+    ],
+    "fun": 35,
+    "freezing_point": -10
+  },
+  {
+    "type": "effect_type",
+    "id": "travel_afterlife_boost_kobe",
+    "name": [
+      "科比·布莱恩特"
+    ],
+    "desc": [
+      "特殊调酒带来的爆发式身体强化，让你的力量，敏捷与行动速度显著提高。"
+    ],
+    "rating": "good",
+    "max_intensity": 1,
+    "max_duration": "60 minutes",
+    "base_mods": {
+      "str_mod": [
+        5
+      ],
+      "dex_mod": [
+        2
+      ],
+      "speed_mod": [
+        20
+      ]
+    },
+    "show_in_info": true
+  },
+  {
+    "type": "COMESTIBLE",
+    "id": "travel_afterlife_drink_kobe",
+    "name": {
+      "str": "科比·布莱恩特"
+    },
+    "description": "一杯纪念科比·布莱恩特的特殊调酒，名字来自那位永远追求极限的篮球传奇。喝下它，你会在一小时内获得惊人的力量，敏捷与行动速度；它不会减免坠落伤害。\n“Man！what can i say”",
+    "weight": "250 g",
+    "color": "magenta",
+    "addiction_type": "alcohol",
+    "use_action": {
+      "type": "consume_drug",
+      "activation_message": "你喝下了这杯纪念科比·布莱恩特的特调。",
+      "effects": [
+        {
+          "id": "travel_afterlife_boost_kobe",
+          "duration": "60 minutes"
+        },
+        {
+          "id": "drunk",
+          "duration": "10 minutes"
+        }
+      ]
+    },
+    "stim": -5,
+    "container": "bottle_glass",
+    "comestible_type": "DRINK",
+    "symbol": "~",
+    "quench": 4,
+    "addiction_potential": 5,
+    "calories": 150,
+    "price": "27 USD 78 cent",
+    "price_postapoc": "27 USD 78 cent",
+    "material": [
+      "alcohol",
+      "water"
+    ],
+    "primary_material": "alcohol",
+    "volume": "250 ml",
+    "phase": "liquid",
+    "charges": 3,
+    "flags": [
+      "EATEN_COLD",
+      "NO_AUTO_CONSUME"
+    ],
+    "fun": 24,
+    "freezing_point": -10
+  },
+  {
+    "type": "mutation",
+    "id": "TRAVEL_GOJO_INFINITY_DODGE",
+    "name": {
+      "str": "无下限术式闪避"
+    },
+    "description": "五条悟特调生效期间使用的隐藏防御特性：让攻击者极难命中，并快速从摔倒状态恢复。",
+    "points": 0,
+    "valid": false,
+    "player_display": false,
+    "purifiable": false,
+    "flags": [
+      "HARDTOHIT",
+      "DOWNED_RECOVERY",
+      "FEATHER_FALL"
+    ],
+    "enchantments": [
+      {
+        "condition": "ALWAYS",
+        "values": [
+          {
+            "value": "BONUS_DODGE",
+            "add": 10000
+          }
+        ],
+        "skills": [
+          {
+            "value": "dodge",
+            "add": 100
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "travel_afterlife_boost_gojo",
+    "name": [
+      "无下限术式"
+    ],
+    "desc": [
+      "无下限术式般的力量隔绝了袭来的伤害。"
+    ],
+    "rating": "good",
+    "max_intensity": 1,
+    "max_duration": "60 seconds",
+    "show_in_info": true
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_GOJO_INFINITY_SYNC",
+    "recurrence": "1 second",
+    "global": true,
+    "run_for_npcs": false,
+    "condition": {
+      "u_has_effect": "travel_afterlife_boost_gojo"
+    },
+    "effect": [
+      {
+        "u_add_trait": "DEBUG_NODMG"
+      },
+      {
+        "u_add_trait": "TRAVEL_GOJO_INFINITY_DODGE"
+      }
+    ],
+    "false_effect": [
+      {
+        "u_lose_trait": "DEBUG_NODMG"
+      },
+      {
+        "u_lose_trait": "TRAVEL_GOJO_INFINITY_DODGE"
+      }
+    ]
+  },
+  {
+    "type": "COMESTIBLE",
+    "id": "travel_afterlife_drink_gojo",
+    "name": {
+      "str": "五条悟"
+    },
+    "description": "一杯颜色近乎透明的特殊调酒，入口清冽，随后会在身体周围形成一种难以理解的疏离感，仿佛任何危险都永远差着最后一点距离。名字来自一位自称最强的咒术师，这一分钟足够让人明白他为什么敢这么说。\n“我的学生们还在看着呢，再让我耍会帅吧”",
+    "weight": "250 g",
+    "color": "light_blue",
+    "addiction_type": "alcohol",
+    "use_action": {
+      "type": "consume_drug",
+      "activation_message": "你喝下了五条悟。袭来的危险仿佛在触及你之前停住了。",
+      "effects": [
+        {
+          "id": "travel_afterlife_boost_gojo",
+          "duration": "60 seconds"
+        },
+        {
+          "id": "drunk",
+          "duration": "10 minutes"
+        }
+      ]
+    },
+    "stim": 5,
+    "container": "bottle_glass",
+    "comestible_type": "DRINK",
+    "symbol": "~",
+    "quench": 4,
+    "addiction_potential": 5,
+    "calories": 150,
+    "price": "100 USD",
+    "price_postapoc": "100 USD",
+    "material": [
+      "alcohol",
+      "water"
+    ],
+    "primary_material": "alcohol",
+    "volume": "250 ml",
+    "phase": "liquid",
+    "charges": 1,
+    "flags": [
+      "EATEN_COLD",
+      "NO_AUTO_CONSUME"
+    ],
+    "fun": 40,
+    "freezing_point": -10
+  }
+]

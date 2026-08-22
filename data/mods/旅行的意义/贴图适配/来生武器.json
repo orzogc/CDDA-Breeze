@@ -1,0 +1,39 @@
+[
+  {
+    "type": "mod_tileset",
+    "compatibility": [
+      "UNDEAD_PEOPLE_BASE",
+      "UNDEAD_PEOPLE",
+      "MshockXottoplus"
+    ],
+    "tiles-new": [
+      {
+        "file": "mod_tileset/travel_afterlife_weapons.png",
+        "sprite_width": 32,
+        "sprite_height": 32,
+        "tiles": [
+          {
+            "id": "overlay_wielded_travel_arasaka_tki20_shingen_v",
+            "fg": 2,
+            "rotates": false
+          },
+          {
+            "id": "travel_arasaka_tki20_shingen_v",
+            "fg": 3,
+            "rotates": false
+          },
+          {
+            "id": "overlay_wielded_travel_ba_xing_chong",
+            "fg": 4,
+            "rotates": false
+          },
+          {
+            "id": "travel_ba_xing_chong",
+            "fg": 5,
+            "rotates": false
+          }
+        ]
+      }
+    ]
+  }
+]

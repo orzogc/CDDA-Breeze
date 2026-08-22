@@ -239,6 +239,7 @@
     "type": "npc",
     "id": "TRAVEL_MAYA_SCARLETT",
     "name_unique": "玛雅·斯卡利特",
+    "portrait": "玛雅·斯卡利特, 耶鲁学生",
     "gender": "female",
     "class": "NC_TRAVEL_MAYA_SCARLETT",
     "attitude": 0,
