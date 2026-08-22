@@ -155,7 +155,7 @@ jobs:
           VCPKG_BINARY_SOURCES: clear
         with:
           vcpkgDirectory: '${{ runner.workspace }}/b/vcpkg'
-          vcpkgGitCommitId: "9dd12f8d791f6fa4e396adbebc714d51cbee2143"
+          vcpkgGitCommitId: "f6672d8e480ccdecddfad3fd1b838ba369ffe6cd"
 
       - name: Install dependencies (windows msvc) (3/4)
         if: runner.os == 'Windows'
@@ -168,7 +168,7 @@ jobs:
         id: cache-vcpkg
         with:
           path: msvc-full-features/vcpkg_installed/
-          key: vcpkg-${{ hashFiles('msvc-full-features/vcpkg.json') }}-${{ hashFiles('.github/vcpkg_triplets/${{ matrix.arch }}-windows-static.cmake') }}-9dd12f8d791f6fa4e396adbebc714d51cbee2143
+          key: vcpkg-${{ hashFiles('msvc-full-features/vcpkg.json') }}-${{ hashFiles('.github/vcpkg_triplets/${{ matrix.arch }}-windows-static.cmake') }}-f6672d8e480ccdecddfad3fd1b838ba369ffe6cd
 
       - name: Install dependencies (windows msvc) (4/4)
         if: runner.os == 'Windows'
