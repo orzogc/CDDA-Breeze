@@ -105,7 +105,7 @@ jobs:
         run: |
           $requiredFiles = @(
             "windows-test-build\data\mods\穆尔卡的武器工坊\modinfo.json",
-            "windows-test-build\data\mods\穆尔卡的武器工坊\物品\弹药\.408CheyTac.json"
+            "windows-test-build\data\mods\穆尔卡的武器工坊\物品\弹药\408CheyTac.json"
           )
           foreach( $requiredFile in $requiredFiles ) {
             if( -not ( Test-Path -LiteralPath $requiredFile ) ) {
