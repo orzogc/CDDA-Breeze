@@ -199,8 +199,12 @@ static void InitSDL()
     SDL_SetHint( SDL_HINT_IME_SUPPORT_EXTENDED_TEXT, "1" );
 #endif
 
-#if defined(SDL_HINT_WINDOWS_DPI_AWARENESS)
-    SDL_SetHint(SDL_HINT_WINDOWS_DPI_AWARENESS, "permonitorv2");
+#if defined(_WIN32) && defined(SDL_HINT_WINDOWS_DPI_AWARENESS)
+    // Keep SDL's runtime policy aligned with application_manifest.xml.  The
+    // 12.4/12.5 regression came from Windows DPI virtualization, so do not let
+    // an inherited/default SDL hint silently switch the process back to an
+    // unaware scaling path.
+    SDL_SetHintWithPriority( SDL_HINT_WINDOWS_DPI_AWARENESS, "permonitorv2", SDL_HINT_OVERRIDE );
 #endif
 
 #if defined(__linux__)
