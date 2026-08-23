@@ -63,6 +63,7 @@ static const std::string flag_BLIND_EASY( "BLIND_EASY" );
 static const std::string flag_BLIND_HARD( "BLIND_HARD" );
 
 static const limb_score_id limb_score_manip( "manip" );
+static const string_id<struct furn_t> furn_f_fake_bench_hands( "f_fake_bench_hands" );
 static const string_id<struct furn_t> furn_f_ground_crafting_spot( "f_ground_crafting_spot" );
 static const field_type_str_id fd_crafting_spot( "fd_crafting_spot" );
 static const activity_id ACT_CRAFT( "ACT_CRAFT" );
@@ -297,8 +298,8 @@ static crafting_menu_defaults last_crafting_settings;
 static const inventory &crafting_inventory_at( Character &crafter,
         const std::optional<tripoint> &workplace )
 {
-    return workplace ? crafter.crafting_inventory( *workplace, PICKUP_RANGE, true ) :
-           crafter.crafting_inventory();
+    return crafter.crafting_inventory( crafting_work_position( crafter, workplace ),
+                                       PICKUP_RANGE, true );
 }
 
 static float crafting_light_at( const Character &crafter, const recipe &rec,
@@ -308,12 +309,36 @@ static float crafting_light_at( const Character &crafter, const recipe &rec,
             workplace ? *workplace : tripoint_zero );
 }
 
+static float workbench_base_multiplier_at( const std::optional<tripoint> &workplace )
+{
+    if( !workplace ) {
+        const furn_t &hands = furn_f_fake_bench_hands.obj();
+        return hands.workbench ? hands.workbench->multiplier : 1.0f;
+    }
+
+    map &here = get_map();
+    if( const std::optional<vpart_reference> vp = here.veh_at( *workplace ).part_with_feature(
+                "WORKBENCH", true ) ) {
+        if( const std::optional<vpslot_workbench> &wb = vp->part().info().get_workbench_info() ) {
+            return wb->multiplier;
+        }
+    }
+    if( here.has_furn( *workplace ) && here.furn( *workplace ).obj().workbench ) {
+        return here.furn( *workplace ).obj().workbench->multiplier;
+    }
+
+    // A marked point without a real workbench is worked on as a ground craft.
+    const furn_t &ground = furn_f_ground_crafting_spot.obj();
+    return ground.workbench ? ground.workbench->multiplier : 0.7f;
+}
+
 static float crafting_speed_at( const Character &crafter, const recipe &rec,
                                 const std::optional<tripoint> &workplace )
 {
     const float result = crafter.morale_crafting_speed_multiplier( rec ) *
                          crafting_light_at( crafter, rec, workplace ) *
-                         crafter.get_limb_score( limb_score_manip );
+                         crafter.get_limb_score( limb_score_manip ) *
+                         workbench_base_multiplier_at( workplace );
     return std::max( result, 0.0f );
 }
 
@@ -356,27 +381,6 @@ static bool is_marked_crafting_spot( const tripoint &location )
     map &here = get_map();
     return here.furn( location ) == furn_f_ground_crafting_spot ||
            here.get_field( location, fd_crafting_spot ) != nullptr;
-}
-
-static std::string workplace_description_at( const tripoint &location )
-{
-    map &here = get_map();
-    if( const std::optional<vpart_reference> vp = here.veh_at( location ).part_with_feature(
-                "WORKBENCH", true ) ) {
-        if( const std::optional<vpslot_workbench> &wb = vp->part().info().get_workbench_info() ) {
-            return string_format( _( "载具工作台，倍率 %.2f" ), wb->multiplier );
-        }
-        return _( "载具工作台" );
-    }
-    if( here.has_furn( location ) && here.furn( location ).obj().workbench ) {
-        const furn_t &furniture = here.furn( location ).obj();
-        const std::string type = here.furn( location ) == furn_f_ground_crafting_spot ?
-                                 _( "地面制造点" ) :
-                                 is_marked_crafting_spot( location ) ? _( "标记工作台" ) :
-                                 _( "家具工作台" );
-        return string_format( _( "%s，倍率 %.2f" ), type, furniture.workbench->multiplier );
-    }
-    return _( "指定地点" );
 }
 
 static bool has_adjacent_work_position( const tripoint &loc )
@@ -503,27 +507,9 @@ static std::vector<crafting_workplace> collect_crafting_workplaces(
 static std::string workplace_detail_text( const crafting_workplace &workplace,
         const Character &crafter )
 {
-    std::vector<std::string> parts;
-    if( !workplace.location ) {
-        const std::optional<tripoint> effective = resolve_crafting_workplace(
-                    crafter, std::nullopt );
-        if( effective ) {
-            parts.emplace_back( string_format( _( "自动采用：%s，%s" ),
-                                               workplace_name_at( *effective ),
-                                               workplace_description_at( *effective ) ) );
-        } else {
-            parts.emplace_back( _( "附近无工作台，将手持或在地面制造" ) );
-        }
-    } else {
-        parts.emplace_back( workplace.type );
-        if( !workplace.detail.empty() ) {
-            parts.emplace_back( workplace.detail );
-        }
-    }
-    if( !workplace.selectable ) {
-        parts.emplace_back( _( "附近没有安全站位" ) );
-    }
-    return enumerate_as_string( parts, enumeration_conjunction::none );
+    const std::optional<tripoint> effective = workplace.location ? workplace.location :
+            resolve_crafting_workplace( crafter, std::nullopt );
+    return string_format( "%.2f", workbench_base_multiplier_at( effective ) );
 }
 
 static std::string workplace_relative_text( const crafting_workplace &workplace,
@@ -546,11 +532,11 @@ static std::string selected_workplace_text( const Character &crafter,
                               crafter_name, workplace_distance_text( crafter, *selected_location ) );
     }
     if( effective_location ) {
-        return string_format( _( "自动选择（%s，距%s%s）" ),
+        return string_format( _( "自动选择，%s，距%s%s" ),
                               workplace_name_at( *effective_location ), crafter_name,
                               workplace_distance_text( crafter, *effective_location ) );
     }
-    return _( "自动选择（手持或地面制造）" );
+    return _( "自动选择" );
 }
 
 static bool craft_is_assigned_to( const item &craft, const npc &who )
@@ -2892,12 +2878,12 @@ static bool choose_crafting_settings( const std::vector<Character *> &crafting_g
             }
             menu.set_selected( crafter_selected_row );
         } else if( page == settings_page::workplace ) {
-            menu.set_column_weights( { 24, 10, 10, 14, 42 } );
+            menu.set_column_weights( { 24, 8, 40, 16, 12 } );
             const std::string crafter_name = selected_crafter.is_avatar() ? _( "你" ) :
                                              selected_crafter.get_name();
             menu.set_header( { _( "工作地点" ), _( "可制作" ), _( "缺少" ),
-                               string_format( _( "距%s" ), crafter_name ), _( "说明" ) } );
-            menu.set_footer( _( "Tab／Shift+Tab切换分页，回车选择，Esc返回。蓝色名称表示已标记工作台。" ) );
+                               string_format( _( "距%s" ), crafter_name ), _( "倍率" ) } );
+            menu.set_footer( _( "自动选择优先最佳工作台，无工作台时手持1.00，地面0.70。蓝色名称为标记工作台。" ) );
 
             const npc *selected_npc = selected_crafter.as_npc();
             const std::optional<tripoint> queue_location = selected_npc ?
