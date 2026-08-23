@@ -114,7 +114,7 @@ void craft_command::execute( bool only_cache_comps )
     }
 
     bool need_selections = true;
-    const tripoint origin = loc ? *loc : crafter->pos();
+    const tripoint origin = crafting_work_position( *crafter, loc );
     inventory map_inv;
     map_inv.form_from_map( origin, PICKUP_RANGE, crafter );
     const inventory &crafting_inv = crafter->crafting_inventory( origin, PICKUP_RANGE, true );
@@ -263,7 +263,7 @@ bool craft_command::continue_prompt_liquids( const std::function<bool( const ite
         bool no_prompt )
 {
     map &m = get_map();
-    const tripoint origin = loc ? *loc : crafter->pos();
+    const tripoint origin = crafting_work_position( *crafter, loc );
     for( const auto &it : item_selections ) {
         const std::vector<pocket_data> it_pkt = it.comp.type->pockets;
         if( ( item::count_by_charges( it.comp.type ) && it.comp.count > 0 ) ||
@@ -437,7 +437,7 @@ item craft_command::create_in_progress_craft()
         return item();
     }
 
-    const tripoint origin = loc ? *loc : crafter->pos();
+    const tripoint origin = crafting_work_position( *crafter, loc );
     inventory map_inv;
     map_inv.form_from_map( origin, PICKUP_RANGE, crafter );
 

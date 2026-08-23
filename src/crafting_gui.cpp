@@ -297,8 +297,8 @@ static crafting_menu_defaults last_crafting_settings;
 static const inventory &crafting_inventory_at( Character &crafter,
         const std::optional<tripoint> &workplace )
 {
-    return workplace ? crafter.crafting_inventory( *workplace, PICKUP_RANGE, true ) :
-           crafter.crafting_inventory();
+    return crafter.crafting_inventory( crafting_work_position( crafter, workplace ),
+                                       PICKUP_RANGE, true );
 }
 
 static float crafting_light_at( const Character &crafter, const recipe &rec,
@@ -546,11 +546,11 @@ static std::string selected_workplace_text( const Character &crafter,
                               crafter_name, workplace_distance_text( crafter, *selected_location ) );
     }
     if( effective_location ) {
-        return string_format( _( "自动选择（%s，距%s%s）" ),
+        return string_format( _( "自动选择，%s，距%s%s" ),
                               workplace_name_at( *effective_location ), crafter_name,
                               workplace_distance_text( crafter, *effective_location ) );
     }
-    return _( "自动选择（手持或地面制造）" );
+    return _( "自动选择" );
 }
 
 static bool craft_is_assigned_to( const item &craft, const npc &who )
@@ -2892,7 +2892,7 @@ static bool choose_crafting_settings( const std::vector<Character *> &crafting_g
             }
             menu.set_selected( crafter_selected_row );
         } else if( page == settings_page::workplace ) {
-            menu.set_column_weights( { 24, 10, 10, 14, 42 } );
+            menu.set_column_weights( { 20, 8, 28, 12, 32 } );
             const std::string crafter_name = selected_crafter.is_avatar() ? _( "你" ) :
                                              selected_crafter.get_name();
             menu.set_header( { _( "工作地点" ), _( "可制作" ), _( "缺少" ),

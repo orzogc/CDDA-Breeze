@@ -30,6 +30,7 @@
 #include "color.h"
 #include "craft_command.h"
 #include "crafting_gui.h"
+#include "creature_tracker.h"
 #include "debug.h"
 #include "enum_traits.h"
 #include "enums.h"
@@ -174,12 +175,76 @@ std::optional<tripoint> resolve_crafting_workplace(
     return best_marked ? best_marked : best_regular;
 }
 
+static float best_workbench_multiplier_near( map &here, const tripoint &loc )
+{
+    float best = 0.0f;
+    for( const tripoint &adj : here.points_in_radius( loc, 1 ) ) {
+        if( here.dangerous_field_at( adj ) ) {
+            continue;
+        }
+        best = std::max( best, workbench_multiplier_at( here, adj ) );
+    }
+    return best;
+}
+
+tripoint crafting_work_position( const Character &crafter,
+                                 const std::optional<tripoint> &workplace )
+{
+    // Players already have to stand next to a selected workplace.  Their real position is the
+    // authoritative origin for nearby materials, including when a vehicle workbench occupies an
+    // impassable tile.
+    if( !workplace || !crafter.is_npc() ) {
+        return crafter.pos();
+    }
+    if( crafter.posz() != workplace->z ) {
+        return crafter.pos();
+    }
+
+    map &here = get_map();
+    creature_tracker &creatures = get_creature_tracker();
+    std::vector<tripoint> candidates;
+    for( const tripoint &adj : here.points_in_radius( *workplace, 1 ) ) {
+        if( adj.z != workplace->z ) {
+            continue;
+        }
+        if( adj == crafter.pos() || ( here.passable( adj ) && !creatures.creature_at( adj ) ) ) {
+            candidates.push_back( adj );
+        }
+    }
+
+    // Mirror the existing NPC workbench pathing: prefer the best workbench reachable from a
+    // candidate tile, then preserve nearest-first ordering for equal workbench multipliers.
+    std::stable_sort( candidates.begin(), candidates.end(), [&]( const tripoint &lhs,
+    const tripoint & rhs ) {
+        return rl_dist( crafter.pos(), lhs ) < rl_dist( crafter.pos(), rhs );
+    } );
+    std::stable_sort( candidates.begin(), candidates.end(), [&]( const tripoint &lhs,
+    const tripoint & rhs ) {
+        return best_workbench_multiplier_near( here, lhs ) >
+               best_workbench_multiplier_near( here, rhs );
+    } );
+
+    const std::set<tripoint> &avoid = crafter.get_path_avoid();
+    for( const tripoint &candidate : candidates ) {
+        if( candidate == crafter.pos() ) {
+            return candidate;
+        }
+        if( !here.route( crafter.pos(), candidate, crafter.get_pathfinding_settings(), avoid ).empty() ) {
+            return candidate;
+        }
+    }
+
+    // Unreachable workplaces are rejected separately.  Falling back to the crafter keeps menu
+    // inventory checks rooted on a valid tile instead of reviving the impassable-workbench bug.
+    return crafter.pos();
+}
+
 static const inventory &crafting_inventory_at( Character &crafter,
         const std::optional<tripoint> &workplace )
 {
     const std::optional<tripoint> effective = resolve_crafting_workplace( crafter, workplace );
-    return effective ? crafter.crafting_inventory( *effective, PICKUP_RANGE, true ) :
-           crafter.crafting_inventory();
+    return crafter.crafting_inventory( crafting_work_position( crafter, effective ),
+                                       PICKUP_RANGE, true );
 }
 
 static bool has_safe_crafting_position( const tripoint &workplace )
@@ -2606,7 +2671,7 @@ bool Character::craft_consume_tools( item &craft, int multiplier, bool start_cra
     const std::vector<comp_selection<tool_comp>> &cached_tool_selections =
                 craft.get_cached_tool_selections();
 
-    const tripoint origin = workplace ? *workplace : pos();
+    const tripoint origin = crafting_work_position( *this, workplace );
     inventory map_inv;
     map_inv.form_from_map( origin, PICKUP_RANGE, this );
 

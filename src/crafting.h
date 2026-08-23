@@ -33,4 +33,9 @@ void drop_or_handle( const item &newit, Character &p );
 // Marked crafting spots are preferred over ordinary workbenches.
 std::optional<tripoint> resolve_crafting_workplace(
     const Character &crafter, const std::optional<tripoint> &selected_workplace );
+// Return the tile the crafter actually uses as their working position for nearby resources.
+// Players always use their real position; remote NPCs predict the same adjacent work position
+// used by their workbench pathing.
+tripoint crafting_work_position( const Character &crafter,
+                                 const std::optional<tripoint> &workplace );
 #endif // CATA_SRC_CRAFTING_H

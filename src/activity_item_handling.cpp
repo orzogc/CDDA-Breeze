@@ -23,6 +23,7 @@
 #include "colony.h"
 #include "construction.h"
 #include "contents_change_handler.h"
+#include "crafting.h"
 #include "creature.h"
 #include "creature_tracker.h"
 #include "debug.h"
@@ -1653,7 +1654,8 @@ static activity_reason_info can_do_activity_there( const activity_id &act, Chara
         if( p ) {
             item_location to_craft = item_to_craft_at( *p, src_loc );
             if( to_craft && to_craft->is_craft() ) {
-                const inventory &inv = you.crafting_inventory( src_loc.raw(), PICKUP_RANGE, false );
+                const tripoint work_position = crafting_work_position( you, src_loc.raw() );
+                const inventory &inv = you.crafting_inventory( work_position, PICKUP_RANGE, true );
                 const recipe& r = to_craft->get_making();
                 std::vector<std::vector<item_comp>> item_comp_vector =
                     to_craft->get_continue_reqs().get_components();
@@ -3189,7 +3191,9 @@ static requirement_check_result generic_multi_activity_check_requirement(
             combined_spots.emplace_back( elem );
         }
         const int nearby_radius = act_id == ACT_MULTIPLE_CRAFT ? PICKUP_RANGE : PICKUP_RANGE - 1;
-        for( const tripoint_bub_ms &elem : here.points_in_radius( src_loc, nearby_radius,
+        const tripoint_bub_ms nearby_center = act_id == ACT_MULTIPLE_CRAFT ?
+                tripoint_bub_ms( crafting_work_position( you, src_loc.raw() ) ) : src_loc;
+        for( const tripoint_bub_ms &elem : here.points_in_radius( nearby_center, nearby_radius,
                 nearby_radius ) ) {
             combined_spots.push_back( elem );
         }
@@ -3283,7 +3287,7 @@ static requirement_check_result generic_multi_activity_check_requirement(
                            reason == do_activity_reason::NEEDS_MINING;
         // is it even worth fetching anything if there isn't enough nearby?
         if( !are_requirements_nearby( tool_pickup ? loot_zone_spots : combined_spots, what_we_need, you,
-                                      act_id, tool_pickup, src_loc ) ) {
+                                      act_id, tool_pickup, nearby_center ) ) {
             if( act_id == ACT_MULTIPLE_CRAFT ) {
                 you.add_msg_player_or_npc( m_bad,
                                            _( "工作地点附近缺少继续制造所需的物品或工具，制作已停止。" ),
@@ -3318,7 +3322,7 @@ static requirement_check_result generic_multi_activity_check_requirement(
                         local_src_set.push_back( here.bub_from_abs( elem ) );
                     }
                     std::vector<tripoint_bub_ms> candidates;
-                    for( const tripoint_bub_ms &point_elem : here.points_in_radius( src_loc,
+                    for( const tripoint_bub_ms &point_elem : here.points_in_radius( nearby_center,
                             nearby_radius, nearby_radius ) ) {
                         // we don't want to place the components where they could interfere with our ( or someone else's ) construction spots
                         if( !you.sees( point_elem ) || ( std::find( local_src_set.begin(), local_src_set.end(),
