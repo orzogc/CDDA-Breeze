@@ -1,0 +1,37 @@
+[
+  {
+    "id": "crt_airship_balloon",
+    "copy-from": "balloon",
+    "looks_like": "airship_balloon",
+    "type": "vehicle_part",
+    "name": "CRIT太阳能飞艇气囊",
+    "description": "一种夹有柔性太阳能电池的飞艇气囊，能够提供升力，并在日照下缓慢发电。",
+    "item": "crt_airship_balloon_item",
+    "height": 90,
+    "categories": [ "movement", "energy" ],
+    "requirements": {
+      "install": { "skills": [ [ "mechanics", 2 ] ], "time": "60 m", "using": [ [ "rope_natural_short", 1 ] ] },
+      "removal": { "skills": [ [ "mechanics", 2 ] ], "time": "60 m", "using": [  ] },
+      "repair": {
+        "skills": [ [ "mechanics", 3 ], [ "electronics", 2 ] ],
+        "time": "60 m",
+        "using": [ [ "adhesive", 1 ], [ "plastics", 1 ], [ "soldering_standard", 2 ] ]
+      }
+    },
+    "durability": 30,
+    "damage_modifier": 10,
+    "epower": 10,
+    "breaks_into": [ { "item": "plastic_chunk", "count": [ 10, 20 ] }, { "item": "solar_cell", "count": [ 1, 4 ] } ],
+    "flags": [ "BALLOON", "SHOCK_IMMUNE", "SOLAR_PANEL" ],
+    "damage_reduction": { "bash": 10 }
+  },
+  {
+    "id": "crt_airship_balloon_external",
+    "copy-from": "crt_airship_balloon",
+    "type": "vehicle_part",
+    "name": "外置CRIT太阳能飞艇气囊",
+    "location": "structure",
+    "categories": [ "movement", "energy" ],
+    "extend": { "flags": [ "EXTENDABLE", "AISLE", "ROOF", "NOCOLLIDE", "NOCOLLIDEBELOW" ] }
+  }
+]

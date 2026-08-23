@@ -1,0 +1,59 @@
+[
+  {
+    "type": "GENERIC",
+    "id": "bundle_of_balloons_item",
+    "symbol": "o",
+    "color": "light_red",
+    "looks_like": "airship_balloon_item",
+    "name": { "str": "一大束气球" },
+    "description": "一大束用绳子扎在一起的派对气球，下面系着一块石头防止它飞走，如果把它固定在载具上，也许能提供一点升力。",
+    "price": "10 USD",
+    "price_postapoc": "1 USD",
+    "material": [ "plastic" ],
+    "weight": "1 kg",
+    "volume": "3 L",
+    "longest_side": "100 cm",
+    "to_hit": -5,
+    "category": "veh_parts",
+    "explosion": { "power": 1 },
+    "explode_in_fire": true
+  },
+  {
+    "id": "bundle_of_balloons",
+    "copy-from": "airship_balloon",
+    "looks_like": "airship_balloon",
+    "type": "vehicle_part",
+    "name": "一大束气球",
+    "item": "bundle_of_balloons_item",
+    "height": 10,
+    "requirements": {
+      "install": { "skills": [ [ "mechanics", 1 ] ], "time": "30 m", "using": [ [ "rope_natural_short", 1 ] ] },
+      "removal": { "skills": [ [ "mechanics", 1 ] ], "time": "30 m", "using": [  ] },
+      "repair": { "skills": [ [ "mechanics", 2 ] ], "time": "30 m", "using": [ [ "adhesive", 1 ] ] }
+    },
+    "durability": 20,
+    "damage_modifier": 90,
+    "flags": [ "BALLOON", "SHOCK_IMMUNE" ],
+    "damage_reduction": { "bash": 2 },
+    "breaks_into": [ { "item": "chunk_rubber", "count": [ 1, 3 ] } ]
+  },
+  {
+    "type": "recipe",
+    "result": "bundle_of_balloons_item",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_VEHICLE",
+    "skill_used": "fabrication",
+    "difficulty": 2,
+    "time": "30 m",
+    "autolearn": true,
+    "components": [ [ [ "balloon", 20 ], [ "condom", 20 ] ], [ [ "rope_natural_short", 1, "LIST" ] ] ]
+  },
+  {
+    "id": "bundle_of_balloons_external",
+    "copy-from": "bundle_of_balloons",
+    "type": "vehicle_part",
+    "name": "外置气球束",
+    "location": "structure",
+    "extend": { "flags": [ "EXTENDABLE", "AISLE", "ROOF", "NOCOLLIDE", "NOCOLLIDEBELOW" ] }
+  }
+]

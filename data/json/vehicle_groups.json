@@ -950,12 +950,12 @@
   {
     "type": "vehicle_group",
     "id": "personal_aircraft_large",
-    "vehicles": [ [ "airship", 100 ] ]
+    "vehicles": [ [ "airship", 80 ], [ "blimp", 20 ] ]
   },
   {
     "type": "vehicle_group",
     "id": "personal_aircraft_airport",
-    "vehicles": [ [ "aircanoe", 45 ], [ "airboat", 35 ], [ "airship", 20 ] ]
+    "vehicles": [ [ "aircanoe", 42 ], [ "airboat", 33 ], [ "airship", 18 ], [ "blimp", 6 ], [ "crt_medblimp", 1 ] ]
   },
   {
     "type": "vehicle_group",

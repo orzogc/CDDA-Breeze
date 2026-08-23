@@ -1,0 +1,22 @@
+[
+  {
+    "type": "GENERIC",
+    "id": "crt_airship_balloon_item",
+    "symbol": "o",
+    "color": "light_cyan",
+    "looks_like": "airship_balloon_item",
+    "name": { "str": "CRIT太阳能飞艇气囊" },
+    "description": "一个内衬柔性太阳能电池的氢气飞艇气囊，能够提供比普通气囊更强的升力，并在日照下缓慢为载具供电。",
+    "price": "80 USD",
+    "price_postapoc": "8 USD",
+    "material": [ "plastic" ],
+    "weight": "3 kg",
+    "volume": "200 L",
+    "longest_side": "250 cm",
+    "melee_damage": { "bash": 4 },
+    "to_hit": -3,
+    "category": "veh_parts",
+    "explosion": { "power": 100 },
+    "explode_in_fire": true
+  }
+]
