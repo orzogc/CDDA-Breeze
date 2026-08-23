@@ -180,6 +180,141 @@ static void ClearScreen()
     RenderClear( renderer );
 }
 
+#if defined(_WIN32)
+static int configured_display_index()
+{
+    int display = std::stoi( get_option<std::string>( "DISPLAY" ) );
+    const int display_count = SDL_GetNumVideoDisplays();
+    if( display_count <= 0 || display < 0 || display >= display_count ) {
+        display = 0;
+    }
+    return display;
+}
+
+static point display_usable_client_size( const int display, const bool subtract_window_borders )
+{
+    int max_width = INT_MAX;
+    int max_height = INT_MAX;
+
+#if SDL_VERSION_ATLEAST( 2, 0, 5 )
+    SDL_Rect usable = {};
+    if( SDL_GetDisplayUsableBounds( display, &usable ) == 0 ) {
+        max_width = usable.w;
+        max_height = usable.h;
+    }
+#endif
+
+    if( max_width == INT_MAX || max_height == INT_MAX ) {
+        SDL_DisplayMode mode = {};
+        if( SDL_GetDesktopDisplayMode( display, &mode ) == 0 ) {
+            max_width = mode.w;
+            max_height = mode.h;
+        }
+    }
+
+#if SDL_VERSION_ATLEAST( 2, 0, 5 )
+    if( subtract_window_borders && ::window && max_width != INT_MAX && max_height != INT_MAX ) {
+        int top = 0;
+        int left = 0;
+        int bottom = 0;
+        int right = 0;
+        if( SDL_GetWindowBordersSize( ::window.get(), &top, &left, &bottom, &right ) == 0 ) {
+            max_width = std::max( 1, max_width - left - right );
+            max_height = std::max( 1, max_height - top - bottom );
+        }
+    }
+#endif
+
+    return point( max_width, max_height );
+}
+
+static float windows_display_dpi_scale( const int display )
+{
+#if SDL_VERSION_ATLEAST( 2, 0, 4 )
+    float diagonal_dpi = 0.0f;
+    float horizontal_dpi = 0.0f;
+    float vertical_dpi = 0.0f;
+    if( SDL_GetDisplayDPI( display, &diagonal_dpi, &horizontal_dpi, &vertical_dpi ) == 0 ) {
+        const float effective_dpi = horizontal_dpi > 0.0f ? horizontal_dpi : diagonal_dpi;
+        if( std::isfinite( effective_dpi ) && effective_dpi > 0.0f ) {
+            return std::clamp( effective_dpi / 96.0f, 1.0f, 4.0f );
+        }
+    }
+#else
+    ( void )display;
+#endif
+    return 1.0f;
+}
+
+static void apply_windows_native_dpi_to_fonts( font_loader &fl )
+{
+    const int display = configured_display_index();
+    float dpi_scale = windows_display_dpi_scale( display );
+    if( dpi_scale <= 1.01f ) {
+        return;
+    }
+
+    int app_scale = 1;
+    if( get_option<std::string>( "SCALING_FACTOR" ) == "2" ) {
+        app_scale = 2;
+    } else if( get_option<std::string>( "SCALING_FACTOR" ) == "4" ) {
+        app_scale = 4;
+    }
+
+    // A native-DPI font must still leave room for the minimum playable terminal.
+    // Cap only the runtime DPI scale; never rewrite the player's font options.
+    const point usable = display_usable_client_size( display, false );
+    if( usable.x != INT_MAX && usable.y != INT_MAX ) {
+        const float fit_x = static_cast<float>( usable.x ) /
+                            ( EVEN_MINIMUM_TERM_WIDTH * std::max( 1, fl.fontwidth ) * app_scale );
+        const float fit_y = static_cast<float>( usable.y ) /
+                            ( EVEN_MINIMUM_TERM_HEIGHT * std::max( 1, fl.fontheight ) * app_scale );
+        dpi_scale = std::min( dpi_scale, std::max( 1.0f, std::min( fit_x, fit_y ) ) );
+    }
+
+    const auto scale_metric = [dpi_scale]( const int value ) {
+        return std::max( 1, static_cast<int>( std::lround( value * dpi_scale ) ) );
+    };
+
+    fl.fontwidth = scale_metric( fl.fontwidth );
+    fl.fontheight = scale_metric( fl.fontheight );
+    fl.fontsize = scale_metric( fl.fontsize );
+    fl.map_fontwidth = scale_metric( fl.map_fontwidth );
+    fl.map_fontheight = scale_metric( fl.map_fontheight );
+    fl.map_fontsize = scale_metric( fl.map_fontsize );
+    fl.overmap_fontwidth = scale_metric( fl.overmap_fontwidth );
+    fl.overmap_fontheight = scale_metric( fl.overmap_fontheight );
+    fl.overmap_fontsize = scale_metric( fl.overmap_fontsize );
+
+    dbg( D_INFO ) << "Windows native DPI font scale: " << dpi_scale
+                  << ", terminal font: " << fl.fontwidth << "x" << fl.fontheight
+                  << ", size " << fl.fontsize;
+}
+
+static point clamp_windowed_size_to_work_area( const int requested_width,
+        const int requested_height )
+{
+    int display = configured_display_index();
+    if( ::window ) {
+        const int window_display = SDL_GetWindowDisplayIndex( ::window.get() );
+        if( window_display >= 0 ) {
+            display = window_display;
+        }
+    }
+
+    const point usable = display_usable_client_size( display, ::window != nullptr );
+    const int cell_width = std::max( 1, fontwidth * scaling_factor );
+    const int cell_height = std::max( 1, fontheight * scaling_factor );
+    const int max_width = usable.x == INT_MAX ? requested_width :
+                          std::max( cell_width, usable.x - usable.x % cell_width );
+    const int max_height = usable.y == INT_MAX ? requested_height :
+                           std::max( cell_height, usable.y - usable.y % cell_height );
+
+    return point( std::min( requested_width, max_width ),
+                  std::min( requested_height, max_height ) );
+}
+#endif
+
 static void InitSDL()
 {
     int init_flags = SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER;
@@ -199,8 +334,12 @@ static void InitSDL()
     SDL_SetHint( SDL_HINT_IME_SUPPORT_EXTENDED_TEXT, "1" );
 #endif
 
-#if defined(SDL_HINT_WINDOWS_DPI_AWARENESS)
-    SDL_SetHint(SDL_HINT_WINDOWS_DPI_AWARENESS, "permonitorv2");
+#if defined(_WIN32) && defined(SDL_HINT_WINDOWS_DPI_AWARENESS)
+    // Keep SDL's runtime policy aligned with application_manifest.xml.  The
+    // 12.4/12.5 regression came from Windows DPI virtualization, so do not let
+    // an inherited/default SDL hint silently switch the process back to an
+    // unaware scaling path.
+    SDL_SetHintWithPriority( SDL_HINT_WINDOWS_DPI_AWARENESS, "permonitorv2", SDL_HINT_OVERRIDE );
 #endif
 
 #if defined(__linux__)
@@ -316,6 +455,23 @@ static void WinCreate()
                                       window_flags
                                     ) );
     throwErrorIf( !::window, "SDL_CreateWindow failed" );
+
+#if defined(_WIN32)
+    // The font metrics are already native-DPI sized.  Keep the physical window
+    // inside the current monitor's work area instead of letting a large terminal
+    // option create an off-screen window.
+    if( !( window_flags & SDL_WINDOW_FULLSCREEN ) &&
+        !( window_flags & SDL_WINDOW_FULLSCREEN_DESKTOP ) &&
+        !( window_flags & SDL_WINDOW_MAXIMIZED ) ) {
+        const point fitted = clamp_windowed_size_to_work_area( WindowWidth, WindowHeight );
+        if( fitted.x != WindowWidth || fitted.y != WindowHeight ) {
+            SDL_SetWindowSize( ::window.get(), fitted.x, fitted.y );
+            SDL_GetWindowSize( ::window.get(), &WindowWidth, &WindowHeight );
+            TERMINAL_WIDTH = std::max( WindowWidth / fontwidth / scaling_factor, EVEN_MINIMUM_TERM_WIDTH );
+            TERMINAL_HEIGHT = std::max( WindowHeight / fontheight / scaling_factor, EVEN_MINIMUM_TERM_HEIGHT );
+        }
+    }
+#endif
 
 #if !defined(__ANDROID__)
     // On Android SDL seems janky in windowed mode so we're fullscreen all the time.
@@ -2164,6 +2320,21 @@ static input_event sdl_keysym_to_keycode_evt( const SDL_Keysym &keysym )
 
 bool handle_resize( int w, int h )
 {
+#if defined(_WIN32)
+    if( ::window ) {
+        const Uint32 flags = SDL_GetWindowFlags( ::window.get() );
+        if( !( flags & SDL_WINDOW_FULLSCREEN ) && !( flags & SDL_WINDOW_FULLSCREEN_DESKTOP ) &&
+            !( flags & SDL_WINDOW_MAXIMIZED ) ) {
+            const point fitted = clamp_windowed_size_to_work_area( w, h );
+            if( fitted.x != w || fitted.y != h ) {
+                w = fitted.x;
+                h = fitted.y;
+                SDL_SetWindowSize( ::window.get(), w, h );
+            }
+        }
+    }
+#endif
+
     if( w == WindowWidth && h == WindowHeight ) {
         return false;
     }
@@ -2206,6 +2377,11 @@ void resize_term( const int cell_w, const int cell_h )
     restore_windowed_for_resize();
     int w = cell_w * fontwidth * scaling_factor;
     int h = cell_h * fontheight * scaling_factor;
+#if defined(_WIN32)
+    const point fitted = clamp_windowed_size_to_work_area( w, h );
+    w = fitted.x;
+    h = fitted.y;
+#endif
     SDL_SetWindowSize( window.get(), w, h );
     SDL_GetWindowSize( window.get(), &w, &h );
     handle_resize( w, h );
@@ -2222,7 +2398,12 @@ void toggle_fullscreen_window()
             return;
         }
         SDL_RestoreWindow( window.get() );
+#if defined(_WIN32)
+        const point fitted = clamp_windowed_size_to_work_area( restore_win_w, restore_win_h );
+        SDL_SetWindowSize( window.get(), fitted.x, fitted.y );
+#else
         SDL_SetWindowSize( window.get(), restore_win_w, restore_win_h );
+#endif
         SDL_SetWindowMinimumSize( window.get(), fontwidth * EVEN_MINIMUM_TERM_WIDTH * scaling_factor,
                                   fontheight * EVEN_MINIMUM_TERM_HEIGHT * scaling_factor );
     } else {
@@ -3895,6 +4076,23 @@ static void init_term_size_and_scaling_factor()
         get_options().save();
     }
 
+#if defined(_WIN32)
+    // DPI scaling increases a cell's physical pixel size.  Preserve the requested
+    // terminal values in options, but cap the runtime terminal to what the selected
+    // monitor can actually contain.
+    const point usable = display_usable_client_size( configured_display_index(), false );
+    if( usable.x != INT_MAX && usable.y != INT_MAX ) {
+        int max_terminal_x = std::max( EVEN_MINIMUM_TERM_WIDTH * scaling_factor,
+                                       usable.x / std::max( 1, fontwidth ) );
+        int max_terminal_y = std::max( EVEN_MINIMUM_TERM_HEIGHT * scaling_factor,
+                                       usable.y / std::max( 1, fontheight ) );
+        max_terminal_x -= max_terminal_x % scaling_factor;
+        max_terminal_y -= max_terminal_y % scaling_factor;
+        terminal.x = std::min( terminal.x, max_terminal_x );
+        terminal.y = std::min( terminal.y, max_terminal_y );
+    }
+#endif
+
 #endif //__ANDROID__
 
     TERMINAL_WIDTH = terminal.x / scaling_factor;
@@ -3925,6 +4123,9 @@ void catacurses::init_interface()
     fl.overmap_fontsize = get_option<int>( "OVERMAP_FONT_SIZE" );
     fl.overmap_fontwidth = get_option<int>( "OVERMAP_FONT_WIDTH" );
     fl.overmap_fontheight = get_option<int>( "OVERMAP_FONT_HEIGHT" );
+#if defined(_WIN32)
+    apply_windows_native_dpi_to_fonts( fl );
+#endif
     ::fontwidth = fl.fontwidth;
     ::fontheight = fl.fontheight;
 
