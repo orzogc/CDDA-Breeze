@@ -1,0 +1,121 @@
+[
+  {
+    "type": "item_group",
+    "id": "FREE_MERCHANTS_Shop_Currency_Press",
+    "subtype": "collection",
+    "items": [
+      { "item": "FMCNote", "count": 1000 },
+      { "item": "money_strap_FMCNote", "count": 40 }
+    ]
+  },
+  {
+    "id": "MISSION_FREE_MERCHANTS_PRINTING_PRESS",
+    "type": "mission_definition",
+    "name": {
+      "str": "扩大票据生产"
+    },
+    "description": "为自由商人找回一台商用平板丝网印刷机，让他们能够稳定批量加工商会币。",
+    "goal": "MGOAL_FIND_ITEM",
+    "difficulty": 4,
+    "value": 0,
+    "item": "commercial_screen_printing_press",
+    "count": 1,
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "followup": "MISSION_FREE_MERCHANTS_PRINTING_PRESS_EXTRA",
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "loffice_tower_9b",
+        "z": 4,
+        "reveal_radius": 1,
+        "random": true,
+        "create_if_necessary": true,
+        "search_range": 240
+      },
+      "update_mapgen": {
+        "place_item": [
+          {
+            "item": "commercial_screen_printing_press",
+            "x": 10,
+            "y": 10
+          }
+        ]
+      }
+    },
+    "end": {
+      "effect": [
+        {
+          "arithmetic": [
+            {
+              "global_val": "var",
+              "var_name": "free_merchants_press_count"
+            },
+            "=",
+            {
+              "const": 1
+            }
+          ]
+        },
+        { "u_spawn_item": "FMCNote", "count": 100 }
+      ],
+      "opinion": { "trust": 2, "value": 2 }
+    },
+    "dialogue": {
+      "describe": "我们缺一套能稳定批量处理票据的设备。",
+      "offer": "我们的商会币不是从白纸做出来的，我们会在旧的大额纸币上重新印承兑说明和图案，再交给财务负责人签字。现在最大的问题是加工速度。有人提过一栋大型办公楼的高层以前有内部图文部门，那里可能还留着一台商用平板丝网印刷机。那东西很重，不过如果你能把它完整带回来，我们就能把商会币的周转量提上去。",
+      "accepted": "我把那栋楼的位置标给你，机器应该在最高的办公层，去内部办公区的工作台和设备桌附近找。",
+      "rejected": "没关系，这东西确实不好搬。",
+      "advice": "别想着背回来，准备一辆能装重货的车，到了顶层办公区以后重点看看工作台和设备桌。",
+      "inquire": "印刷机找到了吗，应该就在顶层办公区的工作台附近。",
+      "success": "很好，这就是我们要的。机器还能用，我们刚试着跑了一批。这100张你拿着，算是第一批票据的纪念。以后每轮我们能多准备大约5000商会币。你要是以后还碰到同型号的机器，也可以继续带给我。",
+      "success_lie": "这么大的机器可没法藏在口袋里。",
+      "failure": "那栋楼不值得拿命去换，活着回来就行。"
+    }
+  },
+  {
+    "id": "MISSION_FREE_MERCHANTS_PRINTING_PRESS_EXTRA",
+    "type": "mission_definition",
+    "name": {
+      "str": "扩建票据工位"
+    },
+    "description": "再为自由商人运回一台商用平板丝网印刷机，每增加一台设备都会继续提高商会币的周期供应量。",
+    "goal": "MGOAL_FIND_ITEM",
+    "difficulty": 3,
+    "value": 0,
+    "item": "commercial_screen_printing_press",
+    "count": 1,
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "followup": "MISSION_FREE_MERCHANTS_PRINTING_PRESS_EXTRA",
+    "end": {
+      "effect": [
+        {
+          "arithmetic": [
+            {
+              "global_val": "var",
+              "var_name": "free_merchants_press_count"
+            },
+            "+=",
+            {
+              "const": 1
+            }
+          ]
+        },
+        { "u_spawn_item": "FMCNote", "count": 50 }
+      ]
+    },
+    "dialogue": {
+      "describe": "如果你还碰到同型号的机器，我们一直收。",
+      "offer": "现有工位已经能稳定工作了，不过这种设备越多，票据周转就越快。以后你在其他办公场所再找到同型号的机器，可以继续带回来。每多一台，我们每轮就能再多准备大约5000商会币。",
+      "accepted": "不用专门为它冒险，碰到了再带回来就行。",
+      "rejected": "没关系，这本来就是长期的事。",
+      "advice": "这种机器很重，先把运输工具准备好。",
+      "inquire": "又找到一台印刷机了吗。",
+      "success": "很好，我们会给它腾出一个新工位。这50张算我们的收购价。下一轮补货开始，这台机器也会算进票据产能里。",
+      "success_lie": "机器就在附近的话，我自己也看得见。",
+      "failure": "不用勉强，我们现有的工位还能继续运转。"
+    }
+  }
+]

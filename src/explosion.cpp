@@ -572,7 +572,7 @@ void ExplosionProcess::project_shrapnel(const tripoint position)
 
 
     auto critter = c_t.creature_at(position);
-    if (critter && !critter->is_dead_state()) {
+    if (critter && !critter->is_dead_state() && !critter->blocks_physical_contact()) {
         int damage_taken = 0;
         // 变通 const auto bps = critter->get_all_body_parts(true);
         const auto bps = critter->get_all_body_parts();
@@ -653,7 +653,10 @@ void ExplosionProcess::blast_tile(const tripoint position, const int rl_distance
     {
         Creature* critter = get_creature_tracker().creature_at(position);
 
-        if (critter != nullptr && !mobs_blasted.count(critter)) {
+        if (critter != nullptr && critter->blocks_physical_contact()) {
+            critter->add_msg_if_player( m_good, _( "爆炸冲击在触及你之前停住了。" ) );
+            mobs_blasted[critter] = 0;
+        } else if (critter != nullptr && !mobs_blasted.count(critter)) {
             const int blast_damage = blast_power * critter_blast_percentage(critter, blast_radius,
                 rl_distance);
             const auto shockwave_dmg = damage_instance::physical(blast_damage, 0, 0, 0.4f);
@@ -705,7 +708,7 @@ void ExplosionProcess::blast_tile(const tripoint position, const int rl_distance
         Creature* critter = get_creature_tracker().creature_at(position);
         avatar* player_ptr = dynamic_cast<avatar*>(critter);
 
-        if (critter != nullptr && !flung_set.count(critter)) {
+        if (critter != nullptr && !critter->blocks_physical_contact() && !flung_set.count(critter)) {
             const int push_strength = (blast_radius - rl_distance) * blast_power;
             const float move_power = ExplosionConstants::MOB_FLING_FACTOR * push_strength;
 

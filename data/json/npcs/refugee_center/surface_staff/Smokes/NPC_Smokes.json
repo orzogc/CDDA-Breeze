@@ -10,7 +10,7 @@
     "attitude": 0,
     "mission": 3,
     "chat": "TALK_FREE_MERCHANTS_MERCHANT",
-    "mission_offered": "MISSION_FREE_MERCHANTS_EVAC_1",
+    "mission_offered": [ "MISSION_FREE_MERCHANTS_EVAC_1", "MISSION_FREE_MERCHANTS_PRINTING_PRESS" ],
     "faction": "free_merchants"
   },
   {
@@ -25,7 +25,14 @@
     "//3": "Most of his dialogue goes in 'free_merchant_shopkeep_dialogue.json'. Dialogue that just does worldbuilding goes into 'free_merchant_shopkeep_dialogue_fluff.json'.",
     "bonus_str": 4,
     "bonus_dex": 2,
-    "shopkeeper_item_group": [ { "group": "FREE_MERCHANTS_Shop", "rigid": true } ],
+    "shopkeeper_item_group": [
+      { "group": "FREE_MERCHANTS_Shop", "rigid": true },
+      {
+        "group": "FREE_MERCHANTS_Shop_Currency_Press",
+        "rigid": true,
+        "restock_repeat_global": "free_merchants_press_count"
+      }
+    ],
     "shopkeeper_consumption_rates": "smokes_shop_rates",
     "worn_override": "NC_FREE_MERCHANTS_MERCHANT_worn",
     "weapon_override": "NC_FREE_MERCHANTS_MERCHANT_carried",

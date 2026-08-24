@@ -2660,6 +2660,11 @@ void options_manager::add_options_world_default()
          0.01, 10.0, 1.0, 0.01
        );
 
+    add( "MERCHANT_ITEM_SPAWNRATE", "world_default", to_translation( "商人物资生成倍率" ),
+         to_translation( "调整NPC商人每次补货时生成的商品数量，不影响地图和其他世界物资生成。数值高于一会增加补货量，低于一会减少补货量。" ),
+         0.01, 10.0, 1.0, 0.01
+       );
+
     add( "NPC_SPAWNTIME", "world_default", to_translation( "Random NPC spawn time" ),
          to_translation( "Baseline average number of days between random NPC spawns.  Average duration goes up with the number of NPCs already spawned.  A higher number means fewer NPCs.  Set to 0 days to disable random NPCs." ),
          0.0, 100.0, 4.0, 0.01

@@ -1,0 +1,15 @@
+[
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_AFTERLIFE_KOBE_FALL_IMMUNITY",
+    "eoc_type": "FALL_DAMAGE",
+    "condition": { "u_has_effect": "travel_afterlife_boost_kobe" },
+    "effect": {
+      "arithmetic": [
+        { "u_val": "var", "var_name": "fall_damage_multiplier", "type": "general", "context": "fall_damage" },
+        "=",
+        { "const": 0 }
+      ]
+    }
+  }
+]

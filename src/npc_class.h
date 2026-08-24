@@ -54,8 +54,13 @@ struct shopkeeper_item_group {
     std::string refusal;
     std::function<bool( const dialogue & )> condition;
 
-    // Rigid shopkeeper groups will be processed a single time. Default groups are not rigid, and will be processed until the shopkeeper has no more room or remaining value to populate goods with.
+    // Rigid shopkeeper groups are processed independently of the shop value budget.  They run once by default,
+    // and can optionally repeat according to a global dialogue variable.
     bool rigid = false;
+
+    // Optional basename of a dialogue global variable.  Rigid groups are queued this many times when restocking.
+    // This lets world state and infrastructure upgrades scale fixed shop inventories without hard-coded NPC special cases.
+    std::string restock_repeat_global;
 
     shopkeeper_item_group() = default;
     shopkeeper_item_group( const std::string &id, int trust, bool strict, bool rigid = false ) :

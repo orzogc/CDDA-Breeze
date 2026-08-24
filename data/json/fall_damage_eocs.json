@@ -1,0 +1,26 @@
+[
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_FALL_DAMAGE_PARKOUR_EXPERT",
+    "eoc_type": "FALL_DAMAGE",
+    "condition": {
+      "compare_int": [ { "u_val": "proficiency", "proficiency_id": "prof_parkour", "format": "percent" }, ">=", { "const": 100 } ]
+    },
+    "effect": [
+      {
+        "arithmetic": [
+          { "u_val": "var", "var_name": "fall_damage_multiplier", "type": "general", "context": "fall_damage" },
+          "*=",
+          { "const": 50 }
+        ]
+      },
+      {
+        "arithmetic": [
+          { "u_val": "var", "var_name": "fall_damage_multiplier", "type": "general", "context": "fall_damage" },
+          "/=",
+          { "const": 100 }
+        ]
+      }
+    ]
+  }
+]

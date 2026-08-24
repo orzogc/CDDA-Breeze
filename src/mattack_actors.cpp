@@ -544,6 +544,13 @@ bool melee_actor::call( monster &z ) const
         }
     }
 
+    const bool contact_attack = damage_max_instance.total_damage() > 0 || !effects.empty() ||
+                                throw_strength > 0;
+    if( contact_attack && target->blocks_physical_contact() ) {
+        target->add_msg_if_player( m_good, _( "%s 的攻击在触及你之前停住了。" ), mon_name );
+        return true;
+    }
+
     // Dodge check
 
     const int acc = accuracy >= 0 ? accuracy : z.type->melee_skill;
