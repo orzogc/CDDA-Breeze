@@ -2521,6 +2521,12 @@ std::vector<int> vehicle::parts_at_relative( const point &dp, const bool use_cac
     return res;
 }
 
+bool vpart_position::cargo_blocks_passage() const
+{
+    const std::optional<vpart_reference> cargo = part_with_feature( "CARGO", true );
+    return cargo && cargo->part().cargo_blocks_passage();
+}
+
 std::optional<vpart_reference> vpart_position::obstacle_at_part() const
 {
     std::optional<vpart_reference> part = part_with_feature( VPFLAG_OBSTACLE, true );
@@ -5647,6 +5653,7 @@ std::optional<vehicle_stack::iterator> vehicle::add_item( int part, const item &
     if( charge ) {
         item *here = istack.stacks_with( itm );
         if( here ) {
+            p.invalidate_cargo_passage_cache();
             invalidate_mass();
             if( !here->merge_charges( itm ) ) {
                 return std::nullopt;
@@ -5667,6 +5674,7 @@ std::optional<vehicle_stack::iterator> vehicle::add_item( int part, const item &
     const vehicle_stack::iterator new_pos = p.items.insert( itm_copy );
     active_items.add(*new_pos, p.mount);
 
+    p.invalidate_cargo_passage_cache();
     invalidate_mass();
     return std::optional<vehicle_stack::iterator>( new_pos );
 }
@@ -5699,6 +5707,7 @@ item& vehicle::add_item_new(int part, const item& itm) {
     if (charge) {
         item* here = istack.stacks_with(itm);
         if (here) {
+            p.invalidate_cargo_passage_cache();
             invalidate_mass();
             if (!here->merge_charges(itm)) {
                 return null_item_reference();
@@ -5714,6 +5723,7 @@ item& vehicle::add_item_new(int part, const item& itm) {
     const vehicle_stack::iterator new_pos = p.items.insert(itm_copy);
     active_items.add(*new_pos, p.mount);
 
+    p.invalidate_cargo_passage_cache();
     invalidate_mass();
     return *new_pos;
 
@@ -5737,6 +5747,7 @@ vehicle_stack::iterator vehicle::remove_item( int part, const vehicle_stack::con
     cata::colony<item> &veh_items = parts[part].items;
 
 
+    parts[part].invalidate_cargo_passage_cache();
     invalidate_mass();
     return veh_items.erase( it );
 }

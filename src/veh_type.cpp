@@ -467,6 +467,7 @@ void vpart_info::load( const JsonObject &jo, const std::string &src )
     assign( jo, "default_ammo", def.default_ammo );
     assign( jo, "folded_volume", def.folded_volume );
     assign( jo, "size", def.size );
+    assign( jo, "cargo_passage_limit", def.cargo_passage_limit );
     assign( jo, "bonus", def.bonus );
     assign( jo, "cargo_weight_modifier", def.cargo_weight_modifier );
     assign( jo, "categories", def.categories );
@@ -1030,6 +1031,17 @@ void vpart_info::check()
                 debugmsg( "vehicle part %s is not CARGO and cannot define size", part.id.c_str() );
             } else if( part.has_flag( "FLUIDTANK" ) ) {
                 debugmsg( "vehicle part %s is FLUIDTANK and cannot define size; it's defined on part's base item",
+                          part.id.c_str() );
+            }
+        }
+        if( part.cargo_passage_limit != 0_ml ) {
+            if( part.cargo_passage_limit < 0_ml ) {
+                debugmsg( "vehicle part %s has negative cargo_passage_limit", part.id.c_str() );
+            } else if( !part.has_flag( "CARGO" ) ) {
+                debugmsg( "vehicle part %s defines cargo_passage_limit but is not CARGO",
+                          part.id.c_str() );
+            } else if( part.cargo_passage_limit > part.size ) {
+                debugmsg( "vehicle part %s has cargo_passage_limit larger than its cargo size",
                           part.id.c_str() );
             }
         }

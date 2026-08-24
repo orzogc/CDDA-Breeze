@@ -337,7 +337,14 @@ std::vector<tripoint> map::route( const tripoint &f, const tripoint &t,
                     // Then account for a real vehicle obstacle, if there is one.  A non-obstacle
                     // vehicle part does not replace the underlying terrain/furniture decision above.
                     if( veh != nullptr ) {
-                        const auto vpobst = vpart_position( const_cast<vehicle &>( *veh ), part ).obstacle_at_part();
+                        const vpart_position vp( const_cast<vehicle &>( *veh ), part );
+                        if( vp.cargo_blocks_passage() ) {
+                            // Cargo blocking a walkway is not a structural vehicle part.
+                            // Route around it instead of treating the cargo rack as bashable.
+                            layer.state[index] = ASL_CLOSED;
+                            continue;
+                        }
+                        const auto vpobst = vp.obstacle_at_part();
                         part = vpobst ? vpobst->part_index() : -1;
                         if( part >= 0 ) {
                             int dummy = -1;

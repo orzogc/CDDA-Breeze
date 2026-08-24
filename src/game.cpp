@@ -10527,6 +10527,10 @@ bool game::walk_move( const tripoint &dest_loc, const bool via_ramp, const bool 
     }
 
     if( m.impassable( dest_loc ) && !pushing && !shifting_furniture ) {
+        if( vp_there && vp_there->cargo_blocks_passage() ) {
+            add_msg( m_info, _( "货舱里的东西堆得太满了，已经无法从这里通过。" ) );
+            return false;
+        }
         if( vp_there && u.mounted_creature && u.mounted_creature->has_flag( MF_RIDEABLE_MECH ) &&
             vp_there->vehicle().handle_potential_theft( dynamic_cast<Character &>( u ) ) ) {
             tripoint diff = dest_loc - u.pos();

@@ -1257,6 +1257,8 @@ class Character : public Creature, public visitable
         float get_limb_score( const limb_score_id &score,
                               const body_part_type::type &bp = body_part_type::type::num_types,
                               int override_encumb = -1, int override_wounds = -1 ) const;
+        /** Manipulation score used only by crafting, ignoring clothing-derived hand encumbrance. */
+        float get_crafting_manipulation_score() const;
 
         bool has_min_manipulators() const;
         // technically this is "has more than one arm"
