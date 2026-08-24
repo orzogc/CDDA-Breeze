@@ -2052,6 +2052,11 @@ bool monster::melee_attack(Creature& target, float accuracy)
         return false;
     }
 
+    if( target.blocks_physical_contact() ) {
+        target.add_msg_if_player( m_good, _( "%s 的攻击在触及你之前停住了。" ), disp_name() );
+        return true;
+    }
+
     int hitspread = target.deal_melee_attack(this, melee::melee_hit_range(accuracy));
     if (type->melee_dice == 0) {
         // We don't hit, so just return

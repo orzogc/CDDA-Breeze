@@ -576,7 +576,7 @@
       "科比·布莱恩特"
     ],
     "desc": [
-      "特殊调酒带来的爆发式身体强化，让你的力量，敏捷与行动速度显著提高。"
+      "特殊调酒带来的爆发式身体强化，让你的力量，敏捷与行动速度显著提高，同时让你在坠落时毫发无伤。"
     ],
     "rating": "good",
     "max_intensity": 1,
@@ -600,7 +600,7 @@
     "name": {
       "str": "科比·布莱恩特"
     },
-    "description": "一杯纪念科比·布莱恩特的特殊调酒，名字来自那位永远追求极限的篮球传奇。喝下它，你会在一小时内获得惊人的力量，敏捷与行动速度；它不会减免坠落伤害。\n“Man！what can i say”",
+    "description": "一杯纪念科比·布莱恩特的特殊调酒，名字来自那位永远追求极限的篮球传奇。喝下它，你会在一小时内获得惊人的力量，敏捷与行动速度，并且完全免疫坠落伤害。\n“Man！what can i say”",
     "weight": "250 g",
     "color": "magenta",
     "addiction_type": "alcohol",
@@ -648,33 +648,13 @@
     "name": {
       "str": "无下限术式闪避"
     },
-    "description": "五条悟特调生效期间使用的隐藏防御特性：让攻击者极难命中，并快速从摔倒状态恢复。",
+    "description": "旧版本无下限术式使用的隐藏兼容特性，现在不再提供任何防御能力。",
     "points": 0,
     "valid": false,
     "player_display": false,
     "purifiable": false,
-    "flags": [
-      "HARDTOHIT",
-      "DOWNED_RECOVERY",
-      "FEATHER_FALL"
-    ],
-    "enchantments": [
-      {
-        "condition": "ALWAYS",
-        "values": [
-          {
-            "value": "BONUS_DODGE",
-            "add": 10000
-          }
-        ],
-        "skills": [
-          {
-            "value": "dodge",
-            "add": 100
-          }
-        ]
-      }
-    ]
+    "flags": [],
+    "enchantments": []
   },
   {
     "type": "effect_type",
@@ -683,38 +663,13 @@
       "无下限术式"
     ],
     "desc": [
-      "无下限术式般的力量隔绝了袭来的伤害。"
+      "无下限术式让一切试图直接接触你的物理攻击停在最后一段距离之外，注视，精神影响，环境危害与直接作用仍然能够穿透。"
     ],
     "rating": "good",
     "max_intensity": 1,
     "max_duration": "60 seconds",
+    "flags": [ "SPATIAL_BARRIER" ],
     "show_in_info": true
-  },
-  {
-    "type": "effect_on_condition",
-    "id": "EOC_TRAVEL_GOJO_INFINITY_SYNC",
-    "recurrence": "1 second",
-    "global": true,
-    "run_for_npcs": false,
-    "condition": {
-      "u_has_effect": "travel_afterlife_boost_gojo"
-    },
-    "effect": [
-      {
-        "u_add_trait": "DEBUG_NODMG"
-      },
-      {
-        "u_add_trait": "TRAVEL_GOJO_INFINITY_DODGE"
-      }
-    ],
-    "false_effect": [
-      {
-        "u_lose_trait": "DEBUG_NODMG"
-      },
-      {
-        "u_lose_trait": "TRAVEL_GOJO_INFINITY_DODGE"
-      }
-    ]
   },
   {
     "type": "COMESTIBLE",
@@ -722,13 +677,13 @@
     "name": {
       "str": "五条悟"
     },
-    "description": "一杯颜色近乎透明的特殊调酒，入口清冽，随后会在身体周围形成一种难以理解的疏离感，仿佛任何危险都永远差着最后一点距离。名字来自一位自称最强的咒术师，这一分钟足够让人明白他为什么敢这么说。\n“我的学生们还在看着呢，再让我耍会帅吧”",
+    "description": "一杯颜色近乎透明的特殊调酒，入口清冽，随后会在身体周围形成一种难以理解的疏离感，仿佛任何试图直接触及你的东西都永远差着最后一点距离。名字来自一位自称最强的咒术师，这一分钟足够让人明白他为什么敢这么说。\n“我的学生们还在看着呢，再让我耍会帅吧”",
     "weight": "250 g",
     "color": "light_blue",
     "addiction_type": "alcohol",
     "use_action": {
       "type": "consume_drug",
-      "activation_message": "你喝下了五条悟。袭来的危险仿佛在触及你之前停住了。",
+      "activation_message": "你喝下了五条悟，袭来的攻击仿佛在触及你之前停住了。",
       "effects": [
         {
           "id": "travel_afterlife_boost_gojo",

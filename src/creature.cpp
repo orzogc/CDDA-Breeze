@@ -1040,6 +1040,15 @@ void Creature::deal_projectile_attack( Creature *source, dealt_projectile_attack
         // Total miss
         return;
     }
+    if( blocks_physical_contact() && !magic ) {
+        attack.dealt_dam = dealt_damage_instance();
+        attack.hit_critter = this;
+        attack.missed_by = 0.0;
+        if( print_messages ) {
+            add_msg_if_player( m_good, _( "投射物在触及你之前停住了。" ) );
+        }
+        return;
+    }
     // If carrying a rider, there is a chance the hits may hit rider instead.
     if( has_effect( effect_ridden ) ) {
         monster *mons = as_monster();
@@ -1636,6 +1645,12 @@ bool Creature::has_effect_with_flag( const flag_id &flag ) const
         // effect::has_flag currently delegates to effect_type::has_flag
         return elem.first->has_flag( flag );
     } );
+}
+
+bool Creature::blocks_physical_contact() const
+{
+    static const flag_id flag_SPATIAL_BARRIER( "SPATIAL_BARRIER" );
+    return has_effect_with_flag( flag_SPATIAL_BARRIER );
 }
 
 std::vector<effect> Creature::get_effects_with_flag( const flag_id &flag ) const
@@ -2861,6 +2876,10 @@ void Creature::knock_back_from( const tripoint &p )
 {
     if( p == pos() ) {
         return; // No effect
+    }
+    if( blocks_physical_contact() ) {
+        add_msg_if_player( m_good, _( "推动你的力量在触及你之前停住了。" ) );
+        return;
     }
     if( is_hallucination() ) {
         die( nullptr );

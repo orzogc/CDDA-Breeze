@@ -1,0 +1,25 @@
+[
+  {
+    "type": "GENERIC",
+    "id": "commercial_screen_printing_press",
+    "name": {
+      "str": "商用平板丝网印刷机"
+    },
+    "description": "一台带真空平板和微调定位机构的商用丝网印刷设备，机身上固定着网框，刮板和一套基本配件，适合在纸张和薄片材料上批量套印复杂图案，整机非常沉重，想把它带走最好准备一辆能装重货的车。",
+    "category": "tools",
+    "weight": "85 kg",
+    "volume": "250 L",
+    "longest_side": "120 cm",
+    "price": 250000,
+    "price_postapoc": 5000,
+    "to_hit": -10,
+    "bashing": 12,
+    "material": [
+      "steel",
+      "aluminum"
+    ],
+    "symbol": ";",
+    "color": "light_gray",
+    "looks_like": "fog_machine"
+  }
+]

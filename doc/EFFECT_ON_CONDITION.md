@@ -13,7 +13,15 @@ An effect_on_condition is an object allowing the combination of dialog condition
 | `global`| bool | If this is true, this recurring eoc will be run on the player and every npc from a global queue.  Deactivate conditions will work based on the avatar. If it is false the avatar and every character will have their own copy and their own deactivated list. Defaults to false.
 | `run_for_npcs`| bool | Can only be true if global is true. If false the eoc will only be run against the avatar. If true the eoc will be run against the avatar and all npcs.  Defaults to false.
 | `EOC_TYPE`| string | The effect_on_condition is automatically invoked once on scenario start.
- Can be any of:ACTIVATION, RECURRING, SCENARIO_SPECIFIC, AVATAR_DEATH, NPC_DEATH, OM_MOVE, PREVENT_DEATH. It defaults to ACTIVATION unless `recurrence` is provided in which case it defaults to RECURRING.  If it is SCENARIO_SPECIFIC it is automatically invoked once on scenario start. If it is PREVENT_DEATH whenever the current avatar dies it will be run with the avatar as u, if after it the player is no longer dead they will not die, if there are multiple they all be run until the player is not dead. If it is AVATAR_DEATH whenever the current avatar dies it will be run with the avatar as u and the killer as npc. NPC_DEATH eocs can only be assigned to run on the death of an npc, in which case u will be the dying npc and npc will be the killer. OM_MOVE EOCs trigger when the player moves overmap tiles.
+ Can be any of:ACTIVATION, RECURRING, SCENARIO_SPECIFIC, AVATAR_DEATH, NPC_DEATH, OM_MOVE, PREVENT_DEATH, FALL_DAMAGE. It defaults to ACTIVATION unless `recurrence` is provided in which case it defaults to RECURRING.  If it is SCENARIO_SPECIFIC it is automatically invoked once on scenario start. If it is PREVENT_DEATH whenever the current avatar dies it will be run with the avatar as u, if after it the player is no longer dead they will not die, if there are multiple they all be run until the player is not dead. If it is AVATAR_DEATH whenever the current avatar dies it will be run with the avatar as u and the killer as npc. NPC_DEATH eocs can only be assigned to run on the death of an npc, in which case u will be the dying npc and npc will be the killer. OM_MOVE EOCs trigger when the player moves overmap tiles. FALL_DAMAGE EOCs run immediately before landing impact damage is applied, with the impacted character as u.
+
+### Fall damage hook
+
+`FALL_DAMAGE` EOCs can change the temporary player variable `fall_damage_multiplier` with `type: "general"` and `context: "fall_damage"`.  The value uses permille, so 1000 is normal damage, 500 is half damage, 2000 is double damage, and 0 prevents the landing damage entirely.  Multiple EOCs should normally multiply this value rather than replace it so independent modifiers compose cleanly.
+
+The temporary player variable `fall_impact_force` with the same type and context contains the effective landing force before the EOC modifiers are applied.  It is intended for conditions that only affect sufficiently hard falls.  Both temporary variables are removed after the hook finishes.
+
+For example, an effect, mutation, item state, proficiency, or mod can define a `FALL_DAMAGE` EOC and multiply `fall_damage_multiplier` when its own condition is true.  No C++ changes are needed for additional modifiers.
 
 ## Examples:
 ```JSON

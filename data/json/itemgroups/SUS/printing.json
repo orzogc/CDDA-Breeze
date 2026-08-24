@@ -1,0 +1,9 @@
+[
+  {
+    "type": "item_group",
+    "id": "SUS_commercial_printing_equipment",
+    "//": "Heavy commercial printing equipment that can plausibly appear in dedicated office production, civic document, or warehouse office spaces.",
+    "subtype": "collection",
+    "items": [ { "item": "commercial_screen_printing_press", "prob": 100 } ]
+  }
+]

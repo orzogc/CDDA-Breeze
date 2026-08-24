@@ -91,7 +91,10 @@
         { "item": "fridgesnacks", "chance": 70, "repeat": [ 1, 10 ] }
       ],
       "o": { "item": "oven", "chance": 70 },
-      "r": [ { "item": "office_supplies", "chance": 65, "repeat": [ 1, 10 ] } ],
+      "r": [
+        { "item": "office_supplies", "chance": 65, "repeat": [ 1, 10 ] },
+        { "item": "SUS_commercial_printing_equipment", "chance": 1 }
+      ],
       "y": { "item": "cleaning", "chance": 60, "repeat": [ 1, 2 ] },
       "Y": { "item": "jackets", "chance": 90, "repeat": [ 3, 8 ] },
       "a": { "item": "trash", "chance": 70, "repeat": [ 2, 5 ] },
