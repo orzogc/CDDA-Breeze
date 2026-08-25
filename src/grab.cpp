@@ -107,22 +107,17 @@ bool game::grabbed_veh_move_cross_z( const tripoint &dp, const tripoint &player_
         if( !m.inbounds( target ) || !m.passable( target ) ||
             !m.has_floor_or_support( target ) || m.has_furn( target ) ||
             m.veh_at( target ) || occupied_by_creature ) {
-            // [临时诊断] 定位跨层放置失败的具体检查项，问题定位后移除
-            add_msg( m_info, _( "[vdrag诊断] target=%s dp=%s inbounds=%d passable=%d floor=%d furn=%d veh=%d creature=%d" ),
-                     target.to_string(), dp.to_string(),
-                     static_cast<int>( m.inbounds( target ) ),
-                     static_cast<int>( m.passable( target ) ),
-                     static_cast<int>( m.has_floor_or_support( target ) ),
-                     static_cast<int>( m.has_furn( target ) ),
-                     static_cast<int>( m.veh_at( target ).has_value() ),
-                     static_cast<int>( occupied_by_creature ) );
             add_msg( m_info, _( "跨层通道另一端没有足够空间放下%s。" ), grabbed_vehicle->disp_name() );
             u.grab( object_type::NONE );
             return true;
         }
     }
 
-    m.displace_vehicle( *grabbed_vehicle, dp );
+    if( !m.displace_vehicle( *grabbed_vehicle, dp ) ) {
+        add_msg( m_info, _( "跨层移动%s时发生异常，你松开了它。" ), grabbed_vehicle->disp_name() );
+        u.grab( object_type::NONE );
+        return true;
+    }
     m.rebuild_vehicle_level_caches();
     m.level_vehicle( *grabbed_vehicle );
     grabbed_vehicle->check_falling_or_floating();
@@ -134,6 +129,13 @@ bool game::grabbed_veh_move_cross_z( const tripoint &dp, const tripoint &player_
     }
 
     const tripoint new_grab_pos = grabbed_part_pos + dp;
+    const optional_vpart_position moved_vehicle_vp = m.veh_at( new_grab_pos );
+    if( !moved_vehicle_vp || &moved_vehicle_vp->vehicle() != grabbed_vehicle ) {
+        add_msg( m_info, _( "跨层移动后无法继续抓住%s，你松开了它。" ), grabbed_vehicle->disp_name() );
+        u.grab( object_type::NONE );
+        return false;
+    }
+
     u.grab( object_type::VEHICLE, new_grab_pos - player_destination );
     add_msg( _( "你把%s拖过了跨层通道。" ), grabbed_vehicle->disp_name() );
     return false;
