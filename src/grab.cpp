@@ -2,8 +2,11 @@
 
 #include <algorithm>
 #include <cstdlib>
+#include <set>
 
 #include "avatar.h"
+#include "creature.h"
+#include "creature_tracker.h"
 #include "debug.h"
 #include "map.h"
 #include "messages.h"
@@ -17,6 +20,115 @@
 #include "vpart_range.h"
 
 static const efftype_id effect_harnessed( "harnessed" );
+
+bool game::grabbed_veh_move_helper( const tripoint &dp, bool via_ramp, bool stairs_move )
+{
+    if( stairs_move ) {
+        return grabbed_veh_move_cross_z( dp, u.pos() );
+    }
+    if( via_ramp && dp.z != 0 ) {
+        return grabbed_veh_move_cross_z( dp, u.pos() + dp );
+    }
+    return grabbed_veh_move( dp );
+}
+
+bool game::grabbed_veh_move_cross_z( const tripoint &dp, const tripoint &player_destination )
+{
+    const optional_vpart_position grabbed_vehicle_vp = m.veh_at( u.pos() + u.grab_point );
+    if( !grabbed_vehicle_vp ) {
+        add_msg( m_info, _( "跨层后找不到原先抓住的载具。" ) );
+        u.grab( object_type::NONE );
+        return false;
+    }
+
+    vehicle *grabbed_vehicle = &grabbed_vehicle_vp->vehicle();
+    if( !grabbed_vehicle ||
+        !grabbed_vehicle->handle_potential_theft( get_avatar() ) ) {
+        u.grab( object_type::NONE );
+        return false;
+    }
+
+    const int grabbed_part = grabbed_vehicle_vp->part_index();
+    for( const vpart_reference &vpr : grabbed_vehicle->get_all_parts() ) {
+        monster *mon = grabbed_vehicle->get_monster( vpr.part_index() );
+        if( mon != nullptr && mon->has_effect( effect_harnessed ) ) {
+            add_msg( m_info, _( "有动物仍连接在%s上，无法把它拖过跨层通道。" ),
+                     grabbed_vehicle->disp_name() );
+            u.grab( object_type::NONE );
+            return false;
+        }
+    }
+
+    grabbed_vehicle->invalidate_mass();
+    if( dp.z > 0 ) {
+        const int str_req = grabbed_vehicle->total_mass() / 10_kilogram;
+        if( u.get_arm_str() < str_req ) {
+            add_msg( m_bad, _( "你的力量不足以把%s拖到上一层。" ), grabbed_vehicle->disp_name() );
+            u.grab( object_type::NONE );
+            return true;
+        }
+    }
+
+    std::set<tripoint> occupied_tiles;
+    for( const vpart_reference &vpr : grabbed_vehicle->get_all_parts() ) {
+        occupied_tiles.insert( grabbed_vehicle->global_part_pos3( vpr.part_index() ) );
+    }
+    if( occupied_tiles.empty() ) {
+        u.grab( object_type::NONE );
+        return false;
+    }
+
+    const tripoint grabbed_part_pos = grabbed_vehicle->global_part_pos3( grabbed_part );
+    int min_x = occupied_tiles.begin()->x;
+    int max_x = min_x;
+    int min_y = occupied_tiles.begin()->y;
+    int max_y = min_y;
+    for( const tripoint &p : occupied_tiles ) {
+        min_x = std::min( min_x, p.x );
+        max_x = std::max( max_x, p.x );
+        min_y = std::min( min_y, p.y );
+        max_y = std::max( max_y, p.y );
+    }
+
+    const int width = max_x - min_x + 1;
+    const int height = max_y - min_y + 1;
+    const int longest_span = std::max( width, height );
+    if( occupied_tiles.size() > 4 || longest_span > 4 || ( width > 1 && height > 1 ) ) {
+        add_msg( m_info, _( "%s太宽或太长，无法安全通过跨层通道。" ), grabbed_vehicle->disp_name() );
+        u.grab( object_type::NONE );
+        return true;
+    }
+
+    creature_tracker &creatures = get_creature_tracker();
+    for( const tripoint &p : occupied_tiles ) {
+        const tripoint target = p + dp;
+        const bool occupied_by_creature = target == player_destination ||
+                                          creatures.creature_at<Creature>( target ) != nullptr;
+        if( !m.inbounds( target ) || !m.passable( target ) ||
+            !m.has_floor_or_support( target ) || m.has_furn( target ) ||
+            m.veh_at( target ) || occupied_by_creature ) {
+            add_msg( m_info, _( "跨层通道另一端没有足够空间放下%s。" ), grabbed_vehicle->disp_name() );
+            u.grab( object_type::NONE );
+            return true;
+        }
+    }
+
+    m.displace_vehicle( *grabbed_vehicle, dp );
+    m.rebuild_vehicle_level_caches();
+    m.level_vehicle( *grabbed_vehicle );
+    grabbed_vehicle->check_falling_or_floating();
+    if( grabbed_vehicle->is_falling ) {
+        add_msg( m_info, _( "%s开始坠落，你松开了它。" ), grabbed_vehicle->disp_name() );
+        u.grab( object_type::NONE );
+        m.drop_vehicle( dp );
+        return false;
+    }
+
+    const tripoint new_grab_pos = grabbed_part_pos + dp;
+    u.grab( object_type::VEHICLE, new_grab_pos - player_destination );
+    add_msg( _( "你把%s拖过了跨层通道。" ), grabbed_vehicle->disp_name() );
+    return false;
+}
 
 bool game::grabbed_veh_move( const tripoint &dp )
 {
