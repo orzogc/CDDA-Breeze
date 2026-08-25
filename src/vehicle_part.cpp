@@ -707,6 +707,33 @@ bool vehicle_part::is_seat() const
     return info().has_flag( "SEAT" );
 }
 
+bool vehicle_part::cargo_blocks_passage() const
+{
+    const units::volume passage_limit = info().cargo_passage_limit;
+    if( is_broken() || passage_limit <= 0_ml ) {
+        return false;
+    }
+
+    if( cargo_passage_cache_dirty ) {
+        cargo_passage_blocked_cache = false;
+        units::volume stored = 0_ml;
+        for( const item &it : items ) {
+            stored += it.volume();
+            if( stored >= passage_limit ) {
+                cargo_passage_blocked_cache = true;
+                break;
+            }
+        }
+        cargo_passage_cache_dirty = false;
+    }
+    return cargo_passage_blocked_cache;
+}
+
+void vehicle_part::invalidate_cargo_passage_cache()
+{
+    cargo_passage_cache_dirty = true;
+}
+
 const vpart_info &vehicle_part::info() const
 {
     static const vpart_info info_none = vpart_info();

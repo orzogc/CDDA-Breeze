@@ -579,6 +579,7 @@ class item_location::impl::item_on_vehicle : public item_location::impl
 
         void on_contents_changed() override {
             target()->on_contents_changed();
+            cur.veh.part( cur.part ).invalidate_cargo_passage_cache();
             cur.veh.invalidate_mass();
         }
 
