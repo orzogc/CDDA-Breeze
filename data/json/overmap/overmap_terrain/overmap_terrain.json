@@ -973,7 +973,7 @@
     "type": "overmap_terrain",
     "id": "open_air_blimp",
     "looks_like": "open_air",
-    "name": "open air",
+    "name": "开放空域",
     "sym": ".",
     "color": "blue"
   }

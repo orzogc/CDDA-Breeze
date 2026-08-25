@@ -1024,6 +1024,7 @@
     "id": "crt_medblimp",
     "type": "vehicle",
     "name": "CRIT医疗后送飞艇",
+    "color_palette": "ems_standard",
     "parts": [
       {
         "x": 0,

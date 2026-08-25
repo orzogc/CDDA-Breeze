@@ -779,8 +779,11 @@ void map::vehmove()
     --airborne_vehicle_redraw_defer_depth;
     restore_airborne_vehicle_redraw_state.cancel();
     if( airborne_vehicle_redraw_defer_depth == 0 && airborne_vehicle_redraw_pending ) {
+        // Coalesce both the main UI invalidation and redraw request for the player's
+        // airborne vehicle.  The normal UI loop presents the finished frame, so do
+        // not force an extra display refresh from inside vehicle simulation.
+        g->invalidate_main_ui_adaptor();
         ui_manager::redraw_invalidated();
-        refresh_display();
         airborne_vehicle_redraw_pending = false;
     }
 }
@@ -1061,14 +1064,17 @@ vehicle *map::move_vehicle( vehicle &veh, const tripoint &dp, const tileray &fac
     // Redraw scene, but only if the player is not engaged in an activity and
     // the vehicle was seen before or after the move.
     if( !player_character.activity && ( seen || sees_veh( player_character, veh, true ) ) ) {
-        g->invalidate_main_ui_adaptor();
         const bool player_is_in_this_aircraft = player_character.posz() > 0 &&
                                                 veh.is_flying_in_air() &&
                                                 veh_pointer_or_null( veh_at( player_character.pos() ) ) == &veh;
 
         if( airborne_vehicle_redraw_defer_depth > 0 && player_is_in_this_aircraft ) {
+            // Large aircraft can cross many squares in one vehmove().  Defer the
+            // adaptor invalidation as well as the redraw so every intermediate
+            // square does not dirty the complete main UI.
             airborne_vehicle_redraw_pending = true;
         } else {
+            g->invalidate_main_ui_adaptor();
             ui_manager::redraw_invalidated();
             airborne_vehicle_redraw_pending = false;
         }
