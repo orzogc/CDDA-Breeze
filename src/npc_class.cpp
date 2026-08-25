@@ -261,6 +261,7 @@ void shopkeeper_item_group::deserialize( const JsonObject &jo )
     optional( jo, false, "trust", trust, 0 );
     optional( jo, false, "strict", strict, false );
     optional( jo, false, "rigid", rigid, false );
+    optional( jo, false, "restock_repeat_global", restock_repeat_global );
     optional( jo, false, "refusal", refusal );
     if( jo.has_member( "condition" ) ) {
         read_condition<dialogue>( jo, "condition", condition, false );

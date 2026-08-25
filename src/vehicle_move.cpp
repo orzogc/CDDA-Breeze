@@ -1064,6 +1064,11 @@ veh_collision vehicle::part_collision( int part, const tripoint &p,
             }
 
             time_stunned = time_duration::from_turns( ( rng( 0, dam ) > 10 ) + ( rng( 0, dam ) > 40 ) );
+            if( critter->blocks_physical_contact() ) {
+                time_stunned = 0_turns;
+                dam = 0;
+                critter->add_msg_if_player( m_good, _( "车辆的撞击在触及你之前停住了。" ) );
+            }
             if( time_stunned > 0_turns ) {
                 critter->add_effect( effect_stunned, time_stunned );
             }
@@ -1087,8 +1092,9 @@ veh_collision vehicle::part_collision( int part, const tripoint &p,
 
             // Don't fling if vertical - critter got smashed into the ground
             if( !vert_coll ) {
-                if( std::fabs( vel2_a ) > 10.0f ||
-                    std::fabs( e * mass * vel1_a ) > std::fabs( mass2 * ( 10.0f - vel2_a ) ) ) {
+                if( !critter->blocks_physical_contact() &&
+                    ( std::fabs( vel2_a ) > 10.0f ||
+                      std::fabs( e * mass * vel1_a ) > std::fabs( mass2 * ( 10.0f - vel2_a ) ) ) ) {
                     const units::angle angle = rng_float( -60_degrees, 60_degrees );
                     // Also handle the weird case when we don't have enough force
                     // but still have to push (in such case compare momentum)

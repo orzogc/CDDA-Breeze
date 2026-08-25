@@ -1269,6 +1269,10 @@
     "type": "json_flag"
   },
   {
+    "id": "SPATIAL_BARRIER",
+    "type": "json_flag"
+  },
+  {
     "id": "PORTAL_PROOF",
     "type": "json_flag"
   },

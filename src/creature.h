@@ -411,6 +411,9 @@ class Creature : public viewer
          */
         double ranged_target_size() const;
 
+        /** True when an active effect prevents physical objects and contact attacks from reaching this creature. */
+        bool blocks_physical_contact() const;
+
         // handles blocking of damage instance. mutates &dam
         virtual bool block_hit( Creature *source, bodypart_id &bp_hit,
                                 damage_instance &dam ) = 0;

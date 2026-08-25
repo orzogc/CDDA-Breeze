@@ -35,6 +35,7 @@
 #include "flag.h"
 #include "game.h"
 #include "game_constants.h"
+#include "global_vars.h"
 #include "game_inventory.h"
 #include "item.h"
 #include "item_group.h"
@@ -2349,17 +2350,26 @@ void npc::shop_restock()
     for( const shopkeeper_item_group &ig : myclass->get_shopkeeper_items() ) {
         if( ig.can_restock( *this ) ) {
             if( ig.rigid ) {
-                rigid_groups.emplace_back( ig.id );
+                int repeat = 1;
+                if( !ig.restock_repeat_global.empty() ) {
+                    const std::string raw_repeat = get_globals().get_global_value(
+                                                       "npctalk_var_" + ig.restock_repeat_global );
+                    repeat = raw_repeat.empty() ? 0 : std::max( 0, std::atoi( raw_repeat.c_str() ) );
+                }
+                for( int i = 0; i < repeat; ++i ) {
+                    rigid_groups.emplace_back( ig.id );
+                }
             } else {
                 value_groups.emplace_back( ig.id );
             }
         }
     }
 
+    const float merchant_spawn_rate = get_option<float>( "MERCHANT_ITEM_SPAWNRATE" );
     std::list<item> ret;
-    int shop_value = 75000;
+    int shop_value = static_cast<int>( 75000 * merchant_spawn_rate );
     if( my_fac ) {
-        shop_value = my_fac->wealth * 0.0075;
+        shop_value = static_cast<int>( my_fac->wealth * 0.0075 * merchant_spawn_rate );
         if( !my_fac->currency.is_empty() ) {
             item my_currency( my_fac->currency );
             if( !my_currency.is_null() ) {
@@ -2372,17 +2382,29 @@ void npc::shop_restock()
         }
     }
 
-    // First, populate trade goods using rigid groups.
-    // Rigid groups are always processed a single time, regardless of the shopkeeper's inventory size or desired total value of goods.
-    for( const item_group_id &rg : rigid_groups ) {
+    // First, populate trade goods using rigid groups.  The dedicated merchant spawn rate applies to
+    // fixed groups as well as value-budget groups, independently of map item spawn rate.
+    const auto add_rigid_group = [&]( const item_group_id &rg, float keep_chance ) {
         item_group::ItemList rigid_items = item_group::items_from( rg, calendar::turn );
         if( !rigid_items.empty() ) {
             for( item &tmpit : rigid_items ) {
-                if( !tmpit.is_null() ) {
+                if( !tmpit.is_null() &&
+                    ( keep_chance >= 1.0f || rng_float( 0.0, 1.0 ) < keep_chance ) ) {
                     tmpit.set_owner( *this );
                     ret.push_back( tmpit );
                 }
             }
+        }
+    };
+
+    const int full_restock_runs = static_cast<int>( std::floor( merchant_spawn_rate ) );
+    const float partial_restock_rate = merchant_spawn_rate - full_restock_runs;
+    for( const item_group_id &rg : rigid_groups ) {
+        for( int run = 0; run < full_restock_runs; ++run ) {
+            add_rigid_group( rg, 1.0f );
+        }
+        if( partial_restock_rate > 0.0f ) {
+            add_rigid_group( rg, partial_restock_rate );
         }
     }
 
@@ -2400,14 +2422,6 @@ void npc::shop_restock()
                 count += 1;
                 last_item = count > 10 && one_in( 100 );
             }
-        }
-
-        // This removes some items according to item spawn scaling factor
-        const float spawn_rate = get_option<float>( "ITEM_SPAWNRATE" );
-        if( spawn_rate < 1 ) {
-            ret.remove_if( [spawn_rate]( auto & ) {
-                return !( rng_float( 0, 1 ) < spawn_rate );
-            } );
         }
     }
 

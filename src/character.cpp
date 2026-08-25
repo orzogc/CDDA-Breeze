@@ -11200,6 +11200,12 @@ float Character::fall_damage_mod() const
 // force is maximum damage to hp before scaling
 int Character::impact( const int force, const tripoint &p )
 {
+    // Debug invincibility, incorporeality and spatial barriers stop impact side effects before armor and terrain handling.
+    if( has_trait( trait_DEBUG_NODMG ) || has_effect( effect_incorporeal ) ||
+        blocks_physical_contact() ) {
+        return 0;
+    }
+
     // Falls over ~30m are fatal more often than not
     // But that would be quite a lot considering 21 z-levels in game
     // so let's assume 1 z-level is comparable to 30 force
@@ -11300,14 +11306,34 @@ int Character::impact( const int force, const tripoint &p )
         }
     }
 
+    float fall_damage_multiplier = 1.0f;
+    if( !slam ) {
+        static const std::string multiplier_var =
+            "npctalk_var_general_fall_damage_fall_damage_multiplier";
+        static const std::string impact_force_var =
+            "npctalk_var_general_fall_damage_fall_impact_force";
+
+        set_value( multiplier_var, "1000" );
+        set_value( impact_force_var, std::to_string( effective_force ) );
+        effect_on_conditions::process_fall_damage( *this );
+
+        const std::string modified_multiplier = get_value( multiplier_var );
+        if( !modified_multiplier.empty() ) {
+            fall_damage_multiplier = std::max( 0.0f,
+                                               std::atoi( modified_multiplier.c_str() ) / 1000.0f );
+        }
+        remove_value( multiplier_var );
+        remove_value( impact_force_var );
+    }
+
     int total_dealt = 0;
-    if( mod * effective_force >= 5 ) {
+    if( mod * effective_force * fall_damage_multiplier >= 5 ) {
         for( const bodypart_id &bp : get_all_body_parts( get_body_part_flags::only_main ) ) {
             const int bash = effective_force * rng( 60, 100 ) / 100;
             damage_instance di;
-            di.add_damage( damage_type::BASH, bash, 0, armor_eff, mod );
+            di.add_damage( damage_type::BASH, bash, 0, armor_eff, mod * fall_damage_multiplier );
             // No good way to land on sharp stuff, so here modifier == 1.0f
-            di.add_damage( damage_type::CUT, cut, 0, armor_eff, 1.0f );
+            di.add_damage( damage_type::CUT, cut, 0, armor_eff, fall_damage_multiplier );
             total_dealt += deal_damage( nullptr, bp, di ).total_damage();
         }
     }

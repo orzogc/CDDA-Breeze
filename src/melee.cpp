@@ -610,6 +610,16 @@ bool Character::melee_attack_abstract( Creature &t, bool allow_special,
         return false;
     }
 
+    if( t.blocks_physical_contact() ) {
+        t.add_msg_if_player( m_good, _( "%s 的攻击在触及你之前停住了。" ), disp_name() );
+        const int total_stam = get_total_melee_stamina_cost();
+        mod_stamina( std::min( -50, total_stam ) );
+        const float weary_mult = exertion_adjusted_move_multiplier( EXTRA_EXERCISE );
+        mod_moves( -move_cost * ( 1 / weary_mult ) );
+        martial_arts_data->ma_onattack_effects( *this );
+        return true;
+    }
+
     if( is_avatar() && move_cost > 1000 && calendar::turn > melee_warning_turn ) {
         const std::string &action = query_popup()
                                     .context( "CANCEL_ACTIVITY_OR_IGNORE_QUERY" )

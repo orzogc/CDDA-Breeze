@@ -2941,6 +2941,10 @@ bool mattack::grab( monster *z )
     }
 
     z->moves -= 80;
+    if( target->blocks_physical_contact() ) {
+        target->add_msg_if_player( m_good, _( "%s 的抓取在触及你之前停住了。" ), z->disp_name() );
+        return true;
+    }
 
     const game_message_type msg_type = target->is_avatar() ? m_warning : m_info;
     if( dodge_check( z, target ) ) {
