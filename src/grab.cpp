@@ -109,9 +109,13 @@ bool game::grabbed_veh_move_cross_z( const tripoint &dp, const tripoint &player_
             m.veh_at( target ) || occupied_by_creature ) {
             // [临时诊断] 定位跨层放置失败的具体检查项，问题定位后移除
             add_msg( m_info, _( "[vdrag诊断] target=%s dp=%s inbounds=%d passable=%d floor=%d furn=%d veh=%d creature=%d" ),
-                     target.to_string(), dp.to_string(), m.inbounds( target ), m.passable( target ),
-                     m.has_floor_or_support( target ), m.has_furn( target ),
-                     m.veh_at( target ).has_value(), occupied_by_creature );
+                     target.to_string(), dp.to_string(),
+                     static_cast<int>( m.inbounds( target ) ),
+                     static_cast<int>( m.passable( target ) ),
+                     static_cast<int>( m.has_floor_or_support( target ) ),
+                     static_cast<int>( m.has_furn( target ) ),
+                     static_cast<int>( m.veh_at( target ).has_value() ),
+                     static_cast<int>( occupied_by_creature ) );
             add_msg( m_info, _( "跨层通道另一端没有足够空间放下%s。" ), grabbed_vehicle->disp_name() );
             u.grab( object_type::NONE );
             return true;
