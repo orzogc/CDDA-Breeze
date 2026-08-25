@@ -472,6 +472,8 @@ class vpart_info
 
         /** Cargo location volume */
         units::volume size = 0_ml;
+        /** Stored cargo volume at which this part stops being passable.  Zero disables it. */
+        units::volume cargo_passage_limit = 0_ml;
 
         /** hint to tilesets for what tile to use if this part doesn't have one */
         std::string looks_like;

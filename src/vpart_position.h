@@ -80,6 +80,8 @@ class vpart_position
          * Broken parts are also never obstacles.
          */
         std::optional<vpart_reference> obstacle_at_part() const;
+        /** Returns true if cargo on this vehicle tile has blocked passage. */
+        bool cargo_blocks_passage() const;
         /**
          * Returns the part displayed at this point of the vehicle.
          */
@@ -129,6 +131,9 @@ class optional_vpart_position : public std::optional<vpart_position>
         std::optional<vpart_reference> avail_part_with_feature( const std::string &f ) const;
         std::optional<vpart_reference> avail_part_with_feature( vpart_bitflags f ) const;
         std::optional<vpart_reference> obstacle_at_part() const;
+        bool cargo_blocks_passage() const {
+            return has_value() && value().cargo_blocks_passage();
+        }
         std::optional<vpart_reference> part_displayed() const;
         std::optional<vpart_reference> part_with_tool( const itype_id &tool_type ) const;
         std::string extended_description() const;

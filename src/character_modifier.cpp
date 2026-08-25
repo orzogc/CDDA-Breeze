@@ -145,20 +145,32 @@ void character_modifier::load( const JsonObject &jo, const std::string & )
 
 // the total of the manipulator score in the best limb group
 static float manipulator_score( const std::map<bodypart_str_id, bodypart> &body,
-                                body_part_type::type type, int override_encumb, int override_wounds )
+                                body_part_type::type type, int override_encumb, int override_wounds,
+                                bool ignore_hand_clothing_encumbrance = false )
 {
     std::map<body_part_type::type, std::vector<std::pair<bodypart, float>>> bodypart_groups;
     std::vector<float> score_groups;
     const bool required_type = type != body_part_type::type::num_types;
     for( const std::pair<const bodypart_str_id, bodypart> &id : body ) {
+        bodypart score_part = id.second;
+        if( ignore_hand_clothing_encumbrance &&
+            ( id.first == body_part_hand_l || id.first == body_part_hand_r ) ) {
+            encumbrance_data encumbrance = score_part.get_encumbrance_data();
+            encumbrance.encumbrance = std::max( 0, encumbrance.encumbrance -
+                                                 encumbrance.armor_encumbrance -
+                                                 encumbrance.layer_penalty );
+            encumbrance.armor_encumbrance = 0;
+            encumbrance.layer_penalty = 0;
+            score_part.set_encumbrance_data( encumbrance );
+        }
         if( required_type ) {
             for( const auto &bp_type : id.first->limbtypes ) {
                 if( bp_type.first == type ) {
-                    bodypart_groups[ bp_type.first ].emplace_back( id.second, bp_type.second );
+                    bodypart_groups[ bp_type.first ].emplace_back( score_part, bp_type.second );
                 }
             }
         } else if( id.first->primary_limb_type() != body_part_type::type::num_types ) {
-            bodypart_groups[ id.first->primary_limb_type() ].emplace_back( id.second,
+            bodypart_groups[ id.first->primary_limb_type() ].emplace_back( score_part,
                     id.first->limbtypes.at( id.first->primary_limb_type() ) );
         }
     }
@@ -206,6 +218,11 @@ float Character::get_limb_score( const limb_score_id &score, const body_part_typ
         total += mod;
     }
     return std::max( 0.0f, total );
+}
+
+float Character::get_crafting_manipulation_score() const
+{
+    return manipulator_score( body, body_part_type::type::num_types, -1, -1, true );
 }
 
 // Modifiers

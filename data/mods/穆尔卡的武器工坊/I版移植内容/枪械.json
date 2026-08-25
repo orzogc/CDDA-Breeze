@@ -1352,5 +1352,117 @@
     ],
     "bashing": 12,
     "looks_like": "svt"
+  },
+  {
+    "type": "GUN",
+    "color": "dark_gray",
+    "symbol": "(",
+    "weapon_category": [
+      "AUTOMATIC_RIFLES"
+    ],
+    "to_hit": -1,
+    "name": {
+      "str": "HK433 突击步枪"
+    },
+    "skill": "rifle",
+    "sight_dispersion": 40,
+    "durability": 8,
+    "handling": 20,
+    "reload": 150,
+    "reload_noise_volume": 10,
+    "faults": [
+      "fault_gun_blackpowder",
+      "fault_gun_dirt",
+      "fault_gun_chamber_spent"
+    ],
+    "id": "hk433",
+    "price_postapoc": "18 USD",
+    "ammo": [
+      "223"
+    ],
+    "min_cycle_recoil": 1350,
+    "looks_like": "hk416",
+    "description": "HK433是黑克勒科赫研制的模块化5.56毫米突击步枪，设计上融合G36与HK416的特点，采用短行程活塞与可更换上机匣，并配有折叠伸缩枪托和现代附件接口。眼前这支安装了11英寸短枪管上机匣，适合车辆和近距离环境，同时保留标准STANAG弹匣供弹能力。",
+    "weight": "1300 g",
+    "volume": "1600 ml",
+    "longest_side": "557 mm",
+    "price": "5 kUSD 400 USD",
+    "material": [
+      "steel",
+      "aluminum",
+      "plastic"
+    ],
+    "dispersion": 180,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        4
+      ]
+    ],
+    "default_mods": [
+      "retool_hk433_short",
+      "high_end_folding_stock"
+    ],
+    "valid_mod_locations": [
+      [
+        "barrel",
+        1
+      ],
+      [
+        "bore",
+        1
+      ],
+      [
+        "mechanism",
+        2
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock accessory",
+        1
+      ],
+      [
+        "stock",
+        1
+      ]
+    ],
+    "flags": [
+      "NO_TURRET"
+    ],
+    "bashing": 12,
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "stanag30",
+          "stanag5",
+          "stanag5ranger",
+          "stanag10",
+          "stanag10ranger",
+          "stanag20",
+          "stanag20ranger",
+          "stanag30ranger",
+          "stanag40",
+          "stanag40ranger",
+          "stanag50",
+          "stanag60",
+          "stanag60drum",
+          "stanag90",
+          "stanag100",
+          "stanag100drum",
+          "stanag150",
+          "survivor223mag"
+        ]
+      }
+    ]
   }
 ]

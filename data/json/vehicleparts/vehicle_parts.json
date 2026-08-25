@@ -2252,8 +2252,9 @@
     "broken_symbol": "#",
     "broken_color": "dark_gray",
     "durability": 250,
-    "size": "500 L",
-    "//": "Based roughly on a quarter of a 2m x 1.2m pickup truck bed, assuming a reasonable amount of piling up (about 80cm, ie. sticking up around 20cm over the sides if really stacked).  Could definitely use more subtypes.",
+    "size": "1000 L",
+    "cargo_passage_limit": "800 L",
+    "//": "General-purpose cargo volume.  Once 800 L is occupied there is no longer enough clear space to pass through the tile.",
     "item": "cargo_rack",
     "location": "center",
     "requirements": {

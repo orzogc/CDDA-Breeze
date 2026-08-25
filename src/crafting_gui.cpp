@@ -62,7 +62,6 @@
 static const std::string flag_BLIND_EASY( "BLIND_EASY" );
 static const std::string flag_BLIND_HARD( "BLIND_HARD" );
 
-static const limb_score_id limb_score_manip( "manip" );
 static const string_id<struct furn_t> furn_f_fake_bench_hands( "f_fake_bench_hands" );
 static const string_id<struct furn_t> furn_f_ground_crafting_spot( "f_ground_crafting_spot" );
 static const field_type_str_id fd_crafting_spot( "fd_crafting_spot" );
@@ -337,7 +336,7 @@ static float crafting_speed_at( const Character &crafter, const recipe &rec,
 {
     const float result = crafter.morale_crafting_speed_multiplier( rec ) *
                          crafting_light_at( crafter, rec, workplace ) *
-                         crafter.get_limb_score( limb_score_manip ) *
+                         crafter.get_crafting_manipulation_score() *
                          workbench_base_multiplier_at( workplace );
     return std::max( result, 0.0f );
 }

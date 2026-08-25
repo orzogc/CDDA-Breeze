@@ -2032,5 +2032,263 @@
       "ZOOM"
     ],
     "longest_side": "40 cm"
+  },
+  {
+    "id": "retool_hk433_short",
+    "type": "GUNMOD",
+    "name": {
+      "str": "HK433 短枪管上机匣"
+    },
+    "description": "这是HK433专用的完整短枪管上机匣，包含11英寸枪管，护木和枪机组件，可快速替换原有上机匣，以获得更紧凑的全枪长度，继续使用5.56毫米弹药和STANAG弹匣。",
+    "weight": "2100 g",
+    "volume": "1350 ml",
+    "longest_side": "279 mm",
+    "integral_volume": "1350 ml",
+    "integral_weight": "2100 g",
+    "integral_longest_side": "279 mm",
+    "price": "259 USD 99 cent",
+    "price_postapoc": "10 USD",
+    "material": [
+      "steel",
+      "aluminum",
+      "plastic"
+    ],
+    "symbol": ":",
+    "color": "green",
+    "location": "bore",
+    "mod_targets": [
+      "hk433"
+    ],
+    "install_time": "5 m",
+    "ammo_modifier": [
+      "223"
+    ],
+    "magazine_adaptor": [
+      [
+        "223",
+        [
+          "stanag30",
+          "stanag5",
+          "stanag5ranger",
+          "stanag10",
+          "stanag10ranger",
+          "stanag20",
+          "stanag20ranger",
+          "stanag30ranger",
+          "stanag40",
+          "stanag40ranger",
+          "stanag50",
+          "stanag60",
+          "stanag60drum",
+          "stanag90",
+          "stanag100",
+          "stanag100drum",
+          "stanag150",
+          "survivor223mag"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        0
+      ]
+    ],
+    "add_mod": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "bayonet lug",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ],
+      [
+        "muzzle",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "retool_hk433_medium",
+    "type": "GUNMOD",
+    "name": {
+      "str": "HK433 标准枪管上机匣"
+    },
+    "description": "这是HK433专用的完整标准枪管上机匣，包含14.5英寸枪管，护木和枪机组件，可在紧凑性和射击性能之间取得平衡，继续使用5.56毫米弹药和STANAG弹匣。",
+    "weight": "2200 g",
+    "volume": "1360 ml",
+    "longest_side": "368 mm",
+    "integral_volume": "1360 ml",
+    "integral_weight": "2200 g",
+    "integral_longest_side": "368 mm",
+    "price": "265 USD 50 cent",
+    "price_postapoc": "10 USD",
+    "material": [
+      "steel",
+      "aluminum",
+      "plastic"
+    ],
+    "symbol": ":",
+    "color": "green",
+    "location": "bore",
+    "mod_targets": [
+      "hk433"
+    ],
+    "install_time": "5 m",
+    "ammo_modifier": [
+      "223"
+    ],
+    "magazine_adaptor": [
+      [
+        "223",
+        [
+          "stanag30",
+          "stanag5",
+          "stanag5ranger",
+          "stanag10",
+          "stanag10ranger",
+          "stanag20",
+          "stanag20ranger",
+          "stanag30ranger",
+          "stanag40",
+          "stanag40ranger",
+          "stanag50",
+          "stanag60",
+          "stanag60drum",
+          "stanag90",
+          "stanag100",
+          "stanag100drum",
+          "stanag150",
+          "survivor223mag"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        0
+      ]
+    ],
+    "add_mod": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ],
+      [
+        "muzzle",
+        1
+      ]
+    ],
+    "dispersion_modifier": -5
+  },
+  {
+    "id": "retool_hk433_long",
+    "type": "GUNMOD",
+    "name": {
+      "str": "HK433 长枪管上机匣"
+    },
+    "description": "这是HK433专用的完整长枪管上机匣，包含16.5英寸枪管，护木和枪机组件，可牺牲部分紧凑性换取更稳定的远距离性能，继续使用5.56毫米弹药和STANAG弹匣。",
+    "weight": "2250 g",
+    "volume": "1410 ml",
+    "longest_side": "419 mm",
+    "integral_volume": "1410 ml",
+    "integral_weight": "2250 g",
+    "integral_longest_side": "419 mm",
+    "price": "265 USD 50 cent",
+    "price_postapoc": "10 USD",
+    "material": [
+      "steel",
+      "aluminum",
+      "plastic"
+    ],
+    "symbol": ":",
+    "color": "green",
+    "location": "bore",
+    "mod_targets": [
+      "hk433"
+    ],
+    "install_time": "5 m",
+    "ammo_modifier": [
+      "223"
+    ],
+    "magazine_adaptor": [
+      [
+        "223",
+        [
+          "stanag30",
+          "stanag5",
+          "stanag5ranger",
+          "stanag10",
+          "stanag10ranger",
+          "stanag20",
+          "stanag20ranger",
+          "stanag30ranger",
+          "stanag40",
+          "stanag40ranger",
+          "stanag50",
+          "stanag60",
+          "stanag60drum",
+          "stanag90",
+          "stanag100",
+          "stanag100drum",
+          "stanag150",
+          "survivor223mag"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        0
+      ]
+    ],
+    "add_mod": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ],
+      [
+        "muzzle",
+        1
+      ]
+    ],
+    "dispersion_modifier": -10
   }
 ]
