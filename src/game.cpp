@@ -11239,6 +11239,7 @@ bool game::phasing_move( const tripoint &dest_loc, const bool via_ramp )
 bool game::can_move_furniture( tripoint fdest, const tripoint &dp )
 {
     const bool pulling_furniture = dp.xy() == -u.grab_point.xy();
+    const bool cross_z_move = dp.z != 0;
     const bool has_floor = m.has_floor( fdest );
     creature_tracker &creatures = get_creature_tracker();
     bool is_ramp_or_road = m.has_flag( ter_furn_flag::TFLAG_RAMP_DOWN, fdest ) ||
@@ -11248,7 +11249,7 @@ bool game::can_move_furniture( tripoint fdest, const tripoint &dp )
             creatures.creature_at<npc>( fdest ) == nullptr &&
             creatures.creature_at<monster>( fdest ) == nullptr &&
             ( !pulling_furniture || is_empty( u.pos() + dp ) ) &&
-            ( !has_floor || m.has_flag( ter_furn_flag::TFLAG_FLAT, fdest ) ||
+            ( cross_z_move || !has_floor || m.has_flag( ter_furn_flag::TFLAG_FLAT, fdest ) ||
               is_ramp_or_road ) &&
             !m.has_furn( fdest ) &&
             !m.veh_at( fdest ) &&
@@ -11265,7 +11266,7 @@ int game::grabbed_furn_move_time( const tripoint &dp )
         return 0;
     }
 
-    tripoint fdest = fpos + tripoint( dp.xy(), 0 ); // intended destination of furniture.
+    tripoint fdest = fpos + dp; // intended destination of furniture.
 
     const bool canmove = can_move_furniture( fdest, dp );
     const furn_t &furntype = m.furn( fpos ).obj();
@@ -11334,20 +11335,12 @@ bool game::grabbed_furn_move( const tripoint &dp )
         return false;
     }
 
-    int ramp_offset = 0;
-    // Furniture could be on a ramp at different time than player so adjust for that.
-    if( m.has_flag( ter_furn_flag::TFLAG_RAMP_UP, fpos + tripoint( dp.xy(), 0 ) ) ) {
-        ramp_offset = 1;
-    } else if( m.has_flag( ter_furn_flag::TFLAG_RAMP_DOWN, fpos + tripoint( dp.xy(), 0 ) ) ) {
-        ramp_offset = -1;
-    }
-
     const bool pushing_furniture = dp.xy() ==  u.grab_point.xy();
     const bool pulling_furniture = dp.xy() == -u.grab_point.xy();
     const bool shifting_furniture = !pushing_furniture && !pulling_furniture;
 
-    // Intended destination of furniture.
-    const tripoint fdest = fpos + tripoint( dp.xy(), ramp_offset );
+    // Intended destination of furniture, including a possible z-level change.
+    const tripoint fdest = fpos + dp;
 
     // Unfortunately, game::is_empty fails for tiles we're standing on,
     // which will forbid pulling, so:
@@ -11487,8 +11480,6 @@ bool game::grabbed_furn_move( const tripoint &dp )
         return true;
     }
 
-    u.grab_point.z += ramp_offset;
-
     if( shifting_furniture ) {
         // We didn't move
         tripoint d_sum = u.grab_point + dp;
@@ -11512,7 +11503,7 @@ bool game::grabbed_furn_move( const tripoint &dp )
     return false;
 }
 
-bool game::grabbed_move( const tripoint &dp, const bool via_ramp )
+bool game::grabbed_move( const tripoint &dp, const bool via_ramp, bool stairs_move )
 {
     if( u.get_grab_type() == object_type::NONE ) {
         return false;
@@ -11520,7 +11511,7 @@ bool game::grabbed_move( const tripoint &dp, const bool via_ramp )
 
     // vehicle: pulling, pushing, or moving around the grabbed object.
     if( u.get_grab_type() == object_type::VEHICLE ) {
-        return grabbed_veh_move( dp );
+        return grabbed_veh_move_helper( dp, via_ramp, stairs_move );
     }
 
     if( u.get_grab_type() == object_type::FURNITURE ) {
@@ -12161,12 +12152,30 @@ void game::vertical_move( int movez, bool force, bool peeking, bool check_traps 
         return;
     }
 
+    const object_type grabbed_type = u.get_grab_type();
+    std::optional<tripoint_abs_ms> grabbed_abs_pos;
     if( force ) {
-        // Let go of a grabbed cart.
         u.grab( object_type::NONE );
     } else if( u.grab_point != tripoint_zero ) {
-        add_msg( m_info, _( "You can't drag things up and down stairs." ) );
-        return;
+        if( climbing || can_swim_vertically ) {
+            add_msg( m_info, _( "这里不适合拖着东西跨层移动。" ) );
+            return;
+        }
+
+        const tripoint grabbed_pos = u.pos() + u.grab_point;
+        bool found_grabbed_object = false;
+        if( grabbed_type == object_type::FURNITURE ) {
+            found_grabbed_object = here.has_furn( grabbed_pos );
+        } else if( grabbed_type == object_type::VEHICLE ) {
+            found_grabbed_object = static_cast<bool>( here.veh_at( grabbed_pos ) );
+        }
+
+        if( !found_grabbed_object ) {
+            add_msg( m_info, _( "找不到原先抓住的物体，你松开了手。" ) );
+            u.grab( object_type::NONE );
+        } else {
+            grabbed_abs_pos = here.getglobal( grabbed_pos );
+        }
     }
 
     // TODO: Use u.posz() instead of m.abs_sub
@@ -12351,6 +12360,34 @@ void game::vertical_move( int movez, bool force, bool peeking, bool check_traps 
     // Now that we know the player's destination position, we can move their mount as well
     if( u.is_mounted() ) {
         u.mounted_creature->setpos( u.pos() );
+    }
+
+    if( grabbed_abs_pos.has_value() ) {
+        const tripoint grabbed_pos = here.getlocal( *grabbed_abs_pos );
+        bool found_grabbed_object = false;
+        if( here.inbounds( grabbed_pos ) ) {
+            if( grabbed_type == object_type::FURNITURE ) {
+                found_grabbed_object = here.has_furn( grabbed_pos );
+            } else if( grabbed_type == object_type::VEHICLE ) {
+                found_grabbed_object = static_cast<bool>( here.veh_at( grabbed_pos ) );
+            }
+        }
+
+        if( !found_grabbed_object ) {
+            add_msg( m_info, _( "跨层后找不到原先抓住的物体，你松开了手。" ) );
+            u.grab( object_type::NONE );
+        } else {
+            u.grab_point = grabbed_pos - u.pos();
+            const std::optional<tripoint> dir = choose_direction(
+                        _( "选择把拖拽物放在楼梯另一端的哪个方向。" ) );
+            if( !dir ) {
+                u.grab( object_type::NONE );
+            } else {
+                const tripoint target = u.pos() + tripoint( dir->xy(), 0 );
+                const tripoint dp = target - grabbed_pos;
+                grabbed_move( dp, false, true );
+            }
+        }
     }
 
     // This ugly check is here because of stair teleport bullshit
