@@ -105,7 +105,7 @@ bool game::grabbed_veh_move_cross_z( const tripoint &dp, const tripoint &player_
         const bool occupied_by_creature = target == player_destination ||
                                           creatures.creature_at<Creature>( target ) != nullptr;
         if( !m.inbounds( target ) || !m.passable( target ) ||
-            !m.has_floor_or_support( target ) || m.has_furn( target ) ||
+            !m.has_floor( target ) || m.has_furn( target ) ||
             m.veh_at( target ) || occupied_by_creature ) {
             add_msg( m_info, _( "跨层通道另一端没有足够空间放下%s。" ), grabbed_vehicle->disp_name() );
             u.grab( object_type::NONE );

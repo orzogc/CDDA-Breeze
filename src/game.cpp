@@ -11239,6 +11239,7 @@ bool game::phasing_move( const tripoint &dest_loc, const bool via_ramp )
 bool game::can_move_furniture( tripoint fdest, const tripoint &dp )
 {
     const bool pulling_furniture = dp.xy() == -u.grab_point.xy();
+    const bool cross_z_move = dp.z != 0;
     const bool has_floor = m.has_floor( fdest );
     creature_tracker &creatures = get_creature_tracker();
     bool is_ramp_or_road = m.has_flag( ter_furn_flag::TFLAG_RAMP_DOWN, fdest ) ||
@@ -11248,7 +11249,7 @@ bool game::can_move_furniture( tripoint fdest, const tripoint &dp )
             creatures.creature_at<npc>( fdest ) == nullptr &&
             creatures.creature_at<monster>( fdest ) == nullptr &&
             ( !pulling_furniture || is_empty( u.pos() + dp ) ) &&
-            ( !has_floor || m.has_flag( ter_furn_flag::TFLAG_FLAT, fdest ) ||
+            ( cross_z_move || !has_floor || m.has_flag( ter_furn_flag::TFLAG_FLAT, fdest ) ||
               is_ramp_or_road ) &&
             !m.has_furn( fdest ) &&
             !m.veh_at( fdest ) &&
