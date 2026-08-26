@@ -911,7 +911,9 @@ class game
         /** Check for dangerous stuff at dest_loc, return false if the player decides
         not to step there */
         // Handle pushing during move, returns true if it handled the move
-        bool grabbed_move( const tripoint &dp, bool via_ramp );
+        bool grabbed_move( const tripoint &dp, bool via_ramp, bool stairs_move = false );
+        bool grabbed_veh_move_helper( const tripoint &dp, bool via_ramp, bool stairs_move );
+        bool grabbed_veh_move_cross_z( const tripoint &dp, const tripoint &player_destination );
         bool grabbed_veh_move( const tripoint &dp );
 
         void control_vehicle(); // Use vehicle controls  '^'
