@@ -108,6 +108,7 @@
         "parts": [
           "xlframe_vertical",
           "door_sliding",
+          "ladder_3",
           "airship_balloon"
         ]
       },
@@ -201,6 +202,7 @@
         "parts": [
           "xlframe_vertical",
           "door_sliding",
+          "ladder_3",
           "airship_balloon"
         ]
       },

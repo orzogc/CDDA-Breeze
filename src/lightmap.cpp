@@ -252,6 +252,70 @@ void map::build_sunlight_cache( int pzlev )
     // Plus one zlevel to prevent clipping inside structures
     const int zlev_max = clamp( calc_max_populated_zlev() + 1, pzlev + 1, OVERMAP_HEIGHT );
 
+    // Flying vehicles cast a soft vertical sunlight shadow.  Keep this local to the
+    // sunlight rebuild: no per-z persistent cache, no periodic EOC, no sun-angle work.
+    using sunlight_shadow_mask = std::bitset<MAPSIZE_X * MAPSIZE_Y>;
+    constexpr float airborne_shadow_core_factor = 0.75f;
+    constexpr float airborne_shadow_edge_factor = 0.88f;
+    sunlight_shadow_mask airborne_shadow_core_above;
+    sunlight_shadow_mask airborne_shadow_edge_above;
+    sunlight_shadow_mask airborne_shadow_core_current;
+    sunlight_shadow_mask airborne_shadow_edge_current;
+
+    const auto shadow_index = []( const int x, const int y ) -> size_t {
+        return static_cast<size_t>( x ) * MAPSIZE_Y + static_cast<size_t>( y );
+    };
+    const auto collect_airborne_shadow = [&]( const level_cache &cache, const int z,
+    sunlight_shadow_mask & core, sunlight_shadow_mask & edge ) {
+        core.reset();
+        edge.reset();
+        if( z <= 0 || cache.vehicle_list.empty() ) {
+            return;
+        }
+
+        std::vector<point> footprint;
+        for( const vehicle *veh : cache.vehicle_list ) {
+            if( veh == nullptr || !veh->is_flying_in_air() ) {
+                continue;
+            }
+            for( const vpart_reference &vp : veh->get_all_parts() ) {
+                if( vp.part().removed ) {
+                    continue;
+                }
+                const tripoint pos = veh->global_part_pos3( vp.part() );
+                if( pos.x < 0 || pos.x >= MAPSIZE_X || pos.y < 0 || pos.y >= MAPSIZE_Y ) {
+                    continue;
+                }
+                const size_t index = shadow_index( pos.x, pos.y );
+                if( !core.test( index ) ) {
+                    core.set( index );
+                    footprint.emplace_back( pos.xy() );
+                }
+            }
+        }
+
+        // One-tile feathering is deliberately grid based.  It is cheap, stable and
+        // avoids pretending the rest of the game's sunlight model has a sun angle.
+        for( const point &p : footprint ) {
+            for( int dx = -1; dx <= 1; ++dx ) {
+                for( int dy = -1; dy <= 1; ++dy ) {
+                    if( dx == 0 && dy == 0 ) {
+                        continue;
+                    }
+                    const int nx = p.x + dx;
+                    const int ny = p.y + dy;
+                    if( nx < 0 || nx >= MAPSIZE_X || ny < 0 || ny >= MAPSIZE_Y ) {
+                        continue;
+                    }
+                    const size_t index = shadow_index( nx, ny );
+                    if( !core.test( index ) ) {
+                        edge.set( index );
+                    }
+                }
+            }
+        }
+    };
+
     // true if all previous z-levels are fully transparent to light (no floors, transparency >= air)
     bool fully_outside = true;
 
@@ -269,6 +333,8 @@ void map::build_sunlight_cache( int pzlev )
     for( int zlev = zlev_max; zlev >= zlev_min; zlev-- ) {
 
         level_cache &map_cache = get_cache( zlev );
+        collect_airborne_shadow( map_cache, zlev, airborne_shadow_core_current,
+                                 airborne_shadow_edge_current );
         map_cache.natural_light_level_cache = g->natural_light_level( zlev );
         auto &lm = map_cache.lm;
         // Grab illumination at ground level.
@@ -305,6 +371,14 @@ void map::build_sunlight_cache( int pzlev )
                                                      this_floor_cache[x][y] );
                 }
             }
+            // A flying vehicle does not turn open sky into a structural floor, but
+            // the level below must leave the fast-fill path so its soft shadow can
+            // be propagated once.
+            if( airborne_shadow_core_current.any() ) {
+                fully_outside = false;
+            }
+            airborne_shadow_core_above = airborne_shadow_core_current;
+            airborne_shadow_edge_above = airborne_shadow_edge_current;
             continue;
         }
 
@@ -316,6 +390,13 @@ void map::build_sunlight_cache( int pzlev )
         const auto &prev_lm = prev_map_cache.lm;
         const auto &prev_transparency_cache = prev_map_cache.transparency_cache;
         const auto &prev_floor_cache = prev_map_cache.floor_cache;
+        const level_cache *airborne_sky_cache = nullptr;
+        if( airborne_shadow_core_above.any() ) {
+            // z+2 is the light immediately above a flying vehicle on z+1.  Using it
+            // prevents the vehicle's own roof/interior floor cache from turning the
+            // ground shadow into an opaque black building shadow.
+            airborne_sky_cache = &get_cache_ref( std::min( zlev + 2, zlev_max ) );
+        }
         const auto &outside_cache = map_cache.outside_cache;
         const float sight_penalty = get_weather().weather_id->sight_penalty;
         // TODO: Replace these with a lookup inside the four_quadrants class.
@@ -348,6 +429,17 @@ void map::build_sunlight_cache( int pzlev )
                         continue;
                     }
 
+                    const size_t prev_shadow_index = shadow_index( prev.x, prev.y );
+                    if( i == 0 && airborne_sky_cache != nullptr &&
+                        airborne_shadow_core_above.test( prev_shadow_index ) ) {
+                        const float sky_light = airborne_sky_cache->lm[prev.x][prev.y].max();
+                        const float shadowed_light = std::max( inside_light_level,
+                                                             sky_light * airborne_shadow_core_factor );
+                        lm[x][y].fill( shadowed_light );
+                        fully_inside &= shadowed_light <= inside_light_level;
+                        break;
+                    }
+
                     float prev_light_max;
                     float prev_transparency = prev_transparency_cache[prev.x][prev.y];
                     // This is pretty gross, this cancels out the per-tile transparency effect
@@ -359,8 +451,12 @@ void map::build_sunlight_cache( int pzlev )
                     if( prev_transparency > LIGHT_TRANSPARENCY_SOLID &&
                         !prev_floor_cache[prev.x][prev.y] &&
                         ( prev_light_max = prev_lm[prev.x][prev.y].max() ) > 0.0 ) {
-                        const float light_level = clamp( prev_light_max * LIGHT_TRANSPARENCY_OPEN_AIR / prev_transparency,
-                                                         inside_light_level, prev_light_max );
+                        float light_level = clamp( prev_light_max * LIGHT_TRANSPARENCY_OPEN_AIR / prev_transparency,
+                                                   inside_light_level, prev_light_max );
+                        if( airborne_shadow_edge_above.test( prev_shadow_index ) ) {
+                            light_level = std::max( inside_light_level,
+                                                   light_level * airborne_shadow_edge_factor );
+                        }
 
                         if( i == 0 ) {
                             lm[x][y].fill( light_level );
@@ -375,6 +471,8 @@ void map::build_sunlight_cache( int pzlev )
                 }
             }
         }
+        airborne_shadow_core_above = airborne_shadow_core_current;
+        airborne_shadow_edge_above = airborne_shadow_edge_current;
     }
 }
 

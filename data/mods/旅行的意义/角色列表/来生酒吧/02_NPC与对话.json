@@ -1354,7 +1354,7 @@
   {
     "id": "TALK_TRAVEL_AFTERLIFE_CLAIRE_VEHICLE_SALES",
     "type": "talk_topic",
-    "dynamic_line": "克莱尔从抽屉里抽出一张手写清单，价格后面全是商会币的数量。\n“现在能稳定交付的就这些。小型房车一千二，普通房车两千二，跑车三千，豪华房车四千五。屋顶还有一艘能飞的老家伙，九千。都是整理到能直接开走的状态，不卖那种发动一下就掉轮子的废铁。地面整车共用北侧交付车库，一次只能停一辆。你把上一辆开出去以后告诉我一声，我再把下一辆开进去。飞船不占车库，它在屋顶。每种型号我暂时只给你留一辆，别把这里当自动售车机。”",
+    "dynamic_line": "克莱尔从抽屉里抽出一张手写清单，价格后面全是商会币的数量。\n“现在能稳定交付的就这些。小型房车一千二，普通房车两千二，跑车三千，豪华房车四千五。屋顶的飞行载具有三种，那艘木制老家伙九千，商用飞艇一万四，CRIT医疗后送飞艇一万八。都是整理到能直接开走的状态，不卖那种发动一下就掉轮子的废铁。地面整车共用北侧交付车库，一次只能停一辆。屋顶停机坪也一次只能交付一艘。把上一辆开出去以后告诉我一声，我再给你交下一辆。每种型号我暂时只给你留一辆，别把这里当自动售车机。”",
     "responses": [
       {
         "text": "买一辆小型房车，1200商会币。",
@@ -1582,23 +1582,96 @@
                 "context": "travel_afterlife_vehicle_sale",
                 "value": "yes"
               }
+            },
+            {
+              "not": {
+                "u_has_var": "roof_delivery_occupied",
+                "type": "dialogue",
+                "context": "travel_afterlife_vehicle_sale",
+                "value": "yes"
+              }
             }
           ]
         }
       },
       {
-        "text": "上一辆已经开出交付区了，车位空了。",
-        "topic": "TALK_TRAVEL_AFTERLIFE_CLAIRE_VEHICLE_SALES",
+        "text": "买一艘商用飞艇，14000商会币。",
+        "topic": "TALK_TRAVEL_AFTERLIFE_CLAIRE_BLIMP_CONFIRM",
+        "condition": {
+          "and": [
+            {
+              "u_has_items": {
+                "item": "FMCNote",
+                "count": 14000
+              }
+            },
+            {
+              "not": {
+                "u_has_var": "blimp",
+                "type": "dialogue",
+                "context": "travel_afterlife_vehicle_sale",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "u_has_var": "roof_delivery_occupied",
+                "type": "dialogue",
+                "context": "travel_afterlife_vehicle_sale",
+                "value": "yes"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "text": "买一艘CRIT医疗后送飞艇，18000商会币。",
+        "topic": "TALK_TRAVEL_AFTERLIFE_CLAIRE_MEDBLIMP_CONFIRM",
+        "condition": {
+          "and": [
+            {
+              "u_has_items": {
+                "item": "FMCNote",
+                "count": 18000
+              }
+            },
+            {
+              "not": {
+                "u_has_var": "crt_medblimp",
+                "type": "dialogue",
+                "context": "travel_afterlife_vehicle_sale",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "u_has_var": "roof_delivery_occupied",
+                "type": "dialogue",
+                "context": "travel_afterlife_vehicle_sale",
+                "value": "yes"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "text": "交付车库还占着？",
+        "topic": "TALK_TRAVEL_AFTERLIFE_CLAIRE_GROUND_DELIVERY_BUSY",
         "condition": {
           "u_has_var": "ground_delivery_occupied",
           "type": "dialogue",
           "context": "travel_afterlife_vehicle_sale",
           "value": "yes"
-        },
-        "effect": {
-          "u_lose_var": "ground_delivery_occupied",
+        }
+      },
+      {
+        "text": "屋顶停机坪还占着？",
+        "topic": "TALK_TRAVEL_AFTERLIFE_CLAIRE_ROOF_DELIVERY_BUSY",
+        "condition": {
+          "u_has_var": "roof_delivery_occupied",
           "type": "dialogue",
-          "context": "travel_afterlife_vehicle_sale"
+          "context": "travel_afterlife_vehicle_sale",
+          "value": "yes"
         }
       },
       {
@@ -1631,10 +1704,22 @@
         "text": "要，9000商会币，成交。",
         "topic": "TALK_TRAVEL_AFTERLIFE_CLAIRE_AIRSHIP_BOUGHT",
         "condition": {
-          "u_has_items": {
-            "item": "FMCNote",
-            "count": 9000
-          }
+          "and": [
+            {
+              "u_has_items": {
+                "item": "FMCNote",
+                "count": 9000
+              }
+            },
+            {
+              "not": {
+                "u_has_var": "roof_delivery_occupied",
+                "type": "dialogue",
+                "context": "travel_afterlife_vehicle_sale",
+                "value": "yes"
+              }
+            }
+          ]
         },
         "effect": [
           {
@@ -1647,6 +1732,12 @@
           },
           {
             "u_add_var": "airship",
+            "type": "dialogue",
+            "context": "travel_afterlife_vehicle_sale",
+            "value": "yes"
+          },
+          {
+            "u_add_var": "roof_delivery_occupied",
             "type": "dialogue",
             "context": "travel_afterlife_vehicle_sale",
             "value": "yes"
