@@ -71,14 +71,14 @@ bool game::grabbed_veh_move_cross_z( const tripoint &dp, const tripoint &player_
 
     std::set<tripoint> occupied_tiles;
     for( const vpart_reference &vpr : grabbed_vehicle->get_all_parts() ) {
-        occupied_tiles.insert( m.getlocal( grabbed_vehicle->global_part_pos3( vpr.part_index() ) ) );
+        occupied_tiles.insert( grabbed_vehicle->bub_part_pos( vpr.part_index() ).raw() );
     }
     if( occupied_tiles.empty() ) {
         u.grab( object_type::NONE );
         return false;
     }
 
-    const tripoint grabbed_part_pos = m.getlocal( grabbed_vehicle->global_part_pos3( grabbed_part ) );
+    const tripoint grabbed_part_pos = grabbed_vehicle->bub_part_pos( grabbed_part ).raw();
     int min_x = occupied_tiles.begin()->x;
     int max_x = min_x;
     int min_y = occupied_tiles.begin()->y;
