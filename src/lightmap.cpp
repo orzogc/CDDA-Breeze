@@ -257,6 +257,12 @@ void map::build_sunlight_cache( int pzlev )
     using sunlight_shadow_mask = std::bitset<MAPSIZE_X * MAPSIZE_Y>;
     constexpr float airborne_shadow_core_factor = 0.75f;
     constexpr float airborne_shadow_edge_factor = 0.88f;
+    // Tile rendering only switches to the tileset's shadow texture below
+    // LIGHT_AMBIENT_LIT.  Pure percentage scaling can therefore be numerically
+    // correct but visually invisible in strong daylight.  Cap daytime shade just
+    // below that boundary: visibly shadowed, but deliberately nowhere near darkness.
+    constexpr float airborne_shadow_core_max_light = LIGHT_AMBIENT_LIT - 0.25f;
+    constexpr float airborne_shadow_edge_max_light = LIGHT_AMBIENT_LIT - 0.05f;
     sunlight_shadow_mask airborne_shadow_core_above;
     sunlight_shadow_mask airborne_shadow_edge_above;
     sunlight_shadow_mask airborne_shadow_core_current;
@@ -433,8 +439,11 @@ void map::build_sunlight_cache( int pzlev )
                     if( i == 0 && airborne_sky_cache != nullptr &&
                         airborne_shadow_core_above.test( prev_shadow_index ) ) {
                         const float sky_light = airborne_sky_cache->lm[prev.x][prev.y].max();
-                        const float shadowed_light = std::max( inside_light_level,
-                                                             sky_light * airborne_shadow_core_factor );
+                        const float shadowed_light = sky_light > LIGHT_AMBIENT_LIT ?
+                                                     std::max( inside_light_level,
+                                                               std::min( sky_light * airborne_shadow_core_factor,
+                                                                         airborne_shadow_core_max_light ) ) :
+                                                     sky_light;
                         lm[x][y].fill( shadowed_light );
                         fully_inside &= shadowed_light <= inside_light_level;
                         break;
@@ -453,9 +462,14 @@ void map::build_sunlight_cache( int pzlev )
                         ( prev_light_max = prev_lm[prev.x][prev.y].max() ) > 0.0 ) {
                         float light_level = clamp( prev_light_max * LIGHT_TRANSPARENCY_OPEN_AIR / prev_transparency,
                                                    inside_light_level, prev_light_max );
-                        if( airborne_shadow_edge_above.test( prev_shadow_index ) ) {
+                        // Feather the one-tile outline without another texture/cache.  Half
+                        // of the edge cells use the normal tileset shadow variant, half keep
+                        // ordinary daylight, producing a cheap grid-scale soft edge.
+                        if( airborne_shadow_edge_above.test( prev_shadow_index ) &&
+                            light_level > LIGHT_AMBIENT_LIT && ( ( prev.x ^ prev.y ) & 1 ) == 0 ) {
                             light_level = std::max( inside_light_level,
-                                                   light_level * airborne_shadow_edge_factor );
+                                                   std::min( light_level * airborne_shadow_edge_factor,
+                                                             airborne_shadow_edge_max_light ) );
                         }
 
                         if( i == 0 ) {
