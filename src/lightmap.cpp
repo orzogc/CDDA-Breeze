@@ -281,7 +281,19 @@ void map::build_sunlight_cache( int pzlev )
 
         std::vector<point> footprint;
         for( const vehicle *veh : cache.vehicle_list ) {
-            if( veh == nullptr || !veh->is_flying_in_air() ) {
+            if( veh == nullptr ) {
+                continue;
+            }
+
+            // `is_flying` is set by the movement code for rotorcraft, not balloon
+            // airships.  An airship suspended on an open-air z-level is nevertheless
+            // airborne and must participate in the same sunlight shadow path.  The
+            // NO_FLOOR check keeps an airship parked on a real elevated floor/roof
+            // from replacing that structure's ordinary hard sunlight occlusion.
+            const bool airborne_airship = veh->is_airship() &&
+                                          has_flag_ter_or_furn( ter_furn_flag::TFLAG_NO_FLOOR,
+                                                                veh->global_pos3() );
+            if( !veh->is_flying_in_air() && !airborne_airship ) {
                 continue;
             }
             for( const vpart_reference &vp : veh->get_all_parts() ) {
