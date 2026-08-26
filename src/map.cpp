@@ -23,7 +23,6 @@
 #include "cached_options.h"
 #include "calendar.h"
 #include "cata_assert.h"
-#include "cata_scope_helpers.h"
 #include "cata_type_traits.h"
 #include "character.h"
 #include "character_id.h"
@@ -616,29 +615,8 @@ void map::on_vehicle_moved( const int smz )
     set_pathfinding_cache_dirty( smz );
 }
 
-namespace
-{
-// A player-occupied aircraft can advance through many map squares during one vehmove().
-// Redrawing the complete multi-z scene after every square is disproportionately expensive
-// at altitude. Keep normal vehicle animation behavior everywhere else and coalesce only
-// the airborne player's redraws while vehmove() is processing the current game turn.
-int airborne_vehicle_redraw_defer_depth = 0;
-bool airborne_vehicle_redraw_pending = false;
-} // namespace
-
 void map::vehmove()
 {
-    if( airborne_vehicle_redraw_defer_depth == 0 ) {
-        airborne_vehicle_redraw_pending = false;
-    }
-    ++airborne_vehicle_redraw_defer_depth;
-    on_out_of_scope restore_airborne_vehicle_redraw_state( []() {
-        --airborne_vehicle_redraw_defer_depth;
-        if( airborne_vehicle_redraw_defer_depth == 0 ) {
-            airborne_vehicle_redraw_pending = false;
-        }
-    } );
-
     // give vehicles movement points
     VehicleList vehicle_list;
     int minz = zlevels ? -OVERMAP_DEPTH : abs_sub.z();
@@ -775,17 +753,6 @@ void map::vehmove()
 
     // refresh vehicle zones for moved vehicles
     zone_manager::get_manager().cache_vzones( this );
-
-    --airborne_vehicle_redraw_defer_depth;
-    restore_airborne_vehicle_redraw_state.cancel();
-    if( airborne_vehicle_redraw_defer_depth == 0 && airborne_vehicle_redraw_pending ) {
-        // Coalesce both the main UI invalidation and redraw request for the player's
-        // airborne vehicle.  The normal UI loop presents the finished frame, so do
-        // not force an extra display refresh from inside vehicle simulation.
-        g->invalidate_main_ui_adaptor();
-        ui_manager::redraw_invalidated();
-        airborne_vehicle_redraw_pending = false;
-    }
 }
 
 bool map::vehproceed( VehicleList &vehicle_list )
@@ -1064,20 +1031,8 @@ vehicle *map::move_vehicle( vehicle &veh, const tripoint &dp, const tileray &fac
     // Redraw scene, but only if the player is not engaged in an activity and
     // the vehicle was seen before or after the move.
     if( !player_character.activity && ( seen || sees_veh( player_character, veh, true ) ) ) {
-        const bool player_is_in_this_aircraft = player_character.posz() > 0 &&
-                                                veh.is_flying_in_air() &&
-                                                veh_pointer_or_null( veh_at( player_character.pos() ) ) == &veh;
-
-        if( airborne_vehicle_redraw_defer_depth > 0 && player_is_in_this_aircraft ) {
-            // Large aircraft can cross many squares in one vehmove().  Defer the
-            // adaptor invalidation as well as the redraw so every intermediate
-            // square does not dirty the complete main UI.
-            airborne_vehicle_redraw_pending = true;
-        } else {
-            g->invalidate_main_ui_adaptor();
-            ui_manager::redraw_invalidated();
-            airborne_vehicle_redraw_pending = false;
-        }
+        g->invalidate_main_ui_adaptor();
+        ui_manager::redraw_invalidated();
         handle_key_blocking_activity();
     }
     return &veh;
