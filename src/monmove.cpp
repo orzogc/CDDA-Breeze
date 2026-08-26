@@ -951,7 +951,7 @@ bool monster::will_move_to( const tripoint &p ) const
 
         if( avoid_fall ) {
             // Don't throw ourselves off cliffs if we have a concept of falling
-            if( !here.has_floor( p ) && !flies() ) {
+            if( !here.has_floor_or_support( p ) && !flies() ) {
                 return false;
             }
 
