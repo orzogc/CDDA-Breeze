@@ -1,0 +1,7 @@
+[
+  {
+    "type": "json_flag",
+    "id": "PAINT_COUNTER_STOCK",
+    "//": "Marks items generated specifically for Smokes' paint counter so normal and counter trade views can be filtered independently."
+  }
+]

@@ -27,6 +27,7 @@
     "bonus_dex": 2,
     "shopkeeper_item_group": [
       { "group": "FREE_MERCHANTS_Shop", "rigid": true },
+      { "group": "FREE_MERCHANTS_Paint_Shop", "rigid": true },
       {
         "group": "FREE_MERCHANTS_Shop_Currency_Press",
         "rigid": true,

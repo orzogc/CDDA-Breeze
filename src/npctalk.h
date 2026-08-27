@@ -48,6 +48,7 @@ void buy_shave( npc & );
 void morale_chat( npc & );
 void morale_chat_activity( npc & );
 void start_trade( npc & );
+void start_paint_trade( npc & );
 void exert_coercion(npc& p);
 void join_the_faction(npc& p);
 void set_status_get_food_from_the_faction(npc &p);

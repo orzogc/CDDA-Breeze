@@ -1,0 +1,210 @@
+[
+  {
+    "abstract": "vehicle_paint_base",
+    "type": "AMMO",
+    "category": "other",
+    "price": 80,
+    "price_postapoc": 20,
+    "symbol": "~",
+    "color": "light_gray",
+    "description": "预调好的车辆喷涂油漆，需要装入喷漆罐并配合喷漆枪使用。",
+    "phase": "liquid",
+    "volume": "1 ml",
+    "weight": "1 g",
+    "ammo_type": "vehicle_paint",
+    "count": 20,
+    "stack_size": 20
+  },
+  {
+    "id": "vehicle_paint_jet_black",
+    "copy-from": "vehicle_paint_base",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "墨黑色车漆"
+    }
+  },
+  {
+    "id": "vehicle_paint_cataclysm_red",
+    "copy-from": "vehicle_paint_base",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "灾变红车漆"
+    }
+  },
+  {
+    "id": "vehicle_paint_cataclysm_green",
+    "copy-from": "vehicle_paint_base",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "灾变绿车漆"
+    }
+  },
+  {
+    "id": "vehicle_paint_signal_brown",
+    "copy-from": "vehicle_paint_base",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "信号棕车漆"
+    }
+  },
+  {
+    "id": "vehicle_paint_sapphire_blue",
+    "copy-from": "vehicle_paint_base",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "宝石蓝车漆"
+    }
+  },
+  {
+    "id": "vehicle_paint_purple_violet",
+    "copy-from": "vehicle_paint_base",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "紫罗兰车漆"
+    }
+  },
+  {
+    "id": "vehicle_paint_azure_blue",
+    "copy-from": "vehicle_paint_base",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "蔚蓝色车漆"
+    }
+  },
+  {
+    "id": "vehicle_paint_silver_grey",
+    "copy-from": "vehicle_paint_base",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "银灰色车漆"
+    }
+  },
+  {
+    "id": "vehicle_paint_black_grey",
+    "copy-from": "vehicle_paint_base",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "黑灰色车漆"
+    }
+  },
+  {
+    "id": "vehicle_paint_bright_red_orange",
+    "copy-from": "vehicle_paint_base",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "亮红橙车漆"
+    }
+  },
+  {
+    "id": "vehicle_paint_grass_green",
+    "copy-from": "vehicle_paint_base",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "草绿色车漆"
+    }
+  },
+  {
+    "id": "vehicle_paint_golden_yellow",
+    "copy-from": "vehicle_paint_base",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "金黄色车漆"
+    }
+  },
+  {
+    "id": "vehicle_paint_light_blue",
+    "copy-from": "vehicle_paint_base",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "浅蓝色车漆"
+    }
+  },
+  {
+    "id": "vehicle_paint_telemagenta",
+    "copy-from": "vehicle_paint_base",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "远洋红车漆"
+    }
+  },
+  {
+    "id": "vehicle_paint_pastel_blue",
+    "copy-from": "vehicle_paint_base",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "淡蓝色车漆"
+    }
+  },
+  {
+    "id": "vehicle_paint_traffic_white",
+    "copy-from": "vehicle_paint_base",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "交通白车漆"
+    }
+  },
+  {
+    "id": "vehicle_paint_white_aluminium",
+    "copy-from": "vehicle_paint_base",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "铝白色车漆"
+    }
+  },
+  {
+    "id": "vehicle_paint_grey_aluminium",
+    "copy-from": "vehicle_paint_base",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "铝灰色车漆"
+    }
+  },
+  {
+    "id": "vehicle_paint_steel_blue",
+    "copy-from": "vehicle_paint_base",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "钢蓝色车漆"
+    }
+  },
+  {
+    "id": "vehicle_paint_pine_green",
+    "copy-from": "vehicle_paint_base",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "松绿色车漆"
+    }
+  },
+  {
+    "id": "vehicle_paint_olive_grey",
+    "copy-from": "vehicle_paint_base",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "橄榄灰车漆"
+    }
+  },
+  {
+    "id": "vehicle_paint_sand_yellow",
+    "copy-from": "vehicle_paint_base",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "沙黄色车漆"
+    }
+  },
+  {
+    "id": "vehicle_paint_traffic_yellow",
+    "copy-from": "vehicle_paint_base",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "交通黄车漆"
+    }
+  },
+  {
+    "id": "vehicle_paint_flame_red",
+    "copy-from": "vehicle_paint_base",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "火焰红车漆"
+    }
+  }
+]

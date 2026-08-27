@@ -212,6 +212,11 @@
   },
   {
     "type": "item_action",
+    "id": "paint_vehicle",
+    "name": { "str": "喷涂载具" }
+  },
+  {
+    "type": "item_action",
     "id": "learn_spell",
     "name": { "str": "Learn spell" }
   },

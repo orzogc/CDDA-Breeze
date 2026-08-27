@@ -33,6 +33,7 @@
         "condition": { "u_has_var": "u_met_Gavin", "type": "general", "context": "meeting", "value": "yes" },
         "effect": "start_trade"
       },
+      { "text": "我想看看喷漆。", "topic": "TALK_FREE_MERCHANTS_MERCHANT_DoneTrading", "effect": "start_paint_trade" },
       {
         "text": "Just saying hello.  Keep safe.",
         "topic": "TALK_DONE",
@@ -48,6 +49,7 @@
     "responses": [
       { "text": "About other things…", "topic": "TALK_FREE_MERCHANTS_MERCHANT_Talk" },
       { "text": "Let's trade.", "topic": "TALK_FREE_MERCHANTS_MERCHANT_DoneTrading", "effect": "start_trade" },
+      { "text": "再看看喷漆。", "topic": "TALK_FREE_MERCHANTS_MERCHANT_DoneTrading", "effect": "start_paint_trade" },
       { "text": "That's all for now.  Take care.", "topic": "TALK_DONE" }
     ]
   },
@@ -65,6 +67,7 @@
     "responses": [
       { "text": "Got some time to talk?", "topic": "TALK_FREE_MERCHANTS_MERCHANT_Talk" },
       { "text": "Let's trade.", "topic": "TALK_FREE_MERCHANTS_MERCHANT_DoneTrading", "effect": "start_trade" },
+      { "text": "我想看看喷漆。", "topic": "TALK_FREE_MERCHANTS_MERCHANT_DoneTrading", "effect": "start_paint_trade" },
       { "text": "I just wanted to look around.  See you.", "topic": "TALK_DONE" }
     ]
   },
@@ -139,6 +142,7 @@
       },
       { "text": "I'm looking for work.  Can I do anything for the center?", "topic": "TALK_MISSION_LIST" },
       { "text": "Let's trade.", "topic": "TALK_FREE_MERCHANTS_MERCHANT_DoneTrading", "effect": "start_trade" },
+      { "text": "我想看看喷漆。", "topic": "TALK_FREE_MERCHANTS_MERCHANT_DoneTrading", "effect": "start_paint_trade" },
       {
         "text": "Are you interested in buying any processed lumber?",
         "topic": "TALK_EVAC_MERCHANT_DEAL_NEGOTIATE",

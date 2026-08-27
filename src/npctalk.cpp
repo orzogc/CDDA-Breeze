@@ -5606,6 +5606,7 @@ void talk_effect_t<T>::parse_string_effect( const std::string &effect_id, const 
             WRAP( clear_mission ),
             WRAP( mission_reward ),
             WRAP( start_trade ),
+            WRAP( start_paint_trade ),
             WRAP(exert_coercion),
             WRAP(join_the_faction),
             WRAP(set_status_get_food_from_the_faction),

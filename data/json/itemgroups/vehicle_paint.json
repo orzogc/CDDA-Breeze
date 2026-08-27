@@ -1,0 +1,550 @@
+[
+  {
+    "type": "item_group",
+    "id": "vehicle_paint_car_color",
+    "subtype": "distribution",
+    "entries": [
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_jet_black",
+        "charges": 20,
+        "prob": 10
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_cataclysm_red",
+        "charges": 20,
+        "prob": 10
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_cataclysm_green",
+        "charges": 20,
+        "prob": 10
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_signal_brown",
+        "charges": 20,
+        "prob": 10
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_sapphire_blue",
+        "charges": 20,
+        "prob": 10
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_purple_violet",
+        "charges": 20,
+        "prob": 10
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_azure_blue",
+        "charges": 20,
+        "prob": 10
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_silver_grey",
+        "charges": 20,
+        "prob": 10
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_black_grey",
+        "charges": 20,
+        "prob": 10
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_bright_red_orange",
+        "charges": 20,
+        "prob": 10
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_grass_green",
+        "charges": 20,
+        "prob": 10
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_golden_yellow",
+        "charges": 20,
+        "prob": 10
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_light_blue",
+        "charges": 20,
+        "prob": 10
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_telemagenta",
+        "charges": 20,
+        "prob": 10
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_pastel_blue",
+        "charges": 20,
+        "prob": 10
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_traffic_white",
+        "charges": 20,
+        "prob": 10
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "vehicle_paint_special_color",
+    "subtype": "distribution",
+    "entries": [
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_white_aluminium",
+        "charges": 20,
+        "prob": 10
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_grey_aluminium",
+        "charges": 20,
+        "prob": 10
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_steel_blue",
+        "charges": 20,
+        "prob": 10
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_pine_green",
+        "charges": 20,
+        "prob": 10
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_olive_grey",
+        "charges": 20,
+        "prob": 10
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_sand_yellow",
+        "charges": 20,
+        "prob": 10
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_traffic_yellow",
+        "charges": 20,
+        "prob": 10
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_flame_red",
+        "charges": 20,
+        "prob": 10
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "vehicle_paint_autoshop_bonus",
+    "subtype": "distribution",
+    "entries": [
+      {
+        "group": "vehicle_paint_car_color",
+        "prob": 75
+      },
+      {
+        "item": "vehicle_paint_can",
+        "prob": 10
+      },
+      {
+        "item": "spray_gun",
+        "prob": 15
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "vehicle_paint_publicworks_bonus",
+    "subtype": "distribution",
+    "entries": [
+      {
+        "group": "vehicle_paint_car_color",
+        "prob": 45
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_traffic_yellow",
+        "charges": 20,
+        "prob": 20
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_flame_red",
+        "charges": 20,
+        "prob": 10
+      },
+      {
+        "group": "vehicle_paint_special_color",
+        "prob": 15
+      },
+      {
+        "item": "spray_gun",
+        "prob": 10
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "vehicle_paint_fire_bonus",
+    "subtype": "distribution",
+    "entries": [
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_flame_red",
+        "charges": 20,
+        "prob": 40
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_traffic_white",
+        "charges": 20,
+        "prob": 15
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_traffic_yellow",
+        "charges": 20,
+        "prob": 15
+      },
+      {
+        "group": "vehicle_paint_car_color",
+        "prob": 15
+      },
+      {
+        "item": "vehicle_paint_can",
+        "prob": 5
+      },
+      {
+        "item": "spray_gun",
+        "prob": 10
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "mechanics_vehicle_paint_autoshop",
+    "subtype": "collection",
+    "entries": [
+      {
+        "group": "mechanics",
+        "prob": 100
+      },
+      {
+        "group": "vehicle_paint_autoshop_bonus",
+        "prob": 65
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "mechanics_vehicle_paint_light",
+    "subtype": "collection",
+    "entries": [
+      {
+        "group": "mechanics",
+        "prob": 100
+      },
+      {
+        "group": "vehicle_paint_autoshop_bonus",
+        "prob": 12
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "mechanics_vehicle_paint_publicworks",
+    "subtype": "collection",
+    "entries": [
+      {
+        "group": "mechanics",
+        "prob": 100
+      },
+      {
+        "group": "vehicle_paint_publicworks_bonus",
+        "prob": 20
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "mechanics_vehicle_paint_fire",
+    "subtype": "collection",
+    "entries": [
+      {
+        "group": "mechanics",
+        "prob": 100
+      },
+      {
+        "group": "vehicle_paint_fire_bonus",
+        "prob": 35
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "FREE_MERCHANTS_Paint_Shop",
+    "subtype": "collection",
+    "entries": [
+      {
+        "item": "spray_gun",
+        "count": [
+          2,
+          3
+        ],
+        "prob": 100,
+        "custom-flags": [
+          "PAINT_COUNTER_STOCK"
+        ]
+      },
+      {
+        "item": "vehicle_paint_can",
+        "count": [
+          2,
+          4
+        ],
+        "prob": 100,
+        "custom-flags": [
+          "PAINT_COUNTER_STOCK"
+        ]
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_jet_black",
+        "charges": 20,
+        "prob": 100,
+        "custom-flags": [
+          "PAINT_COUNTER_STOCK"
+        ]
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_cataclysm_red",
+        "charges": 20,
+        "prob": 100,
+        "custom-flags": [
+          "PAINT_COUNTER_STOCK"
+        ]
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_cataclysm_green",
+        "charges": 20,
+        "prob": 100,
+        "custom-flags": [
+          "PAINT_COUNTER_STOCK"
+        ]
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_signal_brown",
+        "charges": 20,
+        "prob": 100,
+        "custom-flags": [
+          "PAINT_COUNTER_STOCK"
+        ]
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_sapphire_blue",
+        "charges": 20,
+        "prob": 100,
+        "custom-flags": [
+          "PAINT_COUNTER_STOCK"
+        ]
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_purple_violet",
+        "charges": 20,
+        "prob": 100,
+        "custom-flags": [
+          "PAINT_COUNTER_STOCK"
+        ]
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_azure_blue",
+        "charges": 20,
+        "prob": 100,
+        "custom-flags": [
+          "PAINT_COUNTER_STOCK"
+        ]
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_silver_grey",
+        "charges": 20,
+        "prob": 100,
+        "custom-flags": [
+          "PAINT_COUNTER_STOCK"
+        ]
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_black_grey",
+        "charges": 20,
+        "prob": 100,
+        "custom-flags": [
+          "PAINT_COUNTER_STOCK"
+        ]
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_bright_red_orange",
+        "charges": 20,
+        "prob": 100,
+        "custom-flags": [
+          "PAINT_COUNTER_STOCK"
+        ]
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_grass_green",
+        "charges": 20,
+        "prob": 100,
+        "custom-flags": [
+          "PAINT_COUNTER_STOCK"
+        ]
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_golden_yellow",
+        "charges": 20,
+        "prob": 100,
+        "custom-flags": [
+          "PAINT_COUNTER_STOCK"
+        ]
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_light_blue",
+        "charges": 20,
+        "prob": 100,
+        "custom-flags": [
+          "PAINT_COUNTER_STOCK"
+        ]
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_telemagenta",
+        "charges": 20,
+        "prob": 100,
+        "custom-flags": [
+          "PAINT_COUNTER_STOCK"
+        ]
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_pastel_blue",
+        "charges": 20,
+        "prob": 100,
+        "custom-flags": [
+          "PAINT_COUNTER_STOCK"
+        ]
+      },
+      {
+        "item": "vehicle_paint_can",
+        "ammo-item": "vehicle_paint_traffic_white",
+        "charges": 20,
+        "prob": 100,
+        "custom-flags": [
+          "PAINT_COUNTER_STOCK"
+        ]
+      },
+      {
+        "group": "vehicle_paint_special_color",
+        "prob": 80,
+        "custom-flags": [
+          "PAINT_COUNTER_STOCK"
+        ]
+      },
+      {
+        "group": "vehicle_paint_special_color",
+        "prob": 65,
+        "custom-flags": [
+          "PAINT_COUNTER_STOCK"
+        ]
+      },
+      {
+        "group": "vehicle_paint_special_color",
+        "prob": 50,
+        "custom-flags": [
+          "PAINT_COUNTER_STOCK"
+        ]
+      },
+      {
+        "item": "r_paint",
+        "prob": 100,
+        "custom-flags": [
+          "PAINT_COUNTER_STOCK"
+        ]
+      },
+      {
+        "item": "b_paint",
+        "prob": 100,
+        "custom-flags": [
+          "PAINT_COUNTER_STOCK"
+        ]
+      },
+      {
+        "item": "w_paint",
+        "prob": 100,
+        "custom-flags": [
+          "PAINT_COUNTER_STOCK"
+        ]
+      },
+      {
+        "item": "g_paint",
+        "prob": 100,
+        "custom-flags": [
+          "PAINT_COUNTER_STOCK"
+        ]
+      },
+      {
+        "item": "p_paint",
+        "prob": 100,
+        "custom-flags": [
+          "PAINT_COUNTER_STOCK"
+        ]
+      },
+      {
+        "item": "y_paint",
+        "prob": 100,
+        "custom-flags": [
+          "PAINT_COUNTER_STOCK"
+        ]
+      },
+      {
+        "item": "black_paint",
+        "prob": 100,
+        "custom-flags": [
+          "PAINT_COUNTER_STOCK"
+        ]
+      }
+    ]
+  }
+]
