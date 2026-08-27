@@ -680,7 +680,7 @@
   {
     "id": "NOCOLLIDEBELOW",
     "type": "json_flag",
-    "info": "该部件不会与其正下方z层的 terrain 发生碰撞。"
+    "info": "该部件不会与其正下方z层的地形发生碰撞。"
   },
   {
     "id": "FOLDABLE",

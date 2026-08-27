@@ -1,0 +1,152 @@
+[
+  {
+    "id": "TALK_TRAVEL_AFTERLIFE_CLAIRE_GROUND_DELIVERY_BUSY",
+    "type": "talk_topic",
+    "dynamic_line": "上一辆还堵着交付区，先开出去再谈下一辆。",
+    "responses": [
+      {
+        "text": "已经开走了，车位空了。",
+        "topic": "TALK_TRAVEL_AFTERLIFE_CLAIRE_VEHICLE_SALES",
+        "effect": {
+          "u_lose_var": "ground_delivery_occupied",
+          "type": "dialogue",
+          "context": "travel_afterlife_vehicle_sale"
+        }
+      },
+      {
+        "text": "那先不动。",
+        "topic": "TALK_TRAVEL_AFTERLIFE_CLAIRE_VEHICLE_SALES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_TRAVEL_AFTERLIFE_CLAIRE_ROOF_DELIVERY_BUSY",
+    "type": "talk_topic",
+    "dynamic_line": "上一艘还停在屋顶，先把它开出去再谈下一艘。",
+    "responses": [
+      {
+        "text": "已经开走了，停机坪空了。",
+        "topic": "TALK_TRAVEL_AFTERLIFE_CLAIRE_VEHICLE_SALES",
+        "effect": {
+          "u_lose_var": "roof_delivery_occupied",
+          "type": "dialogue",
+          "context": "travel_afterlife_vehicle_sale"
+        }
+      },
+      {
+        "text": "那先不动。",
+        "topic": "TALK_TRAVEL_AFTERLIFE_CLAIRE_VEHICLE_SALES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_TRAVEL_AFTERLIFE_CLAIRE_BLIMP_CONFIRM",
+    "type": "talk_topic",
+    "dynamic_line": "商用飞艇，一万四千商会币。不是刚出厂的新货，但发动机，气囊，电路和控制系统都重新检查过。油箱只给你留三成航空燃油，剩下的自己补。交付在西侧屋顶停机坪。你真要？",
+    "responses": [
+      {
+        "text": "要，14000商会币，成交。",
+        "topic": "TALK_TRAVEL_AFTERLIFE_CLAIRE_AIRSHIP_BOUGHT",
+        "condition": {
+          "and": [
+            {
+              "u_has_items": {
+                "item": "FMCNote",
+                "count": 14000
+              }
+            },
+            {
+              "not": {
+                "u_has_var": "roof_delivery_occupied",
+                "type": "dialogue",
+                "context": "travel_afterlife_vehicle_sale",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "effect": [
+          {
+            "u_consume_item": "FMCNote",
+            "count": 14000
+          },
+          {
+            "mapgen_update": "travel_afterlife_deliver_blimp",
+            "om_terrain": "travel_afterlife_dealership_roof_west"
+          },
+          {
+            "u_add_var": "blimp",
+            "type": "dialogue",
+            "context": "travel_afterlife_vehicle_sale",
+            "value": "yes"
+          },
+          {
+            "u_add_var": "roof_delivery_occupied",
+            "type": "dialogue",
+            "context": "travel_afterlife_vehicle_sale",
+            "value": "yes"
+          }
+        ]
+      },
+      {
+        "text": "我再考虑一下。",
+        "topic": "TALK_TRAVEL_AFTERLIFE_CLAIRE_VEHICLE_SALES"
+      }
+    ]
+  },
+  {
+    "id": "TALK_TRAVEL_AFTERLIFE_CLAIRE_MEDBLIMP_CONFIRM",
+    "type": "talk_topic",
+    "dynamic_line": "CRIT医疗后送飞艇，一万八千商会币。这东西比商用飞艇难找得多，太阳能气囊，电驱系统和医疗舱都已经检查过。电池只充到一半，剩下的让它自己晒太阳慢慢补。交付也在西侧屋顶停机坪。你真要？",
+    "responses": [
+      {
+        "text": "要，18000商会币，成交。",
+        "topic": "TALK_TRAVEL_AFTERLIFE_CLAIRE_AIRSHIP_BOUGHT",
+        "condition": {
+          "and": [
+            {
+              "u_has_items": {
+                "item": "FMCNote",
+                "count": 18000
+              }
+            },
+            {
+              "not": {
+                "u_has_var": "roof_delivery_occupied",
+                "type": "dialogue",
+                "context": "travel_afterlife_vehicle_sale",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "effect": [
+          {
+            "u_consume_item": "FMCNote",
+            "count": 18000
+          },
+          {
+            "mapgen_update": "travel_afterlife_deliver_crt_medblimp",
+            "om_terrain": "travel_afterlife_dealership_roof_west"
+          },
+          {
+            "u_add_var": "crt_medblimp",
+            "type": "dialogue",
+            "context": "travel_afterlife_vehicle_sale",
+            "value": "yes"
+          },
+          {
+            "u_add_var": "roof_delivery_occupied",
+            "type": "dialogue",
+            "context": "travel_afterlife_vehicle_sale",
+            "value": "yes"
+          }
+        ]
+      },
+      {
+        "text": "我再考虑一下。",
+        "topic": "TALK_TRAVEL_AFTERLIFE_CLAIRE_VEHICLE_SALES"
+      }
+    ]
+  }
+]

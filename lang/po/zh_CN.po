@@ -326653,7 +326653,7 @@ msgstr "你能按\"e\"来控制电子设备，如果此处同时有载具控制�
 msgid ""
 "With a seat or saddle, you drive from here.  You can 'e'xamine the tile to "
 "access the controls, or use the vehicle control key (default '^')."
-msgstr "你可以在安装座椅或鞍座后在此驾驶载具，你能按\"e\"查看此处来控制载具，或者按下载具控制键（默认为\"^\"）。"
+msgstr "安装座椅或鞍座后，你可以从这里驾驶载具。按\"e\"查看此处即可使用控制器，也可以按载具控制键（默认为\"^\"）。"
 
 #. ~ Please leave anything in <angle brackets> unchanged.
 #. ~ Description of JSON flag "SMART_ENGINE_CONTROLLER"
@@ -465013,3 +465013,8 @@ msgstr "信赖"
 msgctxt "NPC relationship"
 msgid "Affectionate"
 msgstr "喜爱"
+
+#. ~ Description of JSON flag "CABLE_PORTS"
+#: data/json/vehicleparts/vp_flags.json
+msgid "You can connect electrical cables to this part."
+msgstr "可将电缆连接到这个部件。"

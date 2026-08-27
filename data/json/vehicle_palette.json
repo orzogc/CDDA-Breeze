@@ -83,7 +83,7 @@
       { "color": "Broom yellow", "weight": 5 }, { "color": "Yellow green", "weight": 1 }
     ] } ]
   },
-  { "type": "vehicle_color_palette", "id": "ems_standard", "palette": [ { "fuzzy_ids": [ "board", "windshield", "door", "roof", "trunk_flat", "hatch" ], "colors": [ { "color": "White aluminium", "weight": 20 }, { "color": "Flame red", "weight": 10 }, { "color": "Traffic yellow", "weight": 1 } ] } ] },
+  { "type": "vehicle_color_palette", "id": "ems_standard", "palette": [ { "fuzzy_ids": [ "board", "windshield", "door", "roof", "trunk_flat", "hatch", "propeller", "airship_balloon" ], "colors": [ { "color": "White aluminium", "weight": 20 }, { "color": "Flame red", "weight": 10 }, { "color": "Traffic yellow", "weight": 1 } ] } ] },
   { "type": "vehicle_color_palette", "id": "bus_standard", "palette": [ { "fuzzy_ids": [ "board", "windshield", "door", "roof", "trunk_flat", "hatch" ], "colors": [ { "color": "Traffic yellow", "weight": 1 } ] } ] },
   { "type": "vehicle_color_palette", "id": "wienermobile_standard", "palette": [ { "fuzzy_ids": [ "board", "windshield", "door", "roof", "trunk_flat", "hatch" ], "colors": [ { "color": "Yellow orange", "weight": 1 } ] } ] },
   { "type": "vehicle_color_palette", "id": "limo_standard", "palette": [ { "fuzzy_ids": [ "board", "windshield", "door", "roof", "trunk_flat", "hatch" ], "colors": [ { "color": "Black grey", "weight": 10 }, { "color": "White aluminium", "weight": 10 }, { "color": "Traffic purple", "weight": 1 } ] } ] },
@@ -99,7 +99,7 @@
   },
   {
     "type": "vehicle_color_palette", "id": "aircraft_commercial",
-    "palette": [ { "fuzzy_ids": [ "board", "wing", "rotor", "propeller", "windshield", "door", "roof", "trunk_flat", "hatch" ], "colors": [
+    "palette": [ { "fuzzy_ids": [ "board", "wing", "rotor", "propeller", "windshield", "door", "roof", "trunk_flat", "hatch", "airship_balloon" ], "colors": [
       { "color": "White aluminium", "weight": 15 }, { "color": "Gentian blue", "weight": 10 },
       { "color": "Red orange", "weight": 10 }, { "color": "Lemon yellow", "weight": 5 },
       { "color": "Turquoise green", "weight": 5 }, { "color": "Ultramarine blue", "weight": 1 }
