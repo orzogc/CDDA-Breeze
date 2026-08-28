@@ -4,8 +4,8 @@
     "type": "AMMO",
     "name": { "str_sp": "车辆喷涂油漆" },
     "category": "other",
-    "price": 80,
-    "price_postapoc": 20,
+    "price": 120,
+    "price_postapoc": 30,
     "symbol": "~",
     "color": "light_gray",
     "description": "预调好的车辆喷涂油漆，需要装入喷漆罐并配合喷漆枪使用。",
@@ -13,8 +13,8 @@
     "volume": "1 ml",
     "weight": "1 g",
     "ammo_type": "vehicle_paint",
-    "count": 20,
-    "stack_size": 20
+    "count": 30,
+    "stack_size": 30
   },
   {
     "id": "vehicle_paint_jet_black",

@@ -237,6 +237,7 @@ namespace
 {
 static const flag_id flag_PAINT_COUNTER_STOCK( "PAINT_COUNTER_STOCK" );
 static const std::string paint_counter_filter_var = "breeze_paint_counter_trade_hidden";
+static const std::string paint_counter_stock_var = "breeze_paint_counter_stock";
 
 template<typename Func>
 void for_each_shop_item( npc &p, Func &&func )
@@ -264,7 +265,8 @@ void apply_paint_counter_filter( npc &p, bool counter_only )
     p.shop_restock();
 
     for_each_shop_item( p, [&]( item & it ) {
-        const bool is_counter_stock = it.has_flag( flag_PAINT_COUNTER_STOCK );
+        const bool is_counter_stock = it.has_flag( flag_PAINT_COUNTER_STOCK ) ||
+                                      it.get_var( paint_counter_stock_var ) == "yes";
         const bool should_hide = counter_only ? !is_counter_stock : is_counter_stock;
         if( !should_hide || it.has_var( VAR_TRADE_IGNORE ) ) {
             return;
@@ -272,6 +274,32 @@ void apply_paint_counter_filter( npc &p, bool counter_only )
 
         it.set_var( VAR_TRADE_IGNORE, "yes" );
         it.set_var( paint_counter_filter_var, "yes" );
+    } );
+}
+
+bool is_paint_counter_item( const item &it )
+{
+    const itype_id &id = it.typeId();
+    if( id == itype_id( "vehicle_paint_can" ) || id == itype_id( "spray_gun" ) ) {
+        return true;
+    }
+
+    if( it.ammo_current() != nullptr && it.ammo_current()->ammo_type() == ammotype( "vehicle_paint" ) ) {
+        return true;
+    }
+
+    return false;
+}
+
+void adopt_paint_counter_sales( npc &p )
+{
+    for_each_shop_item( p, [&]( item & it ) {
+        const bool already_counter = it.has_flag( flag_PAINT_COUNTER_STOCK ) ||
+                                     it.get_var( paint_counter_stock_var ) == "yes";
+        if( already_counter || !is_paint_counter_item( it ) ) {
+            return;
+        }
+        it.set_var( paint_counter_stock_var, "yes" );
     } );
 }
 
@@ -318,6 +346,7 @@ void talk_function::start_paint_trade( npc &p )
 {
     apply_paint_counter_filter( p, true );
     npc_trading::trade( p, 0, _( "喷漆专柜" ) );
+    adopt_paint_counter_sales( p );
     clear_paint_counter_filter( p );
 }
 

@@ -6,11 +6,11 @@
     "name": {
       "str": "喷漆罐"
     },
-    "description": "一个可重复灌装的喷漆罐，本身没有喷嘴，需要安装到喷漆枪上使用。空罐可以直接装入兼容的油漆，每罐最多提供 20 格喷涂量。",
+    "description": "一个可重复灌装的喷漆罐，本身没有喷嘴，需要安装到喷漆枪上使用。空罐可以直接装入兼容的油漆，每罐最多提供 30 格喷涂量。",
     "weight": "250 g",
     "volume": "750 ml",
-    "price": 1200,
-    "price_postapoc": 50,
+    "price": 1600,
+    "price_postapoc": 80,
     "material": [
       "steel",
       "plastic"
@@ -20,7 +20,7 @@
     "ammo_type": [
       "vehicle_paint"
     ],
-    "capacity": 20,
+    "capacity": 30,
     "reload_time": 50,
     "pocket_data": [
       {
@@ -28,7 +28,7 @@
         "rigid": true,
         "watertight": true,
         "ammo_restriction": {
-          "vehicle_paint": 20
+          "vehicle_paint": 30
         }
       }
     ]
