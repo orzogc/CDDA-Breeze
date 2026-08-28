@@ -6,7 +6,7 @@
     "style": "sidebar",
     "label": { "str": "末奏" },
     "padding": 0,
-    "width": 36,//如果感觉不够宽，可以调整此项 #默认36
+    "width": 42,//如果感觉不够宽，可以调整此项 #默认42
     "separator": "",
     "widgets": [
       "末奏_地图",
