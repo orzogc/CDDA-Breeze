@@ -284,7 +284,8 @@ bool is_paint_counter_item( const item &it )
         return true;
     }
 
-    if( it.ammo_current() != nullptr && it.ammo_current()->ammo_type() == ammotype( "vehicle_paint" ) ) {
+    const item &loaded = it.loaded_ammo();
+    if( !loaded.is_null() && loaded.ammo_type() == ammotype( "vehicle_paint" ) ) {
         return true;
     }
 
