@@ -2,6 +2,7 @@
   {
     "abstract": "vehicle_paint_base",
     "type": "AMMO",
+    "name": { "str_sp": "车辆喷涂油漆" },
     "category": "other",
     "price": 80,
     "price_postapoc": 20,
