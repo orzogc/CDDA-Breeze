@@ -73,6 +73,7 @@
 #include "pimpl.h"
 #include "player_activity.h"
 #include "point.h"
+#include "popup.h"
 #include "recipe.h"
 #include "recipe_dictionary.h"
 #include "requirements.h"
