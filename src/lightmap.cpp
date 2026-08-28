@@ -252,6 +252,10 @@ void map::build_sunlight_cache( int pzlev )
     // Plus one zlevel to prevent clipping inside structures
     const int zlev_max = clamp( calc_max_populated_zlev() + 1, pzlev + 1, OVERMAP_HEIGHT );
 
+    // A vehicle suspended over open air blocks direct sun but not the diffuse skylight
+    // that keeps a real outdoor shadow much brighter than an enclosed room.
+    constexpr float airborne_vehicle_shade_fraction = 0.35f;
+
     // true if all previous z-levels are fully transparent to light (no floors, transparency >= air)
     bool fully_outside = true;
 
@@ -356,16 +360,35 @@ void map::build_sunlight_cache( int pzlev )
                         prev_transparency /= sight_penalty;
                     }
 
+                    const bool floor_blocks_sun = prev_floor_cache[prev.x][prev.y];
+                    bool airborne_vehicle_floor = false;
+                    if( floor_blocks_sun ) {
+                        const tripoint prev_pos( prev.x, prev.y, zlev + 1 );
+                        if( !has_floor( prev_pos ) ) {
+                            const optional_vpart_position vp = veh_at( prev_pos );
+                            airborne_vehicle_floor = vp &&
+                                                     vp.part_with_feature( VPFLAG_BOARDABLE, true );
+                        }
+                    }
+
                     if( prev_transparency > LIGHT_TRANSPARENCY_SOLID &&
-                        !prev_floor_cache[prev.x][prev.y] &&
+                        ( !floor_blocks_sun || airborne_vehicle_floor ) &&
                         ( prev_light_max = prev_lm[prev.x][prev.y].max() ) > 0.0 ) {
-                        const float light_level = clamp( prev_light_max * LIGHT_TRANSPARENCY_OPEN_AIR / prev_transparency,
-                                                         inside_light_level, prev_light_max );
+                        float light_level = clamp( prev_light_max * LIGHT_TRANSPARENCY_OPEN_AIR / prev_transparency,
+                                                   inside_light_level, prev_light_max );
+                        if( airborne_vehicle_floor ) {
+                            light_level = std::max( inside_light_level,
+                                                   light_level * airborne_vehicle_shade_fraction );
+                        }
 
                         if( i == 0 ) {
                             lm[x][y].fill( light_level );
                             fully_inside &= light_level <= inside_light_level;
-                            break;
+                            // Keep checking side sky around a suspended vehicle floor so
+                            // the edge of its shadow gets naturally brighter quadrants.
+                            if( !airborne_vehicle_floor ) {
+                                break;
+                            }
                         } else {
                             fully_inside &= light_level <= inside_light_level;
                             lm[x][y][dir_quadrants[i][0]] = light_level;
