@@ -14018,6 +14018,14 @@
       ]
     },
     {
+      "file": "vehicle_paint.png",
+      "//": "range 8896 to 8897",
+      "tiles": [
+        { "id": [ "vehicle_paint_can", "overlay_wielded_vehicle_paint_can" ], "fg": 8896, "rotates": false },
+        { "id": [ "spray_gun", "overlay_wielded_spray_gun" ], "fg": 8897, "rotates": false }
+      ]
+    },
+    {
       "file": "fallback.png",
       "tiles": [  ],
       "ascii": [

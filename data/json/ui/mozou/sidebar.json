@@ -1,0 +1,147 @@
+// 内置自末奏侧边栏 1.2a，原作者 心之奏，适配微风内置 widget 系统。
+[
+  {
+    "id": "末奏_侧边栏",
+    "type": "widget",
+    "style": "sidebar",
+    "label": { "str": "末奏" },
+    "padding": 0,
+    "width": 36,//如果感觉不够宽，可以调整此项 #默认36
+    "separator": "",
+    "widgets": [
+      "末奏_地图",
+      "末奏_大地图",
+      "末奏~四维",
+      "末奏_状态",
+      "末奏~需求",
+      "末奏_罗盘",
+      "末奏_怪数"
+    ]
+  },
+  //id:心肺功能cardio_fit_num 活动等级activity_desc_no_label 疲劳惩罚weary_malus_desc_no_label
+  //声音图sound_bar
+  //ver:位置坐标overmap_loc_text
+  { "id": "MZ", "type": "widget", "style": "text", "string": " " },
+  { "id": "MZ|", "type": "widget", "style": "text", "string": "|", "colors": [ "c_white" ] },
+  { "id": "MZ/", "type": "widget", "style": "text", "string": "/", "colors": [ "c_white" ] },
+  { "id": "MZ_文本模板", "type": "widget",
+    "style": "text", "var": "sound",
+    "flags": [ "W_LABEL_NONE", "W_NO_PADDING" ]
+  },
+  { "id": "MZ_数字模板", "type": "widget",
+    "style": "number", "var": "sound",
+    "flags": [ "W_LABEL_NONE", "W_NO_PADDING" ]
+  },
+  { "id": "MZ_图形模板", "type": "widget",
+    "style": "graph", "var": "stamina",
+    "width": 5, "symbols": ".\\|",
+    "colors": [ "c_red", "c_light_red", "c_yellow", "c_light_green", "c_green" ],
+    "flags": [ "W_NO_PADDING" ]
+  },
+  { "id": "MZ_列布局模板", "type": "widget",
+    "style": "layout", "arrange": "columns",
+    "widgets": [ ], "flags": [ "W_NO_PADDING" ]
+  },
+  { "id": "MZ_小列布局模板", "type": "widget",
+    "style": "layout", "arrange": "minimum_columns",
+    "widgets": [ ], "flags": [ "W_NO_PADDING" ]
+  },
+  { "id": "MZ_行布局模板", "type": "widget",
+    "style": "layout", "arrange": "rows",
+    "widgets": [ ], "flags": [ "W_NO_PADDING" ]
+  },
+  //地图
+  {
+    "id": "末奏_地图", "type": "widget", "label": "地图位置",
+    "copy-from": "MZ_列布局模板",
+    "widgets": [ "地图17x5", "末奏_地点时间天气魔法" ]
+  },
+  { "id": "末奏_地点时间天气魔法", "type": "widget",
+    "copy-from": "MZ_行布局模板",
+    "widgets": [ "MZ_高度辐射地点", "MZ_日期时间", "MZ_亮度天气月相", "MZ_生化魔法" ]
+  },
+  { "id": "MZ_高度辐射地点", "type": "widget",
+    "copy-from": "MZ_列布局模板",
+    "widgets": [ "MZ_高度", "MZ_辐射", "place_desc_no_label" ]
+  },
+  { "id": "MZ_日期时间", "type": "widget",
+    "copy-from": "MZ_列布局模板",
+    "widgets": [ "date_desc_no_label", "MZ|", "time_desc_no_label" ]
+  },
+  { "id": "MZ_亮度天气月相", "type": "widget",
+    "copy-from": "MZ_列布局模板",
+    "widgets": [ "lighting_desc_no_label", "MZ|", "MZ|", "weather_desc_no_label", "MZ|", "MZ_月相" ]
+  },
+  { "id": "MZ_生化魔法", "type": "widget",
+    "copy-from": "MZ_行布局模板",
+    "widgets": [ "MZ_生化", "MZ_魔法" ]
+  },
+  { "id": "MZ_生化", "type": "widget",
+    "copy-from": "MZ_列布局模板",
+    "widgets": [ "MZ_能量", "MZ_能量增加" ]
+  },
+  { "id": "MZ_魔法", "type": "widget",
+    "copy-from": "MZ_小列布局模板",
+    "widgets": [ "MZ_魔力1", "MZ/", "MZ_最大魔力" ]
+  },
+  //大地图
+  { "id": "末奏_大地图", "type": "widget", "label": "大地图位置",
+    "copy-from": "MZ_行布局模板",
+    "widgets": [ "末奏_大地图部件", "overmap_full_width", "MZ_生化魔法1" ],
+    "flags": [ "W_DISABLED_BY_DEFAULT" ]
+  },
+  { "id": "末奏_大地图部件", "type": "widget",
+    "copy-from": "MZ_列布局模板",
+    "widgets": [ "MZ_高度辐射地点", "MZ", "MZ_日期时间", "MZ" ]
+  },
+  { "id": "MZ_生化魔法1", "type": "widget",
+    "copy-from": "MZ_列布局模板",
+    "widgets": [ "MZ_生化1", "MZ", "MZ_魔法1", "MZ", "MZ_亮度天气月相" ]
+  },
+  { "id": "MZ_生化1", "type": "widget",
+    "copy-from": "MZ_列布局模板",
+    "widgets": [ "MZ_能量1", "MZ_能量增加" ]
+  },
+  { "id": "MZ_魔法1", "type": "widget",
+    "copy-from": "MZ_小列布局模板",
+    "widgets": [ "MZ_魔力", "MZ/", "MZ_最大魔力" ]
+  },
+
+  {
+    "id": "末奏~四维", "type": "widget", "label": "四维",
+    "copy-from": "MZ_行布局模板",
+    "widgets": [ "MZ_四维" ]
+  },
+  {
+    "id": "MZ_四维", "type": "widget",
+    "copy-from": "MZ_列布局模板",
+    "widgets": [ "MZ_力量", "MZ_敏捷", "MZ_智力", "MZ_感知", "MZ", "MZ_心情专注", "MZ", "MZ_风速", "MZ_舒适", "MZ_温度" ]
+  },
+
+  { "id": "末奏_状态", "type": "widget", "label": "状态",
+    "copy-from": "MZ_行布局模板",
+    "widgets": [ "MZ_zt01", "MZ_zt02", "MZ_zt03" ]
+  },
+  { "id": "MZ_zt01", "type": "widget",
+    "copy-from": "MZ_列布局模板",
+    "widgets": [ "MZ_head", "MZ", "MZ_torso", "MZ", "MZ_移动模式", "MZ_移动耗时", "MZ_速度", "MZ", "MZ_疼痛", "MZ_声音", "MZ", "MZ_安全" ]
+  },
+  { "id": "MZ_zt02", "type": "widget",
+    "copy-from": "MZ_列布局模板",
+    "widgets": [ "MZ_larm", "MZ", "MZ_rarm", "MZ", "MZ_耐力", "MZ_疲劳程度", "MZ|", "structured_carry_weight_text" ]
+  },
+  { "id": "MZ_zt03", "type": "widget",
+    "copy-from": "MZ_列布局模板",
+    "widgets": [ "MZ_lleg", "MZ", "MZ_rleg", "MZ", "MZ_巡航", "MZ_油箱", "MZ_武器武术" ]
+  },
+  { "id": "MZ_武器武术", "type": "widget",
+    "copy-from": "MZ_列布局模板",
+    "widgets": [ "wielding_desc_no_label", "MZ", "style_desc_no_label", "MZ", "ma_buff_legend" ]
+  },
+
+  {
+    "id": "末奏~需求", "type": "widget", "label": "需求",
+    "copy-from": "MZ_行布局模板",
+    "widgets": [ "MZ_需求", "MZ_效果" ]
+  }
+]

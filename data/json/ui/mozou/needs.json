@@ -1,0 +1,509 @@
+// 内置自末奏侧边栏 1.2a，原作者 心之奏，适配微风内置 widget 系统。
+[
+  {
+    "id": "MZ_需求",
+    "type": "widget",
+    "style": "symbol",
+    "flags": [ "W_DISABLED_WHEN_EMPTY" ],
+    "clauses": [
+      { "id": "engorged", "sym": "吃撑", "color": "red", "condition": { "u_has_effect": "hunger_engorged" } },
+      { "id": "full", "sym": "饱饱", "color": "yellow", "condition": { "u_has_effect": "hunger_full" } },
+      { "id": "satisfied", "sym": "吃饱", "color": "green", "condition": { "u_has_effect": "hunger_satisfied" } },
+      { "id": "blank", "sym": "", "color": "light_gray", "condition": { "u_has_effect": "hunger_blank" } },
+      { "id": "hungry", "sym": "空腹", "color": "c_light_gray", "condition": { "u_has_effect": "hunger_hungry" } },
+      { "id": "very_hungry", "sym": "饿了", "color": "yellow", "condition": { "u_has_effect": "hunger_very_hungry" } },
+      { "id": "near_starving", "sym": "很饿", "color": "red", "condition": { "u_has_effect": "hunger_near_starving" } },
+      { "id": "starving", "sym": "饿！!", "color": "red", "condition": { "u_has_effect": "hunger_starving" } },
+      { "id": "famished", "sym": "饿嗝‌", "color": "light_red", "condition": { "u_has_effect": "hunger_famished" } },
+      { "id": "eff", "sym": "|", "color": "white", "condition": { "and": [
+          { "or": [
+            { "u_has_effect": "hunger_engorged" },
+            { "u_has_effect": "hunger_full" },
+            { "u_has_effect": "hunger_satisfied" },
+            { "not": { "u_has_effect": "hunger_blank" } },
+            { "u_has_effect": "hunger_hungry" },
+            { "u_has_effect": "hunger_very_hungry" },
+            { "u_has_effect": "hunger_near_starving" },
+            { "u_has_effect": "hunger_starving" },
+            { "u_has_effect": "hunger_famished" } ]
+          },
+          { "not": { "or": [
+            { "compare_int": [ { "u_val": "instant_thirst" }, "<", { "const": 0 } ] },
+            { "compare_int": [ { "u_val": "instant_thirst" }, ">", { "const": 40 } ] },
+            { "compare_int": [ { "u_val": "fatigue" }, ">", { "const": 191 } ] } ] }
+          },
+          { "or": [
+            { "compare_int": [ { "u_val": "health" }, "<", { "const": -10 } ] },
+            { "compare_int": [ { "u_val": "health" }, ">", { "const": 10 } ] },
+            { "compare_int": [ { "u_val": "bmi_permil" }, "<", { "const": 18500 } ] },
+            { "compare_int": [ { "u_val": "bmi_permil" }, ">", { "const": 25000 } ] } ]
+          }
+      ] } },
+      { "id": "parched", "sym": "无水", "color": "light_red", "condition": { "compare_int": [ { "u_val": "instant_thirst" }, ">", { "const": 520 } ] } },
+      { "id": "dehydrated", "sym": "脱水", "color": "light_red", "condition": { "and": [
+          { "compare_int": [ { "u_val": "instant_thirst" }, ">", { "const": 240 } ] },
+          { "compare_int": [ { "u_val": "instant_thirst" }, "<=", { "const": 520 } ] } ] }
+      },
+      { "id": "very_thirsty", "sym": "很渴", "color": "yellow", "condition": { "and": [
+          { "compare_int": [ { "u_val": "instant_thirst" }, ">", { "const": 80 } ] },
+          { "compare_int": [ { "u_val": "instant_thirst" }, "<=", { "const": 240 } ] } ] }
+      },
+      { "id": "thirsty", "sym": "口渴", "color": "yellow", "condition": { "and": [
+          { "compare_int": [ { "u_val": "instant_thirst" }, ">", { "const": 40 } ] },
+          { "compare_int": [ { "u_val": "instant_thirst" }, "<=", { "const": 80 } ] } ] }
+      },
+      { "id": "neutral", "sym": "", "color": "light_gray", "condition": { "and": [
+          { "compare_int": [ { "u_val": "instant_thirst" }, ">=", { "const": 0 } ] },
+          { "compare_int": [ { "u_val": "instant_thirst" }, "<=", { "const": 40 } ] } ] }
+      },
+      { "id": "slaked", "sym": "喝足", "color": "green", "condition": { "and": [
+          { "compare_int": [ { "u_val": "instant_thirst" }, ">=", { "const": -20 } ] },
+          { "compare_int": [ { "u_val": "instant_thirst" }, "<", { "const": 0 } ] } ] }
+      },
+      { "id": "hydrated", "sym": "喝多", "color": "green", "condition": { "and": [
+          { "compare_int": [ { "u_val": "instant_thirst" }, ">=", { "const": -60 } ] },
+          { "compare_int": [ { "u_val": "instant_thirst" }, "<", { "const": -20 } ] } ] }
+      },
+      { "id": "turgid", "sym": "喝撑", "color": "green", "condition": { "compare_int": [ { "u_val": "instant_thirst" }, "<", { "const": -60 } ] } },
+      { "id": "eff", "sym": "|", "color": "white", "condition": { "and": [
+          { "or": [
+            { "compare_int": [ { "u_val": "instant_thirst" }, "<", { "const": 0 } ] },
+            { "compare_int": [ { "u_val": "instant_thirst" }, ">", { "const": 40 } ] } ]
+          },
+          { "not": { "compare_int": [ { "u_val": "fatigue" }, ">", { "const": 191 } ] } },
+          { "or": [
+            { "compare_int": [ { "u_val": "health" }, "<", { "const": -10 } ] },
+            { "compare_int": [ { "u_val": "health" }, ">", { "const": 10 } ] },
+            { "compare_int": [ { "u_val": "bmi_permil" }, "<", { "const": 18500 } ] },
+            { "compare_int": [ { "u_val": "bmi_permil" }, ">", { "const": 25000 } ] } ]
+          }
+      ] } },
+      { "id": "tired1", "sym": "", "color": "light_gray", "condition": { "compare_int": [ { "u_val": "fatigue" }, "<", { "const": 191 } ] } },
+      { "id": "tired", "sym": "疲惫", "color": "yellow", "condition": { "and": [
+          { "compare_int": [ { "u_val": "fatigue" }, ">=", { "const": 191 } ] },
+          { "compare_int": [ { "u_val": "fatigue" }, "<", { "const": 383 } ] } ] }
+      },
+      { "id": "dead_tired", "sym": "极度疲惫", "color": "light_red", "condition": { "and": [
+          { "compare_int": [ { "u_val": "fatigue" }, ">=", { "const": 383 } ] },
+          { "compare_int": [ { "u_val": "fatigue" }, "<", { "const": 575 } ] } ] }
+      },
+      { "id": "exhausted", "sym": "精疲力尽", "color": "red", "condition": { "compare_int": [ { "u_val": "fatigue" }, ">=", { "const": 575 } ] } },
+
+      { "id": "eff", "sym": "|", "color": "white", "condition": { "and": [
+          { "compare_int": [ { "u_val": "fatigue" }, ">", { "const": 191 } ] },
+          { "or": [
+            { "compare_int": [ { "u_val": "health" }, "<", { "const": -10 } ] },
+            { "compare_int": [ { "u_val": "health" }, ">", { "const": 10 } ] },
+            { "compare_int": [ { "u_val": "bmi_permil" }, "<", { "const": 18500 } ] },
+            { "compare_int": [ { "u_val": "bmi_permil" }, ">", { "const": 25000 } ] } ]
+          }
+      ] } },
+      { "id": "horrible", "sym": "极差", "color": "red", "condition": { "compare_int": [ { "u_val": "health" }, "<", { "const": -100 } ] } },
+      { "id": "very_bad", "sym": "很差", "color": "light_red", "condition": { "and": [
+          { "compare_int": [ { "u_val": "health" }, ">=", { "const": -100 } ] },
+          { "compare_int": [ { "u_val": "health" }, "<", { "const": -50 } ] } ] }
+      },
+      { "id": "bad", "sym": "差", "color": "yellow", "condition": { "and": [
+          { "compare_int": [ { "u_val": "health" }, ">=", { "const": -50 } ] },
+          { "compare_int": [ { "u_val": "health" }, "<", { "const": -10 } ] } ] }
+      },
+      { "id": "ok", "sym": "", "color": "light_gray", "condition": { "and": [
+          { "compare_int": [ { "u_val": "health" }, ">=", { "const": -10 } ] },
+          { "compare_int": [ { "u_val": "health" }, "<", { "const": 10 } ] } ] }
+      },
+      { "id": "good", "sym": "好", "color": "white", "condition": { "and": [
+          { "compare_int": [ { "u_val": "health" }, ">=", { "const": 10 } ] },
+          { "compare_int": [ { "u_val": "health" }, "<", { "const": 50 } ] } ] }
+      },
+      { "id": "very_good", "sym": "很棒", "color": "green", "condition": { "and": [
+          { "compare_int": [ { "u_val": "health" }, ">=", { "const": 50 } ] },
+          { "compare_int": [ { "u_val": "health" }, "<", { "const": 100 } ] } ] }
+      },
+      { "id": "excellent", "sym": "超棒", "color": "light_green", "condition": { "compare_int": [ { "u_val": "health" }, ">=", { "const": 100 } ] } },
+
+      { "id": "skeletal", "sym": "瘦骨如柴", "color": "red", "condition": { "compare_int": [ { "u_val": "bmi_permil" }, "<=", { "const": 14000 } ] } },
+      { "id": "emaciated", "sym": "憔悴", "color": "light_red", "condition": { "and": [
+          { "compare_int": [ { "u_val": "bmi_permil" }, ">", { "const": 14000 } ] },
+          { "compare_int": [ { "u_val": "bmi_permil" }, "<=", { "const": 16000 } ] } ] }
+      },
+      { "id": "underweight", "sym": "瘦弱", "color": "yellow", "condition": { "and": [
+          { "compare_int": [ { "u_val": "bmi_permil" }, ">", { "const": 16000 } ] },
+          { "compare_int": [ { "u_val": "bmi_permil" }, "<=", { "const": 18500 } ] } ] }
+      },
+      { "id": "normal", "sym": "", "color": "light_gray", "condition": { "and": [
+          { "compare_int": [ { "u_val": "bmi_permil" }, ">", { "const": 18500 } ] },
+          { "compare_int": [ { "u_val": "bmi_permil" }, "<=", { "const": 25000 } ] } ] }
+      },
+      { "id": "overweight", "sym": "肥弱", "color": "yellow", "condition": { "and": [
+          { "compare_int": [ { "u_val": "bmi_permil" }, ">", { "const": 25000 } ] },
+          { "compare_int": [ { "u_val": "bmi_permil" }, "<=", { "const": 30000 } ] } ] }
+      },
+      { "id": "obese", "sym": "肥胖", "color": "light_red", "condition": { "and": [
+          { "compare_int": [ { "u_val": "bmi_permil" }, ">", { "const": 30000 } ] },
+          { "compare_int": [ { "u_val": "bmi_permil" }, "<=", { "const": 35000 } ] } ] }
+      },
+      { "id": "very_obese", "sym": "非常肥胖", "color": "red", "condition": { "and": [
+          { "compare_int": [ { "u_val": "bmi_permil" }, ">", { "const": 35000 } ] },
+          { "compare_int": [ { "u_val": "bmi_permil" }, "<=", { "const": 35000 } ] } ] }
+      },
+      { "id": "morbidly_obese", "sym": "病态肥胖", "color": "red", "condition": { "compare_int": [ { "u_val": "bmi_permil" }, ">", { "const": 40000 } ] } }
+    ]
+  },
+
+
+
+
+
+  {
+    "id": "MZ_效果",
+    "type": "widget",
+    "style": "symbol",
+    "flags": [ "W_DISABLED_WHEN_EMPTY" ],
+    "clauses": [
+      { "id": "eff", "sym": "RX11消退", "color": "i_light_gray", "condition": { "and": [
+          { "u_has_effect": "stimpack", "intensity": 1 },
+          { "not": { "u_has_effect": "stimpack", "intensity": 2 } } ] }
+      },
+      { "id": "eff", "sym": "RX11生效", "color": "i_green", "condition": { "u_has_effect": "stimpack", "intensity": 2 } },
+      { "id": "eff", "sym": "RX12消退", "color": "i_light_gray", "condition": { "and": [
+          { "u_has_effect": "jetinjector", "intensity": 1 },
+          { "not": { "u_has_effect": "jetinjector", "intensity": 2 } } ] }
+      },
+      { "id": "eff", "sym": "RX12高涨", "color": "i_green", "condition": { "u_has_effect": "jetinjector", "intensity": 2 } },
+      { "id": "eff", "sym": "被击倒", "color": "i_red", "condition": { "u_has_effect": "downed" } },
+      { "id": "eff", "sym": "气喘吁吁", "color": "red", "condition": { "u_has_effect": "winded" } },
+      { "id": "eff", "sym": "哮喘[1]", "color": "i_light_gray", "condition": { "and": [
+          { "u_has_effect": "asthma", "intensity": 1 },
+          { "not": { "u_has_effect": "asthma", "intensity": 2 } } ] }
+      },
+      { "id": "eff", "sym": "哮喘[2]", "color": "i_light_gray", "condition": { "and": [
+          { "u_has_effect": "asthma", "intensity": 2 },
+          { "not": { "u_has_effect": "asthma", "intensity": 3 } } ] }
+      },
+      { "id": "eff", "sym": "哮喘[3]", "color": "i_light_gray", "condition": { "and": [
+          { "u_has_effect": "asthma", "intensity": 3 },
+          { "not": { "u_has_effect": "asthma", "intensity": 4 } } ] }
+      },
+      { "id": "eff", "sym": "哮喘[4]", "color": "i_light_gray", "condition": { "and": [
+          { "u_has_effect": "asthma", "intensity": 4 },
+          { "not": { "u_has_effect": "asthma", "intensity": 5 } } ] }
+      },
+      { "id": "eff", "sym": "重度哮喘[5]", "color": "light_gray_red", "condition": { "and": [
+          { "u_has_effect": "asthma", "intensity": 5 },
+          { "not": { "u_has_effect": "asthma", "intensity": 6 } } ] }
+      },
+      { "id": "eff", "sym": "重度哮喘[6]", "color": "light_gray_red", "condition": { "u_has_effect": "asthma", "intensity": 6 } },
+      { "id": "eff", "sym": "被电击", "color": "i_light_cyan", "condition": { "u_has_effect": "zapped" } },
+      { "id": "eff", "sym": "被腐蚀[1]", "color": "light_green_red", "condition": { "and": [
+          { "u_has_effect": "corroding", "intensity": 1 },
+          { "not": { "u_has_effect": "corroding", "intensity": 2 } } ] }
+      },
+      { "id": "eff", "sym": "被腐蚀[2]", "color": "light_green_red", "condition": { "and": [
+          { "u_has_effect": "corroding", "intensity": 2 },
+          { "not": { "u_has_effect": "corroding", "intensity": 3 } } ] }
+      },
+      { "id": "eff", "sym": "被腐蚀[3]", "color": "light_green_red", "condition": { "and": [
+          { "u_has_effect": "corroding", "intensity": 3 },
+          { "not": { "u_has_effect": "corroding", "intensity": 4 } } ] }
+      },
+      { "id": "eff", "sym": "被腐蚀[4]", "color": "light_green_red", "condition": { "and": [
+          { "u_has_effect": "corroding", "intensity": 4 },
+          { "not": { "u_has_effect": "corroding", "intensity": 5 } } ] }
+      },
+      { "id": "eff", "sym": "被腐蚀[5]", "color": "light_green_red", "condition": { "u_has_effect": "corroding", "intensity": 5 } },
+
+      { "id": "fetid_goop", "sym": "恶臭黏液", "color": "magenta", "condition": { "u_has_effect": "fetid_goop" } },
+      { "id": "boomered", "sym": "胆汁", "color": "magenta", "condition": { "u_has_effect": "boomered" } },
+      { "id": "glowing", "sym": "发光胆汁", "color": "pink", "condition": { "u_has_effect": "glowing" } },
+      { "id": "sap", "sym": "叶汁", "color": "light_green", "condition": { "u_has_effect": "sap" } },
+      { "id": "eff", "sym": "小醉", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "drunk", "intensity": 1 },
+          { "not": { "u_has_effect": "drunk", "intensity": 2} } ] }
+      },
+      { "id": "eff", "sym": "醉酒", "color": "dark_gray", "condition": { "and": [
+          { "u_has_effect": "drunk", "intensity": 2 },
+          { "not": { "u_has_effect": "drunk", "intensity": 3} } ] }
+      },
+      { "id": "eff", "sym": "大醉", "color": "light_red", "condition": { "and": [
+          { "u_has_effect": "drunk", "intensity": 3 },
+          { "not": { "u_has_effect": "drunk", "intensity": 4 } } ] }
+      },
+      { "id": "eff", "sym": "酯酊大酶", "color": "pink", "condition": { "and": [
+          { "u_has_effect": "drunk", "intensity": 4 },
+          { "not": { "u_has_effect": "drunk", "intensity": 5} } ] }
+      },
+      { "id": "eff", "sym": "烂醉如泥", "color": "i_pink", "condition": { "u_has_effect": "drunk", "intensity": 5 } },
+
+      { "id": "eff", "sym": "兴奋", "color": "light_gray", "condition": { "u_has_effect": "stim" } },
+      { "id": "eff", "sym": "[1]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "stim", "intensity": 1 },
+          { "not": { "u_has_effect": "stim", "intensity": 2 } } ] }
+      },
+      { "id": "eff", "sym": "[2]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "stim", "intensity": 2 },
+          { "not": { "u_has_effect": "stim", "intensity": 3 } } ] }
+      },
+      { "id": "eff", "sym": "[3]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "stim", "intensity": 3 },
+          { "not": { "u_has_effect": "stim", "intensity": 4 } } ] }
+      },
+      { "id": "eff", "sym": "[4]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "stim", "intensity": 4 },
+          { "not": { "u_has_effect": "stim", "intensity": 5 } } ] }
+      },
+      { "id": "eff", "sym": "[5]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "stim", "intensity": 5 },
+          { "not": { "u_has_effect": "stim", "intensity": 6 } } ] }
+      },
+      { "id": "eff", "sym": "[6]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "stim", "intensity": 6 },
+          { "not": { "u_has_effect": "stim", "intensity": 7 } } ] }
+      },
+      { "id": "eff", "sym": "[7]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "stim", "intensity": 7 },
+          { "not": { "u_has_effect": "stim", "intensity": 8 } } ] }
+      },
+      { "id": "eff", "sym": "[8]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "stim", "intensity": 8 },
+          { "not": { "u_has_effect": "stim", "intensity": 9 } } ] }
+      },
+      { "id": "eff", "sym": "[9]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "stim", "intensity": 9 },
+          { "not": { "u_has_effect": "stim", "intensity": 10 } } ] }
+      },
+      { "id": "eff", "sym": "[10]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "stim", "intensity": 10 },
+          { "not": { "u_has_effect": "stim", "intensity": 11 } } ] }
+      },
+      { "id": "eff", "sym": "[11]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "stim", "intensity": 11 },
+          { "not": { "u_has_effect": "stim", "intensity": 12 } } ] }
+      },
+      { "id": "eff", "sym": "[12]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "stim", "intensity": 12 },
+          { "not": { "u_has_effect": "stim", "intensity": 13 } } ] }
+      },
+      { "id": "eff", "sym": "[13]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "stim", "intensity": 13 },
+          { "not": { "u_has_effect": "stim", "intensity": 14 } } ] }
+      },
+      { "id": "eff", "sym": "[14]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "stim", "intensity": 14 },
+          { "not": { "u_has_effect": "stim", "intensity": 15 } } ] }
+      },
+      { "id": "eff", "sym": "[15]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "stim", "intensity": 15 },
+          { "not": { "u_has_effect": "stim", "intensity": 16 } } ] }
+      },
+      { "id": "eff", "sym": "[16]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "stim", "intensity": 16 },
+          { "not": { "u_has_effect": "stim", "intensity": 17 } } ] }
+      },
+      { "id": "eff", "sym": "[17]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "stim", "intensity": 17 },
+          { "not": { "u_has_effect": "stim", "intensity": 18 } } ] }
+      },
+      { "id": "eff", "sym": "[18]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "stim", "intensity": 18 },
+          { "not": { "u_has_effect": "stim", "intensity": 19 } } ] }
+      },
+      { "id": "eff", "sym": "[19]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "stim", "intensity": 19 },
+          { "not": { "u_has_effect": "stim", "intensity": 20 } } ] }
+      },
+      { "id": "eff", "sym": "[20]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "stim", "intensity": 20 },
+          { "not": { "u_has_effect": "stim", "intensity": 21 } } ] }
+      },
+      { "id": "eff", "sym": "[21]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "stim", "intensity": 21 },
+          { "not": { "u_has_effect": "stim", "intensity": 22 } } ] }
+      },
+      { "id": "eff", "sym": "[22]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "stim", "intensity": 22 },
+          { "not": { "u_has_effect": "stim", "intensity": 23 } } ] }
+      },
+      { "id": "eff", "sym": "[23]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "stim", "intensity": 23 },
+          { "not": { "u_has_effect": "stim", "intensity": 24 } } ] }
+      },
+      { "id": "eff", "sym": "[24]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "stim", "intensity": 24 },
+          { "not": { "u_has_effect": "stim", "intensity": 25 } } ] }
+      },
+      { "id": "eff", "sym": "[25]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "stim", "intensity": 25 },
+          { "not": { "u_has_effect": "stim", "intensity": 26 } } ] }
+      },
+      { "id": "eff", "sym": "[26]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "stim", "intensity": 26 },
+          { "not": { "u_has_effect": "stim", "intensity": 27 } } ] }
+      },
+      { "id": "eff", "sym": "[27]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "stim", "intensity": 27 },
+          { "not": { "u_has_effect": "stim", "intensity": 28 } } ] }
+      },
+      { "id": "eff", "sym": "[28]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "stim", "intensity": 28 },
+          { "not": { "u_has_effect": "stim", "intensity": 29 } } ] }
+      },
+      { "id": "eff", "sym": "[29]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "stim", "intensity": 29 },
+          { "not": { "u_has_effect": "stim", "intensity": 30 } } ] }
+      },
+      { "id": "eff", "sym": "[30]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "stim", "intensity": 30 },
+          { "not": { "u_has_effect": "stim", "intensity": 31 } } ] }
+      },
+      { "id": "eff", "sym": "镇疼", "color": "light_gray", "condition": { "u_has_effect": "pkill" } },
+      { "id": "eff", "sym": "[1]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "pkill", "intensity": 1 },
+          { "not": { "u_has_effect": "pkill", "intensity": 2 } } ] }
+      },
+      { "id": "eff", "sym": "[2]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "pkill", "intensity": 2 },
+          { "not": { "u_has_effect": "pkill", "intensity": 3 } } ] }
+      },
+      { "id": "eff", "sym": "[3]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "pkill", "intensity": 3 },
+          { "not": { "u_has_effect": "pkill", "intensity": 4 } } ] }
+      },
+      { "id": "eff", "sym": "[4]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "pkill", "intensity": 4 },
+          { "not": { "u_has_effect": "pkill", "intensity": 5 } } ] }
+      },
+      { "id": "eff", "sym": "[5]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "pkill", "intensity": 5 },
+          { "not": { "u_has_effect": "pkill", "intensity": 6 } } ] }
+      },
+      { "id": "eff", "sym": "[6]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "pkill", "intensity": 6 },
+          { "not": { "u_has_effect": "pkill", "intensity": 7 } } ] }
+      },
+      { "id": "eff", "sym": "[7]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "pkill", "intensity": 7 },
+          { "not": { "u_has_effect": "pkill", "intensity": 8 } } ] }
+      },
+      { "id": "eff", "sym": "[8]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "pkill", "intensity": 8 },
+          { "not": { "u_has_effect": "pkill", "intensity": 9 } } ] }
+      },
+      { "id": "eff", "sym": "[9]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "pkill", "intensity": 9 },
+          { "not": { "u_has_effect": "pkill", "intensity": 10 } } ] }
+      },
+      { "id": "eff", "sym": "[10]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "pkill", "intensity": 10 },
+          { "not": { "u_has_effect": "pkill", "intensity": 11 } } ] }
+      },
+      { "id": "eff", "sym": "[11]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "pkill", "intensity": 11 },
+          { "not": { "u_has_effect": "pkill", "intensity": 12 } } ] }
+      },
+      { "id": "eff", "sym": "[12]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "pkill", "intensity": 12 },
+          { "not": { "u_has_effect": "pkill", "intensity": 13 } } ] }
+      },
+      { "id": "eff", "sym": "[13]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "pkill", "intensity": 13 },
+          { "not": { "u_has_effect": "pkill", "intensity": 14 } } ] }
+      },
+      { "id": "eff", "sym": "[14]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "pkill", "intensity": 14 },
+          { "not": { "u_has_effect": "pkill", "intensity": 15 } } ] }
+      },
+      { "id": "eff", "sym": "[15]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "pkill", "intensity": 15 },
+          { "not": { "u_has_effect": "pkill", "intensity": 16 } } ] }
+      },
+      { "id": "eff", "sym": "[16]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "pkill", "intensity": 16 },
+          { "not": { "u_has_effect": "pkill", "intensity": 17 } } ] }
+      },
+      { "id": "eff", "sym": "[17]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "pkill", "intensity": 17 },
+          { "not": { "u_has_effect": "pkill", "intensity": 18 } } ] }
+      },
+      { "id": "eff", "sym": "[18]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "pkill", "intensity": 18 },
+          { "not": { "u_has_effect": "pkill", "intensity": 19 } } ] }
+      },
+      { "id": "eff", "sym": "[19]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "pkill", "intensity": 19 },
+          { "not": { "u_has_effect": "pkill", "intensity": 20 } } ] }
+      },
+      { "id": "eff", "sym": "[20]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "pkill", "intensity": 20 },
+          { "not": { "u_has_effect": "pkill", "intensity": 21 } } ] }
+      },
+      { "id": "eff", "sym": "[21]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "pkill", "intensity": 21 },
+          { "not": { "u_has_effect": "pkill", "intensity": 22 } } ] }
+      },
+      { "id": "eff", "sym": "[22]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "pkill", "intensity": 22 },
+          { "not": { "u_has_effect": "pkill", "intensity": 23 } } ] }
+      },
+      { "id": "eff", "sym": "[23]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "pkill", "intensity": 23 },
+          { "not": { "u_has_effect": "pkill", "intensity": 24 } } ] }
+      },
+      { "id": "eff", "sym": "[24]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "pkill", "intensity": 24 },
+          { "not": { "u_has_effect": "pkill", "intensity": 25 } } ] }
+      },
+      { "id": "eff", "sym": "[25]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "pkill", "intensity": 25 },
+          { "not": { "u_has_effect": "pkill", "intensity": 26 } } ] }
+      },
+      { "id": "eff", "sym": "[26]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "pkill", "intensity": 26 },
+          { "not": { "u_has_effect": "pkill", "intensity": 27 } } ] }
+      },
+      { "id": "eff", "sym": "[27]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "pkill", "intensity": 27 },
+          { "not": { "u_has_effect": "pkill", "intensity": 28 } } ] }
+      },
+      { "id": "eff", "sym": "[28]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "pkill", "intensity": 28 },
+          { "not": { "u_has_effect": "pkill", "intensity": 29 } } ] }
+      },
+      { "id": "eff", "sym": "[29]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "pkill", "intensity": 29 },
+          { "not": { "u_has_effect": "pkill", "intensity": 30 } } ] }
+      },
+      { "id": "eff", "sym": "[30]", "color": "light_gray", "condition": { "and": [
+          { "u_has_effect": "pkill", "intensity": 30 },
+          { "not": { "u_has_effect": "pkill", "intensity": 31 } } ] }
+      },
+
+      { "id": "eff", "sym": "听力受损", "color": "yellow", "condition": { "and": [
+          { "u_has_effect": "deaf", "intensity": 1 },
+          { "not": { "u_has_effect": "deaf", "intensity": 2 } } ] }
+      },
+      { "id": "eff", "sym": "耳鸣", "color": "light_red", "condition": { "and": [
+          { "u_has_effect": "deaf", "intensity": 2 },
+          { "not": { "u_has_effect": "deaf", "intensity": 3 } } ] }
+      },
+      { "id": "eff", "sym": "失聪", "color": "red", "condition": { "u_has_effect": "deaf", "intensity": 3 } },
+
+      { "id": "eff", "sym": "基因疲劳", "color": "yellow", "condition": { "and": [
+          { "u_has_effect": "genetics_damaged", "intensity": 1 },
+          { "not": { "u_has_effect": "genetics_damaged", "intensity": 2 } } ] }
+      },
+      { "id": "eff", "sym": "基因耗尽", "color": "light_red", "condition": { "and": [
+          { "u_has_effect": "genetics_damaged", "intensity": 2 },
+          { "not": { "u_has_effect": "genetics_damaged", "intensity": 3 } } ] }
+      },
+      { "id": "eff", "sym": "基因破坏", "color": "red", "condition": { "u_has_effect": "genetics_damaged", "intensity": 3 } },
+      { "id": "eff", "sym": "食物中毒", "color": "green", "condition": { "u_has_effect": "foodpoison" } },
+      { "id": "eff", "sym": "感冒", "color": "dark_gray", "condition": { "u_has_effect": "common_cold" } },
+      { "id": "eff", "sym": "流感", "color": "dark_gray", "condition": { "u_has_effect": "flu" } },
+      { "id": "eff", "sym": "光源", "color": "i_yellow", "condition": { "u_has_effect": "haslight" } },
+      { "id": "eff", "sym": "眼镜", "color": "light_gray", "condition": { "u_has_effect": "contacts" } },
+      { "id": "eff", "sym": "培训", "color": "light_gray", "condition": { "u_has_effect": "asked_to_train" } },
+      { "id": "eff", "sym": "耳机", "color": "green", "condition": { "u_has_effect": "earphones" } },
+      { "id": "eff", "sym": "闹钟", "color": "green", "condition": { "u_has_effect": "alarm_clock" } }
+    ]
+  }
+]

@@ -465018,3 +465018,105 @@ msgstr "喜爱"
 #: data/json/vehicleparts/vp_flags.json
 msgid "You can connect electrical cables to this part."
 msgstr "可将电缆连接到这个部件。"
+
+#. ~ Vehicle painting activity verb
+#: data/json/player_activities.json
+msgid "喷涂载具"
+msgstr "喷涂载具"
+
+#. ~ Vehicle painting activity messages
+#: src/activity_actor.cpp
+msgid "你开始为载具喷漆。"
+msgstr "你开始为载具喷漆。"
+
+#: src/activity_actor.cpp
+msgid "喷漆枪已经不在手边了。"
+msgstr "喷漆枪已经不在手边了。"
+
+#: src/activity_actor.cpp
+msgid "喷漆罐已经空了。"
+msgstr "喷漆罐已经空了。"
+
+#: src/activity_actor.cpp
+msgid "需要喷涂的载具已经不在原位了。"
+msgstr "需要喷涂的载具已经不在原位了。"
+
+#, c-format
+#: src/activity_actor.cpp
+msgid "你完成了载具喷涂，共喷涂 %d 个载具格。"
+msgstr "你完成了载具喷涂，共喷涂 %d 个载具格。"
+
+#: src/activity_actor.cpp
+msgid "你停止了载具喷涂，已经完成的部分会保留。"
+msgstr "你停止了载具喷涂，已经完成的部分会保留。"
+
+#: src/activity_actor.cpp
+msgid "你停止了载具喷涂。"
+msgstr "你停止了载具喷涂。"
+
+#, c-format
+#: src/activity_actor.cpp
+msgid "喷涂 %1$d/%2$d 格，已改色 %3$d 格"
+msgstr "喷涂 %1$d/%2$d 格，已改色 %3$d 格"
+
+#. ~ Vehicle painting use action messages
+#: src/iuse_actor.cpp
+msgid "喷漆枪里没有油漆。"
+msgstr "喷漆枪里没有油漆。"
+
+#: src/iuse_actor.cpp
+msgid "这种油漆不能用于载具喷涂。"
+msgstr "这种油漆不能用于载具喷涂。"
+
+#: src/iuse_actor.cpp
+msgid "选择喷漆区域的第一个角。"
+msgstr "选择喷漆区域的第一个角。"
+
+#: src/iuse_actor.cpp
+msgid "请选择一辆载具。"
+msgstr "请选择一辆载具。"
+
+#: src/iuse_actor.cpp
+msgid "选择喷漆区域的第二个角。"
+msgstr "选择喷漆区域的第二个角。"
+
+#: src/iuse_actor.cpp
+msgid "没有需要喷漆的载具表面。"
+msgstr "没有需要喷漆的载具表面。"
+
+#: src/iuse_actor.cpp
+msgid "找不到正在使用的喷漆枪。"
+msgstr "找不到正在使用的喷漆枪。"
+
+#. ~ Mozou sidebar preset labels
+#: data/json/ui/mozou/sidebar.json data/json/ui/mozou/compass.json
+msgid "末奏"
+msgstr "末奏"
+
+#: data/json/ui/mozou/compass.json
+msgid "罗盘"
+msgstr "罗盘"
+
+#: data/json/ui/mozou/compass.json
+msgid "怪数"
+msgstr "怪数"
+
+#: data/json/ui/mozou/sidebar.json
+msgid "地图位置"
+msgstr "地图位置"
+
+#: data/json/ui/mozou/sidebar.json
+msgid "大地图位置"
+msgstr "大地图位置"
+
+#: data/json/ui/mozou/sidebar.json
+msgid "四维"
+msgstr "四维"
+
+#: data/json/ui/mozou/sidebar.json
+msgid "状态"
+msgstr "状态"
+
+#: data/json/ui/mozou/sidebar.json
+msgid "需求"
+msgstr "需求"

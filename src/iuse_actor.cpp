@@ -489,6 +489,8 @@ void unpack_actor::info( const item &, std::vector<iteminfo> &dump ) const
                        _( "This item could be unpacked to receive something." ) );
 }
 
+static item_location form_loc( Character &you, const tripoint &p, item &it );
+
 namespace
 {
 std::optional<RGBColor> vehicle_paint_color_for_ammo( const itype_id &id )
@@ -593,13 +595,14 @@ std::optional<int> paint_vehicle::use( Character &p, item &it, bool t,
         return 0;
     }
 
-    const int available_paint = it.ammo_remaining();
-    int painted_tiles = 0;
+    const int available_paint = it.ammo_remaining( &p );
+    std::vector<tripoint> paint_targets;
+    paint_targets.reserve( std::min<int>( available_paint, 128 ) );
     std::set<point> handled_mounts;
 
     for( const tripoint &pt : here.points_in_rectangle( first.position.value(),
             second.position.value() ) ) {
-        if( painted_tiles >= available_paint ) {
+        if( static_cast<int>( paint_targets.size() ) >= available_paint ) {
             break;
         }
         const optional_vpart_position ovp = here.veh_at( pt );
@@ -614,7 +617,7 @@ std::optional<int> paint_vehicle::use( Character &p, item &it, bool t,
 
         const std::optional<vpart_reference> displayed = ovp->part_displayed();
         const int displayed_index = displayed ? static_cast<int>( displayed->part_index() ) : -1;
-        bool changed_tile = false;
+        bool needs_paint = false;
 
         for( const int index : target->parts_at_relative( mount, true ) ) {
             vehicle_part &vp = target->part( index );
@@ -628,27 +631,32 @@ std::optional<int> paint_vehicle::use( Character &p, item &it, bool t,
             }
 
             const RGBColorPair current = vp.get_color();
-            if( current.bg == paint_color.value() && current.fg == paint_color.value() ) {
-                continue;
+            if( current.bg != paint_color.value() || current.fg != paint_color.value() ) {
+                needs_paint = true;
+                break;
             }
-
-            vp.set_color( paint_color.value(), paint_color.value() );
-            changed_tile = true;
         }
 
-        if( changed_tile ) {
-            ++painted_tiles;
+        if( needs_paint ) {
+            paint_targets.push_back( pt );
         }
     }
 
-    if( painted_tiles == 0 ) {
+    if( paint_targets.empty() ) {
         p.add_msg_if_player( m_info, _( "没有需要喷漆的载具表面。" ) );
         return 0;
     }
 
-    p.moves -= to_moves<int>( 30_seconds ) * painted_tiles;
-    p.add_msg_if_player( m_info, _( "你喷涂了 %d 个载具格。" ), painted_tiles );
-    return painted_tiles;
+    const item_location gun_location = form_loc( p, pos, it );
+    if( !gun_location ) {
+        p.add_msg_if_player( m_info, _( "找不到正在使用的喷漆枪。" ) );
+        return 0;
+    }
+
+    p.assign_activity( player_activity( vehicle_paint_activity_actor(
+                           gun_location, first.position.value(), paint_targets,
+                           paint_color->to_hex() ) ) );
+    return 0;
 }
 
 std::unique_ptr<iuse_actor> countdown_actor::clone() const

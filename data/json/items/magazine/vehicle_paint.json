@@ -1,6 +1,7 @@
 [
   {
     "id": "vehicle_paint_can",
+    "looks_like": "spray_can",
     "type": "MAGAZINE",
     "name": {
       "str": "喷漆罐"
@@ -25,6 +26,7 @@
       {
         "pocket_type": "MAGAZINE",
         "rigid": true,
+        "watertight": true,
         "ammo_restriction": {
           "vehicle_paint": 20
         }

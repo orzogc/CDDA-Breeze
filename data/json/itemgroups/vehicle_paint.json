@@ -322,11 +322,7 @@
       },
       {
         "item": "vehicle_paint_can",
-        "count": [
-          2,
-          4
-        ],
-        "prob": 100,
+        "prob": 50,
         "custom-flags": [
           "PAINT_COUNTER_STOCK"
         ]
@@ -492,55 +488,6 @@
       {
         "group": "vehicle_paint_special_color",
         "prob": 50,
-        "custom-flags": [
-          "PAINT_COUNTER_STOCK"
-        ]
-      },
-      {
-        "item": "r_paint",
-        "prob": 100,
-        "custom-flags": [
-          "PAINT_COUNTER_STOCK"
-        ]
-      },
-      {
-        "item": "b_paint",
-        "prob": 100,
-        "custom-flags": [
-          "PAINT_COUNTER_STOCK"
-        ]
-      },
-      {
-        "item": "w_paint",
-        "prob": 100,
-        "custom-flags": [
-          "PAINT_COUNTER_STOCK"
-        ]
-      },
-      {
-        "item": "g_paint",
-        "prob": 100,
-        "custom-flags": [
-          "PAINT_COUNTER_STOCK"
-        ]
-      },
-      {
-        "item": "p_paint",
-        "prob": 100,
-        "custom-flags": [
-          "PAINT_COUNTER_STOCK"
-        ]
-      },
-      {
-        "item": "y_paint",
-        "prob": 100,
-        "custom-flags": [
-          "PAINT_COUNTER_STOCK"
-        ]
-      },
-      {
-        "item": "black_paint",
-        "prob": 100,
         "custom-flags": [
           "PAINT_COUNTER_STOCK"
         ]

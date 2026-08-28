@@ -1,0 +1,246 @@
+// 内置自末奏侧边栏 1.2a，原作者 心之奏，适配微风内置 widget 系统。
+[
+  { "id": "MZ_疼痛", "type": "widget", "style": "number", "label": "疼",
+    "var": "pain",
+    "colors": [ "c_white", "c_yellow", "c_light_red", "c_red" ]
+  },
+  { "id": "MZ_声音", "type": "widget", "style": "number", "label": "声",
+    "var": "sound"
+  },
+
+  { "id": "MZ_耐力", "type": "widget", "label": "耐",
+    "var": "stamina",
+    "copy-from": "MZ_图形模板",
+    "symbols": " \\|",
+    "colors": [ "c_red", "c_light_red", "c_yellow", "c_light_green", "c_green" ]
+  },
+  { "id": "MZ_疲劳程度", "type": "widget", "label": "疲",
+    "var": "weary_transition_level",
+    "copy-from": "MZ_图形模板",
+    "symbols": " \\|",
+    "colors": [ "c_red", "c_light_red", "c_yellow", "c_light_green", "c_green" ]
+  },
+  { "id": "MZ_安全", "type": "widget", "style": "text",
+    "var": "safe_mode_text"
+  },
+  { "id": "MZ_安全1", "type": "widget", "style": "text",
+    "var": "safe_mode_classic_text"
+  },
+
+  { "id": "MZ_移动模式", "type": "widget", "style": "text",
+    "default_clause": { "text": "bugging out", "sym": "-", "color": "dark_gray" },
+    "clauses": [
+      { "id": "run", "text": "跑", "sym": "R", "color": "red", "condition": { "u_has_move_mode": "run" } },
+      { "id": "walk", "text": "走", "sym": "W", "color": "white", "condition": { "u_has_move_mode": "walk" } },
+      { "id": "crouch", "text": "蹲", "sym": "C", "color": "light_blue", "condition": { "u_has_move_mode": "crouch" } },
+      { "id": "prone", "text": "爬", "sym": "P", "color": "green", "condition": { "u_has_move_mode": "prone" } }
+    ]
+  },
+  { "id": "MZ_移动耗时", "type": "widget", "style": "number",
+    "var": "move_cost",
+    "colors": [ "c_green", "c_light_green", "c_yellow", "c_light_red", "c_red", "c_red_red" ]
+  },
+  { "id": "MZ_速度", "type": "widget", "style": "number", "label": "/",
+    "var": "speed",
+    "colors": [ "c_red", "c_light_red", "c_light_green", "c_green" ]
+  },
+  { "id": "MZ_当前耗时", "type": "widget", "style": "number", "label": "|",
+    "var": "move"
+  },
+
+  { "id": "MZ_head", "type": "widget",
+    "copy-from": "MZ_列布局模板",
+    "widgets": [ "MZ_HEAD_texe", "hp_head_num_no_label" ]
+  },
+  { "id": "MZ_torso", "type": "widget",
+    "copy-from": "MZ_列布局模板",
+    "widgets": [ "MZ_TORSO_texe", "hp_torso_num_no_label" ]
+  },
+  { "id": "MZ_larm", "type": "widget",
+    "copy-from": "MZ_列布局模板",
+    "widgets": [ "MZ_LARM_texe", "hp_left_arm_num_no_label" ]
+  },
+  { "id": "MZ_rarm", "type": "widget",
+    "copy-from": "MZ_列布局模板",
+    "widgets": [ "MZ_RARM_texe", "hp_right_arm_num_no_label" ]
+  },
+  { "id": "MZ_lleg", "type": "widget",
+    "copy-from": "MZ_列布局模板",
+    "widgets": [ "MZ_LLEG_texe", "hp_left_leg_num_no_label" ]
+  },
+  { "id": "MZ_rleg", "type": "widget",
+    "copy-from": "MZ_列布局模板",
+    "widgets": [ "MZ_RLEG_texe", "hp_right_leg_num_no_label" ]
+  },
+  { "id": "MZ_HEAD_texe", "type": "widget", "style": "text",
+    "bodypart": "head",
+    "default_clause": { "text": "头" },
+    "clauses": [
+      { "id": "bleedingAndBitten3", "text": "头", "color": "magenta_red", "condition": { "and": [
+          { "u_has_effect": "bite" }, { "u_has_effect": "bleed", "intensity": 21 } ] }
+      },
+      { "id": "bleedingAndBitten12", "text": "头", "color": "magenta", "condition": { "and": [
+          { "u_has_effect": "bite" },
+          { "u_has_effect": "bleed", "intensity": 1 },
+          { "compare_int": [ { "u_val": "effect_intensity", "effect": "bleed" }, "<", { "const": 21 } ] } ] }
+      },
+
+      { "id": "bleeding3", "text": "头", "color": "red_red", "condition":
+          { "u_has_effect": "bleed", "intensity": 21 } },
+      { "id": "bleeding2", "text": "头", "color": "red", "condition": { "and": [
+          { "u_has_effect": "bleed", "intensity": 11 },
+          { "compare_int": [ { "u_val": "effect_intensity", "effect": "bleed" }, "<", { "const": 21 } ] } ] }
+      },
+      { "id": "bleeding1", "text": "头", "color": "light_red", "condition": { "and": [
+          { "u_has_effect": "bleed", "intensity": 1 },
+          { "compare_int": [ { "u_val": "effect_intensity", "effect": "bleed" }, "<", { "const": 11 } ] } ] }
+      },
+
+      { "id": "infected", "text": "头", "color": "green", "condition": { "u_has_effect": "infected" } },
+      { "id": "bitten", "text": "头", "color": "blue", "condition": { "u_has_effect": "bite" } }
+    ]
+  },
+  { "id": "MZ_TORSO_texe", "type": "widget", "style": "text",
+    "bodypart": "torso",
+    "default_clause": { "text": "躯" },
+    "clauses": [
+      { "id": "bleedingAndBitten3", "text": "躯", "color": "magenta_red", "condition": { "and": [
+          { "u_has_effect": "bite" }, { "u_has_effect": "bleed", "intensity": 21 } ] }
+      },
+      { "id": "bleedingAndBitten12", "text": "躯", "color": "magenta", "condition": { "and": [
+          { "u_has_effect": "bite" },
+          { "u_has_effect": "bleed", "intensity": 1 },
+          { "compare_int": [ { "u_val": "effect_intensity", "effect": "bleed" }, "<", { "const": 21 } ] } ] }
+      },
+      { "id": "bleeding3", "text": "躯", "color": "red_red", "condition":
+          { "u_has_effect": "bleed", "intensity": 21 }
+      },
+      { "id": "bleeding2", "text": "躯", "color": "red", "condition": { "and": [
+          { "u_has_effect": "bleed", "intensity": 11 },
+          { "compare_int": [ { "u_val": "effect_intensity", "effect": "bleed" }, "<", { "const": 21 } ] } ] }
+      },
+      { "id": "bleeding1", "text": "躯", "color": "light_red", "condition": { "and": [
+          { "u_has_effect": "bleed", "intensity": 1 },
+          { "compare_int": [ { "u_val": "effect_intensity", "effect": "bleed" }, "<", { "const": 11 } ] } ] }
+      },
+      { "id": "infected", "text": "躯", "color": "green", "condition": { "u_has_effect": "infected" } },
+      { "id": "bitten", "text": "躯", "color": "blue", "condition": { "u_has_effect": "bite" } }
+    ]
+  },
+  { "id": "MZ_LARM_texe", "type": "widget", "style": "text",
+    "bodypart": "arm_l",
+    "default_clause": { "text": "臂" },
+    "clauses": [
+      { "id": "bleedingAndBitten3", "text": "臂", "color": "magenta_red", "condition": { "and": [
+          { "u_has_effect": "bite" }, { "u_has_effect": "bleed", "intensity": 21 } ] }
+      },
+      { "id": "bleedingAndBitten12", "text": "臂", "color": "magenta", "condition": { "and": [
+          { "u_has_effect": "bite" },
+          { "u_has_effect": "bleed", "intensity": 1 },
+          { "compare_int": [ { "u_val": "effect_intensity", "effect": "bleed" }, "<", { "const": 21 } ] } ] }
+      },
+      { "id": "bleeding3", "text": "臂", "color": "red_red", "condition":
+          { "u_has_effect": "bleed", "intensity": 21 }
+      },
+      { "id": "bleeding2", "text": "臂", "color": "red", "condition": { "and": [
+          { "u_has_effect": "bleed", "intensity": 11 },
+          { "compare_int": [ { "u_val": "effect_intensity", "effect": "bleed" }, "<", { "const": 21 } ] } ] }
+      },
+      { "id": "bleeding1", "text": "臂", "color": "light_red", "condition": { "and": [
+          { "u_has_effect": "bleed", "intensity": 1 },
+          { "compare_int": [ { "u_val": "effect_intensity", "effect": "bleed" }, "<", { "const": 11 } ] } ] }
+      },
+      { "id": "infected", "text": "臂", "color": "green", "condition": { "u_has_effect": "infected" } },
+      { "id": "bitten", "text": "臂", "color": "blue", "condition": { "u_has_effect": "bite" } }
+    ]
+  },
+  { "id": "MZ_RARM_texe", "type": "widget", "style": "text",
+    "bodypart": "arm_r",
+    "default_clause": { "text": "臂" },
+    "clauses": [
+      { "id": "bleedingAndBitten3", "text": "臂", "color": "magenta_red", "condition": { "and": [
+          { "u_has_effect": "bite" }, { "u_has_effect": "bleed", "intensity": 21 } ] }
+      },
+      { "id": "bleedingAndBitten12", "text": "臂", "color": "magenta", "condition": { "and": [
+          { "u_has_effect": "bite" },
+          { "u_has_effect": "bleed", "intensity": 1 },
+          { "compare_int": [ { "u_val": "effect_intensity", "effect": "bleed" }, "<", { "const": 21 } ] } ] }
+      },
+      { "id": "bleeding3", "text": "臂", "color": "red_red", "condition":
+          { "u_has_effect": "bleed", "intensity": 21 }
+      },
+      { "id": "bleeding2", "text": "臂", "color": "red", "condition": { "and": [
+          { "u_has_effect": "bleed", "intensity": 11 },
+          { "compare_int": [ { "u_val": "effect_intensity", "effect": "bleed" }, "<", { "const": 21 } ] } ] }
+      },
+      { "id": "bleeding1", "text": "臂", "color": "light_red", "condition": { "and": [
+          { "u_has_effect": "bleed", "intensity": 1 },
+          { "compare_int": [ { "u_val": "effect_intensity", "effect": "bleed" }, "<", { "const": 11 } ] } ] }
+      },
+      { "id": "infected", "text": "臂", "color": "green", "condition": { "u_has_effect": "infected" } },
+      { "id": "bitten", "text": "臂", "color": "blue", "condition": { "u_has_effect": "bite" } }
+    ]
+  },
+  { "id": "MZ_LLEG_texe", "type": "widget", "style": "text",
+    "bodypart": "leg_l",
+    "default_clause": { "text": "腿" },
+    "clauses": [
+      { "id": "bleedingAndBitten3", "text": "腿", "color": "magenta_red", "condition": { "and": [
+          { "u_has_effect": "bite" }, { "u_has_effect": "bleed", "intensity": 21 } ] }
+      },
+      { "id": "bleedingAndBitten12", "text": "腿", "color": "magenta", "condition": { "and": [
+          { "u_has_effect": "bite" },
+          { "u_has_effect": "bleed", "intensity": 1 },
+          { "compare_int": [ { "u_val": "effect_intensity", "effect": "bleed" }, "<", { "const": 21 } ] } ] }
+      },
+      { "id": "bleeding3", "text": "腿", "color": "red_red", "condition":
+          { "u_has_effect": "bleed", "intensity": 21 }
+      },
+      { "id": "bleeding2", "text": "腿", "color": "red", "condition": { "and": [
+          { "u_has_effect": "bleed", "intensity": 11 },
+          { "compare_int": [ { "u_val": "effect_intensity", "effect": "bleed" }, "<", { "const": 21 } ] } ] }
+      },
+      { "id": "bleeding1", "text": "腿", "color": "light_red", "condition": { "and": [
+          { "u_has_effect": "bleed", "intensity": 1 },
+          { "compare_int": [ { "u_val": "effect_intensity", "effect": "bleed" }, "<", { "const": 11 } ] } ] }
+      },
+      { "id": "infected", "text": "腿", "color": "green", "condition": { "u_has_effect": "infected" } },
+      { "id": "bitten", "text": "腿", "color": "blue", "condition": { "u_has_effect": "bite" } }
+    ]
+  },
+  { "id": "MZ_RLEG_texe", "type": "widget", "style": "text",
+    "bodypart": "leg_r",
+    "default_clause": { "text": "腿" },
+    "clauses": [
+      { "id": "bleedingAndBitten3", "text": "腿", "color": "magenta_red", "condition": { "and": [
+          { "u_has_effect": "bite" }, { "u_has_effect": "bleed", "intensity": 21 } ] }
+      },
+      { "id": "bleedingAndBitten12", "text": "腿", "color": "magenta", "condition": { "and": [
+          { "u_has_effect": "bite" },
+          { "u_has_effect": "bleed", "intensity": 1 },
+          { "compare_int": [ { "u_val": "effect_intensity", "effect": "bleed" }, "<", { "const": 21 } ] } ] }
+      },
+      { "id": "bleeding3", "text": "腿", "color": "red_red", "condition":
+          { "u_has_effect": "bleed", "intensity": 21 }
+      },
+      { "id": "bleeding2", "text": "腿", "color": "red", "condition": { "and": [
+          { "u_has_effect": "bleed", "intensity": 11 },
+          { "compare_int": [ { "u_val": "effect_intensity", "effect": "bleed" }, "<", { "const": 21 } ] } ] }
+      },
+      { "id": "bleeding1", "text": "腿", "color": "light_red", "condition": { "and": [
+          { "u_has_effect": "bleed", "intensity": 1 },
+          { "compare_int": [ { "u_val": "effect_intensity", "effect": "bleed" }, "<", { "const": 11 } ] } ] }
+      },
+      { "id": "infected", "text": "腿", "color": "green", "condition": { "u_has_effect": "infected" } },
+      { "id": "bitten", "text": "腿", "color": "blue", "condition": { "u_has_effect": "bite" } }
+    ]
+  },
+  {
+    "id": "MZ_巡航", "type": "widget", "label": "",
+    "copy-from": "vehicle_cruise_desc_label"
+  },
+  {
+    "id": "MZ_油箱", "type": "widget", "label": " ",
+    "copy-from": "vehicle_fuel_desc_label"
+  }
+]

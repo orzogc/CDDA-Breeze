@@ -1,6 +1,7 @@
 [
   {
     "id": "spray_gun",
+    "looks_like": "nailgun",
     "type": "TOOL",
     "name": {
       "str": "喷漆枪"
