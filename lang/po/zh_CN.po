@@ -462804,7 +462804,12 @@ msgstr "%1$s 的 %2$s 被撕破了！"
 #: src/vehicle.cpp:6969 src/vehicle.cpp:6975
 #, c-format
 msgid "The %1$s's %2$s is destroyed!"
-msgstr "%1$s 的 %2$s 被摧毀了！"
+msgstr "%1$s 的 %2$s 被摧毁了！"
+
+#: src/vehicle.cpp:7198 src/vehicle.cpp:7204 src/vehicle.cpp:7234 src/vehicle.cpp:7240 src/vehicle.cpp:7381
+#, c-format
+msgid "The %1$s's %2$s is disconnected!"
+msgstr "%1$s 的 %2$s 脱落了！"
 
 #: src/vehicle.cpp:7220
 #, c-format
