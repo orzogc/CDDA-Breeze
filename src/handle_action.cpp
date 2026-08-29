@@ -1445,7 +1445,7 @@ bool throw_grabbed_creature( avatar &you )
     if( npc *const guy = target->as_npc(); guy != nullptr ) {
         guy->make_angry();
     } else if( monster *const mon = target->as_monster(); mon != nullptr ) {
-        mon->on_hit( &you, body_part_torso.id(), nullptr, false );
+        mon->on_hit( &you, body_part_torso.id(), 0.0f, nullptr );
     }
 
     if( pivot_throw && can_reposition_to_release ) {
@@ -1680,7 +1680,7 @@ bool throw_grabbed_furniture( avatar &you )
         }
 
         if( monster *const mon = hit.as_monster(); mon != nullptr ) {
-            mon->on_hit( &you, body_part_torso.id(), nullptr, false );
+            mon->on_hit( &you, body_part_torso.id(), 0.0f, nullptr );
         }
 
         furniture_released = true;
