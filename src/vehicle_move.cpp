@@ -743,6 +743,12 @@ bool vehicle::collision( std::vector<veh_collision> &colls,
         if( coll.type == veh_coll_nothing ) {
             continue;
         }
+        if( info.has_flag( "NOCOLLIDE" ) ) {
+            if( coll.type == veh_coll_veh_nocollide ) {
+                here.add_vehicle_to_cache( static_cast<vehicle *>( coll.target ) );
+            }
+            continue;
+        }
 
         colls.push_back( coll );
 
@@ -825,11 +831,25 @@ veh_collision vehicle::part_collision( int part, const tripoint &p,
     // Disable vehicle/critter collisions when bashing floor
     // TODO: More elegant code
     const bool is_veh_collision = !bash_floor && ovp && &ovp->vehicle() != this;
-    const bool is_body_collision = !bash_floor && critter != nullptr;
 
     veh_collision ret;
     ret.type = veh_coll_nothing;
     ret.part = part;
+
+    // NOCOLLIDE parts are intentionally omitted from movement collisions.
+    // Keep direct damage paths untouched so attacks and explosions can still damage them.
+    if( is_veh_collision ) {
+        const vpart_info &target_info = ovp->vehicle().part_info( ovp->part_index() );
+        if( target_info.has_flag( "NOCOLLIDE" ) ) {
+            ret.type = veh_coll_veh_nocollide;
+            ret.target = &ovp->vehicle();
+            return ret;
+        }
+    } else if( part_info( part ).has_flag( "NOCOLLIDE" ) ) {
+        return ret;
+    }
+
+    const bool is_body_collision = !bash_floor && critter != nullptr;
 
     // Vehicle collisions are a special case. just return the collision.
     // The map takes care of the dynamic stuff.
