@@ -1049,9 +1049,18 @@ int d20_dodge_difficulty( const Creature &target )
                          std::ceil( std::max( 0.0f, target.get_dodge() ) / 3.0f ) ) );
 }
 
-bool contact_d20_hits( const avatar &you, const Creature &target,
-                       const int skill_bonus, const int distance_penalty,
-                       const int flat_bonus, const bool show_state_message )
+enum class contact_roll_result {
+    hit,
+    inaccurate,
+    near_miss,
+    dodged
+};
+
+contact_roll_result contact_d20_result( const avatar &you, const Creature &target,
+                                       const int skill_bonus,
+                                       const int distance_penalty,
+                                       const int flat_bonus,
+                                       const bool show_state_message )
 {
     const d20_roll_state state = get_d20_roll_state( you, target );
     if( show_state_message ) {
@@ -1062,20 +1071,41 @@ bool contact_d20_hits( const avatar &you, const Creature &target,
         }
     }
 
-    const int dc = std::clamp(
-                       2 + d20_dodge_difficulty( target ) + distance_penalty -
-                       skill_bonus - d20_dex_modifier( you.get_dex() ) -
-                       d20_target_size_modifier( target ) - flat_bonus,
-                       2, 19 );
+    const int roll = roll_contact_d20( state );
+    if( roll == 1 ) {
+        return contact_roll_result::inaccurate;
+    }
+    if( roll == 20 ) {
+        return contact_roll_result::hit;
+    }
 
-    return roll_contact_d20( state ) >= dc;
+    const int attack_score = roll + skill_bonus +
+                             d20_dex_modifier( you.get_dex() ) +
+                             flat_bonus - distance_penalty;
+    const int silhouette_dc = std::clamp(
+                                  2 - d20_target_size_modifier( target ), 2, 19 );
+    const int final_dc = std::clamp(
+                             silhouette_dc + d20_dodge_difficulty( target ), 2, 19 );
+
+    if( attack_score < 2 ) {
+        return contact_roll_result::inaccurate;
+    }
+    if( attack_score < silhouette_dc ) {
+        return contact_roll_result::near_miss;
+    }
+    if( attack_score < final_dc ) {
+        return contact_roll_result::dodged;
+    }
+    return contact_roll_result::hit;
 }
 
 bool grab_contact_hits( const avatar &you, const Creature &target,
                         const bool armed_control, const int flat_bonus )
 {
     const int skill = you.get_skill_level( armed_control ? skill_melee : skill_unarmed );
-    return contact_d20_hits( you, target, skill / 3, 0, flat_bonus, true );
+    return contact_d20_result(
+               you, target, skill / 3, 0, flat_bonus, true ) ==
+           contact_roll_result::hit;
 }
 
 void mark_player_attack_attempt( avatar &you, Creature &target )
@@ -1300,7 +1330,8 @@ bool throw_grabbed_creature( avatar &you )
     const int target_size_value = static_cast<int>( target_size );
     const int thrower_size_value = static_cast<int>( thrower_size );
     const int target_weight_grams = std::max(
-                                        1, static_cast<int>( units::to_gram( target->get_weight() ) ) );
+                                        1, static_cast<int>( units::to_gram(
+                                                target->get_weight() ) ) );
     const int target_weight = std::max( 1, target_weight_grams / 1000 );
     const int throw_strength = you.get_arm_str() + ( ipman ? 2 : 0 );
 
@@ -1358,19 +1389,50 @@ bool throw_grabbed_creature( avatar &you )
         }
     }
 
-    const int distance = std::max( 1, rl_dist( target->pos(), trajectory.back() ) );
-    const float base_velocity = creature_throw::grabbed_throw_velocity( distance );
-    const int required_strength = creature_throw::required_throw_strength(
-                                      thrower_size, target_size, target_weight_grams );
-    const int strength_margin = std::max( 0, throw_strength - required_strength );
-    const float strength_velocity_factor = std::clamp(
-                                               1.0f + strength_margin * 0.02f,
-                                               1.0f, 1.40f );
-    const float velocity = base_velocity * strength_velocity_factor;
-    const units::angle target_angle = coord_to_angle( target->pos(), trajectory.back() );
+    creature_tracker &creatures = get_creature_tracker();
+    const tripoint original_pos = target->pos();
+    tripoint release_origin = original_pos;
+    bool pivot_throw = false;
+    bool can_reposition_to_release = false;
+
+    for( std::size_t i = 0; i + 1 < trajectory.size(); ++i ) {
+        if( trajectory[i] != you.pos() ) {
+            continue;
+        }
+
+        pivot_throw = true;
+        const tripoint candidate = trajectory[i + 1];
+        Creature *const occupant = creatures.creature_at<Creature>( candidate );
+        if( occupant == nullptr && !here.impassable( candidate ) ) {
+            release_origin = candidate;
+            can_reposition_to_release = true;
+        }
+        break;
+    }
+
+    const int raw_distance = std::max( 1, rl_dist( original_pos, trajectory.back() ) );
+    int flight_distance = raw_distance;
+    int physics_distance = raw_distance;
+
+    if( pivot_throw && can_reposition_to_release ) {
+        flight_distance = rl_dist( release_origin, trajectory.back() );
+        physics_distance = flight_distance;
+    } else if( pivot_throw ) {
+        flight_distance = 1;
+        physics_distance = 2;
+    }
+
+    const float stamina_velocity = creature_throw::grabbed_throw_velocity(
+                                       std::max( 1, flight_distance ) );
+    const float physics_velocity = creature_throw::grabbed_throw_velocity(
+                                       std::max( 1, physics_distance ) );
+    const units::angle target_angle = coord_to_angle(
+                                          can_reposition_to_release ?
+                                          release_origin : original_pos,
+                                          trajectory.back() );
 
     const int stamina_cost = creature_throw::grabbed_stamina_cost(
-                                 base_velocity, target_weight_grams,
+                                 stamina_velocity, target_weight_grams,
                                  you.get_skill_level( skill_unarmed ),
                                  you.get_skill_level( skill_throw ),
                                  you.get_dex() );
@@ -1383,15 +1445,27 @@ bool throw_grabbed_creature( avatar &you )
     if( npc *const guy = target->as_npc(); guy != nullptr ) {
         guy->make_angry();
     } else if( monster *const mon = target->as_monster(); mon != nullptr ) {
-        mon->on_hit( &you, body_part_torso.id() );
+        mon->on_hit( &you, body_part_torso.id(), nullptr, false );
     }
 
-    const int hp_before_throw = target->get_hp();
+    if( pivot_throw && can_reposition_to_release ) {
+        target->setpos( release_origin );
+
+        if( flight_distance == 0 ) {
+            add_msg( _( "你将%s甩到了身体另一侧。" ), target->disp_name() );
+            if( !target->is_dead_state() &&
+                !target->is_immune_effect( effect_downed ) ) {
+                const monster *const mon = target->as_monster();
+                if( mon == nullptr || !mon->flies() ) {
+                    target->add_effect( effect_downed, 1_turns );
+                }
+            }
+            return true;
+        }
+    }
+
     add_msg( _( "你将%s摔了出去。" ), target->disp_name() );
-    g->fling_creature( target, target_angle, velocity, false, &you );
-    const int visible_throw_damage = std::max( 0, hp_before_throw - target->get_hp() );
-    add_msg( m_good, _( "%s在摔投和碰撞中受到%d点伤害。" ),
-             target->disp_name(), visible_throw_damage );
+    g->fling_creature( target, target_angle, physics_velocity, false, &you );
     apply_throw_downed( *target );
 
     return true;
@@ -1432,15 +1506,25 @@ int furniture_knockback_distance( const avatar &you, Creature &target,
     const int difficulty = furniture_throw_difficulty( furn );
     const int strength_surplus = std::max( 0, you.get_arm_str() - difficulty );
 
+    if( monster *const mon = target.as_monster();
+        mon != nullptr && target.get_size() == creature_size::medium &&
+        mon->type->in_species( species_ZOMBIE ) ) {
+        const int baseline_control = difficulty +
+                                     std::min( 10, strength_surplus / 2 ) +
+                                     std::min( 4, std::max( 0, traveled_distance - 1 ) );
+        return baseline_control >= 12 ? 2 : 1;
+    }
+
     const int target_size = static_cast<int>( target.get_size() );
     const int thrower_size = static_cast<int>( you.get_size() );
-    const int size_resistance = std::max( 0, target_size - thrower_size ) * 6;
+    const int size_resistance = std::max( 0, target_size - thrower_size ) * 7;
+    const int size_advantage = std::max( 0, thrower_size - target_size ) * 4;
 
     const int control_roll = difficulty * 2 +
                              std::min( 20, strength_surplus / 2 ) +
                              std::max( 0, strength_surplus - 20 ) / 4 +
                              std::max( 0, traveled_distance - 1 ) / 2 +
-                             rng( -3, 3 );
+                             size_advantage + rng( -3, 3 );
     const int resistance_roll = static_cast<int>(
                                     std::round( target.stability_roll() ) ) +
                                 size_resistance;
@@ -1453,7 +1537,6 @@ int furniture_knockback_distance( const avatar &you, Creature &target,
         distance = 1;
     }
 
-    // Only exceptional strength produces cinematic long throws.
     if( distance > 0 && strength_surplus > 30 ) {
         distance += std::clamp( ( strength_surplus - 30 ) / 12, 0, 6 );
     }
@@ -1461,14 +1544,14 @@ int furniture_knockback_distance( const avatar &you, Creature &target,
     return distance;
 }
 
-bool furniture_throw_hits( avatar &you, Creature &target, const furn_t &,
-                           const int traveled_distance )
+contact_roll_result furniture_throw_hit_result(
+    avatar &you, Creature &target, const furn_t &, const int traveled_distance )
 {
     const int throw_skill = you.get_skill_level( skill_throw );
     const int distance_penalty =
         ( std::max( 0, traveled_distance - 3 ) + 2 ) / 3;
 
-    return contact_d20_hits(
+    return contact_d20_result(
                you, target, throw_skill / 2, distance_penalty, 0, false );
 }
 
@@ -1548,6 +1631,14 @@ bool throw_grabbed_furniture( avatar &you )
         return true;
     }
 
+    tripoint flight_origin = source;
+    for( std::size_t i = 0; i + 1 < trajectory.size(); ++i ) {
+        if( trajectory[i] == you.pos() ) {
+            flight_origin = trajectory[i + 1];
+            break;
+        }
+    }
+
     tripoint furniture_pos = source;
     bool moved = false;
     bool furniture_released = false;
@@ -1567,21 +1658,41 @@ bool throw_grabbed_furniture( avatar &you )
             guy->on_attacked( you );
         }
 
-        if( !furniture_throw_hits( you, hit, furn, traveled ) ) {
-            add_msg( m_info, _( "%s闪开了飞来的%s。" ), hit.disp_name(), furn.name() );
+        const contact_roll_result hit_result =
+            furniture_throw_hit_result( you, hit, furn, traveled );
+        if( hit_result != contact_roll_result::hit ) {
+            switch( hit_result ) {
+                case contact_roll_result::inaccurate:
+                    add_msg( m_info, _( "你把%s扔偏了。" ), furn.name() );
+                    break;
+                case contact_roll_result::near_miss:
+                    add_msg( m_info, _( "飞来的%s从%s身边擦了过去。" ),
+                             furn.name(), hit.disp_name() );
+                    break;
+                case contact_roll_result::dodged:
+                    add_msg( m_info, _( "%s闪开了飞来的%s。" ),
+                             hit.disp_name(), furn.name() );
+                    break;
+                case contact_roll_result::hit:
+                    break;
+            }
             return false;
         }
 
         if( monster *const mon = hit.as_monster(); mon != nullptr ) {
-            mon->on_hit( &you, body_part_torso.id() );
+            mon->on_hit( &you, body_part_torso.id(), nullptr, false );
         }
 
         furniture_released = true;
         const int collision_force = furniture_collision_force( you, furn, traveled );
-        const int impact_damage = furniture_collision_damage( collision_force );
-        const int dealt = hit.impact( impact_damage, hit_pos );
+        const int raw_damage = furniture_collision_damage( collision_force );
+        const dealt_damage_instance dealt = hit.deal_damage(
+                &you, body_part_torso.id(),
+                damage_instance( damage_type::BASH, static_cast<float>( raw_damage ) ) );
+        const int dealt_amount = dealt.total_damage();
+
         add_msg( m_good, _( "%s砸中了%s，造成%d点撞击伤害。" ),
-                 furn.name(), hit.disp_name(), dealt );
+                 furn.name(), hit.disp_name(), dealt_amount );
 
         credit_player_collision_death( you, hit );
         if( !hit.is_dead_state() ) {
@@ -1593,7 +1704,7 @@ bool throw_grabbed_furniture( avatar &you )
             const bool can_fall = !flying && !hit.is_immune_effect( effect_downed );
 
             if( can_fall && knockback > 0 ) {
-                hit.add_effect( effect_downed, 2_turns );
+                hit.add_effect( effect_downed, 3_turns );
             }
 
             if( knockback > 0 ) {
@@ -1617,7 +1728,7 @@ bool throw_grabbed_furniture( avatar &you )
             continue;
         }
 
-        const int traveled = std::max( 1, rl_dist( source, next ) );
+        const int traveled = std::max( 1, rl_dist( flight_origin, next ) );
 
         if( Creature *const hit = creatures.creature_at<Creature>( next );
             hit != nullptr && hit != &you ) {
@@ -1650,7 +1761,7 @@ bool throw_grabbed_furniture( avatar &you )
     }
 
     you.grab( object_type::NONE );
-    const int actual_distance = std::max( 1, rl_dist( source, furniture_pos ) );
+    const int actual_distance = std::max( 1, rl_dist( flight_origin, furniture_pos ) );
     const int stamina_cost = furniture_stamina_cost( you, furn, actual_distance );
 
     you.mod_moves( -100 - 20 * std::max( 0, actual_distance - 1 ) );
