@@ -6,7 +6,7 @@
     "style": "sidebar",
     "label": { "str": "末奏" },
     "padding": 0,
-    "width": 42,//如果感觉不够宽，可以调整此项 #默认42
+    "width": 36,//如果感觉不够宽，可以调整此项 #默认42
     "separator": "",
     "widgets": [
       "末奏_地图",
@@ -65,8 +65,8 @@
     "widgets": [ "MZ_高度", "MZ_辐射", "place_desc_no_label" ]
   },
   { "id": "MZ_日期时间", "type": "widget",
-    "copy-from": "MZ_列布局模板",
-    "widgets": [ "date_desc_no_label", "MZ|", "time_desc_no_label" ]
+    "copy-from": "MZ_行布局模板",
+    "widgets": [ "date_desc_no_label", "time_desc_no_label" ]
   },
   { "id": "MZ_亮度天气月相", "type": "widget",
     "copy-from": "MZ_列布局模板",
