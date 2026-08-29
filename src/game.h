@@ -612,7 +612,7 @@ class game
         
         /** Flings the input creature in the given direction. */
         void fling_creature( Creature *c, const units::angle &dir, float flvel,
-                             bool controlled = false);
+                             bool controlled = false, Creature *flinger = nullptr);
         // 使得被击飞的目标不再局限于平面位移，也会穿越z轴
         void fling_creature_new(Creature* c, const units::angle& dir, float flvel,
             bool controlled = false);

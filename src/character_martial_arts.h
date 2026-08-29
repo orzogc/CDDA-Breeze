@@ -43,6 +43,9 @@ class character_martial_arts
         bool selected_force_unarmed() const;
         bool selected_prevent_weapon_blocking() const;
         bool selected_is_none() const;
+        bool selected_is_style( const matype_id &style ) const {
+            return style_selected == style;
+        }
 
         /** Returns true if the player has access to the entered martial art */
         bool has_martialart( const matype_id &ma_id ) const;

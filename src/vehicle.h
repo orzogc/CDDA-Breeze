@@ -2308,6 +2308,7 @@ class vehicle
         bool autopilot_on = false;
         // skidding mode
         bool skidding = false;
+        Creature *collision_source = nullptr; // NOLINT(cata-serialize)
         // has bloody or smoking parts
         bool check_environmental_effects = false; // NOLINT(cata-serialize)
         // "inside" flags are outdated and need refreshing

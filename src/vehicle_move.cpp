@@ -818,7 +818,8 @@ veh_collision vehicle::part_collision( int part, const tripoint &p,
     Creature *critter = get_creature_tracker().creature_at( p, true );
     Character *ph = dynamic_cast<Character *>( critter );
 
-    Creature *driver = pl_ctrl ? &player_character : nullptr;
+    Creature *driver = collision_source != nullptr ?
+                       collision_source : ( pl_ctrl ? &player_character : nullptr );
 
     // If in a vehicle assume it's this one
     if( ph != nullptr && ph->in_vehicle ) {
@@ -1094,7 +1095,14 @@ veh_collision vehicle::part_collision( int part, const tripoint &p,
             }
 
             if( ph != nullptr ) {
+                if( npc *const guy = dynamic_cast<npc *>( ph );
+                    guy != nullptr && driver != nullptr ) {
+                    guy->on_attacked( *driver );
+                }
                 ph->hitall( dam, 40, driver );
+                if( driver != nullptr && ph->is_dead_state() ) {
+                    ph->die( driver );
+                }
             } else {
                 const int armor = part_flag( ret.part, "SHARP" ) ?
                                   critter->get_armor_cut( bodypart_id( "torso" ) ) :

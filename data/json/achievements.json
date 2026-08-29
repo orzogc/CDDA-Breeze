@@ -1406,5 +1406,20 @@
     "//": "this is the achievement that lets you forever have meta progression disabled",
     "description": "STOP HAND-HOLDING ME!!!",
     "requirements": [  ]
+  },
+  {
+    "id": "achievement_jackie_chan",
+    "type": "achievement",
+    "name": "成龙",
+    "description": "身边没有武器，身边到处都是武器。",
+    "requirements": [
+      {
+        "event_statistic": "num_moves_walked",
+        "is": ">=",
+        "target": 2147483647,
+        "visible": "never"
+      }
+    ]
   }
+
 ]

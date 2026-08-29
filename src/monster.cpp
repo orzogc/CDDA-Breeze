@@ -86,7 +86,9 @@ static const efftype_id effect_downed("downed");
 static const efftype_id effect_dripping_mechanical_fluid("dripping_mechanical_fluid");
 static const efftype_id effect_emp("emp");
 static const efftype_id effect_grabbed("grabbed");
+static const efftype_id effect_grabbed_by_player("grabbed_by_player");
 static const efftype_id effect_grabbing("grabbing");
+static const efftype_id effect_player_grab_fresh("player_grab_fresh");
 static const efftype_id effect_heavysnare("heavysnare");
 static const efftype_id effect_hit_by_player("hit_by_player");
 static const efftype_id effect_in_pit("in_pit");
@@ -2383,6 +2385,50 @@ bool monster::movement_impaired()
 
 bool monster::move_effects(bool)
 {
+    // Player grappling is not movement-impairing.  A held monster gets one
+    // free defensive escape check on each action opportunity and still acts
+    // normally whether the check succeeds or fails.
+    if( has_effect( effect_grabbed_by_player ) ) {
+        avatar &you = get_avatar();
+        if( !you.has_effect( effect_grabbing ) || rl_dist( pos(), you.pos() ) > 1 ) {
+            remove_effect( effect_grabbed_by_player );
+            remove_effect( effect_player_grab_fresh );
+            you.remove_effect( effect_grabbing );
+        } else if( !has_effect( effect_player_grab_fresh ) &&
+                   !has_effect( effect_stunned ) ) {
+            const int grip = std::max( 1, get_effect_int( effect_grabbed_by_player ) );
+            const auto escape_once = [this]() {
+                const int size_term = static_cast<int>( get_size() ) * 2;
+                const int brute = type->melee_dice * type->melee_sides +
+                                  static_cast<int>( std::round( type->melee_skill * 2.0f ) ) +
+                                  size_term;
+                const int agile = static_cast<int>( std::round( get_dodge() * 5.0f ) ) +
+                                  static_cast<int>( std::round( type->melee_skill ) ) +
+                                  size_term;
+                return std::max( brute, agile ) + rng( -4, 4 );
+            };
+
+            int escape_roll = escape_once();
+            const bool escape_disadvantage = has_effect( effect_blind ) ||
+                                             has_effect( effect_no_sight ) ||
+                                             has_effect( effect_downed );
+            if( escape_disadvantage ) {
+                escape_roll = std::min( escape_roll, escape_once() );
+            }
+
+            if( escape_roll >= grip ) {
+                remove_effect( effect_grabbed_by_player );
+                remove_effect( effect_player_grab_fresh );
+                you.remove_effect( effect_grabbing );
+                if( get_player_view().sees( *this ) ) {
+                    add_msg( m_warning, _( "%s挣脱了你的抓取。" ), disp_name() );
+                }
+            } else if( get_player_view().sees( *this ) ) {
+                add_msg( m_info, _( "%s挣扎着试图摆脱你的抓取。" ), disp_name() );
+            }
+        }
+    }
+
     // This function is relatively expensive, we want that cached
     // IMPORTANT: If adding any new effects here, make SURE to
     // add them to hardcoded_movement_impairing in effect.cpp

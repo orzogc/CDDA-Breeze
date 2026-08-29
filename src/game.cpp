@@ -66,6 +66,7 @@
 #include "coordinate_conversions.h"
 #include "coordinates.h"
 #include "creature_tracker.h"
+#include "creature_throw.h"
 #include "cuboid_rectangle.h"
 #include "cursesport.h" // IWYU pragma: keep
 #include "damage.h"
@@ -372,6 +373,12 @@ static void auto_forage_position( map &here, Character &you, const tripoint &pos
 }
 
 static constexpr int DANGEROUS_PROXIMITY = 5;
+
+static int breeze_fling_bash_damage( const Creature &c, const float flvel )
+{
+    return creature_throw::flung_creature_bash_damage(
+               c.get_size(), static_cast<int>( units::to_gram( c.get_weight() ) ), flvel );
+}
 
 
 #if defined(__ANDROID__)
@@ -11838,12 +11845,13 @@ void game::fling_creature_up(Creature* c, const units::angle& dir,float flvel, b
 }
 
 
-void game::fling_creature( Creature *c, const units::angle &dir, float flvel, bool controlled)
+void game::fling_creature( Creature *c, const units::angle &dir, float flvel, bool controlled, Creature *flinger )
 {
     if( c == nullptr ) {
         debugmsg( "game::fling_creature invoked on null target" );
         return;
     }
+    Creature *const collision_source = flinger != nullptr ? flinger : c;
 
     if( c->is_dead_state() ) {
         // Flinging a corpse causes problems, don't enable without testing
@@ -11879,19 +11887,60 @@ void game::fling_creature( Creature *c, const units::angle &dir, float flvel, bo
         pt.y = c->posy() + tdir.dy();
         float force = 0.0f;
 
-        if( monster *const mon_ptr = creatures.creature_at<monster>( pt ) ) {
-            monster &critter = *mon_ptr;
-            // Approximate critter's "stopping power" with its max hp
-            force = std::min<float>( 1.5f * critter.type->hp, flvel );
-            const int damage = rng( force, force * 2.0f ) / 6;
+        if( npc *const guy_ptr = creatures.creature_at<npc>( pt ) ) {
+            npc &guy = *guy_ptr;
+            const int flung_hp_before = c->get_hp();
+            const int hit_hp_before = guy.get_hp();
+            force = std::min<float>( 1.5f * std::max( 1, guy.get_hp() ), flvel );
+            const int damage = rng( force, force * 2.0f ) / 9;
+
             c->impact( damage, pt );
-            // Multiply zed damage by 6 because no body parts
+            if( flinger != nullptr && c->is_dead_state() ) {
+                c->die( flinger );
+            }
+
+            guy.on_attacked( *collision_source );
+            guy.hitall( damage, 40, collision_source );
+            if( guy.is_dead_state() ) {
+                guy.die( collision_source );
+            }
+
+            const int flung_damage = std::max( 0, flung_hp_before - c->get_hp() );
+            const int hit_damage = std::max( 0, hit_hp_before - guy.get_hp() );
+            if( get_avatar().sees( pt ) ) {
+                add_msg( m_info, _( "%s撞上了%s，双方分别受到%d点和%d点伤害。" ),
+                         c->disp_name(), guy.disp_name(), flung_damage, hit_damage );
+            }
+
+            flvel *= 0.50f;
+            if( !guy.is_dead() || flvel < 10.0f ) {
+                thru = false;
+            }
+        } else if( monster *const mon_ptr = creatures.creature_at<monster>( pt ) ) {
+            monster &critter = *mon_ptr;
+            const int flung_hp_before = c->get_hp();
+            const int hit_hp_before = critter.get_hp();
+            force = std::min<float>( 1.5f * critter.type->hp, flvel );
+            const int damage = rng( force, force * 2.0f ) / 9;
+            c->impact( damage, pt );
+            if( flinger != nullptr && c->is_dead_state() ) {
+                c->die( flinger );
+            }
             const int zed_damage = std::max( 0,
-                                             ( damage - critter.get_armor_bash( bodypart_id( "torso" ) ) ) * 6 );
-            // TODO: Pass the "flinger" here - it's not the flung critter that deals damage
-            critter.apply_damage( c, bodypart_id( "torso" ), zed_damage );
+                                             ( damage - critter.get_armor_bash(
+                                                   bodypart_id( "torso" ) ) ) * 2 );
+            critter.apply_damage( collision_source, bodypart_id( "torso" ), zed_damage );
             critter.check_dead_state();
-            if( !critter.is_dead() ) {
+
+            const int flung_damage = std::max( 0, flung_hp_before - c->get_hp() );
+            const int hit_damage = std::max( 0, hit_hp_before - critter.get_hp() );
+            if( get_avatar().sees( pt ) ) {
+                add_msg( m_info, _( "%s撞上了%s，双方分别受到%d点和%d点伤害。" ),
+                         c->disp_name(), critter.disp_name(), flung_damage, hit_damage );
+            }
+
+            flvel *= 0.50f;
+            if( !critter.is_dead() || flvel < 10.0f ) {
                 thru = false;
             }
         } else if( m.impassable( pt ) ) {
@@ -11907,7 +11956,7 @@ void game::fling_creature( Creature *c, const units::angle &dir, float flvel, bo
             c->impact( damage, pt );
             if( m.is_bashable( pt ) ) {
                 // Only go through if we successfully make the tile passable
-                m.bash( pt, flvel );
+                m.bash( pt, breeze_fling_bash_damage( *c, flvel ) );
                 thru = m.passable( pt );
             } else {
                 thru = false;
@@ -11965,8 +12014,12 @@ void game::fling_creature( Creature *c, const units::angle &dir, float flvel, bo
             }
             if( force > 0 ) {
                 int dmg = c->impact( force, c->pos() );
+                if( flinger != nullptr && c->is_dead_state() ) {
+                    c->die( flinger );
+                }
                 // TODO: Make landing damage the floor
-                m.bash( c->pos(), dmg / 4, false, false, false );
+                m.bash( c->pos(), std::max( dmg / 4,
+                        breeze_fling_bash_damage( *c, flvel ) / 4 ), false, false, false );
             }
             // Always apply traps to creature i.e. bear traps, tele traps etc.
             m.creature_on_trap( *c, false );

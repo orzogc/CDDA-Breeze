@@ -14,6 +14,7 @@ static const efftype_id effect_beartrap( "beartrap" );
 static const efftype_id effect_crushed( "crushed" );
 static const efftype_id effect_downed( "downed" );
 static const efftype_id effect_grabbed( "grabbed" );
+static const efftype_id effect_grabbed_by_player( "grabbed_by_player" );
 static const efftype_id effect_grabbing( "grabbing" );
 static const efftype_id effect_heavysnare( "heavysnare" );
 static const efftype_id effect_in_pit( "in_pit" );
@@ -163,6 +164,12 @@ void Character::try_remove_crushed()
 
 bool Character::try_remove_grab()
 {
+    // Player-established grapples use the initial melee hit roll as the only contest.
+    // They end when released, thrown, separated, or when their short effect expires.
+    if( has_effect( effect_grabbed_by_player ) ) {
+        return false;
+    }
+
     int zed_number = 0;
     if( is_mounted() ) {
         auto *mon = mounted_creature.get();

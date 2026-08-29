@@ -26,6 +26,7 @@
 #include "character_martial_arts.h"
 #include "creature.h"
 #include "creature_tracker.h"
+#include "creature_throw.h"
 #include "damage.h"
 #include "debug.h"
 #include "effect_on_condition.h"
@@ -59,6 +60,7 @@
 #include "point.h"
 #include "popup.h"
 #include "projectile.h"
+#include "ranged.h"
 #include "rng.h"
 #include "sounds.h"
 #include "string_formatter.h"
@@ -2044,8 +2046,33 @@ void Character::perform_technique( const ma_technique &technique, Creature &t, d
         const point kb_offset( rng( -technique.knockback_spread, technique.knockback_spread ),
                                rng( -technique.knockback_spread, technique.knockback_spread ) );
         tripoint kb_point( posx() + kb_offset.x, posy() + kb_offset.y, posz() );
-        for( int dist = rng( 1, technique.knockback_dist ); dist > 0; dist-- ) {
-            t.knock_back_from( kb_point );
+        bool controlled_throw_done = false;
+        if( technique.controlled_knockback && is_avatar() ) {
+            avatar &you = get_avatar();
+            const target_handler::trajectory trajectory = target_handler::mode_throw_creature(
+                        you, t, technique.knockback_dist );
+            if( !trajectory.empty() ) {
+                const int distance = std::max( 1, rl_dist( t.pos(), trajectory.back() ) );
+                float velocity = creature_throw::grabbed_throw_velocity( distance );
+                if( technique.powerful_knockback ) {
+                    velocity *= 1.25f;
+                }
+                const units::angle target_angle = coord_to_angle( t.pos(), trajectory.back() );
+                g->fling_creature( &t, target_angle, velocity, false, this );
+                controlled_throw_done = true;
+            }
+        }
+        if( !controlled_throw_done ) {
+            for( int dist = rng( 1, technique.knockback_dist ); dist > 0; dist-- ) {
+                t.knock_back_from( kb_point );
+            }
+        }
+        if( technique.controlled_knockback && t.pos() != prev_pos && !t.is_dead_state() &&
+            !t.is_immune_effect( effect_downed ) ) {
+            const monster *const mon = t.as_monster();
+            if( mon == nullptr || !mon->flies() ) {
+                t.add_effect( effect_downed, creature_throw::thrown_creature_downed_duration );
+            }
         }
 
         Character *passenger = t.as_character();
