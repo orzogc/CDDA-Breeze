@@ -28,6 +28,7 @@
 #include "material.h"
 #include "messages.h"
 #include "monster.h"
+#include "npc.h"
 #include <optional>
 #include "options.h"
 #include "rng.h"

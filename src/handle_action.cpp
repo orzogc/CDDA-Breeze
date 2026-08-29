@@ -138,7 +138,6 @@ static const efftype_id effect_grabbing("grabbing");
 static const efftype_id effect_player_grab_fresh("player_grab_fresh");
 static const efftype_id effect_incorporeal("incorporeal");
 static const efftype_id effect_no_sight("no_sight");
-static const efftype_id effect_stunned("stunned");
 static const efftype_id effect_laserlocked("laserlocked");
 static const efftype_id effect_relax_gas("relax_gas");
 static const efftype_id effect_stunned("stunned");
@@ -939,6 +938,52 @@ enum class d20_roll_state {
     disadvantage
 };
 
+Creature *find_player_grabbed_creature( avatar &you )
+{
+    if( !you.has_effect( effect_grabbing ) ) {
+        return nullptr;
+    }
+    creature_tracker &creatures = get_creature_tracker();
+    map &here = get_map();
+    for( const tripoint &p : here.points_in_radius( you.pos(), 1, 0 ) ) {
+        Creature *const target = creatures.creature_at<Creature>( p );
+        if( target != nullptr && target != &you && target->has_effect( effect_grabbed_by_player ) ) {
+            return target;
+        }
+    }
+    return nullptr;
+}
+
+Creature *find_player_controlled_creature( avatar &you )
+{
+    creature_tracker &creatures = get_creature_tracker();
+    map &here = get_map();
+    for( const tripoint &p : here.points_in_radius( you.pos(), 1, 0 ) ) {
+        Creature *const target = creatures.creature_at<Creature>( p );
+        if( target != nullptr && target != &you &&
+            target->has_effect( effect_controlled_for_shove ) ) {
+            return target;
+        }
+    }
+    return nullptr;
+}
+
+bool ipman_throw_specialist( const avatar &you )
+{
+    static const matype_id style_ipman( "style_wc_rework_ipman" );
+    return you.martial_arts_data->selected_is_style( style_ipman ) &&
+           you.get_skill_level( skill_unarmed ) >= 5;
+}
+
+void release_player_creature_grab( avatar &you, Creature *target )
+{
+    if( target != nullptr ) {
+        target->remove_effect( effect_grabbed_by_player );
+        target->remove_effect( effect_grabbed );
+    }
+    you.remove_effect( effect_grabbing );
+}
+
 d20_roll_state get_d20_roll_state( const avatar &you, const Creature &target )
 {
     const bool target_disadvantaged =
@@ -1038,7 +1083,7 @@ void mark_player_attack_attempt( avatar &you, Creature &target )
     if( npc *const guy = target.as_npc(); guy != nullptr ) {
         guy->on_attacked( you );
     } else if( monster *const mon = target.as_monster(); mon != nullptr ) {
-        mon->on_hit( &you, body_part_torso.id(), nullptr, false );
+        mon->on_hit( &you, body_part_torso.id() );
     }
 }
 
@@ -1055,7 +1100,7 @@ bool confirm_nonhostile_npc_on_trajectory(
     creature_tracker &creatures = get_creature_tracker();
     for( const tripoint &p : trajectory ) {
         npc *const guy = creatures.creature_at<npc>( p );
-        if( guy != nullptr && guy != &you && !guy->is_enemy() ) {
+        if( guy != nullptr && !guy->is_enemy() ) {
             return query_yn( _( "这样做会被视为攻击，继续吗？" ) );
         }
     }
@@ -1338,7 +1383,7 @@ bool throw_grabbed_creature( avatar &you )
     if( npc *const guy = target->as_npc(); guy != nullptr ) {
         guy->make_angry();
     } else if( monster *const mon = target->as_monster(); mon != nullptr ) {
-        mon->on_hit( &you, body_part_torso.id(), nullptr, false );
+        mon->on_hit( &you, body_part_torso.id() );
     }
 
     const int hp_before_throw = target->get_hp();
@@ -1528,7 +1573,7 @@ bool throw_grabbed_furniture( avatar &you )
         }
 
         if( monster *const mon = hit.as_monster(); mon != nullptr ) {
-            mon->on_hit( &you, body_part_torso.id(), nullptr, false );
+            mon->on_hit( &you, body_part_torso.id() );
         }
 
         furniture_released = true;
@@ -1919,7 +1964,7 @@ static void grab()
         }
 
         if( monster *const mon = target->as_monster(); mon != nullptr ) {
-            mon->on_hit( &you, body_part_torso.id(), nullptr, false );
+            mon->on_hit( &you, body_part_torso.id() );
         }
 
         if( armed_control ) {
