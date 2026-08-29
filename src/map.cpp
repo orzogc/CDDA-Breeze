@@ -841,6 +841,7 @@ vehicle *map::move_vehicle( vehicle &veh, const tripoint &dp, const tileray &fac
     int impulse = 0;
 
     std::vector<veh_collision> collisions;
+    std::vector<vehicle *> passthrough;
 
     // Find collisions
     // Velocity of car before collision
@@ -879,6 +880,10 @@ vehicle *map::move_vehicle( vehicle &veh, const tripoint &dp, const tileray &fac
         // Non-vehicle collisions
         for( const veh_collision &coll : collisions ) {
             if( coll.type == veh_coll_veh ) {
+                continue;
+            }
+            if( coll.type == veh_coll_veh_nocollide ) {
+                passthrough.push_back( static_cast<vehicle *>( coll.target ) );
                 continue;
             }
             int part_num = veh.get_non_fake_part( coll.part );
@@ -1027,6 +1032,9 @@ vehicle *map::move_vehicle( vehicle &veh, const tripoint &dp, const tileray &fac
                      veh.tow_data.get_towed()->disp_name() );
             veh.tow_data.get_towed()->invalidate_towing( true );
         }
+    }
+    for( vehicle *colveh : passthrough ) {
+        add_vehicle_to_cache( colveh );
     }
     // Redraw scene, but only if the player is not engaged in an activity and
     // the vehicle was seen before or after the move.
