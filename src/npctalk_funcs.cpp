@@ -236,119 +236,27 @@ void spawn_animal( npc &p, const mtype_id &mon )
 namespace
 {
 static const flag_id flag_PAINT_COUNTER_STOCK( "PAINT_COUNTER_STOCK" );
-static const std::string paint_counter_filter_var = "breeze_paint_counter_trade_hidden";
 static const std::string paint_counter_stock_var = "breeze_paint_counter_stock";
 
-template<typename Func>
-void for_each_shop_item( npc &p, Func &&func )
+bool is_paint_counter_stock( const item &it )
 {
-    for( item *it : p.items_with( []( const item & ) {
-    return true;
-    } ) ) {
-        if( it != nullptr ) {
-            func( *it );
-        }
-    }
-
-    map &here = get_map();
-    for( const tripoint &pt : closest_points_first( p.pos(), PICKUP_RANGE ) ) {
-        for( item &it : here.i_at( pt ) ) {
-            if( it.is_owned_by( p ) ) {
-                func( it );
-            }
-        }
-    }
-}
-
-void apply_paint_counter_filter( npc &p, bool counter_only )
-{
-    p.shop_restock();
-
-    for_each_shop_item( p, [&]( item & it ) {
-        const bool is_counter_stock = it.has_flag( flag_PAINT_COUNTER_STOCK ) ||
-                                      it.get_var( paint_counter_stock_var ) == "yes";
-        const bool should_hide = counter_only ? !is_counter_stock : is_counter_stock;
-        if( !should_hide || it.has_var( VAR_TRADE_IGNORE ) ) {
-            return;
-        }
-
-        it.set_var( VAR_TRADE_IGNORE, "yes" );
-        it.set_var( paint_counter_filter_var, "yes" );
-    } );
-}
-
-bool is_paint_counter_item( const item &it )
-{
-    const itype_id &id = it.typeId();
-    if( id == itype_id( "vehicle_paint_can" ) || id == itype_id( "spray_gun" ) ) {
-        return true;
-    }
-
-    const item &loaded = it.loaded_ammo();
-    if( !loaded.is_null() && loaded.ammo_type() == ammotype( "vehicle_paint" ) ) {
-        return true;
-    }
-
-    return false;
-}
-
-void adopt_paint_counter_sales( npc &p )
-{
-    for_each_shop_item( p, [&]( item & it ) {
-        const bool already_counter = it.has_flag( flag_PAINT_COUNTER_STOCK ) ||
-                                     it.get_var( paint_counter_stock_var ) == "yes";
-        if( already_counter || !is_paint_counter_item( it ) ) {
-            return;
-        }
-        it.set_var( paint_counter_stock_var, "yes" );
-    } );
-}
-
-void clear_paint_counter_filter( npc &p )
-{
-    auto clear_filter = []( item & it ) {
-        if( !it.has_var( paint_counter_filter_var ) ) {
-            return;
-        }
-
-        it.erase_var( paint_counter_filter_var );
-        it.erase_var( VAR_TRADE_IGNORE );
-    };
-
-    for_each_shop_item( p, clear_filter );
-
-    // A purchased item can carry the temporary filter variable into the player's
-    // inventory (or onto the map if the inventory is full), so clear both sides.
-    for( item *it : get_player_character().items_with( [&]( const item & candidate ) {
-        return candidate.has_var( paint_counter_filter_var );
-    } ) ) {
-        if( it != nullptr ) {
-            clear_filter( *it );
-        }
-    }
-
-    map &here = get_map();
-    for( const tripoint &pt : closest_points_first( p.pos(), PICKUP_RANGE ) ) {
-        for( item &it : here.i_at( pt ) ) {
-            clear_filter( it );
-        }
-    }
+    return it.has_flag( flag_PAINT_COUNTER_STOCK ) ||
+           it.get_var( paint_counter_stock_var ) == "yes";
 }
 } // namespace
 
 void talk_function::start_trade( npc &p )
 {
-    apply_paint_counter_filter( p, false );
-    npc_trading::trade( p, 0, _( "Trade" ) );
-    clear_paint_counter_filter( p );
+    npc_trading::trade( p, 0, _( "Trade" ), []( const item & it ) {
+        return !is_paint_counter_stock( it );
+    } );
 }
 
 void talk_function::start_paint_trade( npc &p )
 {
-    apply_paint_counter_filter( p, true );
-    npc_trading::trade( p, 0, _( "喷漆专柜" ) );
-    adopt_paint_counter_sales( p );
-    clear_paint_counter_filter( p );
+    npc_trading::trade( p, 0, _( "喷漆专柜" ), []( const item & it ) {
+        return is_paint_counter_stock( it );
+    }, paint_counter_stock_var );
 }
 
 void talk_function::exert_coercion(npc &p) {
