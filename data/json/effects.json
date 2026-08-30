@@ -2833,19 +2833,44 @@
     "name": [ "Grabbed" ],
     "desc": [ "You have been grabbed by an attack.\nYou are being held in place, and dodging and blocking are very difficult." ],
     "rating": "bad",
-    "max_duration": "2 s",
-    "max_intensity": 15,
+    "max_duration": "10 s",
+    "max_intensity":  100,
     "base_mods": { "speed_mod": [ -15 ] },
     "scaling_mods": { "speed_mod": [ -5 ] },
     "show_in_info": true
   },
   {
     "type": "effect_type",
+    "id": "grabbed_by_player",
+    "name": [ "被玩家擒住" ],
+    "desc": [ "这一状态记录由玩家建立的擒抱关系，不会让目标失去行动能力。" ],
+    "max_duration": "10 s",
+    "max_intensity": 100,
+    "show_in_info": false
+  },
+  {
+    "type": "effect_type",
+    "id": "player_grab_fresh",
+    "name": [ "抓取刚刚建立" ],
+    "desc": [ "刚刚建立的玩家抓取暂时不会立刻被挣脱。" ],
+    "max_duration": "2 s",
+    "show_in_info": false
+  },
+  {
+    "type": "effect_type",
+    "id": "controlled_for_shove",
+    "name": [ "被短暂控制" ],
+    "desc": [ "目标被玩家用武器或身体短暂控制，可以立刻尝试推倒。" ],
+    "max_duration": "3 s",
+    "show_in_info": false
+  },
+  {
+    "type": "effect_type",
     "id": "grabbing",
     "name": [ "Grabbing" ],
     "desc": [ "Grabbing another creature and holding them in place." ],
-    "max_duration": "2 s",
-    "max_intensity": 15,
+    "max_duration": "10 s",
+    "max_intensity":  100,
     "show_in_info": true
   },
   {

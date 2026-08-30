@@ -477,7 +477,9 @@ class target_ui
             Turrets,
             TurretManual,
             Reach,
-            Spell
+            Spell,
+            ThrowCreature,
+            ThrowObject
         };
 
         // Avatar
@@ -486,6 +488,8 @@ class target_ui
         TargetMode mode = TargetMode::Fire;
         // Weapon being fired/thrown
         item *relevant = nullptr;
+        // Source tile for grabbed creatures, furniture, and vehicles.
+        tripoint throw_origin = tripoint_zero;
         // Cached selection range from player's position
         int range = 0;
         // Cached current ammo to display
@@ -739,6 +743,32 @@ target_handler::trajectory target_handler::mode_throw( avatar &you, item &releva
     ui.mode = blind_throwing ? target_ui::TargetMode::ThrowBlind : target_ui::TargetMode::Throw;
     ui.relevant = &relevant;
     ui.range = you.throw_range( relevant );
+
+    restore_on_out_of_scope<tripoint> view_offset_prev( you.view_offset );
+    return ui.run();
+}
+
+target_handler::trajectory target_handler::mode_throw_creature( avatar &you,
+        const Creature &thrown_creature, int range )
+{
+    target_ui ui = target_ui();
+    ui.you = &you;
+    ui.mode = target_ui::TargetMode::ThrowCreature;
+    ui.throw_origin = thrown_creature.pos();
+    ui.range = range;
+
+    restore_on_out_of_scope<tripoint> view_offset_prev( you.view_offset );
+    return ui.run();
+}
+
+target_handler::trajectory target_handler::mode_throw_object( avatar &you,
+        const tripoint &source, int range )
+{
+    target_ui ui = target_ui();
+    ui.you = &you;
+    ui.mode = target_ui::TargetMode::ThrowObject;
+    ui.throw_origin = source;
+    ui.range = range;
 
     restore_on_out_of_scope<tripoint> view_offset_prev( you.view_offset );
     return ui.run();
@@ -2813,8 +2843,16 @@ target_handler::trajectory target_ui::run()
         resume_critter = activity->aiming_at_critter;
     }
 
-    // Initialize cursor position
-    src = you->pos();
+    // A grabbed creature is swung around the thrower before release, so target
+    // selection uses the avatar as its pivot.  Furniture and vehicles still use
+    // their actual map tile because their flight path moves the real map object.
+    if( mode == TargetMode::ThrowCreature ) {
+        src = you->pos();
+    } else if( mode == TargetMode::ThrowObject ) {
+        src = throw_origin;
+    } else {
+        src = you->pos();
+    }
     update_target_list();
 
     if( activity && activity->abort_if_no_targets && targets.empty() ) {
@@ -2832,6 +2870,8 @@ target_handler::trajectory target_ui::run()
             action.clear();
             attack_was_confirmed = false;
         }
+    } else if( mode == TargetMode::ThrowCreature || mode == TargetMode::ThrowObject ) {
+        initial_dst = src;
     } else {
         initial_dst = choose_initial_target();
     }
@@ -3906,6 +3946,10 @@ std::string target_ui::uitext_title() const
             return string_format( _( "Throwing %s" ), relevant->tname() );
         case TargetMode::ThrowBlind:
             return string_format( _( "Blind throwing %s" ), relevant->tname() );
+        case TargetMode::ThrowCreature:
+            return _( "摔投生物" );
+        case TargetMode::ThrowObject:
+            return _( "投掷物体" );
         default:
             return _( "Set target" );
     }
@@ -3913,7 +3957,8 @@ std::string target_ui::uitext_title() const
 
 std::string target_ui::uitext_fire() const
 {
-    if( mode == TargetMode::Throw || mode == TargetMode::ThrowBlind ) {
+    if( mode == TargetMode::Throw || mode == TargetMode::ThrowBlind ||
+        mode == TargetMode::ThrowCreature || mode == TargetMode::ThrowObject ) {
         return to_translation( "[Hotkey] to throw", "to throw" ).translated();
     } else if( mode == TargetMode::Reach ) {
         return to_translation( "[Hotkey] to attack", "to attack" ).translated();

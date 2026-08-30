@@ -2,15 +2,15 @@
   {
     "type": "technique",
     "id": "tec_wc_rework_pak_sao",
-    "name": "拍手震退",
+    "name": "黐桥借势摔",
     "messages": [
-      "你拍开%s的攻势，同时沿中线打出冲拳将其震退",
-      "<npcname>拍开%s的攻势，同时沿中线打出冲拳将其震退"
+      "你黐住%s的攻势，借势转马，将其整个人摔了出去。",
+      "<npcname>黐住%s的攻势，借势转马，将其整个人摔了出去。"
     ],
     "skill_requirements": [
       {
         "name": "unarmed",
-        "level": 2
+        "level": 5
       }
     ],
     "unarmed_allowed": true,
@@ -30,7 +30,7 @@
       {
         "stat": "damage",
         "type": "bash",
-        "scale": 1.1
+        "scale": 1.2
       },
       {
         "stat": "damage",
@@ -46,7 +46,10 @@
     "attack_vectors": [
       "HAND"
     ],
-    "knockback_dist": 1
+    "knockback_dist": 2,
+    "controlled_knockback": true,
+    "stun_dur": 1,
+    "weighting": 3
   },
   {
     "type": "technique",

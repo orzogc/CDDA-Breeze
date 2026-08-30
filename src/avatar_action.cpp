@@ -61,7 +61,11 @@ class gun_mode;
 
 static const efftype_id effect_amigara( "amigara" );
 static const efftype_id effect_glowing( "glowing" );
+static const efftype_id effect_grabbed_by_player( "grabbed_by_player" );
+static const efftype_id effect_grabbing( "grabbing" );
+static const efftype_id effect_player_grab_fresh( "player_grab_fresh" );
 static const efftype_id effect_harnessed( "harnessed" );
+static const efftype_id effect_downed( "downed" );
 static const efftype_id effect_hunger_engorged( "hunger_engorged" );
 static const efftype_id effect_incorporeal( "incorporeal" );
 static const efftype_id effect_onfire( "onfire" );
@@ -76,6 +80,7 @@ static const itype_id itype_swim_fins( "swim_fins" );
 static const move_mode_id move_mode_prone( "prone" );
 
 static const skill_id skill_swimming( "swimming" );
+static const skill_id skill_unarmed( "unarmed" );
 
 static const trait_id trait_BRAWLER( "BRAWLER" );
 static const trait_id trait_GRAZER( "GRAZER" );
@@ -155,6 +160,90 @@ static bool check_water_affect_items( avatar &you )
 
     return true;
 }
+
+namespace
+{
+
+Creature *breeze_player_grabbed_target( avatar &you )
+{
+    if( !you.has_effect( effect_grabbing ) ) {
+        return nullptr;
+    }
+    creature_tracker &creatures = get_creature_tracker();
+    map &here = get_map();
+    for( const tripoint &p : here.points_in_radius( you.pos(), 1, 0 ) ) {
+        Creature *const target = creatures.creature_at<Creature>( p );
+        if( target != nullptr && target != &you &&
+            target->has_effect( effect_grabbed_by_player ) ) {
+            return target;
+        }
+    }
+    return nullptr;
+}
+
+void breeze_release_player_grab( avatar &you, Creature *target )
+{
+    if( target != nullptr ) {
+        target->remove_effect( effect_grabbed_by_player );
+        target->remove_effect( effect_player_grab_fresh );
+    }
+    you.remove_effect( effect_grabbing );
+}
+
+int breeze_grab_drag_weight_bonus( const Creature &target )
+{
+    const int kg = std::max(
+                       1, static_cast<int>( units::to_gram( target.get_weight() ) / 1000 ) );
+    if( kg < 40 ) {
+        return -2;
+    }
+    if( kg <= 90 ) {
+        return 0;
+    }
+    if( kg <= 150 ) {
+        return 2;
+    }
+    if( kg <= 250 ) {
+        return 4;
+    }
+    if( kg <= 400 ) {
+        return 6;
+    }
+    return 8;
+}
+
+int breeze_grab_drag_stamina( const avatar &you, const Creature &target )
+{
+    const int kg = std::max(
+                       1, static_cast<int>( units::to_gram( target.get_weight() ) / 1000 ) );
+    const int skill = you.get_skill_level( skill_unarmed );
+    const float efficiency = std::clamp( 1.0f - skill * 0.04f, 0.65f, 1.0f );
+    return std::clamp(
+               static_cast<int>( ( 60 + std::max( 0, kg - 50 ) ) * efficiency ),
+               40, 350 );
+}
+
+bool breeze_grab_drag_roll( avatar &you, Creature &target )
+{
+    const int player_roll = you.get_arm_str() +
+                            you.get_skill_level( skill_unarmed ) * 2 + rng( -4, 4 );
+    int target_roll = static_cast<int>( std::round( target.stability_roll() ) ) +
+                      breeze_grab_drag_weight_bonus( target );
+    if( target.has_effect( effect_downed ) ) {
+        target_roll -= 3;
+    }
+    return player_roll >= target_roll;
+}
+
+bool breeze_force_drag_monster( monster &mon, const tripoint &dest )
+{
+    const int old_moves = mon.get_moves();
+    const bool moved = mon.move_to( dest, false, false );
+    mon.set_moves( old_moves );
+    return moved;
+}
+
+} // namespace
 
 bool avatar_action::move( avatar &you, map &m, const tripoint &d )
 {
@@ -349,6 +438,32 @@ bool avatar_action::move( avatar &you, map &m, const tripoint &d )
         return false;
     }
 
+    // Moving into the monster currently held by the player attempts to drive it
+    // one tile forward instead of turning the movement key into a punch.
+    if( monster *const held = creatures.creature_at<monster>( dest_loc, true );
+        held != nullptr && you.has_effect( effect_grabbing ) &&
+        held->has_effect( effect_grabbed_by_player ) ) {
+        const int drag_cost = breeze_grab_drag_stamina( you, *held );
+        const int fail_cost = std::max( 25, drag_cost * 6 / 10 );
+        const tripoint beyond = held->pos() + d;
+
+        if( d.z != 0 || !breeze_grab_drag_roll( you, *held ) ) {
+            you.moves -= 100;
+            you.mod_stamina( -fail_cost );
+            add_msg( m_warning, _( "你试图推动%s，但没有成功。" ), held->disp_name() );
+            return false;
+        }
+        if( !breeze_force_drag_monster( *held, beyond ) ) {
+            you.moves -= 100;
+            you.mod_stamina( -fail_cost );
+            add_msg( m_warning, _( "%s挡住了去路，你没能推动它。" ), held->disp_name() );
+            return false;
+        }
+        you.mod_stamina( -drag_cost );
+        add_msg( m_info, _( "你控制着%s向前挪了一步。" ), held->disp_name() );
+        attacking = false;
+    }
+
     if( monster *const mon_ptr = creatures.creature_at<monster>( dest_loc, true ) ) {
         monster &critter = *mon_ptr;
         if( critter.friendly == 0 &&
@@ -504,7 +619,45 @@ bool avatar_action::move( avatar &you, map &m, const tripoint &d )
         }
         return true;
     }
+    monster *pull_target = nullptr;
+    tripoint pull_origin = you.pos();
+    int pull_cost = 0;
+
+    if( you.has_effect( effect_grabbing ) ) {
+        if( Creature *const held = breeze_player_grabbed_target( you ) ) {
+            if( rl_dist( held->pos(), you.pos() ) > 1 ) {
+                breeze_release_player_grab( you, held );
+            } else if( monster *const held_mon = held->as_monster();
+                       held_mon != nullptr && d.z == 0 &&
+                       dest_loc != held_mon->pos() &&
+                       rl_dist( dest_loc, held_mon->pos() ) > 1 ) {
+                pull_cost = breeze_grab_drag_stamina( you, *held_mon );
+                const int fail_cost = std::max( 25, pull_cost * 6 / 10 );
+                if( !breeze_grab_drag_roll( you, *held_mon ) ) {
+                    you.moves -= 100;
+                    you.mod_stamina( -fail_cost );
+                    add_msg( m_warning, _( "你试图拖动%s，但没有成功。" ),
+                             held_mon->disp_name() );
+                    return false;
+                }
+                pull_target = held_mon;
+            }
+        } else {
+            you.remove_effect( effect_grabbing );
+        }
+    }
+
     if( g->walk_move( dest_loc, via_ramp ) ) {
+        if( pull_target != nullptr ) {
+            if( breeze_force_drag_monster( *pull_target, pull_origin ) ) {
+                you.mod_stamina( -pull_cost );
+                add_msg( m_info, _( "你拖着%s移动了一步。" ), pull_target->disp_name() );
+            } else {
+                breeze_release_player_grab( you, pull_target );
+                add_msg( m_warning, _( "你没能继续控制%s，抓取被迫松开。" ),
+                         pull_target->disp_name() );
+            }
+        }
         return true;
     }
     if( g->phasing_move( dest_loc ) ) {

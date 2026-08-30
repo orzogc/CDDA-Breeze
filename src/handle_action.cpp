@@ -7,9 +7,11 @@
 #include <map>
 #include <sstream>
 #include <string>
+#include <thread>
 #include <utility>
 
 #include "action.h"
+#include "achievement.h"
 #include "activity_actor_definitions.h"
 #include "activity_type.h"
 #include "advanced_inv.h"
@@ -30,6 +32,8 @@
 #include "color.h"
 #include "construction.h"
 #include "creature_tracker.h"
+#include "creature.h"
+#include "creature_throw.h"
 #include "cursesdef.h"
 #include "cursesport.h"
 #include "damage.h"
@@ -65,6 +69,7 @@
 #include "mapdata.h"
 #include "mapsharing.h"
 #include "messages.h"
+#include "memory_fast.h"
 #include "monster.h"
 #include "move_mode.h"
 #include "mtype.h"
@@ -124,7 +129,15 @@ static const activity_id ACT_WAIT_WEATHER("ACT_WAIT_WEATHER");
 static const bionic_id bio_remote("bio_remote");
 
 static const efftype_id effect_alarm_clock("alarm_clock");
+static const efftype_id effect_blind("blind");
+static const efftype_id effect_controlled_for_shove("controlled_for_shove");
+static const efftype_id effect_downed("downed");
+static const efftype_id effect_grabbed("grabbed");
+static const efftype_id effect_grabbed_by_player("grabbed_by_player");
+static const efftype_id effect_grabbing("grabbing");
+static const efftype_id effect_player_grab_fresh("player_grab_fresh");
 static const efftype_id effect_incorporeal("incorporeal");
+static const efftype_id effect_no_sight("no_sight");
 static const efftype_id effect_laserlocked("laserlocked");
 static const efftype_id effect_relax_gas("relax_gas");
 static const efftype_id effect_stunned("stunned");
@@ -146,6 +159,8 @@ static const proficiency_id proficiency_prof_helicopter_pilot("prof_helicopter_p
 static const quality_id qual_CUT("CUT");
 
 static const skill_id skill_melee("melee");
+static const skill_id skill_throw("throw");
+static const skill_id skill_unarmed("unarmed");
 
 static const trait_id trait_BRAWLER("BRAWLER");
 static const trait_id trait_HIBERNATE("HIBERNATE");
@@ -913,79 +928,1356 @@ static void close()
     }
 }
 
-// Establish or release a grab on a vehicle
+
+namespace
+{
+
+enum class d20_roll_state {
+    normal,
+    advantage,
+    disadvantage
+};
+
+Creature *find_player_grabbed_creature( avatar &you )
+{
+    if( !you.has_effect( effect_grabbing ) ) {
+        return nullptr;
+    }
+    creature_tracker &creatures = get_creature_tracker();
+    map &here = get_map();
+    for( const tripoint &p : here.points_in_radius( you.pos(), 1, 0 ) ) {
+        Creature *const target = creatures.creature_at<Creature>( p );
+        if( target != nullptr && target != &you && target->has_effect( effect_grabbed_by_player ) ) {
+            return target;
+        }
+    }
+    return nullptr;
+}
+
+Creature *find_player_controlled_creature( avatar &you )
+{
+    creature_tracker &creatures = get_creature_tracker();
+    map &here = get_map();
+    for( const tripoint &p : here.points_in_radius( you.pos(), 1, 0 ) ) {
+        Creature *const target = creatures.creature_at<Creature>( p );
+        if( target != nullptr && target != &you &&
+            target->has_effect( effect_controlled_for_shove ) ) {
+            return target;
+        }
+    }
+    return nullptr;
+}
+
+bool ipman_throw_specialist( const avatar &you )
+{
+    static const matype_id style_ipman( "style_wc_rework_ipman" );
+    return you.martial_arts_data->selected_is_style( style_ipman ) &&
+           you.get_skill_level( skill_unarmed ) >= 5;
+}
+
+void release_player_creature_grab( avatar &you, Creature *target )
+{
+    if( target != nullptr ) {
+        target->remove_effect( effect_grabbed_by_player );
+        target->remove_effect( effect_grabbed );
+    }
+    you.remove_effect( effect_grabbing );
+}
+
+d20_roll_state get_d20_roll_state( const avatar &you, const Creature &target )
+{
+    const bool target_disadvantaged =
+        target.has_effect( effect_downed ) ||
+        target.has_effect( effect_stunned ) ||
+        target.has_effect( effect_blind ) ||
+        target.has_effect( effect_no_sight );
+    const bool player_disadvantaged =
+        you.has_effect( effect_stunned ) ||
+        you.has_effect( effect_blind ) ||
+        you.has_effect( effect_no_sight ) ||
+        you.get_perceived_pain() >= 40;
+
+    if( target_disadvantaged == player_disadvantaged ) {
+        return d20_roll_state::normal;
+    }
+    return target_disadvantaged ? d20_roll_state::advantage :
+           d20_roll_state::disadvantage;
+}
+
+int roll_contact_d20( const d20_roll_state state )
+{
+    const int first = rng( 1, 20 );
+    if( state == d20_roll_state::normal ) {
+        return first;
+    }
+
+    const int second = rng( 1, 20 );
+    return state == d20_roll_state::advantage ?
+           std::max( first, second ) : std::min( first, second );
+}
+
+int d20_dex_modifier( const int dex )
+{
+    if( dex >= 8 ) {
+        return ( dex - 8 ) / 3;
+    }
+    return -( ( 8 - dex + 2 ) / 3 );
+}
+
+int d20_target_size_modifier( const Creature &target )
+{
+    switch( target.get_size() ) {
+        case creature_size::tiny:
+            return -3;
+        case creature_size::small:
+            return -1;
+        case creature_size::medium:
+            return 0;
+        case creature_size::large:
+            return 1;
+        case creature_size::huge:
+            return 2;
+        case creature_size::num_sizes:
+            break;
+    }
+    return 0;
+}
+
+int d20_dodge_difficulty( const Creature &target )
+{
+    return std::max( 0, static_cast<int>(
+                         std::ceil( std::max( 0.0f, target.get_dodge() ) / 3.0f ) ) );
+}
+
+enum class contact_roll_result {
+    hit,
+    inaccurate,
+    near_miss,
+    dodged
+};
+
+contact_roll_result contact_d20_result( const avatar &you, const Creature &target,
+                                       const int skill_bonus,
+                                       const int distance_penalty,
+                                       const int flat_bonus,
+                                       const bool show_state_message )
+{
+    const d20_roll_state state = get_d20_roll_state( you, target );
+    if( show_state_message ) {
+        if( state == d20_roll_state::advantage ) {
+            add_msg( m_good, _( "你在这次抓取中占据优势。" ) );
+        } else if( state == d20_roll_state::disadvantage ) {
+            add_msg( m_warning, _( "你在这次抓取中处于劣势。" ) );
+        }
+    }
+
+    const int roll = roll_contact_d20( state );
+    if( roll == 1 ) {
+        return contact_roll_result::inaccurate;
+    }
+    if( roll == 20 ) {
+        return contact_roll_result::hit;
+    }
+
+    const int attack_score = roll + skill_bonus +
+                             d20_dex_modifier( you.get_dex() ) +
+                             flat_bonus - distance_penalty;
+    const int silhouette_dc = std::clamp(
+                                  2 - d20_target_size_modifier( target ), 2, 19 );
+    const int final_dc = std::clamp(
+                             silhouette_dc + d20_dodge_difficulty( target ), 2, 19 );
+
+    if( attack_score < 2 ) {
+        return contact_roll_result::inaccurate;
+    }
+    if( attack_score < silhouette_dc ) {
+        return contact_roll_result::near_miss;
+    }
+    if( attack_score < final_dc ) {
+        return contact_roll_result::dodged;
+    }
+    return contact_roll_result::hit;
+}
+
+bool grab_contact_hits( const avatar &you, const Creature &target,
+                        const bool armed_control, const int flat_bonus )
+{
+    const int skill = you.get_skill_level( armed_control ? skill_melee : skill_unarmed );
+    return contact_d20_result(
+               you, target, skill / 3, 0, flat_bonus, true ) ==
+           contact_roll_result::hit;
+}
+
+void mark_player_attack_attempt( avatar &you, Creature &target )
+{
+    if( npc *const guy = target.as_npc(); guy != nullptr ) {
+        guy->on_attacked( you );
+    } else if( monster *const mon = target.as_monster(); mon != nullptr ) {
+        mon->on_hit( &you, body_part_torso.id() );
+    }
+}
+
+void credit_player_collision_death( avatar &you, Creature &target )
+{
+    if( target.is_dead_state() ) {
+        target.die( &you );
+    }
+}
+
+bool confirm_nonhostile_npc_on_trajectory(
+    avatar &you, const target_handler::trajectory &trajectory )
+{
+    creature_tracker &creatures = get_creature_tracker();
+    for( const tripoint &p : trajectory ) {
+        npc *const guy = creatures.creature_at<npc>( p );
+        if( guy != nullptr && !guy->is_enemy() ) {
+            return query_yn( _( "这样做会被视为攻击，继续吗？" ) );
+        }
+    }
+    return true;
+}
+
+void complete_jackie_chan_achievement()
+{
+    static const achievement_id achievement_jackie_chan( "achievement_jackie_chan" );
+    if( !achievement_jackie_chan.is_valid() ) {
+        return;
+    }
+
+    achievements_tracker &tracker = get_achievements();
+    if( tracker.is_completed( achievement_jackie_chan ) == achievement_completion::pending ) {
+        tracker.report_achievement(
+            &achievement_jackie_chan.obj(), achievement_completion::completed );
+    }
+}
+
+int creature_weight_kg( const Creature &target )
+{
+    return std::max( 1, static_cast<int>( units::to_gram( target.get_weight() ) / 1000 ) );
+}
+
+int push_weight_stability_bonus( const Creature &target )
+{
+    const int kg = creature_weight_kg( target );
+    if( kg < 40 ) {
+        return -2;
+    }
+    if( kg <= 90 ) {
+        return 0;
+    }
+    if( kg <= 150 ) {
+        return 2;
+    }
+    if( kg <= 250 ) {
+        return 4;
+    }
+    if( kg <= 400 ) {
+        return 6;
+    }
+    return 8;
+}
+
+int push_stamina_cost( const avatar &you, const Creature &target, const bool armed )
+{
+    const int skill = you.get_skill_level( armed ? skill_melee : skill_unarmed );
+    const int kg = creature_weight_kg( target );
+    const int base = 220 + std::max( 0, kg - 50 ) * 2;
+    const float efficiency = std::clamp( 1.0f - skill * 0.05f, 0.60f, 1.0f );
+    return std::clamp( static_cast<int>( base * efficiency ), 120, 900 );
+}
+
+void break_monster_grab_on_player( avatar &you, Creature &target )
+{
+    monster *const pushed_mon = target.as_monster();
+    if( pushed_mon == nullptr || !pushed_mon->has_effect( effect_grabbing ) ) {
+        return;
+    }
+
+    pushed_mon->remove_effect( effect_grabbing );
+
+    creature_tracker &creatures = get_creature_tracker();
+    map &here = get_map();
+    bool another_grabber_remains = false;
+    for( const tripoint &p : here.points_in_radius( you.pos(), 1, 0 ) ) {
+        const monster *const mon = creatures.creature_at<monster>( p );
+        if( mon != nullptr && mon != pushed_mon && mon->has_effect( effect_grabbing ) ) {
+            another_grabber_remains = true;
+            break;
+        }
+    }
+
+    if( !another_grabber_remains ) {
+        you.remove_effect( effect_grabbed );
+    }
+    add_msg( m_good, _( "%s的抓取被打断了。" ), target.disp_name() );
+}
+
+bool target_can_be_pushed_down( const avatar &you, const Creature &target )
+{
+    if( target.is_immune_effect( effect_downed ) ) {
+        return false;
+    }
+    if( const monster *const mon = target.as_monster(); mon != nullptr && mon->flies() ) {
+        return false;
+    }
+
+    const int size_delta = static_cast<int>( target.get_size() ) -
+                           static_cast<int>( you.get_size() );
+    if( size_delta > 0 ) {
+        const int required_strength = 12 + ( size_delta - 1 ) * 4;
+        if( you.get_arm_str() < required_strength ) {
+            return false;
+        }
+    }
+
+    const int kg = creature_weight_kg( target );
+    const int rough_weight_limit = you.get_arm_str() * 20 + 50;
+    return kg <= rough_weight_limit;
+}
+
+bool attempt_pushdown( avatar &you, Creature &target, const bool armed,
+                       const bool release_full_grab )
+{
+    const int full_cost = push_stamina_cost( you, target, armed );
+    const int failure_cost = std::max( 80, full_cost * 7 / 10 );
+    you.mod_moves( -100 );
+
+    if( !target_can_be_pushed_down( you, target ) ) {
+        you.mod_stamina( -failure_cost );
+        add_msg( m_info, _( "%s太稳或太沉重，你没能将其推倒。" ), target.disp_name() );
+        if( release_full_grab ) {
+            release_player_creature_grab( you, &target );
+        } else {
+            target.remove_effect( effect_controlled_for_shove );
+        }
+        return true;
+    }
+
+    const int skill = you.get_skill_level( armed ? skill_melee : skill_unarmed );
+    const int player_roll = you.get_arm_str() + skill * 2 + rng( -4, 4 );
+    const int target_roll = static_cast<int>( std::round( target.stability_roll() ) ) +
+                            push_weight_stability_bonus( target );
+
+    if( player_roll >= target_roll ) {
+        you.mod_stamina( -full_cost );
+        break_monster_grab_on_player( you, target );
+        target.add_effect( effect_downed, creature_throw::shoved_creature_downed_duration );
+        add_msg( m_good, _( "你破坏了%s的平衡，将其推倒在地。" ), target.disp_name() );
+    } else {
+        you.mod_stamina( -failure_cost );
+        add_msg( m_warning, _( "你试图推倒%s，但它稳住了身体。" ), target.disp_name() );
+    }
+
+    if( release_full_grab ) {
+        release_player_creature_grab( you, &target );
+    } else {
+        target.remove_effect( effect_controlled_for_shove );
+    }
+    return true;
+}
+
+bool push_controlled_creature( avatar &you )
+{
+    Creature *const target = find_player_controlled_creature( you );
+    if( target == nullptr ) {
+        return false;
+    }
+    return attempt_pushdown( you, *target, true, false );
+}
+
+void apply_throw_downed( Creature &target )
+{
+    if( target.is_dead_state() || target.is_immune_effect( effect_downed ) ) {
+        return;
+    }
+    const monster *const mon = target.as_monster();
+    if( mon != nullptr && mon->flies() ) {
+        return;
+    }
+    target.add_effect( effect_downed, creature_throw::thrown_creature_downed_duration );
+}
+
+void animate_thrown_furniture_step()
+{
+    if( !get_option<bool>( "ANIMATIONS" ) ) {
+        return;
+    }
+
+    g->invalidate_main_ui_adaptor();
+    ui_manager::redraw_invalidated();
+    refresh_display();
+
+    const int delay_ms = get_option<int>( "ANIMATION_DELAY" );
+    if( delay_ms > 0 ) {
+        std::this_thread::sleep_for( std::chrono::milliseconds( delay_ms ) );
+        inp_mngr.pump_events();
+    }
+}
+
+bool throw_grabbed_creature( avatar &you )
+{
+    Creature *const target = find_player_grabbed_creature( you );
+    if( target == nullptr ) {
+        if( you.has_effect( effect_grabbing ) ) {
+            you.remove_effect( effect_grabbing );
+        }
+        return false;
+    }
+
+    const bool ipman = ipman_throw_specialist( you );
+    const creature_size target_size = target->get_size();
+    const creature_size thrower_size = you.get_size();
+    const int target_size_value = static_cast<int>( target_size );
+    const int thrower_size_value = static_cast<int>( thrower_size );
+    const int target_weight_grams = std::max(
+                                        1, static_cast<int>( units::to_gram(
+                                                target->get_weight() ) ) );
+    const int target_weight = std::max( 1, target_weight_grams / 1000 );
+    const int throw_strength = you.get_arm_str() + ( ipman ? 2 : 0 );
+
+    if( !creature_throw::can_throw_grabbed_creature(
+            thrower_size, throw_strength, target_size, target_weight_grams ) ) {
+        return attempt_pushdown( you, *target, false, true );
+    }
+    if( you.get_stamina() < you.get_stamina_max() / 10 ) {
+        add_msg( m_info, _( "你已经太疲惫了，无法完成摔投。" ) );
+        return true;
+    }
+
+    const float stamina_factor = std::max(
+                                     0.25f, static_cast<float>( you.get_stamina() ) /
+                                     std::max( 1, you.get_stamina_max() ) );
+    float throwforce = ( throw_strength * ( 1.1f + stamina_factor ) +
+                         you.get_skill_level( skill_unarmed ) * 2.0f +
+                         you.get_skill_level( skill_throw ) / 4.0f +
+                         thrower_size_value - target_size_value ) * 2.0f;
+
+    if( target_weight > 70 ) {
+        throwforce *= std::clamp( 70.0f / target_weight, 0.35f, 1.0f );
+    }
+
+    map &here = get_map();
+    if( here.has_flag( ter_furn_flag::TFLAG_DEEP_WATER, target->pos() ) ) {
+        throwforce *= 0.25f;
+    }
+    const int range = static_cast<int>( throwforce / 10.0f );
+    if( range < 1 ) {
+        return attempt_pushdown( you, *target, false, true );
+    }
+
+    const target_handler::trajectory trajectory = target_handler::mode_throw_creature(
+                you, *target, range );
+    if( trajectory.empty() ) {
+        return true;
+    }
+    if( trajectory.back() == you.pos() ) {
+        add_msg( m_info, _( "你不能把%s摔在自己脚下。" ), target->disp_name() );
+        return true;
+    }
+    if( trajectory.back().z != target->posz() ) {
+        add_msg( m_info, _( "你无法将%s直接摔向另一层。" ), target->disp_name() );
+        return true;
+    }
+
+    if( !confirm_nonhostile_npc_on_trajectory( you, trajectory ) ) {
+        return true;
+    }
+
+    if( npc *const guy = target->as_npc(); guy != nullptr && !guy->is_enemy() ) {
+        if( !query_yn( _( "这样做会被视为攻击，继续吗？" ) ) ) {
+            return true;
+        }
+    }
+
+    const tripoint original_pos = target->pos();
+    const tripoint destination = trajectory.back();
+
+    const tripoint release_step(
+        std::clamp( destination.x - you.posx(), -1, 1 ),
+        std::clamp( destination.y - you.posy(), -1, 1 ), 0 );
+    const tripoint release_origin = you.pos() + release_step;
+    const bool turns_across_body = release_origin != original_pos;
+
+    creature_tracker &creatures = get_creature_tracker();
+    Creature *const release_occupant = creatures.creature_at<Creature>( release_origin );
+    const bool release_is_free =
+        release_origin != you.pos() &&
+        release_occupant == nullptr &&
+        !here.impassable( release_origin );
+
+    int flight_distance = std::max( 0, rl_dist( release_origin, destination ) );
+
+    const bool close_pivot_slam = turns_across_body && !release_is_free;
+    if( close_pivot_slam ) {
+        flight_distance = 1;
+    }
+
+    const float velocity = creature_throw::grabbed_throw_velocity(
+                               std::max( 1, flight_distance ) );
+    const units::angle target_angle = coord_to_angle(
+                                          close_pivot_slam ?
+                                          original_pos : release_origin,
+                                          destination );
+
+    const int stamina_cost = creature_throw::grabbed_stamina_cost(
+                                 velocity, target_weight_grams,
+                                 you.get_skill_level( skill_unarmed ),
+                                 you.get_skill_level( skill_throw ),
+                                 you.get_dex() );
+
+    break_monster_grab_on_player( you, *target );
+    release_player_creature_grab( you, target );
+    you.mod_moves( -100 );
+    you.mod_stamina( -stamina_cost );
+
+    if( npc *const guy = target->as_npc(); guy != nullptr ) {
+        guy->make_angry();
+    } else if( monster *const mon = target->as_monster(); mon != nullptr ) {
+        mon->on_hit( &you, body_part_torso.id(), 0.0f, nullptr );
+    }
+
+    if( turns_across_body && release_is_free ) {
+        target->setpos( release_origin );
+
+        if( destination == release_origin ) {
+            add_msg( _( "你将%s甩到了身体另一侧。" ), target->disp_name() );
+            if( !target->is_dead_state() &&
+                !target->is_immune_effect( effect_downed ) ) {
+                const monster *const mon = target->as_monster();
+                if( mon == nullptr || !mon->flies() ) {
+                    target->add_effect( effect_downed, 1_turns );
+                }
+            }
+            return true;
+        }
+    }
+
+    add_msg( _( "你将%s摔了出去。" ), target->disp_name() );
+    g->fling_creature( target, target_angle, velocity, false, &you );
+    apply_throw_downed( *target );
+
+    return true;
+}
+
+int furniture_throw_difficulty( const furn_t &furn )
+{
+    return std::clamp( std::max( 1, furn.move_str_req ), 1, 30 );
+}
+
+int furniture_collision_force( const avatar &you, const furn_t &furn,
+                               const int traveled_distance )
+{
+    const int difficulty = furniture_throw_difficulty( furn );
+    const int strength_surplus = std::max( 0, you.get_arm_str() - difficulty );
+
+    // This is raw impulse, not direct damage.  Difficulty remains the furniture
+    // identity, while normal strength only adds a moderate amount.  Very high
+    // debug strength is handled separately by the displacement check.
+    const int difficulty_term = difficulty * 3 + difficulty * difficulty / 4;
+    const int distance_term = std::max( 0, traveled_distance - 1 ) * 2;
+    const int strength_term = std::min( 15, strength_surplus );
+
+    return std::max( 10, 8 + difficulty_term + distance_term + strength_term );
+}
+
+int furniture_direct_damage( const avatar &you, const furn_t &furn,
+                             const int traveled_distance )
+{
+    const int difficulty = furniture_throw_difficulty( furn );
+
+    const int furniture_base = std::clamp( 6 + difficulty, 10, 30 );
+
+    const int strength_delta = you.get_arm_str() - 8;
+    const int strength_bonus = strength_delta >= 0 ?
+                               strength_delta / 2 :
+                               -( ( -strength_delta + 1 ) / 2 );
+
+    const int distance_bonus = std::min(
+                                   4, std::max( 0, traveled_distance - 1 ) / 3 );
+
+    return std::max( 1, furniture_base + strength_bonus + distance_bonus );
+}
+
+int furniture_knockback_distance( const avatar &you, Creature &target,
+                                  const furn_t &furn, const int traveled_distance )
+{
+    const int difficulty = furniture_throw_difficulty( furn );
+    const int strength_surplus = std::max( 0, you.get_arm_str() - difficulty );
+
+    if( monster *const mon = target.as_monster();
+        mon != nullptr && target.get_size() == creature_size::medium &&
+        mon->type->in_species( species_ZOMBIE ) ) {
+        const int baseline_control = difficulty +
+                                     std::min( 10, strength_surplus / 2 ) +
+                                     std::min( 4, std::max( 0, traveled_distance - 1 ) );
+        return baseline_control >= 12 ? 2 : 1;
+    }
+
+    const int target_size = static_cast<int>( target.get_size() );
+    const int thrower_size = static_cast<int>( you.get_size() );
+    const int size_resistance = std::max( 0, target_size - thrower_size ) * 7;
+    const int size_advantage = std::max( 0, thrower_size - target_size ) * 4;
+
+    const int control_roll = difficulty * 2 +
+                             std::min( 20, strength_surplus / 2 ) +
+                             std::max( 0, strength_surplus - 20 ) / 4 +
+                             std::max( 0, traveled_distance - 1 ) / 2 +
+                             size_advantage + rng( -3, 3 );
+    const int resistance_roll = static_cast<int>(
+                                    std::round( target.stability_roll() ) ) +
+                                size_resistance;
+
+    const int margin = control_roll - resistance_roll;
+    int distance = 0;
+    if( margin >= 12 ) {
+        distance = 2;
+    } else if( margin >= 3 ) {
+        distance = 1;
+    }
+
+    if( distance > 0 && strength_surplus > 30 ) {
+        distance += std::clamp( ( strength_surplus - 30 ) / 12, 0, 6 );
+    }
+
+    return distance;
+}
+
+contact_roll_result furniture_throw_hit_result(
+    avatar &you, Creature &target, const furn_t &, const int traveled_distance )
+{
+    const int throw_skill = you.get_skill_level( skill_throw );
+    const int distance_penalty =
+        ( std::max( 0, traveled_distance - 3 ) + 2 ) / 3;
+
+    return contact_d20_result(
+               you, target, throw_skill / 2, distance_penalty, 0, false );
+}
+
+int furniture_stamina_cost( const avatar &you, const furn_t &furn,
+                            const int actual_distance )
+{
+    const int difficulty = furniture_throw_difficulty( furn );
+    const int throw_skill = you.get_skill_level( skill_throw );
+
+    const float efficiency = std::clamp(
+                                 1.0f - throw_skill * 0.03f -
+                                 std::max( 0, you.get_dex() - 8 ) * 0.005f,
+                                 0.70f, 1.0f );
+
+    const int base = 30 + difficulty * difficulty * 3 +
+                     actual_distance * ( 6 + difficulty * 2 );
+
+    return std::clamp(
+               static_cast<int>( std::round( base * efficiency ) ),
+               50, 1200 );
+}
+
+bool throw_grabbed_furniture( avatar &you )
+{
+    if( you.get_grab_type() != object_type::FURNITURE ) {
+        return false;
+    }
+
+    map &here = get_map();
+    const tripoint source = you.pos() + you.grab_point;
+    if( !here.has_furn( source ) ) {
+        you.grab( object_type::NONE );
+        return true;
+    }
+
+    const furn_id thrown_furn = here.furn( source );
+    const furn_t &furn = thrown_furn.obj();
+    const int strength_req = furniture_throw_difficulty( furn );
+    const int strength = you.get_arm_str();
+
+    if( strength < strength_req ) {
+        add_msg( m_bad, _( "你没有足够的力量将%s扔出去。" ), furn.name() );
+        you.mod_moves( -100 );
+        return true;
+    }
+
+    const int range = std::clamp( 1 + ( strength - strength_req ) / 2, 1, 30 );
+    target_handler::trajectory trajectory = target_handler::mode_throw_object(
+                you, source, range );
+
+    if( trajectory.empty() ) {
+        return true;
+    }
+    if( trajectory.back() == you.pos() ) {
+        add_msg( m_info, _( "你不能把%s扔在自己脚下。" ), furn.name() );
+        return true;
+    }
+    for( const tripoint &p : trajectory ) {
+        if( p.z != source.z ) {
+            add_msg( m_info, _( "你无法将%s直接扔向另一层。" ), furn.name() );
+            return true;
+        }
+    }
+
+    creature_tracker &creatures = get_creature_tracker();
+    const int aimed_distance = std::max( 1, rl_dist( source, trajectory.back() ) );
+
+    if( creatures.creature_at<Creature>( trajectory.back() ) != nullptr &&
+        trajectory.size() >= 2 ) {
+        const int extension_len = std::max( 1, range - aimed_distance );
+        std::vector<tripoint> extension = continue_line( trajectory, extension_len );
+        trajectory.reserve( trajectory.size() + extension.size() );
+        trajectory.insert( trajectory.end(), extension.begin(), extension.end() );
+    }
+
+    if( !confirm_nonhostile_npc_on_trajectory( you, trajectory ) ) {
+        return true;
+    }
+
+    tripoint flight_origin = source;
+    for( std::size_t i = 0; i + 1 < trajectory.size(); ++i ) {
+        if( trajectory[i] == you.pos() ) {
+            flight_origin = trajectory[i + 1];
+            break;
+        }
+    }
+
+    tripoint furniture_pos = source;
+    bool moved = false;
+    bool furniture_released = false;
+
+    auto move_furniture_to = [&]( const tripoint &dest ) {
+        here.furn_set( dest, here.furn( furniture_pos ) );
+        here.furn_set( furniture_pos, f_null, true );
+        furniture_pos = dest;
+        moved = true;
+        furniture_released = true;
+        animate_thrown_furniture_step();
+    };
+
+    auto resolve_creature_hit = [&]( Creature &hit, const tripoint &hit_pos,
+                                     const tripoint &from_pos, const int traveled ) {
+        if( npc *const guy = hit.as_npc(); guy != nullptr ) {
+            guy->on_attacked( you );
+        }
+
+        const contact_roll_result hit_result =
+            furniture_throw_hit_result( you, hit, furn, traveled );
+        if( hit_result != contact_roll_result::hit ) {
+            switch( hit_result ) {
+                case contact_roll_result::inaccurate:
+                    add_msg( m_info, _( "你把%s扔偏了。" ), furn.name() );
+                    break;
+                case contact_roll_result::near_miss:
+                    add_msg( m_info, _( "飞来的%s从%s身边擦了过去。" ),
+                             furn.name(), hit.disp_name() );
+                    break;
+                case contact_roll_result::dodged:
+                    add_msg( m_info, _( "%s闪开了飞来的%s。" ),
+                             hit.disp_name(), furn.name() );
+                    break;
+                case contact_roll_result::hit:
+                    break;
+            }
+            return false;
+        }
+
+        if( monster *const mon = hit.as_monster(); mon != nullptr ) {
+            mon->on_hit( &you, body_part_torso.id(), 0.0f, nullptr );
+        }
+
+        furniture_released = true;
+        const int raw_damage = furniture_direct_damage( you, furn, traveled );
+        const dealt_damage_instance dealt = hit.deal_damage(
+                &you, body_part_torso.id(),
+                damage_instance( damage_type::BASH, static_cast<float>( raw_damage ) ) );
+        const int dealt_amount = dealt.total_damage();
+
+        add_msg( m_good, _( "%s砸中了%s，造成%d点撞击伤害。" ),
+                 furn.name(), hit.disp_name(), dealt_amount );
+
+        credit_player_collision_death( you, hit );
+        if( !hit.is_dead_state() ) {
+            const int knockback = furniture_knockback_distance(
+                                      you, hit, furn, traveled );
+
+            const monster *const hit_mon = hit.as_monster();
+            const bool flying = hit_mon != nullptr && hit_mon->flies();
+            const bool can_fall = !flying && !hit.is_immune_effect( effect_downed );
+
+            if( can_fall && knockback > 0 ) {
+                hit.add_effect( effect_downed, 3_turns );
+            }
+
+            if( knockback > 0 ) {
+                const units::angle angle = coord_to_angle( from_pos, hit_pos );
+                const float fling_velocity = 5.0f + knockback * 10.0f;
+                g->fling_creature( &hit, angle, fling_velocity, false, &you );
+            }
+        }
+        return true;
+    };
+
+    tripoint previous_flight_pos = source;
+
+    for( const tripoint &next : trajectory ) {
+        if( next == source ) {
+            continue;
+        }
+
+        if( next == you.pos() ) {
+            previous_flight_pos = next;
+            continue;
+        }
+
+        const int traveled = std::max( 1, rl_dist( flight_origin, next ) );
+
+        if( Creature *const hit = creatures.creature_at<Creature>( next );
+            hit != nullptr && hit != &you ) {
+            const bool connected = resolve_creature_hit(
+                                       *hit, next, previous_flight_pos, traveled );
+            if( connected ) {
+                if( creatures.creature_at<Creature>( next ) == nullptr &&
+                    !here.veh_at( next ) && !here.has_furn( next ) &&
+                    !here.impassable( next ) ) {
+                    move_furniture_to( next );
+                }
+                break;
+            }
+
+            previous_flight_pos = next;
+            continue;
+        }
+
+        const int bash_force = std::max(
+                                   5, furniture_collision_force( you, furn, traveled ) / 2 );
+        if( here.veh_at( next ) || here.has_furn( next ) || here.impassable( next ) ) {
+            here.bash( next, bash_force );
+            if( here.veh_at( next ) || here.has_furn( next ) || here.impassable( next ) ) {
+                break;
+            }
+        }
+
+        move_furniture_to( next );
+        previous_flight_pos = next;
+    }
+
+    you.grab( object_type::NONE );
+    const int actual_distance = std::max( 1, rl_dist( flight_origin, furniture_pos ) );
+    const int stamina_cost = furniture_stamina_cost( you, furn, actual_distance );
+
+    you.mod_moves( -100 - 20 * std::max( 0, actual_distance - 1 ) );
+    you.mod_stamina( -stamina_cost );
+
+    if( furniture_released ) {
+        complete_jackie_chan_achievement();
+    }
+
+    if( moved ) {
+        add_msg( _( "你将%s猛地扔了出去。" ), furn.name() );
+        if( !here.has_floor( furniture_pos ) &&
+            !here.has_flag( ter_furn_flag::TFLAG_FLAT, furniture_pos ) ) {
+            here.drop_furniture( furniture_pos );
+        }
+    } else {
+        add_msg( m_info, _( "%s撞上了障碍，没有飞出去。" ), furn.name() );
+    }
+
+    return true;
+}
+
+bool throw_grabbed_vehicle( avatar &you )
+{
+    if( you.get_grab_type() != object_type::VEHICLE ) {
+        return false;
+    }
+
+    map &here = get_map();
+    creature_tracker &creatures = get_creature_tracker();
+
+    const optional_vpart_position vp = here.veh_at( you.pos() + you.grab_point );
+    if( !vp ) {
+        you.grab( object_type::NONE );
+        return true;
+    }
+
+    vehicle *veh = &vp->vehicle();
+
+    if( you.in_vehicle ) {
+        const optional_vpart_position occupied = here.veh_at( you.pos() );
+        if( occupied && &occupied->vehicle() == veh ) {
+            add_msg( m_info, _( "你正在%s里面，无法将它投掷出去。" ), veh->disp_name() );
+            return true;
+        }
+    }
+
+    if( !veh->handle_potential_theft( you ) ) {
+        return true;
+    }
+
+    if( veh->has_harnessed_animal() ) {
+        add_msg( m_info, _( "有动物仍连接在%s上，无法将它投掷出去。" ), veh->disp_name() );
+        return true;
+    }
+
+    veh->invalidate_mass();
+
+    const int raw_strength = you.get_arm_str();
+    const int size_penalty = std::max(
+                                 0, static_cast<int>( creature_size::large ) -
+                                 static_cast<int>( you.get_size() ) ) * 5;
+    const int effective_strength = std::max( 0, raw_strength - size_penalty );
+    const int strength_req = std::max(
+                                 1, static_cast<int>( veh->total_mass() / 100_kilogram ) );
+
+    if( effective_strength < strength_req ) {
+        add_msg( m_bad, _( "你没有足够的力量和杠杆将%s投掷出去。" ), veh->disp_name() );
+        you.mod_moves( -100 );
+        return true;
+    }
+
+    const int range = std::clamp(
+                          ( effective_strength - strength_req ) / 2 + 1, 1, 30 );
+
+    const int grabbed_part = vp->part_index();
+    const tripoint source = veh->global_part_pos3( grabbed_part );
+
+    const target_handler::trajectory trajectory = target_handler::mode_throw_object(
+                you, source, range );
+
+    if( trajectory.empty() ) {
+        return true;
+    }
+
+    if( trajectory.back() == you.pos() ) {
+        add_msg( m_info, _( "你不能把%s投在自己所在的位置。" ), veh->disp_name() );
+        return true;
+    }
+
+    for( const tripoint &p : trajectory ) {
+        if( p.z != source.z ) {
+            add_msg( m_info, _( "你无法将%s直接投向另一层。" ), veh->disp_name() );
+            return true;
+        }
+    }
+
+    std::size_t pivot_index = trajectory.size();
+    for( std::size_t i = 0; i < trajectory.size(); ++i ) {
+        if( trajectory[i] == you.pos() ) {
+            pivot_index = i;
+            break;
+        }
+    }
+
+    target_handler::trajectory flight_trajectory = trajectory;
+    tripoint flight_origin = source;
+    bool pivot_repositioned = false;
+
+    if( pivot_index < trajectory.size() ) {
+        // 多格载具不能像单格生物一样直接让正常车辆移动穿过玩家。
+        // 先检查抓取部件沿轨迹绕过玩家时，整辆车的每个占格是否都有空间。
+        // 中间姿态只允许覆盖投掷者本人，不允许穿墙，穿家具，穿其他车辆或生物。
+        const auto &vehicle_points = veh->get_points();
+
+        auto pose_overlaps_thrower = [&]( const tripoint &candidate_anchor ) {
+            const tripoint delta = candidate_anchor - source;
+            for( const tripoint &part_pos : vehicle_points ) {
+                if( part_pos + delta == you.pos() ) {
+                    return true;
+                }
+            }
+            return false;
+        };
+
+        auto pivot_pose_is_clear = [&]( const tripoint &candidate_anchor ) {
+            const tripoint delta = candidate_anchor - source;
+
+            for( const tripoint &part_pos : vehicle_points ) {
+                const tripoint dest = part_pos + delta;
+
+                if( !here.inbounds( dest ) ) {
+                    return false;
+                }
+
+                // 玩家本人只在抽象转身阶段作为枢轴被忽略。
+                if( dest == you.pos() ) {
+                    continue;
+                }
+
+                if( creatures.creature_at<Creature>( dest ) != nullptr ) {
+                    return false;
+                }
+
+                const optional_vpart_position other_vp = here.veh_at( dest );
+                if( other_vp && &other_vp->vehicle() != veh ) {
+                    return false;
+                }
+
+                if( here.impassable( dest ) || here.has_furn( dest ) ) {
+                    return false;
+                }
+            }
+
+            return true;
+        };
+
+        std::size_t release_index = trajectory.size();
+
+        // 从抓取部件到达玩家格开始检查整车扫过姿态。
+        // 第一个整车完全离开玩家格的位置，就是正式释放位置。
+        for( std::size_t i = pivot_index; i < trajectory.size(); ++i ) {
+            const tripoint &candidate_anchor = trajectory[i];
+
+            if( !pivot_pose_is_clear( candidate_anchor ) ) {
+                break;
+            }
+
+            if( i > pivot_index && !pose_overlaps_thrower( candidate_anchor ) ) {
+                release_index = i;
+                break;
+            }
+        }
+
+        if( release_index == trajectory.size() ) {
+            add_msg( m_info, _( "你周围没有足够的空间将%s甩到身体另一侧。" ),
+                     veh->disp_name() );
+            return true;
+        }
+
+        const tripoint release_anchor = trajectory[release_index];
+
+        flight_trajectory.clear();
+        for( std::size_t i = release_index; i < trajectory.size(); ++i ) {
+            flight_trajectory.push_back( trajectory[i] );
+        }
+
+        // 抽象转身不会撞到轨迹前半段的生物。
+        // 只有正式释放后的真实飞行轨迹需要攻击确认。
+        if( !confirm_nonhostile_npc_on_trajectory( you, flight_trajectory ) ) {
+            return true;
+        }
+
+        const tripoint pivot_delta = release_anchor - source;
+
+        // displace_vehicle 只负责把整辆车放到已经验证过的释放姿态。
+        // 它不会执行车辆碰撞，因此玩家不会被自己的车撞击或带着一起移动。
+        if( !here.displace_vehicle( *veh, pivot_delta, false ) ) {
+            add_msg( m_info, _( "你没能将%s调整到合适的释放位置。" ),
+                     veh->disp_name() );
+            return true;
+        }
+
+        // displace_vehicle 可能使旧 vehicle 指针失效，因此必须从地图重新取得。
+        const optional_vpart_position released_vp = here.veh_at( release_anchor );
+        if( !released_vp ) {
+            debugmsg( "Thrown vehicle disappeared after pivot release" );
+            you.grab( object_type::NONE );
+            return true;
+        }
+
+        veh = &released_vp->vehicle();
+        flight_origin = veh->global_part_pos3( grabbed_part );
+        pivot_repositioned = true;
+    } else {
+        if( !confirm_nonhostile_npc_on_trajectory( you, flight_trajectory ) ) {
+            return true;
+        }
+    }
+
+    const int shove_velocity = std::clamp(
+                                   1000 + 125 * std::max(
+                                       0, effective_strength - strength_req ),
+                                   1000, 2000 );
+
+    bool attempted_flight = false;
+    const tripoint current_release_pos = veh->global_part_pos3( grabbed_part );
+    for( const tripoint &target_pos : flight_trajectory ) {
+        if( target_pos != current_release_pos ) {
+            attempted_flight = true;
+            break;
+        }
+    }
+
+    bool moved = pivot_repositioned;
+
+    // collision_source 只在正式飞行阶段存在，用于把撞击和击杀归属给玩家。
+    // 这里不再让通用车辆碰撞系统对投掷者本人免疫。
+    if( attempted_flight ) {
+        veh->collision_source = &you;
+    }
+
+    for( const tripoint &target_pos : flight_trajectory ) {
+        const tripoint current_part_pos = veh->global_part_pos3( grabbed_part );
+
+        if( target_pos == current_part_pos ) {
+            continue;
+        }
+
+        const tripoint delta(
+            std::clamp( target_pos.x - current_part_pos.x, -1, 1 ),
+            std::clamp( target_pos.y - current_part_pos.y, -1, 1 ), 0 );
+
+        if( delta == tripoint_zero ) {
+            continue;
+        }
+
+        veh->skidding = true;
+        veh->velocity = shove_velocity;
+
+        vehicle *const moved_vehicle = here.move_vehicle( *veh, delta, veh->face );
+
+        if( moved_vehicle == nullptr ||
+            moved_vehicle->global_part_pos3( grabbed_part ) == current_part_pos ) {
+            break;
+        }
+
+        veh = moved_vehicle;
+        moved = true;
+    }
+
+    veh->velocity = 0;
+    veh->skidding = false;
+
+    if( attempted_flight ) {
+        veh->collision_source = nullptr;
+    }
+
+    if( moved ) {
+        const int actual_distance = std::max(
+                                        1, rl_dist(
+                                            flight_origin,
+                                            veh->global_part_pos3( grabbed_part ) ) );
+
+        const int strength_margin = std::max(
+                                        0, effective_strength - strength_req );
+
+        const float strength_efficiency = std::clamp(
+                                              1.25f - strength_margin * 0.005f,
+                                              0.70f, 1.25f );
+
+        const int vehicle_stamina_cost = std::clamp(
+                                             static_cast<int>(
+                                                 ( 200 + actual_distance * 35 +
+                                                   strength_req * 45 ) *
+                                                 strength_efficiency ),
+                                             150, 2000 );
+
+        if( pivot_repositioned && !attempted_flight ) {
+            add_msg( _( "你将%s甩到了身体另一侧。" ), veh->disp_name() );
+        } else {
+            add_msg( _( "你猛地将%s掷了出去。" ), veh->disp_name() );
+        }
+
+        you.grab( object_type::NONE );
+        you.mod_moves( -100 - 25 * std::max( 0, actual_distance - 1 ) );
+        you.mod_stamina( -vehicle_stamina_cost );
+    } else {
+        add_msg( m_info, _( "%s纹丝不动。" ), veh->disp_name() );
+        you.mod_moves( -100 );
+    }
+
+    return true;
+}
+
+} // namespace
+
+// Establish or release a grab on a creature, vehicle, or piece of furniture
 static void grab()
 {
-    avatar& you = get_avatar();
-    map& here = get_map();
+    avatar &you = get_avatar();
+    map &here = get_map();
+    creature_tracker &creatures = get_creature_tracker();
 
-    if (you.get_grab_type() != object_type::NONE) {
-        if (const optional_vpart_position vp = here.veh_at(you.pos() + you.grab_point)) {
-            add_msg(_("You release the %s."), vp->vehicle().name);
+    if( you.has_effect( effect_grabbing ) ) {
+        Creature *const target = find_player_grabbed_creature( you );
+        if( target != nullptr ) {
+            add_msg( _( "你松开了%s。" ), target->disp_name() );
         }
-        else if (here.has_furn(you.pos() + you.grab_point)) {
-            add_msg(_("You release the %s."), here.furnname(you.pos() + you.grab_point));
+        release_player_creature_grab( you, target );
+        return;
+    }
+
+    if( you.get_grab_type() != object_type::NONE ) {
+        if( const optional_vpart_position vp = here.veh_at( you.pos() + you.grab_point ) ) {
+            add_msg( _( "You release the %s." ), vp->vehicle().name );
+        } else if( here.has_furn( you.pos() + you.grab_point ) ) {
+            add_msg( _( "You release the %s." ), here.furnname( you.pos() + you.grab_point ) );
+        }
+        you.grab( object_type::NONE );
+        return;
+    }
+
+    std::vector<tripoint> grab_candidates;
+    for( const tripoint &candidate : here.points_in_radius( you.pos(), 1, 0 ) ) {
+        if( candidate == you.pos() ) {
+            continue;
         }
 
-        you.grab(object_type::NONE);
+        bool valid = false;
+        if( Creature *const target = creatures.creature_at<Creature>( candidate );
+            target != nullptr && target != &you &&
+            !target->is_hallucination() && !target->blocks_physical_contact() &&
+            !target->has_effect( effect_grabbed ) ) {
+            valid = true;
+        }
+
+        if( const optional_vpart_position candidate_vp = here.veh_at( candidate ) ) {
+            if( !candidate_vp.part_with_feature( VPFLAG_WALL_MOUNTED, false ) &&
+                !candidate_vp->vehicle().has_tag( flag_CANT_DRAG ) ) {
+                valid = true;
+            }
+        }
+
+        if( here.has_furn( candidate ) && here.furn( candidate ).obj().is_movable() ) {
+            valid = true;
+        }
+
+        if( valid ) {
+            grab_candidates.push_back( candidate );
+        }
+    }
+
+    if( grab_candidates.empty() ) {
+        add_msg( m_info, _( "附近没有可以抓住的目标。" ) );
         return;
     }
 
-    const std::optional<tripoint> grabp_ = choose_adjacent(_("Grab where?"));
-    if (!grabp_) {
-        add_msg(_("Never mind."));
+    tripoint grabp;
+    if( grab_candidates.size() == 1 ) {
+        grabp = grab_candidates.front();
+    } else {
+        shared_ptr_fast<game::draw_callback_t> grab_targets_cb =
+        make_shared_fast<game::draw_callback_t>( [&grab_candidates]() {
+            for( const tripoint &candidate : grab_candidates ) {
+                g->draw_highlight( candidate );
+            }
+        } );
+        g->add_draw_callback( grab_targets_cb );
+
+        const std::optional<tripoint> grabp_ = choose_adjacent( _( "抓住哪里？" ) );
+        if( !grabp_ ) {
+            add_msg( _( "算了。" ) );
+            return;
+        }
+        grabp = *grabp_;
+
+        if( std::find( grab_candidates.begin(), grab_candidates.end(), grabp ) ==
+            grab_candidates.end() ) {
+            add_msg( m_info, _( "那里没有可以抓住的目标。" ) );
+            return;
+        }
+    }
+
+    if( grabp == you.pos() ) {
+        add_msg( _( "You get a hold of yourself." ) );
         return;
     }
-    tripoint grabp = *grabp_;
 
-    if (grabp == you.pos()) {
-        add_msg(_("You get a hold of yourself."));
-        you.grab(object_type::NONE);
-        return;
-    }
-
-    // Object might not be on the same z level if on a ramp.
-    if (!(here.veh_at(grabp) || here.has_furn(grabp))) {
-        if (here.has_flag(ter_furn_flag::TFLAG_RAMP_UP, grabp) ||
-            here.has_flag(ter_furn_flag::TFLAG_RAMP_UP, you.pos())) {
+    if( !( here.veh_at( grabp ) || here.has_furn( grabp ) ||
+           creatures.creature_at<Creature>( grabp ) ) ) {
+        if( here.has_flag( ter_furn_flag::TFLAG_RAMP_UP, grabp ) ||
+            here.has_flag( ter_furn_flag::TFLAG_RAMP_UP, you.pos() ) ) {
             grabp.z += 1;
-        }
-        else if (here.has_flag(ter_furn_flag::TFLAG_RAMP_DOWN, grabp) ||
-            here.has_flag(ter_furn_flag::TFLAG_RAMP_DOWN, you.pos())) {
+        } else if( here.has_flag( ter_furn_flag::TFLAG_RAMP_DOWN, grabp ) ||
+                   here.has_flag( ter_furn_flag::TFLAG_RAMP_DOWN, you.pos() ) ) {
             grabp.z -= 1;
         }
     }
 
-    if (const optional_vpart_position vp = here.veh_at(grabp)) {
-        if (!vp->vehicle().handle_potential_theft(you)) {
+    if( Creature *const target = creatures.creature_at<Creature>( grabp );
+        target != nullptr && target != &you ) {
+        if( target->is_hallucination() || target->blocks_physical_contact() ) {
+            add_msg( m_info, _( "你无法控制这个目标。" ) );
+            return;
+        }
+        if( target->has_effect( effect_grabbed ) ) {
+            add_msg( m_info, _( "这个目标已经被抓住了。" ) );
+            return;
+        }
+        if( you.get_working_arm_count() < 1 ) {
+            add_msg( m_info, _( "你的手臂状态不足以完成这个动作。" ) );
+            return;
+        }
+        if( you.get_stamina() < 300 ) {
+            add_msg( m_info, _( "你已经太疲惫了，无法稳稳控制对方。" ) );
+            return;
+        }
+        if( npc *const guy = target->as_npc(); guy != nullptr && !guy->is_enemy() ) {
+            if( !query_yn( _( "这样做会被视为攻击，继续吗？" ) ) ) {
+                return;
+            }
+            guy->on_attacked( you );
+        }
+
+        const bool armed_control = you.is_armed();
+        const bool ipman = !armed_control && ipman_throw_specialist( you );
+        you.mod_moves( -100 );
+        you.mod_stamina( -20 );
+        const bool contact_hit = grab_contact_hits(
+                                     you, *target, armed_control, ipman ? 2 : 0 );
+        if( !contact_hit ) {
+            if( armed_control ) {
+                add_msg( m_warning, _( "你试图用武器控制%s，但没有成功。" ),
+                         target->disp_name() );
+            } else {
+                add_msg( m_warning, _( "你伸手试图控制%s，但没有抓住。" ),
+                         target->disp_name() );
+            }
+            return;
+        }
+
+        if( monster *const mon = target->as_monster(); mon != nullptr ) {
+            mon->on_hit( &you, body_part_torso.id() );
+        }
+
+        if( armed_control ) {
+            target->add_effect( effect_controlled_for_shove, 2_turns );
+            add_msg( _( "你用武器和身体短暂控制住了%s。" ), target->disp_name() );
+            return;
+        }
+
+        const int grab_strength = std::clamp(
+                                      6 + you.get_arm_str() +
+                                      you.get_skill_level( skill_unarmed ) * 2 +
+                                      you.get_skill_level( skill_melee ) / 2 +
+                                      static_cast<int>( you.get_size() ) * 2 +
+                                      ( ipman ? 4 : 0 ),
+                                      1, 100 );
+        // Player grappling uses its own relationship marker.  Do not apply the
+        // vanilla monster grabbed movement-impairing effect: the target may
+        // still attack and act while wrestling with the player.
+        target->add_effect(
+            effect_grabbed_by_player, 10_turns, body_part_torso, false, grab_strength );
+        target->add_effect( effect_player_grab_fresh, 2_turns );
+        you.add_effect(
+            effect_grabbing, 10_turns, body_part_torso, false, grab_strength );
+        add_msg( _( "你抓住了%s。" ), target->disp_name() );
+        return;
+    }
+
+    if( const optional_vpart_position vp = here.veh_at( grabp ) ) {
+        if( !vp->vehicle().handle_potential_theft( you ) ) {
             return;
         }
         if( vp.part_with_feature( VPFLAG_WALL_MOUNTED, false ) ) {
             add_msg( m_info, _( "它固定在墙上，无法移动。" ) );
             return;
         }
-        if (vp->vehicle().has_tag(flag_CANT_DRAG)) {
-            add_msg(m_info, _("There's nothing to grab there!"));
+        if( vp->vehicle().has_tag( flag_CANT_DRAG ) ) {
+            add_msg( m_info, _( "There's nothing to grab there!" ) );
             return;
         }
-        you.grab(object_type::VEHICLE, grabp - you.pos());
-        add_msg(_("You grab the %s."), vp->vehicle().name);
-    }
-    else if (here.has_furn(grabp)) { // If not, grab furniture if present
-        if (!here.furn(grabp).obj().is_movable()) {
-            add_msg(_("You can not grab the %s"), here.furnname(grabp));
+        you.grab( object_type::VEHICLE, grabp - you.pos() );
+        add_msg( _( "You grab the %s." ), vp->vehicle().name );
+    } else if( here.has_furn( grabp ) ) {
+        if( !here.furn( grabp ).obj().is_movable() ) {
+            add_msg( _( "You can not grab the %s" ), here.furnname( grabp ) );
             return;
         }
-        you.grab(object_type::FURNITURE, grabp - you.pos());
-        if (!here.can_move_furniture(grabp, &you)) {
-            add_msg(_("You grab the %s. It feels really heavy."), here.furnname(grabp));
+        you.grab( object_type::FURNITURE, grabp - you.pos() );
+        if( !here.can_move_furniture( grabp, &you ) ) {
+            add_msg( _( "You grab the %s. It feels really heavy." ),
+                     here.furnname( grabp ) );
+        } else {
+            add_msg( _( "You grab the %s." ), here.furnname( grabp ) );
         }
-        else {
-            add_msg(_("You grab the %s."), here.furnname(grabp));
-        }
-    }
-    else { // TODO: grab mob? Captured squirrel = pet (or meat that stays fresh longer).
-        add_msg(m_info, _("There's nothing to grab there!"));
+    } else {
+        add_msg( m_info, _( "There's nothing to grab there!" ) );
     }
 }
 
@@ -3226,8 +4518,13 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
         break;
 
     case ACTION_THROW: {
-        item_location loc;
-        avatar_action::plthrow(player_character, loc);
+        if( !push_controlled_creature( player_character ) &&
+            !throw_grabbed_creature( player_character ) &&
+            !throw_grabbed_furniture( player_character ) &&
+            !throw_grabbed_vehicle( player_character ) ) {
+            item_location loc;
+            avatar_action::plthrow( player_character, loc );
+        }
         break;
     }
 

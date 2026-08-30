@@ -260,6 +260,7 @@ void ma_technique::load( const JsonObject &jo, const std::string &src )
     optional( jo, was_loaded, "knockback_dist", knockback_dist, 0 );
     optional( jo, was_loaded, "knockback_spread", knockback_spread, 0 );
     optional( jo, was_loaded, "powerful_knockback", powerful_knockback, false );
+    optional( jo, was_loaded, "controlled_knockback", controlled_knockback, false );
     optional( jo, was_loaded, "knockback_follow", knockback_follow, false );
 
     optional( jo, was_loaded, "aoe", aoe, "" );
