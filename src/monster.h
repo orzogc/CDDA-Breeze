@@ -181,7 +181,7 @@ class monster : public Creature
 
         // Permanent pets are marked by both friendly == -1 and the pet effect.
         bool is_pet() const;
-        // Only dog-type pets follow automatically; other animals require a leash.
+        // Dogs and a zombie dominator's zombie pets follow automatically.
         bool is_pet_follow() const;
 
         bool avoid_trap( const tripoint &pos, const trap &tr ) const override;
