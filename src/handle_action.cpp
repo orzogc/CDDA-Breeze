@@ -1786,13 +1786,18 @@ bool throw_grabbed_vehicle( avatar &you )
     if( you.get_grab_type() != object_type::VEHICLE ) {
         return false;
     }
+
     map &here = get_map();
+    creature_tracker &creatures = get_creature_tracker();
+
     const optional_vpart_position vp = here.veh_at( you.pos() + you.grab_point );
     if( !vp ) {
         you.grab( object_type::NONE );
         return true;
     }
+
     vehicle *veh = &vp->vehicle();
+
     if( you.in_vehicle ) {
         const optional_vpart_position occupied = here.veh_at( you.pos() );
         if( occupied && &occupied->vehicle() == veh ) {
@@ -1800,15 +1805,18 @@ bool throw_grabbed_vehicle( avatar &you )
             return true;
         }
     }
+
     if( !veh->handle_potential_theft( you ) ) {
         return true;
     }
+
     if( veh->has_harnessed_animal() ) {
         add_msg( m_info, _( "有动物仍连接在%s上，无法将它投掷出去。" ), veh->disp_name() );
         return true;
     }
 
     veh->invalidate_mass();
+
     const int raw_strength = you.get_arm_str();
     const int size_penalty = std::max(
                                  0, static_cast<int>( creature_size::large ) -
@@ -1816,6 +1824,7 @@ bool throw_grabbed_vehicle( avatar &you )
     const int effective_strength = std::max( 0, raw_strength - size_penalty );
     const int strength_req = std::max(
                                  1, static_cast<int>( veh->total_mass() / 100_kilogram ) );
+
     if( effective_strength < strength_req ) {
         add_msg( m_bad, _( "你没有足够的力量和杠杆将%s投掷出去。" ), veh->disp_name() );
         you.mod_moves( -100 );
@@ -1824,17 +1833,22 @@ bool throw_grabbed_vehicle( avatar &you )
 
     const int range = std::clamp(
                           ( effective_strength - strength_req ) / 2 + 1, 1, 30 );
+
     const int grabbed_part = vp->part_index();
     const tripoint source = veh->global_part_pos3( grabbed_part );
+
     const target_handler::trajectory trajectory = target_handler::mode_throw_object(
                 you, source, range );
+
     if( trajectory.empty() ) {
         return true;
     }
+
     if( trajectory.back() == you.pos() ) {
         add_msg( m_info, _( "你不能把%s投在自己所在的位置。" ), veh->disp_name() );
         return true;
     }
+
     for( const tripoint &p : trajectory ) {
         if( p.z != source.z ) {
             add_msg( m_info, _( "你无法将%s直接投向另一层。" ), veh->disp_name() );
@@ -1842,78 +1856,200 @@ bool throw_grabbed_vehicle( avatar &you )
         }
     }
 
-    tripoint flight_origin = source;
-    for( std::size_t i = 0; i + 1 < trajectory.size(); ++i ) {
+    std::size_t pivot_index = trajectory.size();
+    for( std::size_t i = 0; i < trajectory.size(); ++i ) {
         if( trajectory[i] == you.pos() ) {
-            flight_origin = trajectory[i + 1];
+            pivot_index = i;
             break;
+        }
+    }
+
+    target_handler::trajectory flight_trajectory = trajectory;
+    tripoint flight_origin = source;
+    bool pivot_repositioned = false;
+
+    if( pivot_index < trajectory.size() ) {
+        // 多格载具不能像单格生物一样直接让正常车辆移动穿过玩家。
+        // 先检查抓取部件沿轨迹绕过玩家时，整辆车的每个占格是否都有空间。
+        // 中间姿态只允许覆盖投掷者本人，不允许穿墙，穿家具，穿其他车辆或生物。
+        const auto &vehicle_points = veh->get_points();
+
+        auto pose_overlaps_thrower = [&]( const tripoint &candidate_anchor ) {
+            const tripoint delta = candidate_anchor - source;
+            for( const tripoint &part_pos : vehicle_points ) {
+                if( part_pos + delta == you.pos() ) {
+                    return true;
+                }
+            }
+            return false;
+        };
+
+        auto pivot_pose_is_clear = [&]( const tripoint &candidate_anchor ) {
+            const tripoint delta = candidate_anchor - source;
+
+            for( const tripoint &part_pos : vehicle_points ) {
+                const tripoint dest = part_pos + delta;
+
+                if( !here.inbounds( dest ) ) {
+                    return false;
+                }
+
+                // 玩家本人只在抽象转身阶段作为枢轴被忽略。
+                if( dest == you.pos() ) {
+                    continue;
+                }
+
+                if( creatures.creature_at<Creature>( dest ) != nullptr ) {
+                    return false;
+                }
+
+                const optional_vpart_position other_vp = here.veh_at( dest );
+                if( other_vp && &other_vp->vehicle() != veh ) {
+                    return false;
+                }
+
+                if( here.impassable( dest ) || here.has_furn( dest ) ) {
+                    return false;
+                }
+            }
+
+            return true;
+        };
+
+        std::size_t release_index = trajectory.size();
+
+        // 从抓取部件到达玩家格开始检查整车扫过姿态。
+        // 第一个整车完全离开玩家格的位置，就是正式释放位置。
+        for( std::size_t i = pivot_index; i < trajectory.size(); ++i ) {
+            const tripoint &candidate_anchor = trajectory[i];
+
+            if( !pivot_pose_is_clear( candidate_anchor ) ) {
+                break;
+            }
+
+            if( i > pivot_index && !pose_overlaps_thrower( candidate_anchor ) ) {
+                release_index = i;
+                break;
+            }
+        }
+
+        if( release_index == trajectory.size() ) {
+            add_msg( m_info, _( "你周围没有足够的空间将%s甩到身体另一侧。" ),
+                     veh->disp_name() );
+            return true;
+        }
+
+        const tripoint release_anchor = trajectory[release_index];
+
+        flight_trajectory.clear();
+        for( std::size_t i = release_index; i < trajectory.size(); ++i ) {
+            flight_trajectory.push_back( trajectory[i] );
+        }
+
+        // 抽象转身不会撞到轨迹前半段的生物。
+        // 只有正式释放后的真实飞行轨迹需要攻击确认。
+        if( !confirm_nonhostile_npc_on_trajectory( you, flight_trajectory ) ) {
+            return true;
+        }
+
+        const tripoint pivot_delta = release_anchor - source;
+
+        // displace_vehicle 只负责把整辆车放到已经验证过的释放姿态。
+        // 它不会执行车辆碰撞，因此玩家不会被自己的车撞击或带着一起移动。
+        if( !here.displace_vehicle( *veh, pivot_delta, false ) ) {
+            add_msg( m_info, _( "你没能将%s调整到合适的释放位置。" ),
+                     veh->disp_name() );
+            return true;
+        }
+
+        // displace_vehicle 可能使旧 vehicle 指针失效，因此必须从地图重新取得。
+        const optional_vpart_position released_vp = here.veh_at( release_anchor );
+        if( !released_vp ) {
+            debugmsg( "Thrown vehicle disappeared after pivot release" );
+            you.grab( object_type::NONE );
+            return true;
+        }
+
+        veh = &released_vp->vehicle();
+        flight_origin = veh->global_part_pos3( grabbed_part );
+        pivot_repositioned = true;
+    } else {
+        if( !confirm_nonhostile_npc_on_trajectory( you, flight_trajectory ) ) {
+            return true;
         }
     }
 
     const int shove_velocity = std::clamp(
                                    1000 + 125 * std::max(
                                        0, effective_strength - strength_req ),
-                                   1000, 2600 );
-    if( !confirm_nonhostile_npc_on_trajectory( you, trajectory ) ) {
-        return true;
+                                   1000, 2000 );
+
+    bool attempted_flight = false;
+    const tripoint current_release_pos = veh->global_part_pos3( grabbed_part );
+    for( const tripoint &target_pos : flight_trajectory ) {
+        if( target_pos != current_release_pos ) {
+            attempted_flight = true;
+            break;
+        }
     }
 
-    veh->collision_source = &you;
-    bool moved = false;
-    creature_tracker &creatures = get_creature_tracker();
-    for( const tripoint &target_pos : trajectory ) {
+    bool moved = pivot_repositioned;
+
+    // collision_source 只在正式飞行阶段存在，用于把撞击和击杀归属给玩家。
+    // 这里不再让通用车辆碰撞系统对投掷者本人免疫。
+    if( attempted_flight ) {
+        veh->collision_source = &you;
+    }
+
+    for( const tripoint &target_pos : flight_trajectory ) {
         const tripoint current_part_pos = veh->global_part_pos3( grabbed_part );
+
         if( target_pos == current_part_pos ) {
             continue;
         }
+
         const tripoint delta(
             std::clamp( target_pos.x - current_part_pos.x, -1, 1 ),
             std::clamp( target_pos.y - current_part_pos.y, -1, 1 ), 0 );
+
         if( delta == tripoint_zero ) {
             continue;
         }
-        Creature *const pending_hit = creatures.creature_at<Creature>(
-                                               current_part_pos + delta );
+
         veh->skidding = true;
         veh->velocity = shove_velocity;
+
         vehicle *const moved_vehicle = here.move_vehicle( *veh, delta, veh->face );
+
         if( moved_vehicle == nullptr ||
             moved_vehicle->global_part_pos3( grabbed_part ) == current_part_pos ) {
             break;
         }
+
         veh = moved_vehicle;
         moved = true;
-
-        if( pending_hit != nullptr && pending_hit != &you &&
-            !pending_hit->is_dead_state() &&
-            !pending_hit->is_immune_effect( effect_downed ) ) {
-            const monster *const hit_mon = pending_hit->as_monster();
-            const bool flying = hit_mon != nullptr && hit_mon->flies();
-            if( !flying ) {
-                const int impact_roll = strength_req * 3 +
-                                        shove_velocity / 100 + rng( -5, 5 );
-                const int stability = static_cast<int>(
-                                          std::round( pending_hit->stability_roll() ) );
-                if( impact_roll >= stability ) {
-                    pending_hit->add_effect( effect_downed, 3_turns );
-                    add_msg( m_good, _( "%s被%s撞翻在地。" ),
-                             pending_hit->disp_name(), veh->disp_name() );
-                }
-            }
-        }
     }
 
     veh->velocity = 0;
     veh->skidding = false;
-    veh->collision_source = nullptr;
+
+    if( attempted_flight ) {
+        veh->collision_source = nullptr;
+    }
+
     if( moved ) {
         const int actual_distance = std::max(
-                                        1, rl_dist( flight_origin,
+                                        1, rl_dist(
+                                            flight_origin,
                                             veh->global_part_pos3( grabbed_part ) ) );
-        const int strength_margin = std::max( 0, effective_strength - strength_req );
+
+        const int strength_margin = std::max(
+                                        0, effective_strength - strength_req );
+
         const float strength_efficiency = std::clamp(
                                               1.25f - strength_margin * 0.005f,
                                               0.70f, 1.25f );
+
         const int vehicle_stamina_cost = std::clamp(
                                              static_cast<int>(
                                                  ( 200 + actual_distance * 35 +
@@ -1921,7 +2057,12 @@ bool throw_grabbed_vehicle( avatar &you )
                                                  strength_efficiency ),
                                              150, 2000 );
 
-        add_msg( _( "你猛地将%s掷了出去。" ), veh->disp_name() );
+        if( pivot_repositioned && !attempted_flight ) {
+            add_msg( _( "你将%s甩到了身体另一侧。" ), veh->disp_name() );
+        } else {
+            add_msg( _( "你猛地将%s掷了出去。" ), veh->disp_name() );
+        }
+
         you.grab( object_type::NONE );
         you.mod_moves( -100 - 25 * std::max( 0, actual_distance - 1 ) );
         you.mod_stamina( -vehicle_stamina_cost );
@@ -1929,6 +2070,7 @@ bool throw_grabbed_vehicle( avatar &you )
         add_msg( m_info, _( "%s纹丝不动。" ), veh->disp_name() );
         you.mod_moves( -100 );
     }
+
     return true;
 }
 

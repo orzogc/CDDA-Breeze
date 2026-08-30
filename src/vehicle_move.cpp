@@ -828,11 +828,6 @@ veh_collision vehicle::part_collision( int part, const tripoint &p,
         ph = nullptr;
     }
 
-    if( collision_source != nullptr && critter == collision_source ) {
-        critter = nullptr;
-        ph = nullptr;
-    }
-
     map &here = get_map();
     const optional_vpart_position ovp = here.veh_at( p );
     // Disable vehicle/critter collisions when bashing floor
