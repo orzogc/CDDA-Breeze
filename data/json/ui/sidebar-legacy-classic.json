@@ -157,12 +157,19 @@
     "widgets": [ "wielding_desc", "style_desc" ]
   },
   {
+    "id": "lcla_date_desc_full",
+    "type": "widget",
+    "copy-from": "date_desc_label",
+    "width": 22
+  },
+  {
     "id": "lcla_time_layout",
     "type": "widget",
     "label": "Date/Time",
     "style": "layout",
-    "arrange": "rows",
-    "widgets": [ "date_desc_label", "time_desc_label" ],
+    "arrange": "minimum_columns",
+    "padding": 1,
+    "widgets": [ "lcla_date_desc_full", "time_desc_short_label" ],
     "flags": [ "W_LABEL_NONE" ]
   },
   {
