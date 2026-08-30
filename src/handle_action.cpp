@@ -1389,50 +1389,38 @@ bool throw_grabbed_creature( avatar &you )
         }
     }
 
-    creature_tracker &creatures = get_creature_tracker();
     const tripoint original_pos = target->pos();
-    tripoint release_origin = original_pos;
-    bool pivot_throw = false;
-    bool can_reposition_to_release = false;
+    const tripoint destination = trajectory.back();
 
-    for( std::size_t i = 0; i + 1 < trajectory.size(); ++i ) {
-        if( trajectory[i] != you.pos() ) {
-            continue;
-        }
+    const tripoint release_step(
+        std::clamp( destination.x - you.posx(), -1, 1 ),
+        std::clamp( destination.y - you.posy(), -1, 1 ), 0 );
+    const tripoint release_origin = you.pos() + release_step;
+    const bool turns_across_body = release_origin != original_pos;
 
-        pivot_throw = true;
-        const tripoint candidate = trajectory[i + 1];
-        Creature *const occupant = creatures.creature_at<Creature>( candidate );
-        if( occupant == nullptr && !here.impassable( candidate ) ) {
-            release_origin = candidate;
-            can_reposition_to_release = true;
-        }
-        break;
-    }
+    creature_tracker &creatures = get_creature_tracker();
+    Creature *const release_occupant = creatures.creature_at<Creature>( release_origin );
+    const bool release_is_free =
+        release_origin != you.pos() &&
+        release_occupant == nullptr &&
+        !here.impassable( release_origin );
 
-    const int raw_distance = std::max( 1, rl_dist( original_pos, trajectory.back() ) );
-    int flight_distance = raw_distance;
-    int physics_distance = raw_distance;
+    int flight_distance = std::max( 0, rl_dist( release_origin, destination ) );
 
-    if( pivot_throw && can_reposition_to_release ) {
-        flight_distance = rl_dist( release_origin, trajectory.back() );
-        physics_distance = flight_distance;
-    } else if( pivot_throw ) {
+    const bool close_pivot_slam = turns_across_body && !release_is_free;
+    if( close_pivot_slam ) {
         flight_distance = 1;
-        physics_distance = 2;
     }
 
-    const float stamina_velocity = creature_throw::grabbed_throw_velocity(
-                                       std::max( 1, flight_distance ) );
-    const float physics_velocity = creature_throw::grabbed_throw_velocity(
-                                       std::max( 1, physics_distance ) );
+    const float velocity = creature_throw::grabbed_throw_velocity(
+                               std::max( 1, flight_distance ) );
     const units::angle target_angle = coord_to_angle(
-                                          can_reposition_to_release ?
-                                          release_origin : original_pos,
-                                          trajectory.back() );
+                                          close_pivot_slam ?
+                                          original_pos : release_origin,
+                                          destination );
 
     const int stamina_cost = creature_throw::grabbed_stamina_cost(
-                                 stamina_velocity, target_weight_grams,
+                                 velocity, target_weight_grams,
                                  you.get_skill_level( skill_unarmed ),
                                  you.get_skill_level( skill_throw ),
                                  you.get_dex() );
@@ -1448,10 +1436,10 @@ bool throw_grabbed_creature( avatar &you )
         mon->on_hit( &you, body_part_torso.id(), 0.0f, nullptr );
     }
 
-    if( pivot_throw && can_reposition_to_release ) {
+    if( turns_across_body && release_is_free ) {
         target->setpos( release_origin );
 
-        if( flight_distance == 0 ) {
+        if( destination == release_origin ) {
             add_msg( _( "你将%s甩到了身体另一侧。" ), target->disp_name() );
             if( !target->is_dead_state() &&
                 !target->is_immune_effect( effect_downed ) ) {
@@ -1465,7 +1453,7 @@ bool throw_grabbed_creature( avatar &you )
     }
 
     add_msg( _( "你将%s摔了出去。" ), target->disp_name() );
-    g->fling_creature( target, target_angle, physics_velocity, false, &you );
+    g->fling_creature( target, target_angle, velocity, false, &you );
     apply_throw_downed( *target );
 
     return true;
@@ -1492,12 +1480,22 @@ int furniture_collision_force( const avatar &you, const furn_t &furn,
     return std::max( 10, 8 + difficulty_term + distance_term + strength_term );
 }
 
-int furniture_collision_damage( const int impulse )
+int furniture_direct_damage( const avatar &you, const furn_t &furn,
+                             const int traveled_distance )
 {
-    // Follow CTLG restrained creature-collision scale instead of feeding raw
-    // impulse directly into impact().  Furniture can be used often, so damage
-    // should support weapons and unarmed combat rather than replace them.
-    return std::max( 1, rng( impulse, impulse * 2 ) / 6 );
+    const int difficulty = furniture_throw_difficulty( furn );
+
+    const int furniture_base = std::clamp( 6 + difficulty, 10, 30 );
+
+    const int strength_delta = you.get_arm_str() - 8;
+    const int strength_bonus = strength_delta >= 0 ?
+                               strength_delta / 2 :
+                               -( ( -strength_delta + 1 ) / 2 );
+
+    const int distance_bonus = std::min(
+                                   4, std::max( 0, traveled_distance - 1 ) / 3 );
+
+    return std::max( 1, furniture_base + strength_bonus + distance_bonus );
 }
 
 int furniture_knockback_distance( const avatar &you, Creature &target,
@@ -1684,8 +1682,7 @@ bool throw_grabbed_furniture( avatar &you )
         }
 
         furniture_released = true;
-        const int collision_force = furniture_collision_force( you, furn, traveled );
-        const int raw_damage = furniture_collision_damage( collision_force );
+        const int raw_damage = furniture_direct_damage( you, furn, traveled );
         const dealt_damage_instance dealt = hit.deal_damage(
                 &you, body_part_torso.id(),
                 damage_instance( damage_type::BASH, static_cast<float>( raw_damage ) ) );
@@ -1845,6 +1842,14 @@ bool throw_grabbed_vehicle( avatar &you )
         }
     }
 
+    tripoint flight_origin = source;
+    for( std::size_t i = 0; i + 1 < trajectory.size(); ++i ) {
+        if( trajectory[i] == you.pos() ) {
+            flight_origin = trajectory[i + 1];
+            break;
+        }
+    }
+
     const int shove_velocity = std::clamp(
                                    1000 + 125 * std::max(
                                        0, effective_strength - strength_req ),
@@ -1903,7 +1908,7 @@ bool throw_grabbed_vehicle( avatar &you )
     veh->collision_source = nullptr;
     if( moved ) {
         const int actual_distance = std::max(
-                                        1, rl_dist( source,
+                                        1, rl_dist( flight_origin,
                                             veh->global_part_pos3( grabbed_part ) ) );
         const int strength_margin = std::max( 0, effective_strength - strength_req );
         const float strength_efficiency = std::clamp(

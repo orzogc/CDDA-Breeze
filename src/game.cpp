@@ -11885,9 +11885,15 @@ void game::fling_creature( Creature *c, const units::angle &dir, float flvel, bo
         tdir.advance();
         pt.x = c->posx() + tdir.dx();
         pt.y = c->posy() + tdir.dy();
+
+        const bool passing_flinger =
+            flinger != nullptr && pt == flinger->pos();
+
         float force = 0.0f;
 
-        if( npc *const guy_ptr = creatures.creature_at<npc>( pt ) ) {
+        if( passing_flinger ) {
+            // The active thrower is a pivot, not a collision target.
+        } else if( npc *const guy_ptr = creatures.creature_at<npc>( pt ) ) {
             npc &guy = *guy_ptr;
             const int flung_hp_before = c->get_hp();
             const int hit_hp_before = guy.get_hp();
@@ -11953,7 +11959,16 @@ void game::fling_creature( Creature *c, const units::angle &dir, float flvel, bo
                 force = flvel - 1;
             }
             const int damage = rng( force, force * 2.0f ) / 9;
+            const int hp_before_impact = c->get_hp();
             c->impact( damage, pt );
+            const int impact_taken = std::max( 0, hp_before_impact - c->get_hp() );
+            if( impact_taken > 0 && get_avatar().sees( pt ) ) {
+                add_msg( m_info, _( "%s撞上了障碍，受到%d点伤害。" ),
+                         c->disp_name(), impact_taken );
+            }
+            if( flinger != nullptr && c->is_dead_state() ) {
+                c->die( flinger );
+            }
             if( m.is_bashable( pt ) ) {
                 // Only go through if we successfully make the tile passable
                 m.bash( pt, breeze_fling_bash_damage( *c, flvel ) );
@@ -11970,7 +11985,9 @@ void game::fling_creature( Creature *c, const units::angle &dir, float flvel, bo
 
         flvel -= force;
         if( thru ) {
-            if( you != nullptr ) {
+            if( passing_flinger ) {
+                // Do not place the flung creature on top of the thrower.
+            } else if( you != nullptr ) {
                 if( you->in_vehicle ) {
                     m.unboard_vehicle( you->pos() );
                 }
@@ -12013,7 +12030,14 @@ void game::fling_creature( Creature *c, const units::angle &dir, float flvel, bo
                 force = std::max( force / 2 - 5, 0 );
             }
             if( force > 0 ) {
+                const int hp_before_landing = c->get_hp();
                 int dmg = c->impact( force, c->pos() );
+                const int landing_taken = std::max(
+                                              0, hp_before_landing - c->get_hp() );
+                if( landing_taken > 0 && get_avatar().sees( c->pos() ) ) {
+                    add_msg( m_info, _( "%s重重摔在地上，受到%d点伤害。" ),
+                             c->disp_name(), landing_taken );
+                }
                 if( flinger != nullptr && c->is_dead_state() ) {
                     c->die( flinger );
                 }
