@@ -1493,10 +1493,17 @@ bool monster::is_pet() const
 
 bool monster::is_pet_follow() const
 {
-    // Only animals whose original monster faction is the dog faction follow
-    // automatically.  Other tamed animals must be led with a leash.
-    return is_pet() && type->default_faction == monfaction_dog &&
-           !has_flag( MF_PET_WONT_FOLLOW );
+    if( !is_pet() || has_flag( MF_PET_WONT_FOLLOW ) ) {
+        return false;
+    }
+
+    if( type->default_faction == monfaction_dog ) {
+        return true;
+    }
+
+    const Character &player_character = get_player_character();
+    return in_species( species_ZOMBIE ) &&
+           player_character.has_trait( trait_Dominator_Of_Zombies );
 }
 
 bool monster::made_of(phase_id p) const
