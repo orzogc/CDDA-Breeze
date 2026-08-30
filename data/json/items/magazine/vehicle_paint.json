@@ -1,0 +1,36 @@
+[
+  {
+    "id": "vehicle_paint_can",
+    "looks_like": "spray_can",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "喷漆罐"
+    },
+    "description": "一个可重复灌装的喷漆罐，本身没有喷嘴，需要安装到喷漆枪上使用。空罐可以直接装入兼容的油漆，每罐最多提供 30 格喷涂量。",
+    "weight": "250 g",
+    "volume": "750 ml",
+    "price": 1600,
+    "price_postapoc": 80,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "vehicle_paint"
+    ],
+    "capacity": 30,
+    "reload_time": 50,
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "watertight": true,
+        "ammo_restriction": {
+          "vehicle_paint": 30
+        }
+      }
+    ]
+  }
+]

@@ -334,6 +334,45 @@ class hotwire_car_activity_actor : public activity_actor
         static std::unique_ptr<activity_actor> deserialize( JsonValue &jsin );
 };
 
+class vehicle_paint_activity_actor : public activity_actor
+{
+    private:
+        static constexpr time_duration time_per_tile = 30_seconds;
+        item_location spray_gun;
+        tripoint target_vehicle_anchor;
+        std::vector<tripoint> targets;
+        std::string paint_color_hex;
+        int next_target = 0;
+        int painted_tiles = 0;
+        time_duration time_until_next_tile = time_per_tile;
+
+        vehicle_paint_activity_actor() = default;
+
+    public:
+        vehicle_paint_activity_actor( const item_location &spray_gun,
+                                      const tripoint &target_vehicle_anchor,
+                                      const std::vector<tripoint> &targets,
+                                      const std::string &paint_color_hex );
+
+        activity_id get_type() const override {
+            return activity_id( "ACT_VEHICLE_PAINT" );
+        }
+
+        void start( player_activity &act, Character &who ) override;
+        void do_turn( player_activity &act, Character &who ) override;
+        void finish( player_activity &act, Character &who ) override;
+        void canceled( player_activity &act, Character &who ) override;
+
+        std::string get_progress_message( const player_activity & ) const override;
+
+        std::unique_ptr<activity_actor> clone() const override {
+            return std::make_unique<vehicle_paint_activity_actor>( *this );
+        }
+
+        void serialize( JsonOut &jsout ) const override;
+        static std::unique_ptr<activity_actor> deserialize( JsonValue &jsin );
+};
+
 class bikerack_racking_activity_actor : public activity_actor
 {
     private:

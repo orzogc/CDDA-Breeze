@@ -29,7 +29,8 @@ static const flag_id json_flag_NO_UNWIELD( "NO_UNWIELD" );
 static const skill_id skill_speech( "speech" );
 
 std::list<item> npc_trading::transfer_items( trade_selector::select_t &stuff, Character &giver,
-        Character &receiver, std::list<item_location *> &from_map, bool use_escrow )
+        Character &receiver, std::list<item_location *> &from_map, bool use_escrow,
+        const std::string &escrow_item_var )
 {
     // escrow is used only when the npc is the destination. Item transfer to the npc is deferred.
     std::list<item> escrow = std::list<item>();
@@ -40,6 +41,9 @@ std::list<item> npc_trading::transfer_items( trade_selector::select_t &stuff, Ch
             continue;
         }
         item gift = *ip.first.get_item();
+        if( use_escrow && !escrow_item_var.empty() ) {
+            gift.set_var( escrow_item_var, "yes" );
+        }
 
         npc const *npc = nullptr;
         std::function<bool( item_location const &, int )> f_wants;
@@ -276,7 +280,9 @@ void npc_trading::update_npc_owed( npc &np, int your_balance, int your_sale_valu
 // op_of_u.owed is the positive when the NPC owes the player, and negative if the player owes the
 // NPC
 // cost is positive when the player owes the NPC money for a service to be performed
-bool npc_trading::trade( npc &np, int cost, const std::string &deal )
+bool npc_trading::trade( npc &np, int cost, const std::string &deal,
+                         std::function<bool( item const & )> trader_filter,
+                         const std::string &player_sale_var )
 {   
 
     np.shop_restock();
@@ -284,7 +290,8 @@ bool npc_trading::trade( npc &np, int cost, const std::string &deal )
     //               np.volume_carried() - np.volume_capacity() );
     np.drop_invalid_inventory();
 
-    std::unique_ptr<trade_ui> tradeui = std::make_unique<trade_ui>( get_avatar(), np, cost, deal );
+    std::unique_ptr<trade_ui> tradeui =
+        std::make_unique<trade_ui>( get_avatar(), np, cost, deal, trader_filter );
     trade_ui::trade_result_t trade_result = tradeui->perform_trade();
 
     if( trade_result.traded ) {
@@ -296,7 +303,7 @@ bool npc_trading::trade( npc &np, int cost, const std::string &deal )
         avatar &player_character = get_avatar();
         // Movement of items in 3 steps: player to escrow - npc to player - escrow to npc.
         escrow = npc_trading::transfer_items( trade_result.items_you, player_character, np, from_map,
-                                              true );
+                                              true, player_sale_var );
         npc_trading::transfer_items( trade_result.items_trader, np, player_character, from_map, false );
         // Now move items from escrow to the npc. Keep the weapon wielded.
         if( np.is_shopkeeper() ) {

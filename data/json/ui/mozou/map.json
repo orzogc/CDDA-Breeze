@@ -1,0 +1,176 @@
+// 内置自末奏侧边栏 1.2a，原作者 心之奏，适配微风内置 widget 系统。
+[
+  { "id": "地图17x5", "type": "widget",
+    "var": "overmap_text",
+    "style": "text",
+    "text_align": "right",
+    "width": 17, "height": 5,
+    "flags": [ "W_NO_PADDING" ]
+  },
+  { "id": "MZ_高度", "type": "widget", "style": "symbol",
+    "clauses": [
+      { "id": "Z10", "sym": "11", "color": "white",
+        "condition": { "compare_int": [ { "u_val": "pos_z" }, "==", { "const": 10 } ] }
+      },
+      { "id": "Z9", "sym": "10", "color": "white",
+        "condition": { "compare_int": [ { "u_val": "pos_z" }, "==", { "const": 9 } ] }
+      },
+      { "id": "Z8", "sym": "9", "color": "white",
+        "condition": { "compare_int": [ { "u_val": "pos_z" }, "==", { "const": 8 } ] }
+      },
+      { "id": "Z7", "sym": "8", "color": "white",
+        "condition": { "compare_int": [ { "u_val": "pos_z" }, "==", { "const": 7 } ] }
+      },
+      { "id": "Z6", "sym": "7", "color": "white",
+        "condition": { "compare_int": [ { "u_val": "pos_z" }, "==", { "const": 6 } ] }
+      },
+      { "id": "Z5", "sym": "6", "color": "white",
+        "condition": { "compare_int": [ { "u_val": "pos_z" }, "==", { "const": 5 } ] }
+      },
+      { "id": "Z4", "sym": "5", "color": "white",
+        "condition": { "compare_int": [ { "u_val": "pos_z" }, "==", { "const": 4 } ] }
+      },
+      { "id": "Z3", "sym": "4", "color": "white",
+        "condition": { "compare_int": [ { "u_val": "pos_z" }, "==", { "const": 3 } ] }
+      },
+      { "id": "Z2", "sym": "3", "color": "white",
+        "condition": { "compare_int": [ { "u_val": "pos_z" }, "==", { "const": 2 } ] }
+      },
+      { "id": "Z1", "sym": "2", "color": "white",
+        "condition": { "compare_int": [ { "u_val": "pos_z" }, "==", { "const": 1 } ] }
+      },
+      { "id": "Z0", "sym": "", "color": "white",
+        "condition": { "compare_int": [ { "u_val": "pos_z" }, "==", { "const": 0 } ] }
+      },
+      { "id": "z1", "sym": "-1", "color": "white",
+        "condition": { "compare_int": [ { "u_val": "pos_z" }, "==", { "const": -1 } ] }
+      },
+      { "id": "z2", "sym": "-2", "color": "white",
+        "condition": { "compare_int": [ { "u_val": "pos_z" }, "==", { "const": -2 } ] }
+      },
+      { "id": "z3", "sym": "-3", "color": "white",
+        "condition": { "compare_int": [ { "u_val": "pos_z" }, "==", { "const": -3 } ] }
+      },
+      { "id": "z4", "sym": "-4", "color": "white",
+        "condition": { "compare_int": [ { "u_val": "pos_z" }, "==", { "const": -4 } ] }
+      },
+      { "id": "z5", "sym": "-5", "color": "white",
+        "condition": { "compare_int": [ { "u_val": "pos_z" }, "==", { "const": -5 } ] }
+      },
+      { "id": "z6", "sym": "-6", "color": "white",
+        "condition": { "compare_int": [ { "u_val": "pos_z" }, "==", { "const": -6 } ] }
+      },
+      { "id": "z7", "sym": "-7", "color": "white",
+        "condition": { "compare_int": [ { "u_val": "pos_z" }, "==", { "const": -7 } ] }
+      },
+      { "id": "z8", "sym": "-8", "color": "white",
+        "condition": { "compare_int": [ { "u_val": "pos_z" }, "==", { "const": -8 } ] }
+      },
+      { "id": "z9", "sym": "-9", "color": "white",
+        "condition": { "compare_int": [ { "u_val": "pos_z" }, "==", { "const": -9 } ] }
+      },
+      { "id": "z10", "sym": "-10", "color": "white",
+        "condition": { "compare_int": [ { "u_val": "pos_z" }, "==", { "const": -10 } ] }
+      }
+    ]
+  },
+  { "id": "MZ_辐射", "type": "widget", "style": "text",
+    "clauses": [
+      { "id": "rad_0", "text": " 绿 ", "color": "white_green",
+        "condition": { "and": [
+          { "compare_int": [ { "u_val": "item_rad", "flag": "RAD_DETECT", "aggregate": "min" }, "<=", { "const": 0 } ] },
+          { "or": [ { "u_has_worn_with_flag": "RAD_DETECT" }, { "u_has_wielded_with_flag": "RAD_DETECT" } ] } ]
+        }
+      },
+      { "id": "rad_30", "text": " 蓝 ", "color": "h_white",
+        "condition": { "and": [
+          { "compare_int": [ { "u_val": "item_rad", "flag": "RAD_DETECT", "aggregate": "min" }, "<=", { "const": 30 } ] },
+          { "compare_int": [ { "u_val": "item_rad", "flag": "RAD_DETECT", "aggregate": "min" }, ">", { "const": 0 } ] },
+          { "or": [ { "u_has_worn_with_flag": "RAD_DETECT" }, { "u_has_wielded_with_flag": "RAD_DETECT" } ] } ]
+        }
+      },
+      { "id": "rad_60", "text": " 黄 ", "color": "i_yellow",
+        "condition": { "and": [
+          { "compare_int": [ { "u_val": "item_rad", "flag": "RAD_DETECT", "aggregate": "min" }, "<=", { "const": 60 } ] },
+          { "compare_int": [ { "u_val": "item_rad", "flag": "RAD_DETECT", "aggregate": "min" }, ">", { "const": 30 } ] },
+          { "or": [ { "u_has_worn_with_flag": "RAD_DETECT" }, { "u_has_wielded_with_flag": "RAD_DETECT" } ] } ]
+        }
+      },
+      { "id": "rad_120", "text": " 橙 ", "color": "red_yellow",
+        "condition": { "and": [
+          { "compare_int": [ { "u_val": "item_rad", "flag": "RAD_DETECT", "aggregate": "min" }, "<=", { "const": 120 } ] },
+          { "compare_int": [ { "u_val": "item_rad", "flag": "RAD_DETECT", "aggregate": "min" }, ">", { "const": 60 } ] },
+          { "or": [ { "u_has_worn_with_flag": "RAD_DETECT" }, { "u_has_wielded_with_flag": "RAD_DETECT" } ] } ]
+        }
+      },
+      { "id": "rad_240", "text": " 红 ", "color": "red_red",
+        "condition": { "and": [
+          { "compare_int": [ { "u_val": "item_rad", "flag": "RAD_DETECT", "aggregate": "min" }, "<=", { "const": 240 } ] },
+          { "compare_int": [ { "u_val": "item_rad", "flag": "RAD_DETECT", "aggregate": "min" }, ">", { "const": 120 } ] },
+          { "or": [ { "u_has_worn_with_flag": "RAD_DETECT" }, { "u_has_wielded_with_flag": "RAD_DETECT" } ] } ]
+        }
+      },
+      { "id": "rad_500", "text": " 黑 ", "color": "pink",
+        "condition": { "and": [
+          { "compare_int": [ { "u_val": "item_rad", "flag": "RAD_DETECT", "aggregate": "min" }, ">", { "const": 240 } ] },
+          { "or": [ { "u_has_worn_with_flag": "RAD_DETECT" }, { "u_has_wielded_with_flag": "RAD_DETECT" } ] } ]
+        }
+      }
+    ]
+  },
+  { "id": "MZ_月相", "type": "widget", "style": "symbol",
+    "clauses": [
+      { "id": "new_moon", "sym": "新月▁⁰", "color": "white",
+        "condition": { "compare_int": [ "moon", "==", { "const": 0 } ] }
+      },
+      { "id": "waxing crescent", "sym": "盈月▃¹", "color": "white",
+        "condition": { "compare_int": [ "moon", "==", { "const": 1 } ] }
+      },
+      { "id": "half_moon", "sym": "半月▅²", "color": "white",
+        "condition": { "compare_int": [ "moon", "==", { "const": 2 } ] }
+      },
+      { "id": "waxing_gibbous", "sym": "弦月▆³", "color": "white",
+        "condition": { "compare_int": [ "moon", "==", { "const": 3 } ] }
+      },
+      { "id": "full_moon", "sym": "满月█⁴", "color": "white",
+        "condition": { "compare_int": [ "moon", "==", { "const": 4 } ] }
+      },
+      { "id": "waning_gibbous", "sym": "弦月▆³", "color": "white",
+        "condition": { "compare_int": [ "moon", "==", { "const": 5 } ] }
+      },
+      { "id": "half_moon", "sym": "半月▅²", "color": "white",
+        "condition": { "compare_int": [ "moon", "==", { "const": 6 } ] }
+      },
+      { "id": "waning_crescent", "sym": "残月▃¹", "color": "white",
+        "condition": { "compare_int": [ "moon", "==", { "const": 7 } ] }
+      },
+      { "id": "dark_moon", "sym": "晚月▁⁰", "color": "white",
+        "condition": { "compare_int": [ "moon", "==", { "const": 8 } ] }
+      }
+    ]
+  },
+  { "id": "MZ_能量", "type": "widget", "label": "能量",
+    "style": "text",
+    "var": "power_text"
+  },
+  { "id": "MZ_能量1", "type": "widget",
+    "style": "text",
+    "var": "power_text"
+  },
+  { "id": "MZ_能量增加", "type": "widget",
+    "style": "text",
+    "var": "power_balance_text"
+  },
+  { "id": "MZ_魔力1", "type": "widget", "label": "魔力", "style": "number",
+    "var": "mana",
+    "colors": [ "c_red", "c_light_red", "c_yellow", "c_light_blue" ]
+  },
+  { "id": "MZ_魔力", "type": "widget", "style": "number",
+    "var": "mana",
+    "colors": [ "c_red", "c_light_red", "c_yellow", "c_light_blue" ]
+  },
+  { "id": "MZ_最大魔力", "type": "widget", "style": "number",
+    "var": "max_mana",
+    "colors": [ "c_light_blue" ]
+  }
+]

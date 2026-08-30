@@ -2,6 +2,7 @@
 #ifndef CATA_SRC_NPCTRADE_H
 #define CATA_SRC_NPCTRADE_H
 
+#include <functional>
 #include <list>
 #include <string>
 #include <utility>
@@ -59,9 +60,11 @@ int cash_to_favor( const npc &, int cash );
 
 std::list<item> transfer_items( trade_selector::select_t &stuff, Character &giver,
                                 Character &receiver, std::list<item_location *> &from_map,
-                                bool use_escrow );
+                                bool use_escrow, const std::string &escrow_item_var = {} );
 double net_price_adjustment( const Character &buyer, const Character &seller );
-bool trade( npc &p, int cost, const std::string &deal );
+bool trade( npc &p, int cost, const std::string &deal,
+            std::function<bool( item const & )> trader_filter = {},
+            const std::string &player_sale_var = {} );
 std::vector<item_pricing> init_selling( npc &p );
 } // namespace npc_trading
 

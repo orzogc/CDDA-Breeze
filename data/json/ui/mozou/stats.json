@@ -1,0 +1,43 @@
+// 内置自末奏侧边栏 1.2a，原作者 心之奏，适配微风内置 widget 系统。
+[
+  { "id": "MZ_力量", "type": "widget",
+    "label": "",
+    "copy-from": "str_num",
+    "flags": [ "W_NO_PADDING" ]
+  },
+  { "id": "MZ_敏捷", "type": "widget",
+    "label": "/",
+    "copy-from": "dex_num",
+    "flags": [ "W_NO_PADDING" ]
+  },
+  { "id": "MZ_智力", "type": "widget",
+    "label": "/",
+    "copy-from": "int_num",
+    "flags": [ "W_NO_PADDING" ]
+  },
+  { "id": "MZ_感知", "type": "widget",
+    "label": "/",
+    "copy-from": "per_num",
+    "flags": [ "W_NO_PADDING" ]
+  },
+  { "id": "MZ_心情专注", "type": "widget",
+    "copy-from": "MZ_列布局模板",
+    "widgets": [ "mood_desc_no_label", "MZ/", "MZ_专注" ]
+  },
+  { "id": "MZ_专注", "type": "widget",
+    "copy-from": "focus_num",
+    "flags": [ "W_LABEL_NONE" ]
+  },
+  { "id": "MZ_风速", "type": "widget",
+    "copy-from": "wind_desc_no_label",
+    "flags": [ "W_LABEL_NONE" ]
+  },
+  { "id": "MZ_舒适", "type": "widget",
+    "copy-from": "MZ_列布局模板",
+    "widgets": [ "body_temp_desc_no_label", "body_temp_delta_sym_no_label" ]
+  },
+  { "id": "MZ_温度", "type": "widget",
+    "copy-from": "MZ_列布局模板",
+    "widgets": [ "env_temp_desc_no_label" ]
+  }
+]

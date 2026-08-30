@@ -1,0 +1,38 @@
+[
+  {
+    "id": "spray_gun",
+    "looks_like": "nailgun",
+    "type": "TOOL",
+    "name": {
+      "str": "喷漆枪"
+    },
+    "description": "一把用于连续喷涂的喷漆枪，可以安装可重复灌装的喷漆罐。激活后选择 2 个角划定区域，连续 2 次选择同一位置可以只喷 1 个载具格，取消选择不会消耗油漆。",
+    "weight": "700 g",
+    "volume": "1 L",
+    "price": 3500,
+    "price_postapoc": 150,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": ";",
+    "color": "light_gray",
+    "ammo": [
+      "vehicle_paint"
+    ],
+    "charges_per_use": 1,
+    "use_action": {
+      "type": "paint_vehicle"
+    },
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "rigid": true,
+        "item_restriction": [
+          "vehicle_paint_can"
+        ],
+        "default_magazine": "vehicle_paint_can"
+      }
+    ]
+  }
+]

@@ -394,7 +394,7 @@ static std::map<std::string, panel_layout> initialize_default_panel_layouts()
 
 panel_manager::panel_manager()
 {
-    current_layout_id = "legacy_labels_sidebar";
+    current_layout_id = "末奏_侧边栏";
     // Set empty layouts; these will be populated by load()
     layouts = std::map<std::string, panel_layout>();
 }
@@ -493,7 +493,6 @@ void panel_manager::serialize( JsonOut &json )
     json.start_object();
 
     json.member( "current_layout_id", current_layout_id );
-    json.member( "hide_weekday", hide_weekday );
     json.member( "layouts" );
 
     json.start_array();
@@ -530,7 +529,8 @@ void panel_manager::deserialize( const JsonArray &ja )
     JsonObject joLayouts = ja.get_object( 0 );
 
     current_layout_id = joLayouts.get_string( "current_layout_id" );
-    hide_weekday = joLayouts.get_bool( "hide_weekday", false );
+    ( void )joLayouts.get_bool( "hide_weekday", false );
+    hide_weekday = false;
     if( layouts.find( current_layout_id ) == layouts.end() ) {
         // Layout id updated between loads.
         // Shouldn't happen unless custom sidebar id's were modified or removed.
@@ -601,14 +601,10 @@ static void draw_border_win( catacurses::window &w, const std::vector<int> &colu
 
 static void draw_left_win( catacurses::window &w, const std::map<size_t, size_t> &row_indices,
                            const std::vector<window_panel> &panels, size_t source_index, size_t current_row,
-                           size_t source_row, bool cur_col, bool swapping, bool hide_weekday,
+                           size_t source_row, bool cur_col, bool swapping,
                            int width, int height, int start )
 {
     werase( w );
-    if( start == 0 ) {
-        mvwprintz( w, point( 3, 0 ), hide_weekday ? c_white : c_dark_gray,
-                   _( "Hide weekday" ) );
-    }
     for( std::pair<size_t, size_t> row_indx : row_indices ) {
         if( row_indx.first < static_cast<size_t>( start ) ) {
             continue;
@@ -640,7 +636,7 @@ static void draw_left_win( catacurses::window &w, const std::map<size_t, size_t>
     scrollbar()
     .offset_x( width - 1 )
     .offset_y( 0 )
-    .content_size( row_indices.size() + 1 )
+    .content_size( std::max<size_t>( 1, row_indices.size() ) )
     .viewport_pos( start )
     .viewport_size( height )
     .apply( w );
@@ -683,21 +679,15 @@ static void draw_center_win( catacurses::window &w, int col_width, const input_c
                col_width - 1 ) + ":" );
     mvwprintz( w, point( 1, 5 ), c_white, _( "Exit" ) );
 
-    if( left_panel ) {
-        if( current_row == 0 ) {
-            fold_and_print( w, point( 1, 7 ), col_width - 2, c_white,
-                            _( "Hide the weekday in every sidebar date to save horizontal space.  "
-                               "Disable this option to show the full date." ) );
-        } else {
-            const widget_id current_widget = panels[row_indices.at( current_row )].get_widget();
-            for( const widget &wgt : widget::get_all() ) {
-                if( wgt.getId() == current_widget ) {
-                    fold_and_print( w, point( 1, 7 ), col_width - 2, c_white, _( wgt._description ) );
-                    break;
-                }
+    if( left_panel && !row_indices.empty() ) {
+        const widget_id current_widget = panels[row_indices.at( current_row )].get_widget();
+        for( const widget &wgt : widget::get_all() ) {
+            if( wgt.getId() == current_widget ) {
+                fold_and_print( w, point( 1, 7 ), col_width - 2, c_white, _( wgt._description ) );
+                break;
             }
         }
-    } else {
+    } else if( !left_panel ) {
         fold_and_print( w, point( 1, 7 ), col_width - 2, c_white, _( sidebar._description ) );
     }
 
@@ -760,7 +750,7 @@ void panel_manager::show_adm()
         draw_right_win( w_right, layouts, current_layout_id, current_row, current_col == 2 );
         auto &panels = get_current_layout().panels();
         draw_left_win( w_left, row_indices, panels, source_index, current_row, source_row, current_col == 0,
-                       swapping, hide_weekday, column_widths[0], popup_height - 2, start );
+                       swapping, column_widths[0], popup_height - 2, start );
 
         widget *sidebar = nullptr;
         if( current_col == 0 ) {
@@ -785,7 +775,7 @@ void panel_manager::show_adm()
                 widget::finalize_inherited_fields_recursive( get_current_sidebar()->getId(),
                         get_current_sidebar()->_separator, get_current_sidebar()->_padding );
             }
-            for( size_t i = 0, row = 1; i < panels.size(); i++ ) {
+            for( size_t i = 0, row = 0; i < panels.size(); i++ ) {
                 if( panels[i].render() ) {
                     row_indices.emplace( row, i );
                     row++;
@@ -793,7 +783,7 @@ void panel_manager::show_adm()
             }
         }
 
-        const size_t num_rows = current_col == 0 ? row_indices.size() + 1 : layouts.size();
+        const size_t num_rows = current_col == 0 ? std::max<size_t>( 1, row_indices.size() ) : layouts.size();
         current_row = clamp<size_t>( current_row, 0, num_rows - 1 );
         if( current_row < start ) {
             start = current_row > popup_height - 3 ? current_row - ( popup_height - 3 ) : 0;
@@ -803,7 +793,7 @@ void panel_manager::show_adm()
 
         const std::string action = ctxt.handle_input();
         if( action == "UP" ) {
-            const size_t first_row = current_col == 0 && swapping ? 1 : 0;
+            const size_t first_row = 0;
             if( current_row > first_row ) {
                 current_row -= 1;
                 if( current_row < start ) {
@@ -816,7 +806,7 @@ void panel_manager::show_adm()
                 }
             }
         } else if( action == "DOWN" ) {
-            const size_t first_row = current_col == 0 && swapping ? 1 : 0;
+            const size_t first_row = 0;
             if( current_row + 1 < num_rows ) {
                 current_row += 1;
                 if( current_row > start + popup_height - 3 ) {
@@ -826,7 +816,7 @@ void panel_manager::show_adm()
                 current_row = first_row;
                 start = first_row;
             }
-        } else if( action == "MOVE_PANEL" && current_col == 0 && current_row > 0 ) {
+        } else if( action == "MOVE_PANEL" && current_col == 0 && !row_indices.empty() ) {
             swapping = !swapping;
             if( swapping ) {
                 // source window from the swap
@@ -865,13 +855,9 @@ void panel_manager::show_adm()
             } else {
                 current_col = 0;
             }
-        } else if( !swapping && action == "TOGGLE_PANEL" && current_col == 0 ) {
-            if( current_row == 0 ) {
-                hide_weekday = !hide_weekday;
-            } else {
-                panels[row_indices.at( current_row )].toggle =
-                    !panels[row_indices.at( current_row )].toggle;
-            }
+        } else if( !swapping && action == "TOGGLE_PANEL" && current_col == 0 && !row_indices.empty() ) {
+            panels[row_indices.at( current_row )].toggle =
+                !panels[row_indices.at( current_row )].toggle;
             g->invalidate_main_ui_adaptor();
         } else if( action == "QUIT" ) {
             exit = true;

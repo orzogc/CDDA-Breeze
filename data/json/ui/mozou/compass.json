@@ -1,0 +1,104 @@
+// 内置自末奏侧边栏 1.2a，原作者 心之奏，适配微风内置 widget 系统。
+[
+  {//罗盘
+    "id": "末奏_罗盘",
+    "type": "widget",
+    "label": "罗盘",
+    "style": "layout",
+    "arrange": "rows",
+    "widgets": [ "MZ_lp1", "MZ_lp2", "MZ_lp3" ],
+    "flags": [ "W_DISABLED_BY_DEFAULT" ]
+  },
+  {//怪数
+    "id": "末奏_怪数",
+    "type": "widget",
+    "label": "怪数",
+    "style": "layout",
+    "arrange": "rows",
+    "widgets": [ "compass_legend_text_alt" ]
+  },
+  {//上
+    "id": "MZ_lp1",
+    "type": "widget",
+    "style": "layout",
+    "arrange": "columns",
+    "widgets": [ "MZ_lpnw", "MZ_lpn", "MZ_lpne" ]
+  },
+  {
+    "id": "MZ_lpnw",
+    "type": "widget",
+    "label": "↖",
+    "direction": "NW",
+    "copy-from": "compass_text_template"
+  },
+  {
+    "id": "MZ_lpn",
+    "type": "widget",
+    "label": "↑",
+    "direction": "N",
+    "copy-from": "compass_text_template"
+  },
+  {
+    "id": "MZ_lpne",
+    "type": "widget",
+    "label": "↗",
+    "direction": "NE",
+    "copy-from": "compass_text_template"
+  },
+  {//中
+    "id": "MZ_lp2",
+    "type": "widget",
+    "style": "layout",
+    "arrange": "columns",
+    "widgets": [ "MZ_lpw", "MZ_lpl", "MZ_lpe" ]
+  },
+  {
+    "id": "MZ_lpw",
+    "type": "widget",
+    "label": "←",
+    "direction": "W",
+    "copy-from": "compass_text_template"
+  },
+  {
+    "id": "MZ_lpl",
+    "type": "widget",
+    "label": ".",
+    "direction": "L",
+    "copy-from": "compass_text_template"
+  },
+  {
+    "id": "MZ_lpe",
+    "type": "widget",
+    "label": "→",
+    "direction": "E",
+    "copy-from": "compass_text_template"
+  },
+  {//下
+    "id": "MZ_lp3",
+    "type": "widget",
+    "style": "layout",
+    "arrange": "columns",
+    "widgets": [ "MZ_lpsw", "MZ_lps", "MZ_lpse" ]
+  },
+  {
+    "id": "MZ_lpsw",
+    "type": "widget",
+    "label": "↙",
+    "direction": "SW",
+    "copy-from": "compass_text_template"
+  },
+  {
+    "id": "MZ_lps",
+    "type": "widget",
+    "label": "↓",
+    "direction": "S",
+    "copy-from": "compass_text_template"
+  },
+  {
+    "id": "MZ_lpse",
+    "type": "widget",
+    "label": "↘",
+    "direction": "SE",
+    "copy-from": "compass_text_template"
+  }
+]

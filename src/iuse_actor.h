@@ -141,6 +141,24 @@ class unpack_actor : public iuse_actor
         void info( const item &, std::vector<iteminfo> &dump ) const override;
 };
 
+/**
+ * Repaint vehicle tiles with the color supplied by the loaded vehicle-paint ammo.
+ * Cost and time are charged once per vehicle mount that actually changes color.
+ */
+class paint_vehicle : public iuse_actor
+{
+    public:
+        explicit paint_vehicle( const std::string &type = "paint_vehicle" ) : iuse_actor( type ) {}
+        ~paint_vehicle() override = default;
+
+        void load( const JsonObject &obj ) override;
+        std::optional<int> use( Character &p, item &it, bool t,
+                                const tripoint &pos ) const override;
+        ret_val<void> can_use( const Character &p, const item &it, bool t,
+                               const tripoint &pos ) const override;
+        std::unique_ptr<iuse_actor> clone() const override;
+};
+
 class countdown_actor : public iuse_actor
 {
     public:

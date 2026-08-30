@@ -99,8 +99,9 @@ void set_persistent_trade_vehicle_selected( vehicle *veh, const bool selected )
 
 } // namespace
 
-trade_preset::trade_preset( Character const &you, Character const &trader )
-    : _u( you ), _trader( trader )
+trade_preset::trade_preset( Character const &you, Character const &trader,
+                                  std::function<bool( item const & )> filter )
+    : _u( you ), _trader( trader ), _filter( std::move( filter ) )
 {
     save_state = &inventory_ui_default_state;
     append_cell(
@@ -112,6 +113,9 @@ trade_preset::trade_preset( Character const &you, Character const &trader )
 
 bool trade_preset::is_shown( item_location const &loc ) const
 {
+    if( _filter && !_filter( *loc ) ) {
+        return false;
+    }
     return !loc->has_var( VAR_TRADE_IGNORE ) && inventory_selector_preset::is_shown( loc ) &&
            loc->is_owned_by( _u ) && loc->made_of( phase_id::SOLID ) && !loc->is_frozen_liquid() &&
            ( !_u.is_wielding( *loc ) || !loc->has_flag( json_flag_NO_UNWIELD ) );
@@ -162,8 +166,9 @@ bool trade_preset::cat_sort_compare( const inventory_entry &lhs, const inventory
     return fudge_rank( lhs ) < fudge_rank( rhs );
 }
 
-trade_ui::trade_ui( party_t &you, npc &trader, currency_t cost, std::string title )
-    : _upreset{ you, trader }, _tpreset{ trader, you },
+trade_ui::trade_ui( party_t &you, npc &trader, currency_t cost, std::string title,
+                    std::function<bool( item const & )> trader_filter )
+    : _upreset{ you, trader }, _tpreset{ trader, you, std::move( trader_filter ) },
       _panes{ std::make_unique<pane_t>( this, trader, _tpreset, std::string(), _pane_size(),
                                         _pane_orig( -1 ) ),
               std::make_unique<pane_t>( this, you, _upreset, std::string(), _pane_size(),

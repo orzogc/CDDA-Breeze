@@ -30,6 +30,7 @@
 #include "event.h"
 #include "event_bus.h"
 #include "faction.h"
+#include "flag.h"
 #include "game.h"
 #include "game_constants.h"
 #include "game_inventory.h"
@@ -232,9 +233,30 @@ void spawn_animal( npc &p, const mtype_id &mon )
     }
 }
 
+namespace
+{
+static const flag_id flag_PAINT_COUNTER_STOCK( "PAINT_COUNTER_STOCK" );
+static const std::string paint_counter_stock_var = "breeze_paint_counter_stock";
+
+bool is_paint_counter_stock( const item &it )
+{
+    return it.has_flag( flag_PAINT_COUNTER_STOCK ) ||
+           it.get_var( paint_counter_stock_var ) == "yes";
+}
+} // namespace
+
 void talk_function::start_trade( npc &p )
 {
-    npc_trading::trade( p, 0, _( "Trade" ) );
+    npc_trading::trade( p, 0, _( "Trade" ), []( const item & it ) {
+        return !is_paint_counter_stock( it );
+    } );
+}
+
+void talk_function::start_paint_trade( npc &p )
+{
+    npc_trading::trade( p, 0, _( "喷漆专柜" ), []( const item & it ) {
+        return is_paint_counter_stock( it );
+    }, paint_counter_stock_var );
 }
 
 void talk_function::exert_coercion(npc &p) {

@@ -349,6 +349,12 @@
   },
   {
     "type": "ammunition_type",
+    "id": "vehicle_paint",
+    "name": "车辆喷漆",
+    "default": "vehicle_paint_jet_black"
+  },
+  {
+    "type": "ammunition_type",
     "id": "permanent_ink",
     "name": "ink",
     "default": "permanent_ink"

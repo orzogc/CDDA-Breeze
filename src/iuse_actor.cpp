@@ -11,6 +11,7 @@
 #include <list>
 #include <memory>
 #include <numeric>
+#include <set>
 #include <sstream>
 #include <type_traits>
 
@@ -44,6 +45,7 @@
 #include "game_constants.h"
 #include "game_inventory.h"
 #include "generic_factory.h"
+#include "hsv_color.h"
 #include "inventory.h"
 #include "item.h"
 #include "item_group.h"
@@ -71,6 +73,7 @@
 #include "pimpl.h"
 #include "player_activity.h"
 #include "point.h"
+#include "popup.h"
 #include "recipe.h"
 #include "recipe_dictionary.h"
 #include "requirements.h"
@@ -484,6 +487,176 @@ void unpack_actor::info( const item &, std::vector<iteminfo> &dump ) const
 {
     dump.emplace_back( "DESCRIPTION",
                        _( "This item could be unpacked to receive something." ) );
+}
+
+static item_location form_loc( Character &you, const tripoint &p, item &it );
+
+namespace
+{
+std::optional<RGBColor> vehicle_paint_color_for_ammo( const itype_id &id )
+{
+    static const std::map<itype_id, std::string> colors = {
+        { itype_id( "vehicle_paint_jet_black" ), "#0A0A0D" },
+        { itype_id( "vehicle_paint_cataclysm_red" ), "#622625" },
+        { itype_id( "vehicle_paint_cataclysm_green" ), "#3F4535" },
+        { itype_id( "vehicle_paint_signal_brown" ), "#7B5141" },
+        { itype_id( "vehicle_paint_sapphire_blue" ), "#2A3756" },
+        { itype_id( "vehicle_paint_purple_violet" ), "#4A203B" },
+        { itype_id( "vehicle_paint_azure_blue" ), "#2E5978" },
+        { itype_id( "vehicle_paint_silver_grey" ), "#8F999F" },
+        { itype_id( "vehicle_paint_black_grey" ), "#2E3234" },
+        { itype_id( "vehicle_paint_bright_red_orange" ), "#F3752C" },
+        { itype_id( "vehicle_paint_grass_green" ), "#3E753B" },
+        { itype_id( "vehicle_paint_golden_yellow" ), "#E49E00" },
+        { itype_id( "vehicle_paint_light_blue" ), "#3481B8" },
+        { itype_id( "vehicle_paint_telemagenta" ), "#C63678" },
+        { itype_id( "vehicle_paint_pastel_blue" ), "#6A93B0" },
+        { itype_id( "vehicle_paint_traffic_white" ), "#F7FBF5" },
+        { itype_id( "vehicle_paint_white_aluminium" ), "#A5A8A6" },
+        { itype_id( "vehicle_paint_grey_aluminium" ), "#8F8F8C" },
+        { itype_id( "vehicle_paint_steel_blue" ), "#232C3F" },
+        { itype_id( "vehicle_paint_pine_green" ), "#2D5546" },
+        { itype_id( "vehicle_paint_olive_grey" ), "#817F68" },
+        { itype_id( "vehicle_paint_sand_yellow" ), "#D2AA6D" },
+        { itype_id( "vehicle_paint_traffic_yellow" ), "#F7B500" },
+        { itype_id( "vehicle_paint_flame_red" ), "#AB2524" },
+        { itype_id( "r_paint" ), "#622625" },
+        { itype_id( "b_paint" ), "#2A3756" },
+        { itype_id( "w_paint" ), "#F7FBF5" },
+        { itype_id( "g_paint" ), "#3E753B" },
+        { itype_id( "p_paint" ), "#4A203B" },
+        { itype_id( "y_paint" ), "#E49E00" },
+        { itype_id( "black_paint" ), "#0A0A0D" }
+    };
+    const auto found = colors.find( id );
+    if( found == colors.end() ) {
+        return std::nullopt;
+    }
+    return RGBColor::from_hex( found->second );
+}
+} // namespace
+
+std::unique_ptr<iuse_actor> paint_vehicle::clone() const
+{
+    return std::make_unique<paint_vehicle>( *this );
+}
+
+void paint_vehicle::load( const JsonObject & )
+{
+}
+
+ret_val<void> paint_vehicle::can_use( const Character &, const item &it, bool,
+                                      const tripoint & ) const
+{
+    if( it.ammo_remaining() <= 0 ) {
+        return ret_val<void>::make_failure( _( "喷漆枪里没有油漆。" ) );
+    }
+    if( !vehicle_paint_color_for_ammo( it.ammo_current() ).has_value() ) {
+        return ret_val<void>::make_failure( _( "这种油漆不能用于载具喷涂。" ) );
+    }
+    return ret_val<void>::make_success();
+}
+
+std::optional<int> paint_vehicle::use( Character &p, item &it, bool t,
+                                       const tripoint &pos ) const
+{
+    if( t ) {
+        return std::nullopt;
+    }
+
+    const std::optional<RGBColor> paint_color = vehicle_paint_color_for_ammo( it.ammo_current() );
+    if( !paint_color.has_value() ) {
+        p.add_msg_if_player( m_info, _( "这种油漆不能用于载具喷涂。" ) );
+        return 0;
+    }
+
+    static_popup popup;
+    popup.on_top( true );
+    popup.message( "%s", _( "选择喷漆区域的第一个角。" ) );
+
+    tripoint center = pos;
+    const look_around_result first = g->look_around( false, center, center, false, true, false );
+    if( !first.position ) {
+        return 0;
+    }
+
+    map &here = get_map();
+    const optional_vpart_position first_vehicle = here.veh_at( first.position.value() );
+    if( !first_vehicle ) {
+        p.add_msg_if_player( m_info, _( "请选择一辆载具。" ) );
+        return 0;
+    }
+    vehicle *target = &first_vehicle->vehicle();
+
+    popup.message( "%s", _( "选择喷漆区域的第二个角。" ) );
+    const look_around_result second = g->look_around( false, center, first.position.value(),
+                                      true, true, false );
+    if( !second.position ) {
+        return 0;
+    }
+
+    const int available_paint = it.ammo_remaining( &p );
+    std::vector<tripoint> paint_targets;
+    paint_targets.reserve( std::min<int>( available_paint, 128 ) );
+    std::set<point> handled_mounts;
+
+    for( const tripoint &pt : here.points_in_rectangle( first.position.value(),
+            second.position.value() ) ) {
+        if( static_cast<int>( paint_targets.size() ) >= available_paint ) {
+            break;
+        }
+        const optional_vpart_position ovp = here.veh_at( pt );
+        if( !ovp || &ovp->vehicle() != target ) {
+            continue;
+        }
+
+        const point mount = ovp->mount();
+        if( !handled_mounts.insert( mount ).second ) {
+            continue;
+        }
+
+        const std::optional<vpart_reference> displayed = ovp->part_displayed();
+        const int displayed_index = displayed ? static_cast<int>( displayed->part_index() ) : -1;
+        bool needs_paint = false;
+
+        for( const int index : target->parts_at_relative( mount, true ) ) {
+            vehicle_part &vp = target->part( index );
+            if( vp.removed || vp.info().has_flag( "NO_PAINT" ) ) {
+                continue;
+            }
+
+            const bool is_displayed = index == displayed_index;
+            if( !is_displayed && !vp.has_custom_color() ) {
+                continue;
+            }
+
+            const RGBColorPair current = vp.get_color();
+            if( current.bg != paint_color.value() || current.fg != paint_color.value() ) {
+                needs_paint = true;
+                break;
+            }
+        }
+
+        if( needs_paint ) {
+            paint_targets.push_back( pt );
+        }
+    }
+
+    if( paint_targets.empty() ) {
+        p.add_msg_if_player( m_info, _( "没有需要喷漆的载具表面。" ) );
+        return 0;
+    }
+
+    const item_location gun_location = form_loc( p, pos, it );
+    if( !gun_location ) {
+        p.add_msg_if_player( m_info, _( "找不到正在使用的喷漆枪。" ) );
+        return 0;
+    }
+
+    p.assign_activity( player_activity( vehicle_paint_activity_actor(
+                           gun_location, first.position.value(), paint_targets,
+                           paint_color->to_hex() ) ) );
+    return 0;
 }
 
 std::unique_ptr<iuse_actor> countdown_actor::clone() const

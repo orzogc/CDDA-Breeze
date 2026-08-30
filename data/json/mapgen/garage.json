@@ -74,7 +74,7 @@
       "items": {
         "L": { "item": "clothing_work_set", "chance": 55 },
         "c": { "item": "mechanics", "chance": 60 },
-        "S": { "item": "mechanics", "chance": 80, "repeat": [ 1, 6 ] },
+        "S": { "item": "mechanics_vehicle_paint_autoshop", "chance": 80, "repeat": [ 1, 6 ] },
         "x": { "item": "SUS_welding_gear", "chance": 80, "repeat": [ 1, 2 ] }
       },
       "place_vehicles": [
@@ -194,7 +194,7 @@
       "items": {
         "L": { "item": "clothing_work_set", "chance": 55 },
         "c": { "item": "mechanics", "chance": 60 },
-        "S": { "item": "mechanics", "chance": 80, "repeat": [ 1, 6 ] },
+        "S": { "item": "mechanics_vehicle_paint_autoshop", "chance": 80, "repeat": [ 1, 6 ] },
         "x": { "item": "mechanics", "chance": 80, "repeat": [ 1, 3 ] }
       },
       "place_vehicles": [

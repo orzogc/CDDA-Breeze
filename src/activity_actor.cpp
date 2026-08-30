@@ -39,6 +39,7 @@
 #include "gates.h"
 #include "gun_mode.h"
 #include "handle_liquid.h"
+#include "hsv_color.h"
 #include "harvest.h"
 #include "iexamine.h"
 #include "item.h"
@@ -143,6 +144,7 @@ static const activity_id ACT_TRY_SLEEP( "ACT_TRY_SLEEP" );
 static const activity_id ACT_UNLOAD( "ACT_UNLOAD" );
 static const activity_id ACT_UNLOAD_LOOT( "ACT_UNLOAD_LOOT" );
 static const activity_id ACT_VEHICLE_FOLD( "ACT_VEHICLE_FOLD" );
+static const activity_id ACT_VEHICLE_PAINT( "ACT_VEHICLE_PAINT" );
 static const activity_id ACT_VEHICLE_UNFOLD( "ACT_VEHICLE_UNFOLD" );
 static const activity_id ACT_WEAR( "ACT_WEAR" );
 static const activity_id ACT_WIELD( "ACT_WIELD" );
@@ -1330,6 +1332,154 @@ static std::string enumerate_ints_to_string( const std::vector<int> &vec )
     return enumerate_as_string( vec, []( const int &it ) {
         return std::to_string( it );
     } );
+}
+
+namespace
+{
+bool paint_vehicle_activity_tile( map &here, vehicle &target, const tripoint &pt,
+                                  const RGBColor &color )
+{
+    const optional_vpart_position ovp = here.veh_at( pt );
+    if( !ovp || &ovp->vehicle() != &target ) {
+        return false;
+    }
+
+    const point mount = ovp->mount();
+    const std::optional<vpart_reference> displayed = ovp->part_displayed();
+    const int displayed_index = displayed ? static_cast<int>( displayed->part_index() ) : -1;
+    bool changed = false;
+
+    for( const int index : target.parts_at_relative( mount, true ) ) {
+        vehicle_part &vp = target.part( index );
+        if( vp.removed || vp.info().has_flag( "NO_PAINT" ) ) {
+            continue;
+        }
+
+        const bool is_displayed = index == displayed_index;
+        if( !is_displayed && !vp.has_custom_color() ) {
+            continue;
+        }
+
+        const RGBColorPair current = vp.get_color();
+        if( current.bg == color && current.fg == color ) {
+            continue;
+        }
+
+        vp.set_color( color, color );
+        changed = true;
+    }
+    return changed;
+}
+} // namespace
+
+vehicle_paint_activity_actor::vehicle_paint_activity_actor( const item_location &spray_gun,
+        const tripoint &target_vehicle_anchor, const std::vector<tripoint> &targets,
+        const std::string &paint_color_hex )
+    : spray_gun( spray_gun ), target_vehicle_anchor( target_vehicle_anchor ), targets( targets ),
+      paint_color_hex( paint_color_hex )
+{
+}
+
+void vehicle_paint_activity_actor::start( player_activity &act, Character &who )
+{
+    act.moves_left = act.moves_total = static_cast<int>( targets.size() ) *
+                                      to_moves<int>( time_per_tile );
+    time_until_next_tile = time_per_tile;
+    who.add_msg_if_player( m_info, _( "你开始为载具喷漆。" ) );
+}
+
+void vehicle_paint_activity_actor::do_turn( player_activity &act, Character &who )
+{
+    if( !spray_gun ) {
+        who.add_msg_if_player( m_info, _( "喷漆枪已经不在手边了。" ) );
+        who.cancel_activity();
+        return;
+    }
+
+    time_until_next_tile -= 1_seconds;
+    if( time_until_next_tile > 0_seconds ) {
+        return;
+    }
+    time_until_next_tile = time_per_tile;
+
+    if( next_target >= static_cast<int>( targets.size() ) ) {
+        act.moves_left = 0;
+        return;
+    }
+
+    if( spray_gun->ammo_remaining( &who ) <= 0 ) {
+        who.add_msg_if_player( m_info, _( "喷漆罐已经空了。" ) );
+        who.cancel_activity();
+        return;
+    }
+
+    map &here = get_map();
+    const optional_vpart_position anchor_vp = here.veh_at( target_vehicle_anchor );
+    if( !anchor_vp ) {
+        who.add_msg_if_player( m_info, _( "需要喷涂的载具已经不在原位了。" ) );
+        who.cancel_activity();
+        return;
+    }
+    vehicle &target = anchor_vp->vehicle();
+
+    const RGBColor color = RGBColor::from_hex( paint_color_hex );
+    const tripoint target_point = targets[next_target++];
+    if( paint_vehicle_activity_tile( here, target, target_point, color ) ) {
+        spray_gun->ammo_consume( 1, who.pos(), &who );
+        ++painted_tiles;
+    }
+
+    if( next_target >= static_cast<int>( targets.size() ) ) {
+        act.moves_left = 0;
+    }
+}
+
+void vehicle_paint_activity_actor::finish( player_activity &act, Character &who )
+{
+    who.add_msg_if_player( m_info, _( "你完成了载具喷涂，共喷涂 %d 个载具格。" ), painted_tiles );
+    act.set_to_null();
+}
+
+void vehicle_paint_activity_actor::canceled( player_activity &, Character &who )
+{
+    if( painted_tiles > 0 ) {
+        who.add_msg_if_player( m_info, _( "你停止了载具喷涂，已经完成的部分会保留。" ) );
+    } else {
+        who.add_msg_if_player( m_info, _( "你停止了载具喷涂。" ) );
+    }
+}
+
+std::string vehicle_paint_activity_actor::get_progress_message( const player_activity & ) const
+{
+    return string_format( _( "喷涂 %1$d/%2$d 格，已改色 %3$d 格" ), next_target,
+                          static_cast<int>( targets.size() ), painted_tiles );
+}
+
+void vehicle_paint_activity_actor::serialize( JsonOut &jsout ) const
+{
+    jsout.start_object();
+    jsout.member( "spray_gun", spray_gun );
+    jsout.member( "target_vehicle_anchor", target_vehicle_anchor );
+    jsout.member( "targets", targets );
+    jsout.member( "paint_color_hex", paint_color_hex );
+    jsout.member( "next_target", next_target );
+    jsout.member( "painted_tiles", painted_tiles );
+    jsout.member( "time_until_next_tile", time_until_next_tile );
+    jsout.end_object();
+}
+
+std::unique_ptr<activity_actor> vehicle_paint_activity_actor::deserialize( JsonValue &jsin )
+{
+    vehicle_paint_activity_actor actor;
+    JsonObject data = jsin.get_object();
+    data.read( "spray_gun", actor.spray_gun );
+    data.read( "target_vehicle_anchor", actor.target_vehicle_anchor );
+    data.read( "targets", actor.targets );
+    data.read( "paint_color_hex", actor.paint_color_hex );
+    data.read( "next_target", actor.next_target );
+    data.read( "painted_tiles", actor.painted_tiles );
+    data.read( "time_until_next_tile", actor.time_until_next_tile );
+    return actor.clone();
 }
 
 bikerack_racking_activity_actor::bikerack_racking_activity_actor( const vehicle &parent_vehicle,
@@ -7391,6 +7541,7 @@ deserialize_functions = {
     { ACT_UNLOAD, &unload_activity_actor::deserialize },
     { ACT_UNLOAD_LOOT, &unload_loot_activity_actor::deserialize },
     { ACT_VEHICLE_FOLD, &vehicle_folding_activity_actor::deserialize },
+    { ACT_VEHICLE_PAINT, &vehicle_paint_activity_actor::deserialize },
     { ACT_VEHICLE_UNFOLD, &vehicle_unfolding_activity_actor::deserialize },
     { ACT_WEAR, &wear_activity_actor::deserialize },
     { ACT_WIELD, &wield_activity_actor::deserialize},

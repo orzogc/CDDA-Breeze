@@ -3,6 +3,7 @@
 
 #include <array>
 #include <cstddef>
+#include <functional>
 #include <memory>
 #include <queue>
 #include <string>
@@ -17,6 +18,7 @@
 #include "translations.h"
 #include "ui_manager.h"
 
+class item;
 class npc;
 class trade_ui;
 class vehicle;
@@ -57,7 +59,8 @@ class trade_selector : public inventory_drop_selector
 class trade_preset : public inventory_selector_preset
 {
     public:
-        explicit trade_preset( Character const &you, Character const &trader );
+        explicit trade_preset( Character const &you, Character const &trader,
+                               std::function<bool( item const & )> filter = {} );
 
         bool is_shown( item_location const &loc ) const override;
         std::string get_denial( const item_location &loc ) const override;
@@ -65,6 +68,7 @@ class trade_preset : public inventory_selector_preset
 
     private:
         Character const &_u, &_trader;
+        std::function<bool( item const & )> _filter;
 };
 
 class trade_ui
@@ -86,7 +90,8 @@ class trade_ui
 
         enum class event { TRADECANCEL = 0, TRADEOK = 1, SWITCH = 2, NEVENTS = 3 };
 
-        trade_ui( party_t &you, npc &trader, currency_t cost = 0, std::string title = _( "Trade" ) );
+        trade_ui( party_t &you, npc &trader, currency_t cost = 0, std::string title = _( "Trade" ),
+                  std::function<bool( item const & )> trader_filter = {} );
 
         void pushevent( event const &ev );
 
