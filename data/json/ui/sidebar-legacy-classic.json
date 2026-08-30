@@ -168,7 +168,7 @@
     "label": "Date/Time",
     "style": "layout",
     "arrange": "minimum_columns",
-    "padding": 1,
+    "padding": 0,
     "widgets": [ "lcla_date_desc_full", "time_desc_short_label" ],
     "flags": [ "W_LABEL_NONE" ]
   },
