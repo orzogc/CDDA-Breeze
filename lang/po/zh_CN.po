@@ -323653,6 +323653,11 @@ msgctxt "UI sidebar"
 msgid "mobile"
 msgstr "移动端"
 
+#. ~ Description of UI widget "sidebar-mobile"
+#: data/json/ui/sidebar-mobile.json
+msgid "This one intended for mobile use where every symbol counts. Fixed data takes 22 lines and 43 symbols width. "
+msgstr "此侧边栏专为移动端设计，每个字符都很重要。固定内容占用 22 行、43 个字符宽度。"
+
 #. ~ Label of UI widget "thick_rs_column"
 #. ~ Label of UI widget "thick_rs_column_sa"
 #. ~ Label of UI widget "thick_rs_column_2"
@@ -323990,6 +323995,11 @@ msgstr "武器/声音"
 #: data/json/ui/structured/sidebar-structured.json
 msgid "structured"
 msgstr "结构化"
+
+#. ~ Description of UI widget "structured_sidebar"
+#: data/json/ui/structured/sidebar-structured.json
+msgid "A compact, structured sidebar. Ideal for playing with large font size or small resolution.\n\nFeatures compact body graphs for HP, encumbrance, status and temperature.\n\nHighly customizable in-game!\n\n(It is recommended to disable sidebar spacers under Options -> Interface.)"
+msgstr "紧凑、结构化的侧边栏。适合使用大字体或在低分辨率下游玩。\n\n提供紧凑的身体部位图，用于显示生命值、累赘、状态和体温。\n\n可在游戏中高度自定义！\n\n（建议在“选项 → 界面”中关闭侧边栏间隔。）"
 
 #. ~ Label of UI widget "structured_overmap_compass_9x9_layout"
 #: data/json/ui/structured/structured_compass_block.json
