@@ -1,0 +1,175 @@
+[
+  {
+    "type": "mod_tileset",
+    "compatibility": [
+      "Chibi_Ultica",
+      "MshockRealXotto",
+      "UltimateCataclysm",
+      "MshockXottoplus",
+      "UNDEAD_PEOPLE",
+      "UNDEAD_PEOPLE_BASE",
+      "UNDEAD_PEOPLE_LEGACY",
+      "UlticaShell",
+      "MshockXottoplus12",
+      "MSX++DEAD_PEOPLE",
+      "MXplus12_for_cosmetics",
+      "MSXotto+",
+      "MshockXotto+",
+      "UltimateCataclysmDemo",
+      "Ultica"
+    ],
+    "tiles-new": [
+      {
+        "file": "tiles_cbn119_weapons.png",
+        "tiles": [
+          {
+            "id": "overlay_wielded_k27",
+            "fg": 50
+          },
+          {
+            "id": "k27",
+            "fg": 51
+          },
+          {
+            "id": "overlay_wielded_k28",
+            "fg": 52
+          },
+          {
+            "id": "k28",
+            "fg": 53
+          },
+          {
+            "id": "overlay_wielded_claw9s",
+            "fg": 120
+          },
+          {
+            "id": "claw9s",
+            "fg": 121
+          },
+          {
+            "id": "overlay_wielded_gk_47su",
+            "fg": 128
+          },
+          {
+            "id": "gk_47su",
+            "fg": 129
+          },
+          {
+            "id": "overlay_wielded_gk_47",
+            "fg": 142
+          },
+          {
+            "id": "gk_47",
+            "fg": 143
+          },
+          {
+            "id": "overlay_wielded_gk_74",
+            "fg": 144
+          },
+          {
+            "id": "gk_74",
+            "fg": 145
+          }
+        ],
+        "sprite_width": 32,
+        "sprite_height": 32,
+        "sprite_offset_x": 0,
+        "sprite_offset_y": 0
+      }
+    ]
+  },
+  {
+    "type": "mod_tileset",
+    "compatibility": [
+      "Chibi_Ultica",
+      "MshockRealXotto",
+      "UltimateCataclysm",
+      "MshockXottoplus",
+      "UNDEAD_PEOPLE",
+      "UNDEAD_PEOPLE_BASE",
+      "UNDEAD_PEOPLE_LEGACY",
+      "UlticaShell",
+      "MshockXottoplus12",
+      "MSX++DEAD_PEOPLE",
+      "MXplus12_for_cosmetics",
+      "MSXotto+",
+      "MshockXotto+",
+      "UltimateCataclysmDemo",
+      "Ultica"
+    ],
+    "tiles-new": [
+      {
+        "file": "tiles_cbn119_ammo.png",
+        "tiles": [
+          {
+            "id": "ZS1",
+            "fg": 11
+          },
+          {
+            "id": "ZH2C",
+            "fg": 11
+          },
+          {
+            "id": "ZP1",
+            "fg": 11
+          },
+          {
+            "id": "2080_casing",
+            "fg": 13
+          }
+        ],
+        "sprite_width": 32,
+        "sprite_height": 32,
+        "sprite_offset_x": 0,
+        "sprite_offset_y": 0
+      }
+    ]
+  },
+  {
+    "type": "mod_tileset",
+    "compatibility": [
+      "Chibi_Ultica",
+      "MshockRealXotto",
+      "UltimateCataclysm",
+      "MshockXottoplus",
+      "UNDEAD_PEOPLE",
+      "UNDEAD_PEOPLE_BASE",
+      "UNDEAD_PEOPLE_LEGACY",
+      "UlticaShell",
+      "MshockXottoplus12",
+      "MSX++DEAD_PEOPLE",
+      "MXplus12_for_cosmetics",
+      "MSXotto+",
+      "MshockXotto+",
+      "UltimateCataclysmDemo",
+      "Ultica"
+    ],
+    "tiles-new": [
+      {
+        "file": "tiles_cbn119_heavy.png",
+        "tiles": [
+          {
+            "id": "overlay_wielded_gavsk",
+            "fg": 94
+          },
+          {
+            "id": "gavsk",
+            "fg": 95
+          },
+          {
+            "id": "overlay_wielded_gavsl",
+            "fg": 96
+          },
+          {
+            "id": "gavsl",
+            "fg": 97
+          }
+        ],
+        "sprite_width": 64,
+        "sprite_height": 64,
+        "sprite_offset_x": -16,
+        "sprite_offset_y": -16
+      }
+    ]
+  }
+]

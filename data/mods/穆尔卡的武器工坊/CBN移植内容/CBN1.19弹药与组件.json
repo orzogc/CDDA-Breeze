@@ -1,0 +1,283 @@
+[
+  {
+    "type": "ammunition_type",
+    "id": "2080_cta",
+    "name": "20x80mm 埋头弹",
+    "default": "ZS1"
+  },
+  {
+    "id": "2080_casing",
+    "copy-from": "casing",
+    "type": "GENERIC",
+    "material": [
+      "plastic"
+    ],
+    "name": {
+      "str": "20x80mm 埋头弹壳"
+    },
+    "description": "空的20x80mm埋头弹壳，弹壳上面还印着该子弹的参数。",
+    "weight": "20 g",
+    "volume": "20 ml"
+  },
+  {
+    "id": "ZS1",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "20x80mm ZS1 亚音速标准弹"
+    },
+    "description": "格科斯勒的枪械设计师们向来都是面多加水，水多加面的典范，如果有人需要一款既有隐蔽性又有杀伤性的子弹该怎么办？这款20x80mm的弹药就是他们的回答，为了穿透重型防弹衣，它的弹头重量就足足有200克左右，另一方面为了保持速度又不得不加长弹壳来容纳更多的装药，于是你就得到了一块会飞的大铁块，在亚音速弹中它的威力是毁灭性的，绝对的大力出奇迹，然而沉重的弹头与亚音速严重影响了射程，也正因如此，它的抗风偏与存速能力极好，基本只需要算好下坠就可以打的特别准，该弹药在特定情况下出奇的好用，搭配消音器可以悄无声息的打飞某个人的脑袋。",
+    "weight": "250 g",
+    "volume": "250 ml",
+    "price": "800 cent",
+    "price_postapoc": "20 USD",
+    "material": [
+      "steel",
+      "plastic",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "green",
+    "count": 20,
+    "stack_size": 20,
+    "ammo_type": "2080_cta",
+    "casing": "2080_casing",
+    "range": 55,
+    "loudness": 160,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 140,
+      "armor_penetration": 60
+    },
+    "dispersion": 20,
+    "recoil": 5000,
+    "speed": 320,
+    "effects": [
+      "COOKOFF",
+      "NEVER_MISFIRES"
+    ]
+  },
+  {
+    "id": "ZP1",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "20x80mm ZP1 亚音速风帽空尖弹"
+    },
+    "description": "一种基于20x80mm ZS1 埋头弹而设计的风帽空尖弹，弹壳涂有一圈白色的标记，其设计目的便是为了追求对软目标的极致杀伤效果，ZP1空尖弹可以在命中目标后迅速膨胀并造成极为可怕的损伤，并且这种弹药不容易导致过度穿透，可以有效避免误伤，但同时空尖弹的阻力比普通弹药更大，为了解决这个问题，ZP1在弹头上安装了聚合物风帽，大幅降低了空气阻力……不过目前这个情况，真的有必要在意误伤吗？",
+    "weight": "250 g",
+    "volume": "250 ml",
+    "price": "800 cent",
+    "price_postapoc": "20 USD",
+    "material": [
+      "steel",
+      "plastic",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "green",
+    "count": 20,
+    "stack_size": 20,
+    "ammo_type": "2080_cta",
+    "casing": "2080_casing",
+    "range": 55,
+    "loudness": 160,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 180,
+      "armor_penetration": 20
+    },
+    "dispersion": 25,
+    "recoil": 5000,
+    "speed": 320,
+    "effects": [
+      "COOKOFF",
+      "NEVER_MISFIRES",
+      "NO_PENETRATE_OBSTACLES"
+    ]
+  },
+  {
+    "id": "ZH2C",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "20x80mm ZH2C 亚音速薄壳高爆弹"
+    },
+    "description": "一种基于20x80mm ZS1 埋头弹而设计的薄壳高爆弹，弹壳涂有一圈黄红相间的标记，这种弹药很奇怪，20x80mm是一种为了追求隐蔽性才设计的弹药，而ZH2C却违背了这一点，得益于它是亚音速弹，弹头被设计的非常大，所以有充足的空间用来容纳装药，其弹头内部装有大约60克的炸药，这个装药量甚至比一些20mm机炮使用的高爆弹还要多好几倍，爆炸威力相当大，可以轻而易举的撕碎大部分民用车辆，但薄壳弹设计也让它的穿透性与破片伤害不佳，该弹药通常用于打击软目标以及设备。\n\n温馨提醒：请不要在近距离使用该弹药。",
+    "weight": "250 g",
+    "volume": "250 ml",
+    "price": "100 USD",
+    "price_postapoc": "50 USD",
+    "material": [
+      "steel",
+      "plastic",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "green",
+    "count": 20,
+    "stack_size": 20,
+    "ammo_type": "2080_cta",
+    "casing": "2080_casing",
+    "range": 55,
+    "loudness": 160,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 95,
+      "armor_penetration": 20
+    },
+    "dispersion": 20,
+    "recoil": 5000,
+    "speed": 320,
+    "effects": [
+      "COOKOFF",
+      "NEVER_MISFIRES",
+      "NO_PENETRATE_OBSTACLES",
+      "AMMO_2080_HEHC"
+    ]
+  },
+  {
+    "id": "gavsk_10",
+    "looks_like": "svd_10",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "GAVSK 10发弹匣"
+    },
+    "description": "一个GAVSK的10发弹匣，可以装填10发20x80mm埋头弹。",
+    "weight": "500 g",
+    "volume": "500 ml",
+    "price": "50 USD",
+    "price_postapoc": "500 cent",
+    "material": "steel",
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": "2080_cta",
+    "capacity": 10,
+    "reliability": 10,
+    "reload_time": 200,
+    "flags": [
+      "MAG_BULKY"
+    ]
+  },
+  {
+    "id": "gavsk_20",
+    "looks_like": "svd_10",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "GAVSK 20发弹鼓"
+    },
+    "description": "一个GAVSK的20发弹鼓，可以装填20发20x80mm埋头弹。",
+    "weight": "1200 g",
+    "volume": "1000 ml",
+    "price": "100 USD",
+    "price_postapoc": "1 USD",
+    "material": "steel",
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": "2080_cta",
+    "capacity": 20,
+    "reliability": 10,
+    "reload_time": 300,
+    "flags": [
+      "MAG_BULKY"
+    ]
+  },
+  {
+    "id": "bcrf_sp_s",
+    "type": "GUNMOD",
+    "name": {
+      "str": "集成式冲锋枪消音器"
+    },
+    "description": "枪械内置的消音器，不可被拆卸。",
+    "weight": "5 g",
+    "volume": "10 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": "1 USD",
+    "price_postapoc": "1 USD",
+    "install_time": "15 s",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "muzzle",
+    "loudness_modifier": -40,
+    "flags": [
+      "IRREMOVABLE",
+      "ZERO_WEIGHT"
+    ],
+    "mod_targets": [
+      "smg"
+    ]
+  },
+  {
+    "id": "gavsk_sp",
+    "type": "GUNMOD",
+    "name": {
+      "str": "GAVSK 集成式消音器"
+    },
+    "description": "GAVSK的专属消音器，差不多有你的胳膊那么粗，尺寸还很长，消音效果非常好。",
+    "weight": "10 g",
+    "volume": "10 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": "10 USD",
+    "price_postapoc": "10 USD",
+    "install_time": "1 s",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "muzzle",
+    "mod_targets": [
+      "gavsk"
+    ],
+    "loudness_modifier": -50,
+    "flags": [
+      "IRREMOVABLE"
+    ]
+  },
+  {
+    "id": "gavsl_sp",
+    "type": "GUNMOD",
+    "name": {
+      "str": "GAVSL 集成式消音器"
+    },
+    "description": "GAVSL的专属消音器，尺寸更短，所以消音效果更差一些。",
+    "weight": "10 g",
+    "volume": "10 ml",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": "10 USD",
+    "price_postapoc": "10 USD",
+    "install_time": "1 s",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "muzzle",
+    "mod_targets": [
+      "gavsl"
+    ],
+    "loudness_modifier": -40,
+    "flags": [
+      "IRREMOVABLE"
+    ]
+  },
+  {
+    "id": "AMMO_2080_HEHC",
+    "type": "ammo_effect",
+    "explosion": {
+      "damage": 80,
+      "radius": 5,
+      "fragment": {
+        "impact": {
+          "damage_type": "bullet",
+          "amount": 30,
+          "armor_multiplier": 2
+        },
+        "range": 7
+      }
+    }
+  }
+]
