@@ -14,6 +14,8 @@
 #include "omdata.h"
 #include "type_id.h"
 
+constexpr int DEFAULT_TILESET_ZOOM = 16;
+
 class item;
 
 struct advanced_inv_pane_save_state {
@@ -132,6 +134,10 @@ class uistatedata
         bool overmap_debug_weather = false;
         // draw monster groups on the overmap.
         bool overmap_debug_mongroup = false;
+
+        // Persist normal-map and overmap zoom independently.
+        int tileset_zoom = DEFAULT_TILESET_ZOOM;
+        int overmap_tileset_zoom = DEFAULT_TILESET_ZOOM;
 
         // Distraction manager stuff
         bool distraction_noise = true;
