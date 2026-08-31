@@ -147,6 +147,38 @@
       {
         "item": "ga290r",
         "prob": 8
+      },
+      {
+        "item": "k27",
+        "prob": 15
+      },
+      {
+        "item": "k28",
+        "prob": 15
+      },
+      {
+        "item": "gk_47",
+        "prob": 12
+      },
+      {
+        "item": "gk_47su",
+        "prob": 15
+      },
+      {
+        "item": "gk_74",
+        "prob": 12
+      },
+      {
+        "item": "claw9s",
+        "prob": 12
+      },
+      {
+        "item": "gavsk",
+        "prob": 5
+      },
+      {
+        "item": "gavsl",
+        "prob": 4
       }
     ]
   },
@@ -218,6 +250,14 @@
       {
         "item": "csls7_30",
         "prob": 30
+      },
+      {
+        "item": "gavsk_10",
+        "prob": 20
+      },
+      {
+        "item": "gavsk_20",
+        "prob": 10
       }
     ]
   },
@@ -269,6 +309,18 @@
       {
         "item": "762bp",
         "prob": 35
+      },
+      {
+        "item": "ZS1",
+        "prob": 20
+      },
+      {
+        "item": "ZH2C",
+        "prob": 10
+      },
+      {
+        "item": "ZP1",
+        "prob": 30
       }
     ]
   },
@@ -457,6 +509,30 @@
         [
           "zagl40",
           3
+        ],
+        [
+          "gk_47",
+          15
+        ],
+        [
+          "gk_74",
+          15
+        ],
+        [
+          "gk_47su",
+          25
+        ],
+        [
+          "claw9s",
+          20
+        ],
+        [
+          "gavsk",
+          3
+        ],
+        [
+          "gavsl",
+          1
         ]
       ],
       "entries": [
@@ -613,6 +689,302 @@
           "item": "191_30",
           "prob": 10
         }
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "guns_rifle_common",
+    "copy-from": "guns_rifle_common",
+    "extend": {
+      "items": [
+        [
+          "k27",
+          15
+        ],
+        [
+          "k28",
+          15
+        ]
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "guns_rifle_rare",
+    "copy-from": "guns_rifle_rare",
+    "extend": {
+      "items": [
+        [
+          "claw9s",
+          20
+        ],
+        [
+          "k27",
+          20
+        ],
+        [
+          "k28",
+          20
+        ],
+        [
+          "gk_47",
+          15
+        ],
+        [
+          "gk_74",
+          15
+        ],
+        [
+          "gk_47su",
+          25
+        ]
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "guns_rifle_milspec",
+    "copy-from": "guns_rifle_milspec",
+    "extend": {
+      "items": [
+        [
+          "gk_47",
+          20
+        ],
+        [
+          "gk_74",
+          20
+        ],
+        [
+          "gk_47su",
+          35
+        ],
+        [
+          "claw9s",
+          20
+        ],
+        [
+          "gavsk",
+          10
+        ],
+        [
+          "gavsl",
+          5
+        ]
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "guns_swat",
+    "copy-from": "guns_swat",
+    "extend": {
+      "items": [
+        [
+          "gk_47",
+          5
+        ],
+        [
+          "gk_74",
+          5
+        ],
+        [
+          "gk_47su",
+          10
+        ],
+        [
+          "claw9s",
+          20
+        ],
+        [
+          "gavsk",
+          10
+        ],
+        [
+          "gavsl",
+          2
+        ]
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "ammo_rifle_rare",
+    "copy-from": "ammo_rifle_rare",
+    "extend": {
+      "entries": [
+        {
+          "item": "ZS1",
+          "prob": 5,
+          "charges": [
+            1,
+            100
+          ]
+        },
+        {
+          "item": "ZP1",
+          "prob": 5,
+          "charges": [
+            1,
+            100
+          ]
+        }
+      ]
+    },
+    "subtype": "distribution"
+  },
+  {
+    "type": "item_group",
+    "id": "ammo_rifle_milspec",
+    "copy-from": "ammo_rifle_milspec",
+    "extend": {
+      "entries": [
+        {
+          "item": "ZS1",
+          "prob": 20,
+          "charges": [
+            1,
+            100
+          ]
+        },
+        {
+          "item": "ZH2C",
+          "prob": 10,
+          "charges": [
+            1,
+            100
+          ]
+        },
+        {
+          "item": "ZP1",
+          "prob": 30,
+          "charges": [
+            1,
+            100
+          ]
+        }
+      ]
+    },
+    "subtype": "distribution"
+  },
+  {
+    "type": "item_group",
+    "id": "ammo_rifle_obscure",
+    "copy-from": "ammo_rifle_obscure",
+    "extend": {
+      "entries": [
+        {
+          "item": "ZS1",
+          "prob": 20,
+          "charges": [
+            1,
+            100
+          ]
+        },
+        {
+          "item": "ZH2C",
+          "prob": 1,
+          "charges": [
+            1,
+            100
+          ]
+        },
+        {
+          "item": "ZP1",
+          "prob": 30,
+          "charges": [
+            1,
+            100
+          ]
+        }
+      ]
+    },
+    "subtype": "distribution"
+  },
+  {
+    "type": "item_group",
+    "id": "ammo_swat",
+    "copy-from": "ammo_swat",
+    "extend": {
+      "entries": [
+        {
+          "item": "ZS1",
+          "prob": 10,
+          "charges": [
+            1,
+            100
+          ]
+        },
+        {
+          "item": "ZH2C",
+          "prob": 1,
+          "charges": [
+            1,
+            100
+          ]
+        },
+        {
+          "item": "ZP1",
+          "prob": 10,
+          "charges": [
+            1,
+            100
+          ]
+        }
+      ]
+    },
+    "subtype": "distribution"
+  },
+  {
+    "type": "item_group",
+    "id": "ammo_rifle_rare_full",
+    "copy-from": "ammo_rifle_rare_full",
+    "extend": {
+      "entries": [
+        {
+          "item": "ZS1",
+          "prob": 2
+        },
+        {
+          "item": "ZP1",
+          "prob": 10
+        }
+      ]
+    },
+    "subtype": "distribution"
+  },
+  {
+    "type": "item_group",
+    "id": "mags_milspec",
+    "copy-from": "mags_milspec",
+    "extend": {
+      "items": [
+        [
+          "gavsk_10",
+          20
+        ],
+        [
+          "gavsk_20",
+          10
+        ]
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "mags_swat",
+    "copy-from": "mags_swat",
+    "extend": {
+      "items": [
+        [
+          "gavsk_10",
+          20
+        ],
+        [
+          "gavsk_20",
+          10
+        ]
       ]
     }
   }

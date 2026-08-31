@@ -1,0 +1,520 @@
+[
+  {
+    "result": "737_casing",
+    "type": "recipe",
+    "category": "CC_AMMO",
+    "subcategory": "CSC_AMMO_COMPONENTS",
+    "skill_used": "fabrication",
+    "difficulty": 6,
+    "time": "5 m",
+    "book_learn": [
+      [
+        "recipe_bullets",
+        5
+      ],
+      [
+        "mag_shotgun",
+        5
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "hydraulic_press",
+          15
+        ]
+      ],
+      [
+        [
+          "forging_standard",
+          1,
+          "LIST"
+        ]
+      ],
+      [
+        [
+          "mold_plastic",
+          -1
+        ]
+      ]
+    ],
+    "charges": 1,
+    "components": [
+      [
+        [
+          "copper",
+          1
+        ]
+      ],
+      [
+        [
+          "plastic_chunk",
+          1
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "2080_casing",
+    "type": "recipe",
+    "category": "CC_AMMO",
+    "subcategory": "CSC_AMMO_COMPONENTS",
+    "skill_used": "fabrication",
+    "difficulty": 8,
+    "time": "5 m",
+    "book_learn": [
+      [
+        "recipe_bullets",
+        8
+      ],
+      [
+        "mag_shotgun",
+        8
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "hydraulic_press",
+          40
+        ]
+      ],
+      [
+        [
+          "forging_standard",
+          2,
+          "LIST"
+        ]
+      ],
+      [
+        [
+          "mold_plastic",
+          -1
+        ]
+      ]
+    ],
+    "charges": 1,
+    "components": [
+      [
+        [
+          "copper",
+          3
+        ]
+      ],
+      [
+        [
+          "plastic_chunk",
+          2
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "5C2SB",
+    "type": "recipe",
+    "category": "CC_AMMO",
+    "subcategory": "CSC_AMMO_RIFLE",
+    "skill_used": "fabrication",
+    "difficulty": 5,
+    "skills_required": [
+      "gun",
+      5
+    ],
+    "time": "2 m",
+    "batch_time_factors": [
+      60,
+      5
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        5
+      ],
+      [
+        "mag_rifle",
+        5
+      ]
+    ],
+    "charges": 1,
+    "reversible": true,
+    "using": [
+      [
+        "bullet_forming",
+        5
+      ],
+      [
+        "ammo_bullet",
+        5
+      ]
+    ],
+    "components": [
+      [
+        [
+          "737_casing",
+          1
+        ]
+      ],
+      [
+        [
+          "lgrifle_primer",
+          1
+        ]
+      ],
+      [
+        [
+          "gunpowder",
+          8
+        ]
+      ],
+      [
+        [
+          "copper",
+          1
+        ]
+      ]
+    ],
+    "activity_level": "LIGHT_EXERCISE",
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ]
+  },
+  {
+    "result": "ZS1",
+    "type": "recipe",
+    "category": "CC_AMMO",
+    "subcategory": "CSC_AMMO_RIFLE",
+    "skill_used": "fabrication",
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "2 m",
+    "batch_time_factors": [
+      60,
+      5
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        7
+      ]
+    ],
+    "charges": 1,
+    "reversible": true,
+    "using": [
+      [
+        "bullet_forming",
+        25
+      ],
+      [
+        "ammo_bullet",
+        15
+      ]
+    ],
+    "components": [
+      [
+        [
+          "2080_casing",
+          1
+        ]
+      ],
+      [
+        [
+          "lgrifle_primer",
+          1
+        ]
+      ],
+      [
+        [
+          "gunpowder",
+          40
+        ]
+      ],
+      [
+        [
+          "copper",
+          10
+        ]
+      ]
+    ],
+    "activity_level": "LIGHT_EXERCISE",
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ]
+  },
+  {
+    "result": "ZH2C",
+    "type": "recipe",
+    "category": "CC_AMMO",
+    "subcategory": "CSC_AMMO_RIFLE",
+    "skill_used": "fabrication",
+    "difficulty": 10,
+    "skills_required": [
+      "gun",
+      10
+    ],
+    "time": "10 m",
+    "batch_time_factors": [
+      60,
+      5
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        8
+      ]
+    ],
+    "charges": 1,
+    "reversible": true,
+    "using": [
+      [
+        "bullet_forming",
+        25
+      ],
+      [
+        "ammo_bullet",
+        15
+      ]
+    ],
+    "components": [
+      [
+        [
+          "2080_casing",
+          1
+        ]
+      ],
+      [
+        [
+          "lgrifle_primer",
+          1
+        ]
+      ],
+      [
+        [
+          "gunpowder",
+          40
+        ]
+      ],
+      [
+        [
+          "copper",
+          10
+        ]
+      ],
+      [
+        [
+          "military_explosive",
+          10,
+          "LIST"
+        ],
+        [
+          "stable_explosive",
+          10,
+          "LIST"
+        ]
+      ],
+      [
+        [
+          "impact_fuze",
+          1
+        ]
+      ]
+    ],
+    "activity_level": "LIGHT_EXERCISE",
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ]
+  },
+  {
+    "result": "ZP1",
+    "type": "recipe",
+    "category": "CC_AMMO",
+    "subcategory": "CSC_AMMO_RIFLE",
+    "skill_used": "fabrication",
+    "difficulty": 8,
+    "skills_required": [
+      "gun",
+      8
+    ],
+    "time": "2 m",
+    "batch_time_factors": [
+      60,
+      5
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        7
+      ]
+    ],
+    "charges": 1,
+    "reversible": true,
+    "using": [
+      [
+        "bullet_forming",
+        25
+      ],
+      [
+        "ammo_bullet",
+        15
+      ]
+    ],
+    "components": [
+      [
+        [
+          "2080_casing",
+          1
+        ]
+      ],
+      [
+        [
+          "lgrifle_primer",
+          1
+        ]
+      ],
+      [
+        [
+          "gunpowder",
+          40
+        ]
+      ],
+      [
+        [
+          "copper",
+          10
+        ]
+      ]
+    ],
+    "activity_level": "LIGHT_EXERCISE",
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ]
+  },
+  {
+    "result": "gavsk_20",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "autolearn": false,
+    "skill_used": "fabrication",
+    "book_learn": [
+      [
+        "mag_guns",
+        5
+      ]
+    ],
+    "difficulty": 5,
+    "time": "300 m",
+    "reversible": true,
+    "decomp_learn": 3,
+    "components": [
+      [
+        [
+          "scrap",
+          20
+        ]
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "small_repairkit",
+          10
+        ],
+        [
+          "large_repairkit",
+          5
+        ]
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 1
+      },
+      {
+        "id": "SCREW_FINE",
+        "level": 1
+      }
+    ],
+    "activity_level": "MODERATE_EXERCISE"
+  },
+  {
+    "result": "gavsk_10",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "autolearn": false,
+    "skill_used": "fabrication",
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "difficulty": 3,
+    "time": "150 m",
+    "reversible": true,
+    "decomp_learn": 3,
+    "components": [
+      [
+        [
+          "scrap",
+          10
+        ]
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "small_repairkit",
+          10
+        ],
+        [
+          "large_repairkit",
+          5
+        ]
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 1
+      },
+      {
+        "id": "SCREW_FINE",
+        "level": 1
+      }
+    ],
+    "activity_level": "MODERATE_EXERCISE"
+  }
+]
