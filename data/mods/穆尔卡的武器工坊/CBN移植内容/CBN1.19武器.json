@@ -568,13 +568,13 @@
       {
         "pocket_type": "MAGAZINE_WELL",
         "item_restriction": [
-          "kriss_vector_9mm_mag",
           "glock17_17",
           "glock17_22",
           "glock_drum_50rd",
           "glock_drum_100rd",
           "glockbigmag"
-        ]
+        ],
+        "default_magazine": "glock17_17"
       }
     ]
   },
