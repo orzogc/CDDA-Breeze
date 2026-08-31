@@ -1741,16 +1741,14 @@ static std::vector<tripoint_abs_omt> get_overmap_path_to( const tripoint_abs_omt
     }
 }
 
-static int overmap_zoom_level = DEFAULT_TILESET_ZOOM;
-
 static tripoint_abs_omt display( const tripoint_abs_omt &orig,
                                  const draw_data_t &data = draw_data_t() )
 {
-    const int previous_zoom = g->get_zoom();
-    g->set_zoom( overmap_zoom_level );
+    // Normal map and overmap keep separate logical zoom values.  Because Breeze's
+    // renderer shares draw dimensions, explicitly restore the context being shown.
+    g->set_overmap_zoom( uistate.overmap_tileset_zoom );
     on_out_of_scope reset_zoom( [&]() {
-        overmap_zoom_level = g->get_zoom();
-        g->set_zoom( previous_zoom );
+        g->set_zoom( uistate.tileset_zoom );
         g->mark_main_ui_adaptor_resize();
     } );
 

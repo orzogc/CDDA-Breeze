@@ -480,7 +480,6 @@ game::game() :
     next_npc_id(1),
     next_mission_id(1),
     remoteveh_cache_time(calendar::before_time_starts),
-    tileset_zoom(DEFAULT_TILESET_ZOOM),
     last_mouse_edge_scroll(std::chrono::steady_clock::now())
 {
     first_redraw_since_waiting_started = true;
@@ -2493,7 +2492,7 @@ std::pair<tripoint, tripoint> game::mouse_edge_scrolling( input_context &ctxt, c
 
 tripoint game::mouse_edge_scrolling_terrain( input_context &ctxt )
 {
-    auto ret = mouse_edge_scrolling( ctxt, std::max( DEFAULT_TILESET_ZOOM / tileset_zoom, 1 ),
+    auto ret = mouse_edge_scrolling( ctxt, std::max( DEFAULT_TILESET_ZOOM / uistate.tileset_zoom, 1 ),
                                      last_mouse_edge_scroll_vector_terrain, g->is_tileset_isometric() );
     last_mouse_edge_scroll_vector_terrain = ret.second;
     last_mouse_edge_scroll_vector_overmap = tripoint_zero;
@@ -3018,6 +3017,9 @@ bool game::load( const save_t &name )
     const JsonValue & jsin ) {
         uistate.deserialize( jsin.get_object() );
     } );
+    // Restore both logical and rendered zoom after loading UI state.
+    set_zoom( uistate.tileset_zoom );
+    set_overmap_zoom( uistate.overmap_tileset_zoom );
     reload_npcs();
     validate_npc_followers();
     validate_mounted_npcs();
@@ -7758,7 +7760,7 @@ look_around_result game::look_around(
     is_looking = true;
     const tripoint prev_offset = u.view_offset;
 
-    const int prev_tileset_zoom = tileset_zoom;
+    const int prev_tileset_zoom = uistate.tileset_zoom;
     while( is_moving_zone && square_dist( start_point, end_point ) > 256 / get_zoom() &&
            get_zoom() != 4 ) {
         zoom_out();
@@ -8104,73 +8106,81 @@ static constexpr int MAXIMUM_ZOOM_LEVEL = 4;
 void game::zoom_out()
 {
 
-    if( tileset_zoom > MAXIMUM_ZOOM_LEVEL ) {
-        tileset_zoom = tileset_zoom / 2;
+    if( uistate.tileset_zoom > MAXIMUM_ZOOM_LEVEL ) {
+        uistate.tileset_zoom = uistate.tileset_zoom / 2;
     } else {
-        tileset_zoom = 64;
+        uistate.tileset_zoom = 64;
     }
-    rescale_tileset( tileset_zoom );
+    rescale_tileset( uistate.tileset_zoom );
 
 }
 
 void game::zoom_out_overmap()
 {
 
-    if( overmap_tileset_zoom > MAXIMUM_ZOOM_LEVEL ) {
-        overmap_tileset_zoom /= 2;
+    if( uistate.overmap_tileset_zoom > MAXIMUM_ZOOM_LEVEL ) {
+        uistate.overmap_tileset_zoom /= 2;
     } else {
-        overmap_tileset_zoom = 64;
+        uistate.overmap_tileset_zoom = 64;
     }
-    overmap_tilecontext->set_draw_scale( overmap_tileset_zoom );
+    overmap_tilecontext->set_draw_scale( uistate.overmap_tileset_zoom );
 
 }
 
 void game::zoom_in()
 {
 
-    if( tileset_zoom == 64 ) {
-        tileset_zoom = MAXIMUM_ZOOM_LEVEL;
+    if( uistate.tileset_zoom == 64 ) {
+        uistate.tileset_zoom = MAXIMUM_ZOOM_LEVEL;
     } else {
-        tileset_zoom = tileset_zoom * 2;
+        uistate.tileset_zoom = uistate.tileset_zoom * 2;
     }
-    rescale_tileset( tileset_zoom );
+    rescale_tileset( uistate.tileset_zoom );
 
 }
 
 void game::zoom_in_overmap()
 {
 
-    if( overmap_tileset_zoom == 64 ) {
-        overmap_tileset_zoom = MAXIMUM_ZOOM_LEVEL;
+    if( uistate.overmap_tileset_zoom == 64 ) {
+        uistate.overmap_tileset_zoom = MAXIMUM_ZOOM_LEVEL;
     } else {
-        overmap_tileset_zoom *= 2;
+        uistate.overmap_tileset_zoom *= 2;
     }
-    overmap_tilecontext->set_draw_scale( overmap_tileset_zoom );
+    overmap_tilecontext->set_draw_scale( uistate.overmap_tileset_zoom );
 
 }
 
 void game::reset_zoom()
 {
 
-    tileset_zoom = DEFAULT_TILESET_ZOOM;
-    rescale_tileset( tileset_zoom );
+    uistate.tileset_zoom = DEFAULT_TILESET_ZOOM;
+    rescale_tileset( uistate.tileset_zoom );
 
 }
 
 void game::set_zoom( const int level )
 {
 
-    if( tileset_zoom != level ) {
-        tileset_zoom = level;
-        rescale_tileset( tileset_zoom );
-    }
+    uistate.tileset_zoom = level;
+    // Breeze shares draw dimensions between tile contexts, so always re-apply the scale.
+    rescale_tileset( uistate.tileset_zoom );
+
+}
+
+void game::set_overmap_zoom( const int level )
+{
+
+    uistate.overmap_tileset_zoom = level;
+    // Always re-apply: the normal-map context may have overwritten the shared draw dimensions.
+    overmap_tilecontext->set_draw_scale( uistate.overmap_tileset_zoom );
 
 }
 
 int game::get_zoom() const
 {
 
-    return tileset_zoom;
+    return uistate.tileset_zoom;
 
 }
 
