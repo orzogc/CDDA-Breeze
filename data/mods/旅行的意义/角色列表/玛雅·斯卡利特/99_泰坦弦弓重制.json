@@ -1,0 +1,210 @@
+[
+  {
+    "type": "GUN",
+    "id": "travel_titan_string_bow",
+    "copy-from": "longbow",
+    "name": {
+      "str": "泰坦弦弓"
+    },
+    "description": "一把黑金色复合弓。重做后的滑轮组会随射手的力量改变弓身输出，不再需要切换张力。力量8时，弓身提供60点基础穿刺伤害；力量每高于8点1点，伤害增加2点，每低于8点1点，伤害降低2点。它没有最低力量门槛，力量不足只会让箭矢失去一部分威力。\n\n人们常以为天生的弓手都该身形修长、手臂纤细——这完全错了。把弓弦一路拉到颧骨需要多年的训练；到最后，你的手臂会像钢铁一样坚硬。",
+    "looks_like": "compbow",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "weight": "907 g",
+    "volume": "1500 ml",
+    "longest_side": "150 cm",
+    "price": "800 USD",
+    "price_postapoc": "80 USD",
+    "bashing": 8,
+    "to_hit": 1,
+    "skill": "archery",
+    "min_strength": 0,
+    "range": 18,
+    "dispersion": 500,
+    "durability": 8,
+    "loudness": 0,
+    "reload_noise_volume": 2,
+    "ammo": [
+      "arrow"
+    ],
+    "clip_size": 1,
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "arrow": 1
+        }
+      }
+    ],
+    "ammo_effects": [
+      "NEVER_MISFIRES"
+    ],
+    "flags": [
+      "FIRE_TWOHAND",
+      "RELOAD_AND_SHOOT",
+      "PRIMITIVE_RANGED_WEAPON",
+      "SHEATH_BOW",
+      "WATERPROOF_GUN",
+      "NEVER_JAMS",
+      "TRAVEL_TITAN_STRING_BOW"
+    ],
+    "ranged_damage": [
+      {
+        "damage_type": "stab",
+        "amount": 60
+      }
+    ]
+  },
+  {
+    "type": "MIGRATION",
+    "id": "travel_titan_string_bow_medium",
+    "replace": "travel_titan_string_bow"
+  },
+  {
+    "type": "MIGRATION",
+    "id": "travel_titan_string_bow_high",
+    "replace": "travel_titan_string_bow"
+  },
+  {
+    "type": "requirement",
+    "id": "spell_components_travel_titan_dance",
+    "//": "华舞只检查泰坦弦弓本体，箭矢由真实射击流程装填、消耗与回收。",
+    "tools": [
+      [
+        [
+          "travel_titan_string_bow",
+          -1
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "SPELL",
+    "id": "SPELL_TRAVEL_TITAN_STRING_DANCE",
+    "name": {
+      "str": "挥砍华舞（远程）"
+    },
+    "description": {
+      "str": "一段为泰坦弦弓改写的战场乐句。第一支实体箭离弦后，你会立刻重新选择第二个目标，再放出第二支实体箭。两次攻击都按真正的射击处理，箭头、爆炸与回收效果照常生效，并以华舞的节拍锁定目标。\n\n“别追着箭走。让箭追上你的旋律。”"
+    },
+    "message": "你奏响弓弦，放出挥砍华舞！",
+    "valid_targets": [
+      "hostile"
+    ],
+    "effect": "effect_on_condition",
+    "effect_str": "TRAVEL_TITAN_FLOURISH_PRIMARY",
+    "shape": "blast",
+    "min_damage": 0,
+    "max_damage": 0,
+    "damage_increment": 0,
+    "min_range": 18,
+    "max_range": 18,
+    "range_increment": 0,
+    "min_aoe": 0,
+    "max_aoe": 0,
+    "skill": "archery",
+    "energy_source": "NONE",
+    "base_energy_cost": 0,
+    "final_energy_cost": 0,
+    "energy_increment": 0,
+    "base_casting_time": 100,
+    "final_casting_time": 100,
+    "casting_time_increment": 0,
+    "difficulty": 0,
+    "max_level": 15,
+    "flags": [
+      "NO_FAIL",
+      "NO_LEGS",
+      "NO_HANDS",
+      "SILENT",
+      "NO_EXPLOSION_SFX",
+      "NON_MAGICAL"
+    ],
+    "components": "spell_components_travel_titan_dance",
+    "extra_effects": [
+      {
+        "id": "SPELL_TRAVEL_TITAN_FLOURISH_SECOND_TRIGGER",
+        "hit_self": true,
+        "min_level": 0,
+        "max_level": 15
+      }
+    ]
+  },
+  {
+    "type": "SPELL",
+    "id": "SPELL_TRAVEL_TITAN_FLOURISH_ECHO",
+    "name": {
+      "str": "挥砍华舞第二箭"
+    },
+    "description": {
+      "str": "挥砍华舞的第二次真实射击。"
+    },
+    "valid_targets": [
+      "hostile"
+    ],
+    "effect": "effect_on_condition",
+    "effect_str": "TRAVEL_TITAN_FLOURISH_SECONDARY",
+    "shape": "blast",
+    "min_damage": 0,
+    "max_damage": 0,
+    "damage_increment": 0,
+    "min_range": 18,
+    "max_range": 18,
+    "range_increment": 0,
+    "min_aoe": 0,
+    "max_aoe": 0,
+    "energy_source": "NONE",
+    "base_energy_cost": 0,
+    "final_energy_cost": 0,
+    "energy_increment": 0,
+    "base_casting_time": 0,
+    "final_casting_time": 0,
+    "casting_time_increment": 0,
+    "difficulty": 0,
+    "max_level": 15,
+    "flags": [
+      "NO_FAIL",
+      "NO_LEGS",
+      "NO_HANDS",
+      "SILENT",
+      "NO_EXPLOSION_SFX",
+      "NON_MAGICAL"
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_TITAN_FLOURISH_SECOND_TARGET",
+    "eoc_type": "ACTIVATION",
+    "//": "第一箭完成真实射击后，重新打开敌对目标选择并发射第二箭。取消瞄准则不再发射。",
+    "effect": [
+      {
+        "u_message": "第一箭已经离弦。选择挥砍华舞的第二个目标。",
+        "type": "info"
+      },
+      {
+        "u_cast_spell": {
+          "id": "SPELL_TRAVEL_TITAN_FLOURISH_ECHO",
+          "min_level": 0,
+          "max_level": 0
+        },
+        "targeted": true
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_BARRY_REWARD_BOW",
+    "dynamic_line": "长盒里躺着一把黑金色复合弓。\n\n“泰坦弦弓。”玛雅说，“名字来自灾变前我喜欢的一场游戏——一个不肯向血统和命运低头的吟游诗人。很夸张，但叫久了就改不掉了。”\n\n她用拇指压了压弓臂。\n\n“我把那套来回调张力的结构拆掉了。现在八点力量时，弓身本身大约能给出六十点穿刺；力量每高一点，就再多两点，低一点也会少两点。没有最低力量门槛，只是拉弦的人有多大力，它就肯给多少。”\n\n她又点了点两本薄册。\n\n“这本弓箭入门手册是灾变前留下的。另一本才是我整理的华舞笔记：怎样在第一箭离弦后立刻转调，再把第二支箭送向另一个目标。”",
+    "responses": []
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_BARRY_REWARD_BOW_CONTINUE",
+    "dynamic_line": "玛雅按住那只大箭筒，没有立刻把它推过来。\n\n“华舞也改了。现在不是烧掉一支箭再补一道火焰残影，而是实打实地放两箭。第一箭离弦以后，你会立刻重新选第二个目标；两箭都按真正的射击结算，所以宽刃、穿甲、爆炸箭，该怎么生效就怎么生效，能回收的也照样可能捡回来。”\n\n“我留下的节拍会把两箭的准头锁死。刚开始练，它会吃掉差不多两次正常射击的耐力；熟练以后，这个负担会一路降下来，最后约等于一次正常射击。”\n\n她这才松开手。\n\n“所以别再拿好箭当柴烧。华舞现在值得你搭上真正想射出去的那支箭。”",
+    "responses": []
+  }
+]
