@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 
+#include "calendar.h"
 #include "character.h"
 #include "flag.h"
 #include "item.h"
@@ -13,6 +14,7 @@
 #include "skill.h"
 #include "type_id.h"
 
+static const efftype_id effect_travel_titan_flourish_lock( "travel_titan_flourish_lock" );
 static const flag_id flag_TRAVEL_TITAN_STRING_BOW( "TRAVEL_TITAN_STRING_BOW" );
 static const skill_id skill_archery( "archery" );
 
@@ -78,9 +80,14 @@ void spell_effect::titan_string_bow( const spell &sp, Creature &caster, const tr
         weapon->set_var( "TRAVEL_TITAN_FLOURISH_AMMO", weapon->ammo_current().str() );
     }
 
-    weapon->set_var( "TRAVEL_TITAN_GUARANTEED_HIT", 1 );
+    // 华舞仍走标准 fire_gun / projectile_attack 流程，只在这一箭结算前临时把
+    // 武器散布与后坐归零。这样箭矢、爆炸效果、命中事件与回收逻辑全部保持原版行为。
+    shooter->add_effect( effect_travel_titan_flourish_lock, 1_turns );
+    shooter->recalculate_enchantment_cache();
+    shooter->recoil = 0;
     const int shots_fired = shooter->fire_gun( target, 1, *weapon );
-    weapon->erase_var( "TRAVEL_TITAN_GUARANTEED_HIT" );
+    shooter->remove_effect( effect_travel_titan_flourish_lock );
+    shooter->recalculate_enchantment_cache();
 
     if( secondary ) {
         weapon->erase_var( "TRAVEL_TITAN_FLOURISH_AMMO" );
@@ -89,6 +96,8 @@ void spell_effect::titan_string_bow( const spell &sp, Creature &caster, const tr
         return;
     }
 
+    // Breeze 当前弓术普通拉弓耐力为 ( 20 - 弓术 )^2。华舞从两倍该消耗开始，
+    // 随法术等级线性下降，在满级时等于一次普通射击。
     const int archery_skill = shooter->get_skill_level( skill_archery );
     const int normal_stamina_cost = static_cast<int>( std::pow( 20 - archery_skill, 2 ) );
     const double level_ratio = sp.get_max_level() > 0 ?
