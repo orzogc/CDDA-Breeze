@@ -1,5 +1,27 @@
 [
   {
+    "type": "effect_type",
+    "id": "travel_titan_flourish_lock",
+    "name": [
+      "华舞锁定"
+    ],
+    "desc": [
+      "挥砍华舞正在锁定这一箭的目标。"
+    ],
+    "show_intensity": false,
+    "show_in_info": false,
+    "enchantments": [
+      {
+        "values": [
+          {
+            "value": "WEAPON_DISPERSION",
+            "multiply": -1.0
+          }
+        ]
+      }
+    ]
+  },
+  {
     "type": "GUN",
     "id": "travel_titan_string_bow",
     "copy-from": "longbow",
@@ -57,7 +79,35 @@
         "damage_type": "stab",
         "amount": 60
       }
-    ]
+    ],
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "values": [
+            {
+              "value": "ITEM_DAMAGE_STAB",
+              "add": {
+                "arithmetic": [
+                  {
+                    "u_val": "strength"
+                  },
+                  "*",
+                  {
+                    "const": 2
+                  },
+                  "-",
+                  {
+                    "const": 16
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
   },
   {
     "type": "MIGRATION",
@@ -95,7 +145,7 @@
     "valid_targets": [
       "hostile"
     ],
-    "effect": "effect_on_condition",
+    "effect": "titan_string_bow",
     "effect_str": "TRAVEL_TITAN_FLOURISH_PRIMARY",
     "shape": "blast",
     "min_damage": 0,
@@ -146,7 +196,7 @@
     "valid_targets": [
       "hostile"
     ],
-    "effect": "effect_on_condition",
+    "effect": "titan_string_bow",
     "effect_str": "TRAVEL_TITAN_FLOURISH_SECONDARY",
     "shape": "blast",
     "min_damage": 0,
@@ -199,12 +249,29 @@
     "type": "talk_topic",
     "id": "TALK_TRAVEL_MAYA_BARRY_REWARD_BOW",
     "dynamic_line": "长盒里躺着一把黑金色复合弓。\n\n“泰坦弦弓。”玛雅说，“名字来自灾变前我喜欢的一场游戏——一个不肯向血统和命运低头的吟游诗人。很夸张，但叫久了就改不掉了。”\n\n她用拇指压了压弓臂。\n\n“我把那套来回调张力的结构拆掉了。现在八点力量时，弓身本身大约能给出六十点穿刺；力量每高一点，就再多两点，低一点也会少两点。没有最低力量门槛，只是拉弦的人有多大力，它就肯给多少。”\n\n她又点了点两本薄册。\n\n“这本弓箭入门手册是灾变前留下的。另一本才是我整理的华舞笔记：怎样在第一箭离弦后立刻转调，再把第二支箭送向另一个目标。”",
-    "responses": []
+    "responses": [
+      {
+        "text": "[继续查看箭筒和笔记] 还有什么需要注意？",
+        "topic": "TALK_TRAVEL_MAYA_BARRY_REWARD_BOW_CONTINUE"
+      }
+    ]
   },
   {
     "type": "talk_topic",
     "id": "TALK_TRAVEL_MAYA_BARRY_REWARD_BOW_CONTINUE",
     "dynamic_line": "玛雅按住那只大箭筒，没有立刻把它推过来。\n\n“华舞也改了。现在不是烧掉一支箭再补一道火焰残影，而是实打实地放两箭。第一箭离弦以后，你会立刻重新选第二个目标；两箭都按真正的射击结算，所以宽刃、穿甲、爆炸箭，该怎么生效就怎么生效，能回收的也照样可能捡回来。”\n\n“我留下的节拍会把两箭的准头锁死。刚开始练，它会吃掉差不多两次正常射击的耐力；熟练以后，这个负担会一路降下来，最后约等于一次正常射击。”\n\n她这才松开手。\n\n“所以别再拿好箭当柴烧。华舞现在值得你搭上真正想射出去的那支箭。”",
-    "responses": []
+    "responses": [
+      {
+        "text": "[记下说明，接过弓盒] 两箭都是真箭，华舞会替我锁定目标。",
+        "topic": "TALK_TRAVEL_MAYA_MENU_FARM",
+        "effect": [
+          {
+            "run_eocs": [
+              "EOC_TRAVEL_MAYA_BARRY_REWARD"
+            ]
+          }
+        ]
+      }
+    ]
   }
 ]
