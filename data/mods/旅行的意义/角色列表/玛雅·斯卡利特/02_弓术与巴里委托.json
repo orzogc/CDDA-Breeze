@@ -1,1 +1,359 @@
-[{"type":"item_group","id":"TRAVEL_MAYA_EMPTY_WEAPON","subtype":"collection","entries":[{"item":"compbow"}]},{"type":"item_group","id":"TRAVEL_MAYA_WORN","subtype":"collection","entries":[{"item":"hoodie"},{"item":"tshirt"},{"item":"jeans"},{"item":"bra"},{"item":"panties"},{"item":"socks"},{"item":"gloves_fingerless"},{"item":"sneakers"},{"item":"quiver_large"}]},{"type":"item_group","id":"TRAVEL_MAYA_CARRIED","subtype":"collection","entries":[{"item":"arrow_metal","count":[18,30]}]},{"type":"json_flag","id":"TRAVEL_TITAN_STRING_BOW","info":"泰坦弦弓。力量会改变弓身输出，可用于施展挥砍华舞。"},{"type":"GUN","id":"travel_titan_string_bow","copy-from":"compbow","name":{"str":"泰坦弦弓"},"description":"一把黑金色复合弓。重做后的滑轮组会随射手的力量改变弓身输出，不再需要切换张力。力量8时，弓身提供60点基础穿刺伤害；力量每高于8点1点，伤害增加2点，每低于8点1点，伤害降低2点。它没有最低力量门槛，力量不足只会让箭矢失去一部分威力。\n\n人们常以为天生的弓手都该身形修长、手臂纤细——这完全错了。把弓弦一路拉到颧骨需要多年的训练；到最后，你的手臂会像钢铁一样坚硬。","min_strength":0,"range":18,"dispersion":500,"durability":8,"looks_like":"compbow","skill":"archery","loudness":0,"reload_noise_volume":2,"ammo":["arrow"],"pocket_data":[{"pocket_type":"MAGAZINE","ammo_restriction":{"arrow":1}}],"ammo_effects":["NEVER_MISFIRES"],"use_action":[],"extend":{"flags":["TRAVEL_TITAN_STRING_BOW"]},"ranged_damage":[{"damage_type":"stab","amount":60}],"relic_data":{"passive_effects":[{"has":"WIELD","condition":"ALWAYS","values":[{"value":"ITEM_DAMAGE_STAB","add":{"arithmetic":[{"u_val":"strength"},"*",{"const":2},"-",{"const":16}]}}]}]}},{"type":"BOOK","id":"travel_titan_string_dance_grimoire","category":"manuals","name":{"str":"吟游诗人的乐章"},"description":"一本以深蓝线重新装订的薄册。前半部抄录着剑湾酒馆的歌谣，后半部则布满箭着图、节拍记号和玛雅密密麻麻的批注。\n\n末页只留下一句：\n“第一支箭是旋律，第二支箭是回声。”","weight":"280 g","volume":"450 ml","longest_side":"27 cm","price":"80 USD","price_postapoc":"10 USD","material":["paper"],"looks_like":"cookbook","symbol":"?","color":"yellow","use_action":{"type":"learn_spell","spells":["SPELL_TRAVEL_TITAN_STRING_DANCE"]}},{"type":"requirement","id":"spell_components_travel_titan_dance","//":"华舞只检查泰坦弦弓本体，箭矢由真实射击流程装填、消耗与回收。","tools":[[["travel_titan_string_bow",-1]]]},{"type":"SPELL","id":"SPELL_TRAVEL_TITAN_STRING_DANCE","name":{"str":"挥砍华舞（远程）"},"description":{"str":"一段为泰坦弦弓改写的战场乐句。第一支实体箭离弦后，你会立刻重新选择第二个目标，再放出第二支实体箭。两次攻击都按真正的射击处理，箭头、爆炸与回收效果照常生效，并以华舞的节拍锁定目标。\n\n“别追着箭走。让箭追上你的旋律。”"},"message":"你奏响弓弦，放出挥砍华舞！","valid_targets":["hostile"],"effect":"titan_string_bow","effect_str":"TRAVEL_TITAN_FLOURISH_PRIMARY","shape":"blast","min_damage":0,"max_damage":0,"damage_increment":0,"min_range":18,"max_range":18,"range_increment":0,"min_aoe":0,"max_aoe":0,"skill":"archery","energy_source":"NONE","base_energy_cost":0,"final_energy_cost":0,"energy_increment":0,"base_casting_time":100,"final_casting_time":100,"casting_time_increment":0,"difficulty":0,"max_level":15,"flags":["NO_FAIL","NO_LEGS","NO_HANDS","SILENT","NO_EXPLOSION_SFX","NON_MAGICAL"],"components":"spell_components_travel_titan_dance","extra_effects":[{"id":"SPELL_TRAVEL_TITAN_FLOURISH_SECOND_TRIGGER","hit_self":true,"min_level":0,"max_level":15}]},{"type":"SPELL","id":"SPELL_TRAVEL_TITAN_FLOURISH_ECHO","name":{"str":"挥砍华舞第二箭"},"description":{"str":"挥砍华舞的第二次真实射击。"},"valid_targets":["hostile"],"effect":"titan_string_bow","effect_str":"TRAVEL_TITAN_FLOURISH_SECONDARY","shape":"blast","min_damage":0,"max_damage":0,"damage_increment":0,"min_range":18,"max_range":18,"range_increment":0,"min_aoe":0,"max_aoe":0,"energy_source":"NONE","base_energy_cost":0,"final_energy_cost":0,"energy_increment":0,"base_casting_time":0,"final_casting_time":0,"casting_time_increment":0,"difficulty":0,"max_level":15,"flags":["NO_FAIL","NO_LEGS","NO_HANDS","SILENT","NO_EXPLOSION_SFX","NON_MAGICAL"]},{"type":"SPELL","id":"SPELL_TRAVEL_TITAN_FLOURISH_SECOND_TRIGGER","name":{"str":"挥砍华舞转调"},"description":{"str":"内部法术：在第一箭结算后交还瞄准控制，用于选择第二个目标。"},"valid_targets":["self"],"effect":"effect_on_condition","effect_str":"EOC_TRAVEL_TITAN_FLOURISH_SECOND_TARGET","shape":"blast","min_damage":0,"max_damage":0,"damage_increment":0,"min_range":0,"max_range":0,"range_increment":0,"min_aoe":0,"max_aoe":0,"energy_source":"NONE","base_energy_cost":0,"final_energy_cost":0,"energy_increment":0,"base_casting_time":0,"final_casting_time":0,"casting_time_increment":0,"difficulty":0,"max_level":15,"flags":["NO_FAIL","NO_LEGS","NO_HANDS","SILENT","NO_EXPLOSION_SFX","NON_MAGICAL"]},{"type":"effect_on_condition","id":"EOC_TRAVEL_TITAN_FLOURISH_SECOND_TARGET","eoc_type":"ACTIVATION","//":"第一箭完成真实射击后，重新打开敌对目标选择并发射第二箭。取消瞄准则不再发射。","effect":[{"u_message":"第一箭已经离弦。选择挥砍华舞的第二个目标。","type":"info"},{"u_cast_spell":{"id":"SPELL_TRAVEL_TITAN_FLOURISH_ECHO","min_level":0,"max_level":0},"targeted":true}]},{"type":"item_group","id":"travel_maya_full_large_quiver","subtype":"collection","entries":[{"item":"quiver_large","count":1},{"item":"arrow_metal","count":30}]},{"type":"item_group","id":"TRAVEL_MAYA_SHOP_ARROWS","subtype":"collection","entries":[{"item":"arrow_fire_hardened_fletched","charges":[60,80],"prob":100},{"item":"arrow_heavy_fire_hardened_fletched","charges":[45,60],"prob":100},{"item":"arrow_small_game_fletched","charges":[25,35],"prob":100},{"item":"arrow_wood_heavy","charges":[18,25],"prob":100},{"item":"arrow_field_point_fletched","charges":[15,25],"prob":100},{"item":"arrow_wood","charges":[12,18],"prob":100},{"item":"arrow_heavy_field_point_fletched","charges":[8,15],"prob":100},{"item":"arrow_metal_sharpened_fletched","charges":[6,10],"prob":100},{"item":"arrow_metal","charges":[3,7],"prob":100},{"item":"arrow_metal_bodkin","charges":[3,7],"prob":100},{"item":"arrow_metal_target","charges":[2,5],"prob":100},{"item":"arrow_cf","charges":[2,4],"prob":100},{"item":"flamable_arrow","charges":[1,3],"prob":100}]},{"type":"item_group","id":"TRAVEL_MAYA_SHOP_BOWS","subtype":"collection","entries":[{"item":"selfbow","count":[1,2],"prob":100},{"item":"shortbow","count":[1,2],"prob":75},{"item":"recurbow","count":[1,2],"prob":70},{"item":"takedown_recurbow","count":[1,1],"prob":40},{"item":"reflexbow","count":[1,1],"prob":45},{"item":"compositebow","count":[1,1],"prob":40},{"item":"compbow","count":[1,2],"prob":55}]},{"type":"item_group","id":"TRAVEL_MAYA_SHOP_ACCESSORIES","subtype":"collection","entries":[{"item":"quiver","count":[2,4],"prob":100},{"item":"quiver_large","count":[1,3],"prob":85},{"item":"bow_sling","count":[1,3],"prob":80},{"item":"arrowrest","count":[1,3],"prob":85},{"item":"arrowrest_wood","count":[1,3],"prob":90},{"item":"bow_stabilizer","count":[1,2],"prob":70},{"item":"bow_stabilizer_set","count":[1,1],"prob":35},{"item":"bow_silencer","count":[1,3],"prob":80},{"item":"primitive_bow_silencer","count":[1,3],"prob":90}]},{"type":"item_group","id":"TRAVEL_MAYA_SHOP_BOOKS","subtype":"collection","entries":[{"item":"mag_archery","count":[2,5],"prob":100},{"item":"book_archery","count":[1,3],"prob":100},{"item":"manual_archery","count":[1,2],"prob":70}]},{"type":"mission_definition","id":"MISSION_TRAVEL_MAYA_RESCUE_BARRY","name":{"str":"玛雅的请求：带巴里回家"},"description":"伊舍伍德家曾在高速公路辅路上冒险救下被丧尸、丧尸犬和野性疯人包围的玛雅一行。玛雅因右膝受伤无法远行，却不愿在巴里失踪后只接受这个家庭的照顾。先向克莱尔了解巴里失踪的经过，再帮助卡洛斯处理农场急需的铁砧；取得信任后寻找克里斯，并按他制订的计划营救巴里。巴里安全回到农场后，回到二楼向玛雅复命。","goal":"MGOAL_NULL","difficulty":5,"value":0,"has_generic_rewards":false,"origins":["ORIGIN_SECONDARY"],"dialogue":{"describe":"沿伊舍伍德家留下的线索寻找巴里，并把他安全带回农场。","offer":"伊舍伍德家曾冒险从高速公路包围中救出玛雅和其他幸存者。如今巴里失踪，玛雅无法带伤远行，只能请你替她回应这份救命之恩。","accepted":"“先听克莱尔讲清楚巴里失踪那天的事。卡洛斯若先请你补上农场眼前的缺口，也别把那当成推诿——他需要确认你会把一件事做完。”","rejected":"“没关系。救人不是一句客气话，也不该靠我把风险塞进你手里。”","advice":"“克莱尔知道巴里失踪的经过；卡洛斯知道克里斯去了哪里；克里斯才真正见过那些怪物的巢。一步一步来，别像我们在高速公路上一样被赶进死路。”","inquire":"“别空手闯进未知的地方。先听克莱尔和卡洛斯怎么说，找到克里斯，再按他带回来的线索接近那座尖塔。”","success":"你把巴里安全带回了伊舍伍德农场，也替无法远行的玛雅回应了这个家庭的照顾。","success_lie":"玛雅侧耳听了听楼下的动静。\n\n“我想听见巴里自己回到家人身边。看到尖塔、找到线索，或者制订计划，都还不是回家。”","failure":"“先活下来。只要还没有得到最坏的确认，就别替巴里把故事写完。”"}},{"type":"item_group","id":"TRAVEL_MAYA_REWARD_ARROW_METAL_30","subtype":"distribution","entries":[{"item":"arrow_metal","prob":100,"charges":30}]},{"type":"effect_on_condition","id":"EOC_TRAVEL_MAYA_BARRY_REWARD","eoc_type":"ACTIVATION","effect":[{"u_spawn_item":"travel_titan_string_bow"},{"u_spawn_item":"book_archery"},{"u_spawn_item":"quiver_large"},{"u_spawn_item":"TRAVEL_MAYA_REWARD_ARROW_METAL_30","use_item_group":true},{"u_spawn_item":"travel_titan_string_dance_grimoire"},{"npc_add_var":"travel_maya_barry_rewarded","type":"dialogue","context":"travel_maya","value":"yes"},{"npc_add_var":"travel_maya_barry_reward_fix_v2","type":"dialogue","context":"travel_maya","value":"yes"},{"finish_mission":"MISSION_TRAVEL_MAYA_RESCUE_BARRY","success":true},{"u_message":"玛雅交给你一本弓箭入门手册、泰坦弦弓、一只大箭筒、一捆金属宽刃箭和吟游诗人的乐章。","type":"good"}]},{"type":"effect_on_condition","id":"EOC_TRAVEL_MAYA_BARRY_REWARD_MISSING_ITEMS","eoc_type":"ACTIVATION","effect":[{"u_spawn_item":"book_archery"},{"u_spawn_item":"quiver_large"},{"u_spawn_item":"TRAVEL_MAYA_REWARD_ARROW_METAL_30","use_item_group":true},{"u_spawn_item":"travel_titan_string_dance_grimoire"},{"npc_add_var":"travel_maya_barry_reward_fix_v2","type":"dialogue","context":"travel_maya","value":"yes"},{"u_message":"玛雅把遗漏的弓箭入门手册、大箭筒、一捆金属宽刃箭和吟游诗人的乐章交给了你。","type":"good"}]},{"type":"effect_on_condition","id":"EOC_TRAVEL_LIANG_MARK_SHARED_MAYA_SCENE","eoc_type":"ACTIVATION","effect":[{"u_add_var":"travel_liang_maya_shared_scene_seen","type":"dialogue","context":"travel_liang","value":"yes"}]},{"type":"effect_on_condition","id":"EOC_TRAVEL_MAYA_SHARED_SCENE_SYNC","eoc_type":"ACTIVATION","effect":[{"npc_add_var":"travel_maya_shared_scene_seen","type":"dialogue","context":"travel_maya","value":"yes"},{"npc_run_npc_eocs":["EOC_TRAVEL_LIANG_MARK_SHARED_MAYA_SCENE"],"unique_ids":["TRAVEL_LIANG_ZHIYAO"],"npc_range":30,"z_min":0,"z_max":1}]},{"type":"talk_topic","id":"TALK_TRAVEL_MAYA_BARRY_OFFER","dynamic_line":"玛雅望向敞开的门。楼下有人在搬水，木桶碰上台阶，发出沉闷的响声。\n\n“我不想把他们的照顾算成一笔账。可这个家为了救我们，开车冲进了高速公路边的包围，花掉了油、药和子弹。现在他们夜里谈起巴里，我不能躺在这里假装没有听见。”\n\n“我的腿连院子都跑不过，所以我需要一个还能走远路的人。”","responses":[{"text":"巴里发生了什么？","topic":"TALK_TRAVEL_MAYA_BARRY_DETAILS"},{"text":"为什么救人要先从一座铁砧开始？","topic":"TALK_TRAVEL_MAYA_BARRY_ANVIL_REASON"},{"text":"【接受任务】我会尽力把巴里带回来。","topic":"TALK_TRAVEL_MAYA_BARRY_ACCEPTED","effect":[{"assign_mission":"MISSION_TRAVEL_MAYA_RESCUE_BARRY"},{"npc_add_var":"travel_maya_barry_commission_started","type":"dialogue","context":"travel_maya","value":"yes"},{"u_message":"已接受玛雅的委托：带巴里回家。","type":"good"}]},{"text":"[返回农场与巴里] 我现在还不能答应。","topic":"TALK_TRAVEL_MAYA_MENU_FARM"},{"text":"[返回主菜单] 先谈别的。","topic":"TALK_TRAVEL_MAYA_ISHERWOOD"}]},{"type":"talk_topic","id":"TALK_TRAVEL_MAYA_BARRY_ANVIL_REASON","dynamic_line":"玛雅沉默了片刻。\n\n“因为卡洛斯不信任外人。”\n\n“铁砧当然不是巴里。可农具、马具和护栏都在等着修，农场若停下来，更多人会出事。你替他把眼前最急的缺口补上，他才会相信你不是问完克里斯的去向就消失。”\n\n她皱了皱眉。\n\n“我不喜欢拿信任当门票，也不喜欢巴里在外面等。可你现在连那些怪物去了哪里都不知道。硬闯不是更快，只是更早迷路。”","responses":[{"text":"我明白了。回到巴里的委托。","topic":"TALK_TRAVEL_MAYA_BARRY_OFFER"},{"text":"[返回农场与巴里] 我再想想。","topic":"TALK_TRAVEL_MAYA_MENU_FARM"},{"text":"[返回主菜单] 先谈别的。","topic":"TALK_TRAVEL_MAYA_ISHERWOOD"}]},{"type":"talk_topic","id":"TALK_TRAVEL_MAYA_BARRY_ACCEPTED","dynamic_line":"玛雅轻轻点头。\n\n“先找克莱尔。卡洛斯若先请你帮农场处理别的，别急着认为他不在乎巴里。他只是把修理、守住农场和寻找家人都压在同一双手上。”\n\n“找到克里斯以后，听完他看见的尖塔和那些怪物，再决定怎样接近。”\n\n她伸出手，又在半途收回。\n\n“活着回来。最好把巴里也一起带回来。”","responses":[{"text":"[返回农场与巴里] 我会回来告诉你结果。","topic":"TALK_TRAVEL_MAYA_MENU_FARM"},{"text":"[返回主菜单] 先谈别的。","topic":"TALK_TRAVEL_MAYA_ISHERWOOD"},{"text":"[结束交谈] 我现在就去准备。","topic":"TALK_DONE"}]},{"type":"talk_topic","id":"TALK_TRAVEL_MAYA_BARRY_PROGRESS","dynamic_line":"玛雅把一张纸摊到桌上，只写了三个名字。\n\n“克莱尔知道巴里失踪那天的细节。卡洛斯知道克里斯去了哪里。克里斯才真正见过那些怪物的巢。”\n\n她用笔尖把三个名字连成一条线。\n\n“别把这当成规矩。把它当成一条不会让你空手闯进黑暗的路。”\n\n“等巴里本人回到农场，再来告诉我。”","responses":[{"text":"[返回农场与巴里] 我继续沿这条线查。","topic":"TALK_TRAVEL_MAYA_MENU_FARM"},{"text":"我还是觉得找铁砧太慢了。","topic":"TALK_TRAVEL_MAYA_BARRY_ANVIL_REASON"},{"text":"[返回主菜单] 先谈别的。","topic":"TALK_TRAVEL_MAYA_ISHERWOOD"}]},{"type":"talk_topic","id":"TALK_TRAVEL_MAYA_BARRY_REWARD","dynamic_line":"玛雅没有先看你带回来的东西。她听你把经过说完，直到楼下有人喊了一声巴里的名字，另一个声音立刻嫌那个人太吵。\n\n她这才真正笑起来。\n\n“那就是真的。谢谢你。”\n\n玛雅从床下拖出一只长盒，又取出一只大箭筒、一捆金属宽刃箭和两本薄册。\n\n“这不是把救命换算成报酬。只是你还要继续走，我想让你带上些能把你活着送回来的东西。”","responses":[{"text":"[打开长盒] 这把弓是什么？","topic":"TALK_TRAVEL_MAYA_BARRY_REWARD_BOW"},{"text":"[接过长盒，不再追问] 我会让它继续派上用场。","topic":"TALK_TRAVEL_MAYA_MENU_FARM","effect":[{"run_eocs":["EOC_TRAVEL_MAYA_BARRY_REWARD"]}]}]},{"type":"talk_topic","id":"TALK_TRAVEL_MAYA_BARRY_REWARD_MISSING","dynamic_line":"玛雅怔了一下，随即低头看向床下。\n\n“对。上次我只把弓盒递给了你，箭筒和两本册子还留在这里。”\n\n她把大箭筒、一捆金属宽刃箭、弓箭入门手册和吟游诗人的乐章一并推到你面前。\n\n“这次点清楚了。”","responses":[{"text":"[收好遗漏的物品] 现在齐了。","topic":"TALK_TRAVEL_MAYA_MENU_FARM","effect":[{"run_eocs":["EOC_TRAVEL_MAYA_BARRY_REWARD_MISSING_ITEMS"]}]}]},{"type":"talk_topic","id":"TALK_TRAVEL_MAYA_LIANG_SHARED_SCENE","dynamic_line":"玛雅把窗边的椅子让出一半，梁知遥却没有坐。她先蹲下来，检查固定带有没有松动，又看了看玛雅落地时下意识避开的角度。\n\n“检查完了吗，梁知遥同学？”玛雅问。\n\n“没有。你刚才从椅子上站起来时，把重量全偏到左腿了。”\n\n玛雅叹了口气。\n\n“这就是和一个会做记录的人住过太久的后果。”","speaker_effect":{"effect":[{"run_eocs":["EOC_TRAVEL_MAYA_SHARED_SCENE_SYNC"]}]},"responses":[{"text":"所以，你们接下来怎么打算？","topic":"TALK_TRAVEL_MAYA_LIANG_PLAN"},{"text":"[看向墙边成捆的箭] 她休养时也没有闲着。","topic":"TALK_TRAVEL_MAYA_LIANG_ARROW_WORK"},{"text":"[返回梁知遥与玛雅] 先让你们歇一会儿。","topic":"TALK_TRAVEL_MAYA_MENU_LIANG"},{"text":"[返回主菜单] 先谈别的。","topic":"TALK_TRAVEL_MAYA_ISHERWOOD"}]},{"type":"talk_topic","id":"TALK_ISHERWOOD_LISA","responses":[{"response_id":"travel_maya_lisa_where","text":"玛雅·斯卡利特在哪里？","topic":"TALK_TRAVEL_LISA_ABOUT_MAYA","condition":{"and":[{"not":{"u_is_wearing":"badge_marshal"}},{"or":[{"u_has_mission":"MISSION_TRAVEL_LIANG_TRACE_ISHERWOOD"},{"u_has_var":"travel_liang_maya_reunited","type":"dialogue","context":"travel_liang","value":"yes"}]}]}}],"response_patches":[{"op":"move_before","target":"travel_maya_lisa_where","anchor":"isherwood_lisa_leave"}]},{"type":"talk_topic","id":"TALK_TRAVEL_LISA_ABOUT_MAYA","dynamic_line":"丽莎用下巴指了指住宅二楼靠南的一侧。\n\n“小房间。右膝扭伤，没有感染。”\n\n她顿了一下。\n\n“我们是在高速辅路上把他们接出来的。丧尸堵着沟口，几条死狗一样的东西追得最快，旁边还有疯子抢东西。杰克开车，卡洛斯和我用步枪清路。七个人活着上了车。”\n\n“上楼轻一点。她昨晚又在给一批木箭修羽片，睡得不多。”","responses":[{"text":"谢谢。我上楼找她。","topic":"TALK_DONE"},{"text":"她在这里还适应吗？","topic":"TALK_TRAVEL_LISA_MAYA_THOUGHTS"}],"speaker_effect":{"effect":[{"run_eocs":["EOC_TRAVEL_ENSURE_MAYA_ISHERWOOD"]}]}},{"type":"talk_topic","id":"TALK_TRAVEL_LISA_MAYA_THOUGHTS","dynamic_line":"“她总问还有什么能做。”丽莎说。\n\n“会先问清楚再碰药，也知道哪些话不能播进公共频道。腿不能跑，她就坐着校箭杆、修尾栝，还把谷仓里几把坏弓拆开重装。”\n\n丽莎朝楼上看了一眼。\n\n“我告诉她，真想帮忙，就先别把一条伤腿拖成两条。有人急着还救命的人情时，最容易把自己再弄伤一次。”","responses":[{"text":"梁知遥大概也会这么说。","topic":"TALK_DONE"}]},{"type":"talk_topic","id":"TALK_ISHERWOOD_CLAIRE","responses":[{"response_id":"travel_maya_claire_radio_group","text":"听说最近有一批无线电互助队的人来到农场。","topic":"TALK_TRAVEL_CLAIRE_ABOUT_MAYA","condition":{"and":[{"not":{"u_is_wearing":"badge_marshal"}},{"or":[{"u_has_mission":"MISSION_TRAVEL_LIANG_TRACE_ISHERWOOD"},{"u_has_var":"travel_liang_maya_reunited","type":"dialogue","context":"travel_liang","value":"yes"}]}]}}],"response_patches":[{"op":"move_before","target":"travel_maya_claire_radio_group","anchor":"isherwood_claire_mission"}]},{"type":"talk_topic","id":"TALK_TRAVEL_CLAIRE_ABOUT_MAYA","dynamic_line":"克莱尔把手里的布折好。\n\n“无线电里先是求救，后来只剩枪声和狗叫。杰克他们把人接回来时，七个活着，三个伤得不能自己走。”\n\n“玛雅一直问她那几个没能上车的同学。她自己的膝盖不算致命，可继续赶路就会拖成重伤。丽莎把楼上的小空房给了她。”\n\n克莱尔叹了口气。\n\n“她若再问能做什么，你就替我告诉她：箭明天也能做，今晚先睡觉。”","responses":[{"text":"我知道了。","topic":"TALK_DONE"}]},{"type":"talk_topic","id":"TALK_ISHERWOOD_JACK","responses":[{"response_id":"travel_maya_jack_rescue","text":"玛雅那一行人是怎么被接进来的？","topic":"TALK_TRAVEL_JACK_ABOUT_MAYA","condition":{"and":[{"not":{"u_is_wearing":"badge_marshal"}},{"or":[{"u_has_mission":"MISSION_TRAVEL_LIANG_TRACE_ISHERWOOD"},{"u_has_var":"travel_liang_maya_reunited","type":"dialogue","context":"travel_liang","value":"yes"}]}]}}],"response_patches":[{"op":"move_before","target":"travel_maya_jack_rescue","anchor":"isherwood_jack_mission"}]},{"type":"talk_topic","id":"TALK_TRAVEL_JACK_ABOUT_MAYA","dynamic_line":"杰克朝外围道路看了一眼。\n\n“原计划是在旧谷仓旁检查，再派车接人。可他们没走到约定点，就被尸群、丧尸犬和几个发疯的活人堵在辅路排水沟里。”\n\n“求救进了我们的频率。我们可以不去——那样最安全。”\n\n他抿紧嘴角。\n\n“可听见有人在另一头等死，还装作没听见，也不算守住一个家。我们开车过去，带回七个。玛雅留下养伤，其他能走的人后来跟补给队继续走。”","responses":[{"text":"这套规矩救了不少人。","topic":"TALK_DONE"}]},{"type":"talk_topic","id":["TALK_ISHERWOOD_CARLOS","TALK_ISHERWOOD_CARLOS_ConvincedMarshal"],"responses":[{"response_id":"travel_maya_carlos_barry","text":"玛雅说她想替你们做点事，也提到了巴里。","topic":"TALK_TRAVEL_CARLOS_ABOUT_MAYA","condition":{"and":[{"not":{"u_is_wearing":"badge_marshal"}},{"or":[{"u_has_mission":"MISSION_TRAVEL_LIANG_TRACE_ISHERWOOD"},{"u_has_var":"travel_liang_maya_reunited","type":"dialogue","context":"travel_liang","value":"yes"}]}]}}]},{"type":"talk_topic","id":"TALK_ISHERWOOD_CARLOS","responses":[],"response_patches":[{"op":"move_before","target":"travel_maya_carlos_barry","anchor":"isherwood_carlos_mission"}]},{"type":"talk_topic","id":"TALK_TRAVEL_CARLOS_ABOUT_MAYA","dynamic_line":"卡洛斯哼了一声。\n\n“我们给她一张床，不是买下一名伤员。那天开车出去，是我们自己作的决定；她没必要把每一发子弹都背成债。”\n\n他把一件缺口的工具扔回桌面。\n\n“不过她做的箭确实有用。练习、打猎、守夜都能省下一些枪弹。她要报答，就安安稳稳把腿养好，别背着弓一瘸一拐去找巴里。”\n\n“你真想帮，先把我缺的铁砧找来。不是因为铁砧比巴里重要——是因为农场的修理全停着，而我不会把克里斯的去向交给一个刚进门的陌生人。”","responses":[{"text":"我会按你们的线索来。","topic":"TALK_DONE"}]},{"type":"talk_topic","id":["TALK_ISHERWOOD_CHRIS","TALK_ISHERWOOD_CHRIS_TOPICS"],"responses":[{"response_id":"travel_maya_chris_barry","text":"玛雅在楼上养伤。她也想帮忙找巴里。","topic":"TALK_TRAVEL_CHRIS_ABOUT_MAYA","condition":{"and":[{"not":{"u_is_wearing":"badge_marshal"}},{"or":[{"u_has_mission":"MISSION_TRAVEL_LIANG_TRACE_ISHERWOOD"},{"u_has_var":"travel_liang_maya_reunited","type":"dialogue","context":"travel_liang","value":"yes"}]}]}}],"response_patches":[{"op":"move_before","target":"travel_maya_chris_barry","anchor":"isherwood_chris_leave"}]},{"type":"talk_topic","id":"TALK_TRAVEL_CHRIS_ABOUT_MAYA","dynamic_line":"克里斯点点头。\n\n“她问过我看见的尖塔，也问那些怪物会不会沿固定路线行动。我没带她去侦察——她现在连跑都跑不了。”\n\n“不过她做的箭和修过的弓很有用。枪当然更能压住尸群，可打猎、练习和安静处理落单的东西，没必要每次都浪费子弹。”\n\n“等她能正常走路，再让她自己决定要不要把弓带出门。现在先把巴里带回来。”","responses":[{"text":"先把巴里救回来。","topic":"TALK_DONE"}]},{"type":"talk_topic","id":"TALK_TRAVEL_MAYA_BARRY_DETAILS","dynamic_line":"“巴里是他们的家人。”玛雅说。\n\n“他被一种会把活人带走的怪物掳走了。克莱尔知道失踪那天的经过，卡洛斯知道克里斯去了哪里，而克里斯真正见过那些怪物筑起的尖塔。”\n\n“我能抄记录、做箭，也能把线索排成顺序；但我现在追不上任何东西。若你愿意，就从克莱尔开始问。”","responses":[{"text":"【接受任务】我去找克莱尔，也会把巴里带回来。","topic":"TALK_TRAVEL_MAYA_BARRY_ACCEPTED","effect":[{"assign_mission":"MISSION_TRAVEL_MAYA_RESCUE_BARRY"},{"npc_add_var":"travel_maya_barry_commission_started","type":"dialogue","context":"travel_maya","value":"yes"},{"u_message":"已接受玛雅的委托：带巴里回家。","type":"good"}]},{"text":"为什么还要先替卡洛斯找铁砧？","topic":"TALK_TRAVEL_MAYA_BARRY_ANVIL_REASON"},{"text":"[返回巴里的委托] 我再确认一下。","topic":"TALK_TRAVEL_MAYA_BARRY_OFFER"},{"text":"[返回农场与巴里] 我需要再想想。","topic":"TALK_TRAVEL_MAYA_MENU_FARM"}]},{"type":"talk_topic","id":"TALK_TRAVEL_MAYA_BARRY_REWARD_BOW","dynamic_line":"长盒里躺着一把黑金色复合弓。\n\n“泰坦弦弓。”玛雅说，“名字来自灾变前我喜欢的一场游戏——一个不肯向血统和命运低头的吟游诗人。很夸张，但叫久了就改不掉了。”\n\n她用拇指压了压弓臂。\n\n“我把那套来回调张力的结构拆掉了。现在八点力量时，弓身本身大约能给出六十点穿刺；力量每高一点，就再多两点，低一点也会少两点。没有最低力量门槛，只是拉弦的人有多大力，它就肯给多少。”\n\n她又点了点两本薄册。\n\n“这本弓箭入门手册是灾变前留下的。另一本才是我整理的华舞笔记：怎样在第一箭离弦后立刻转调，再把第二支箭送向另一个目标。”","responses":[{"text":"[继续查看箭筒和笔记] 还有什么需要注意？","topic":"TALK_TRAVEL_MAYA_BARRY_REWARD_BOW_CONTINUE"}]},{"type":"talk_topic","id":"TALK_TRAVEL_MAYA_BARRY_REWARD_BOW_CONTINUE","dynamic_line":"玛雅按住那只大箭筒，没有立刻把它推过来。\n\n“华舞也改了。现在不是烧掉一支箭再补一道火焰残影，而是实打实地放两箭。第一箭离弦以后，你会立刻重新选第二个目标；两箭都按真正的射击结算，所以宽刃、穿甲、爆炸箭，该怎么生效就怎么生效，能回收的也照样可能捡回来。”\n\n“我留下的节拍会把两箭的准头锁死。刚开始练，它会吃掉差不多两次正常射击的耐力；熟练以后，这个负担会一路降下来，最后约等于一次正常射击。”\n\n她这才松开手。\n\n“所以别再拿好箭当柴烧。华舞现在值得你搭上真正想射出去的那支箭。”","responses":[{"text":"[记下说明，接过弓盒] 两箭都是真箭，华舞会替我锁定目标。","topic":"TALK_TRAVEL_MAYA_MENU_FARM","effect":[{"run_eocs":["EOC_TRAVEL_MAYA_BARRY_REWARD"]}]}]},{"type":"talk_topic","id":"TALK_TRAVEL_MAYA_LIANG_PLAN","dynamic_line":"梁知遥站起身，看向桌上摊开的地图。\n\n“她留在这里。农场有干净的水、药和认识她的人。我继续跟你走，找更远的通信线索，也把外面的变化带回来。”\n\n玛雅拍了拍窗边那摞短波记录。\n\n“我等阿琼的消息，也等这条腿重新属于我。你把外面发生的事带回来——别把新的伤也一起带回来。”\n\n梁知遥看了她一会儿，点头。\n\n“好。”","responses":[{"text":"[继续听她们说] 我还想确认另一件事。","topic":"TALK_TRAVEL_MAYA_LIANG_SHARED_SCENE"},{"text":"[返回梁知遥与玛雅] 先把下一周过好。","topic":"TALK_TRAVEL_MAYA_MENU_LIANG"},{"text":"[返回主菜单] 先谈别的。","topic":"TALK_TRAVEL_MAYA_ISHERWOOD"}]},{"type":"talk_topic","id":"TALK_TRAVEL_MAYA_LIANG_ARROW_WORK","dynamic_line":"梁知遥拿起一支还没装箭头的木箭杆，先看尾栝，再用指腹摸过羽片槽。\n\n“她以前就这样。”梁知遥说，“别人练完去吃饭，她留下来把器材表补齐，把弦距和损坏的箭一支支记下来。”\n\n玛雅从她手里拿回箭杆。\n\n“现在只是把表格换成了能保命的东西。木箭做得快，金属箭要看工坊剩下什么。那些复合弓多半是修出来或换来的，不是我凭空造的。”\n\n“每周重新清点一次，够农场练习、打猎，也能拿出一部分交换。”","responses":[{"text":"[继续听她们说] 我还想问问你们的计划。","topic":"TALK_TRAVEL_MAYA_LIANG_SHARED_SCENE"},{"text":"[返回梁知遥与玛雅] 我明白了。","topic":"TALK_TRAVEL_MAYA_MENU_LIANG"},{"text":"[返回主菜单] 先谈别的。","topic":"TALK_TRAVEL_MAYA_ISHERWOOD"}]}]
+[
+  {
+    "type": "item_group",
+    "id": "TRAVEL_MAYA_EMPTY_WEAPON",
+    "subtype": "collection",
+    "entries": [
+      {
+        "item": "compbow"
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "TRAVEL_MAYA_WORN",
+    "subtype": "collection",
+    "entries": [
+      {
+        "item": "hoodie"
+      },
+      {
+        "item": "tshirt"
+      },
+      {
+        "item": "jeans"
+      },
+      {
+        "item": "bra"
+      },
+      {
+        "item": "panties"
+      },
+      {
+        "item": "socks"
+      },
+      {
+        "item": "gloves_fingerless"
+      },
+      {
+        "item": "sneakers"
+      },
+      {
+        "item": "quiver_large"
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "TRAVEL_MAYA_CARRIED",
+    "subtype": "collection",
+    "entries": [
+      {
+        "item": "arrow_metal",
+        "count": [
+          18,
+          30
+        ]
+      }
+    ]
+  },
+  {
+    "type": "json_flag",
+    "id": "TRAVEL_TITAN_STRING_BOW",
+    "info": "泰坦弦弓。一把带有异界魔法附魔的长弓，可作为挥砍华舞的施法工具。"
+  },
+  {
+    "type": "GUN",
+    "id": "travel_titan_string_bow",
+    "copy-from": "compbow",
+    "name": {
+      "str": "泰坦弦弓"
+    },
+    "description": "一把散发着淡金色光芒的优雅长弓，弓身的金属结构与繁复纹路不像任何现代工艺，拉弦时会留下如星辉般的短暂轨迹。传闻中，费伦大陆的一位半精灵吟游诗人曾经使用它拯救博德之门。玛雅是在大灾变后的时空乱流中偶然获得的，毫无疑问这是一把强力武器，它会随着你力量的增加而发挥出更惊人的威力。\n\n人们常以为天生的弓手都该身形修长、手臂纤细——这完全错了。把弓弦一路拉到颧骨需要多年的训练；到最后，你的手臂会像钢铁一样坚硬。",
+    "min_strength": 0,
+    "range": 18,
+    "dispersion": 500,
+    "durability": 8,
+    "looks_like": "longbow",
+    "skill": "archery",
+    "loudness": 0,
+    "reload_noise_volume": 2,
+    "ammo": [
+      "arrow"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "arrow": 1
+        }
+      }
+    ],
+    "ammo_effects": [
+      "NEVER_MISFIRES"
+    ],
+    "use_action": [],
+    "delete": {
+      "flags": [
+        "STR_DRAW"
+      ]
+    },
+    "extend": {
+      "flags": [
+        "TRAVEL_TITAN_STRING_BOW"
+      ]
+    },
+    "ranged_damage": [
+      {
+        "damage_type": "pure",
+        "amount": 60
+      }
+    ],
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "values": [
+            {
+              "value": "ITEM_DAMAGE_PURE",
+              "add": {
+                "arithmetic": [
+                  {
+                    "u_val": "strength"
+                  },
+                  "-",
+                  {
+                    "const": 8
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "BOOK",
+    "id": "travel_titan_string_dance_grimoire",
+    "category": "manuals",
+    "name": {
+      "str": "吟游诗人的乐章"
+    },
+    "description": "一本以深蓝线重新装订的薄册。前半部抄录着剑湾酒馆的歌谣，后半部则布满箭着图、节拍记号和玛雅密密麻麻的批注。\n\n末页只留下一句：\n“第一支箭是旋律，第二支箭是回声。”",
+    "weight": "280 g",
+    "volume": "450 ml",
+    "longest_side": "27 cm",
+    "price": "80 USD",
+    "price_postapoc": "10 USD",
+    "material": [
+      "paper"
+    ],
+    "looks_like": "cookbook",
+    "symbol": "?",
+    "color": "yellow",
+    "use_action": {
+      "type": "learn_spell",
+      "spells": [
+        "SPELL_TRAVEL_TITAN_STRING_DANCE"
+      ]
+    }
+  },
+  {
+    "type": "requirement",
+    "id": "spell_components_travel_titan_dance",
+    "//": "华舞只检查泰坦弦弓本体，箭矢由真实射击流程装填、消耗与回收。",
+    "tools": [
+      [
+        [
+          "travel_titan_string_bow",
+          -1
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "SPELL",
+    "id": "SPELL_TRAVEL_TITAN_STRING_DANCE",
+    "name": {
+      "str": "挥砍华舞（远程）"
+    },
+    "description": {
+      "str": "一段为泰坦弦弓改写的战场乐句。第一支实体箭离弦后，你会立刻重新选择第二个目标，再放出第二支实体箭。两次攻击都按真正的射击处理，箭头、爆炸、泰坦附魔与回收效果照常生效，并以华舞的节拍锁定目标。\n\n“别追着箭走。让箭追上你的旋律。”"
+    },
+    "message": "你奏响弓弦，放出挥砍华舞！",
+    "valid_targets": [
+      "hostile"
+    ],
+    "effect": "titan_string_bow",
+    "effect_str": "TRAVEL_TITAN_FLOURISH_PRIMARY",
+    "shape": "blast",
+    "min_damage": 0,
+    "max_damage": 0,
+    "damage_increment": 0,
+    "min_range": 18,
+    "max_range": 18,
+    "range_increment": 0,
+    "min_aoe": 0,
+    "max_aoe": 0,
+    "skill": "archery",
+    "energy_source": "NONE",
+    "base_energy_cost": 0,
+    "final_energy_cost": 0,
+    "energy_increment": 0,
+    "base_casting_time": 100,
+    "final_casting_time": 100,
+    "casting_time_increment": 0,
+    "difficulty": 0,
+    "max_level": 15,
+    "flags": [
+      "NO_FAIL",
+      "NO_LEGS",
+      "NO_HANDS",
+      "SILENT",
+      "NO_EXPLOSION_SFX",
+      "NON_MAGICAL"
+    ],
+    "components": "spell_components_travel_titan_dance",
+    "extra_effects": [
+      {
+        "id": "SPELL_TRAVEL_TITAN_FLOURISH_SECOND_TRIGGER",
+        "hit_self": true,
+        "min_level": 0,
+        "max_level": 15
+      }
+    ]
+  },
+  {
+    "type": "SPELL",
+    "id": "SPELL_TRAVEL_TITAN_FLOURISH_ECHO",
+    "name": {
+      "str": "挥砍华舞第二箭"
+    },
+    "description": {
+      "str": "挥砍华舞的第二次真实射击。"
+    },
+    "valid_targets": [
+      "hostile"
+    ],
+    "effect": "titan_string_bow",
+    "effect_str": "TRAVEL_TITAN_FLOURISH_SECONDARY",
+    "shape": "blast",
+    "min_damage": 0,
+    "max_damage": 0,
+    "damage_increment": 0,
+    "min_range": 18,
+    "max_range": 18,
+    "range_increment": 0,
+    "min_aoe": 0,
+    "max_aoe": 0,
+    "energy_source": "NONE",
+    "base_energy_cost": 0,
+    "final_energy_cost": 0,
+    "energy_increment": 0,
+    "base_casting_time": 0,
+    "final_casting_time": 0,
+    "casting_time_increment": 0,
+    "difficulty": 0,
+    "max_level": 15,
+    "flags": [
+      "NO_FAIL",
+      "NO_LEGS",
+      "NO_HANDS",
+      "SILENT",
+      "NO_EXPLOSION_SFX",
+      "NON_MAGICAL"
+    ]
+  },
+  {
+    "type": "SPELL",
+    "id": "SPELL_TRAVEL_TITAN_FLOURISH_SECOND_TRIGGER",
+    "name": {
+      "str": "挥砍华舞转调"
+    },
+    "description": {
+      "str": "内部法术：在第一箭结算后交还瞄准控制，用于选择第二个目标。"
+    },
+    "valid_targets": [
+      "self"
+    ],
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_TRAVEL_TITAN_FLOURISH_SECOND_TARGET",
+    "shape": "blast",
+    "min_damage": 0,
+    "max_damage": 0,
+    "damage_increment": 0,
+    "min_range": 0,
+    "max_range": 0,
+    "range_increment": 0,
+    "min_aoe": 0,
+    "max_aoe": 0,
+    "energy_source": "NONE",
+    "base_energy_cost": 0,
+    "final_energy_cost": 0,
+    "energy_increment": 0,
+    "base_casting_time": 0,
+    "final_casting_time": 0,
+    "casting_time_increment": 0,
+    "difficulty": 0,
+    "max_level": 15,
+    "flags": [
+      "NO_FAIL",
+      "NO_LEGS",
+      "NO_HANDS",
+      "SILENT",
+      "NO_EXPLOSION_SFX",
+      "NON_MAGICAL"
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_TITAN_FLOURISH_SECOND_TARGET",
+    "eoc_type": "ACTIVATION",
+    "//": "第一箭完成真实射击后，重新打开敌对目标选择并发射第二箭。取消瞄准则不再发射。",
+    "effect": [
+      {
+        "u_message": "第一箭已经离弦。选择挥砍华舞的第二个目标。",
+        "type": "info"
+      },
+      {
+        "u_cast_spell": {
+          "id": "SPELL_TRAVEL_TITAN_FLOURISH_ECHO",
+          "min_level": 0,
+          "max_level": 0
+        },
+        "targeted": true
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_BARRY_REWARD_BOW",
+    "dynamic_line": "长盒里躺着一把泛着淡金色微光的长弓，弓身的金属结构和纹路怎么看都不像现代工艺。\n\n“泰坦弦弓。”玛雅说，“这名字不是我随便起的。我是在大灾变后的时空乱流里碰到它的。要是那些传闻没撒谎，它以前属于费伦的一位半精灵吟游诗人，那家伙还拿它救过博德之门。”\n\n她用指节轻轻敲了敲弓身，金纹像被惊醒一样闪了一瞬。\n\n“它真正厉害的是附魔。八点力量是基准，附魔大约能压出六十点不吃护甲的魔法伤害。之后每多一点力量，就再多一点，低于八点也会照样减弱。箭本身还是箭，宽刃、穿甲、爆炸和回收都按原来的方式算。”\n\n她又点了点两本薄册。\n\n“这本弓箭入门手册是灾变前留下的。另一本才是我整理的华舞笔记，教你怎样在一次完整的起弦节奏里，连续处理两个目标。”",
+    "responses": [
+      {
+        "text": "[继续查看箭筒和笔记] 还有什么需要注意？",
+        "topic": "TALK_TRAVEL_MAYA_BARRY_REWARD_BOW_CONTINUE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_BARRY_REWARD_BOW_CONTINUE",
+    "dynamic_line": "玛雅按住那只大箭筒，没有立刻把它推过来。\n\n“华舞不是烧掉一支箭换两道影子。你会真的放两箭，第一箭出去以后还能重新选第二个目标，同一个也行。两箭都会吃泰坦弓的附魔，也都会保留箭头自己的效果，能回收的箭照样有机会捡回来。”\n\n“华舞会把那两箭锁得很死，代价是累。刚学会时，一轮华舞大约要花普通一箭两倍的耐力。练熟以后，这个额外负担会慢慢降下来，最后差不多就是普通一箭的消耗。”\n\n她这才松开手。\n\n“拿去吧。让它继续派上用场。”",
+    "responses": [
+      {
+        "text": "[记下提醒，接过弓盒] 两支真箭，附魔跟力量走。明白了。",
+        "topic": "TALK_TRAVEL_MAYA_MENU_FARM",
+        "effect": [
+          {
+            "run_eocs": [
+              "EOC_TRAVEL_MAYA_BARRY_REWARD"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
