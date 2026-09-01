@@ -80,14 +80,19 @@ void spell_effect::titan_string_bow( const spell &sp, Creature &caster, const tr
         weapon->set_var( "TRAVEL_TITAN_FLOURISH_AMMO", weapon->ammo_current().str() );
     }
 
-    // 华舞仍走标准 fire_gun / projectile_attack 流程，只在这一箭结算前临时把
-    // 武器散布与后坐归零。这样箭矢、爆炸效果、命中事件与回收逻辑全部保持原版行为。
+    // 华舞仍走标准 fire_gun / projectile_attack 流程。开火前临时清空武器散布，
+    // 并让角色后坐与载具运动后坐互相抵消，使这一箭的总散布为零。
+    // 箭矢、爆炸效果、命中事件、障碍物碰撞与回收逻辑仍全部由原版弹道处理。
+    const double recoil_before_flourish = shooter->recoil;
     shooter->add_effect( effect_travel_titan_flourish_lock, 1_turns );
     shooter->recalculate_enchantment_cache();
-    shooter->recoil = 0;
+    shooter->recoil = -shooter->recoil_vehicle();
     const int shots_fired = shooter->fire_gun( target, 1, *weapon );
     shooter->remove_effect( effect_travel_titan_flourish_lock );
     shooter->recalculate_enchantment_cache();
+    if( shots_fired <= 0 ) {
+        shooter->recoil = recoil_before_flourish;
+    }
 
     if( secondary ) {
         weapon->erase_var( "TRAVEL_TITAN_FLOURISH_AMMO" );
