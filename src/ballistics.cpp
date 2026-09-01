@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "calendar.h"
+#include "character.h"
 #include "creature.h"
 #include "creature_tracker.h"
 #include "damage.h"
@@ -237,6 +238,33 @@ dealt_projectile_attack projectile_attack( const projectile &proj_arg, const tri
     }
 
     projectile &proj = attack.proj;
+
+    // Weapons may define a strength-scaled PURE component without changing the physical ammo damage.
+    // The modifier is applied to the projectile itself so normal shots and special firing actions share
+    // exactly the same damage path, critical hits, penetration, ammo effects and recovery behavior.
+    if( origin != nullptr && wp_attack.weapon != nullptr ) {
+        Character *shooter = origin->as_character();
+        if( shooter != nullptr &&
+            wp_attack.weapon->has_property( "ranged_strength_pure_damage_reference" ) ) {
+            const int reference = static_cast<int>( wp_attack.weapon->get_property_int64_t(
+                                      "ranged_strength_pure_damage_reference" ) );
+            const int damage_per_point = static_cast<int>( wp_attack.weapon->get_property_int64_t(
+                                             "ranged_strength_pure_damage_per_point", 1 ) );
+            const float adjustment = static_cast<float>( ( shooter->get_str() - reference ) *
+                                     damage_per_point );
+            const auto apply_strength_adjustment = [adjustment]( damage_instance &damage ) {
+                for( damage_unit &du : damage.damage_units ) {
+                    if( du.type == damage_type::PURE ) {
+                        du.amount = std::max( 0.0f, du.amount + adjustment );
+                        break;
+                    }
+                }
+            };
+            apply_strength_adjustment( proj.impact );
+            apply_strength_adjustment( proj.shot_impact );
+        }
+    }
+
     const auto &proj_effects = proj.proj_effects;
 
     const bool stream = proj_effects.count( "STREAM" ) > 0 ||
