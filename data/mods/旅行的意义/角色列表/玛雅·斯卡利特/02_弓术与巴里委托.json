@@ -109,30 +109,16 @@
         "amount": 60
       }
     ],
-    "relic_data": {
-      "passive_effects": [
-        {
-          "has": "WIELD",
-          "condition": "ALWAYS",
-          "values": [
-            {
-              "value": "ITEM_DAMAGE_PURE",
-              "add": {
-                "arithmetic": [
-                  {
-                    "u_val": "strength"
-                  },
-                  "-",
-                  {
-                    "const": 8
-                  }
-                ]
-              }
-            }
-          ]
-        }
+    "properties": [
+      [
+        "ranged_strength_pure_damage_reference",
+        "8"
+      ],
+      [
+        "ranged_strength_pure_damage_per_point",
+        "1"
       ]
-    }
+    ]
   },
   {
     "type": "BOOK",
