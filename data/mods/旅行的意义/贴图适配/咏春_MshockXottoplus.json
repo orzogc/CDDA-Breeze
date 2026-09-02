@@ -1,37 +1,16 @@
 [
   {
     "type": "mod_tileset",
-    "compatibility": [
-      "MshockXottoplus"
-    ],
+    "compatibility": [ "MshockXottoplus" ],
     "tiles-new": [
       {
         "file": "mod_tileset/wc_rework_mshock_tiles.png",
         "tiles": [
-          {
-            "id": "wc_baat_jaam_dou_pair",
-            "fg": 0
-          },
-          {
-            "id": "wc_luk_dim_boon_gwan",
-            "fg": 1
-          },
-          {
-            "id": "overlay_wielded_wc_baat_jaam_dou_pair",
-            "fg": 2
-          },
-          {
-            "id": "overlay_wielded_wc_luk_dim_boon_gwan",
-            "fg": 3
-          },
-          {
-            "id": "travel_liang_luk_dim_boon_gwan",
-            "fg": 1
-          },
-          {
-            "id": "overlay_wielded_travel_liang_luk_dim_boon_gwan",
-            "fg": 3
-          }
+          { "id": "wc_baat_jaam_dou_pair", "fg": 0 },
+          { "id": "wc_luk_dim_boon_gwan", "fg": 1 },
+          { "id": "overlay_wielded_wc_baat_jaam_dou_pair", "fg": 2 },
+          { "id": "overlay_wielded_wc_luk_dim_boon_gwan", "fg": 3 },
+          { "id": "overlay_wielded_travel_liang_luk_dim_boon_gwan", "fg": 3 }
         ],
         "sprite_width": 32,
         "sprite_height": 32

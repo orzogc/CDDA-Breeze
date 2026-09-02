@@ -1,0 +1,84 @@
+[
+  {
+    "type": "mod_tileset",
+    "compatibility": [
+      "Chibi_Ultica",
+      "MshockRealXotto",
+      "UltimateCataclysm",
+      "MshockXottoplus",
+      "UNDEAD_PEOPLE",
+      "UNDEAD_PEOPLE_BASE",
+      "UNDEAD_PEOPLE_LEGACY",
+      "UlticaShell",
+      "MshockXottoplus12",
+      "MSX++DEAD_PEOPLE",
+      "MXplus12_for_cosmetics",
+      "MSXotto+",
+      "MshockXotto+",
+      "UltimateCataclysmDemo",
+      "Ultica"
+    ],
+    "tiles-new": [
+      {
+        "file": "贴图/第一批不死人风格/黑缠布六点半棍.png",
+        "tiles": [ { "id": "travel_liang_luk_dim_boon_gwan", "fg": 0 } ],
+        "sprite_width": 32,
+        "sprite_height": 32
+      },
+      {
+        "file": "贴图/第一批不死人风格/康陶远行者野外显示帽.png",
+        "tiles": [ { "id": "travel_liang_kangtao_field_cap", "fg": 0 } ],
+        "sprite_width": 32,
+        "sprite_height": 32
+      },
+      {
+        "file": "贴图/第一批不死人风格/康陶远行者模块背包.png",
+        "tiles": [ { "id": "travel_liang_kangtao_runner_pack", "fg": 0 } ],
+        "sprite_width": 32,
+        "sprite_height": 32
+      },
+      {
+        "file": "贴图/第一批不死人风格/康陶远行者医疗腰包.png",
+        "tiles": [ { "id": "travel_liang_medical_pouch", "fg": 0 } ],
+        "sprite_width": 32,
+        "sprite_height": 32
+      },
+      {
+        "file": "贴图/第一批不死人风格/康陶远行者防滑野外靴.png",
+        "tiles": [ { "id": "travel_liang_kangtao_hiking_boots", "fg": 0 } ],
+        "sprite_width": 32,
+        "sprite_height": 32
+      },
+      {
+        "file": "贴图/第一批不死人风格/康陶远行者应急护服.png",
+        "tiles": [ { "id": "travel_liang_light_leather_armor", "fg": 0 } ],
+        "sprite_width": 32,
+        "sprite_height": 32
+      },
+      {
+        "file": "贴图/第一批不死人风格/康陶G58应龙智能冲锋枪.png",
+        "tiles": [ { "id": "kt_yinglong_hub", "fg": 0 } ],
+        "sprite_width": 32,
+        "sprite_height": 32
+      },
+      {
+        "file": "贴图/第一批不死人风格/45发智能弹匣.png",
+        "tiles": [ { "id": "kt_yinglong_mag", "fg": 0 } ],
+        "sprite_width": 32,
+        "sprite_height": 32
+      },
+      {
+        "file": "贴图/第一批不死人风格/100发智能弹鼓.png",
+        "tiles": [ { "id": "kt_yinglong_drum_100", "fg": 0 } ],
+        "sprite_width": 32,
+        "sprite_height": 32
+      },
+      {
+        "file": "贴图/第一批不死人风格/9x19毫米智能弹.png",
+        "tiles": [ { "id": "kt_smart_round", "fg": 0 } ],
+        "sprite_width": 32,
+        "sprite_height": 32
+      }
+    ]
+  }
+]
