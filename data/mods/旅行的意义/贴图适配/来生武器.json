@@ -18,18 +18,8 @@
             "rotates": false
           },
           {
-            "id": "travel_arasaka_tki20_shingen_v",
-            "fg": 3,
-            "rotates": false
-          },
-          {
             "id": "overlay_wielded_travel_ba_xing_chong",
             "fg": 4,
-            "rotates": false
-          },
-          {
-            "id": "travel_ba_xing_chong",
-            "fg": 5,
             "rotates": false
           }
         ]
