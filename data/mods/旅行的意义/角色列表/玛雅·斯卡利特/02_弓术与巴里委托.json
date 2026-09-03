@@ -300,6 +300,9 @@
     "//": "第一箭完成真实射击后，重新打开敌对目标选择并发射第二箭。取消瞄准则不再发射。",
     "effect": [
       {
+        "u_lose_effect": "travel_titan_flourish_primary_ready"
+      },
+      {
         "u_message": "第一箭已经离弦。选择挥砍华舞的第二个目标。",
         "type": "info"
       },
@@ -311,7 +314,10 @@
         },
         "targeted": true
       }
-    ]
+    ],
+    "condition": {
+      "u_has_effect": "travel_titan_flourish_primary_ready"
+    }
   },
   {
     "type": "talk_topic",

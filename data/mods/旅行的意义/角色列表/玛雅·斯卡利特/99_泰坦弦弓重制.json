@@ -22,6 +22,18 @@
     ]
   },
   {
+    "type": "effect_type",
+    "id": "travel_titan_flourish_primary_ready",
+    "name": [
+      "华舞第一箭已完成"
+    ],
+    "desc": [
+      "挥砍华舞的第一箭已经完成真实射击，正在等待第二个目标。"
+    ],
+    "show_intensity": false,
+    "show_in_info": false
+  },
+  {
     "type": "MIGRATION",
     "id": "travel_titan_string_bow_medium",
     "replace": "travel_titan_string_bow"
