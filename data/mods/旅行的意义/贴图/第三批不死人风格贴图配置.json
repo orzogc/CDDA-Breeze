@@ -1,0 +1,187 @@
+[
+  {
+    "type": "mod_tileset",
+    "compatibility": [
+      "Chibi_Ultica",
+      "MshockRealXotto",
+      "UltimateCataclysm",
+      "MshockXottoplus",
+      "UNDEAD_PEOPLE",
+      "UNDEAD_PEOPLE_BASE",
+      "UNDEAD_PEOPLE_LEGACY",
+      "UlticaShell",
+      "MshockXottoplus12",
+      "MSX++DEAD_PEOPLE",
+      "MXplus12_for_cosmetics",
+      "MSXotto+",
+      "MshockXotto+",
+      "UltimateCataclysmDemo",
+      "Ultica"
+    ],
+    "tiles-new": [
+      {
+        "file": "贴图/第三批不死人风格/耶鲁大学学生证.png",
+        "tiles": [
+          {
+            "id": "travel_brown_student_card",
+            "fg": 0
+          }
+        ],
+        "sprite_width": 32,
+        "sprite_height": 32
+      },
+      {
+        "file": "贴图/第三批不死人风格/Nintendo Switch OLED.png",
+        "tiles": [
+          {
+            "id": "travel_liang_handheld_game",
+            "fg": 0
+          }
+        ],
+        "sprite_width": 32,
+        "sprite_height": 32
+      },
+      {
+        "file": "贴图/第三批不死人风格/ROG Zephyrus G14.png",
+        "tiles": [
+          {
+            "id": "travel_liang_gaming_laptop",
+            "fg": 0
+          }
+        ],
+        "sprite_width": 32,
+        "sprite_height": 32
+      },
+      {
+        "file": "贴图/第三批不死人风格/知遥的叶系咏春训练札记.png",
+        "tiles": [
+          {
+            "id": "travel_liang_wc_notes",
+            "fg": 0
+          }
+        ],
+        "sprite_width": 32,
+        "sprite_height": 32
+      },
+      {
+        "file": "贴图/第三批不死人风格/应龙智能弹改装记录.png",
+        "tiles": [
+          {
+            "id": "kt_yinglong_ammo_record",
+            "fg": 0
+          }
+        ],
+        "sprite_width": 32,
+        "sprite_height": 32
+      },
+      {
+        "file": "贴图/第三批不死人风格/日记手写内页.png",
+        "tiles": [
+          {
+            "id": [
+              "travel_liang_journal_social_archive",
+              "travel_liang_journal_apr23",
+              "travel_liang_journal_apr24",
+              "travel_liang_journal_apr25",
+              "travel_liang_journal_apr26",
+              "travel_liang_journal_apr27",
+              "travel_liang_journal_apr28",
+              "travel_liang_journal_apr29"
+            ],
+            "fg": 0
+          }
+        ],
+        "sprite_width": 32,
+        "sprite_height": 32
+      },
+      {
+        "file": "贴图/第三批不死人风格/吟游诗人的乐章.png",
+        "tiles": [
+          {
+            "id": "travel_titan_string_dance_grimoire",
+            "fg": 0
+          }
+        ],
+        "sprite_width": 32,
+        "sprite_height": 32
+      },
+      {
+        "file": "贴图/第三批不死人风格/杰克·威尔斯.png",
+        "tiles": [
+          {
+            "id": "travel_afterlife_drink_jackie",
+            "fg": 0
+          }
+        ],
+        "sprite_width": 32,
+        "sprite_height": 32
+      },
+      {
+        "file": "贴图/第三批不死人风格/星星.png",
+        "tiles": [
+          {
+            "id": "travel_afterlife_drink_star",
+            "fg": 0
+          }
+        ],
+        "sprite_width": 32,
+        "sprite_height": 32
+      },
+      {
+        "file": "贴图/第三批不死人风格/银手余响.png",
+        "tiles": [
+          {
+            "id": "travel_afterlife_drink_silverhand",
+            "fg": 0
+          }
+        ],
+        "sprite_width": 32,
+        "sprite_height": 32
+      },
+      {
+        "file": "贴图/第三批不死人风格/来生特调.png",
+        "tiles": [
+          {
+            "id": "travel_afterlife_drink_afterlife",
+            "fg": 0
+          }
+        ],
+        "sprite_width": 32,
+        "sprite_height": 32
+      },
+      {
+        "file": "贴图/第三批不死人风格/张雪峰.png",
+        "tiles": [
+          {
+            "id": "travel_afterlife_drink_zhang_xuefeng",
+            "fg": 0
+          }
+        ],
+        "sprite_width": 32,
+        "sprite_height": 32
+      },
+      {
+        "file": "贴图/第三批不死人风格/科比·布莱恩特.png",
+        "tiles": [
+          {
+            "id": "travel_afterlife_drink_kobe",
+            "fg": 0
+          }
+        ],
+        "sprite_width": 32,
+        "sprite_height": 32
+      },
+      {
+        "file": "贴图/第三批不死人风格/五条悟.png",
+        "tiles": [
+          {
+            "id": "travel_afterlife_drink_gojo",
+            "fg": 0
+          }
+        ],
+        "sprite_width": 32,
+        "sprite_height": 32
+      }
+    ]
+  }
+]
