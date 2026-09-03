@@ -263,6 +263,10 @@ int main( int argc, const char *argv[] )
 
     MAP_SHARING::setDefaults();
 
+    // Breeze currently keeps the legacy command-line documentation but no longer runs the
+    // original parser.  Keep --jsonverify working because CI and developers rely on it.
+    const bool json_verify = std::count( argv, argv + argc, std::string( "--jsonverify" ) ) > 0;
+
     if( !dir_exist( PATH_INFO::datadir() ) ) {
         printf( "Fatal: Can't find data directory \"%s\"\nPlease ensure the current working directory is correct or specify data directory with --datadir.  Perhaps you meant to start \"cataclysm-launcher\"?\n",
                 PATH_INFO::datadir().c_str() );
@@ -370,6 +374,9 @@ int main( int argc, const char *argv[] )
     // depend on the mods.
     try {
         g->load_static_data();
+        if( json_verify ) {
+            exit_handler( 0 );
+        }
     } catch( const std::exception &err ) {
         debugmsg( "%s", err.what() );
         exit_handler( -999 );
