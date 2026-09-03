@@ -11,6 +11,18 @@
     "type": "effect_on_condition",
     "id": "EOC_TRAVEL_MAYA_SHARED_SCENE_SYNC",
     "eoc_type": "ACTIVATION",
+    "condition": {
+      "compare_int": [
+        {
+          "global_val": "var",
+          "var_name": "travel_maya_liang_nearby"
+        },
+        "==",
+        {
+          "const": 1
+        }
+      ]
+    },
     "effect": [
       { "npc_add_var": "travel_maya_shared_scene_seen", "type": "dialogue", "context": "travel_maya", "value": "yes" },
       {
@@ -26,7 +38,12 @@
     "type": "talk_topic",
     "id": "TALK_TRAVEL_MAYA_LIANG_SHARED_SCENE",
     "dynamic_line": "玛雅把窗边的椅子让出一半，梁知遥却没有坐。她先蹲下来，检查固定带有没有松动，又看了看玛雅落地时下意识避开的角度。\n\n“检查完了吗，梁知遥同学？”玛雅问。\n\n“没有。你刚才从椅子上站起来时，把重量全偏到左腿了。”\n\n玛雅叹了口气。\n\n“这就是和一个会做记录的人住过太久的后果。”",
-    "speaker_effect": { "effect": [ { "run_eocs": [ "EOC_TRAVEL_MAYA_SHARED_SCENE_SYNC" ] } ] },
+    "speaker_effect": {
+      "effect": [
+        { "run_eocs": [ "EOC_TRAVEL_MAYA_SCAN_LIANG_NEARBY" ] },
+        { "run_eocs": [ "EOC_TRAVEL_MAYA_SHARED_SCENE_SYNC" ] }
+      ]
+    },
     "responses": [
       { "text": "所以，你们接下来怎么打算？", "topic": "TALK_TRAVEL_MAYA_LIANG_PLAN" },
       { "text": "[看向墙边成捆的箭] 她休养时也没有闲着。", "topic": "TALK_TRAVEL_MAYA_LIANG_ARROW_WORK" },
