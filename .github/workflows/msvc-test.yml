@@ -1,13 +1,17 @@
 name: "Windows & Android Test"
 
 on:
+  pull_request:
+    branches:
+      - main
+    types: [opened, reopened, synchronize, ready_for_review]
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: platform-test-${{ github.ref }}
+  group: platform-test-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 env:
@@ -18,8 +22,169 @@ env:
   VCPKG_COMMIT_ID: f6672d8e480ccdecddfad3fd1b838ba369ffe6cd
 
 jobs:
+  preflight:
+    name: 快速检查
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout selected branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Collect changed files
+        id: changes
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            BASE_SHA="${{ github.event.pull_request.base.sha }}"
+            HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+          else
+            HEAD_SHA="${GITHUB_SHA}"
+            BASE_SHA="$(git rev-parse "${HEAD_SHA}^" 2>/dev/null || printf '%s' "${HEAD_SHA}")"
+          fi
+
+          echo "base=${BASE_SHA}" >> "${GITHUB_OUTPUT}"
+          echo "head=${HEAD_SHA}" >> "${GITHUB_OUTPUT}"
+          git diff --name-only --diff-filter=ACMR "${BASE_SHA}" "${HEAD_SHA}" > "${RUNNER_TEMP}/changed-files.txt"
+          echo "Changed files:"
+          cat "${RUNNER_TEMP}/changed-files.txt"
+
+      - name: Check patch whitespace
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check "${{ steps.changes.outputs.base }}" "${{ steps.changes.outputs.head }}"
+
+      - name: Validate changed JSON Python and project files
+        shell: bash
+        env:
+          CHANGED_FILES: ${{ runner.temp }}/changed-files.txt
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+          import py_compile
+          import sys
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+
+          changed_file_list = Path(os.environ["CHANGED_FILES"])
+          files = [Path(line) for line in changed_file_list.read_text(encoding="utf-8").splitlines() if line.strip()]
+          failures = []
+          checked = 0
+
+          for path in files:
+              if not path.is_file():
+                  continue
+              suffix = path.suffix.lower()
+              try:
+                  if suffix == ".json":
+                      with path.open("r", encoding="utf-8-sig") as handle:
+                          json.load(handle)
+                      checked += 1
+                  elif suffix == ".py":
+                      py_compile.compile(str(path), doraise=True)
+                      checked += 1
+                  elif suffix in {".xml", ".vcxproj", ".props", ".targets"}:
+                      ET.parse(path)
+                      checked += 1
+              except Exception as exc:
+                  failures.append(f"{path}: {exc}")
+
+          if failures:
+              print("快速语法检查失败：", file=sys.stderr)
+              for failure in failures:
+                  print(f"- {failure}", file=sys.stderr)
+              raise SystemExit(1)
+
+          print(f"快速语法检查通过，共检查 {checked} 个 JSON/Python/XML/Visual Studio 项目文件。")
+          PY
+
+      - name: Detect unresolved merge markers
+        shell: bash
+        env:
+          CHANGED_FILES: ${{ runner.temp }}/changed-files.txt
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import os
+          import sys
+          from pathlib import Path
+
+          changed_file_list = Path(os.environ["CHANGED_FILES"])
+          candidates = []
+          checked_suffixes = {
+              ".c", ".cc", ".cpp", ".cxx", ".h", ".hh", ".hpp",
+              ".json", ".py", ".java", ".kt", ".kts", ".gradle",
+              ".yml", ".yaml", ".xml", ".vcxproj", ".props", ".targets",
+          }
+
+          for raw in changed_file_list.read_text(encoding="utf-8").splitlines():
+              path = Path(raw)
+              if not path.is_file() or path.suffix.lower() not in checked_suffixes:
+                  continue
+              try:
+                  text = path.read_text(encoding="utf-8")
+              except UnicodeDecodeError:
+                  continue
+              for number, line in enumerate(text.splitlines(), 1):
+                  if line.startswith(("<<<<<<< ", ">>>>>>> ")):
+                      candidates.append(f"{path}:{number}: {line}")
+
+          if candidates:
+              print("发现疑似未解决的合并冲突标记：", file=sys.stderr)
+              print("\n".join(candidates), file=sys.stderr)
+              raise SystemExit(1)
+
+          print("未发现未解决的合并冲突标记。")
+          PY
+
+      - name: Validate embedded weapon workshop paths
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f "data/mods/穆尔卡的武器工坊/modinfo.json"
+          test -f "data/mods/穆尔卡的武器工坊/物品/弹药/408CheyTac.json"
+
+  android-gradle-config:
+    name: Android Gradle 快速检查
+    needs: preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout selected branch
+        uses: actions/checkout@v4
+
+      - name: Setup JDK 11
+        uses: actions/setup-java@v4
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Resolve Android Gradle configuration
+        working-directory: ./android
+        env:
+          GRADLE_OPTS: >-
+            -Dorg.gradle.internal.http.connectionTimeout=120000
+            -Dorg.gradle.internal.http.socketTimeout=120000
+        run: |
+          set -euo pipefail
+          chmod +x gradlew
+          ./gradlew --no-daemon help
+
   msvc:
     name: Windows Tiles x64 MSVC
+    needs: preflight
+    if: ${{ github.event_name != 'pull_request' || github.event.pull_request.draft == false }}
     runs-on: windows-2022
     # Keep a hung toolchain or runner from occupying Actions indefinitely.
     timeout-minutes: 60
@@ -121,8 +286,13 @@ jobs:
           include-hidden-files: true
           if-no-files-found: error
           retention-days: 7
+
   android:
     name: Android arm64
+    needs:
+      - preflight
+      - android-gradle-config
+    if: ${{ github.event_name != 'pull_request' || github.event.pull_request.draft == false }}
     runs-on: ubuntu-latest
     # Keep a hung package mirror or Gradle process from occupying Actions indefinitely.
     timeout-minutes: 60
