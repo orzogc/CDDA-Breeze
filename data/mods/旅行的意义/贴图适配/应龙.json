@@ -12,7 +12,7 @@
         "sprite_width": 32,
         "sprite_height": 32,
         "tiles": [
-          { "id": "overlay_wielded_kt_yinglong_hub", "fg": 1, "rotates": false }
+          { "id": "overlay_wielded_kt_yinglong_hub", "fg": 0, "rotates": false }
         ]
       }
     ]
