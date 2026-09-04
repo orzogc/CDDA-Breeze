@@ -12,51 +12,11 @@
         "sprite_width": 32,
         "sprite_height": 32,
         "tiles": [
-          {
-            "id": "travel_liang_light_leather_armor",
-            "fg": 0
-          },
-          {
-            "id": "overlay_worn_travel_liang_light_leather_armor",
-            "fg": 1,
-            "rotates": false
-          },
-          {
-            "id": "travel_liang_kangtao_field_cap",
-            "fg": 2
-          },
-          {
-            "id": "overlay_worn_travel_liang_kangtao_field_cap",
-            "fg": 3,
-            "rotates": false
-          },
-          {
-            "id": "travel_liang_kangtao_runner_pack",
-            "fg": 4
-          },
-          {
-            "id": "overlay_worn_travel_liang_kangtao_runner_pack",
-            "fg": 5,
-            "rotates": false
-          },
-          {
-            "id": "travel_liang_medical_pouch",
-            "fg": 6
-          },
-          {
-            "id": "overlay_worn_travel_liang_medical_pouch",
-            "fg": 7,
-            "rotates": false
-          },
-          {
-            "id": "travel_liang_kangtao_hiking_boots",
-            "fg": 8
-          },
-          {
-            "id": "overlay_worn_travel_liang_kangtao_hiking_boots",
-            "fg": 9,
-            "rotates": false
-          }
+          { "id": "overlay_worn_travel_liang_light_leather_armor", "fg": 1, "rotates": false },
+          { "id": "overlay_worn_travel_liang_kangtao_field_cap", "fg": 3, "rotates": false },
+          { "id": "overlay_worn_travel_liang_kangtao_runner_pack", "fg": 5, "rotates": false },
+          { "id": "overlay_worn_travel_liang_medical_pouch", "fg": 7, "rotates": false },
+          { "id": "overlay_worn_travel_liang_kangtao_hiking_boots", "fg": 9, "rotates": false }
         ]
       }
     ]

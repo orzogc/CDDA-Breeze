@@ -1,0 +1,84 @@
+[
+  {
+    "type": "mod_tileset",
+    "compatibility": [
+      "Chibi_Ultica",
+      "MshockRealXotto",
+      "UltimateCataclysm",
+      "MshockXottoplus",
+      "UNDEAD_PEOPLE",
+      "UNDEAD_PEOPLE_BASE",
+      "UNDEAD_PEOPLE_LEGACY",
+      "UlticaShell",
+      "MshockXottoplus12",
+      "MSX++DEAD_PEOPLE",
+      "MXplus12_for_cosmetics",
+      "MSXotto+",
+      "MshockXotto+",
+      "UltimateCataclysmDemo",
+      "Ultica"
+    ],
+    "tiles-new": [
+      {
+        "file": "贴图/第二批不死人风格/普通六点半棍.png",
+        "tiles": [ { "id": "wc_luk_dim_boon_gwan", "fg": 0 } ],
+        "sprite_width": 32,
+        "sprite_height": 32
+      },
+      {
+        "file": "贴图/第二批不死人风格/一对八斩刀.png",
+        "tiles": [ { "id": "wc_baat_jaam_dou_pair", "fg": 1 } ],
+        "sprite_width": 32,
+        "sprite_height": 32
+      },
+      {
+        "file": "贴图/第二批不死人风格/荒坂信玄V型.png",
+        "tiles": [ { "id": "travel_arasaka_tki20_shingen_v", "fg": 2 } ],
+        "sprite_width": 32,
+        "sprite_height": 32
+      },
+      {
+        "file": "贴图/第二批不死人风格/八星铳.png",
+        "tiles": [ { "id": "travel_ba_xing_chong", "fg": 3 } ],
+        "sprite_width": 32,
+        "sprite_height": 32
+      },
+      {
+        "file": "贴图/第二批不死人风格/八星铳智能微弹.png",
+        "tiles": [ { "id": "travel_ba_xing_micro_rocket", "fg": 4 } ],
+        "sprite_width": 32,
+        "sprite_height": 32
+      },
+      {
+        "file": "贴图/第二批不死人风格/应龙制造模板.png",
+        "tiles": [ { "id": "kt_yinglong_template", "fg": 5 } ],
+        "sprite_width": 32,
+        "sprite_height": 32
+      },
+      {
+        "file": "贴图/第二批不死人风格/应龙弹药改装套件.png",
+        "tiles": [ { "id": "kt_yinglong_ammo_conversion_kit", "fg": 6 } ],
+        "sprite_width": 32,
+        "sprite_height": 32
+      },
+      {
+        "file": "贴图/第二批不死人风格/旧玉平安扣.png",
+        "tiles": [ { "id": "travel_liang_family_talisman", "fg": 7 } ],
+        "sprite_width": 32,
+        "sprite_height": 32
+      },
+      {
+        "file": "贴图/第二批不死人风格/Shinola皮面日记.png",
+        "tiles": [ { "id": "travel_liang_journal", "fg": 8 } ],
+        "sprite_width": 32,
+        "sprite_height": 32
+      },
+      {
+        "file": "贴图/第二批不死人风格/iPhone17.png",
+        "tiles": [ { "id": "travel_liang_smartphone", "fg": 9 } ],
+        "sprite_width": 32,
+        "sprite_height": 32
+      }
+    ]
+  }
+]
