@@ -3981,7 +3981,7 @@ int get_auto_consume_moves( Character &you, const bool food )
     }
 
     if( best_comestible ) {
-        int consume_moves = -Pickup::cost_to_move_item( you, *best_comestible ) *
+        int consume_moves = Pickup::cost_to_move_item( you, *best_comestible ) *
                             std::max( rl_dist( you.pos(), here.getlocal( best_comestible.position() ) ), 1 );
         consume_moves += to_moves<int>( you.get_consume_time( *best_comestible ) );
         you.consume( best_comestible );
