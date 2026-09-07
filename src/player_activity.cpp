@@ -518,7 +518,7 @@ std::map<distraction_type, std::string> player_activity::get_distractions() cons
             if( hostile_critter != nullptr ) {
                 res.emplace( distraction_type::hostile_spotted_near,
                              string_format( _( "The %s is dangerously close!" ),
-                                            g->is_hostile_very_close( true )->get_name() ) );
+                                            hostile_critter->get_name() ) );
             }
         }
         if( uistate.distraction_dangerous_field &&
