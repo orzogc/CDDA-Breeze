@@ -1862,7 +1862,7 @@
       "s_gun_b_range_roof"
     ],
     "name": "gun store roof",
-    "looks_like": "s_gun_roof_a",
+    "looks_like": "s_gun_a_roof",
     "copy-from": "generic_city_building",
     "color": "red"
   }

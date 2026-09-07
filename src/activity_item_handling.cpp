@@ -3873,8 +3873,8 @@ static time_duration get_comestible_time_left( const item_location &loc )
     const time_duration shelf_life = loc->is_comestible() ? loc->get_comestible()->spoils :
                                      calendar::INDEFINITELY_LONG_DURATION;
     if( shelf_life > 0_turns ) {
-        const item &it = *loc;
-        const double relative_rot = it.get_relative_rot();
+        const item &comestible = *loc;
+        const double relative_rot = comestible.get_relative_rot();
         time_left = shelf_life - shelf_life * relative_rot;
 
         // Correct for an estimate that exceeds shelf life -- this happens especially with
@@ -3890,10 +3890,10 @@ static time_duration get_comestible_time_left( const item_location &loc )
 static bool comestible_sort_compare( Character &you, const item_location &lhs,
                                      const item_location &rhs )
 {
-    time_duration time_a = get_comestible_time_left( lhs );
-    time_duration time_b = get_comestible_time_left( rhs );
-    int order_a = get_comestible_order( you, lhs, time_a );
-    int order_b = get_comestible_order( you, rhs, time_b );
+    const time_duration time_a = get_comestible_time_left( lhs );
+    const time_duration time_b = get_comestible_time_left( rhs );
+    const int order_a = get_comestible_order( you, lhs, time_a );
+    const int order_b = get_comestible_order( you, rhs, time_b );
 
     return order_a < order_b
            || ( order_a == order_b && time_a < time_b )
@@ -3906,8 +3906,9 @@ int get_auto_consume_moves( Character &you, const bool food )
         return 0;
     }
     const tripoint pos = you.pos();
-    zone_manager &mgr = zone_manager::get_manager();
-    const zone_type_id zone_type = food ? zone_type_LOOT_AUTO_EAT : zone_type_LOOT_AUTO_DRINK;
+    const zone_manager &mgr = zone_manager::get_manager();
+    const zone_type_id zone_type = food ? zone_type_AUTO_EAT : zone_type_AUTO_DRINK;
+    map &here = get_map();
     const std::unordered_set<tripoint_abs_ms> &dest_set =
         mgr.get_near( zone_type, here.getglobal( pos ), ACTIVITY_SEARCH_DISTANCE, nullptr,
                       _fac_id( you ) );
