@@ -1,0 +1,43 @@
+[
+  {
+    "type": "mod_tileset",
+    "compatibility": [
+      "Chibi_Ultica",
+      "MshockRealXotto",
+      "UltimateCataclysm",
+      "MshockXottoplus",
+      "UNDEAD_PEOPLE",
+      "UNDEAD_PEOPLE_BASE",
+      "UNDEAD_PEOPLE_LEGACY",
+      "UlticaShell",
+      "MshockXottoplus12",
+      "MSX++DEAD_PEOPLE",
+      "MXplus12_for_cosmetics",
+      "MSXotto+",
+      "MshockXotto+",
+      "UltimateCataclysmDemo",
+      "Ultica"
+    ],
+    "tiles-new": [
+      {
+        "file": "贴图/第四批不死人风格/LIXA文件与身份卡.png",
+        "sprite_width": 32,
+        "sprite_height": 32,
+        "tiles": [
+          { "id": "LIXA_lab_file", "fg": 0 },
+          { "id": "LIXA_generic_file", "fg": 1 },
+          { "id": "LIXA_mil_file", "fg": 2 },
+          { "id": "LIXA_lab_postit", "fg": 3 },
+          { "id": "lixa_data", "fg": 4 },
+          { "id": "id_LIXA", "fg": 5 },
+          { "id": "id_LIXA_2", "fg": 6 },
+          { "id": "id_LIXA_najma", "fg": 7 },
+          { "id": "id_LIXA_jason", "fg": 8 },
+          { "id": "id_LIXA_kai_mei", "fg": 9 },
+          { "id": "id_LIXA_rich", "fg": 10 },
+          { "id": "id_LIXA_mil", "fg": 11 }
+        ]
+      }
+    ]
+  }
+]

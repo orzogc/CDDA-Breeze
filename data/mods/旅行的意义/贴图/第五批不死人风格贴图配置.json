@@ -1,0 +1,43 @@
+[
+  {
+    "type": "mod_tileset",
+    "compatibility": [
+      "Chibi_Ultica",
+      "MshockRealXotto",
+      "UltimateCataclysm",
+      "MshockXottoplus",
+      "UNDEAD_PEOPLE",
+      "UNDEAD_PEOPLE_BASE",
+      "UNDEAD_PEOPLE_LEGACY",
+      "UlticaShell",
+      "MshockXottoplus12",
+      "MSX++DEAD_PEOPLE",
+      "MXplus12_for_cosmetics",
+      "MSXotto+",
+      "MshockXotto+",
+      "UltimateCataclysmDemo",
+      "Ultica"
+    ],
+    "tiles-new": [
+      {
+        "file": "贴图/第五批不死人风格/科迪定制武器.png",
+        "sprite_width": 32,
+        "sprite_height": 32,
+        "tiles": [
+          { "id": "hc_mace", "fg": 0 },
+          { "id": "qt_mace", "fg": 1 },
+          { "id": "hc_warhammer", "fg": 2 },
+          { "id": "qt_warhammer", "fg": 3 },
+          { "id": "hc_steel_staff", "fg": 4 },
+          { "id": "qt_steel_staff", "fg": 5 },
+          { "id": "hc_battleaxe", "fg": 6 },
+          { "id": "qt_battleaxe", "fg": 7 },
+          { "id": "hc_kukri", "fg": 8 },
+          { "id": "qt_kukri", "fg": 9 },
+          { "id": "hc_knife_trench", "fg": 10 },
+          { "id": "qt_knife_trench", "fg": 11 }
+        ]
+      }
+    ]
+  }
+]

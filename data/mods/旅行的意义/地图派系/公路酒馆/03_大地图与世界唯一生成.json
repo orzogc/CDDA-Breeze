@@ -28,6 +28,11 @@
     ]
   },
   {
+    "type": "faction_camp_label",
+    "overmap_terrain": "travel_roadside_tavern",
+    "name": "来生酒吧"
+  },
+  {
     "type": "overmap_terrain",
     "id": "travel_afterlife_dealership_roof_west",
     "name": "来生酒吧屋顶停机坪",

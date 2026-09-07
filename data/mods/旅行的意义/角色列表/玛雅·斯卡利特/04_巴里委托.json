@@ -1,0 +1,153 @@
+[
+  {
+    "type": "mission_definition",
+    "id": "MISSION_TRAVEL_MAYA_RESCUE_BARRY",
+    "name": { "str": "玛雅的请求：带巴里回家" },
+    "description": "伊舍伍德家曾在高速公路辅路上冒险救下被丧尸、丧尸犬和野性疯人包围的玛雅一行。玛雅因右膝受伤无法远行，却不愿在巴里失踪后只接受这个家庭的照顾。先向克莱尔了解巴里失踪的经过，再帮助卡洛斯处理农场急需的铁砧；取得信任后寻找克里斯，并按他制订的计划营救巴里。巴里安全回到农场后，回到二楼向玛雅复命。",
+    "goal": "MGOAL_NULL",
+    "difficulty": 5,
+    "value": 0,
+    "has_generic_rewards": false,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "dialogue": {
+      "describe": "沿伊舍伍德家留下的线索寻找巴里，并把他安全带回农场。",
+      "offer": "伊舍伍德家曾冒险从高速公路包围中救出玛雅和其他幸存者。如今巴里失踪，玛雅无法带伤远行，只能请你替她回应这份救命之恩。",
+      "accepted": "“先听克莱尔讲清楚巴里失踪那天的事。卡洛斯若先请你补上农场眼前的缺口，也别把那当成推诿——他需要确认你会把一件事做完。”",
+      "rejected": "“没关系。救人不是一句客气话，也不该靠我把风险塞进你手里。”",
+      "advice": "“克莱尔知道巴里失踪的经过；卡洛斯知道克里斯去了哪里；克里斯才真正见过那些怪物的巢。一步一步来，别像我们在高速公路上一样被赶进死路。”",
+      "inquire": "“别空手闯进未知的地方。先听克莱尔和卡洛斯怎么说，找到克里斯，再按他带回来的线索接近那座尖塔。”",
+      "success": "你把巴里安全带回了伊舍伍德农场，也替无法远行的玛雅回应了这个家庭的照顾。",
+      "success_lie": "玛雅侧耳听了听楼下的动静。\n\n“我想听见巴里自己回到家人身边。看到尖塔、找到线索，或者制订计划，都还不是回家。”",
+      "failure": "“先活下来。只要还没有得到最坏的确认，就别替巴里把故事写完。”"
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "TRAVEL_MAYA_REWARD_ARROW_METAL_30",
+    "subtype": "distribution",
+    "entries": [ { "item": "arrow_metal", "prob": 100, "charges": 30 } ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_MAYA_BARRY_REWARD",
+    "eoc_type": "ACTIVATION",
+    "effect": [
+      { "u_spawn_item": "travel_titan_string_bow" },
+      { "u_spawn_item": "book_archery" },
+      { "u_spawn_item": "quiver_large" },
+      { "u_spawn_item": "TRAVEL_MAYA_REWARD_ARROW_METAL_30", "use_item_group": true },
+      { "u_spawn_item": "travel_titan_string_dance_grimoire" },
+      { "npc_add_var": "travel_maya_barry_rewarded", "type": "dialogue", "context": "travel_maya", "value": "yes" },
+      { "npc_add_var": "travel_maya_barry_reward_fix_v2", "type": "dialogue", "context": "travel_maya", "value": "yes" },
+      { "finish_mission": "MISSION_TRAVEL_MAYA_RESCUE_BARRY", "success": true },
+      { "u_message": "玛雅交给你一本弓箭入门手册、泰坦弦弓、一只大箭筒、一捆金属宽刃箭和吟游诗人的乐章。", "type": "good" }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TRAVEL_MAYA_BARRY_REWARD_MISSING_ITEMS",
+    "eoc_type": "ACTIVATION",
+    "effect": [
+      { "u_spawn_item": "book_archery" },
+      { "u_spawn_item": "quiver_large" },
+      { "u_spawn_item": "TRAVEL_MAYA_REWARD_ARROW_METAL_30", "use_item_group": true },
+      { "u_spawn_item": "travel_titan_string_dance_grimoire" },
+      { "npc_add_var": "travel_maya_barry_reward_fix_v2", "type": "dialogue", "context": "travel_maya", "value": "yes" },
+      { "u_message": "玛雅把遗漏的弓箭入门手册、大箭筒、一捆金属宽刃箭和吟游诗人的乐章交给了你。", "type": "good" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_BARRY_OFFER",
+    "dynamic_line": "玛雅望向敞开的门。楼下有人在搬水，木桶碰上台阶，发出沉闷的响声。\n\n“我不想把他们的照顾算成一笔账。可这个家为了救我们，开车冲进了高速公路边的包围，花掉了油、药和子弹。现在他们夜里谈起巴里，我不能躺在这里假装没有听见。”\n\n“我的腿连院子都跑不过，所以我需要一个还能走远路的人。”",
+    "responses": [
+      { "text": "巴里发生了什么？", "topic": "TALK_TRAVEL_MAYA_BARRY_DETAILS" },
+      { "text": "为什么救人要先从一座铁砧开始？", "topic": "TALK_TRAVEL_MAYA_BARRY_ANVIL_REASON" },
+      {
+        "text": "【接受任务】我会尽力把巴里带回来。",
+        "topic": "TALK_TRAVEL_MAYA_BARRY_ACCEPTED",
+        "effect": [
+          { "assign_mission": "MISSION_TRAVEL_MAYA_RESCUE_BARRY" },
+          { "npc_add_var": "travel_maya_barry_commission_started", "type": "dialogue", "context": "travel_maya", "value": "yes" },
+          { "u_message": "已接受玛雅的委托：带巴里回家。", "type": "good" }
+        ]
+      },
+      { "text": "[返回农场与巴里] 我现在还不能答应。", "topic": "TALK_TRAVEL_MAYA_MENU_FARM" },
+      { "text": "[返回主菜单] 先谈别的。", "topic": "TALK_TRAVEL_MAYA_ISHERWOOD" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_BARRY_ANVIL_REASON",
+    "dynamic_line": "玛雅沉默了片刻。\n\n“因为卡洛斯不信任外人。”\n\n“铁砧当然不是巴里。可农具、马具和护栏都在等着修，农场若停下来，更多人会出事。你替他把眼前最急的缺口补上，他才会相信你不是问完克里斯的去向就消失。”\n\n她皱了皱眉。\n\n“我不喜欢拿信任当门票，也不喜欢巴里在外面等。可你现在连那些怪物去了哪里都不知道。硬闯不是更快，只是更早迷路。”",
+    "responses": [
+      { "text": "我明白了。回到巴里的委托。", "topic": "TALK_TRAVEL_MAYA_BARRY_OFFER" },
+      { "text": "[返回农场与巴里] 我再想想。", "topic": "TALK_TRAVEL_MAYA_MENU_FARM" },
+      { "text": "[返回主菜单] 先谈别的。", "topic": "TALK_TRAVEL_MAYA_ISHERWOOD" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_BARRY_ACCEPTED",
+    "dynamic_line": "玛雅轻轻点头。\n\n“先找克莱尔。卡洛斯若先请你帮农场处理别的，别急着认为他不在乎巴里。他只是把修理、守住农场和寻找家人都压在同一双手上。”\n\n“找到克里斯以后，听完他看见的尖塔和那些怪物，再决定怎样接近。”\n\n她伸出手，又在半途收回。\n\n“活着回来。最好把巴里也一起带回来。”",
+    "responses": [
+      { "text": "[返回农场与巴里] 我会回来告诉你结果。", "topic": "TALK_TRAVEL_MAYA_MENU_FARM" },
+      { "text": "[返回主菜单] 先谈别的。", "topic": "TALK_TRAVEL_MAYA_ISHERWOOD" },
+      { "text": "[结束交谈] 我现在就去准备。", "topic": "TALK_DONE" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_BARRY_PROGRESS",
+    "dynamic_line": "玛雅把一张纸摊到桌上，只写了三个名字。\n\n“克莱尔知道巴里失踪那天的细节。卡洛斯知道克里斯去了哪里。克里斯才真正见过那些怪物的巢。”\n\n她用笔尖把三个名字连成一条线。\n\n“别把这当成规矩。把它当成一条不会让你空手闯进黑暗的路。”\n\n“等巴里本人回到农场，再来告诉我。”",
+    "responses": [
+      { "text": "[返回农场与巴里] 我继续沿这条线查。", "topic": "TALK_TRAVEL_MAYA_MENU_FARM" },
+      { "text": "我还是觉得找铁砧太慢了。", "topic": "TALK_TRAVEL_MAYA_BARRY_ANVIL_REASON" },
+      { "text": "[返回主菜单] 先谈别的。", "topic": "TALK_TRAVEL_MAYA_ISHERWOOD" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_BARRY_REWARD",
+    "dynamic_line": "玛雅没有先看你带回来的东西。她听你把经过说完，直到楼下有人喊了一声巴里的名字，另一个声音立刻嫌那个人太吵。\n\n她这才真正笑起来。\n\n“那就是真的。谢谢你。”\n\n玛雅从床下拖出一只长盒，又取出一只大箭筒、一捆金属宽刃箭和两本薄册。\n\n“这不是把救命换算成报酬。只是你还要继续走，我想让你带上些能把你活着送回来的东西。”",
+    "responses": [
+      { "text": "[打开长盒] 这把弓是什么？", "topic": "TALK_TRAVEL_MAYA_BARRY_REWARD_BOW" },
+      {
+        "text": "[接过长盒，不再追问] 我会让它继续派上用场。",
+        "topic": "TALK_TRAVEL_MAYA_MENU_FARM",
+        "effect": [ { "run_eocs": [ "EOC_TRAVEL_MAYA_BARRY_REWARD" ] } ]
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_BARRY_REWARD_MISSING",
+    "dynamic_line": "玛雅怔了一下，随即低头看向床下。\n\n“对。上次我只把弓盒递给了你，箭筒和两本册子还留在这里。”\n\n她把大箭筒、一捆金属宽刃箭、弓箭入门手册和吟游诗人的乐章一并推到你面前。\n\n“这次点清楚了。”",
+    "responses": [
+      {
+        "text": "[收好遗漏的物品] 现在齐了。",
+        "topic": "TALK_TRAVEL_MAYA_MENU_FARM",
+        "effect": [ { "run_eocs": [ "EOC_TRAVEL_MAYA_BARRY_REWARD_MISSING_ITEMS" ] } ]
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_BARRY_DETAILS",
+    "dynamic_line": "“巴里是他们的家人。”玛雅说。\n\n“他被一种会把活人带走的怪物掳走了。克莱尔知道失踪那天的经过，卡洛斯知道克里斯去了哪里，而克里斯真正见过那些怪物筑起的尖塔。”\n\n“我能抄记录、做箭，也能把线索排成顺序；但我现在追不上任何东西。若你愿意，就从克莱尔开始问。”",
+    "responses": [
+      {
+        "text": "【接受任务】我去找克莱尔，也会把巴里带回来。",
+        "topic": "TALK_TRAVEL_MAYA_BARRY_ACCEPTED",
+        "effect": [
+          { "assign_mission": "MISSION_TRAVEL_MAYA_RESCUE_BARRY" },
+          { "npc_add_var": "travel_maya_barry_commission_started", "type": "dialogue", "context": "travel_maya", "value": "yes" },
+          { "u_message": "已接受玛雅的委托：带巴里回家。", "type": "good" }
+        ]
+      },
+      { "text": "为什么还要先替卡洛斯找铁砧？", "topic": "TALK_TRAVEL_MAYA_BARRY_ANVIL_REASON" },
+      { "text": "[返回巴里的委托] 我再确认一下。", "topic": "TALK_TRAVEL_MAYA_BARRY_OFFER" },
+      { "text": "[返回农场与巴里] 我需要再想想。", "topic": "TALK_TRAVEL_MAYA_MENU_FARM" }
+    ]
+  }
+]

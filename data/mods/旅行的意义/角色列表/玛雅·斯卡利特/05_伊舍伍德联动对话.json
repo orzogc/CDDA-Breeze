@@ -1,0 +1,172 @@
+[
+  {
+    "type": "talk_topic",
+    "id": "TALK_ISHERWOOD_LISA",
+    "responses": [
+      {
+        "response_id": "travel_maya_lisa_where",
+        "text": "玛雅·斯卡利特在哪里？",
+        "topic": "TALK_TRAVEL_LISA_ABOUT_MAYA",
+        "condition": {
+          "and": [
+            { "not": { "u_is_wearing": "badge_marshal" } },
+            {
+              "or": [
+                { "u_has_mission": "MISSION_TRAVEL_LIANG_TRACE_ISHERWOOD" },
+                { "u_has_var": "travel_liang_maya_reunited", "type": "dialogue", "context": "travel_liang", "value": "yes" }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "response_patches": [
+      { "op": "move_before", "target": "travel_maya_lisa_where", "anchor": "isherwood_lisa_leave" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LISA_ABOUT_MAYA",
+    "dynamic_line": "丽莎用下巴指了指住宅二楼靠南的一侧。\n\n“小房间。右膝扭伤，没有感染。”\n\n她顿了一下。\n\n“我们是在高速辅路上把他们接出来的。丧尸堵着沟口，几条死狗一样的东西追得最快，旁边还有疯子抢东西。杰克开车，卡洛斯和我用步枪清路。七个人活着上了车。”\n\n“上楼轻一点。她昨晚又在给一批木箭修羽片，睡得不多。”",
+    "responses": [
+      { "text": "谢谢。我上楼找她。", "topic": "TALK_DONE" },
+      { "text": "她在这里还适应吗？", "topic": "TALK_TRAVEL_LISA_MAYA_THOUGHTS" }
+    ],
+    "speaker_effect": { "effect": [ { "run_eocs": [ "EOC_TRAVEL_ENSURE_MAYA_ISHERWOOD" ] } ] }
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LISA_MAYA_THOUGHTS",
+    "dynamic_line": "“她总问还有什么能做。”丽莎说。\n\n“会先问清楚再碰药，也知道哪些话不能播进公共频道。腿不能跑，她就坐着校箭杆、修尾栝，还把谷仓里几把坏弓拆开重装。”\n\n丽莎朝楼上看了一眼。\n\n“我告诉她，真想帮忙，就先别把一条伤腿拖成两条。有人急着还救命的人情时，最容易把自己再弄伤一次。”",
+    "responses": [ { "text": "梁知遥大概也会这么说。", "topic": "TALK_DONE" } ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_ISHERWOOD_CLAIRE",
+    "responses": [
+      {
+        "response_id": "travel_maya_claire_radio_group",
+        "text": "听说最近有一批无线电互助队的人来到农场。",
+        "topic": "TALK_TRAVEL_CLAIRE_ABOUT_MAYA",
+        "condition": {
+          "and": [
+            { "not": { "u_is_wearing": "badge_marshal" } },
+            {
+              "or": [
+                { "u_has_mission": "MISSION_TRAVEL_LIANG_TRACE_ISHERWOOD" },
+                { "u_has_var": "travel_liang_maya_reunited", "type": "dialogue", "context": "travel_liang", "value": "yes" }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "response_patches": [
+      { "op": "move_before", "target": "travel_maya_claire_radio_group", "anchor": "isherwood_claire_mission" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_CLAIRE_ABOUT_MAYA",
+    "dynamic_line": "克莱尔把手里的布折好。\n\n“无线电里先是求救，后来只剩枪声和狗叫。杰克他们把人接回来时，七个活着，三个伤得不能自己走。”\n\n“玛雅一直问她那几个没能上车的同学。她自己的膝盖不算致命，可继续赶路就会拖成重伤。丽莎把楼上的小空房给了她。”\n\n克莱尔叹了口气。\n\n“她若再问能做什么，你就替我告诉她：箭明天也能做，今晚先睡觉。”",
+    "responses": [ { "text": "我知道了。", "topic": "TALK_DONE" } ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_ISHERWOOD_JACK",
+    "responses": [
+      {
+        "response_id": "travel_maya_jack_rescue",
+        "text": "玛雅那一行人是怎么被接进来的？",
+        "topic": "TALK_TRAVEL_JACK_ABOUT_MAYA",
+        "condition": {
+          "and": [
+            { "not": { "u_is_wearing": "badge_marshal" } },
+            {
+              "or": [
+                { "u_has_mission": "MISSION_TRAVEL_LIANG_TRACE_ISHERWOOD" },
+                { "u_has_var": "travel_liang_maya_reunited", "type": "dialogue", "context": "travel_liang", "value": "yes" }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "response_patches": [
+      { "op": "move_before", "target": "travel_maya_jack_rescue", "anchor": "isherwood_jack_mission" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_JACK_ABOUT_MAYA",
+    "dynamic_line": "杰克朝外围道路看了一眼。\n\n“原计划是在旧谷仓旁检查，再派车接人。可他们没走到约定点，就被尸群、丧尸犬和几个发疯的活人堵在辅路排水沟里。”\n\n“求救进了我们的频率。我们可以不去——那样最安全。”\n\n他抿紧嘴角。\n\n“可听见有人在另一头等死，还装作没听见，也不算守住一个家。我们开车过去，带回七个。玛雅留下养伤，其他能走的人后来跟补给队继续走。”",
+    "responses": [ { "text": "这套规矩救了不少人。", "topic": "TALK_DONE" } ]
+  },
+  {
+    "type": "talk_topic",
+    "id": [ "TALK_ISHERWOOD_CARLOS", "TALK_ISHERWOOD_CARLOS_ConvincedMarshal" ],
+    "responses": [
+      {
+        "response_id": "travel_maya_carlos_barry",
+        "text": "玛雅说她想替你们做点事，也提到了巴里。",
+        "topic": "TALK_TRAVEL_CARLOS_ABOUT_MAYA",
+        "condition": {
+          "and": [
+            { "not": { "u_is_wearing": "badge_marshal" } },
+            {
+              "or": [
+                { "u_has_mission": "MISSION_TRAVEL_LIANG_TRACE_ISHERWOOD" },
+                { "u_has_var": "travel_liang_maya_reunited", "type": "dialogue", "context": "travel_liang", "value": "yes" }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_ISHERWOOD_CARLOS",
+    "responses": [],
+    "response_patches": [
+      { "op": "move_before", "target": "travel_maya_carlos_barry", "anchor": "isherwood_carlos_mission" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_CARLOS_ABOUT_MAYA",
+    "dynamic_line": "卡洛斯哼了一声。\n\n“我们给她一张床，不是买下一名伤员。那天开车出去，是我们自己作的决定；她没必要把每一发子弹都背成债。”\n\n他把一件缺口的工具扔回桌面。\n\n“不过她做的箭确实有用。练习、打猎、守夜都能省下一些枪弹。她要报答，就安安稳稳把腿养好，别背着弓一瘸一拐去找巴里。”\n\n“你真想帮，先把我缺的铁砧找来。不是因为铁砧比巴里重要——是因为农场的修理全停着，而我不会把克里斯的去向交给一个刚进门的陌生人。”",
+    "responses": [ { "text": "我会按你们的线索来。", "topic": "TALK_DONE" } ]
+  },
+  {
+    "type": "talk_topic",
+    "id": [ "TALK_ISHERWOOD_CHRIS", "TALK_ISHERWOOD_CHRIS_TOPICS" ],
+    "responses": [
+      {
+        "response_id": "travel_maya_chris_barry",
+        "text": "玛雅在楼上养伤。她也想帮忙找巴里。",
+        "topic": "TALK_TRAVEL_CHRIS_ABOUT_MAYA",
+        "condition": {
+          "and": [
+            { "not": { "u_is_wearing": "badge_marshal" } },
+            {
+              "or": [
+                { "u_has_mission": "MISSION_TRAVEL_LIANG_TRACE_ISHERWOOD" },
+                { "u_has_var": "travel_liang_maya_reunited", "type": "dialogue", "context": "travel_liang", "value": "yes" }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "response_patches": [
+      { "op": "move_before", "target": "travel_maya_chris_barry", "anchor": "isherwood_chris_leave" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_CHRIS_ABOUT_MAYA",
+    "dynamic_line": "克里斯点点头。\n\n“她问过我看见的尖塔，也问那些怪物会不会沿固定路线行动。我没带她去侦察——她现在连跑都跑不了。”\n\n“不过她做的箭和修过的弓很有用。枪当然更能压住尸群，可打猎、练习和安静处理落单的东西，没必要每次都浪费子弹。”\n\n“等她能正常走路，再让她自己决定要不要把弓带出门。现在先把巴里带回来。”",
+    "responses": [ { "text": "先把巴里救回来。", "topic": "TALK_DONE" } ]
+  }
+]
