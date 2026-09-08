@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <array>
+#include <cstdint>
 #include <cstdlib>
 #include <iterator>
 #include <memory>
@@ -32,6 +33,15 @@ enum astar_state {
     ASL_CLOSED
 };
 
+// state 数组按 (generation << 2) | astar_state 打包。每次寻路换一个
+// generation，格子里存的 generation 对不上就当作 ASL_NONE，于是不必在每次
+// 寻路前把整层 state 清零（原本是一次 memset，独占约 6% 采样）。新分配的
+// 层数值初始化为 0，对应 generation 0，与从 1 开始的 generation 永远不等，
+// 连首次清零都省掉了。
+static constexpr uint32_t astar_state_bits = 2;
+static constexpr uint32_t astar_state_mask = ( 1u << astar_state_bits ) - 1;
+static constexpr uint32_t astar_generation_max = ( 1u << 30 ) - 1;
+
 // Turns two indexed to a 2D array into an index to equivalent 1D array
 static constexpr int flat_index( const point &p )
 {
@@ -41,40 +51,61 @@ static constexpr int flat_index( const point &p )
 // Flattened 2D array representing a single z-level worth of pathfinding data
 struct path_data_layer {
     // State is accessed way more often than all other values here
-    std::array< astar_state, MAPSIZE_X *MAPSIZE_Y > state;
+    std::array< uint32_t, MAPSIZE_X *MAPSIZE_Y > state;
     std::array< int, MAPSIZE_X *MAPSIZE_Y > score;
     std::array< int, MAPSIZE_X *MAPSIZE_Y > gscore;
     std::array< tripoint, MAPSIZE_X *MAPSIZE_Y > parent;
 
-    void init( const point &min, const point &max ) {
-        for( int x = min.x; x <= max.x; x++ ) {
-            for( int y = min.y; y <= max.y; y++ ) {
-                const int ind = flat_index( point( x, y ) );
-                state[ind] = ASL_NONE; // Mark as unvisited
-            }
-        }
+    astar_state get_state( const int index, const uint32_t generation ) const {
+        const uint32_t packed = state[index];
+        return ( packed >> astar_state_bits ) == generation ?
+               static_cast<astar_state>( packed & astar_state_mask ) : ASL_NONE;
+    }
+
+    void set_state( const int index, const uint32_t generation, const astar_state value ) {
+        state[index] = ( generation << astar_state_bits ) | static_cast<uint32_t>( value );
+    }
+
+    // 只有 generation 溢出时才需要真正清零，一局游戏内几乎不会走到
+    void clear_states() {
+        state.fill( 0 );
     }
 };
 
-struct pathfinder {
-    point min;
-    point max;
-    pathfinder( const point &_min, const point &_max ) :
-        min( _min ), max( _max ) {
+// 各层的寻路数据在整个进程内复用：每次 map::route 只换一个 generation，
+// 而不是重新分配并清零整层，省掉每层的 operator new 和 memset。
+// map::route 里唯一的递归是越界裁剪后的 `return route( ... )`，外层在递归
+// 返回后立即退出、不再读写自己的状态，因此共用同一份数组是安全的。
+static std::array< std::unique_ptr< path_data_layer >, OVERMAP_LAYERS > shared_path_data;
+static uint32_t astar_generation = 0;
+
+static uint32_t next_astar_generation()
+{
+    if( astar_generation >= astar_generation_max ) {
+        for( std::unique_ptr< path_data_layer > &layer : shared_path_data ) {
+            if( layer ) {
+                layer->clear_states();
+            }
+        }
+        astar_generation = 0;
     }
+    return ++astar_generation;
+}
+
+struct pathfinder {
+    uint32_t generation;
 
     std::priority_queue< std::pair<int, tripoint>, std::vector< std::pair<int, tripoint> >, pair_greater_cmp_first >
     open;
-    std::array< std::unique_ptr< path_data_layer >, OVERMAP_LAYERS > path_data;
+
+    pathfinder() : generation( next_astar_generation() ) {
+    }
 
     path_data_layer &get_layer( const int z ) {
-        std::unique_ptr< path_data_layer > &ptr = path_data[z + OVERMAP_DEPTH];
-        if( ptr != nullptr ) {
-            return *ptr;
+        std::unique_ptr< path_data_layer > &ptr = shared_path_data[z + OVERMAP_DEPTH];
+        if( ptr == nullptr ) {
+            ptr = std::make_unique<path_data_layer>();
         }
-
-        ptr = std::make_unique<path_data_layer>();
-        ptr->init( min, max );
         return *ptr;
     }
 
@@ -91,12 +122,13 @@ struct pathfinder {
     void add_point( const int gscore, const int score, const tripoint &from, const tripoint &to ) {
         path_data_layer &layer = get_layer( to.z );
         const int index = flat_index( to.xy() );
-        if( ( layer.state[index] == ASL_OPEN && gscore >= layer.gscore[index] ) ||
-            layer.state[index] == ASL_CLOSED ) {
+        const astar_state state = layer.get_state( index, generation );
+        if( ( state == ASL_OPEN && gscore >= layer.gscore[index] ) ||
+            state == ASL_CLOSED ) {
             return;
         }
 
-        layer.state [index] = ASL_OPEN;
+        layer.set_state( index, generation, ASL_OPEN );
         layer.gscore[index] = gscore;
         layer.parent[index] = from;
         layer.score [index] = score;
@@ -106,13 +138,13 @@ struct pathfinder {
     void close_point( const tripoint &p ) {
         path_data_layer &layer = get_layer( p.z );
         const int index = flat_index( p.xy() );
-        layer.state[index] = ASL_CLOSED;
+        layer.set_state( index, generation, ASL_CLOSED );
     }
 
     void unclose_point( const tripoint &p ) {
         path_data_layer &layer = get_layer( p.z );
         const int index = flat_index( p.xy() );
-        layer.state[index] = ASL_NONE;
+        layer.set_state( index, generation, ASL_NONE );
     }
 };
 
@@ -220,7 +252,7 @@ std::vector<tripoint> map::route( const tripoint &f, const tripoint &t,
     clip_to_bounds( min.x, min.y, min.z );
     clip_to_bounds( max.x, max.y, max.z );
 
-    pathfinder pf( min.xy(), max.xy() );
+    pathfinder pf;
     // Make NPCs not want to path through player
     // But don't make player pathing stop working
     for( const tripoint &p : pre_closed ) {
@@ -241,8 +273,7 @@ std::vector<tripoint> map::route( const tripoint &f, const tripoint &t,
 
         const int parent_index = flat_index( cur.xy() );
         path_data_layer &layer = pf.get_layer( cur.z );
-        auto &cur_state = layer.state[parent_index];
-        if( cur_state == ASL_CLOSED ) {
+        if( layer.get_state( parent_index, pf.generation ) == ASL_CLOSED ) {
             continue;
         }
 
@@ -256,7 +287,7 @@ std::vector<tripoint> map::route( const tripoint &f, const tripoint &t,
             break;
         }
 
-        cur_state = ASL_CLOSED;
+        layer.set_state( parent_index, pf.generation, ASL_CLOSED );
 
         const pathfinding_cache &pf_cache = get_pathfinding_cache_ref( cur.z );
         const pf_special cur_special = pf_cache.special[cur.x][cur.y];
@@ -275,7 +306,7 @@ std::vector<tripoint> map::route( const tripoint &f, const tripoint &t,
                 continue;
             }
 
-            if( layer.state[index] == ASL_CLOSED ) {
+            if( layer.get_state( index, pf.generation ) == ASL_CLOSED ) {
                 continue;
             }
 
@@ -289,7 +320,7 @@ std::vector<tripoint> map::route( const tripoint &f, const tripoint &t,
                 newg += 2;
             } else {
                 if( roughavoid ) {
-                    layer.state[index] = ASL_CLOSED; // Close all rough terrain tiles
+                    layer.set_state( index, pf.generation, ASL_CLOSED ); // Close all rough terrain tiles
                     continue;
                 }
 
@@ -329,7 +360,7 @@ std::vector<tripoint> map::route( const tripoint &f, const tripoint &t,
                             // Desperate measures, avoid whenever possible.
                             newg += 500;
                         } else {
-                            layer.state[index] = ASL_CLOSED;
+                            layer.set_state( index, pf.generation, ASL_CLOSED );
                             continue;
                         }
                     }
@@ -341,7 +372,7 @@ std::vector<tripoint> map::route( const tripoint &f, const tripoint &t,
                         if( vp.cargo_blocks_passage() ) {
                             // Cargo blocking a walkway is not a structural vehicle part.
                             // Route around it instead of treating the cargo rack as bashable.
-                            layer.state[index] = ASL_CLOSED;
+                            layer.set_state( index, pf.generation, ASL_CLOSED );
                             continue;
                         }
                         const auto vpobst = vp.obstacle_at_part();
@@ -359,7 +390,7 @@ std::vector<tripoint> map::route( const tripoint &f, const tripoint &t,
                                 int hp = veh->part( part ).hp();
                                 if( hp / 20 > bash ) {
                                     // Threshold damage thing means we just can't bash this down
-                                    layer.state[index] = ASL_CLOSED;
+                                    layer.set_state( index, pf.generation, ASL_CLOSED );
                                     continue;
                                 } else if( hp / 10 > bash ) {
                                     // Threshold damage thing means we will fail to deal damage pretty often
@@ -370,7 +401,7 @@ std::vector<tripoint> map::route( const tripoint &f, const tripoint &t,
                             } else {
                                 if( !doors || !veh->part_flag( part, VPFLAG_OPENABLE ) ) {
                                     // Won't be openable, don't try from other sides
-                                    layer.state[index] = ASL_CLOSED;
+                                    layer.set_state( index, pf.generation, ASL_CLOSED );
                                 }
 
                                 continue;
@@ -399,7 +430,7 @@ std::vector<tripoint> map::route( const tripoint &f, const tripoint &t,
                                 }
 
                                 // Close p, because we won't be walking on it
-                                layer.state[index] = ASL_CLOSED;
+                                layer.set_state( index, pf.generation, ASL_CLOSED );
                                 continue;
                             }
                         } else {
@@ -410,14 +441,14 @@ std::vector<tripoint> map::route( const tripoint &f, const tripoint &t,
                 }
 
                 if( sharpavoid && p_special & PF_SHARP ) {
-                    layer.state[index] = ASL_CLOSED; // Avoid sharp things
+                    layer.set_state( index, pf.generation, ASL_CLOSED ); // Avoid sharp things
                 }
 
             }
 
             // If not visited, add as open
             // If visited, add it only if we can do so with better score
-            if( layer.state[index] == ASL_NONE || newg < layer.gscore[index] ) {
+            if( layer.get_state( index, pf.generation ) == ASL_NONE || newg < layer.gscore[index] ) {
                 pf.add_point( newg, newg + 2 * rl_dist( p, t ), cur, p );
             }
         }
