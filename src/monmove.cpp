@@ -34,6 +34,7 @@
 #include "flood_fill.h"
 #include "game.h"
 #include "game_constants.h"
+#include "hash_utils.h"
 #include "line.h"
 #include "make_static.h"
 #include "map.h"
@@ -47,6 +48,7 @@
 #include "mtype.h"
 #include "npc.h"
 #include "options.h"
+#include "parallel_hashmap/phmap.h"
 #include "pathfinding.h"
 #include "pimpl.h"
 #include "rng.h"
@@ -92,11 +94,21 @@ namespace
 // and map::route interfaces.
 constexpr int fallback_monster_path_radius = 24;
 constexpr int cross_z_monster_path_radius = 96;
-constexpr int reverse_field_radius = 64;
-constexpr int reverse_field_cross_z_radius = 72;
+// A reverse field relaxes one node per cell, so a single request can cover
+// roughly sqrt(request_budget / pi) ~= 18 tiles of radius on open ground.
+// Advertising a far larger radius only lets distant monsters enter the
+// Dijkstra loop and burn the entire budget before failing the is_settled()
+// check; rejecting them up front costs nothing and they fall back to A*.
+constexpr int reverse_field_radius = 20;
+constexpr int reverse_field_cross_z_radius = 24;
 constexpr std::size_t monster_route_cache_max_edges = 8192;
 constexpr std::size_t monster_reverse_field_max_count = 24;
 constexpr std::size_t monster_reverse_field_request_budget = 1024;
+// Once the shared per-turn budget is gone, a monster would otherwise be
+// rejected without expanding a single node even when its neighbours have
+// already built a field that reaches almost all the way to it.  This
+// starvation allowance lets it finish the last few nodes and join that field.
+constexpr std::size_t monster_reverse_field_starved_budget = 128;
 constexpr int monster_stair_route_bucket_size = 24;
 constexpr int monster_stair_route_memory_turns = 60;
 constexpr int monster_stair_route_target_tolerance = 4;
@@ -136,6 +148,24 @@ struct monster_route_cache_key {
                std::tie( rhs.type_id, rhs.target.x, rhs.target.y, rhs.target.z,
                          rhs.bash_strength_quanta, rhs.can_open_doors );
     }
+
+    bool operator==( const monster_route_cache_key &rhs ) const
+    {
+        return type_id == rhs.type_id && target == rhs.target &&
+               bash_strength_quanta == rhs.bash_strength_quanta &&
+               can_open_doors == rhs.can_open_doors;
+    }
+};
+
+struct monster_route_cache_key_hash {
+    std::size_t operator()( const monster_route_cache_key &key ) const {
+        std::size_t seed = 0;
+        cata::hash_combine( seed, key.type_id );
+        cata::hash_combine( seed, key.target );
+        cata::hash_combine( seed, key.bash_strength_quanta );
+        cata::hash_combine( seed, key.can_open_doors );
+        return seed;
+    }
 };
 
 struct monster_route_cache_entry {
@@ -156,6 +186,23 @@ struct monster_z_route_cache_key {
         }
         return source_z < rhs.source_z;
     }
+
+    bool operator==( const monster_z_route_cache_key &rhs ) const
+    {
+        return route_key == rhs.route_key && source_z == rhs.source_z;
+    }
+};
+
+struct monster_z_route_cache_key_hash {
+    std::size_t operator()( const monster_z_route_cache_key &key ) const {
+        std::size_t seed = 0;
+        cata::hash_combine( seed, key.route_key.type_id );
+        cata::hash_combine( seed, key.route_key.target );
+        cata::hash_combine( seed, key.route_key.bash_strength_quanta );
+        cata::hash_combine( seed, key.route_key.can_open_doors );
+        cata::hash_combine( seed, key.source_z );
+        return seed;
+    }
 };
 
 struct monster_z_route_plan {
@@ -174,6 +221,24 @@ struct monster_stair_route_cache_key {
         return std::tie( source_z, target_z, target_x_bucket, target_y_bucket ) <
                std::tie( rhs.source_z, rhs.target_z, rhs.target_x_bucket,
                           rhs.target_y_bucket );
+    }
+
+    bool operator==( const monster_stair_route_cache_key &rhs ) const
+    {
+        return source_z == rhs.source_z && target_z == rhs.target_z &&
+               target_x_bucket == rhs.target_x_bucket &&
+               target_y_bucket == rhs.target_y_bucket;
+    }
+};
+
+struct monster_stair_route_cache_key_hash {
+    std::size_t operator()( const monster_stair_route_cache_key &key ) const {
+        std::size_t seed = 0;
+        cata::hash_combine( seed, key.source_z );
+        cata::hash_combine( seed, key.target_z );
+        cata::hash_combine( seed, key.target_x_bucket );
+        cata::hash_combine( seed, key.target_y_bucket );
+        return seed;
     }
 };
 
@@ -627,12 +692,20 @@ std::optional<monster_z_route_plan> infer_recent_hostile_escape_transition(
 }
 
 std::optional<time_point> monster_path_cache_turn;
-std::map<monster_route_cache_key, monster_route_cache_entry> monster_route_cache;
-std::map<monster_z_route_cache_key, monster_z_route_plan> monster_z_route_cache;
-std::map<monster_route_cache_key, std::unique_ptr<monster_reverse_field_entry>>
+// Flat hash maps here are safe: no reference or iterator into these caches is
+// held across an insertion (the only rehash trigger), and
+// get_monster_reverse_field returns a pointer to the heap object owned by the
+// unique_ptr, which survives rehash.
+phmap::flat_hash_map<monster_route_cache_key, monster_route_cache_entry,
+                     monster_route_cache_key_hash> monster_route_cache;
+phmap::flat_hash_map<monster_z_route_cache_key, monster_z_route_plan,
+                     monster_z_route_cache_key_hash> monster_z_route_cache;
+phmap::flat_hash_map<monster_route_cache_key, std::unique_ptr<monster_reverse_field_entry>,
+                     monster_route_cache_key_hash>
 monster_reverse_fields;
 std::vector<std::unique_ptr<monster_reverse_field_entry>> monster_reverse_field_pool;
-std::map<monster_stair_route_cache_key, monster_stair_route_cache_entry>
+phmap::flat_hash_map<monster_stair_route_cache_key, monster_stair_route_cache_entry,
+                     monster_stair_route_cache_key_hash>
 monster_stair_route_cache;
 std::size_t monster_route_cache_edges = 0;
 std::size_t monster_reverse_field_nodes = 0;
@@ -2517,9 +2590,14 @@ void monster::move()
                 };
 
                 std::size_t expanded_this_request = 0;
+                // The shared turn budget is a soft cap: once it is spent a
+                // monster still gets monster_reverse_field_starved_budget
+                // nodes, so a horde shares one field instead of the first few
+                // monsters consuming everything and starving the rest.
                 while( !field->is_settled( pos() ) && !field->frontier.empty() &&
                        expanded_this_request < monster_reverse_field_request_budget &&
-                       monster_reverse_field_nodes < monster_reverse_field_turn_budget ) {
+                       ( monster_reverse_field_nodes < monster_reverse_field_turn_budget ||
+                         expanded_this_request < monster_reverse_field_starved_budget ) ) {
                     const monster_reverse_field_node current = field->frontier.top();
                     field->frontier.pop();
                     if( !field->settle_node( current.position, current.cost ) ) {
