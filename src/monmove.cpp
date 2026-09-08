@@ -94,21 +94,11 @@ namespace
 // and map::route interfaces.
 constexpr int fallback_monster_path_radius = 24;
 constexpr int cross_z_monster_path_radius = 96;
-// A reverse field relaxes one node per cell, so a single request can cover
-// roughly sqrt(request_budget / pi) ~= 18 tiles of radius on open ground.
-// Advertising a far larger radius only lets distant monsters enter the
-// Dijkstra loop and burn the entire budget before failing the is_settled()
-// check; rejecting them up front costs nothing and they fall back to A*.
-constexpr int reverse_field_radius = 20;
-constexpr int reverse_field_cross_z_radius = 24;
+constexpr int reverse_field_radius = 64;
+constexpr int reverse_field_cross_z_radius = 72;
 constexpr std::size_t monster_route_cache_max_edges = 8192;
 constexpr std::size_t monster_reverse_field_max_count = 24;
 constexpr std::size_t monster_reverse_field_request_budget = 1024;
-// Once the shared per-turn budget is gone, a monster would otherwise be
-// rejected without expanding a single node even when its neighbours have
-// already built a field that reaches almost all the way to it.  This
-// starvation allowance lets it finish the last few nodes and join that field.
-constexpr std::size_t monster_reverse_field_starved_budget = 128;
 constexpr int monster_stair_route_bucket_size = 24;
 constexpr int monster_stair_route_memory_turns = 60;
 constexpr int monster_stair_route_target_tolerance = 4;
@@ -2590,14 +2580,9 @@ void monster::move()
                 };
 
                 std::size_t expanded_this_request = 0;
-                // The shared turn budget is a soft cap: once it is spent a
-                // monster still gets monster_reverse_field_starved_budget
-                // nodes, so a horde shares one field instead of the first few
-                // monsters consuming everything and starving the rest.
                 while( !field->is_settled( pos() ) && !field->frontier.empty() &&
                        expanded_this_request < monster_reverse_field_request_budget &&
-                       ( monster_reverse_field_nodes < monster_reverse_field_turn_budget ||
-                         expanded_this_request < monster_reverse_field_starved_budget ) ) {
+                       monster_reverse_field_nodes < monster_reverse_field_turn_budget ) {
                     const monster_reverse_field_node current = field->frontier.top();
                     field->frontier.pop();
                     if( !field->settle_node( current.position, current.cost ) ) {
