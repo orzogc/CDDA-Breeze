@@ -682,10 +682,10 @@ std::optional<monster_z_route_plan> infer_recent_hostile_escape_transition(
 }
 
 std::optional<time_point> monster_path_cache_turn;
-// Flat hash maps here are safe: no reference or iterator into these caches is
-// held across an insertion (the only rehash trigger), and
-// get_monster_reverse_field returns a pointer to the heap object owned by the
-// unique_ptr, which survives rehash.
+// 这里用 flat 系列是安全的：没有任何引用或迭代器会跨过一次插入操作存活
+// （插入是唯一会触发 rehash 的动作）；而 get_monster_reverse_field 返回的
+// 是指向 unique_ptr 所持有堆对象的裸指针，rehash 只搬动 unique_ptr 本身，
+// 堆对象地址不变，指针不受影响。
 phmap::flat_hash_map<monster_route_cache_key, monster_route_cache_entry,
                      monster_route_cache_key_hash> monster_route_cache;
 phmap::flat_hash_map<monster_z_route_cache_key, monster_z_route_plan,
