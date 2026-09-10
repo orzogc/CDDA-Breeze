@@ -225,17 +225,18 @@ void creature_tracker::swap_positions( monster &first, monster &second )
     }
 
     // Either of them may be invalid!
-    const auto first_iter = monsters_by_location.find( first.get_location() );
-    const auto second_iter = monsters_by_location.find( second.get_location() );
-    // implied: first_iter != second_iter
+    const tripoint_abs_ms first_pos = first.get_location();
+    const tripoint_abs_ms second_pos = second.get_location();
 
     shared_ptr_fast<monster> first_ptr;
+    const auto first_iter = monsters_by_location.find( first_pos );
     if( first_iter != monsters_by_location.end() ) {
         first_ptr = first_iter->second;
         monsters_by_location.erase( first_iter );
     }
 
     shared_ptr_fast<monster> second_ptr;
+    const auto second_iter = monsters_by_location.find( second_pos );
     if( second_iter != monsters_by_location.end() ) {
         second_ptr = second_iter->second;
         monsters_by_location.erase( second_iter );
