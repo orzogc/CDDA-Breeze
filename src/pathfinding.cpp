@@ -4,6 +4,7 @@
 #include <array>
 #include <cstdint>
 #include <cstdlib>
+#include <functional>
 #include <iterator>
 #include <memory>
 #include <queue>
@@ -92,11 +93,45 @@ static uint32_t next_astar_generation()
     return ++astar_generation;
 }
 
+// open 优先队列的条目被压进一个 uint64_t：
+//   [ score : 43 位 ][ z+偏移 : 5 位 ][ y : 8 位 ][ x : 8 位 ]
+// score 放高位，于是默认的整数比较等价于"先比 score"，与原先
+// pair_greater_cmp_first 只比较 first 的行为一致。坐标全部落在
+// [0, MAPSIZE_X/Y) 与 [-OVERMAP_DEPTH, OVERMAP_HEIGHT] 内，各字段都够放。
+// 这样每次入堆/出堆搬移的是 8 字节整数，而不是 16 字节的 pair<int, tripoint>，
+// 省去堆调整时对 tripoint 的搬移和一次自定义比较器调用。
+static constexpr int open_step_x_bits = 8;
+static constexpr int open_step_y_bits = 8;
+static constexpr int open_step_z_bits = 5;
+static constexpr int open_step_coord_bits = open_step_x_bits + open_step_y_bits + open_step_z_bits;
+static constexpr uint64_t open_step_x_mask = ( uint64_t( 1 ) << open_step_x_bits ) - 1;
+static constexpr uint64_t open_step_y_mask = ( uint64_t( 1 ) << open_step_y_bits ) - 1;
+static constexpr uint64_t open_step_z_mask = ( uint64_t( 1 ) << open_step_z_bits ) - 1;
+
+static uint64_t pack_open_step( const int score, const tripoint &p )
+{
+    const uint64_t coord = ( static_cast<uint64_t>( p.x ) & open_step_x_mask ) |
+                           ( ( static_cast<uint64_t>( p.y ) & open_step_y_mask ) << open_step_x_bits ) |
+                           ( ( static_cast<uint64_t>( p.z + OVERMAP_DEPTH ) & open_step_z_mask )
+                             << ( open_step_x_bits + open_step_y_bits ) );
+    return ( static_cast<uint64_t>( score ) << open_step_coord_bits ) | coord;
+}
+
+static tripoint unpack_open_step( const uint64_t packed )
+{
+    const uint64_t coord = packed & ( ( uint64_t( 1 ) << open_step_coord_bits ) - 1 );
+    const int x = static_cast<int>( coord & open_step_x_mask );
+    const int y = static_cast<int>( ( coord >> open_step_x_bits ) & open_step_y_mask );
+    const int z = static_cast<int>(
+                      ( coord >> ( open_step_x_bits + open_step_y_bits ) ) & open_step_z_mask ) - OVERMAP_DEPTH;
+    return tripoint( x, y, z );
+}
+
 struct pathfinder {
     uint32_t generation;
 
-    std::priority_queue< std::pair<int, tripoint>, std::vector< std::pair<int, tripoint> >, pair_greater_cmp_first >
-    open;
+    // 最小堆：greater 使 score 最小者先出，等价于原先 pair_greater_cmp_first 的效果。
+    std::priority_queue< uint64_t, std::vector<uint64_t>, std::greater<uint64_t> > open;
 
     pathfinder() : generation( next_astar_generation() ) {
     }
@@ -114,9 +149,9 @@ struct pathfinder {
     }
 
     tripoint get_next() {
-        const auto pt = open.top();
+        const uint64_t packed = open.top();
         open.pop();
-        return pt.second;
+        return unpack_open_step( packed );
     }
 
     void add_point( const int gscore, const int score, const tripoint &from, const tripoint &to ) {
@@ -132,7 +167,7 @@ struct pathfinder {
         layer.gscore[index] = gscore;
         layer.parent[index] = from;
         layer.score [index] = score;
-        open.push( std::make_pair( score, to ) );
+        open.push( pack_open_step( score, to ) );
     }
 
     void close_point( const tripoint &p ) {

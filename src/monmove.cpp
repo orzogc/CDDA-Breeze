@@ -16,6 +16,7 @@
 #include <optional>
 #include <ostream>
 #include <queue>
+#include <set>
 #include <string>
 #include <tuple>
 #include <unordered_map>
@@ -159,7 +160,7 @@ struct monster_route_cache_key_hash {
 };
 
 struct monster_route_cache_entry {
-    std::map<tripoint, tripoint> next_steps;
+    phmap::flat_hash_map<tripoint, tripoint> next_steps;
 };
 
 struct monster_z_route_cache_key {
@@ -2485,7 +2486,7 @@ void monster::move()
             const auto cache_iter = monster_route_cache.find( cache_key );
             if( cache_iter != monster_route_cache.end() ) {
                 std::vector<tripoint> cached_path;
-                std::set<tripoint> visited;
+                phmap::flat_hash_set<tripoint> visited;
                 tripoint cursor = pos();
                 const std::size_t max_cached_steps = static_cast<std::size_t>(
                             std::max( 1, pf_settings.max_length ) );
