@@ -2337,8 +2337,10 @@ int map::move_cost_internal( const furn_t &furniture, const ter_t &terrain, cons
                              const vehicle *veh,
                              const int vpart ) const
 {   
+    const int field_cost = field.field_count() == 0 ? 0 : field.total_move_cost();
+
     if( terrain.movecost == 0 || ( furniture.id && furniture.movecost < 0 ) ||
-        field.total_move_cost() < 0 ) {
+        field_cost < 0 ) {
         return 0;
     }
 
@@ -2352,7 +2354,7 @@ int map::move_cost_internal( const furn_t &furniture, const ter_t &terrain, cons
             return 8;
         }
     }
-    int movecost = std::max( terrain.movecost + field.total_move_cost(), 0 );
+    int movecost = std::max( terrain.movecost + field_cost, 0 );
 
     if( furniture.id ) {
         if( furniture.has_flag( "BRIDGE" ) ) {

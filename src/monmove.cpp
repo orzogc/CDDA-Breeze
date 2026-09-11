@@ -3373,36 +3373,36 @@ int monster::calc_movecost( const tripoint &f, const tripoint &t ) const
         if( here.has_flag( ter_furn_flag::TFLAG_SWIMMABLE, f ) ) {
             movecost += 25;
         } else {
-            movecost += 50 * here.move_cost( f );
+            movecost += 50 * source_cost;
         }
         if( here.has_flag( ter_furn_flag::TFLAG_SWIMMABLE, t ) ) {
             movecost += 25;
         } else {
-            movecost += 50 * here.move_cost( t );
+            movecost += 50 * dest_cost;
         }
     } else if( can_submerge() ) {
         // No-breathe monsters have to walk underwater slowly
         if( here.has_flag( ter_furn_flag::TFLAG_SWIMMABLE, f ) ) {
             movecost += 250;
         } else {
-            movecost += 50 * here.move_cost( f );
+            movecost += 50 * source_cost;
         }
         if( here.has_flag( ter_furn_flag::TFLAG_SWIMMABLE, t ) ) {
             movecost += 250;
         } else {
-            movecost += 50 * here.move_cost( t );
+            movecost += 50 * dest_cost;
         }
         movecost /= 2;
     } else if( climbs() ) {
         if( here.has_flag( ter_furn_flag::TFLAG_CLIMBABLE, f ) ) {
             movecost += 150;
         } else {
-            movecost += 50 * here.move_cost( f );
+            movecost += 50 * source_cost;
         }
         if( here.has_flag( ter_furn_flag::TFLAG_CLIMBABLE, t ) ) {
             movecost += 150;
         } else {
-            movecost += 50 * here.move_cost( t );
+            movecost += 50 * dest_cost;
         }
         movecost /= 2;
     } else {
@@ -3901,10 +3901,11 @@ bool monster::push_to( const tripoint &p, const int boost, const size_t depth )
         }
 
         tripoint dest( p + d );
-        const int dest_movecost_from = 50 * here.move_cost( dest );
+        const int dest_cost = here.move_cost( dest );
+        const int dest_movecost_from = 50 * dest_cost;
 
         // Pushing into cars/windows etc. is harder
-        const int movecost_penalty = here.move_cost( dest ) - 2;
+        const int movecost_penalty = dest_cost - 2;
         if( movecost_penalty <= -2 ) {
             // Can't push into unpassable terrain
             continue;
