@@ -51,6 +51,7 @@
 #include "messages.h"
 #include "mission.h"
 #include "monster.h"
+#include "morale.h"
 #include "morale_types.h"
 #include "mtype.h"
 #include "mutation.h"
@@ -3452,6 +3453,9 @@ void npc::npc_update_body()
     if( calendar::once_every( 10_seconds ) ) {
         update_body( last_updated, calendar::turn );
         last_updated = calendar::turn;
+    }
+    if( calendar::once_every( 1_minutes ) ) {
+        morale->decay( 1_minutes );
     }
 }
 
