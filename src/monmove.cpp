@@ -2537,7 +2537,8 @@ void monster::move()
                     if( from.x != to.x && from.y != to.y ) {
                         const tripoint side_a( from.x, to.y, from.z );
                         const tripoint side_b( to.x, from.y, from.z );
-                        if( here.impassable( side_a ) && here.impassable( side_b ) ) {
+                        if( here.cached_move_cost( side_a ) == 0 &&
+                            here.cached_move_cost( side_b ) == 0 ) {
                             return impassable_cost;
                         }
                     }
@@ -3363,8 +3364,8 @@ int monster::calc_movecost( const tripoint &f, const tripoint &t ) const
     int movecost = 0;
 
     map &here = get_map();
-    const int source_cost = here.move_cost( f );
-    const int dest_cost = here.move_cost( t );
+    const int source_cost = here.cached_move_cost( f );
+    const int dest_cost = here.cached_move_cost( t );
     // Digging and flying monsters ignore terrain cost
     if( flies() || ( digging() && here.has_flag( ter_furn_flag::TFLAG_DIGGABLE, t ) ) ) {
         movecost = 100;
