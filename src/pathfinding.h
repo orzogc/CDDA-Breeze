@@ -2,6 +2,8 @@
 #ifndef CATA_SRC_PATHFINDING_H
 #define CATA_SRC_PATHFINDING_H
 
+#include <cstdint>
+
 #include "coordinates.h"
 #include "game_constants.h"
 #include "mdarray.h"
@@ -46,6 +48,7 @@ struct pathfinding_cache {
     bool dirty = false;
 
     cata::mdarray<pf_special, point_bub_ms> special;
+    cata::mdarray<int16_t, point_bub_ms> cost;
 };
 
 struct pathfinding_settings {

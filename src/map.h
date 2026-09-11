@@ -530,6 +530,7 @@ class map
         int move_cost( const point &p, const vehicle *ignored_vehicle = nullptr ) const {
             return move_cost( tripoint( p, abs_sub.z() ), ignored_vehicle );
         }
+        int cached_move_cost( const tripoint &p ) const;
         // TODO: fix point types (remove the first overload)
         bool impassable( const tripoint &p ) const;
         bool impassable( const tripoint_bub_ms &p ) const;
