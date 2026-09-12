@@ -227,18 +227,6 @@
   { "id": "guns_rifle_rare_display", "type": "item_group", "subtype": "distribution", "copy-from": "guns_rifle_rare_display", "extend": { "items": [ { "item": "smle_mk3", "prob": 10, "charges-min": 0, "charges-max": 0 }, { "item": "number4_mki", "prob": 10, "charges-min": 0, "charges-max": 0 } ] } },
   { "id": "mags_rifle_rare", "type": "item_group", "copy-from": "mags_rifle_rare", "extend": { "items": [ [ "clip303_5rd", 15 ], [ "enfield_303mag", 4 ] ] } },
   {
-    "id": "ammo_pouch", "type": "ARMOR", "copy-from": "ammo_pouch",
-    "pocket_data": [ { "ammo_restriction": { "pebble": 60, "700nx": 60, "50": 60, "4570": 60, "BB": 60, "410shot": 60, "22": 60, "shot": 60, "9mm": 60, "357sig": 60, "9x18": 60, "380": 60, "38": 60, "40": 60, "10mm": 60, "44": 60, "45": 60, "460": 60, "454": 60, "45colt": 60, "500": 60, "57": 60, "46": 60, "762": 60, "545x39": 60, "223": 60, "3006": 60, "303": 60, "270win": 60, "308": 60, "12mm": 60, "8x40mm": 60, "20x66mm": 60, "5x50": 60, "stimpack_ammo": 60, "ampoule": 60, "300": 60, "32": 60, "762x25": 60, "flintlock": 60, "36paper": 60, "44paper": 60, "762R": 60, "paintball": 60 }, "moves": 35 } ]
-  },
-  {
-    "id": "bandolier_rifle", "type": "ARMOR", "copy-from": "bandolier_rifle",
-    "pocket_data": [ { "ammo_restriction": { "22": 16, "223": 16, "270win": 16, "300blk": 16, "5x50": 16, "545x39": 16, "3006": 16, "303": 16, "308": 16, "300": 16, "762": 16, "762R": 16, "8x40mm": 16, "4570": 16, "50": 16, "700nx": 16 }, "moves": 20 } ]
-  },
-  {
-    "id": "bandolier_wrist", "type": "ARMOR", "copy-from": "bandolier_wrist",
-    "pocket_data": [ { "ammo_restriction": { "22": 4, "223": 4, "270win": 4, "300blk": 4, "5x50": 4, "545x39": 4, "3006": 4, "303": 4, "308": 4, "300": 4, "762": 4, "762R": 4, "8x40mm": 4, "4570": 4, "50": 4, "700nx": 4 }, "moves": 20 } ]
-  },
-  {
     "result": "reloaded_303", "type": "recipe", "activity_level": "LIGHT_EXERCISE", "category": "CC_AMMO", "subcategory": "CSC_AMMO_RIFLE", "skill_used": "fabrication", "difficulty": 4, "skills_required": [ "gun", 4 ], "time": "2 m", "batch_time_factors": [ 60, 5 ], "book_learn": [ [ "recipe_bullets", 3 ] ], "charges": 1, "reversible": true, "using": [ [ "bullet_forming", 12 ], [ "ammo_bullet", 3 ] ], "proficiencies": [ { "proficiency": "prof_handloading" } ], "components": [ [ [ "303_casing", 1 ] ], [ [ "lgrifle_primer", 1 ] ], [ [ "gunpowder", 31 ], [ "gunpowder_rifle", 31 ], [ "gunpowder_large_rifle", 31 ] ], [ [ "copper", 2 ] ] ]
   },
   {
