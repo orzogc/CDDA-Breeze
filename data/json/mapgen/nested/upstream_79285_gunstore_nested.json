@@ -1125,7 +1125,7 @@
         "a": "t_thconc_floor"
       },
       "flags": [
-        "DISMANTLE_ALL_BEFORE_PLACING_TERRAIN"
+        "ERASE_ALL_BEFORE_PLACING_TERRAIN"
       ]
     }
   },
@@ -1145,7 +1145,7 @@
         "#": "t_thconc_floor"
       },
       "flags": [
-        "ERASE_ITEMS_BEFORE_PLACING_TERRAIN"
+        "ERASE_ALL_BEFORE_PLACING_TERRAIN"
       ]
     }
   }
