@@ -10,18 +10,18 @@
       "yes": "<greet>",
       "no": "嘿，陌生人。这些日子过得怎么样？"
     },
-    "speaker_effect": { "effect": { "npc_add_var": "knows_u", "type": "dialogue", "context": "first_meeting", "value": "yes" } },
     "responses": [
       {
         "text": "把东西都交出来。别乱动，不然你就死定了。",
         "trial": { "type": "INTIMIDATE", "difficulty": 30 },
-        "success": { "topic": "TALK_WEAPON_DROPPED", "effect": "drop_weapon", "opinion": { "trust": -4, "fear": 3 } },
-        "failure": { "topic": "TALK_DONE", "effect": "hostile" },
+        "success": { "topic": "TALK_WEAPON_DROPPED", "effect": [ "drop_weapon", { "npc_add_var": "knows_u", "type": "dialogue", "context": "first_meeting", "value": "yes" } ], "opinion": { "trust": -4, "fear": 3 } },
+        "failure": { "topic": "TALK_DONE", "effect": [ "hostile", { "npc_add_var": "knows_u", "type": "dialogue", "context": "first_meeting", "value": "yes" } ] },
         "condition": { "not": { "npc_has_var": "knows_u", "type": "dialogue", "context": "first_meeting", "value": "yes" } }
       },
       {
         "text": "嘿，很高兴见到你。",
         "topic": "TALK_NPC_GUN_STORE_SURVIVOR_INTRO",
+        "effect": { "npc_add_var": "knows_u", "type": "dialogue", "context": "first_meeting", "value": "yes" },
         "condition": { "not": { "npc_has_var": "knows_u", "type": "dialogue", "context": "first_meeting", "value": "yes" } }
       },
       {
