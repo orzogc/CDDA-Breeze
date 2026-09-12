@@ -5238,7 +5238,10 @@ bool game::spawn_hallucination( const tripoint &p )
         tripoint_abs_omt( ms_to_omt_copy( get_map().getabs( p ) ) ) );
     const overmap_static_spawns &spawns = terrain_type->get_static_spawns();
     if( !spawns.group.is_null() && !one_in( 9 ) ) {
-        hallu = MonsterGroupManager::GetRandomMonsterFromGroup( spawns.group );
+        const mtype_id local_hallu = MonsterGroupManager::GetRandomMonsterFromGroup( spawns.group );
+        if( !local_hallu.is_null() ) {
+            hallu = local_hallu;
+        }
     }
 
     return spawn_hallucination( p, hallu, std::nullopt );

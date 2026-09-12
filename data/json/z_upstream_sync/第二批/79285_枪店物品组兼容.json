@@ -64,15 +64,14 @@
     "id": "SUS_gunstore_carry_gear",
     "subtype": "distribution",
     "entries": [
-      { "item": "holster", "prob": 60 },
+      { "item": "holster", "prob": 180 },
       { "item": "sholster", "prob": 25 },
       { "item": "bholster", "prob": 20 },
       { "item": "bbholster", "prob": 10 },
       { "item": "suspenders_holster", "prob": 8 },
       { "item": "tactical_holster", "prob": 25 },
       { "item": "shoulder_holster", "prob": 12 },
-      { "item": "bootstrap", "prob": 15 },
-      { "item": "nylon_holster", "prob": 120 }
+      { "item": "bootstrap", "prob": 15 }
     ]
   }
 ]

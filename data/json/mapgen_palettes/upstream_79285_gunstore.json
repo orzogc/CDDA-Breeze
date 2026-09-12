@@ -2,6 +2,12 @@
   {
     "type": "palette",
     "id": "gunstore_palette_unlooted",
+    "parameters": {
+      "interior_wall_type": {
+        "type": "ter_str_id",
+        "default": { "distribution": [ [ "t_wall_w", 1 ], [ "t_wall_gray", 1 ], [ "t_wall_black", 1 ] ] }
+      }
+    },
     "//": " P, U, S, h, F, e, |, o, k, z, c, and > are all still available for more terrain or furniture",
     "toilets": {
       "&": {}
@@ -510,6 +516,12 @@
   {
     "type": "palette",
     "id": "gunstore_palette_looted",
+    "parameters": {
+      "interior_wall_type": {
+        "type": "ter_str_id",
+        "default": { "distribution": [ [ "t_wall_w", 1 ], [ "t_wall_gray", 1 ], [ "t_wall_black", 1 ] ] }
+      }
+    },
     "//": " P, U, S, h, F, e, |, o, k, z, c, and > are all still available for more terrain or furniture",
     "toilets": {
       "&": {}
@@ -1081,6 +1093,12 @@
   {
     "type": "palette",
     "id": "gunstore_palette_occupied",
+    "parameters": {
+      "interior_wall_type": {
+        "type": "ter_str_id",
+        "default": { "distribution": [ [ "t_wall_w", 1 ], [ "t_wall_gray", 1 ], [ "t_wall_black", 1 ] ] }
+      }
+    },
     "//": " P, U, S, h, F, e, |, o, k, z, c, and > are all still available for more terrain or furniture",
     "toilets": {
       "&": {}

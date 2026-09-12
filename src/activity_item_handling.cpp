@@ -3908,6 +3908,7 @@ int get_auto_consume_moves( Character &you, const bool food )
     const tripoint pos = you.pos();
     const zone_manager &mgr = zone_manager::get_manager();
     const zone_type_id zone_type = food ? zone_type_AUTO_EAT : zone_type_AUTO_DRINK;
+    // NOLINTNEXTLINE(misc-const-correctness): map::i_at requires mutable map access on this baseline.
     map &here = get_map();
     const std::unordered_set<tripoint_abs_ms> &dest_set =
         mgr.get_near( zone_type, here.getglobal( pos ), ACTIVITY_SEARCH_DISTANCE, nullptr,

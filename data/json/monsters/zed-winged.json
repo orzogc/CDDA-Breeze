@@ -146,7 +146,7 @@
     "material": [ "flesh" ],
     "symbol": "z",
     "color": "white",
-    "scents_tracked": ["sc_human", "sc_fetid"],
+    "scents_tracked": [ "sc_human", "sc_fetid" ],
     "aggression": 100,
     "morale": 100,
     "melee_skill": 9,

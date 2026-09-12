@@ -26,7 +26,7 @@
     "class": "NC_BANDIT_TRADER",
     "attitude": 0,
     "mission": 3,
-    "chat": "TALK_DONE",
+    "chat": "TALK_BANDIT_SHOPKEEPER",
     "faction": "hells_raiders"
   },
   {
@@ -36,7 +36,7 @@
     "class": "NC_BANDIT_QUARTERMASTER",
     "attitude": 0,
     "mission": 3,
-    "chat": "TALK_DONE",
+    "chat": "TALK_BANDIT_SHOPKEEPER",
     "faction": "hells_raiders"
   },
   {
@@ -48,5 +48,14 @@
     "mission": 8,
     "chat": "TALK_DONE",
     "faction": "hells_raiders"
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_BANDIT_SHOPKEEPER",
+    "dynamic_line": "要买点什么，还是有东西要出手？",
+    "responses": [
+      { "text": "让我看看你的货。", "topic": "TALK_BANDIT_SHOPKEEPER", "effect": "start_trade" },
+      { "text": "没事了。", "topic": "TALK_DONE" }
+    ]
   }
 ]
