@@ -148,26 +148,26 @@ void dialogue_window::draw_character_sidebar( const std::string &npc_name )
         std::string relationship = pgettext( "NPC relationship", "Indifferent" );
         nc_color relationship_color = c_light_gray;
         if( affection_score_value <= -60 ) {
-            relationship = pgettext( "NPC relationship", "Hatred" );
+            relationship = pgettext( "NPC relationship", "憎恨" );
             relationship_color = c_red;
         } else if( affection_score_value <= -40 ) {
-            relationship = pgettext( "NPC relationship", "Repulsed" );
+            relationship = pgettext( "NPC relationship", "厌恶" );
             relationship_color = c_light_red;
         } else if( affection_score_value <= -20 ) {
-            relationship = pgettext( "NPC relationship", "Averse" );
+            relationship = pgettext( "NPC relationship", "反感" );
             relationship_color = c_yellow;
         } else if( affection_score_value >= 60 ) {
-            relationship = pgettext( "NPC relationship", "Affectionate" );
+            relationship = pgettext( "NPC relationship", "充满爱意" );
             relationship_color = c_pink;
         } else if( affection_score_value >= 40 ) {
-            relationship = pgettext( "NPC relationship", "Trusting" );
+            relationship = pgettext( "NPC relationship", "信任" );
             relationship_color = c_cyan;
         } else if( affection_score_value >= 20 ) {
-            relationship = pgettext( "NPC relationship", "Friendly" );
+            relationship = pgettext( "NPC relationship", "友好" );
             relationship_color = c_light_green;
         }
         trim_and_print( d_win, point( 2, text_y ), text_width, relationship_color,
-                        string_format( _( "Relationship: %s" ), relationship ) );
+                        string_format("关系: %s", relationship ) );
         ++text_y;
     }
 

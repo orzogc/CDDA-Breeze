@@ -18,6 +18,7 @@
 #include "enums.h"
 #include "item_location.h"
 #include "memory_fast.h"
+#include "parallel_hashmap/phmap.h"
 #include <optional>
 #include "point.h"
 #include "type_id.h"
@@ -184,7 +185,7 @@ class player_activity
             return !actor || actor->do_drop_invalid_inventory();
         }
 
-        std::map<distraction_type, std::string> get_distractions() const;
+        phmap::flat_hash_map<distraction_type, std::string> get_distractions() const;
 };
 
 #endif // CATA_SRC_PLAYER_ACTIVITY_H

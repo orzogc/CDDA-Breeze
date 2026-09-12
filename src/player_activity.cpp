@@ -507,9 +507,9 @@ void player_activity::inherit_distractions( const player_activity &other )
     }
 }
 
-std::map<distraction_type, std::string> player_activity::get_distractions() const
+phmap::flat_hash_map<distraction_type, std::string> player_activity::get_distractions() const
 {
-    std::map < distraction_type, std::string > res;
+    phmap::flat_hash_map < distraction_type, std::string > res;
     activity_id act_id = id();
     if( act_id != ACT_AIM && moves_left > 0 ) {
         if( uistate.distraction_hostile_close &&
@@ -518,7 +518,7 @@ std::map<distraction_type, std::string> player_activity::get_distractions() cons
             if( hostile_critter != nullptr ) {
                 res.emplace( distraction_type::hostile_spotted_near,
                              string_format( _( "The %s is dangerously close!" ),
-                                            g->is_hostile_very_close( true )->get_name() ) );
+                                            hostile_critter->get_name() ) );
             }
         }
         if( uistate.distraction_dangerous_field &&

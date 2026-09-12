@@ -12,6 +12,7 @@
 
 #include "coordinates.h"
 #include "memory_fast.h"
+#include "parallel_hashmap/phmap.h"
 #include "point.h"
 #include "type_id.h"
 
@@ -126,8 +127,14 @@ class creature_tracker
         std::list<shared_ptr_fast<npc>> active_npc; // NOLINT(cata-serialize)
         std::vector<shared_ptr_fast<monster>> monsters_list;
         void rebuild_cache();
+        // 这里用 flat 哈希表：它是 creature_at()/find() 背后的生物定位索引，
+        // 只做按键查找——没有任何代码依赖它的遍历顺序，且每次取出的迭代器都会在
+        // 下一次插入/删除之前用完即弃。开放式寻址省去了每个怪物的节点分配，以及
+        // 每次探测时的一次指针追逐。
+        // 注意：flat 容器在删除时会搬移元素，因此调用方不得在删除某个键的期间
+        // 持有指向其它键的迭代器（参见 swap_positions）。
         // NOLINTNEXTLINE(cata-serialize)
-        std::unordered_map<tripoint_abs_ms, shared_ptr_fast<monster>> monsters_by_location;
+        phmap::flat_hash_map<tripoint_abs_ms, shared_ptr_fast<monster>> monsters_by_location;
         /** Remove the monsters entry in @ref monsters_by_location */
         void remove_from_location_map( const monster &critter );
 };

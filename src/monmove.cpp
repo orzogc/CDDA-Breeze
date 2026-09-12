@@ -16,6 +16,7 @@
 #include <optional>
 #include <ostream>
 #include <queue>
+#include <set>
 #include <string>
 #include <tuple>
 #include <unordered_map>
@@ -34,6 +35,7 @@
 #include "flood_fill.h"
 #include "game.h"
 #include "game_constants.h"
+#include "hash_utils.h"
 #include "line.h"
 #include "make_static.h"
 #include "map.h"
@@ -47,6 +49,7 @@
 #include "mtype.h"
 #include "npc.h"
 #include "options.h"
+#include "parallel_hashmap/phmap.h"
 #include "pathfinding.h"
 #include "pimpl.h"
 #include "rng.h"
@@ -136,10 +139,28 @@ struct monster_route_cache_key {
                std::tie( rhs.type_id, rhs.target.x, rhs.target.y, rhs.target.z,
                          rhs.bash_strength_quanta, rhs.can_open_doors );
     }
+
+    bool operator==( const monster_route_cache_key &rhs ) const
+    {
+        return type_id == rhs.type_id && target == rhs.target &&
+               bash_strength_quanta == rhs.bash_strength_quanta &&
+               can_open_doors == rhs.can_open_doors;
+    }
+};
+
+struct monster_route_cache_key_hash {
+    std::size_t operator()( const monster_route_cache_key &key ) const {
+        std::size_t seed = 0;
+        cata::hash_combine( seed, key.type_id );
+        cata::hash_combine( seed, key.target );
+        cata::hash_combine( seed, key.bash_strength_quanta );
+        cata::hash_combine( seed, key.can_open_doors );
+        return seed;
+    }
 };
 
 struct monster_route_cache_entry {
-    std::map<tripoint, tripoint> next_steps;
+    phmap::flat_hash_map<tripoint, tripoint> next_steps;
 };
 
 struct monster_z_route_cache_key {
@@ -155,6 +176,23 @@ struct monster_z_route_cache_key {
             return false;
         }
         return source_z < rhs.source_z;
+    }
+
+    bool operator==( const monster_z_route_cache_key &rhs ) const
+    {
+        return route_key == rhs.route_key && source_z == rhs.source_z;
+    }
+};
+
+struct monster_z_route_cache_key_hash {
+    std::size_t operator()( const monster_z_route_cache_key &key ) const {
+        std::size_t seed = 0;
+        cata::hash_combine( seed, key.route_key.type_id );
+        cata::hash_combine( seed, key.route_key.target );
+        cata::hash_combine( seed, key.route_key.bash_strength_quanta );
+        cata::hash_combine( seed, key.route_key.can_open_doors );
+        cata::hash_combine( seed, key.source_z );
+        return seed;
     }
 };
 
@@ -174,6 +212,24 @@ struct monster_stair_route_cache_key {
         return std::tie( source_z, target_z, target_x_bucket, target_y_bucket ) <
                std::tie( rhs.source_z, rhs.target_z, rhs.target_x_bucket,
                           rhs.target_y_bucket );
+    }
+
+    bool operator==( const monster_stair_route_cache_key &rhs ) const
+    {
+        return source_z == rhs.source_z && target_z == rhs.target_z &&
+               target_x_bucket == rhs.target_x_bucket &&
+               target_y_bucket == rhs.target_y_bucket;
+    }
+};
+
+struct monster_stair_route_cache_key_hash {
+    std::size_t operator()( const monster_stair_route_cache_key &key ) const {
+        std::size_t seed = 0;
+        cata::hash_combine( seed, key.source_z );
+        cata::hash_combine( seed, key.target_z );
+        cata::hash_combine( seed, key.target_x_bucket );
+        cata::hash_combine( seed, key.target_y_bucket );
+        return seed;
     }
 };
 
@@ -627,12 +683,20 @@ std::optional<monster_z_route_plan> infer_recent_hostile_escape_transition(
 }
 
 std::optional<time_point> monster_path_cache_turn;
-std::map<monster_route_cache_key, monster_route_cache_entry> monster_route_cache;
-std::map<monster_z_route_cache_key, monster_z_route_plan> monster_z_route_cache;
-std::map<monster_route_cache_key, std::unique_ptr<monster_reverse_field_entry>>
+// 这里用 flat 系列是安全的：没有任何引用或迭代器会跨过一次插入操作存活
+// （插入是唯一会触发 rehash 的动作）；而 get_monster_reverse_field 返回的
+// 是指向 unique_ptr 所持有堆对象的裸指针，rehash 只搬动 unique_ptr 本身，
+// 堆对象地址不变，指针不受影响。
+phmap::flat_hash_map<monster_route_cache_key, monster_route_cache_entry,
+                     monster_route_cache_key_hash> monster_route_cache;
+phmap::flat_hash_map<monster_z_route_cache_key, monster_z_route_plan,
+                     monster_z_route_cache_key_hash> monster_z_route_cache;
+phmap::flat_hash_map<monster_route_cache_key, std::unique_ptr<monster_reverse_field_entry>,
+                     monster_route_cache_key_hash>
 monster_reverse_fields;
 std::vector<std::unique_ptr<monster_reverse_field_entry>> monster_reverse_field_pool;
-std::map<monster_stair_route_cache_key, monster_stair_route_cache_entry>
+phmap::flat_hash_map<monster_stair_route_cache_key, monster_stair_route_cache_entry,
+                     monster_stair_route_cache_key_hash>
 monster_stair_route_cache;
 std::size_t monster_route_cache_edges = 0;
 std::size_t monster_reverse_field_nodes = 0;
@@ -2422,7 +2486,7 @@ void monster::move()
             const auto cache_iter = monster_route_cache.find( cache_key );
             if( cache_iter != monster_route_cache.end() ) {
                 std::vector<tripoint> cached_path;
-                std::set<tripoint> visited;
+                phmap::flat_hash_set<tripoint> visited;
                 tripoint cursor = pos();
                 const std::size_t max_cached_steps = static_cast<std::size_t>(
                             std::max( 1, pf_settings.max_length ) );
@@ -2473,7 +2537,8 @@ void monster::move()
                     if( from.x != to.x && from.y != to.y ) {
                         const tripoint side_a( from.x, to.y, from.z );
                         const tripoint side_b( to.x, from.y, from.z );
-                        if( here.impassable( side_a ) && here.impassable( side_b ) ) {
+                        if( here.cached_move_cost( side_a ) == 0 &&
+                            here.cached_move_cost( side_b ) == 0 ) {
                             return impassable_cost;
                         }
                     }
@@ -3299,8 +3364,8 @@ int monster::calc_movecost( const tripoint &f, const tripoint &t ) const
     int movecost = 0;
 
     map &here = get_map();
-    const int source_cost = here.move_cost( f );
-    const int dest_cost = here.move_cost( t );
+    const int source_cost = here.cached_move_cost( f );
+    const int dest_cost = here.cached_move_cost( t );
     // Digging and flying monsters ignore terrain cost
     if( flies() || ( digging() && here.has_flag( ter_furn_flag::TFLAG_DIGGABLE, t ) ) ) {
         movecost = 100;
@@ -3309,36 +3374,36 @@ int monster::calc_movecost( const tripoint &f, const tripoint &t ) const
         if( here.has_flag( ter_furn_flag::TFLAG_SWIMMABLE, f ) ) {
             movecost += 25;
         } else {
-            movecost += 50 * here.move_cost( f );
+            movecost += 50 * source_cost;
         }
         if( here.has_flag( ter_furn_flag::TFLAG_SWIMMABLE, t ) ) {
             movecost += 25;
         } else {
-            movecost += 50 * here.move_cost( t );
+            movecost += 50 * dest_cost;
         }
     } else if( can_submerge() ) {
         // No-breathe monsters have to walk underwater slowly
         if( here.has_flag( ter_furn_flag::TFLAG_SWIMMABLE, f ) ) {
             movecost += 250;
         } else {
-            movecost += 50 * here.move_cost( f );
+            movecost += 50 * source_cost;
         }
         if( here.has_flag( ter_furn_flag::TFLAG_SWIMMABLE, t ) ) {
             movecost += 250;
         } else {
-            movecost += 50 * here.move_cost( t );
+            movecost += 50 * dest_cost;
         }
         movecost /= 2;
     } else if( climbs() ) {
         if( here.has_flag( ter_furn_flag::TFLAG_CLIMBABLE, f ) ) {
             movecost += 150;
         } else {
-            movecost += 50 * here.move_cost( f );
+            movecost += 50 * source_cost;
         }
         if( here.has_flag( ter_furn_flag::TFLAG_CLIMBABLE, t ) ) {
             movecost += 150;
         } else {
-            movecost += 50 * here.move_cost( t );
+            movecost += 50 * dest_cost;
         }
         movecost /= 2;
     } else {
@@ -3837,10 +3902,11 @@ bool monster::push_to( const tripoint &p, const int boost, const size_t depth )
         }
 
         tripoint dest( p + d );
-        const int dest_movecost_from = 50 * here.move_cost( dest );
+        const int dest_cost = here.move_cost( dest );
+        const int dest_movecost_from = 50 * dest_cost;
 
         // Pushing into cars/windows etc. is harder
-        const int movecost_penalty = here.move_cost( dest ) - 2;
+        const int movecost_penalty = dest_cost - 2;
         if( movecost_penalty <= -2 ) {
             // Can't push into unpassable terrain
             continue;

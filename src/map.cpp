@@ -2337,8 +2337,10 @@ int map::move_cost_internal( const furn_t &furniture, const ter_t &terrain, cons
                              const vehicle *veh,
                              const int vpart ) const
 {   
+    const int field_cost = field.field_count() == 0 ? 0 : field.total_move_cost();
+
     if( terrain.movecost == 0 || ( furniture.id && furniture.movecost < 0 ) ||
-        field.total_move_cost() < 0 ) {
+        field_cost < 0 ) {
         return 0;
     }
 
@@ -2352,7 +2354,7 @@ int map::move_cost_internal( const furn_t &furniture, const ter_t &terrain, cons
             return 8;
         }
     }
-    int movecost = std::max( terrain.movecost + field.total_move_cost(), 0 );
+    int movecost = std::max( terrain.movecost + field_cost, 0 );
 
     if( furniture.id ) {
         if( furniture.has_flag( "BRIDGE" ) ) {
@@ -2416,6 +2418,21 @@ int map::move_cost( const tripoint &p, const vehicle *ignored_vehicle ) const
 int map::move_cost( const tripoint_bub_ms &p, const vehicle *ignored_vehicle ) const
 {
     return move_cost( p.raw(), ignored_vehicle );
+}
+
+int map::cached_move_cost( const tripoint &p ) const
+{
+    if( !inbounds( p ) ) {
+        return 0;
+    }
+
+    int part_num = -1;
+    if( veh_at_internal( p, part_num ) != nullptr ) {
+        return move_cost( p );
+    }
+
+    const int cached = get_pathfinding_cache_ref( p.z ).cost[p.x][p.y];
+    return cached < 0 ? move_cost( p ) : cached;
 }
 
 bool map::impassable( const tripoint &p ) const
@@ -7204,6 +7221,7 @@ void map::clear_fields( const tripoint &p )
     point l;
     submap *const current_submap = unsafe_get_submap_at( p, l );
     current_submap->clear_fields( l );
+    set_pathfinding_cache_dirty( p.z );
 }
 
 void map::on_field_modified( const tripoint &p, const field_type &fd_type )
@@ -7219,7 +7237,14 @@ void map::on_field_modified( const tripoint &p, const field_type &fd_type )
         set_seen_cache_dirty( p );
     }
 
-    if( fd_type.is_dangerous() ) {
+    bool affects_move_cost = fd_type.is_dangerous();
+    for( const field_intensity_level &lvl : fd_type.intensity_levels ) {
+        if( lvl.move_cost != 0 ) {
+            affects_move_cost = true;
+            break;
+        }
+    }
+    if( affects_move_cost ) {
         set_pathfinding_cache_dirty( p.z );
     }
 
@@ -10614,6 +10639,7 @@ void map::update_pathfinding_cache( int zlev ) const
     }
 
     std::uninitialized_fill_n( &cache.special[0][0], MAPSIZE_X * MAPSIZE_Y, PF_NORMAL );
+    cache.cost.fill( static_cast<int16_t>( -1 ) );
 
     for( int smx = 0; smx < my_MAPSIZE; ++smx ) {
         for( int smy = 0; smy < my_MAPSIZE; ++smy ) {
@@ -10640,6 +10666,8 @@ void map::update_pathfinding_cache( int zlev ) const
                     const vehicle *veh = veh_at_internal( p, part );
 
                     const int cost = move_cost_internal( furniture, terrain, field, veh, part );
+                    cache.cost[p.x][p.y] = static_cast<int16_t>( veh == nullptr ? cost :
+                                           move_cost_internal( furniture, terrain, field, nullptr, -1 ) );
 
                     if( cost > 2 ) {
                         cur_value |= PF_SLOW;
