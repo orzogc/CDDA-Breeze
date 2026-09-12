@@ -27,7 +27,8 @@
       "L": "t_null",
       "C": "t_null",
       "Y": "t_null",
-      "y": "t_null"
+      "y": "t_null",
+      "v": "t_ladder_down"
     },
     "furniture": {
       "&": "f_roof_turbine_vent",

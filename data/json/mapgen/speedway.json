@@ -718,7 +718,7 @@
       "terrain": {
         " ": "t_open_air",
         "_": "t_concrete",
-        ">": "t_stairs_down_no_roof",
+        ">": "t_stairs_down",
         "-": "t_gutter",
         ".": "t_flat_roof",
         "5": "t_gutter_drop"

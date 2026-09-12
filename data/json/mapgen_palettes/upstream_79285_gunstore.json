@@ -5,7 +5,7 @@
     "parameters": {
       "interior_wall_type": {
         "type": "ter_str_id",
-        "default": { "distribution": [ [ "t_wall_w", 1 ], [ "t_wall_gray", 1 ], [ "t_wall_black", 1 ] ] }
+        "default": { "distribution": [ [ "t_wall_w", 1 ], [ "t_wall", 1 ], [ "t_brick_wall", 1 ] ] }
       }
     },
     "//": " P, U, S, h, F, e, |, o, k, z, c, and > are all still available for more terrain or furniture",
@@ -155,7 +155,7 @@
         "item": "american_flag"
       },
       "F": {
-        "item": "gun_lock",
+        "item": "lock",
         "repeat": [
           5,
           20
@@ -202,7 +202,7 @@
         ]
       },
       "`": {
-        "item": "ammo_casings_gunsmith_bulk",
+        "item": "ammo_casings_bulk",
         "repeat": [
           12,
           15
@@ -375,7 +375,7 @@
         "chance": 45
       },
       "Q": {
-        "item": "ammo_casings_gunsmith_bulk",
+        "item": "ammo_casings_bulk",
         "repeat": 15,
         "chance": 35
       },
@@ -519,7 +519,7 @@
     "parameters": {
       "interior_wall_type": {
         "type": "ter_str_id",
-        "default": { "distribution": [ [ "t_wall_w", 1 ], [ "t_wall_gray", 1 ], [ "t_wall_black", 1 ] ] }
+        "default": { "distribution": [ [ "t_wall_w", 1 ], [ "t_wall", 1 ], [ "t_brick_wall", 1 ] ] }
       }
     },
     "//": " P, U, S, h, F, e, |, o, k, z, c, and > are all still available for more terrain or furniture",
@@ -726,7 +726,7 @@
         "item": "american_flag"
       },
       "F": {
-        "item": "gun_lock",
+        "item": "lock",
         "repeat": [
           5,
           20
@@ -767,7 +767,7 @@
         ]
       },
       "`": {
-        "item": "ammo_casings_gunsmith_bulk",
+        "item": "ammo_casings_bulk",
         "repeat": [
           6,
           8
@@ -949,7 +949,7 @@
         "chance": 45
       },
       "Q": {
-        "item": "ammo_casings_gunsmith_bulk",
+        "item": "ammo_casings_bulk",
         "repeat": 15,
         "chance": 35
       },
@@ -1096,7 +1096,7 @@
     "parameters": {
       "interior_wall_type": {
         "type": "ter_str_id",
-        "default": { "distribution": [ [ "t_wall_w", 1 ], [ "t_wall_gray", 1 ], [ "t_wall_black", 1 ] ] }
+        "default": { "distribution": [ [ "t_wall_w", 1 ], [ "t_wall", 1 ], [ "t_brick_wall", 1 ] ] }
       }
     },
     "//": " P, U, S, h, F, e, |, o, k, z, c, and > are all still available for more terrain or furniture",
@@ -1632,7 +1632,7 @@
               ]
             },
             {
-              "item": "blister_pack",
+              "item": "wrapper",
               "count": [
                 14,
                 30
@@ -1716,7 +1716,7 @@
               "prob": 60
             },
             {
-              "item": "bag_plastic_small",
+              "item": "bag_plastic",
               "prob": 20
             },
             {
