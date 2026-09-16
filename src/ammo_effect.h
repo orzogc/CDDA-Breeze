@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 
+#include "calendar.h"
 #include "explosion.h"
 #include "field_type.h"
 #include "type_id.h"
@@ -38,6 +39,10 @@ struct ammo_effect {
         bool do_flashbang = false;
         bool do_emp_blast = false;
         bool foamcrete_build = false;
+
+        efftype_id aoe_effect_type;
+        std::string aoe_effect_type_name;
+        time_duration aoe_effect_duration = 0_turns;
 
         field_type_id trail_field_type = fd_null.id_or( INVALID_FIELD_TYPE_ID );
         /** used during JSON loading only */
