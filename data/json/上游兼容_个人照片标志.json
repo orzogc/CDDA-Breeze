@@ -2,6 +2,6 @@
   {
     "id": "BANK_NOTE_SHAPED",
     "type": "json_flag",
-    "restriction": "Item must be shaped like a bank note"
+    "restriction": "物品必须呈纸钞形状"
   }
 ]
