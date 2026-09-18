@@ -2038,33 +2038,10 @@ double item::effective_dps( const Character &guy, Creature &mon ) const
         double subtotal_moves = moves_per_attack * num_strikes;
 
         if( has_technique( RAPID ) ) {
-            Creature *temp_rs_mon = &mon;
-            damage_instance rs_base_damage;
-            guy.roll_all_damage( crit, rs_base_damage, true, *this, "WEAPON", &mon, bp );
-            damage_instance dealt_rs_damage = rs_base_damage;
-            for( damage_unit &dmg_unit : dealt_rs_damage.damage_units ) {
-                dmg_unit.damage_multiplier *= 0.66;
-            }
-            // TODO: Modify DPS calculation to consider weakpoints.
-            resistances rs_r = resistances( *static_cast<monster *>( temp_rs_mon ) );
-            for( damage_unit &dmg_unit : dealt_rs_damage.damage_units ) {
-                dmg_unit.amount -= std::min( rs_r.get_effective_resist( dmg_unit ), dmg_unit.amount );
-            }
-            dealt_damage_instance rs_dealt_dams;
-            for( const damage_unit &dmg_unit : dealt_rs_damage.damage_units ) {
-                int cur_damage = 0;
-                int total_pain = 0;
-                temp_rs_mon->deal_damage_handle_type( effect_source::empty(), dmg_unit, bp,
-                                                      cur_damage, total_pain );
-                if( cur_damage > 0 ) {
-                    rs_dealt_dams.dealt_dams[ static_cast<int>( dmg_unit.type ) ] += cur_damage;
-                }
-            }
-            double rs_damage_per_hit = rs_dealt_dams.total_damage();
-            subtotal_moves *= 0.5;
-            subtotal_damage *= 0.5;
-            subtotal_moves += moves_per_attack * num_strikes * 0.33;
-            subtotal_damage += rs_damage_per_hit * num_strikes * 0.5;
+            // The DPS estimator assumes half of successful strikes use RAPID.  RAPID now
+            // deals full damage at 75% move cost, so damage is unchanged and successful
+            // attack time averages 87.5% of normal: 0.5 * 1.0 + 0.5 * 0.75.
+            subtotal_moves *= 0.875;
         }
         return std::make_pair( subtotal_moves, subtotal_damage );
     };
