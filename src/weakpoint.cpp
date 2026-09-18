@@ -331,7 +331,7 @@ weakpoint_attack::attack_type
 weakpoint_attack::type_of_melee_attack( const damage_instance &damage )
 {
     damage_type primary = damage_type::NONE;
-    int primary_amount = 0;
+    float primary_amount = 0.0f;
     for( const damage_unit &du : damage.damage_units ) {
         if( du.amount > primary_amount ) {
             primary = du.type;
