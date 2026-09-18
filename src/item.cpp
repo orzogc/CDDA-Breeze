@@ -182,18 +182,11 @@ static const json_character_flag json_flag_CANNIBAL( "CANNIBAL" );
 static const json_character_flag json_flag_IMMUNE_SPOIL( "IMMUNE_SPOIL" );
 
 static const matec_id RAPID( "RAPID" );
-static const std::array<matec_id, 12> rapid_strike_techniques = { {
-        matec_id( "tec_barbaran_disarm" ),
-        matec_id( "tec_boxing_rapid" ),
-        matec_id( "tec_centipede_rapid" ),
+// Generic full-damage rapid attacks supplied by weapon-capable martial arts.
+// Conditional fast techniques such as disarms and reach-only jabs are deliberately excluded.
+static const std::array<matec_id, 3> rapid_strike_techniques = { {
         matec_id( "tec_eskrima_fan" ),
-        matec_id( "tec_karate_rapid" ),
-        matec_id( "tec_kickboxing_rapid" ),
         matec_id( "tec_krav_maga_rapid" ),
-        matec_id( "tec_leopard_rapid" ),
-        matec_id( "tec_lizard_rapid" ),
-        matec_id( "tec_sojutsu_jab" ),
-        matec_id( "tec_venom_snake_rapid" ),
         matec_id( "mma_tec_panzer_rapid" )
     } };
 
@@ -2053,7 +2046,7 @@ double item::effective_dps( const Character &guy, Creature &mon ) const
 
         const bool has_rapid_strike = has_technique( RAPID ) ||
                                       std::any_of( rapid_strike_techniques.begin(),
-        rapid_strike_techniques.end(), [&]( const matec_id &tec_id ) {
+        rapid_strike_techniques.end(), [&]( const matec_id & tec_id ) {
             return tec_id.is_valid() &&
                    guy.martial_arts_data->has_technique( guy, tec_id, *this );
         } );
