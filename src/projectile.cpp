@@ -9,6 +9,7 @@
 #include "ammo_effect.h"
 #include "character.h"
 #include "debug.h"
+#include "effect.h"
 #include "enums.h"
 #include "explosion.h"
 #include "field.h"
@@ -165,6 +166,15 @@ void apply_ammo_effects( const Creature *source, const tripoint &p,
                                 }
                             }
                         }
+                    }
+                }
+            }
+            if( ae.aoe_effect_type.is_valid() ) {
+                const size_t r = static_cast<size_t>( std::max( 0, ae.aoe_radius ) );
+                const size_t rz = static_cast<size_t>( std::max( 0, ae.aoe_radius_z ) );
+                for( Creature *critter : here.get_creatures_in_radius( p, r, rz ) ) {
+                    if( x_in_y( ae.aoe_chance, 100 ) ) {
+                        critter->add_effect( ae.aoe_effect_type, ae.aoe_effect_duration );
                     }
                 }
             }
