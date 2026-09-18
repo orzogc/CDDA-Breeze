@@ -2,8 +2,8 @@
   {
     "type": "furniture",
     "id": "f_room_divider",
-    "name": "room divider",
-    "description": "A tall piece of furniture used to divide rooms into separate areas.",
+    "name": "房间隔断",
+    "description": "一件高大的家具，用来把房间分隔成不同区域。",
     "move_cost_mod": -1,
     "required_str": 8,
     "coverage": 80,

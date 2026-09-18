@@ -58,7 +58,7 @@
   {
     "type": "overmap_terrain",
     "id": "drug_lab",
-    "name": "drug lab",
+    "name": "制毒实验室",
     "sym": "^",
     "color": "brown",
     "see_cost": 5

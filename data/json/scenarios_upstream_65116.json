@@ -2,35 +2,35 @@
   {
     "type": "scenario",
     "id": "mass_quarantine_start",
-    "name": "Mass Quarantine",
+    "name": "大规模隔离",
     "points": -1,
-    "description": "When FEMA camps ran out of space the authorities used what was left of their manpower to round up people at gunpoint.  The stadiums they forced everyone into did nothing to slow down the madness and it spread like wildfire.  You managed to slip away from the worst violence but you are now surrounded and need to escape quickly!",
-    "start_name": "In Town",
+    "description": "当 FEMA 营地再也挤不下人时，当局动用了所剩无几的人手，用枪逼着人们集合。他们把所有人赶进体育场，可这丝毫没能遏制疯狂，混乱像野火一样蔓延。你设法避开了最惨烈的暴力，但如今四周仍被包围，必须尽快逃出去！",
+    "start_name": "城镇之中",
     "allowed_locs": [ "sloc_stadium" ],
     "map_extra": "mx_corpses"
   },
   {
     "type": "scenario",
     "id": "road_start",
-    "name": "Middle of nowhere",
+    "name": "荒郊野外",
     "points": 1,
-    "description": "During your escape you got lost and ended up at the wrong location.  Get your bearings and make a plan.  You'll need it.",
-    "start_name": "Middle of Nowhere",
+    "description": "逃亡途中你迷了路，最后到了完全不对劲的地方。先辨明方位，再想个计划。你会需要它的。",
+    "start_name": "荒郊野外",
     "allowed_locs": [ "sloc_middle_of_nowhere" ]
   },
   {
     "type": "scenario",
     "id": "sewer_start",
-    "name": "Challenge - Lost Underground",
+    "name": "挑战-迷失地下",
     "points": 1,
-    "description": "When the riots came to your home, you ran underground and hid.  Now days later you are lost and hear movement echoing in the dark.",
-    "start_name": "In Town",
+    "description": "暴乱波及你家时，你逃进地下躲了起来。几天过去，你已经迷失方向，只能听见黑暗里不断回荡的动静。",
+    "start_name": "城镇之中",
     "allowed_locs": [ "sloc_sewer" ]
   },
   {
     "type": "start_location",
     "id": "sloc_stadium",
-    "name": "Stadium",
+    "name": "体育场",
     "terrain": [
       "stadium_football_1_1",
       "stadium_football_2_1",
@@ -56,13 +56,13 @@
   {
     "type": "start_location",
     "id": "sloc_middle_of_nowhere",
-    "name": "Middle of Nowhere",
+    "name": "荒郊野外",
     "terrain": [ "state_park_1_0", "sewage_treatment_1_0_0", "pwr_sub_s", "derelict_property", "ws_regional_dump_2_0", "waiting_area" ]
   },
   {
     "type": "start_location",
     "id": "sloc_sewer",
-    "name": "Sewer",
+    "name": "下水道",
     "terrain": [ "sewer" ]
   }
 ]
