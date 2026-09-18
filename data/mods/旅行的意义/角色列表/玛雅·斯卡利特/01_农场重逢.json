@@ -230,7 +230,7 @@
     "shopkeeper_price_rules": [
       {
         "group": "TRAVEL_MAYA_SHOP_ARROWS",
-        "markup": 5
+        "markup": 5.0
       }
     ],
     "carry_override": "TRAVEL_MAYA_CARRIED"
