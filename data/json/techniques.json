@@ -104,7 +104,7 @@
     "melee_allowed": true,
     "mult_bonuses": [ { "stat": "movecost", "scale": 0.75 } ],
     "messages": [ "You quickly strike %s", "<npcname> quickly strikes %s" ],
-    "description": "75% movecost, full damage",
+    "description": "75% move cost, full damage",
     "attack_vectors": [ "WEAPON" ]
   },
   {
