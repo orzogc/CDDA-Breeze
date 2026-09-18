@@ -459,7 +459,9 @@ void dialogue_window::set_temporary_image( SDL_Texture *new_image )
         SDL_DestroyTexture( temporary_image );
     }
     temporary_image = new_image;
-    image = temporary_image != nullptr ? temporary_image : base_image;
+    // A temporary speaker with no portrait must not inherit the original speaker's portrait.
+    // Keeping image null lets the alternate speaker's character preview become the fallback.
+    image = temporary_image;
     apply_saved_display_preference();
 }
 
