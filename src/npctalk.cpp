@@ -2839,9 +2839,10 @@ talk_topic dialogue::opt( dialogue_window &d_win, const talk_topic &topic )
         challenge = challenge.substr( 1 );
         d_win.add_to_history( challenge );
     } else if( challenge[0] == '*' ) {
-        // Prepend name
-        challenge = string_format( pgettext( "npc does something", "%s %s" ), actor( true )->disp_name(),
-                                   challenge.substr( 1 ) );
+        // Prepend the speaker actually presenting this line.
+        challenge = string_format( pgettext( "npc does something", "%s %s" ),
+                                   display_speaker ? display_speaker->disp_name() :
+                                   actor( true )->disp_name(), challenge.substr( 1 ) );
         d_win.add_to_history( challenge );
     } else {
         d_win.add_to_history( challenge,
