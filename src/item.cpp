@@ -182,6 +182,20 @@ static const json_character_flag json_flag_CANNIBAL( "CANNIBAL" );
 static const json_character_flag json_flag_IMMUNE_SPOIL( "IMMUNE_SPOIL" );
 
 static const matec_id RAPID( "RAPID" );
+static const std::array<matec_id, 12> rapid_strike_techniques = { {
+        matec_id( "tec_barbaran_disarm" ),
+        matec_id( "tec_boxing_rapid" ),
+        matec_id( "tec_centipede_rapid" ),
+        matec_id( "tec_eskrima_fan" ),
+        matec_id( "tec_karate_rapid" ),
+        matec_id( "tec_kickboxing_rapid" ),
+        matec_id( "tec_krav_maga_rapid" ),
+        matec_id( "tec_leopard_rapid" ),
+        matec_id( "tec_lizard_rapid" ),
+        matec_id( "tec_sojutsu_jab" ),
+        matec_id( "tec_venom_snake_rapid" ),
+        matec_id( "mma_tec_panzer_rapid" )
+    } };
 
 static const material_id material_wool( "wool" );
 
@@ -2037,10 +2051,16 @@ double item::effective_dps( const Character &guy, Creature &mon ) const
         subtotal_damage = damage_per_hit * num_strikes;
         double subtotal_moves = moves_per_attack * num_strikes;
 
-        if( has_technique( RAPID ) ) {
-            // The DPS estimator assumes half of successful strikes use RAPID.  RAPID now
-            // deals full damage at 75% move cost, so damage is unchanged and successful
-            // attack time averages 87.5% of normal: 0.5 * 1.0 + 0.5 * 0.75.
+        const bool has_rapid_strike = has_technique( RAPID ) ||
+                                      std::any_of( rapid_strike_techniques.begin(),
+        rapid_strike_techniques.end(), [&]( const matec_id &tec_id ) {
+            return tec_id.is_valid() &&
+                   guy.martial_arts_data->has_technique( guy, tec_id, *this );
+        } );
+        if( has_rapid_strike ) {
+            // The DPS estimator assumes half of successful strikes use a rapid technique.
+            // Full-damage rapid strikes take 75% move cost, so successful attack time
+            // averages 87.5% of normal: 0.5 * 1.0 + 0.5 * 0.75.
             subtotal_moves *= 0.875;
         }
         return std::make_pair( subtotal_moves, subtotal_damage );
