@@ -2755,8 +2755,7 @@ talk_topic dialogue::opt( dialogue_window &d_win, const talk_topic &topic )
             const int speaker_range = topic_data->get_speaker_npc_range();
             const tripoint listener_pos = actor( false )->pos();
             const int listener_z = actor( false )->posz();
-            const std::vector<npc *> nearby_speakers = g->get_npcs_if(
-            [&]( const npc & candidate ) {
+            const std::vector<npc *> nearby_speakers = g->get_npcs_if( [&]( const npc & candidate ) {
                 return candidate.get_unique_id() == speaker_id &&
                        candidate.posz() == listener_z &&
                        rl_dist( candidate.pos(), listener_pos ) <= speaker_range;
@@ -2767,22 +2766,27 @@ talk_topic dialogue::opt( dialogue_window &d_win, const talk_topic &topic )
         }
     }
 
+    npc *conversation_speaker = actor( true )->get_npc();
     if( display_speaker != nullptr ) {
-        SDL_Texture *speaker_image = nullptr;
-        if( get_option<bool>( "显示特殊NPC的图片" ) ) {
-            if( !display_speaker->portrait_id.empty() ) {
-                std::string portrait_key = display_speaker->portrait_id;
-                speaker_image = get_character_picture( portrait_key );
+        if( display_speaker != conversation_speaker ) {
+            SDL_Texture *speaker_image = nullptr;
+            if( get_option<bool>( "显示特殊NPC的图片" ) ) {
+                if( !display_speaker->portrait_id.empty() ) {
+                    std::string portrait_key = display_speaker->portrait_id;
+                    speaker_image = get_character_picture( portrait_key );
+                }
+                if( speaker_image == nullptr ) {
+                    std::string speaker_name = display_speaker->get_name();
+                    speaker_image = get_character_picture( speaker_name );
+                }
+                if( speaker_image == nullptr && display_speaker->getID().get_value() > 0 ) {
+                    speaker_image = get_npc_dynamic_picture( display_speaker->getID().get_value() );
+                }
             }
-            if( speaker_image == nullptr ) {
-                std::string speaker_name = display_speaker->get_name();
-                speaker_image = get_character_picture( speaker_name );
-            }
-            if( speaker_image == nullptr && display_speaker->getID().get_value() > 0 ) {
-                speaker_image = get_npc_dynamic_picture( display_speaker->getID().get_value() );
-            }
+            d_win.set_temporary_image( speaker_image );
+        } else {
+            d_win.reset_temporary_image();
         }
-        d_win.set_image( speaker_image );
         d_win.set_preview_character( display_speaker );
         d_win.set_character_profession( display_speaker->myclass.is_valid() ?
                                         display_speaker->myclass->get_name() : "" );
