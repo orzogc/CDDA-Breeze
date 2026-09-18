@@ -214,8 +214,8 @@
   {
     "id": "mon_feral_human_archaeologist",
     "type": "MONSTER",
-    "name": "feral archaeologist",
-    "description": "Judging by looks, this poor individual was probably an archeologist in their former life.  Maniac and bloodshot, it now seems intent to make you a part of its collection of artifacts, as it comes at you with a shovel in hand.",
+    "name": "野化考古学家",
+    "description": "从外表看，这个可怜人过去大概是一名考古学家。如今它双眼充血、神态癫狂，手里挥着铁锹朝你冲来，似乎打算把你也变成自己“藏品”的一部分。",
     "copy-from": "mon_feral_human_pipe",
     "looks_like": "mon_feral_human_tool",
     "death_drops": "feral_archaelogist_death_drops"

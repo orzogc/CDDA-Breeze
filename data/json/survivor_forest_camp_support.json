@@ -5,9 +5,9 @@
     "category": "books",
     "symbol": ",",
     "color": "white",
-    "name": { "str": "child's note" },
+    "name": { "str": "孩子的纸条" },
     "snippet_category": "note_child",
-    "description": "A piece of paper.  Something's written on it, scrawled in simple, messy handwriting.",
+    "description": "一张纸，上面用简单又潦草的字迹写了些什么。",
     "price": 0,
     "price_postapoc": 0,
     "material": [ "paper" ],
@@ -21,7 +21,7 @@
     "text": [
       {
         "id": "note_child_29",
-        "text": "\"Dad and I have been living in the woods for a week now.  He gives me his pistol when he is out hunting.  It wasn´t enough to stop the werewolf that attacked me.  So I had to hide in a small hole for a whole night where it couldn´t reach me.  Luckily dad found me and killed it. He also said he will make me a werewolf jacket for my birthday.  A WEREWOLF JACKET, IHAVETHECOOLESTDADINTHEWORLD.\""
+        "text": "“爸爸和我已经在树林里住了一个星期。他出去打猎的时候会把手枪留给我。可那把枪没能挡住袭击我的狼人，所以我只好躲进一个很小的洞里，整整一晚上它都够不到我。幸好爸爸找到了我，还把它杀了。他说生日时会给我做一件狼人夹克。一件狼人夹克！我爸爸是全世界最酷的爸爸！”"
       }
     ]
   },
@@ -46,7 +46,7 @@
   {
     "type": "overmap_terrain",
     "id": [ "survivor_forest_camp" ],
-    "name": "survivor forest camp",
+    "name": "幸存者森林营地",
     "sym": "+",
     "color": "green",
     "see_cost": 5,
