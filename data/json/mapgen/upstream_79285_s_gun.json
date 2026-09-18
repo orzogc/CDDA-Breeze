@@ -66,19 +66,19 @@
           "chunks": [
             [
               "gunstore_barricaded_a",
-              15
+              25
             ],
             [
               "gunstore_occupied_a",
-              5
+              10
             ],
             [
               "gunstore_looted_a",
-              60
+              50
             ],
             [
               "gunstore_ransacked_a",
-              20
+              15
             ]
           ]
         }
@@ -266,19 +266,19 @@
           "chunks": [
             [
               "gunstore_occupied_b",
-              5
+              10
             ],
             [
               "gunstore_barricaded_b",
-              15
+              25
             ],
             [
               "gunstore_looted_b",
-              60
+              50
             ],
             [
               "gunstore_ransacked_b",
-              20
+              15
             ]
           ]
         }
