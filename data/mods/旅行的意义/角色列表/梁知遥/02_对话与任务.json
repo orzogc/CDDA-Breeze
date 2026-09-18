@@ -4990,18 +4990,8 @@
         }
       },
       {
-        "text": "和梁知遥聊聊她在意的事。",
-        "topic": "TALK_TRAVEL_LIANG_PERSONAL_MENU",
-        "condition": {
-          "npc_has_var": "travel_liang_joined",
-          "type": "dialogue",
-          "context": "travel_liang",
-          "value": "yes"
-        }
-      }
-    ],
-    "speaker_effect": [
-      {
+        "text": "昨晚休息得怎么样，准备继续出发了吗？",
+        "topic": "TALK_TRAVEL_LIANG_MAYA_RESTING",
         "condition": {
           "and": [
             {
@@ -5018,25 +5008,20 @@
               "time": "1 day"
             }
           ]
-        },
-        "effect": [
-          {
-            "npc_lose_trait": "NPC_HOLD_POSITION"
-          },
-          "follow_only",
-          {
-            "npc_lose_var": "travel_liang_maya_resting",
-            "type": "dialogue",
-            "context": "travel_liang"
-          },
-          {
-            "npc_add_var": "travel_liang_maya_rest_finished",
-            "type": "dialogue",
-            "context": "travel_liang",
-            "value": "yes"
-          }
-        ]
+        }
       },
+      {
+        "text": "和梁知遥聊聊她在意的事。",
+        "topic": "TALK_TRAVEL_LIANG_PERSONAL_MENU",
+        "condition": {
+          "npc_has_var": "travel_liang_joined",
+          "type": "dialogue",
+          "context": "travel_liang",
+          "value": "yes"
+        }
+      }
+    ],
+    "speaker_effect": [
       {
         "effect": [
           {
