@@ -266,4 +266,4 @@ msgstr "管下底座"
 
 # Combat balance branch strings
 msgid "75% move cost, full damage"
-msgstr "75% 耗时，完整伤害"
+msgstr "75％耗时，100％伤害"
