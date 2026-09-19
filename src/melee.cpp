@@ -1491,7 +1491,9 @@ void Character::roll_cut_damage( bool crit, damage_instance &di, bool average,
 
     cut_mul *= mabuff_damage_mult( damage_type::CUT );
     if( crit ) {
-        cut_mul *= 1.f + 0.25f * crit_mod;
+        // Cutting critical damage gains modest skill scaling.  At cutting 10 this reaches
+        // +45%, still below bashing's +50%, while retaining cutting's existing armor behavior.
+        cut_mul *= 1.f + ( 0.25f + 0.02f * skill ) * crit_mod;
         arpen += static_cast<int>( 5.f * crit_mod );
         armor_mult = 1.f - 0.25f * crit_mod; //25% armor penetration
     }

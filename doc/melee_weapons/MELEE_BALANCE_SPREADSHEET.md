@@ -35,10 +35,10 @@ All that is pretty straightforward.  The next three blocks are where it gets com
 * Row T "Crit %s" is the percentage of those hits that should be critical hits.
 * Row U "Dmg" is the average expected damage past armor.  This is simply the sum of max( 0, damage type - armor amount ) for each of the 3 damage types.
 * Row V "Crit" is the average expected critical damage past armor.  This is the sum of the critical damage - armor amount for each of the three damage amounts, but the formula is substantially more complicated because the 3 damage types have different critical damage multipliers and reduce effective armor by different amounts on a critical.
-* Rows W-Y repeat damage and critical damage, but for rapid strikes where the base damage is multiplied by 2/3rds.
+* Rows W-Y repeat damage and critical damage for rapid strikes. Rapid strikes now keep full damage and use 75% of normal move cost.
 * Row Z "Dmg/Turn" is either:
 ** 100 * ( Dmg * ( Hits - num crits ) + Crit Dmg * ( num hits ) ) / ( 1000 * Moves ) - ie, sum of damage per hit for each normal hit + crit damage for each critical hit divided by the number of moves in 1000 attacks, multiplied by 100 moves/second, OR
-** 100 * ( Dmg * ( Hits - num crits ) / 2 + Crit Dmg * ( num hits ) / 2 + rapid strike Dmg * ( Hits - num crits ) / 2 + rapid strike Crit Dmg * ( num hits ) / 2 ) / ( 1000 - ( hits / 2 ) * Moves + Hits * 0.33 * Moves ) - same as above, but accounting for rapid strike reduced damage and movement cost.
+** 100 * ( Dmg * ( Hits - num crits ) + Crit Dmg * ( num hits ) ) / ( Misses * Moves + Hits * Moves * 0.875 ) - same as above, but assuming half of successful attacks use rapid strike at full damage and 75% move cost.
 
 Finally,
 * Column AT "Weapon" is a repeat of the weapon name for reference
