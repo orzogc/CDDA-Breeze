@@ -3450,22 +3450,12 @@ void monster::process_one_effect(effect& it, bool is_new)
         }
     }
     else if (id == effect_dermatik) {
-        if (is_new) {
-            add_msg(m_info, "[寄生调试] %s 中了寄生", name());
-        }
         if (type->bloodType().obj().has_acid) {
-            add_msg(m_info, "[寄生调试] %s 是酸血，免疫", name());
             it.set_duration(0_turns);
-        } else if (it.get_duration() > 2_minutes) {
+        } else if (it.get_duration() > 1_days) {
             const int num_larvae = rng(1, std::min(3, get_hp_max() / 40 + 1));
-            add_msg(m_info, "[寄生调试] %s 到点（%d,%d,%d），准备产 %d 只幼虫", name(),
-                pos().x, pos().y, pos().z, num_larvae);
             for (int i = 0; i < num_larvae; i++) {
-                if (g->place_critter_around(mon_dermatik_larva, pos(), 1) != nullptr) {
-                    add_msg(m_info, "[寄生调试] 第 %d 只幼虫生成成功", i + 1);
-                } else {
-                    add_msg(m_info, "[寄生调试] 第 %d 只幼虫生成失败", i + 1);
-                }
+                g->place_critter_around(mon_dermatik_larva, pos(), 1);
             }
             apply_damage(it.get_source().resolve_creature(), bodypart_id("torso"),
                 rng(2, 4) * num_larvae);

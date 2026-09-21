@@ -1251,28 +1251,24 @@ void Character::hardcoded_effects( effect &it )
                 }
             }
         }
-        if( dur > 2_minutes ) {
+        if( dur > 1_days ) {
             // Spawn some larvae!
             // Choose how many insects; more for large characters
             ///\EFFECT_STR_MAX increases number of insects hatched from dermatik infection
             int num_insects = rng( 1, std::min( 3, str_max / 3 ) );
-            add_msg( m_info, "[寄生调试] %s 到点，准备产 %d 只幼虫", get_name(), num_insects );
             apply_damage( nullptr,  bp, rng( 2, 4 ) * num_insects );
             // Figure out where they may be placed
             add_msg_player_or_npc( m_bad,
                                    _( "Your flesh crawls; insects tear through the flesh and begin to emerge!" ),
                                    _( "Insects begin to emerge from <npcname>'s skin!" ) );
-            int spawned = 0;
             for( ; num_insects > 0; num_insects-- ) {
                 if( monster *const grub = g->place_critter_around( mon_dermatik_larva, pos(), 1 ) ) {
-                    spawned++;
                     if( is_avatar() && one_in( 3 ) ) {
                         grub->friendly = -1;
                         grub->add_effect( effect_pet, 1_turns, true );
                     }
                 }
             }
-            add_msg( m_info, "[寄生调试] 角色侧实际生成 %d 只", spawned );
             get_event_bus().send<event_type::dermatik_eggs_hatch>( getID() );
             schedule_effect_removal( effect_formication, bp );
             moves -= 600;

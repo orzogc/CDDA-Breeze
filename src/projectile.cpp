@@ -194,22 +194,12 @@ void apply_ammo_effects( const Creature *source, const tripoint &p,
             }
             if( ae.target.effect_type.is_valid() ) {
                 Creature *const hit = attack != nullptr ? attack->hit_critter : nullptr;
-                if( hit == nullptr ) {
-                    add_msg( m_info, "[寄生调试] 命中格上没有生物，不挂效果" );
-                } else if( x_in_y( ae.target.chance, 100 ) &&
-                           target_conditions_met( ae.target, attack ) ) {
-                    add_msg( m_info, "[寄生调试] 命中 %s：伤害 %d，条件通过，挂上 %s",
-                             hit->disp_name(),
-                             attack != nullptr ? attack->dealt_dam.total_damage() : -1,
-                             ae.target.effect_type.c_str() );
+                if( hit != nullptr && x_in_y( ae.target.chance, 100 ) &&
+                    target_conditions_met( ae.target, attack ) ) {
                     hit->add_effect( ae.target.effect_type, ae.target.effect_duration,
                                      ae.target.effect_permanent );
                     hit->add_msg_player_or_npc( ae.target.message_type, ae.target.message.translated(),
                                                 ae.target.message_npc.translated() );
-                } else {
-                    add_msg( m_info, "[寄生调试] 命中 %s：伤害 %d，条件未通过，不挂效果",
-                             hit->disp_name(),
-                             attack != nullptr ? attack->dealt_dam.total_damage() : -1 );
                 }
             }
             if( ae.aoe_explosion_data.power > 0 ) {
