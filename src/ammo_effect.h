@@ -4,17 +4,45 @@
 
 #include <cstddef>
 #include <iosfwd>
+#include <set>
 #include <string>
 #include <vector>
 
 #include "calendar.h"
+#include "enum_traits.h"
+#include "enums.h"
 #include "explosion.h"
 #include "field_type.h"
+#include "translations.h"
 #include "type_id.h"
 
 class JsonObject;
 
 generic_factory<ammo_effect> &get_all_ammo_effects();
+
+enum class ammo_target_condition : int {
+    DAMAGED,
+    NO_DAMAGE,
+
+    LAST
+};
+
+template<>
+struct enum_traits<ammo_target_condition> {
+    static constexpr ammo_target_condition last = ammo_target_condition::LAST;
+};
+
+struct ammo_effect_target {
+    int chance = 100;
+    std::set<ammo_target_condition> conditions;
+    efftype_id effect_type;
+    std::string effect_type_name;
+    time_duration effect_duration = 0_turns;
+    bool effect_permanent = false;
+    translation message;
+    translation message_npc;
+    game_message_type message_type = m_neutral;
+};
 
 struct ammo_effect {
     public:
@@ -40,9 +68,7 @@ struct ammo_effect {
         bool do_emp_blast = false;
         bool foamcrete_build = false;
 
-        efftype_id aoe_effect_type;
-        std::string aoe_effect_type_name;
-        time_duration aoe_effect_duration = 0_turns;
+        ammo_effect_target target;
 
         field_type_id trail_field_type = fd_null.id_or( INVALID_FIELD_TYPE_ID );
         /** used during JSON loading only */

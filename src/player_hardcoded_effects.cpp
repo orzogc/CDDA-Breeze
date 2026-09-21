@@ -27,6 +27,7 @@
 #include "messages.h"
 #include "mongroup.h"
 #include "monster.h"
+#include "npc.h"
 #include "player_activity.h"
 #include "rng.h"
 #include "sounds.h"
@@ -116,6 +117,7 @@ static const proficiency_id proficiency_prof_wound_care( "prof_wound_care" );
 static const proficiency_id proficiency_prof_wound_care_expert( "prof_wound_care_expert" );
 
 static const trait_id trait_ACIDBLOOD( "ACIDBLOOD" );
+static const trait_id trait_BEE( "BEE" );
 static const trait_id trait_CHLOROMORPH( "CHLOROMORPH" );
 static const trait_id trait_HEAVYSLEEPER( "HEAVYSLEEPER" );
 static const trait_id trait_HEAVYSLEEPER2( "HEAVYSLEEPER2" );
@@ -1228,6 +1230,7 @@ void Character::hardcoded_effects( effect &it )
     creature_tracker &creatures = get_creature_tracker();
     if( id == effect_dermatik ) {
         bool triggered = false;
+        const bool acid_blood = bloodType().obj().has_acid;
         int formication_chance = 3600;
         if( dur < 4_hours ) {
             formication_chance += 14400 - to_turns<int>( dur );
@@ -1238,30 +1241,44 @@ void Character::hardcoded_effects( effect &it )
         if( dur < 1_days && one_in( 14400 ) ) {
             vomit();
         }
-        if( dur > 1_days ) {
+        if( dur > 60_turns && dur <= 61_turns && has_trait( trait_BEE ) ) {
+            if( npc *guy = as_npc() ) {
+                if( one_in( 2 ) ) {
+                    guy->set_attitude( NPCATT_NULL );
+                    guy->chatbin.first_topic = "TALK_SUGGEST_FOLLOW";
+                } else {
+                    guy->set_attitude( NPCATT_KILL );
+                }
+            }
+        }
+        if( dur > 2_minutes ) {
             // Spawn some larvae!
             // Choose how many insects; more for large characters
             ///\EFFECT_STR_MAX increases number of insects hatched from dermatik infection
             int num_insects = rng( 1, std::min( 3, str_max / 3 ) );
+            add_msg( m_info, "[寄生调试] %s 到点，准备产 %d 只幼虫", get_name(), num_insects );
             apply_damage( nullptr,  bp, rng( 2, 4 ) * num_insects );
             // Figure out where they may be placed
             add_msg_player_or_npc( m_bad,
                                    _( "Your flesh crawls; insects tear through the flesh and begin to emerge!" ),
                                    _( "Insects begin to emerge from <npcname>'s skin!" ) );
+            int spawned = 0;
             for( ; num_insects > 0; num_insects-- ) {
                 if( monster *const grub = g->place_critter_around( mon_dermatik_larva, pos(), 1 ) ) {
-                    if( one_in( 3 ) ) {
+                    spawned++;
+                    if( is_avatar() && one_in( 3 ) ) {
                         grub->friendly = -1;
                         grub->add_effect( effect_pet, 1_turns, true );
                     }
                 }
             }
+            add_msg( m_info, "[寄生调试] 角色侧实际生成 %d 只", spawned );
             get_event_bus().send<event_type::dermatik_eggs_hatch>( getID() );
             schedule_effect_removal( effect_formication, bp );
             moves -= 600;
             triggered = true;
         }
-        if( triggered ) {
+        if( triggered || acid_blood ) {
             // Set ourselves up for removal
             it.set_duration( 0_turns );
         } else {

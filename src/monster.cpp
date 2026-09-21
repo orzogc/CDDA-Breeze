@@ -81,6 +81,7 @@ static const efftype_id effect_bouldering("bouldering");
 static const efftype_id effect_controlled("controlled");
 static const efftype_id effect_crushed("crushed");
 static const efftype_id effect_deaf("deaf");
+static const efftype_id effect_dermatik("dermatik");
 static const efftype_id effect_docile("docile");
 static const efftype_id effect_downed("downed");
 static const efftype_id effect_dripping_mechanical_fluid("dripping_mechanical_fluid");
@@ -138,8 +139,13 @@ static const mfaction_str_id monfaction_acid_ant("acid_ant");
 static const mfaction_str_id monfaction_ant("ant");
 static const mfaction_str_id monfaction_bee("bee");
 static const mfaction_str_id monfaction_dog("dog");
+static const mfaction_str_id monfaction_hive_rejected("hive_rejected");
 static const mfaction_str_id monfaction_nether_player_hate("nether_player_hate");
 static const mfaction_str_id monfaction_wasp("wasp");
+
+static const mongroup_id DERMATIK_HIVE_REJECTION_TARGETS("DERMATIK_HIVE_REJECTION_TARGETS");
+
+static const mtype_id mon_dermatik_larva("mon_dermatik_larva");
 
 static const species_id species_AMPHIBIAN("AMPHIBIAN");
 static const species_id species_CYBORG("CYBORG");
@@ -571,32 +577,38 @@ void monster::try_reproduce()
 
 void monster::refill_udders()
 {
-    if (type->starting_ammo.empty()) {
-        debugmsg("monster %s has no starting ammo to refill udders", get_name());
+    if( type->starting_ammo.empty() ) {
+        debugmsg( "%s 的初始弹药为空，无法补充可挤产物", get_name() );
         return;
     }
-    if (ammo.empty()) {
+    if( ammo.empty() ) {
         // legacy animals got empty ammo map, fill them up now if needed.
         ammo[type->starting_ammo.begin()->first] = type->starting_ammo.begin()->second;
     }
-    auto current_milk = ammo.find(itype_milk_raw);
-    if (current_milk == ammo.end()) {
-        current_milk = ammo.find(itype_milk);
-        if (current_milk != ammo.end()) {
+    auto current_milk = ammo.find( itype_milk_raw );
+    if( current_milk == ammo.end() ) {
+        current_milk = ammo.find( itype_milk );
+        if( current_milk != ammo.end() ) {
             // take this opportunity to update milk udders to raw_milk
             ammo[itype_milk_raw] = current_milk->second;
             // Erase old key-value from map
-            ammo.erase(current_milk);
+            ammo.erase( current_milk );
+            current_milk = ammo.find( itype_milk_raw );
         }
     }
-    // if we got here, we got milk.
-    if (current_milk->second == type->starting_ammo.begin()->second) {
+    if( current_milk == ammo.end() ) {
+        current_milk = ammo.find( type->starting_ammo.begin()->first );
+        if( current_milk == ammo.end() ) {
+            return;
+        }
+    }
+    if( current_milk->second == type->starting_ammo.begin()->second ) {
         // already full up
         return;
     }
-    if (calendar::turn - udder_timer > 1_days) {
+    if( calendar::turn - udder_timer > 1_days ) {
         // no point granularizing this really, you milk once a day.
-        ammo.begin()->second = type->starting_ammo.begin()->second;
+        current_milk->second = type->starting_ammo.begin()->second;
         udder_timer = calendar::turn;
     }
 }
@@ -1679,6 +1691,9 @@ monster_attitude monster::attitude(const Character* u) const
     if (u != nullptr) {
         if (faction == monfaction_bee) {
             if (u->has_trait(trait_BEE)) {
+                if (u->get_effect_dur(effect_dermatik) > 60_turns) {
+                    return MATT_ATTACK;
+                }
                 return MATT_FRIEND;
             }
             else if (u->has_trait(trait_FLOWERS)) {
@@ -3432,6 +3447,40 @@ void monster::process_one_effect(effect& it, bool is_new)
         if (id == effect_bleed) {
             // monsters are simplified so they just take damage from bleeding
             apply_damage(it.get_source().resolve_creature(), bodypart_id("torso"), 1);
+        }
+    }
+    else if (id == effect_dermatik) {
+        if (is_new) {
+            add_msg(m_info, "[寄生调试] %s 中了寄生", name());
+        }
+        if (type->bloodType().obj().has_acid) {
+            add_msg(m_info, "[寄生调试] %s 是酸血，免疫", name());
+            it.set_duration(0_turns);
+        } else if (it.get_duration() > 2_minutes) {
+            const int num_larvae = rng(1, std::min(3, get_hp_max() / 40 + 1));
+            add_msg(m_info, "[寄生调试] %s 到点（%d,%d,%d），准备产 %d 只幼虫", name(),
+                pos().x, pos().y, pos().z, num_larvae);
+            for (int i = 0; i < num_larvae; i++) {
+                if (g->place_critter_around(mon_dermatik_larva, pos(), 1) != nullptr) {
+                    add_msg(m_info, "[寄生调试] 第 %d 只幼虫生成成功", i + 1);
+                } else {
+                    add_msg(m_info, "[寄生调试] 第 %d 只幼虫生成失败", i + 1);
+                }
+            }
+            apply_damage(it.get_source().resolve_creature(), bodypart_id("torso"),
+                rng(2, 4) * num_larvae);
+            add_msg_if_player_sees(*this, m_bad,
+                "%s 的身体裂开了，几只幼虫钻了出来。", name());
+            it.set_duration(0_turns);
+        } else {
+            if (it.get_duration() > 60_turns &&
+                MonsterGroupManager::IsMonsterInGroup(DERMATIK_HIVE_REJECTION_TARGETS, type->id) &&
+                faction != monfaction_hive_rejected) {
+                faction = monfaction_hive_rejected;
+                add_msg_if_player_sees(*this, m_warning,
+                    "%s 的气味变了，附近的蜂立刻围了上来。", name());
+            }
+            it.mod_duration(1_turns);
         }
     }
 }

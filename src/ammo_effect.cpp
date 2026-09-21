@@ -4,8 +4,23 @@
 
 #include "debug.h"
 #include "effect.h"
+#include "enum_conversions.h"
 #include "generic_factory.h"
 #include "json.h"
+
+template<>
+std::string io::enum_to_string<ammo_target_condition>( ammo_target_condition data )
+{
+    switch( data ) {
+        // *INDENT-OFF*
+        case ammo_target_condition::DAMAGED: return "DAMAGED";
+        case ammo_target_condition::NO_DAMAGE: return "NO_DAMAGE";
+        // *INDENT-ON*
+        case ammo_target_condition::LAST:
+            break;
+    }
+    cata_fatal( "Invalid ammo_target_condition" );
+}
 
 generic_factory<ammo_effect> &get_all_ammo_effects()
 {
@@ -75,8 +90,19 @@ void ammo_effect::load( const JsonObject &jo, const std::string & )
         optional( joa, was_loaded, "check_passable", aoe_check_passable, false );
         optional( joa, was_loaded, "check_sees", aoe_check_sees, false );
         optional( joa, was_loaded, "check_sees_radius", aoe_check_sees_radius, 0 );
-        optional( joa, was_loaded, "effect_type", aoe_effect_type_name, "" );
-        optional( joa, was_loaded, "effect_duration", aoe_effect_duration, 0_seconds );
+    }
+    if( jo.has_member( "target" ) ) {
+        JsonObject jot = jo.get_object( "target" );
+        optional( jot, was_loaded, "chance", target.chance, 100 );
+        const auto condition_reader = enum_flags_reader<ammo_target_condition> { "target condition" };
+        optional( jot, was_loaded, "conditions", target.conditions, condition_reader );
+        optional( jot, was_loaded, "effect_type", target.effect_type_name, "" );
+        optional( jot, was_loaded, "effect_duration", target.effect_duration, 0_seconds );
+        optional( jot, was_loaded, "effect_permanent", target.effect_permanent, false );
+        optional( jot, was_loaded, "message", target.message );
+        optional( jot, was_loaded, "message_npc", target.message_npc );
+        const auto message_type_reader = enum_flags_reader<game_message_type> { "game message type" };
+        optional( jot, was_loaded, "message_type", target.message_type, message_type_reader );
     }
     if( jo.has_member( "trail" ) ) {
         JsonObject joa = jo.get_object( "trail" );
@@ -100,8 +126,8 @@ void ammo_effect::finalize()
     for( const ammo_effect &ae : ammo_effects::get_all() ) {
         const_cast<ammo_effect &>( ae ).aoe_field_type = field_type_id( ae.aoe_field_type_name );
         const_cast<ammo_effect &>( ae ).trail_field_type = field_type_id( ae.trail_field_type_name );
-        if( !ae.aoe_effect_type_name.empty() ) {
-            const_cast<ammo_effect &>( ae ).aoe_effect_type = efftype_id( ae.aoe_effect_type_name );
+        if( !ae.target.effect_type_name.empty() ) {
+            const_cast<ammo_effect &>( ae ).target.effect_type = efftype_id( ae.target.effect_type_name );
         }
     }
 
@@ -133,11 +159,12 @@ void ammo_effect::check() const
     if( !trail_field_type.is_valid() ) {
         debugmsg( "No such field type %s", trail_field_type_name );
     }
-    if( !aoe_effect_type_name.empty() && !aoe_effect_type.is_valid() ) {
-        debugmsg( "没有名为 %s 的效果类型", aoe_effect_type_name );
+    if( !target.effect_type_name.empty() && !target.effect_type.is_valid() ) {
+        debugmsg( "没有名为 %s 的效果类型", target.effect_type_name );
     }
-    if( !aoe_effect_type_name.empty() && aoe_effect_duration <= 0_seconds ) {
-        debugmsg( "弹药效果 %s 挂载的效果 %s 时长必须为正数", id.c_str(), aoe_effect_type_name );
+    if( !target.effect_type_name.empty() && target.effect_duration <= 0_seconds ) {
+        debugmsg( "弹药效果 %s 的 target 挂载的效果 %s 时长必须为正数", id.c_str(),
+                  target.effect_type_name );
     }
     if( trail_chance > 100 || trail_chance <= 0 ) {
         debugmsg( "Field chance divisor cannot be negative" );

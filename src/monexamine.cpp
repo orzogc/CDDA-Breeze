@@ -501,9 +501,17 @@ void milk_source( monster &source_mon )
         player_character.assign_activity( player_activity( milk_activity_actor( moves, coords,
                                           str_values ) ) );
 
-        add_msg( _( "You milk the %s." ), source_mon.get_name() );
+        if( item( milked_item ).made_of_from_type( phase_id::LIQUID ) ) {
+            add_msg( _( "You milk the %s." ), source_mon.get_name() );
+        } else {
+            add_msg( "你伸手探向%1$s。", source_mon.get_name() );
+        }
     } else {
-        add_msg( _( "The %s has no more milk." ), source_mon.get_name() );
+        if( item( milked_item ).made_of_from_type( phase_id::LIQUID ) ) {
+            add_msg( _( "The %s has no more milk." ), source_mon.get_name() );
+        } else {
+            add_msg( "%1$s身上已经取不出东西了。", source_mon.get_name() );
+        }
     }
 }
 
@@ -828,7 +836,13 @@ bool monexamine::pet_menu( monster &z )
         amenu.addentry( play_with_pet, true, 'y', _( "Play with %s" ), pet_name );
     }
     if( z.has_flag( MF_MILKABLE ) ) {
-        amenu.addentry( milk, true, 'm', _( "Milk %s" ), pet_name );
+        const std::map<itype_id, int> &sa = z.type->starting_ammo;
+        const bool is_liquid = sa.empty() || item( sa.begin()->first ).made_of_from_type( phase_id::LIQUID );
+        if( is_liquid ) {
+            amenu.addentry( milk, true, 'm', _( "Milk %s" ), pet_name );
+        } else {
+            amenu.addentry( milk, true, 'm', "从%1$s身上取物", pet_name );
+        }
     }
     if( z.shearable() ) {
         bool available = true;

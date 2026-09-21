@@ -516,7 +516,7 @@ dealt_projectile_attack projectile_attack( const projectile &proj_arg, const tri
 
     drop_or_embed_projectile( attack );
 
-    apply_ammo_effects( null_source ? nullptr : origin, tp, proj.proj_effects );
+    apply_ammo_effects( null_source ? nullptr : origin, tp, proj.proj_effects, &attack );
     const explosion_data &expl = proj.get_custom_explosion();
     if( expl.power > 0.0f ) {
         explosion_handler::explosion( null_source ? nullptr : origin, tp, proj.get_custom_explosion() );
