@@ -24,6 +24,7 @@
 static const limb_score_id limb_score_reaction( "reaction" );
 static const limb_score_id limb_score_vision( "vision" );
 
+static const skill_id skill_cutting( "cutting" );
 static const skill_id skill_gun( "gun" );
 static const skill_id skill_melee( "melee" );
 static const skill_id skill_throw( "throw" );
@@ -330,7 +331,7 @@ weakpoint_attack::attack_type
 weakpoint_attack::type_of_melee_attack( const damage_instance &damage )
 {
     damage_type primary = damage_type::NONE;
-    int primary_amount = 0;
+    float primary_amount = 0.0f;
     for( const damage_unit &du : damage.damage_units ) {
         if( du.amount > primary_amount ) {
             primary = du.type;
@@ -365,9 +366,13 @@ void weakpoint_attack::compute_wp_skill()
     } else if( chr_att != nullptr ) {
         switch( type ) {
             case attack_type::MELEE_BASH:
-            case attack_type::MELEE_CUT:
             case attack_type::MELEE_STAB:
                 attacker_skill = chr_att->melee_weakpoint_skill( *weapon );
+                break;
+            case attack_type::MELEE_CUT:
+                // Skilled cutting attacks are better at exploiting gaps and exposed weak areas.
+                attacker_skill = chr_att->melee_weakpoint_skill( *weapon ) +
+                                 0.1f * chr_att->get_skill_level( skill_cutting );
                 break;
             case attack_type::PROJECTILE:
                 attacker_skill = is_thrown
