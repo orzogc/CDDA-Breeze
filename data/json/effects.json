@@ -3748,7 +3748,7 @@
     "show_intensity": false,
     "enchantments": [
       {
-        "values": [ { "value": "CARRY_WEIGHT", "multiply": { "global_val": "var", "var_name": "portal_dungeon_carry_strength" } } ]
+        "values": [ { "value": "CARRY_WEIGHT", "multiply": { "global_val": "var", "var_name": "portal_dungeon_carry_strength", "default": 0 } } ]
       }
     ]
   },
@@ -3762,7 +3762,7 @@
     "rating": "bad",
     "show_intensity": false,
     "enchantments": [
-      { "values": [ { "value": "SPEED", "multiply": { "global_val": "var", "var_name": "portal_dungeon_slow_strength" } } ] }
+      { "values": [ { "value": "SPEED", "multiply": { "global_val": "var", "var_name": "portal_dungeon_slow_strength", "default": 0 } } ] }
     ]
   },
   {
