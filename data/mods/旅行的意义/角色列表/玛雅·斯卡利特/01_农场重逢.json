@@ -230,7 +230,7 @@
     "shopkeeper_price_rules": [
       {
         "group": "TRAVEL_MAYA_SHOP_ARROWS",
-        "markup": 5.0
+        "markup": 5
       }
     ],
     "carry_override": "TRAVEL_MAYA_CARRIED"
@@ -1273,32 +1273,28 @@
   {
     "type": "talk_topic",
     "id": "TALK_TRAVEL_MAYA_REUNION_DOOR_CARE",
-    "dynamic_line": "你没有催玛雅站起来，只把门口完整地让开。\n梁知遥出现在门边时，玛雅仍坐在椅子上。她们隔着几步看了彼此很久，像是在把失联后的每一天，一寸一寸从对方身上确认回来。\n“玛雅。”梁知遥终于叫出她的名字。\n玛雅抬起手，眼泪沿着笑意滑下来。\n“嗯，是我。”她吸了吸鼻子，“你迟到太久了。”\n梁知遥在她面前蹲下，声音轻得几乎听不见。\n“对不起。”\n“那就过来，笨蛋。”",
+    "dynamic_line": "你没有催玛雅站起来，只把门口完整地让开。\n梁知遥出现在门边时，玛雅仍坐在椅子上。她们隔着几步看了彼此很久，像是在把失联后的每一天，一寸一寸从对方身上确认回来。\n梁知遥终于开口。\n“玛雅。”",
     "responses": [
       {
-        "text": "[向后退开，让梁知遥自己走完最后几步。]",
-        "topic": "TALK_TRAVEL_MAYA_REUNION_APPROACH_CARE"
-      },
-      {
-        "text": "[轻轻把椅子向门口转了半边。]",
-        "topic": "TALK_TRAVEL_MAYA_REUNION_APPROACH_CARE"
+        "text": "[看向玛雅。]",
+        "topic": "TALK_TRAVEL_MAYA_REUNION_DOOR_CARE_MAYA"
       }
-    ]
+    ],
+    "speaker_npc": "TRAVEL_LIANG_ZHIYAO",
+    "speaker_npc_range": 30
   },
   {
     "type": "talk_topic",
     "id": "TALK_TRAVEL_MAYA_REUNION_APPROACH",
-    "dynamic_line": "梁知遥越过门槛。玛雅扶着椅背站起，右膝才刚受力，身体便向前一晃。\n“别动——”\n梁知遥几乎扑到她面前，一只手揽住腰侧，另一只手托稳她的手臂。玛雅借着这个动作抱住了她，像是早已决定，哪怕腿不能走，最后这一步也要由自己完成。\n“我就知道你会把自己走丢。”玛雅把脸埋进她肩上，笑声已经全是哭腔。\n“我没有……”梁知遥只说出三个字，便再也说不下去。",
+    "dynamic_line": "梁知遥越过门槛。玛雅扶着椅背站起，右膝才刚受力，身体便向前一晃。\n“别动。”\n梁知遥几乎扑到她面前，一只手揽住腰侧，另一只手托稳她的手臂。",
     "responses": [
       {
-        "text": "[留在门边，不打断她们。]",
-        "topic": "TALK_TRAVEL_MAYA_REUNION"
-      },
-      {
-        "text": "慢一点，她的膝盖还没有恢复。",
-        "topic": "TALK_TRAVEL_MAYA_REUNION"
+        "text": "[继续看着她们。]",
+        "topic": "TALK_TRAVEL_MAYA_REUNION_APPROACH_MAYA"
       }
-    ]
+    ],
+    "speaker_npc": "TRAVEL_LIANG_ZHIYAO",
+    "speaker_npc_range": 30
   },
   {
     "type": "talk_topic",
@@ -1318,56 +1314,44 @@
   {
     "type": "talk_topic",
     "id": "TALK_TRAVEL_MAYA_REUNION_CLOSING",
-    "dynamic_line": "玛雅用手背擦去脸上的泪水，梁知遥则在她身旁坐下，十指仍然扣在一起。\n“今天只确认一件事。”玛雅说，“我们都活着。”\n梁知遥看着她，终于露出一个没有勉强自己的笑。\n“剩下的明天再讲。”\n“这次不熬夜？”\n“这次不熬夜。”\n玛雅轻轻捏了捏她的手。\n“你说的。我会监督。”",
+    "dynamic_line": "玛雅用手背擦去脸上的泪水，梁知遥则在她身旁坐下，十指仍然扣在一起。\n“今天只确认一件事。我们都活着。”",
     "responses": [
       {
-        "text": "[结束交谈] 留给她们一点时间。",
-        "topic": "TALK_DONE"
+        "text": "[看向梁知遥。]",
+        "topic": "TALK_TRAVEL_LIANG_REUNION_CLOSING_TOMORROW"
       }
     ]
   },
   {
     "type": "talk_topic",
     "id": "TALK_TRAVEL_MAYA_REUNION",
-    "dynamic_line": "梁知遥抱着玛雅，直到两个人都确定这不是梦，也不是一段被噪声剪碎的无线电记录。玛雅先笑了一下，随后把额头抵在她肩上。\n\n“我以为你死了。”这句话没有修饰，也没有玩笑。梁知遥的手臂骤然收紧。“我也以为……”她没能说完。玛雅吸了一口发颤的气，抬手拍了拍她的背：“那我们都猜错了。这次错得很好。”她仍没有松开梁知遥，“日语暂停，鸡胸肉还欠着，所有计划都可以重来。人先回来。”梁知遥点头：“好。人先回来。”“还有——先让我抱一会儿。”“嗯。”梁知遥闭着眼回答，“多久都可以。”",
+    "dynamic_line": "梁知遥抱着玛雅，直到两个人都确定这不是梦，也不是一段被噪声剪碎的无线电记录。玛雅先笑了一下，随后把额头抵在她肩上。\n“我以为你死了。”这句话没有修饰，也没有玩笑。",
     "responses": [
       {
-        "text": "[安静地守在门边，没有打断她们。]",
-        "topic": "TALK_TRAVEL_MAYA_AFTER_REUNION"
-      },
-      {
-        "text": "[把目光移向窗外，给她们一点时间。]",
-        "topic": "TALK_TRAVEL_MAYA_AFTER_REUNION"
+        "text": "[看向梁知遥。]",
+        "topic": "TALK_TRAVEL_LIANG_REUNION_FEARED_LOST"
       }
     ]
   },
   {
     "type": "talk_topic",
     "id": "TALK_TRAVEL_MAYA_REUNION_CONTINUE",
-    "dynamic_line": "玛雅没有松开她。\n“日语暂停，鸡胸肉还欠着，所有计划都可以重来。”她的声音闷在梁知遥肩上，“人先回来。”\n梁知遥点头。\n“好。人先回来。”\n玛雅又抱紧了一点。\n“还有——先让我抱一会儿。”\n“嗯。”梁知遥闭着眼回答，“多久都可以。”",
+    "dynamic_line": "玛雅没有松开她。\n“日语暂停，鸡胸肉还欠着，所有计划都可以重来。”她的声音闷在梁知遥肩上，“人先回来。”",
     "responses": [
       {
-        "text": "[安静地守在门边，没有打断她们。]",
-        "topic": "TALK_TRAVEL_MAYA_AFTER_REUNION"
-      },
-      {
-        "text": "[把目光移向窗外，给她们一点时间。]",
-        "topic": "TALK_TRAVEL_MAYA_AFTER_REUNION"
+        "text": "[看向梁知遥。]",
+        "topic": "TALK_TRAVEL_LIANG_REUNION_CONTINUE_PEOPLE_FIRST"
       }
     ]
   },
   {
     "type": "talk_topic",
     "id": "TALK_TRAVEL_MAYA_AFTER_REUNION",
-    "dynamic_line": "过了很久，梁知遥才稍微松开手，却仍扶着玛雅，没有让她独自把重量压回受伤的膝盖。两个人的眼睛都红着，谁也没有假装只是风吹的。玛雅抬手碰了碰梁知遥胸前的平安扣，随后看向你。\n\n“谢谢。不是谢谢你找到一份记录，是谢谢你在她害怕的时候陪她继续走，也谢谢你把她带到了这扇门前。”梁知遥把椅子拉近，让玛雅重新坐下，又把水和药放到她伸手就能拿到的地方，始终没有松开她的手。玛雅用手背擦去眼泪：“今天只确认一件事——我们都活着。”梁知遥终于露出一个没有勉强自己的笑：“剩下的明天再讲。”“这次不熬夜？”“这次不熬夜。”玛雅轻轻捏了捏她的手：“你说的。我会监督。”",
+    "dynamic_line": "过了很久，梁知遥才稍微松开手，却仍扶着玛雅，没有让她独自把重量压回受伤的膝盖。两个人的眼睛都红着，谁也没有假装只是风吹的。玛雅抬手碰了碰梁知遥胸前的平安扣，随后看向你。\n“谢谢。不是谢谢你找到一份记录，是谢谢你在她害怕的时候陪她继续走，也谢谢你把她带到了这扇门前。”\n梁知遥把椅子拉近，让玛雅重新坐下，又把水和药放到她伸手就能拿到的地方，始终没有松开她的手。玛雅用手背擦去眼泪。\n“今天只确认一件事。我们都活着。”",
     "responses": [
       {
-        "text": "[结束交谈] 这一路没有白走。你们先休息吧。",
-        "topic": "TALK_DONE"
-      },
-      {
-        "text": "[把水杯推近一点] 先照顾好膝盖，其余的明天再说。",
-        "topic": "TALK_DONE"
+        "text": "[看向梁知遥。]",
+        "topic": "TALK_TRAVEL_LIANG_AFTER_REUNION_TOMORROW"
       }
     ]
   },
@@ -1644,6 +1628,279 @@
       },
       {
         "text": "[结束交谈] 今天先到这里。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_REUNION_DOOR_CARE_MAYA",
+    "dynamic_line": "玛雅抬起手，眼泪沿着笑意滑下来。\n“嗯，是我。”她吸了吸鼻子，“你迟到太久了。”",
+    "responses": [
+      {
+        "text": "[看向梁知遥。]",
+        "topic": "TALK_TRAVEL_MAYA_REUNION_DOOR_CARE_LIANG"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_REUNION_DOOR_CARE_LIANG",
+    "speaker_npc": "TRAVEL_LIANG_ZHIYAO",
+    "speaker_npc_range": 30,
+    "dynamic_line": "梁知遥在她面前蹲下，声音轻得几乎听不见。\n“对不起。”",
+    "responses": [
+      {
+        "text": "[继续看着她们。]",
+        "topic": "TALK_TRAVEL_MAYA_REUNION_DOOR_CARE_MAYA_INVITE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_REUNION_DOOR_CARE_MAYA_INVITE",
+    "dynamic_line": "玛雅伸出手。\n“那就过来，笨蛋。”",
+    "responses": [
+      {
+        "text": "[向后退开，让梁知遥自己走完最后几步。]",
+        "topic": "TALK_TRAVEL_MAYA_REUNION_APPROACH_CARE"
+      },
+      {
+        "text": "[轻轻把椅子向门口转了半边。]",
+        "topic": "TALK_TRAVEL_MAYA_REUNION_APPROACH_CARE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_REUNION_APPROACH_MAYA",
+    "dynamic_line": "玛雅借着这个动作抱住了她，像是早已决定，哪怕腿不能走，最后这一步也要由自己完成。\n“我就知道你会把自己走丢。”她把脸埋进梁知遥肩上，笑声已经全是哭腔。",
+    "responses": [
+      {
+        "text": "[看向梁知遥。]",
+        "topic": "TALK_TRAVEL_MAYA_REUNION_APPROACH_LIANG"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_REUNION_APPROACH_LIANG",
+    "speaker_npc": "TRAVEL_LIANG_ZHIYAO",
+    "speaker_npc_range": 30,
+    "dynamic_line": "“我没有。”梁知遥只说出三个字，便再也说不下去。",
+    "responses": [
+      {
+        "text": "[留在门边，不打断她们。]",
+        "topic": "TALK_TRAVEL_MAYA_REUNION"
+      },
+      {
+        "text": "慢一点，她的膝盖还没有恢复。",
+        "topic": "TALK_TRAVEL_MAYA_REUNION"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_REUNION_FEARED_LOST",
+    "speaker_npc": "TRAVEL_LIANG_ZHIYAO",
+    "speaker_npc_range": 30,
+    "dynamic_line": "梁知遥的手臂骤然收紧。\n“我也以为。”她没能说完。",
+    "responses": [
+      {
+        "text": "[继续听玛雅说。]",
+        "topic": "TALK_TRAVEL_MAYA_REUNION_WRONG_GUESS"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_REUNION_WRONG_GUESS",
+    "dynamic_line": "玛雅吸了一口发颤的气，抬手拍了拍她的背。\n“那我们都猜错了。这次错得很好。”\n她仍没有松开梁知遥。\n“日语暂停，鸡胸肉还欠着，所有计划都可以重来。人先回来。”",
+    "responses": [
+      {
+        "text": "[看向梁知遥。]",
+        "topic": "TALK_TRAVEL_LIANG_REUNION_PEOPLE_FIRST"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_REUNION_PEOPLE_FIRST",
+    "speaker_npc": "TRAVEL_LIANG_ZHIYAO",
+    "speaker_npc_range": 30,
+    "dynamic_line": "梁知遥点头。\n“好。人先回来。”",
+    "responses": [
+      {
+        "text": "[继续听玛雅说。]",
+        "topic": "TALK_TRAVEL_MAYA_REUNION_HOLD"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_REUNION_HOLD",
+    "dynamic_line": "玛雅又抱紧了一点。\n“还有，先让我抱一会儿。”",
+    "responses": [
+      {
+        "text": "[看向梁知遥。]",
+        "topic": "TALK_TRAVEL_LIANG_REUNION_HOLD"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_REUNION_HOLD",
+    "speaker_npc": "TRAVEL_LIANG_ZHIYAO",
+    "speaker_npc_range": 30,
+    "dynamic_line": "“嗯。”梁知遥闭着眼回答，“多久都可以。”",
+    "responses": [
+      {
+        "text": "[安静地守在门边，没有打断她们。]",
+        "topic": "TALK_TRAVEL_MAYA_AFTER_REUNION"
+      },
+      {
+        "text": "[把目光移向窗外，给她们一点时间。]",
+        "topic": "TALK_TRAVEL_MAYA_AFTER_REUNION"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_REUNION_CONTINUE_PEOPLE_FIRST",
+    "speaker_npc": "TRAVEL_LIANG_ZHIYAO",
+    "speaker_npc_range": 30,
+    "dynamic_line": "梁知遥点头。\n“好。人先回来。”",
+    "responses": [
+      {
+        "text": "[继续听玛雅说。]",
+        "topic": "TALK_TRAVEL_MAYA_REUNION_CONTINUE_HOLD"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_REUNION_CONTINUE_HOLD",
+    "dynamic_line": "玛雅又抱紧了一点。\n“还有，先让我抱一会儿。”",
+    "responses": [
+      {
+        "text": "[看向梁知遥。]",
+        "topic": "TALK_TRAVEL_LIANG_REUNION_CONTINUE_HOLD"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_REUNION_CONTINUE_HOLD",
+    "speaker_npc": "TRAVEL_LIANG_ZHIYAO",
+    "speaker_npc_range": 30,
+    "dynamic_line": "“嗯。”梁知遥闭着眼回答，“多久都可以。”",
+    "responses": [
+      {
+        "text": "[安静地守在门边，没有打断她们。]",
+        "topic": "TALK_TRAVEL_MAYA_AFTER_REUNION"
+      },
+      {
+        "text": "[把目光移向窗外，给她们一点时间。]",
+        "topic": "TALK_TRAVEL_MAYA_AFTER_REUNION"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_AFTER_REUNION_TOMORROW",
+    "speaker_npc": "TRAVEL_LIANG_ZHIYAO",
+    "speaker_npc_range": 30,
+    "dynamic_line": "梁知遥终于露出一个没有勉强自己的笑。\n“剩下的明天再讲。”",
+    "responses": [
+      {
+        "text": "[继续听玛雅说。]",
+        "topic": "TALK_TRAVEL_MAYA_AFTER_REUNION_SLEEP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_AFTER_REUNION_SLEEP",
+    "dynamic_line": "“这次不熬夜？”",
+    "responses": [
+      {
+        "text": "[看向梁知遥。]",
+        "topic": "TALK_TRAVEL_LIANG_AFTER_REUNION_SLEEP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_AFTER_REUNION_SLEEP",
+    "speaker_npc": "TRAVEL_LIANG_ZHIYAO",
+    "speaker_npc_range": 30,
+    "dynamic_line": "“这次不熬夜。”",
+    "responses": [
+      {
+        "text": "[继续听玛雅说。]",
+        "topic": "TALK_TRAVEL_MAYA_AFTER_REUNION_PROMISE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_AFTER_REUNION_PROMISE",
+    "dynamic_line": "玛雅轻轻捏了捏她的手。\n“你说的。我会监督。”",
+    "responses": [
+      {
+        "text": "[结束交谈] 这一路没有白走。你们先休息吧。",
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "[把水杯推近一点] 先照顾好膝盖，其余的明天再说。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_REUNION_CLOSING_TOMORROW",
+    "speaker_npc": "TRAVEL_LIANG_ZHIYAO",
+    "speaker_npc_range": 30,
+    "dynamic_line": "梁知遥看着她，终于露出一个没有勉强自己的笑。\n“剩下的明天再讲。”",
+    "responses": [
+      {
+        "text": "[继续听玛雅说。]",
+        "topic": "TALK_TRAVEL_MAYA_REUNION_CLOSING_SLEEP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_REUNION_CLOSING_SLEEP",
+    "dynamic_line": "“这次不熬夜？”",
+    "responses": [
+      {
+        "text": "[看向梁知遥。]",
+        "topic": "TALK_TRAVEL_LIANG_REUNION_CLOSING_SLEEP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_REUNION_CLOSING_SLEEP",
+    "speaker_npc": "TRAVEL_LIANG_ZHIYAO",
+    "speaker_npc_range": 30,
+    "dynamic_line": "“这次不熬夜。”",
+    "responses": [
+      {
+        "text": "[继续听玛雅说。]",
+        "topic": "TALK_TRAVEL_MAYA_REUNION_CLOSING_PROMISE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_MAYA_REUNION_CLOSING_PROMISE",
+    "dynamic_line": "玛雅轻轻捏了捏她的手。\n“你说的。我会监督。”",
+    "responses": [
+      {
+        "text": "[结束交谈] 留给她们一点时间。",
         "topic": "TALK_DONE"
       }
     ]
