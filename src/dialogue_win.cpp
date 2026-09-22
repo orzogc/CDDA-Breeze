@@ -145,7 +145,7 @@ void dialogue_window::draw_character_sidebar( const std::string &npc_name )
         ++text_y;
     }
     if( has_affection_score && text_y < getmaxy( d_win ) - 1 ) {
-        std::string relationship = pgettext( "NPC relationship", "Indifferent" );
+        std::string relationship = pgettext( "NPC relationship", "漠不关心" );
         nc_color relationship_color = c_light_gray;
         if( affection_score_value <= -60 ) {
             relationship = pgettext( "NPC relationship", "憎恨" );
