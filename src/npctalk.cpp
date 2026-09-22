@@ -1906,7 +1906,8 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
             int cat = topic_category( d.topic_stack.back() );
             do {
                 d.topic_stack.pop_back();
-            } while( cat != -1 && topic_category( d.topic_stack.back() ) == cat );
+            } while( cat != -1 && !d.topic_stack.empty() &&
+                     topic_category( d.topic_stack.back() ) == cat );
         }
         if( next.id == "TALK_DONE" || d.topic_stack.empty() ) {
             npc *npc_actor = d.actor( true )->get_npc();

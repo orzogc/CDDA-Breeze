@@ -102,6 +102,8 @@ static const efftype_id effect_visuals( "visuals" );
 static const efftype_id effect_weak_antibiotic( "weak_antibiotic" );
 static const efftype_id effect_winded( "winded" );
 
+static const faction_id faction_apis_hive_freed( "apis_hive_freed" );
+
 static const json_character_flag json_flag_ALARMCLOCK( "ALARMCLOCK" );
 static const json_character_flag json_flag_SEESLEEP( "SEESLEEP" );
 
@@ -1245,9 +1247,13 @@ void Character::hardcoded_effects( effect &it )
             if( npc *guy = as_npc() ) {
                 if( one_in( 2 ) ) {
                     guy->set_attitude( NPCATT_NULL );
+                    guy->set_fac( faction_apis_hive_freed );
                     guy->chatbin.first_topic = "TALK_SUGGEST_FOLLOW";
+                    add_msg_if_player_sees( *guy, m_info, "蜜蜂人恢复了神志" );
                 } else {
                     guy->set_attitude( NPCATT_KILL );
+                    add_msg_if_player_sees( *guy, m_warning,
+                                            "蜜蜂人恢复了神志，但看向你的眼神充满了敌意" );
                 }
             }
         }
