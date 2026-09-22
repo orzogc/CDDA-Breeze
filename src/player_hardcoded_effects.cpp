@@ -1261,9 +1261,11 @@ void Character::hardcoded_effects( effect &it )
             add_msg_player_or_npc( m_bad,
                                    _( "Your flesh crawls; insects tear through the flesh and begin to emerge!" ),
                                    _( "Insects begin to emerge from <npcname>'s skin!" ) );
+            const bool grubs_are_ours = is_avatar() ||
+                                         ( is_npc() && as_npc()->is_player_ally() );
             for( ; num_insects > 0; num_insects-- ) {
                 if( monster *const grub = g->place_critter_around( mon_dermatik_larva, pos(), 1 ) ) {
-                    if( is_avatar() && one_in( 3 ) ) {
+                    if( grubs_are_ours && one_in( 3 ) ) {
                         grub->friendly = -1;
                         grub->add_effect( effect_pet, 1_turns, true );
                     }
