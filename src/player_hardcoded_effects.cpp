@@ -1257,7 +1257,7 @@ void Character::hardcoded_effects( effect &it )
                 }
             }
         }
-        if( dur > 1_days ) {
+        if( !acid_blood && dur > 1_days ) {
             // Spawn some larvae!
             // Choose how many insects; more for large characters
             ///\EFFECT_STR_MAX increases number of insects hatched from dermatik infection
