@@ -58,7 +58,8 @@
     "count": 1,
     "name": { "str": "粗木寄生箭", "str_pl": "粗木寄生箭" },
     "description": "在箭头上绑了一枚寄生蜂的卵。扎进肉里，卵就会顺着伤口钻进去。",
-    "extend": { "effects": [ "DERMATIK_BROOD" ] }
+    "extend": { "effects": [ "DERMATIK_BROOD" ] },
+    "delete": { "effects": [ "RECOVER_2" ] }
   },
   {
     "id": "dermatik_arrow_wood",
@@ -67,7 +68,8 @@
     "count": 1,
     "name": { "str": "木制宽刃寄生箭", "str_pl": "木制宽刃寄生箭" },
     "description": "在箭头上绑了一枚寄生蜂的卵。扎进肉里，卵就会顺着伤口钻进去。",
-    "extend": { "effects": [ "DERMATIK_BROOD" ] }
+    "extend": { "effects": [ "DERMATIK_BROOD" ] },
+    "delete": { "effects": [ "RECOVER_25" ] }
   },
   {
     "id": "dermatik_arrow_heavy_fire_hardened_fletched",
@@ -76,7 +78,8 @@
     "count": 1,
     "name": { "str": "简易木寄生箭", "str_pl": "简易木寄生箭" },
     "description": "在箭头上绑了一枚寄生蜂的卵。扎进肉里，卵就会顺着伤口钻进去。",
-    "extend": { "effects": [ "DERMATIK_BROOD" ] }
+    "extend": { "effects": [ "DERMATIK_BROOD" ] },
+    "delete": { "effects": [ "RECOVER_6" ] }
   },
   {
     "id": "dermatik_arrow_heavy_field_point_fletched",
@@ -85,7 +88,8 @@
     "count": 1,
     "name": { "str": "木制狩猎寄生小箭", "str_pl": "木制狩猎寄生小箭" },
     "description": "在箭头上绑了一枚寄生蜂的卵。扎进肉里，卵就会顺着伤口钻进去。",
-    "extend": { "effects": [ "DERMATIK_BROOD" ] }
+    "extend": { "effects": [ "DERMATIK_BROOD" ] },
+    "delete": { "effects": [ "RECOVER_35" ] }
   },
   {
     "id": "dermatik_arrow_wood_heavy",
@@ -94,7 +98,8 @@
     "count": 1,
     "name": { "str": "自制木寄生箭", "str_pl": "自制木寄生箭" },
     "description": "在箭头上绑了一枚寄生蜂的卵。扎进肉里，卵就会顺着伤口钻进去。",
-    "extend": { "effects": [ "DERMATIK_BROOD" ] }
+    "extend": { "effects": [ "DERMATIK_BROOD" ] },
+    "delete": { "effects": [ "RECOVER_8" ] }
   },
   {
     "id": "dermatik_arrow_metal",
@@ -103,7 +108,8 @@
     "count": 1,
     "name": { "str": "铝制宽刃寄生箭", "str_pl": "铝制宽刃寄生箭" },
     "description": "在箭头上绑了一枚寄生蜂的卵。扎进肉里，卵就会顺着伤口钻进去。",
-    "extend": { "effects": [ "DERMATIK_BROOD" ] }
+    "extend": { "effects": [ "DERMATIK_BROOD" ] },
+    "delete": { "effects": [ "RECOVER_35" ] }
   },
   {
     "id": "dermatik_bolt_crude",
@@ -112,7 +118,8 @@
     "count": 1,
     "name": { "str": "粗木寄生弩矢", "str_pl": "粗木寄生弩矢" },
     "description": "在箭头上绑了一枚寄生蜂的卵。扎进肉里，卵就会顺着伤口钻进去。",
-    "extend": { "effects": [ "DERMATIK_BROOD" ] }
+    "extend": { "effects": [ "DERMATIK_BROOD" ] },
+    "delete": { "effects": [ "RECOVER_2" ] }
   },
   {
     "id": "dermatik_bolt_makeshift",
@@ -121,7 +128,8 @@
     "count": 1,
     "name": { "str": "自制木制寄生弩矢", "str_pl": "自制木制寄生弩矢" },
     "description": "在箭头上绑了一枚寄生蜂的卵。扎进肉里，卵就会顺着伤口钻进去。",
-    "extend": { "effects": [ "DERMATIK_BROOD" ] }
+    "extend": { "effects": [ "DERMATIK_BROOD" ] },
+    "delete": { "effects": [ "RECOVER_8" ] }
   },
   {
     "id": "dermatik_bolt_wood",
@@ -130,7 +138,8 @@
     "count": 1,
     "name": { "str": "木制宽刃寄生弩矢", "str_pl": "木制宽刃寄生弩矢" },
     "description": "在箭头上绑了一枚寄生蜂的卵。扎进肉里，卵就会顺着伤口钻进去。",
-    "extend": { "effects": [ "DERMATIK_BROOD" ] }
+    "extend": { "effects": [ "DERMATIK_BROOD" ] },
+    "delete": { "effects": [ "RECOVER_25" ] }
   },
   {
     "id": "dermatik_bolt_wood_bodkin",
@@ -139,7 +148,8 @@
     "count": 1,
     "name": { "str": "木制锥头寄生弩矢", "str_pl": "木制锥头寄生弩矢" },
     "description": "在箭头上绑了一枚寄生蜂的卵。扎进肉里，卵就会顺着伤口钻进去。",
-    "extend": { "effects": [ "DERMATIK_BROOD" ] }
+    "extend": { "effects": [ "DERMATIK_BROOD" ] },
+    "delete": { "effects": [ "RECOVER_30" ] }
   },
   {
     "id": "dermatik_bolt_wood_small_game",
@@ -148,7 +158,8 @@
     "count": 1,
     "name": { "str": "木制狩猎寄生小弩矢", "str_pl": "木制狩猎寄生小弩矢" },
     "description": "在箭头上绑了一枚寄生蜂的卵。扎进肉里，卵就会顺着伤口钻进去。",
-    "extend": { "effects": [ "DERMATIK_BROOD" ] }
+    "extend": { "effects": [ "DERMATIK_BROOD" ] },
+    "delete": { "effects": [ "RECOVER_35" ] }
   },
   {
     "id": "dermatik_bolt_metal",
@@ -157,7 +168,8 @@
     "count": 1,
     "name": { "str": "简易金属寄生弩矢", "str_pl": "简易金属寄生弩矢" },
     "description": "在箭头上绑了一枚寄生蜂的卵。扎进肉里，卵就会顺着伤口钻进去。",
-    "extend": { "effects": [ "DERMATIK_BROOD" ] }
+    "extend": { "effects": [ "DERMATIK_BROOD" ] },
+    "delete": { "effects": [ "RECOVER_20" ] }
   },
   {
     "id": "dermatik_bolt_steel",
@@ -166,7 +178,8 @@
     "count": 1,
     "name": { "str": "铝制宽刃寄生弩矢", "str_pl": "铝制宽刃寄生弩矢" },
     "description": "在箭头上绑了一枚寄生蜂的卵。扎进肉里，卵就会顺着伤口钻进去。",
-    "extend": { "effects": [ "DERMATIK_BROOD" ] }
+    "extend": { "effects": [ "DERMATIK_BROOD" ] },
+    "delete": { "effects": [ "RECOVER_35" ] }
   },
   {
     "id": "dermatik_9mm",
