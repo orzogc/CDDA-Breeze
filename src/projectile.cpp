@@ -30,6 +30,28 @@ static const ter_str_id ter_t_foamcrete_wall( "t_foamcrete_wall" );
 
 static const trait_id trait_PYROMANIA( "PYROMANIA" );
 
+static bool target_conditions_met( const ammo_effect_target &target,
+                                   const dealt_projectile_attack *attack )
+{
+    for( const ammo_target_condition &condition : target.conditions ) {
+        switch( condition ) {
+            case ammo_target_condition::DAMAGED:
+                if( attack == nullptr || attack->dealt_dam.total_damage() <= 0 ) {
+                    return false;
+                }
+                break;
+            case ammo_target_condition::NO_DAMAGE:
+                if( attack == nullptr || attack->dealt_dam.total_damage() > 0 ) {
+                    return false;
+                }
+                break;
+            case ammo_target_condition::LAST:
+                break;
+        }
+    }
+    return true;
+}
+
 projectile::projectile() :
     critical_multiplier( 2.0 ), drop( nullptr ), custom_explosion( nullptr )
 { }
@@ -140,7 +162,8 @@ static void foamcrete_build( const tripoint &p )
 }
 
 void apply_ammo_effects( const Creature *source, const tripoint &p,
-                         const std::set<std::string> &effects )
+                         const std::set<std::string> &effects,
+                         const dealt_projectile_attack *attack )
 {
     map &here = get_map();
     Character &player_character = get_player_character();
@@ -169,13 +192,14 @@ void apply_ammo_effects( const Creature *source, const tripoint &p,
                     }
                 }
             }
-            if( ae.aoe_effect_type.is_valid() ) {
-                const size_t r = static_cast<size_t>( std::max( 0, ae.aoe_radius ) );
-                const size_t rz = static_cast<size_t>( std::max( 0, ae.aoe_radius_z ) );
-                for( Creature *critter : here.get_creatures_in_radius( p, r, rz ) ) {
-                    if( x_in_y( ae.aoe_chance, 100 ) ) {
-                        critter->add_effect( ae.aoe_effect_type, ae.aoe_effect_duration );
-                    }
+            if( ae.target.effect_type.is_valid() ) {
+                Creature *const hit = attack != nullptr ? attack->hit_critter : nullptr;
+                if( hit != nullptr && x_in_y( ae.target.chance, 100 ) &&
+                    target_conditions_met( ae.target, attack ) ) {
+                    hit->add_effect( ae.target.effect_type, ae.target.effect_duration,
+                                     ae.target.effect_permanent );
+                    hit->add_msg_player_or_npc( ae.target.message_type, ae.target.message.translated(),
+                                                ae.target.message_npc.translated() );
                 }
             }
             if( ae.aoe_explosion_data.power > 0 ) {

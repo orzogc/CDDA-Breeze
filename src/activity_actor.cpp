@@ -4786,14 +4786,21 @@ void milk_activity_actor::finish( player_activity &act, Character &who )
         return;
     }
     item milk( milked_item->first, calendar::turn, milked_item->second );
-    milk.set_item_temperature( units::from_celsius( 38.6 ) );
-    if( liquid_handler::handle_liquid( milk, nullptr, 1, nullptr, nullptr, -1, source_mon ) ) {
-        milked_item->second = 0;
-        if( milk.charges > 0 ) {
-            milked_item->second = milk.charges;
-        } else {
-            who.add_msg_if_player( _( "The %s's udders run dry." ), source_mon->get_name() );
+    if( milk.made_of_from_type( phase_id::LIQUID ) ) {
+        milk.set_item_temperature( units::from_celsius( 38.6 ) );
+        if( liquid_handler::handle_liquid( milk, nullptr, 1, nullptr, nullptr, -1, source_mon ) ) {
+            milked_item->second = 0;
+            if( milk.charges > 0 ) {
+                milked_item->second = milk.charges;
+            } else {
+                who.add_msg_if_player( _( "The %s's udders run dry." ), source_mon->get_name() );
+            }
         }
+    } else {
+        here.add_item_or_charges( who.pos(), milk );
+        milked_item->second = 0;
+        who.add_msg_if_player( m_good, "你从%1$s身上取下了%2$s。",
+                               source_mon->get_name(), milk.tname() );
     }
     // if the monster was not manually tied up, but needed to be fixed in place temporarily then
     // remove that now.

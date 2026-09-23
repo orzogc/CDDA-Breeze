@@ -27,6 +27,7 @@
 #include "messages.h"
 #include "mongroup.h"
 #include "monster.h"
+#include "npc.h"
 #include "player_activity.h"
 #include "rng.h"
 #include "sounds.h"
@@ -101,6 +102,8 @@ static const efftype_id effect_visuals( "visuals" );
 static const efftype_id effect_weak_antibiotic( "weak_antibiotic" );
 static const efftype_id effect_winded( "winded" );
 
+static const faction_id faction_apis_hive_freed( "apis_hive_freed" );
+
 static const json_character_flag json_flag_ALARMCLOCK( "ALARMCLOCK" );
 static const json_character_flag json_flag_SEESLEEP( "SEESLEEP" );
 
@@ -116,6 +119,7 @@ static const proficiency_id proficiency_prof_wound_care( "prof_wound_care" );
 static const proficiency_id proficiency_prof_wound_care_expert( "prof_wound_care_expert" );
 
 static const trait_id trait_ACIDBLOOD( "ACIDBLOOD" );
+static const trait_id trait_BEE( "BEE" );
 static const trait_id trait_CHLOROMORPH( "CHLOROMORPH" );
 static const trait_id trait_HEAVYSLEEPER( "HEAVYSLEEPER" );
 static const trait_id trait_HEAVYSLEEPER2( "HEAVYSLEEPER2" );
@@ -1228,6 +1232,7 @@ void Character::hardcoded_effects( effect &it )
     creature_tracker &creatures = get_creature_tracker();
     if( id == effect_dermatik ) {
         bool triggered = false;
+        const bool acid_blood = bloodType().obj().has_acid;
         int formication_chance = 3600;
         if( dur < 4_hours ) {
             formication_chance += 14400 - to_turns<int>( dur );
@@ -1238,7 +1243,21 @@ void Character::hardcoded_effects( effect &it )
         if( dur < 1_days && one_in( 14400 ) ) {
             vomit();
         }
-        if( dur > 1_days ) {
+        if( dur > 60_turns && dur <= 61_turns && has_trait( trait_BEE ) ) {
+            if( npc *guy = as_npc() ) {
+                if( one_in( 2 ) ) {
+                    guy->set_attitude( NPCATT_NULL );
+                    guy->set_fac( faction_apis_hive_freed );
+                    guy->chatbin.first_topic = "TALK_SUGGEST_FOLLOW";
+                    add_msg_if_player_sees( *guy, m_info, "蜜蜂人恢复了神志" );
+                } else {
+                    guy->set_attitude( NPCATT_KILL );
+                    add_msg_if_player_sees( *guy, m_warning,
+                                            "蜜蜂人恢复了神志，但看向你的眼神充满了敌意" );
+                }
+            }
+        }
+        if( !acid_blood && dur > 1_days ) {
             // Spawn some larvae!
             // Choose how many insects; more for large characters
             ///\EFFECT_STR_MAX increases number of insects hatched from dermatik infection
@@ -1248,9 +1267,11 @@ void Character::hardcoded_effects( effect &it )
             add_msg_player_or_npc( m_bad,
                                    _( "Your flesh crawls; insects tear through the flesh and begin to emerge!" ),
                                    _( "Insects begin to emerge from <npcname>'s skin!" ) );
+            const bool grubs_are_ours = is_avatar() ||
+                                         ( is_npc() && as_npc()->is_player_ally() );
             for( ; num_insects > 0; num_insects-- ) {
                 if( monster *const grub = g->place_critter_around( mon_dermatik_larva, pos(), 1 ) ) {
-                    if( one_in( 3 ) ) {
+                    if( grubs_are_ours && one_in( 3 ) ) {
                         grub->friendly = -1;
                         grub->add_effect( effect_pet, 1_turns, true );
                     }
@@ -1261,7 +1282,7 @@ void Character::hardcoded_effects( effect &it )
             moves -= 600;
             triggered = true;
         }
-        if( triggered ) {
+        if( triggered || acid_blood ) {
             // Set ourselves up for removal
             it.set_duration( 0_turns );
         } else {

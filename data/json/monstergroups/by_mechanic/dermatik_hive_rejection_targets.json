@@ -1,0 +1,11 @@
+[
+  {
+    "type": "monstergroup",
+    "name": "DERMATIK_HIVE_REJECTION_TARGETS",
+    "monsters": [
+      { "monster": "mon_bee_small" },
+      { "monster": "mon_bee" },
+      { "monster": "mon_bee_mega" }
+    ]
+  }
+]

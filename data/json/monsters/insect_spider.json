@@ -1828,7 +1828,8 @@
     "anger_triggers": [ "FRIEND_ATTACKED", "PLAYER_WEAK" ],
     "fear_triggers": [ "HURT", "FIRE" ],
     "zombify_into": "mon_meat_cocoon_tiny",
-    "flags": [ "SEES", "HEARS", "SMELLS", "FLIES", "PATH_AVOID_FIRE", "CANPLAY" ]
+    "starting_ammo": { "dermatik_egg_micro": 1 },
+    "flags": [ "SEES", "HEARS", "SMELLS", "FLIES", "PATH_AVOID_FIRE", "CANPLAY", "MILKABLE" ]
   },
   {
     "id": "mon_dermatik_midwife",
@@ -1846,7 +1847,7 @@
     "weakpoints": [ { "id": "abdomen", "name": "the abdomen", "coverage": 30 } ],
     "vision_night": 8,
     "zombify_into": "mon_meat_cocoon_tiny",
-    "delete": { "weakpoints": [ { "id": "stinger" } ], "flags": [ "FLIES" ], "special_attacks": [ "DERMATIK" ] }
+    "delete": { "weakpoints": [ { "id": "stinger" } ], "flags": [ "FLIES", "MILKABLE" ], "special_attacks": [ "DERMATIK" ] }
   },
   {
     "id": "mon_dermatik_incubator_deer",
