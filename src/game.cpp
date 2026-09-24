@@ -842,29 +842,36 @@ void game::load_map( const tripoint_abs_sm &pos_sm,
 }
 
 // Set up all default values for a new game
-static void grant_mid_autumn_gift_if_eligible( avatar &you )
+void game::refresh_mid_autumn_event( const bool force )
 {
     static const std::string active_year_var =
         "npctalk_var_dialogue_breeze_mid_autumn_active_year";
     static const std::string gift_year_var = "breeze_mid_autumn_gift_year";
+    static std::time_t last_check = 0;
 
-    const int holiday_year = get_mid_autumn_holiday_year();
+    const std::time_t now = std::time( nullptr );
+    if( !force && last_check != 0 && now / 60 == last_check / 60 ) {
+        return;
+    }
+    last_check = now;
+
+    const int holiday_year = get_mid_autumn_holiday_year( now );
     if( holiday_year == 0 ) {
-        you.remove_value( active_year_var );
+        u.remove_value( active_year_var );
         return;
     }
 
     const std::string year_string = std::to_string( holiday_year );
-    you.set_value( active_year_var, year_string );
-    if( you.get_value( gift_year_var ) == year_string ) {
+    u.set_value( active_year_var, year_string );
+    if( u.get_value( gift_year_var ) == year_string ) {
         return;
     }
 
-    you.i_add( item( itype_mid_autumn_recipe_book, calendar::turn ) );
+    u.i_add( item( itype_mid_autumn_recipe_book, calendar::turn ) );
     for( item &gift : item_group::items_from( item_group_mid_autumn_gift, calendar::turn ) ) {
-        you.i_add( gift );
+        u.i_add( gift );
     }
-    you.set_value( gift_year_var, year_string );
+    u.set_value( gift_year_var, year_string );
     add_msg( m_good, _( "A Mid-Autumn Festival recipe booklet and mooncake gift box have been delivered to you." ) );
 }
 
@@ -1107,7 +1114,7 @@ bool game::start_game()
     get_event_bus().send<event_type::avatar_enters_omt>( abs_omt.raw(), cur_ter );
 
     effect_on_conditions::load_new_character( u );
-    grant_mid_autumn_gift_if_eligible( u );
+    refresh_mid_autumn_event( true );
     return true;
 }
 
@@ -3099,7 +3106,7 @@ bool game::load( const save_t &name )
     }
 
     effect_on_conditions::load_existing_character( u );
-    grant_mid_autumn_gift_if_eligible( u );
+    refresh_mid_autumn_event( true );
     // recalculate light level for correctly resuming crafting and disassembly
     m.build_map_cache( m.get_abs_sub().z() );
 
