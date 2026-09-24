@@ -6707,10 +6707,7 @@
     "responses": [
       {
         "text": "这也许是你后来很强调独立的原因。",
-        "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN_INDEPENDENCE",
-        "opinion": {
-          "trust": 1
-        }
+        "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN_INDEPENDENCE"
       },
       {
         "text": "你父亲在家里是什么样。",
@@ -6733,10 +6730,7 @@
     "responses": [
       {
         "text": "能意识到这一点已经很好。",
-        "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN",
-        "opinion": {
-          "value": 1
-        }
+        "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN"
       },
       {
         "text": "再说说你的家人。",
