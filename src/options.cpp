@@ -1706,7 +1706,7 @@ void options_manager::add_options_general()
     add( "EVENT_SPAWNS", "general", to_translation( "Special event spawns" ),
          to_translation( "If not disabled, unique items and/or monsters can spawn during special events (Christmas, Halloween, etc.)" ),
     { { "off", to_translation( "Disabled" ) }, { "items", to_translation( "Items" ) }, { "monsters", to_translation( "Monsters" ) }, { "both", to_translation( "Both" ) } },
-    "off" );
+    "items" );
 
     add_empty_line();
 
