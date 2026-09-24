@@ -48,6 +48,7 @@
 #include "item_action.h"
 #include "item_category.h"
 #include "item_factory.h"
+#include "item_group.h"
 #include "itype.h"
 #include "json.h"
 #include "json_loader.h"
