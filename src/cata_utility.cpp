@@ -792,6 +792,34 @@ holiday get_holiday_from_time( std::time_t time, bool force_refresh )
     return cached_holiday;
 }
 
+int get_mid_autumn_gift_year( std::time_t time )
+{
+    std::tm local_time{};
+    const std::time_t current_time = time == 0 ? std::time( nullptr ) : time;
+    bool success = false;
+
+#if defined(_WIN32)
+    success = localtime_s( &local_time, &current_time ) == 0;
+#else
+    success = localtime_r( &current_time, &local_time ) != nullptr;
+#endif
+
+    if( !success ) {
+        return 0;
+    }
+
+    const int year = local_time.tm_year + 1900;
+    const int month = local_time.tm_mon + 1;
+    const int day = local_time.tm_mday;
+
+    // 2026 Mid-Autumn Festival holiday: September 25 through September 27.
+    if( year == 2026 && month == 9 && day >= 25 && day <= 27 ) {
+        return year;
+    }
+
+    return 0;
+}
+
 int bucket_index_from_weight_list( const std::vector<int> &weights )
 {
     int total_weight = std::accumulate( weights.begin(), weights.end(), int( 0 ) );
