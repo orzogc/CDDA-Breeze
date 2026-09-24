@@ -3902,9 +3902,17 @@ void options_manager::deserialize( const JsonArray &ja )
     for( JsonObject joOptions : ja ) {
         joOptions.allow_omitted_members();
 
-        const std::string name = migrateOptionName( joOptions.get_string( "name" ) );
-        const std::string value = migrateOptionValue( joOptions.get_string( "name" ),
-                                  joOptions.get_string( "value" ) );
+        const std::string saved_name = joOptions.get_string( "name" );
+        const std::string name = migrateOptionName( saved_name );
+        std::string value = migrateOptionValue( saved_name, joOptions.get_string( "value" ) );
+
+        // EVENT_SPAWNS previously defaulted to off.  Migrate users who still have that
+        // old default to item-only event spawns once, while preserving later explicit
+        // choices after the new default has been saved as "items".
+        if( saved_name == "EVENT_SPAWNS" && value == "off" &&
+            joOptions.get_string( "default", "" ) == "off" ) {
+            value = "items";
+        }
 
         auto option = options.find( name );
         if( option == options.end() ) {
