@@ -89,6 +89,7 @@ enum class holiday : int {
     halloween,
     thanksgiving,
     christmas,
+    mid_autumn,
     num_holiday
 };
 
