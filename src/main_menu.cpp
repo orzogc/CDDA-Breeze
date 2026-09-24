@@ -321,6 +321,7 @@ void main_menu::print_menu( const catacurses::window &w_open, int iSel, const po
                 break;
             case holiday::thanksgiving:
             case holiday::christmas:
+            case holiday::mid_autumn:
             case holiday::none:
             case holiday::num_holiday:
             default:
