@@ -1,0 +1,181 @@
+[
+  {
+    "id": "breeze_mid_autumn_gift_box",
+    "type": "GENERIC",
+    "category": "container",
+    "name": {
+      "str": "Mid-Autumn mooncake gift box",
+      "str_pl": "Mid-Autumn mooncake gift boxes"
+    },
+    "description": "May we live long and share the beauty of the moon together, even if we are a thousand miles apart.",
+    "weight": "120 g",
+    "volume": "1750 ml",
+    "longest_side": "28 cm",
+    "price": 300,
+    "price_postapoc": 150,
+    "material": [
+      "cardboard"
+    ],
+    "symbol": ")",
+    "color": "red",
+    "looks_like": "box_small",
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "rigid": true,
+        "max_contains_volume": "1500 ml",
+        "max_contains_weight": "3 kg",
+        "max_item_length": "16 cm"
+      }
+    ]
+  },
+  {
+    "id": "breeze_mid_autumn_recipe_book",
+    "type": "BOOK",
+    "category": "manuals",
+    "name": {
+      "str": "Mid-Autumn mooncake recipes",
+      "str_pl": "copies of Mid-Autumn mooncake recipes"
+    },
+    "description": "A small festive recipe booklet covering several common mooncakes and a floral pastry filling.",
+    "weight": "80 g",
+    "volume": "250 ml",
+    "price": 800,
+    "price_postapoc": 300,
+    "material": [
+      "paper"
+    ],
+    "symbol": "?",
+    "color": "yellow",
+    "looks_like": "cookbook",
+    "skill": "cooking",
+    "required_level": 1,
+    "max_level": 2,
+    "intelligence": 4,
+    "time": "10 m",
+    "fun": 1
+  },
+  {
+    "type": "COMESTIBLE",
+    "id": "breeze_mooncake_lotus_egg",
+    "name": {
+      "str": "lotus seed and salted egg yolk mooncake"
+    },
+    "weight": "125 g",
+    "color": "yellow",
+    "spoils_in": "60 days",
+    "comestible_type": "FOOD",
+    "symbol": "%",
+    "calories": 420,
+    "quench": -2,
+    "description": "A dense baked mooncake filled with sweet lotus seed paste and a rich salted egg yolk.",
+    "price": 700,
+    "price_postapoc": 400,
+    "material": [
+      "wheat",
+      "junk"
+    ],
+    "volume": "150 ml",
+    "fun": 10,
+    "looks_like": "cookies"
+  },
+  {
+    "type": "COMESTIBLE",
+    "id": "breeze_mooncake_red_bean",
+    "name": {
+      "str": "red bean mooncake"
+    },
+    "weight": "120 g",
+    "color": "red",
+    "spoils_in": "60 days",
+    "comestible_type": "FOOD",
+    "symbol": "%",
+    "calories": 360,
+    "quench": -2,
+    "description": "A baked mooncake with a smooth, sweet red bean filling.",
+    "price": 550,
+    "price_postapoc": 350,
+    "material": [
+      "wheat",
+      "junk"
+    ],
+    "volume": "150 ml",
+    "fun": 8,
+    "looks_like": "cookies"
+  },
+  {
+    "type": "COMESTIBLE",
+    "id": "breeze_mooncake_five_nut",
+    "name": {
+      "str": "five-nut mooncake"
+    },
+    "weight": "130 g",
+    "color": "brown",
+    "spoils_in": "90 days",
+    "comestible_type": "FOOD",
+    "symbol": "%",
+    "calories": 450,
+    "quench": -3,
+    "description": "A traditional baked mooncake packed with a sweet, chewy mixture of nuts and seeds.",
+    "price": 600,
+    "price_postapoc": 400,
+    "material": [
+      "wheat",
+      "junk"
+    ],
+    "volume": "150 ml",
+    "fun": 6,
+    "looks_like": "cookies"
+  },
+  {
+    "type": "COMESTIBLE",
+    "id": "breeze_mooncake_snow_skin",
+    "name": {
+      "str": "snow-skin mooncake"
+    },
+    "weight": "110 g",
+    "color": "white",
+    "spoils_in": "5 days",
+    "comestible_type": "FOOD",
+    "symbol": "%",
+    "calories": 290,
+    "quench": -1,
+    "description": "A soft, chilled mooncake with a pale, slightly chewy skin and a sweet filling.  It does not keep nearly as well as a baked mooncake.",
+    "price": 700,
+    "price_postapoc": 450,
+    "material": [
+      "wheat",
+      "junk"
+    ],
+    "volume": "150 ml",
+    "fun": 11,
+    "looks_like": "cookies",
+    "flags": [
+      "EDIBLE_FROZEN"
+    ]
+  },
+  {
+    "type": "COMESTIBLE",
+    "id": "breeze_dali_flower_pastry_filling",
+    "name": {
+      "str": "Dali flower-pastry filling"
+    },
+    "weight": "100 g",
+    "color": "pink",
+    "spoils_in": "7 days",
+    "comestible_type": "FOOD",
+    "symbol": "%",
+    "calories": 240,
+    "quench": -1,
+    "description": "A fragrant, sugary floral filling inspired by the rose fillings used in Dali-style flower pastries.",
+    "price": 450,
+    "price_postapoc": 300,
+    "material": [
+      "fruit",
+      "junk"
+    ],
+    "volume": "100 ml",
+    "fun": 7,
+    "looks_like": "jam"
+  }
+]
