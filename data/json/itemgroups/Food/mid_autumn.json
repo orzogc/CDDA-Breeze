@@ -1,0 +1,38 @@
+[
+  {
+    "type": "item_group",
+    "id": "BREEZE_MID_AUTUMN_MOONCAKE_BOX",
+    "subtype": "collection",
+    "container-item": "mid_autumn_gift_box",
+    "entries": [
+      {
+        "item": "mooncake_lotus_egg_yolk"
+      },
+      {
+        "item": "mooncake_red_bean"
+      },
+      {
+        "item": "mooncake_five_nut"
+      },
+      {
+        "item": "mooncake_snow_skin"
+      },
+      {
+        "item": "dali_flower_cake_filling"
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "BREEZE_MID_AUTUMN_GIFT",
+    "subtype": "collection",
+    "entries": [
+      {
+        "item": "mid_autumn_mooncake_recipes"
+      },
+      {
+        "group": "BREEZE_MID_AUTUMN_MOONCAKE_BOX"
+      }
+    ]
+  }
+]
