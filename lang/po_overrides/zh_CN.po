@@ -289,8 +289,8 @@ msgid "copies of Mid-Autumn mooncake recipes"
 msgstr "中秋月饼配方"
 
 # Mid-Autumn Festival update
-msgid "A small festive recipe booklet covering several common mooncakes and a floral pastry filling."
-msgstr "一本小巧的中秋节配方册，记录了几种常见月饼和鲜花饼馅的做法。"
+msgid "A small festive recipe booklet covering several common styles of mooncake."
+msgstr "一本小巧的中秋节配方册，记录了几种常见月饼的做法。"
 
 # Mid-Autumn Festival update
 msgid "lotus seed and salted egg yolk mooncake"
