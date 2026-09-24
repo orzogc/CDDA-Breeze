@@ -6323,9 +6323,8 @@
         },
         "effect": [
           {
-            "u_consume_item": "breeze_mooncake_lotus_egg",
-            "count": 1,
-            "popup": true
+            "u_sell_item": "breeze_mooncake_lotus_egg",
+            "count": 1
           },
           {
             "npc_add_var": "travel_liang_mid_autumn_gift_received",
@@ -6362,9 +6361,8 @@
         },
         "effect": [
           {
-            "u_consume_item": "breeze_mooncake_red_bean",
-            "count": 1,
-            "popup": true
+            "u_sell_item": "breeze_mooncake_red_bean",
+            "count": 1
           },
           {
             "npc_add_var": "travel_liang_mid_autumn_gift_received",
@@ -6401,9 +6399,8 @@
         },
         "effect": [
           {
-            "u_consume_item": "breeze_mooncake_five_nut",
-            "count": 1,
-            "popup": true
+            "u_sell_item": "breeze_mooncake_five_nut",
+            "count": 1
           },
           {
             "npc_add_var": "travel_liang_mid_autumn_gift_received",
@@ -6440,9 +6437,8 @@
         },
         "effect": [
           {
-            "u_consume_item": "breeze_mooncake_snow_skin",
-            "count": 1,
-            "popup": true
+            "u_sell_item": "breeze_mooncake_snow_skin",
+            "count": 1
           },
           {
             "npc_add_var": "travel_liang_mid_autumn_gift_received",
