@@ -272,98 +272,50 @@ msgstr "75％耗时，100％伤害"
 msgid "Mid-Autumn mooncake gift box"
 msgstr "中秋月饼礼盒"
 
-# Mid-Autumn Festival update
 msgid "Mid-Autumn mooncake gift boxes"
 msgstr "中秋月饼礼盒"
 
-# Mid-Autumn Festival update
 msgid "May we live long and share the beauty of the moon together, even if we are a thousand miles apart."
 msgstr "但愿人长久，千里共婵娟。"
 
-# Mid-Autumn Festival update
 msgid "Mid-Autumn mooncake recipes"
 msgstr "中秋月饼配方"
 
-# Mid-Autumn Festival update
 msgid "copies of Mid-Autumn mooncake recipes"
 msgstr "中秋月饼配方"
 
-# Mid-Autumn Festival update
 msgid "A small festive recipe booklet covering several common styles of mooncake."
 msgstr "一本小巧的中秋节配方册，记录了几种常见月饼的做法。"
 
-# Mid-Autumn Festival update
 msgid "lotus seed and salted egg yolk mooncake"
 msgstr "莲蓉蛋黄月饼"
 
-# Mid-Autumn Festival update
 msgid "A dense baked mooncake filled with sweet lotus seed paste and a rich salted egg yolk."
 msgstr "传统烘烤月饼，内馅是香甜的莲蓉和浓郁的咸蛋黄。"
 
-# Mid-Autumn Festival update
 msgid "red bean mooncake"
 msgstr "豆沙月饼"
 
-# Mid-Autumn Festival update
 msgid "A baked mooncake with a smooth, sweet red bean filling."
 msgstr "传统烘烤月饼，里面包着细腻香甜的豆沙馅。"
 
-# Mid-Autumn Festival update
 msgid "five-nut mooncake"
 msgstr "五仁月饼"
 
-# Mid-Autumn Festival update
 msgid "A traditional baked mooncake packed with a sweet, chewy mixture of nuts and seeds."
 msgstr "传统烘烤月饼，里面是由多种坚果和种子组成的香甜耐嚼馅料。"
 
-# Mid-Autumn Festival update
 msgid "snow-skin mooncake"
 msgstr "冰皮月饼"
 
-# Mid-Autumn Festival update
 msgid "A soft, chilled mooncake with a pale, slightly chewy skin and a sweet filling.  It does not keep nearly as well as a baked mooncake."
 msgstr "柔软冰凉的月饼，浅色外皮略带弹性，里面包着甜馅。它远没有烘烤月饼那么耐放。"
 
-# Mid-Autumn Festival update
 msgid "Dali flower-pastry filling"
 msgstr "大理鲜花饼馅"
 
-# Mid-Autumn Festival update
 msgid "A fragrant, sugary floral filling inspired by the rose fillings used in Dali-style flower pastries."
 msgstr "香甜而带着花香的馅料，做法取自大理鲜花饼常见的玫瑰花馅。"
 
-# Mid-Autumn Festival update
 msgid "A Mid-Autumn Festival recipe booklet and mooncake gift box have been delivered to you."
 msgstr "你收到了一份中秋月饼配方和一个月饼礼盒。"
-
-# Mid-Autumn Festival
-msgid "A small recipe booklet for several traditional Mid-Autumn pastries, with practical substitutions for an ordinary home kitchen."
-msgstr "一本简短的中秋点心配方册，记录了几种传统做法，也给出了适合普通厨房条件的替代材料。"
-
-# Mid-Autumn Festival
-msgid "Mid-Autumn gift box"
-msgstr "中秋月饼礼盒"
-
-# Mid-Autumn Festival
-msgid "A neatly printed festival gift box.  The lid carries a wish for people separated by distance to share the same moon."
-msgstr "一只印刷精致的中秋礼盒，盒盖上写着，但愿人长久，千里共婵娟。"
-
-# Mid-Autumn Festival
-msgid "A baked mooncake packed with a sweet, fragrant mixture of chopped nuts and seeds."
-msgstr "一枚烘烤月饼，里面塞满切碎的坚果和种子，香甜而扎实。"
-
-# Mid-Autumn Festival
-msgid "A soft, pale mooncake with a cool, chewy wrapper.  It is much more perishable than baked mooncakes."
-msgstr "一枚柔软洁白的冰皮月饼，外皮清凉软糯，比烘烤月饼更容易变质。"
-
-# Mid-Autumn Festival
-msgid "Dali flower cake filling"
-msgstr "大理鲜花饼馅"
-
-# Mid-Autumn Festival
-msgid "A fragrant sweet filling inspired by Dali-style flower cakes, made from edible flowers and sugar."
-msgstr "一份参考大理鲜花饼做法调成的香甜花馅，由可食用花材和糖制成。"
-
-# Mid-Autumn Festival
-msgid "A Mid-Autumn gift has been delivered to you.  May the full moon find you safe."
-msgstr "你收到了一份中秋礼物，愿此时明月，照见你仍安然。"
