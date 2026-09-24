@@ -1662,6 +1662,10 @@ std::function<int( const T & )> conditional_t<T>::get_get_int( const JsonObject 
                 effect target = d.actor( is_npc )->get_effect( efftype_id( effect_id ), bid );
                 return target.is_null() ? -1 : target.get_intensity();
             };
+        } else if( checked_value == "mid_autumn_holiday_year" ) {
+            return []( const T & ) {
+                return get_mid_autumn_holiday_year();
+            };
         } else if( checked_value == "var" ) {
             var_info info = read_var_info( jo );
             return [info]( const T & d ) {
