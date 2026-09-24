@@ -713,14 +713,24 @@ static bool get_local_calendar_time( std::time_t time, std::tm &local_time )
 #endif
 }
 
-static bool is_mid_autumn_holiday_date( int year, int month, int day )
+static constexpr int mid_autumn_holiday_year_for_date( int year, int month, int day )
 {
     // Keep this table aligned with officially announced holiday windows instead
     // of trying to infer future compensatory days from the lunar calendar.
-    if( year == 2026 ) {
-        return month == 9 && day >= 25 && day <= 27;
+    if( year == 2026 && month == 9 && day >= 25 && day <= 27 ) {
+        return year;
     }
-    return false;
+    return 0;
+}
+
+static_assert( mid_autumn_holiday_year_for_date( 2026, 9, 24 ) == 0 );
+static_assert( mid_autumn_holiday_year_for_date( 2026, 9, 25 ) == 2026 );
+static_assert( mid_autumn_holiday_year_for_date( 2026, 9, 27 ) == 2026 );
+static_assert( mid_autumn_holiday_year_for_date( 2026, 9, 28 ) == 0 );
+
+static bool is_mid_autumn_holiday_date( int year, int month, int day )
+{
+    return mid_autumn_holiday_year_for_date( year, month, day ) != 0;
 }
 
 int get_mid_autumn_holiday_year( std::time_t time )
@@ -729,10 +739,8 @@ int get_mid_autumn_holiday_year( std::time_t time )
     if( !get_local_calendar_time( time, local_time ) ) {
         return 0;
     }
-    const int year = local_time.tm_year + 1900;
-    const int month = local_time.tm_mon + 1;
-    const int day = local_time.tm_mday;
-    return is_mid_autumn_holiday_date( year, month, day ) ? year : 0;
+    return mid_autumn_holiday_year_for_date( local_time.tm_year + 1900, local_time.tm_mon + 1,
+            local_time.tm_mday );
 }
 
 holiday get_holiday_from_time( std::time_t time, bool force_refresh )
