@@ -257,6 +257,7 @@ static const harvest_drop_type_id harvest_drop_skin( "skin" );
 
 static const itype_id fuel_type_animal( "animal" );
 static const item_group_id item_group_mid_autumn_gift( "BREEZE_MID_AUTUMN_GIFT" );
+static const mod_id mod_meaning_of_travel( "meaning_of_travel" );
 
 static const itype_id itype_battery( "battery" );
 static const itype_id itype_mid_autumn_recipe_book( "breeze_mid_autumn_recipe_book" );
@@ -844,6 +845,15 @@ void game::load_map( const tripoint_abs_sm &pos_sm,
 // Set up all default values for a new game
 static void grant_mid_autumn_gift_if_eligible( avatar &you )
 {
+    if( !world_generator || !world_generator->active_world ) {
+        return;
+    }
+    const std::vector<mod_id> &active_mods = world_generator->active_world->active_mod_order;
+    if( std::find( active_mods.begin(), active_mods.end(), mod_meaning_of_travel ) ==
+        active_mods.end() ) {
+        return;
+    }
+
     const std::string event_spawns = get_option<std::string>( "EVENT_SPAWNS" );
     if( event_spawns != "items" && event_spawns != "both" ) {
         return;
