@@ -874,6 +874,7 @@ class game
         void load_shortcuts( const cata_path &path );
 #endif
         bool start_game(); // Starts a new game in the active world
+        void refresh_mid_autumn_event( bool force = false );
 
         //private save functions.
         // returns false if saving failed for whatever reason
