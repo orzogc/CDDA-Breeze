@@ -1,0 +1,26 @@
+[
+  {
+    "type": "item_group",
+    "id": "BREEZE_MID_AUTUMN_GIFT",
+    "subtype": "collection",
+    "container-item": "breeze_mid_autumn_gift_box",
+    "on_overflow": "spill",
+    "entries": [
+      {
+        "item": "breeze_mooncake_lotus_egg"
+      },
+      {
+        "item": "breeze_mooncake_red_bean"
+      },
+      {
+        "item": "breeze_mooncake_five_nut"
+      },
+      {
+        "item": "breeze_mooncake_snow_skin"
+      },
+      {
+        "item": "breeze_dali_flower_pastry_filling"
+      }
+    ]
+  }
+]
