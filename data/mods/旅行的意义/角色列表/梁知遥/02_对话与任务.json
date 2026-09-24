@@ -6310,7 +6310,7 @@
       }
     ]
   },
-  {
+    {
     "type": "talk_topic",
     "id": "TALK_TRAVEL_LIANG_MID_AUTUMN",
     "dynamic_line": {
@@ -6320,18 +6320,22 @@
         "type": "dialogue",
         "context": "travel_liang",
         "op": "==",
-        "value": { "u_val": "mid_autumn_holiday_year" },
-        "yes": "梁知遥看了一眼你又带来的月饼，又望向外面的秋色，说，至少这一次，旧日历和季节还算对得上。她笑了笑，说，你已经送过我一块了，不过中秋这种日子，人离家越远，越容易想起平时不会主动想的事。",
-        "no": "梁知遥的目光在月饼上停了几秒，又望向外面的秋色，说，至少这一次，旧日历和季节还算对得上。她的神情慢慢松下来，说，中秋这种日子很奇怪，人离家越远，越容易想起平时不会主动想的事。"
+        "value": {
+          "u_val": "mid_autumn_holiday_year"
+        },
+        "yes": "梁知遥看了一眼你又带来的月饼，又望向外面的秋色。\\n\\n“至少这一次，旧日历和季节还算对得上。”她笑了笑，“你已经送过我一块了，不过中秋这种日子，人离家越远，越容易想起平时不会主动想的事。”",
+        "no": "梁知遥的目光在月饼上停了几秒，又望向外面的秋色。\\n\\n“至少这一次，旧日历和季节还算对得上。”她的神情慢慢松下来，“中秋这种日子很奇怪，人离家越远，越容易想起平时不会主动想的事。”"
       },
       "no": {
         "npc_compare_var": "travel_liang_mid_autumn_gift_year",
         "type": "dialogue",
         "context": "travel_liang",
         "op": "==",
-        "value": { "u_val": "mid_autumn_holiday_year" },
-        "yes": "梁知遥看了一眼你又带来的月饼，再看看明显不合时宜的季节，说，按现在的季节算，怎么都轮不到中秋。她停了一下，又笑了，说，灾变以后连日历都开始各过各的了，你已经送过我一块，这些留着慢慢吃吧。",
-        "no": "梁知遥看了一眼月饼，再看看明显不合时宜的季节，说，中秋，按现在的季节算，怎么都轮不到今天。她停了一下，又笑了，说，灾变以后连日历都开始各过各的了，不过拿它当个吃月饼的理由也不错。"
+        "value": {
+          "u_val": "mid_autumn_holiday_year"
+        },
+        "yes": "梁知遥看了一眼你又带来的月饼，再看看明显不合时宜的季节。\\n\\n“按现在的季节算，怎么都轮不到中秋。”她停了一下，又笑了，“灾变以后连日历都开始各过各的了。你已经送过我一块，这些留着慢慢吃吧。”",
+        "no": "梁知遥看了一眼月饼，再看看明显不合时宜的季节。\\n\\n“中秋？按现在的季节算，怎么都轮不到今天。”她停了一下，又笑了，“灾变以后连日历都开始各过各的了，不过拿它当个吃月饼的理由也不错。”"
       }
     },
     "responses": [
@@ -6346,7 +6350,9 @@
                 "type": "dialogue",
                 "context": "travel_liang",
                 "op": "==",
-                "value": { "u_val": "mid_autumn_holiday_year" }
+                "value": {
+                  "u_val": "mid_autumn_holiday_year"
+                }
               }
             },
             {
@@ -6375,7 +6381,9 @@
             "npc_adjust_var": "travel_liang_mid_autumn_gift_year",
             "type": "dialogue",
             "context": "travel_liang",
-            "adjustment": { "u_val": "mid_autumn_holiday_year" }
+            "adjustment": {
+              "u_val": "mid_autumn_holiday_year"
+            }
           }
         ]
       },
@@ -6390,7 +6398,9 @@
                 "type": "dialogue",
                 "context": "travel_liang",
                 "op": "==",
-                "value": { "u_val": "mid_autumn_holiday_year" }
+                "value": {
+                  "u_val": "mid_autumn_holiday_year"
+                }
               }
             },
             {
@@ -6419,7 +6429,9 @@
             "npc_adjust_var": "travel_liang_mid_autumn_gift_year",
             "type": "dialogue",
             "context": "travel_liang",
-            "adjustment": { "u_val": "mid_autumn_holiday_year" }
+            "adjustment": {
+              "u_val": "mid_autumn_holiday_year"
+            }
           }
         ]
       },
@@ -6434,7 +6446,9 @@
                 "type": "dialogue",
                 "context": "travel_liang",
                 "op": "==",
-                "value": { "u_val": "mid_autumn_holiday_year" }
+                "value": {
+                  "u_val": "mid_autumn_holiday_year"
+                }
               }
             },
             {
@@ -6463,7 +6477,9 @@
             "npc_adjust_var": "travel_liang_mid_autumn_gift_year",
             "type": "dialogue",
             "context": "travel_liang",
-            "adjustment": { "u_val": "mid_autumn_holiday_year" }
+            "adjustment": {
+              "u_val": "mid_autumn_holiday_year"
+            }
           }
         ]
       },
@@ -6478,7 +6494,9 @@
                 "type": "dialogue",
                 "context": "travel_liang",
                 "op": "==",
-                "value": { "u_val": "mid_autumn_holiday_year" }
+                "value": {
+                  "u_val": "mid_autumn_holiday_year"
+                }
               }
             },
             {
@@ -6507,25 +6525,24 @@
             "npc_adjust_var": "travel_liang_mid_autumn_gift_year",
             "type": "dialogue",
             "context": "travel_liang",
-            "adjustment": { "u_val": "mid_autumn_holiday_year" }
+            "adjustment": {
+              "u_val": "mid_autumn_holiday_year"
+            }
           }
         ]
       },
       {
-        "text": "你以前在香港怎么过中秋。",
-        "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN_FAMILY"
-      },
-      {
-        "text": "你父亲从小教你咏春吗。",
-        "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN_FATHER"
-      },
-      {
-        "text": "你和母亲相处得怎么样。",
-        "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN_MOTHER"
-      },
-      {
-        "text": "你在香港读高中时是什么样。",
-        "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN_SCHOOL"
+        "text": "刚才你提到香港和家里，还愿意继续说说吗？",
+        "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN_FAMILY",
+        "condition": {
+          "npc_compare_var": "travel_liang_mid_autumn_gift_year",
+          "type": "dialogue",
+          "context": "travel_liang",
+          "op": "==",
+          "value": {
+            "u_val": "mid_autumn_holiday_year"
+          }
+        }
       },
       {
         "text": "先不聊这些。",
@@ -6533,141 +6550,141 @@
       }
     ]
   },
-  {
+    {
     "type": "talk_topic",
     "id": "TALK_TRAVEL_LIANG_MID_AUTUMN_GIFT",
     "dynamic_line": {
       "is_season": "autumn",
-      "yes": "梁知遥接过月饼，没有立刻拆开。她低声说了句谢谢，又补了一句，自己会留到真正想吃的时候。她笑了一下，说，这种时候还能收到节日吃的东西，大概已经算很奢侈了。",
-      "no": "梁知遥接过月饼，没有立刻拆开。她低声说了句谢谢，又朝外面的季节看了一眼。她笑了一下，说，季节不对也没关系，真正想家的时候，也不会先看日历。"
+      "yes": "梁知遥接过月饼，没有立刻拆开，只用拇指沿着包装边缘轻轻压了一下。\\n\\n“谢谢。以前在香港的时候，我家中秋也会买月饼。我爸妈做生意，那几天通常比平时还忙，不过晚上会尽量回来一起吃饭。”\\n\\n她像是没料到自己会说这么多，安静了几秒。\\n\\n“奇怪，我已经很久没想起这些了。”",
+      "no": "梁知遥接过月饼，没有立刻拆开，又朝外面明显不合时宜的季节看了一眼。\\n\\n“季节不对也没关系。以前在香港的时候，我家中秋也会买月饼。我爸妈做生意，那几天通常很忙，不过晚上会尽量回来一起吃饭。”\\n\\n她笑了一下。\\n\\n“真正想家的时候，确实不会先看日历。”"
     },
     "responses": [
       {
-        "text": "你以前在香港怎么过中秋。",
+        "text": "你以前住在香港？",
         "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN_FAMILY"
       },
       {
-        "text": "你父亲从小教你咏春吗。",
-        "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN_FATHER"
+        "text": "你刚才说，你爸妈中秋再忙也会回来？",
+        "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN_FAMILY"
       },
       {
-        "text": "你和母亲相处得怎么样。",
-        "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN_MOTHER"
-      },
-      {
-        "text": "你在香港读高中时是什么样。",
-        "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN_SCHOOL"
-      },
-      {
-        "text": "先吃吧，别想太多。",
+        "text": "如果不想说，就不用勉强。",
         "topic": "TALK_DONE"
       }
     ]
   },
-  {
+    {
     "type": "talk_topic",
     "id": "TALK_TRAVEL_LIANG_MID_AUTUMN_FAMILY",
-    "dynamic_line": "我爸妈以前都在香港做生意。中秋前后通常反而是他们比较忙的时候，但晚上还是会尽量回来吃饭。小时候我觉得那只是固定流程，长大以后离家远了，才发现这种固定流程其实很难得。我爸不太爱讲大道理，他更习惯陪我做一件具体的事。对我来说，那件事一直是咏春。",
+    "dynamic_line": "“嗯，我在那里长大，高中也在那里读。”梁知遥把月饼放到一边，像是在整理一段很久没有碰过的记忆，“我爸不太爱说话。他陪我的方式通常是练拳，从站姿和重心开始，一点点教。我妈就完全相反，她什么都想替我安排好，时间，朋友，该做什么，不该做什么。”\\n\\n她停了一下。\\n\\n“小时候我没觉得有什么问题。后来离开家，才发现一个人过日子和我想的不太一样。”",
     "responses": [
       {
-        "text": "所以是你父亲带你入门的。",
+        "text": "你说你爸会陪你练拳，他教你的是什么？",
         "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN_FATHER"
       },
       {
-        "text": "你母亲呢。",
+        "text": "你说你妈妈什么都替你安排，她一直都这样吗？",
         "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN_MOTHER"
       },
       {
-        "text": "你高中时也一直练吗。",
+        "text": "你高中时也一直在练吗？",
         "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN_SCHOOL"
       },
       {
-        "text": "回到月饼的话题。",
-        "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN"
-      }
-    ]
-  },
-  {
-    "type": "talk_topic",
-    "id": "TALK_TRAVEL_LIANG_MID_AUTUMN_FATHER",
-    "dynamic_line": "是，从很小的时候开始。我爸先教站姿，重心，手的位置，再一点点教套路和对练。他很少把它说成什么家传绝学，对他来说更像每天应该认真做完的一件事。小时候我嫌基本功重复，后来才发现，真正紧张的时候能留下来的恰好就是那些重复过很多次的东西。",
-    "responses": [
-      {
-        "text": "你母亲也支持你练武吗。",
-        "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN_MOTHER"
-      },
-      {
-        "text": "学校里也有练武的地方吗。",
-        "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN_SCHOOL"
-      },
-      {
-        "text": "再说说你们家。",
-        "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN_FAMILY"
-      },
-      {
-        "text": "回到月饼的话题。",
-        "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN"
-      }
-    ]
-  },
-  {
-    "type": "talk_topic",
-    "id": "TALK_TRAVEL_LIANG_MID_AUTUMN_MOTHER",
-    "dynamic_line": "我妈不是不爱我，她大概就是太害怕我走错路。她会替我安排时间，替我判断什么朋友该来往，什么事情应该先做，连很多生活上的小事都习惯直接替我处理。家务也很少真的让我负责。小时候当然觉得轻松，后来一个人生活才发现，有些本来应该自己学会承担的事情，我比别人晚了很多才开始学。她想保护我，只是有时候保护和控制离得太近了。",
-    "responses": [
-      {
-        "text": "这也许是你后来很强调独立的原因。",
+        "text": "离开家以后，你才开始学着自己生活？",
         "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN_INDEPENDENCE"
       },
       {
-        "text": "你父亲在家里是什么样。",
-        "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN_FATHER"
-      },
-      {
-        "text": "说说你高中时的生活。",
-        "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN_SCHOOL"
-      },
-      {
-        "text": "回到月饼的话题。",
-        "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN"
+        "text": "不想继续说也没关系。",
+        "topic": "TALK_DONE"
       }
     ]
   },
-  {
+    {
     "type": "talk_topic",
-    "id": "TALK_TRAVEL_LIANG_MID_AUTUMN_INDEPENDENCE",
-    "dynamic_line": "大概是。我后来总想把钱，时间，路线和风险都自己算清楚，一部分是因为我真的喜欢有计划，另一部分也是想证明自己可以负责。我现在知道，独立不是把所有事情都一个人扛，也不是把生活做成一张永远不能出错的表格。只是这个道理，我学得有点慢。",
+    "id": "TALK_TRAVEL_LIANG_MID_AUTUMN_FATHER",
+    "dynamic_line": "“咏春。从很小的时候就开始。”梁知遥抬起手，比了一个很短的起手动作，“我爸先教站姿，重心，手的位置，再一点点教套路和对练。六点半棍是后来的事。小时候我最烦他让我重复基本功，他也不解释什么大道理，只会说，再来一次。”\\n\\n她笑了一下。\\n\\n“现在倒是明白了。真遇上麻烦，留下来的往往就是那些重复到不需要想的东西。”",
     "responses": [
       {
-        "text": "能意识到这一点已经很好。",
-        "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN"
-      },
-      {
-        "text": "再说说你的家人。",
+        "text": "所以你现在还带着六点半棍，也是因为他？",
         "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN_FAMILY"
-      }
-    ]
-  },
-  {
-    "type": "talk_topic",
-    "id": "TALK_TRAVEL_LIANG_MID_AUTUMN_SCHOOL",
-    "dynamic_line": "高中也在香港读。学校的课外活动很多，武术社只是其中一个。我参加过一段时间，社团里练的不只一种东西，也会有表演和交流活动。那种环境让我第一次觉得，练武不一定只是我和我爸之间的固定功课，也可以是和同龄人一起做的普通兴趣。不过我的咏春底子主要还是家里练出来的，学校没有把我训练成什么高手。",
-    "responses": [
-      {
-        "text": "听起来你父亲才是主要的老师。",
-        "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN_FATHER"
       },
       {
-        "text": "那时候你和母亲相处得怎么样。",
+        "text": "你妈妈怎么看你们练武？",
         "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN_MOTHER"
       },
       {
-        "text": "再说说中秋和家里。",
+        "text": "你在学校里也练这些吗？",
+        "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN_SCHOOL"
+      },
+      {
+        "text": "先说到这里。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+    {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_MID_AUTUMN_MOTHER",
+    "dynamic_line": "“她当然是关心我，只是关心得很具体。”梁知遥想了想，“几点回来，跟谁出去，课程怎么选，什么事情应该先做，她都想替我安排好。连家里很多小事，她也习惯直接替我处理。”\\n\\n她低头看着手里的月饼。\\n\\n“小时候我只觉得省事。后来一个人生活才发现，有些本来应该自己学会承担的事情，我比别人晚了很多才开始学。她想保护我，只是保护和控制有时候离得太近了。”",
+    "responses": [
+      {
+        "text": "你离开家以后，才发现很多事得自己学？",
+        "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN_INDEPENDENCE"
+      },
+      {
+        "text": "那时候你在学校也被她管得很紧吗？",
+        "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN_SCHOOL"
+      },
+      {
+        "text": "你刚才说，你父亲和她很不一样？",
+        "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN_FATHER"
+      },
+      {
+        "text": "先说到这里。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+    {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_MID_AUTUMN_INDEPENDENCE",
+    "dynamic_line": "“对。刚开始的时候，连钱该怎么分，时间怎么排，路线怎么记，家务先做什么，都得重新学。”梁知遥有点无奈地笑了笑，“所以后来我总想把钱，时间，路线和风险都自己算清楚。一部分是因为我真的喜欢有计划，另一部分也是想证明，我可以对自己的选择负责。”\\n\\n她停了一下。\\n\\n“现在我知道，独立不是把所有事情都一个人扛，也不是把生活做成一张永远不能出错的表格。只是这个道理，我学得有点慢。”",
+    "responses": [
+      {
+        "text": "所以你现在才总把路线和物资算得那么细？",
         "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN_FAMILY"
       },
       {
-        "text": "回到月饼的话题。",
-        "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN"
+        "text": "你高中时就已经这么有计划了吗？",
+        "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN_SCHOOL"
+      },
+      {
+        "text": "先说到这里。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+    {
+    "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_MID_AUTUMN_SCHOOL",
+    "dynamic_line": "“高中也在香港读。学校的课外活动很多，我参加过一阵武术社。”梁知遥笑了笑，“社团里不只练一种东西，也会做表演和交流。那时候我第一次觉得，练武不一定只是我和我爸之间每天要完成的功课，也可以是和同龄人一起做的普通兴趣。”\\n\\n“不过我的咏春底子主要还是家里练出来的。学校没有把我训练成什么高手。”",
+    "responses": [
+      {
+        "text": "所以咏春主要还是你父亲教的？",
+        "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN_FATHER"
+      },
+      {
+        "text": "你妈妈会管你参加这些社团吗？",
+        "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN_MOTHER"
+      },
+      {
+        "text": "那时候你已经想过以后要自己生活吗？",
+        "topic": "TALK_TRAVEL_LIANG_MID_AUTUMN_INDEPENDENCE"
+      },
+      {
+        "text": "先说到这里。",
+        "topic": "TALK_DONE"
       }
     ]
   }
