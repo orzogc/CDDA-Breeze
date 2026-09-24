@@ -2267,21 +2267,6 @@
               "is_mid_autumn_holiday": true
             },
             {
-              "compare_int": [
-                {
-                  "u_val": "var",
-                  "var_name": "active_year",
-                  "type": "dialogue",
-                  "context": "breeze_mid_autumn",
-                  "default": 0
-                },
-                ">",
-                {
-                  "const": 0
-                }
-              ]
-            },
-            {
               "or": [
                 {
                   "u_has_items": {
@@ -5095,21 +5080,6 @@
               "is_mid_autumn_holiday": true
             },
             {
-              "compare_int": [
-                {
-                  "u_val": "var",
-                  "var_name": "active_year",
-                  "type": "dialogue",
-                  "context": "breeze_mid_autumn",
-                  "default": 0
-                },
-                ">",
-                {
-                  "const": 0
-                }
-              ]
-            },
-            {
               "or": [
                 {
                   "u_has_items": {
@@ -6350,13 +6320,7 @@
         "type": "dialogue",
         "context": "travel_liang",
         "op": "==",
-        "value": {
-          "u_val": "var",
-          "var_name": "active_year",
-          "type": "dialogue",
-          "context": "breeze_mid_autumn",
-          "default": 0
-        },
+        "value": { "u_val": "mid_autumn_holiday_year" },
         "yes": "梁知遥看了一眼你又带来的月饼，又望向外面的秋色，说，至少这一次，旧日历和季节还算对得上。她笑了笑，说，你已经送过我一块了，不过中秋这种日子，人离家越远，越容易想起平时不会主动想的事。",
         "no": "梁知遥的目光在月饼上停了几秒，又望向外面的秋色，说，至少这一次，旧日历和季节还算对得上。她的神情慢慢松下来，说，中秋这种日子很奇怪，人离家越远，越容易想起平时不会主动想的事。"
       },
@@ -6365,13 +6329,7 @@
         "type": "dialogue",
         "context": "travel_liang",
         "op": "==",
-        "value": {
-          "u_val": "var",
-          "var_name": "active_year",
-          "type": "dialogue",
-          "context": "breeze_mid_autumn",
-          "default": 0
-        },
+        "value": { "u_val": "mid_autumn_holiday_year" },
         "yes": "梁知遥看了一眼你又带来的月饼，再看看明显不合时宜的季节，说，按现在的季节算，怎么都轮不到中秋。她停了一下，又笑了，说，灾变以后连日历都开始各过各的了，你已经送过我一块，这些留着慢慢吃吧。",
         "no": "梁知遥看了一眼月饼，再看看明显不合时宜的季节，说，中秋，按现在的季节算，怎么都轮不到今天。她停了一下，又笑了，说，灾变以后连日历都开始各过各的了，不过拿它当个吃月饼的理由也不错。"
       }
@@ -6388,13 +6346,7 @@
                 "type": "dialogue",
                 "context": "travel_liang",
                 "op": "==",
-                "value": {
-                  "u_val": "var",
-                  "var_name": "active_year",
-                  "type": "dialogue",
-                  "context": "breeze_mid_autumn",
-                  "default": 0
-                }
+                "value": { "u_val": "mid_autumn_holiday_year" }
               }
             },
             {
@@ -6423,13 +6375,7 @@
             "npc_adjust_var": "travel_liang_mid_autumn_gift_year",
             "type": "dialogue",
             "context": "travel_liang",
-            "adjustment": {
-              "u_val": "var",
-              "var_name": "active_year",
-              "type": "dialogue",
-              "context": "breeze_mid_autumn",
-              "default": 0
-            }
+            "adjustment": { "u_val": "mid_autumn_holiday_year" }
           }
         ]
       },
@@ -6444,13 +6390,7 @@
                 "type": "dialogue",
                 "context": "travel_liang",
                 "op": "==",
-                "value": {
-                  "u_val": "var",
-                  "var_name": "active_year",
-                  "type": "dialogue",
-                  "context": "breeze_mid_autumn",
-                  "default": 0
-                }
+                "value": { "u_val": "mid_autumn_holiday_year" }
               }
             },
             {
@@ -6479,13 +6419,7 @@
             "npc_adjust_var": "travel_liang_mid_autumn_gift_year",
             "type": "dialogue",
             "context": "travel_liang",
-            "adjustment": {
-              "u_val": "var",
-              "var_name": "active_year",
-              "type": "dialogue",
-              "context": "breeze_mid_autumn",
-              "default": 0
-            }
+            "adjustment": { "u_val": "mid_autumn_holiday_year" }
           }
         ]
       },
@@ -6500,13 +6434,7 @@
                 "type": "dialogue",
                 "context": "travel_liang",
                 "op": "==",
-                "value": {
-                  "u_val": "var",
-                  "var_name": "active_year",
-                  "type": "dialogue",
-                  "context": "breeze_mid_autumn",
-                  "default": 0
-                }
+                "value": { "u_val": "mid_autumn_holiday_year" }
               }
             },
             {
@@ -6535,13 +6463,7 @@
             "npc_adjust_var": "travel_liang_mid_autumn_gift_year",
             "type": "dialogue",
             "context": "travel_liang",
-            "adjustment": {
-              "u_val": "var",
-              "var_name": "active_year",
-              "type": "dialogue",
-              "context": "breeze_mid_autumn",
-              "default": 0
-            }
+            "adjustment": { "u_val": "mid_autumn_holiday_year" }
           }
         ]
       },
@@ -6556,13 +6478,7 @@
                 "type": "dialogue",
                 "context": "travel_liang",
                 "op": "==",
-                "value": {
-                  "u_val": "var",
-                  "var_name": "active_year",
-                  "type": "dialogue",
-                  "context": "breeze_mid_autumn",
-                  "default": 0
-                }
+                "value": { "u_val": "mid_autumn_holiday_year" }
               }
             },
             {
@@ -6591,13 +6507,7 @@
             "npc_adjust_var": "travel_liang_mid_autumn_gift_year",
             "type": "dialogue",
             "context": "travel_liang",
-            "adjustment": {
-              "u_val": "var",
-              "var_name": "active_year",
-              "type": "dialogue",
-              "context": "breeze_mid_autumn",
-              "default": 0
-            }
+            "adjustment": { "u_val": "mid_autumn_holiday_year" }
           }
         ]
       },
