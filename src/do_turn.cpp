@@ -997,6 +997,8 @@ bool do_turn()
         return turn_handler::cleanup_at_end();
     }
 
+    g->refresh_mid_autumn_event();
+
     weather_manager &weather = get_weather();
     // Actual stuff
     if( g->new_game ) {
