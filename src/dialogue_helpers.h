@@ -198,8 +198,11 @@ struct int_or_var_part {
     std::optional<var_info> var_val;
     std::optional<int> default_val;
     std::optional<talk_effect_fun_t<T>> arithmetic_val;
+    std::function<int( const T &d )> dynamic_val;
     int evaluate( const T &d ) const {
-        if( int_val.has_value() ) {
+        if( dynamic_val ) {
+            return dynamic_val( d );
+        } else if( int_val.has_value() ) {
             return int_val.value();
         } else if( var_val.has_value() ) {
             std::string val = read_var_value( var_val.value(), d );
