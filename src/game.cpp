@@ -844,13 +844,18 @@ void game::load_map( const tripoint_abs_sm &pos_sm,
 // Set up all default values for a new game
 static void grant_mid_autumn_gift_if_eligible( avatar &you )
 {
+    static const std::string active_year_var =
+        "npctalk_var_dialogue_breeze_mid_autumn_active_year";
+    static const std::string gift_year_var = "breeze_mid_autumn_gift_year";
+
     const int holiday_year = get_mid_autumn_holiday_year();
     if( holiday_year == 0 ) {
+        you.remove_value( active_year_var );
         return;
     }
 
-    static const std::string gift_year_var = "breeze_mid_autumn_gift_year";
     const std::string year_string = std::to_string( holiday_year );
+    you.set_value( active_year_var, year_string );
     if( you.get_value( gift_year_var ) == year_string ) {
         return;
     }
