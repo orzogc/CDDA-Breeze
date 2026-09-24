@@ -1704,9 +1704,9 @@ void options_manager::add_options_general()
        );
 
     add( "EVENT_SPAWNS", "general", to_translation( "Special event spawns" ),
-         to_translation( "If not disabled, unique items and/or monsters can spawn during special events (Christmas, Halloween, etc.)" ),
-    { { "off", to_translation( "Disabled" ) }, { "items", to_translation( "Items" ) }, { "monsters", to_translation( "Monsters" ) }, { "both", to_translation( "Both" ) } },
-    "items" );
+         to_translation( "Controls special-event spawns.  Mod defaults only enables holidays explicitly opted in by active mods; Items and Both enable all event items." ),
+    { { "off", to_translation( "Disabled" ) }, { "mod_defaults", to_translation( "Mod defaults" ) }, { "items", to_translation( "Items" ) }, { "monsters", to_translation( "Monsters" ) }, { "both", to_translation( "Both" ) } },
+    "mod_defaults" );
 
     add_empty_line();
 
@@ -3906,12 +3906,12 @@ void options_manager::deserialize( const JsonArray &ja )
         const std::string name = migrateOptionName( saved_name );
         std::string value = migrateOptionValue( saved_name, joOptions.get_string( "value" ) );
 
-        // EVENT_SPAWNS previously defaulted to off.  Migrate users who still have that
-        // old default to item-only event spawns once, while preserving later explicit
-        // choices after the new default has been saved as "items".
+        // EVENT_SPAWNS used to default to off.  Move untouched legacy defaults
+        // to the new mod-default mode.  This still spawns nothing unless an active
+        // mod explicitly opts a holiday in.
         if( saved_name == "EVENT_SPAWNS" && value == "off" &&
             joOptions.get_string( "default", "" ) == "off" ) {
-            value = "items";
+            value = "mod_defaults";
         }
 
         auto option = options.find( name );
