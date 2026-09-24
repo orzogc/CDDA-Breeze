@@ -601,6 +601,15 @@ std::unordered_set<T> &operator<<( std::unordered_set<T> &lhv, std::unordered_se
 holiday get_holiday_from_time( std::time_t time = 0, bool force_refresh = false );
 
 /**
+ * Return the Gregorian year when the local system date falls within a configured
+ * real-world Mid-Autumn Festival gift window.  Returns 0 outside the window.
+ *
+ * The date is intentionally based on the player's local system clock, not the
+ * in-game calendar.  Future years should be added after their holiday dates are known.
+ */
+int get_mid_autumn_gift_year( std::time_t time = 0 );
+
+/**
  * Return the real-world year when the given local date is inside a configured
  * Mid-Autumn Festival holiday window, or 0 when it is not.
  * Official holiday windows are added after they are announced.
