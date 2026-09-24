@@ -262,47 +262,5 @@
         ]
       ]
     ]
-  },
-  {
-    "type": "recipe",
-    "activity_level": "NO_EXERCISE",
-    "result": "breeze_dali_flower_pastry_filling",
-    "category": "CC_FOOD",
-    "subcategory": "CSC_FOOD_OTHER",
-    "skill_used": "cooking",
-    "difficulty": 1,
-    "time": "20 m",
-    "book_learn": [
-      [
-        "breeze_mid_autumn_recipe_book",
-        1
-      ]
-    ],
-    "proficiencies": [
-      {
-        "proficiency": "prof_food_prep"
-      }
-    ],
-    "components": [
-      [
-        [
-          "raw_dandelion",
-          6
-        ]
-      ],
-      [
-        [
-          "sugar_standard",
-          2,
-          "LIST"
-        ]
-      ],
-      [
-        [
-          "honeycomb",
-          1
-        ]
-      ]
-    ]
   }
 ]
