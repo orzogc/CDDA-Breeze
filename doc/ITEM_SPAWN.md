@@ -118,6 +118,21 @@ Current possible values are:
 - "halloween"
 - "thanksgiving"
 - "christmas"
+- "mid_autumn"
+
+When `EVENT_SPAWNS` is set to `mod_defaults`, event-based item entries are disabled unless an active mod explicitly opts that holiday in with a `holiday_item_event` JSON object.  This lets mods enable only the holidays they own without globally enabling every holiday item.
+
+Example:
+
+```json
+{
+  "type": "holiday_item_event",
+  "holiday": "mid_autumn",
+  "default_enabled": true
+}
+```
+
+Setting `EVENT_SPAWNS` to `off` disables all event items, including mod defaults.  `items` and `both` enable all event item entries as before.  `monsters` does not enable event items.
 
 `artifact`: This object determines that the item or group that is spawned by this entry will become an artifact. Here is an example:
 ```json
