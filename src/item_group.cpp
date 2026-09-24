@@ -32,6 +32,42 @@
 
 static const std::string null_item_id( "null" );
 
+static std::set<holiday> mod_default_holiday_item_events;
+
+namespace item_group
+{
+
+void load_holiday_item_event( const JsonObject &jo )
+{
+    const holiday event = jo.get_enum_value<holiday>( "holiday", holiday::none );
+    if( event == holiday::none ) {
+        jo.throw_error_at( "holiday", "holiday_item_event requires a concrete holiday" );
+    }
+    if( jo.get_bool( "default_enabled", true ) ) {
+        mod_default_holiday_item_events.insert( event );
+    }
+}
+
+void reset_holiday_item_events()
+{
+    mod_default_holiday_item_events.clear();
+}
+
+bool holiday_item_event_enabled( const holiday event )
+{
+    const std::string option = get_option<std::string>( "EVENT_SPAWNS" );
+    if( option == "items" || option == "both" ) {
+        return true;
+    }
+    if( option == "mod_defaults" ) {
+        return mod_default_holiday_item_events.count( event ) != 0;
+    }
+    return false;
+}
+
+} // namespace item_group
+
+
 std::size_t Item_spawn_data::create( ItemList &list,
                                      const time_point &birthday, spawn_flags flags ) const
 {
@@ -774,9 +810,9 @@ int Item_spawn_data::get_probability( bool skip_event_check ) const
         return probability;
     }
 
-    // Item spawn is event-based, but option is disabled
-    std::string opt = get_option<std::string>( "EVENT_SPAWNS" );
-    if( opt != "items" && opt != "both" ) {
+    // Item spawn is event-based, but may be disabled globally or by the
+    // active mod-default holiday configuration.
+    if( !item_group::holiday_item_event_enabled( event ) ) {
         return 0;
     }
 
