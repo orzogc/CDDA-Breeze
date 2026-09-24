@@ -1,0 +1,308 @@
+[
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "category": "CC_FOOD",
+    "subcategory": "CSC_FOOD_BREAD",
+    "skill_used": "cooking",
+    "difficulty": 2,
+    "time": "45 m",
+    "book_learn": [
+      [
+        "breeze_mid_autumn_recipe_book",
+        1
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "OVEN",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "surface_heat",
+          5,
+          "LIST"
+        ]
+      ]
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_food_prep"
+      },
+      {
+        "proficiency": "prof_baking"
+      }
+    ],
+    "result": "breeze_mooncake_lotus_egg",
+    "components": [
+      [
+        [
+          "flour_any",
+          2,
+          "LIST"
+        ]
+      ],
+      [
+        [
+          "sugar_standard",
+          1,
+          "LIST"
+        ]
+      ],
+      [
+        [
+          "paste_seed",
+          2
+        ]
+      ],
+      [
+        [
+          "eggs_any_shape",
+          1,
+          "LIST"
+        ]
+      ],
+      [
+        [
+          "any_butter_or_oil",
+          2,
+          "LIST"
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "category": "CC_FOOD",
+    "subcategory": "CSC_FOOD_BREAD",
+    "skill_used": "cooking",
+    "difficulty": 2,
+    "time": "45 m",
+    "book_learn": [
+      [
+        "breeze_mid_autumn_recipe_book",
+        1
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "OVEN",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "surface_heat",
+          5,
+          "LIST"
+        ]
+      ]
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_food_prep"
+      },
+      {
+        "proficiency": "prof_baking"
+      }
+    ],
+    "result": "breeze_mooncake_red_bean",
+    "components": [
+      [
+        [
+          "flour_any",
+          2,
+          "LIST"
+        ]
+      ],
+      [
+        [
+          "sugar_standard",
+          1,
+          "LIST"
+        ]
+      ],
+      [
+        [
+          "beans_cooked",
+          2
+        ]
+      ],
+      [
+        [
+          "any_butter_or_oil",
+          2,
+          "LIST"
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "category": "CC_FOOD",
+    "subcategory": "CSC_FOOD_BREAD",
+    "skill_used": "cooking",
+    "difficulty": 2,
+    "time": "45 m",
+    "book_learn": [
+      [
+        "breeze_mid_autumn_recipe_book",
+        1
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "OVEN",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "surface_heat",
+          5,
+          "LIST"
+        ]
+      ]
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_food_prep"
+      },
+      {
+        "proficiency": "prof_baking"
+      }
+    ],
+    "result": "breeze_mooncake_five_nut",
+    "components": [
+      [
+        [
+          "flour_any",
+          2,
+          "LIST"
+        ]
+      ],
+      [
+        [
+          "sugar_standard",
+          1,
+          "LIST"
+        ]
+      ],
+      [
+        [
+          "paste_nut",
+          2
+        ]
+      ],
+      [
+        [
+          "any_butter_or_oil",
+          2,
+          "LIST"
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "NO_EXERCISE",
+    "result": "breeze_mooncake_snow_skin",
+    "category": "CC_FOOD",
+    "subcategory": "CSC_FOOD_OTHER",
+    "skill_used": "cooking",
+    "difficulty": 2,
+    "time": "30 m",
+    "book_learn": [
+      [
+        "breeze_mid_autumn_recipe_book",
+        1
+      ]
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_food_prep"
+      }
+    ],
+    "components": [
+      [
+        [
+          "flour_any",
+          2,
+          "LIST"
+        ]
+      ],
+      [
+        [
+          "sugar_standard",
+          1,
+          "LIST"
+        ]
+      ],
+      [
+        [
+          "paste_seed",
+          1
+        ]
+      ],
+      [
+        [
+          "water",
+          1
+        ],
+        [
+          "water_clean",
+          1
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "NO_EXERCISE",
+    "result": "breeze_dali_flower_pastry_filling",
+    "category": "CC_FOOD",
+    "subcategory": "CSC_FOOD_OTHER",
+    "skill_used": "cooking",
+    "difficulty": 1,
+    "time": "20 m",
+    "book_learn": [
+      [
+        "breeze_mid_autumn_recipe_book",
+        1
+      ]
+    ],
+    "proficiencies": [
+      {
+        "proficiency": "prof_food_prep"
+      }
+    ],
+    "components": [
+      [
+        [
+          "raw_dandelion",
+          6
+        ]
+      ],
+      [
+        [
+          "sugar_standard",
+          2,
+          "LIST"
+        ]
+      ],
+      [
+        [
+          "honey",
+          1
+        ]
+      ]
+    ]
+  }
+]
