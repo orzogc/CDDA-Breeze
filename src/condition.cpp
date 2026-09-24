@@ -132,7 +132,11 @@ int_or_var_part<T> get_int_or_var_part( const JsonValue &jv, const std::string &
     } else if( jv.test_object() ) {
         JsonObject jo = jv.get_object();
         jo.allow_omitted_members();
-        if( jo.has_array( "arithmetic" ) ) {
+        if( jo.has_string( "u_val" ) && jo.get_string( "u_val" ) == "mid_autumn_holiday_year" ) {
+            ret_val.dynamic_val = []( const T & ) {
+                return get_mid_autumn_holiday_year();
+            };
+        } else if( jo.has_array( "arithmetic" ) ) {
             talk_effect_fun_t<T> arith;
             arith.set_arithmetic( jo, "arithmetic", true );
             ret_val.arithmetic_val = arith;
