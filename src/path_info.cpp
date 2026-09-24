@@ -491,7 +491,6 @@ std::string PATH_INFO::title( const holiday current_holiday )
             theme_fallback = datadir_value + "title/" + "en.christmas";
             break;
         case holiday::mid_autumn:
-            break;
         case holiday::none:
         case holiday::num_holiday:
         default:
