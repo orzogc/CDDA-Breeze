@@ -16,6 +16,7 @@
 #include "avatar.h"
 #include "basecamp.h"
 #include "calendar.h"
+#include "cata_utility.h"
 #include "character.h"
 #include "coordinates.h"
 #include "debug.h"
@@ -3167,6 +3168,11 @@ conditional_t<T>::conditional_t( const JsonObject &jo )
         set_days_since( jo, "days_since_cataclysm" );
     } else if( jo.has_string( "is_season" ) ) {
         set_is_season( jo, "is_season" );
+    } else if( jo.has_bool( "is_mid_autumn_holiday" ) ) {
+        const bool expected = jo.get_bool( "is_mid_autumn_holiday" );
+        condition = [expected]( const T & ) {
+            return ( get_mid_autumn_holiday_year() != 0 ) == expected;
+        };
     } else if( jo.has_string( "mission_goal" ) ) {
         set_mission_goal( jo, "mission_goal", true );
     } else if( jo.has_string( "npc_mission_goal" ) ) {
