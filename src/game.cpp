@@ -844,6 +844,11 @@ void game::load_map( const tripoint_abs_sm &pos_sm,
 // Set up all default values for a new game
 static void grant_mid_autumn_gift_if_eligible( avatar &you )
 {
+    const std::string event_spawns = get_option<std::string>( "EVENT_SPAWNS" );
+    if( event_spawns != "items" && event_spawns != "both" ) {
+        return;
+    }
+
     const int holiday_year = get_mid_autumn_holiday_year();
     if( holiday_year == 0 ) {
         return;
