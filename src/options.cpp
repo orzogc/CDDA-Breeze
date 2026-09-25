@@ -1704,9 +1704,9 @@ void options_manager::add_options_general()
        );
 
     add( "EVENT_SPAWNS", "general", to_translation( "Special event spawns" ),
-         to_translation( "Controls special-event spawns.  Mod defaults only enables holidays explicitly opted in by active mods; Items and Both enable all event items." ),
-    { { "off", to_translation( "Disabled" ) }, { "mod_defaults", to_translation( "Mod defaults" ) }, { "items", to_translation( "Items" ) }, { "monsters", to_translation( "Monsters" ) }, { "both", to_translation( "Both" ) } },
-    "mod_defaults" );
+         to_translation( "If not disabled, unique items and/or monsters can spawn during special events (Christmas, Halloween, etc.)" ),
+    { { "off", to_translation( "Disabled" ) }, { "items", to_translation( "Items" ) }, { "monsters", to_translation( "Monsters" ) }, { "both", to_translation( "Both" ) } },
+    "off" );
 
     add_empty_line();
 
@@ -3902,17 +3902,9 @@ void options_manager::deserialize( const JsonArray &ja )
     for( JsonObject joOptions : ja ) {
         joOptions.allow_omitted_members();
 
-        const std::string saved_name = joOptions.get_string( "name" );
-        const std::string name = migrateOptionName( saved_name );
-        std::string value = migrateOptionValue( saved_name, joOptions.get_string( "value" ) );
-
-        // EVENT_SPAWNS used to default to off.  Move untouched legacy defaults
-        // to the new mod-default mode.  This still spawns nothing unless an active
-        // mod explicitly opts a holiday in.
-        if( saved_name == "EVENT_SPAWNS" && value == "off" &&
-            joOptions.get_string( "default", "" ) == "off" ) {
-            value = "mod_defaults";
-        }
+        const std::string name = migrateOptionName( joOptions.get_string( "name" ) );
+        const std::string value = migrateOptionValue( joOptions.get_string( "name" ),
+                                  joOptions.get_string( "value" ) );
 
         auto option = options.find( name );
         if( option == options.end() ) {
