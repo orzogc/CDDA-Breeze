@@ -48,7 +48,6 @@
 #include "item_action.h"
 #include "item_category.h"
 #include "item_factory.h"
-#include "item_group.h"
 #include "itype.h"
 #include "json.h"
 #include "json_loader.h"
@@ -301,9 +300,6 @@ void DynamicDataLoader::initialize()
     } );
     add( "item_group", []( const JsonObject & jo ) {
         item_controller->load_item_group( jo );
-    } );
-    add( "holiday_item_event", []( const JsonObject & jo ) {
-        item_group::load_holiday_item_event( jo );
     } );
     add( "trait_group", []( const JsonObject & jo ) {
         mutation_branch::load_trait_group( jo );
@@ -579,7 +575,6 @@ void DynamicDataLoader::unload_data()
     harvest_list::reset();
     item_category::reset();
     item_controller->reset();
-    item_group::reset_holiday_item_events();
     json_flag::reset();
     connect_group::reset();
     limb_score::reset();
