@@ -844,9 +844,6 @@ void game::load_map( const tripoint_abs_sm &pos_sm,
 // Set up all default values for a new game
 static void grant_mid_autumn_gift_if_eligible( avatar &you )
 {
-    if( !item_group::holiday_item_event_enabled( holiday::mid_autumn ) ) {
-        return;
-    }
     if( !item_group::group_is_defined( item_group_mid_autumn_gift ) ||
         !itype_mid_autumn_recipe_book.is_valid() ) {
         return;
