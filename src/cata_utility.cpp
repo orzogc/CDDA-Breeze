@@ -666,6 +666,7 @@ std::string io::enum_to_string<holiday>( holiday data )
         case holiday::halloween:        return "halloween";
         case holiday::thanksgiving:     return "thanksgiving";
         case holiday::christmas:        return "christmas";
+        case holiday::mid_autumn:       return "mid_autumn";
             // *INDENT-ON*
         case holiday::num_holiday:
             break;
@@ -702,6 +703,46 @@ static bool is_easter( int day, int month, int year )
     return false;
 }
 
+static bool get_local_calendar_time( std::time_t time, std::tm &local_time )
+{
+    const std::time_t current_time = time == 0 ? std::time( nullptr ) : time;
+#if defined(_WIN32)
+    return localtime_s( &local_time, &current_time ) == 0;
+#else
+    return localtime_r( &current_time, &local_time ) != nullptr;
+#endif
+}
+
+static constexpr int mid_autumn_holiday_year_for_date( int year, int month, int day )
+{
+    // Keep this table aligned with officially announced holiday windows instead
+    // of trying to infer future compensatory days from the lunar calendar.
+    if( year == 2026 && month == 9 && day >= 25 && day <= 27 ) {
+        return year;
+    }
+    return 0;
+}
+
+static_assert( mid_autumn_holiday_year_for_date( 2026, 9, 24 ) == 0 );
+static_assert( mid_autumn_holiday_year_for_date( 2026, 9, 25 ) == 2026 );
+static_assert( mid_autumn_holiday_year_for_date( 2026, 9, 27 ) == 2026 );
+static_assert( mid_autumn_holiday_year_for_date( 2026, 9, 28 ) == 0 );
+
+static bool is_mid_autumn_holiday_date( int year, int month, int day )
+{
+    return mid_autumn_holiday_year_for_date( year, month, day ) != 0;
+}
+
+int get_mid_autumn_holiday_year( std::time_t time )
+{
+    std::tm local_time = {};
+    if( !get_local_calendar_time( time, local_time ) ) {
+        return 0;
+    }
+    return mid_autumn_holiday_year_for_date( local_time.tm_year + 1900, local_time.tm_mon + 1,
+            local_time.tm_mday );
+}
+
 holiday get_holiday_from_time( std::time_t time, bool force_refresh )
 {
     static holiday cached_holiday = holiday::none;
@@ -716,26 +757,8 @@ holiday get_holiday_from_time( std::time_t time, bool force_refresh )
 
     is_cached = true;
 
-    bool success = false;
-
-    std::tm local_time;
-    std::time_t current_time = time == 0 ? std::time( nullptr ) : time;
-
-    /* necessary to pass LGTM, as threadsafe version of localtime differs by platform */
-#if defined(_WIN32)
-
-    errno_t err = localtime_s( &local_time, &current_time );
-    if( err == 0 ) {
-        success = true;
-    }
-
-#else
-
-    success = !!localtime_r( &current_time, &local_time );
-
-#endif
-
-    if( success ) {
+    std::tm local_time = {};
+    if( get_local_calendar_time( time, local_time ) ) {
 
         const int month = local_time.tm_mon + 1;
         const int day = local_time.tm_mday;
@@ -753,6 +776,9 @@ holiday get_holiday_from_time( std::time_t time, bool force_refresh )
             return cached_holiday;
         } else if( month == 7 && day == 4 ) {
             cached_holiday = holiday::independence_day;
+            return cached_holiday;
+        } else if( is_mid_autumn_holiday_date( year, month, day ) ) {
+            cached_holiday = holiday::mid_autumn;
             return cached_holiday;
         }
         // 13 days seems appropriate for Halloween

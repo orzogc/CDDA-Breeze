@@ -43,7 +43,7 @@ const std::unordered_set<std::string> complex_conds = { {
         "npc_aim_rule", "npc_engagement_rule", "npc_rule", "npc_override", "npc_personality",
         "npc_movement_policy", "u_has_hp", "npc_has_hp",
         "u_has_part_temp", "npc_has_part_temp", "npc_cbm_reserve_rule", "npc_cbm_recharge_rule", "u_has_faction_trust",
-        "days_since_cataclysm", "is_season", "mission_goal", "u_has_var", "npc_has_var",
+        "days_since_cataclysm", "is_season", "is_mid_autumn_holiday", "mission_goal", "u_has_var", "npc_has_var",
         "u_has_skill", "npc_has_skill", "u_know_recipe", "u_compare_var", "npc_compare_var",
         "u_compare_time_since_var", "npc_compare_time_since_var", "is_weather", "mod_is_loaded", "one_in_chance", "x_in_y_chance",
         "is_temperature", "is_windpower", "is_humidity", "is_pressure", "u_is_height", "npc_is_height",

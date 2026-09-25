@@ -600,6 +600,14 @@ std::unordered_set<T> &operator<<( std::unordered_set<T> &lhv, std::unordered_se
 */
 holiday get_holiday_from_time( std::time_t time = 0, bool force_refresh = false );
 
+
+/**
+ * Return the real-world year when the given local date is inside a configured
+ * Mid-Autumn Festival holiday window, or 0 when it is not.
+ * Official holiday windows are added after they are announced.
+ */
+int get_mid_autumn_holiday_year( std::time_t time = 0 );
+
 /**
  * Returns a random (weighted) bucket index from a list of weights
  * @param weights vector with a list of int weights

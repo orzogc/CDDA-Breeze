@@ -16,6 +16,7 @@
 #include "avatar.h"
 #include "basecamp.h"
 #include "calendar.h"
+#include "cata_utility.h"
 #include "character.h"
 #include "coordinates.h"
 #include "debug.h"
@@ -131,7 +132,11 @@ int_or_var_part<T> get_int_or_var_part( const JsonValue &jv, const std::string &
     } else if( jv.test_object() ) {
         JsonObject jo = jv.get_object();
         jo.allow_omitted_members();
-        if( jo.has_array( "arithmetic" ) ) {
+        if( jo.has_string( "u_val" ) && jo.get_string( "u_val" ) == "mid_autumn_holiday_year" ) {
+            ret_val.dynamic_val = []( const T & ) {
+                return get_mid_autumn_holiday_year();
+            };
+        } else if( jo.has_array( "arithmetic" ) ) {
             talk_effect_fun_t<T> arith;
             arith.set_arithmetic( jo, "arithmetic", true );
             ret_val.arithmetic_val = arith;
@@ -1661,6 +1666,10 @@ std::function<int( const T & )> conditional_t<T>::get_get_int( const JsonObject 
                 effect target = d.actor( is_npc )->get_effect( efftype_id( effect_id ), bid );
                 return target.is_null() ? -1 : target.get_intensity();
             };
+        } else if( checked_value == "mid_autumn_holiday_year" ) {
+            return []( const T & ) {
+                return get_mid_autumn_holiday_year();
+            };
         } else if( checked_value == "var" ) {
             var_info info = read_var_info( jo );
             return [info]( const T & d ) {
@@ -3167,6 +3176,11 @@ conditional_t<T>::conditional_t( const JsonObject &jo )
         set_days_since( jo, "days_since_cataclysm" );
     } else if( jo.has_string( "is_season" ) ) {
         set_is_season( jo, "is_season" );
+    } else if( jo.has_bool( "is_mid_autumn_holiday" ) ) {
+        const bool expected = jo.get_bool( "is_mid_autumn_holiday" );
+        condition = [expected]( const T & ) {
+            return ( get_mid_autumn_holiday_year() != 0 ) == expected;
+        };
     } else if( jo.has_string( "mission_goal" ) ) {
         set_mission_goal( jo, "mission_goal", true );
     } else if( jo.has_string( "npc_mission_goal" ) ) {
