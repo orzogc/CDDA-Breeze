@@ -84,14 +84,6 @@ std::set<const itype *> every_possible_item_from( const item_group_id &group_id 
  */
 bool group_is_defined( const item_group_id &group_id );
 /**
- * Register an event whose holiday items are enabled by default when the
- * declaring JSON data is loaded.  This lets active mods opt individual
- * holidays into the EVENT_SPAWNS "mod defaults" mode.
- */
-void load_holiday_item_event( const JsonObject &jo );
-void reset_holiday_item_events();
-bool holiday_item_event_enabled( holiday event );
-/**
  * Shows an menu to debug the item groups.
  */
 void debug_spawn();
