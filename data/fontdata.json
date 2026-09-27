@@ -1,16 +1,17 @@
 {
   "//1": "If more than one font is specified for a typeface the list is treated as a fallback order.",
   "//2": "unifont will always be used as a 'last resort' fallback even if not listed here.",
+  "//3": "Terminus supplies the crisp bitmap Latin; Sarasa Fixed SC supplies CJK (1em square, ttfautohint).",
   "typeface": [
     "data/font/Terminus.ttf",
-    "data/font/unifont.ttf"
+    "data/font/SarasaFixedSC-Regular.ttf"
   ],
   "map_typeface": [
     "data/font/Terminus.ttf",
-    "data/font/unifont.ttf"
+    "data/font/SarasaFixedSC-Regular.ttf"
   ],
   "overmap_typeface": [
     "data/font/Terminus.ttf",
-    "data/font/unifont.ttf"
+    "data/font/SarasaFixedSC-Regular.ttf"
   ]
 }
