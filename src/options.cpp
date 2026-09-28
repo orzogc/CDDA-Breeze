@@ -2265,7 +2265,7 @@ void options_manager::add_options_graphics()
 
     add( "FONT_BLENDING", "graphics", to_translation( "Font blending" ),
          to_translation( "If true, fonts will look better." ),
-         false, COPT_CURSES_HIDE
+         true, COPT_CURSES_HIDE
        );
 
     add( "FONT_WIDTH", "graphics", to_translation( "Font width" ),
