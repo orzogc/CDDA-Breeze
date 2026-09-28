@@ -1,17 +1,18 @@
 {
   "//1": "If more than one font is specified for a typeface the list is treated as a fallback order.",
   "//2": "unifont will always be used as a 'last resort' fallback even if not listed here.",
-  "//3": "Terminus supplies the crisp bitmap Latin; Sarasa Fixed SC supplies CJK (1em square, ttfautohint).",
+  "//3": "Terminus supplies the crisp bitmap Latin; Sarasa Fixed SC SemiBold supplies CJK (1em square, ttfautohint).",
+  "//4": "SemiBold (stem 103/1000 em) is chosen over Regular (81/1000): at the 20px runtime size SemiBold stems land on 2.06px (3% antialiasing fringe) versus Regular's 1.62px (24% fringe), and it stays crisp across 19-20-30px.",
   "typeface": [
     "data/font/Terminus.ttf",
-    "data/font/SarasaFixedSC-Regular.ttf"
+    "data/font/SarasaFixedSC-SemiBold.ttf"
   ],
   "map_typeface": [
     "data/font/Terminus.ttf",
-    "data/font/SarasaFixedSC-Regular.ttf"
+    "data/font/SarasaFixedSC-SemiBold.ttf"
   ],
   "overmap_typeface": [
     "data/font/Terminus.ttf",
-    "data/font/SarasaFixedSC-Regular.ttf"
+    "data/font/SarasaFixedSC-SemiBold.ttf"
   ]
 }
