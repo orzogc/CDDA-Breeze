@@ -838,9 +838,10 @@ void refresh_display()
                        TERMINAL_HEIGHT * fontheight );
     RenderCopy( renderer, display_buffer, NULL, &dstrect );
 #else
-    
-    
-    RenderCopy( renderer, display_buffer, nullptr, nullptr );
+    const int grid_w = std::min( TERMINAL_WIDTH * fontwidth, WindowWidth / scaling_factor );
+    const int grid_h = std::min( TERMINAL_HEIGHT * fontheight, WindowHeight / scaling_factor );
+    SDL_Rect grid_rect = { 0, 0, grid_w, grid_h };
+    RenderCopy( renderer, display_buffer, &grid_rect, &grid_rect );
     
     
 
